@@ -1,0 +1,23 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="sport-default" extends="struts-default" namespace="/">
+        <interceptors>
+            <interceptor name="sportInterceptor" class="com.nraynaud.sport.web.SportInterceptor"/>
+            <interceptor-stack name="sportStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="sportInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="sportStack"/>
+        
+        <global-results>
+            <result name="login" type="redirectAction">
+                <param name="actionName">login</param>
+            </result>
+        </global-results>
+    </package>
+</struts>

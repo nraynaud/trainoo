@@ -1,0 +1,115 @@
+body {
+    font-size: 11px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-family: Verdana, arial, helvetica, sans-serif;
+}
+
+/* Neutralize styling:
+Elements with a vertical margin: */
+h1, h2, h3, h4, h5, h6, p, pre,
+    blockquote, ul, ol, dl, address {
+    margin: 1em 0;
+    padding: 0;
+}
+
+/* Apply left margin:
+Only to the few elements that need it: */
+li, dd, blockquote {
+    margin-left: 1em;
+}
+
+/* Miscellaneous conveniences: */
+form label {
+    cursor: pointer;
+}
+
+fieldset {
+    border: none;
+}
+
+input, select, textarea {
+    font-size: 100%;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: #588E03;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+input, select, textarea {
+    font-size: 100%;
+}
+
+input, select {
+    border: 1px solid gray;
+}
+
+#center {
+    width: 962px;
+    margin: 10px auto 0;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    color: #09460F;
+}
+
+hr {
+    color: #09460F;
+    background-color: #09460F;
+    height: 5px;
+    border: none;
+}
+
+h2, h1 {
+    color: #09460F;
+}
+
+.flashPart {
+    background-color: #FFEC00;
+}
+
+#undo, span#undo a {
+    color: black;
+    background-color: #F9630D;
+}
+
+.tip {
+    display: inline;
+}
+
+.time_col, .distance_col {
+    text-align: right;
+}
+
+.feedback {
+    background-color: #F9630D;
+    font-weight: bold;
+}
+
+.errorMessage {
+    color: red;
+}
+
+#logoutForm {
+    display: inline;
+}
+
+#logoutForm input {
+    border: none;
+    cursor: pointer;
+    background: none;
+    text-decoration: underline;
+    color: #588E03;
+}
