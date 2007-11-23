@@ -13,21 +13,8 @@
         <s:submit cssClass="logoutButton" value="Déconnexion"/>
     </s:form>
     <hr>
-    <h1>Vos Entraînements</h1>
-    <span style="display:inline-block;">
-        <s:component template="workoutTable.jsp" templateDir="WEB-INF"/>
-    </span>
-    <hr/>
-
-    <h2>Nouvel entraînement</h2>
-
-    <div style="display:block;">
-        <s:set name="template" scope="page" value="workoutForm.jsp"/>
-        <s:component template="workoutForm.jsp"/>
-        <div class="tip" id="date_tip" style="display:none;">
-            <span class="feedback" id="date_feedback"> </span><br/><span>Saisissez la date au format jj/mm/aaaa ex: 03/10/2006.</span>
-        </div>
-    </div>
+    
+    <s:component template="%{jspContent}" templateDir="WEB-INF"/>
 </div>
 <script language="JavaScript" type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
 <script language="JavaScript" type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>

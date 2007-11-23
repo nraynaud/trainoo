@@ -6,20 +6,17 @@
 </head>
 <body>
 <div id="center">
+    <a href="<s:url action='login'/>">S'identifier</a> | <a href="<s:url action='signup'/>">S'inscrire</a>
+    <hr>
     <h1>Les derniers Entraînements</h1>
     <span style="display:inline-block;">
-        <table>
-            <s:iterator value="workouts">
-                <tr>
-                    <td><s:date name="date" format="E dd/M/yy"/></td>
-                    <td><s:property value="user.name"/></td>
-                </tr>
-            </s:iterator>
-        </table>
+        <s:set name="lol" value="%{'workoutTable.jsp'}"/>
+        <s:component template="%{lol}" templateDir="WEB-INF">
+            <s:param name="displayName" value="true"/>
+        </s:component>
     </span>
     <hr/>
 
-<a href="<s:url action='login'/>">S'identifier</a> | <a href="<s:url action='signup'/>">S'inscrire</a>
 </div>
 </body>
 </html>

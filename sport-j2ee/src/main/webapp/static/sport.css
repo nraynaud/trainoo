@@ -58,6 +58,7 @@ input, select {
 
 table {
     border-collapse: collapse;
+    font-size:100%
 }
 
 th {
@@ -112,4 +113,26 @@ h2, h1 {
     background: none;
     text-decoration: underline;
     color: #588E03;
+}
+
+.aroundForm form p {
+    overflow: hidden;
+    _overflow: visible;
+    zoom: 1
+}
+
+.aroundForm form input {
+    overflow: hidden;
+    _overflow: visible;
+    zoom: 1;
+    float: right
+}
+
+.aroundForm form label {
+    float: left
+}
+
+.aroundForm {
+    display:block;
+    width:40em
 }

@@ -35,10 +35,12 @@ public class SportActionMapper extends Restful2ActionMapper {
         final String name = mapping.getName();
         if (name.endsWith("/"))
             mapping.setName(name.substring(0, name.length() - 1));
-        System.out.println("action name" + mapping.getName());
-        System.out.println("namespace  " + mapping.getNamespace());
-        System.out.println("method     " + mapping.getMethod());
-        System.out.println("params     " + mapping.getParams());
+        /*
+        System.out.println("action name: " + mapping.getName());
+        System.out.println("namespace    " + mapping.getNamespace());
+        System.out.println("method       " + mapping.getMethod());
+        System.out.println("params       " + mapping.getParams());
+        */
         return mapping;
     }
 

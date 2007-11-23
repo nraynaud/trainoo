@@ -8,31 +8,28 @@
 </head>
 <body>
 <div id="center">
-    <h1>Votre compte :</h1>
+    <h1>Identification</h1>
 
-    <div style="display:block;">
-        <s:form action="login">
+    <div class="aroundForm">
+        <s:form id="login_form" action="login">
 
             <s:actionerror/>
             <s:actionmessage/>
             <s:fielderror/>
-            
-            <s:label for="login">Votre surnom :</s:label>
-            <s:textfield id="login" name="login"/><br/>
 
-            <s:label for="password">Votre mot de passe :</s:label>
-            <s:password id="password" name="password"/><br/>
+            <p><label for="login">Votre surnom&nbsp;:</label>
+                <s:textfield id="login" name="login"/><br/></p>
 
-            <s:submit value="entrez !"/>
+            <p><label for="password">Votre mot de passe&nbsp;:</label>
+                <s:password id="password" name="password"/><br/></p>
+
+            <p><s:submit value="Entrez !"/></p>
         </s:form>
     </div>
     Pas encore de compte&nbsp;? <a href="<s:url action='signup'/>">Inscrivez-vous&nbsp;!</a>
 </div>
-
-
-<script language="JavaScript" type="text/javascript"
-        src="<s:url value="/static/prototype_packed.js"/>"></script>
-<script language="JavaScript" type="text/javascript"
-        src="<s:url value="/static/sport.js"/>"></script>
+<script language="JavaScript" type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
+<script language="JavaScript" type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
+<script language="JavaScript" type="text/javascript">Field.activate('login');</script>
 </body>
 </html>
