@@ -10,7 +10,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-@Result(name = Constants.FEEDBACK, value = "/WEB-INF/feedback.jsp")
+@Result(name = Constants.FEEDBACK, value = "/WEB-INF/pages/feedback.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class FeedbackAction {

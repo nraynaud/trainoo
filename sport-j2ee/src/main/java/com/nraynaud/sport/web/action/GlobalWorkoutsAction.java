@@ -12,7 +12,7 @@ import org.apache.struts2.config.Namespace;
 
 import java.util.List;
 
-@Result(name = Action.SUCCESS, value = "/WEB-INF/globalWorkouts.jsp")
+@Result(name = Action.SUCCESS, value = "/WEB-INF/pages/globalWorkouts.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class GlobalWorkoutsAction extends DefaultAction {

@@ -11,7 +11,7 @@
     <h1>Les derniers Entraînements</h1>
     <span style="display:inline-block;">
         <s:set name="lol" value="%{'workoutTable.jsp'}"/>
-        <s:component template="%{lol}" templateDir="WEB-INF">
+        <s:component template="%{lol}">
             <s:param name="displayName" value="true"/>
         </s:component>
     </span>

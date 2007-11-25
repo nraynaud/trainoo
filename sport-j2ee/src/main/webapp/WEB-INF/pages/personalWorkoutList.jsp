@@ -15,7 +15,7 @@
     <hr>
     <h1>Vos Entraînements</h1>
     <span style="display:inline-block;">
-        <s:component template="workoutTable.jsp" templateDir="WEB-INF"/>
+        <s:component template="workoutTable.jsp"/>
     </span>
     <hr/>
 

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Results({
-@Result(name = Action.INPUT, value = "/WEB-INF/login.jsp"),
+@Result(name = Action.INPUT, value = "/WEB-INF/pages/login.jsp"),
 @Result(type = ServletActionRedirectResult.class,
         value = Constants.WORKOUTS_ACTION)
         })
