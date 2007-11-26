@@ -3,10 +3,7 @@ package com.nraynaud.sport.web.action;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserAlreadyExistsException;
-import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.DefaultAction;
-import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.Public;
+import com.nraynaud.sport.web.*;
 import static com.nraynaud.sport.web.action.LoginAction.openSession;
 import com.opensymphony.xwork2.Action;
 import org.apache.struts2.config.ParentPackage;
@@ -20,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @Results({
 @Result(type = ServletActionRedirectResult.class,
         value = Constants.WORKOUTS_ACTION),
-@Result(name = Action.INPUT, value = "/WEB-INF/pages/signup.jsp")
+@Result(type = LayoutResult.class, name = Action.INPUT, value = "/WEB-INF/pages/signup.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
