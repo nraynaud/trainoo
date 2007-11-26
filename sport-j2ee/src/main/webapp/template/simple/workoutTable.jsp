@@ -1,5 +1,6 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="p" uri="/sport-tags" %>
 
 <s:if test="%{workouts.size > 0}">
     <table>
@@ -10,7 +11,7 @@
         <s:iterator value="workouts">
             <tr>
                 <td><s:date name="date" format="E dd/M/yy"/></td>
-                <td><s:property value="duration"/></td>
+                <td><p:duration name="duration"/></td>
                 <s:if test="%{parameters.displayName}">
                     <td><s:property value="user.name"/></td>
                 </s:if>

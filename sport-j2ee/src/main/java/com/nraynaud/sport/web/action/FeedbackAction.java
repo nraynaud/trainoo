@@ -3,6 +3,7 @@ package com.nraynaud.sport.web.action;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.WorkoutDateConverter;
+import com.nraynaud.sport.web.WorkoutDurationConverter;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
@@ -21,8 +22,8 @@ public class FeedbackAction {
         }
     };
 
-    private String data;
 
+    private String data;
     private String type;
 
     @SuppressWarnings({"MethodMayBeStatic"})
@@ -31,9 +32,26 @@ public class FeedbackAction {
     }
 
     public String getResult() {
-        final WorkoutDateConverter converter = new WorkoutDateConverter();
+        if ("date".equals(type)) {
+            return convertDate();
+        } else if ("duration".equals(type)) {
+            return convertDuration();
+        }
+        return "";
+    }
+
+    private String convertDuration() {
         try {
-            final Date date = (Date) converter.convertFromString(null, new String[]{data}, Date.class);
+            final Long globalSeconds = WorkoutDurationConverter.parseDuration(data);
+            return WorkoutDurationConverter.formatDuration(globalSeconds);
+        } catch (IllegalArgumentException e) {
+            return "La durée n'a pas été comprise.";
+        }
+    }
+
+    private String convertDate() {
+        try {
+            final Date date = WorkoutDateConverter.parseDate(data);
             return LONG_DATEFORMAT.get().format(date);
         } catch (Exception e) {
             return "La date n'a pas été comprise.";

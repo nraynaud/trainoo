@@ -40,4 +40,14 @@
         <tag-class>com.nraynaud.sport.web.view.JavascriptTag</tag-class>
         <description>For the individual pages : defines a new javascript to append to the page.</description>
     </tag>
+    <tag>
+        <name>duration</name>
+        <tag-class>com.nraynaud.sport.web.view.DurationTag</tag-class>
+        <description>displays duration</description>
+        <attribute>
+            <name>name</name>
+            <required>false</required>
+            <description>name of the duration property</description>
+        </attribute>
+    </tag>
 </taglib>

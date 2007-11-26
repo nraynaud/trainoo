@@ -15,8 +15,5 @@
 
 <div style="display:block;">
     <s:component template="workoutForm.jsp"/>
-    <div class="tip" id="date_tip" style="display:none;">
-        <span class="feedback" id="date_feedback"> </span><br/><span>Saisissez la date au format jj/mm/aaaa ex: 03/10/2006.</span>
-    </div>
 </div>
 

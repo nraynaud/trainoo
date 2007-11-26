@@ -34,31 +34,35 @@ public class WorkoutDateConverter extends StrutsTypeConverter {
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
         if (values != null && values.length > 0 && values[0] != null && values[0].length() > 0) {
-            final DateFormat sdf = FORMAT_WITH_YEAR.get();
             final String source = values[0];
-            try {
-                return sdf.parse(source);
-            }
-            catch (ParseException e) {
-                try {
-                    final Date date = FORMAT_WITH_MONTH.get().parse(source);
-                    return setCurrentComponents(date, Calendar.YEAR);
-                } catch (ParseException e1) {
-                    try {
-                        final Date date = FORMAT_WITH_DAY.get().parse(source);
-                        return setCurrentComponents(date, Calendar.YEAR, Calendar.MONTH);
-                    } catch (ParseException e2) {
-                        throw new TypeConversionException(e);
-                    }
-                }
-            }
+            return parseDate(source);
         }
         return null;
     }
 
+    public static Date parseDate(final String source) {
+        final DateFormat sdf = FORMAT_WITH_YEAR.get();
+        try {
+            return sdf.parse(source);
+        }
+        catch (ParseException e) {
+            try {
+                final Date date = FORMAT_WITH_MONTH.get().parse(source);
+                return setCurrentComponents(date, Calendar.YEAR);
+            } catch (ParseException e1) {
+                try {
+                    final Date date = FORMAT_WITH_DAY.get().parse(source);
+                    return setCurrentComponents(date, Calendar.YEAR, Calendar.MONTH);
+                } catch (ParseException e2) {
+                    throw new TypeConversionException(e);
+                }
+            }
+        }
+    }
+
 
     // returns a new date whose component (like Calendar.YEAR) are overriden with the current one.
-    private Date setCurrentComponents(final Date date, final int... compents) {
+    private static Date setCurrentComponents(final Date date, final int... compents) {
         final GregorianCalendar calendar = new GregorianCalendar();
         final int saved[] = new int[compents.length];
         for (int i = 0; i < compents.length; i++)

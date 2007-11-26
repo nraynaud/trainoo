@@ -5,7 +5,6 @@ import com.nraynaud.sport.User;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
-import com.nraynaud.sport.web.LayoutResult;
 import com.nraynaud.sport.web.PostOnly;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
@@ -20,9 +19,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings({"MethodMayBeStatic"})
 @Conversion
 @Results({
-@Result(type = LayoutResult.class, value = "/WEB-INF/pages/personalWorkoutList.jsp")
+@Result(name = Action.SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
+@Result(name = Action.INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class WorkoutsAction extends DefaultAction implements SessionAware {
@@ -85,6 +86,7 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
         return duration;
     }
 
+    @TypeConversion(converter = "com.nraynaud.sport.web.WorkoutDurationConverter")
     public void setDuration(final Long duration) {
         this.duration = duration;
     }

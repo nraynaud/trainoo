@@ -15,6 +15,7 @@ public class WorkoutImpl implements Workout {
     private long id;
 
     @Column(name = "WORKOUT_DATE", nullable = false)
+    @OrderBy("DESC")
     private Date date;
 
     @Column(name = "DISTANCE")

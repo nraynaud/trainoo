@@ -20,9 +20,16 @@
                              onkeyup="feedback('date', this.value)"/></td>
             <td><s:textfield id="duration"
                              name="duration"
-                             onfocus="Element.show('duration_tip')"
-                             onblur="Element.hide('duration_tip')"/></td>
+                             onfocus="Element.show('duration_tip');feedback('duration', this.value)"
+                             onblur="Element.hide('duration_tip')"
+                             onkeyup="feedback('duration', this.value)"/></td>
             <td><s:submit value="Ajouter"/></td>
         </tr>
     </table>
+    <div class="tip" id="date_tip" style="display:none;">
+        <span class="feedback" id="date_feedback"> </span><br/><span>Saisissez la date au format jj/mm/aaaa ex: 03/10/2006.</span>
+    </div>
+    <div class="tip" id="duration_tip" style="display:none;">
+        <span class="feedback" id="duration_feedback"> </span><br/><span>Saisissez la durée de l'entraînement au format HHhmm'ss ex: 03h41'17 ou 40'22</span>
+    </div>
 </s:form>

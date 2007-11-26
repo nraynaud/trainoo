@@ -252,11 +252,6 @@
           <option name="CHECK_DUPLICATE_KEYS_WITH_DIFFERENT_VALUES" value="true" />
         </inspection_tool>
         <inspection_tool class="StringTokenizer" level="WARNING" enabled="true" />
-        <inspection_tool class="StringConcatenation" level="WARNING" enabled="true">
-          <option name="ignoreAsserts" value="false" />
-          <option name="ignoreSystemOuts" value="false" />
-          <option name="ignoreSystemErrs" value="false" />
-        </inspection_tool>
         <inspection_tool class="IndexOfReplaceableByContains" level="WARNING" enabled="true" />
         <inspection_tool class="RawUseOfParameterizedType" level="WARNING" enabled="true">
           <option name="ignoreObjectConstruction" value="false" />

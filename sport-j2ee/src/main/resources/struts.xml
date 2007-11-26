@@ -4,6 +4,9 @@
 
 <struts>
     <package name="sport-default" extends="struts-default" namespace="/">
+        <result-types>
+            <result-type name="layout" class="com.nraynaud.sport.web.LayoutResult" default="true"/>
+        </result-types>
         <interceptors>
             <interceptor name="sportInterceptor" class="com.nraynaud.sport.web.SportInterceptor"/>
             <interceptor-stack name="sportStack">
