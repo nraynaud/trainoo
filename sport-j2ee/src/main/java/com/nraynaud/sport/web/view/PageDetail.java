@@ -1,8 +1,8 @@
 package com.nraynaud.sport.web.view;
 
 import javax.servlet.ServletRequest;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PageDetail {
     private String content = "";
@@ -36,7 +36,7 @@ public class PageDetail {
     public String getTitle() {
         return title;
     }
-    
+
     public void addJavascript(final String script) {
         javascript.add(script);
     }

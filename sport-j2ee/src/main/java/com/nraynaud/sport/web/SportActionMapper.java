@@ -60,7 +60,7 @@ public class SportActionMapper extends Restful2ActionMapper {
     }
 
     private static String defaultMethod(final String httpMethod) {
-        if(httpMethod.equals("POST"))
+        if (httpMethod.equals("POST"))
             return "create";
         else
             return "index";
@@ -87,6 +87,7 @@ public class SportActionMapper extends Restful2ActionMapper {
         private final String prefix;
         private final String namespace;
 
+        @SuppressWarnings({"StringConcatenation"})
         private NamespaceData(final String namespace) {
             this.namespace = namespace;
             if (namespace.length() > 0)
@@ -130,5 +131,5 @@ public class SportActionMapper extends Restful2ActionMapper {
         }
         return request.getRequestURI().substring(request.getContextPath().length());
     }
-    
+
 }

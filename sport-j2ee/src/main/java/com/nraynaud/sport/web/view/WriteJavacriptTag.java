@@ -3,8 +3,8 @@ package com.nraynaud.sport.web.view;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
-import java.util.List;
 import java.io.IOException;
+import java.util.List;
 
 public class WriteJavacriptTag extends TagSupport {
     public int doStartTag() throws JspException {

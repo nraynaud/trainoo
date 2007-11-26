@@ -4,7 +4,7 @@
 
 <p:defineTitle value="Test page"/>
 ééé
- <s:url action='login'/>
+<s:url action='login'/>
 
 <span id="sp">lol</span>
 <p:javascript>Element("sp").hide()</p:javascript>

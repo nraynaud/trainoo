@@ -5,4 +5,5 @@ function feedback(field_name, val)
         {asynchronous:true, evalScripts:true,
             parameters:'data=' + val + '&type=' + field_name}).updateContent();
     }
-};
+}
+;

@@ -8,13 +8,11 @@ public interface Workout {
     User getUser();
 
     /**
-     *
      * @return workout distance in km
      */
     Double getDistance();
 
     /**
-     *
      * @return workout duration in milleconds
      */
     Long getDuration();

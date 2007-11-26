@@ -24,7 +24,7 @@ public class WorkoutImpl implements Workout {
     private Long duration;
 
     @ManyToOne(targetEntity = UserImpl.class)
-    @JoinColumn(name = "USER_ID", nullable = false )
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     public WorkoutImpl() {

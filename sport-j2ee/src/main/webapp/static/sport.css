@@ -58,7 +58,7 @@ input, select {
 
 table {
     border-collapse: collapse;
-    font-size:100%
+    font-size: 100%
 }
 
 th {
@@ -133,6 +133,6 @@ h2, h1 {
 }
 
 .aroundForm {
-    display:block;
-    width:40em
+    display: block;
+    width: 40em
 }

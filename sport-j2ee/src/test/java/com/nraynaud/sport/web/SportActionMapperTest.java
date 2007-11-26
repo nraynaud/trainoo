@@ -18,10 +18,10 @@ public class SportActionMapperTest {
         config(map, "lol4", "/lol");
         config(map, "lol5", "/lol/pop");
         checkExtract(map, "/", "pouet", "index", "/pouet");
-        checkExtract(map, "/lol", "pouet", "index","/lol/pouet");
-        checkExtract(map, "/lol/pop", "pouet", "index","/lol/pop/pouet");
-        checkExtract(map, "/lol", "poppouet", "index","/lol/poppouet");
-        checkExtract(map, "/lol", "poppouet", "new","/lol/poppouet/new");
+        checkExtract(map, "/lol", "pouet", "index", "/lol/pouet");
+        checkExtract(map, "/lol/pop", "pouet", "index", "/lol/pop/pouet");
+        checkExtract(map, "/lol", "poppouet", "index", "/lol/poppouet");
+        checkExtract(map, "/lol", "poppouet", "new", "/lol/poppouet/new");
     }
 
     private static void checkExtract(final HashMap<String, PackageConfig> map,

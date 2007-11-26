@@ -33,9 +33,9 @@ public class LayoutResult extends StrutsResultSupport {
     // but read it with the strut's default encoding
     // setting the response to the struts encoding before inclusion
     private void includeWithCharset(final String finalLocation,
-                                           final Writer writer,
-                                           final HttpServletResponse response,
-                                           final HttpServletRequest request) throws ServletException, IOException {
+                                    final Writer writer,
+                                    final HttpServletResponse response,
+                                    final HttpServletRequest request) throws ServletException, IOException {
         response.setCharacterEncoding(encoding);
         Include.include(finalLocation, writer, request, response);
     }

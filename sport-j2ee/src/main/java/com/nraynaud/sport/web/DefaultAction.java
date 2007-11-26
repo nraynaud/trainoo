@@ -1,9 +1,9 @@
 package com.nraynaud.sport.web;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Action;
-import org.apache.struts2.config.ParentPackage;
+import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.config.Namespace;
+import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 

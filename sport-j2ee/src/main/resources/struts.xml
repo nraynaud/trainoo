@@ -13,7 +13,7 @@
         </interceptors>
 
         <default-interceptor-ref name="sportStack"/>
-        
+
         <global-results>
             <result name="login" type="redirectAction">
                 <param name="actionName">login</param>
