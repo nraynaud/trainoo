@@ -5,12 +5,13 @@ import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.WorkoutDateConverter;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
+import org.apache.struts2.dispatcher.ServletDispatcherResult;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-@Result(name = Constants.FEEDBACK, value = "/WEB-INF/pages/feedback.jsp")
+@Result(type = ServletDispatcherResult.class, name = Constants.FEEDBACK, value = "/WEB-INF/pages/feedback.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class FeedbackAction {
