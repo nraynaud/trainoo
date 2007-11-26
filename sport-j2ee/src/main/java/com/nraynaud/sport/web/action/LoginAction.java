@@ -2,10 +2,7 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
-import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.DefaultAction;
-import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.Public;
+import com.nraynaud.sport.web.*;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validation;
@@ -19,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Results({
-@Result(name = Action.INPUT, value = "/WEB-INF/pages/login.jsp"),
+@Result(type = LayoutResult.class, name = Action.INPUT, value = "/WEB-INF/pages/login.jsp"),
 @Result(type = ServletActionRedirectResult.class,
         value = Constants.WORKOUTS_ACTION)
         })

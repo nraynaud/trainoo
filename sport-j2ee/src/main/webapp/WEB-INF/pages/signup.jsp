@@ -26,5 +26,5 @@
     </s:form>
 </div>
 Déjà un compte&nbsp;? <a href="<s:url action='login'/>">Identifiez-vous&nbsp;!</a>
-</div>
+
 <p:javascript>Field.activate('login');</p:javascript>
