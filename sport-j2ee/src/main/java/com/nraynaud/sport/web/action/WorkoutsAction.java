@@ -5,6 +5,7 @@ import com.nraynaud.sport.User;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
+import com.nraynaud.sport.web.LayoutResult;
 import com.nraynaud.sport.web.PostOnly;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @Conversion
 @Results({
-@Result(value = "/WEB-INF/pages/personalWorkoutList.jsp")
+@Result(type = LayoutResult.class, value = "/WEB-INF/pages/personalWorkoutList.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class WorkoutsAction extends DefaultAction implements SessionAware {
