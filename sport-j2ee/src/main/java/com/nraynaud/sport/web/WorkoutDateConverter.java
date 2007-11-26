@@ -12,24 +12,23 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 
 public class WorkoutDateConverter extends StrutsTypeConverter {
-    public static final ThreadLocal<DateFormat> FORMAT_WITH_YEAR = new ThreadLocal<DateFormat>() {
-        protected synchronized DateFormat initialValue() {
+    public static final SoftThreadLocal<DateFormat> FORMAT_WITH_YEAR = new SoftThreadLocal<DateFormat>() {
+        protected DateFormat createValue() {
             return new SimpleDateFormat("dd/MM/yy");
         }
     };
 
-    public static final ThreadLocal<DateFormat> FORMAT_WITH_MONTH = new ThreadLocal<DateFormat>() {
-        protected synchronized DateFormat initialValue() {
+    public static final SoftThreadLocal<DateFormat> FORMAT_WITH_MONTH = new SoftThreadLocal<DateFormat>() {
+        protected DateFormat createValue() {
             return new SimpleDateFormat("dd/MM");
         }
     };
 
-    public static final ThreadLocal<DateFormat> FORMAT_WITH_DAY = new ThreadLocal<DateFormat>() {
-        protected synchronized DateFormat initialValue() {
+    public static final SoftThreadLocal<DateFormat> FORMAT_WITH_DAY = new SoftThreadLocal<DateFormat>() {
+        protected DateFormat createValue() {
             return new SimpleDateFormat("dd");
         }
     };
-
 
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
