@@ -6,7 +6,7 @@ import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.Redirect;
+import com.nraynaud.sport.web.result.Redirect;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;

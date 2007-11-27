@@ -1,4 +1,4 @@
-package com.nraynaud.sport.web;
+package com.nraynaud.sport.web.result;
 
 import org.apache.struts2.dispatcher.ServletActionRedirectResult;
 
