@@ -6,6 +6,8 @@ import com.nraynaud.sport.UserAlreadyExistsException;
 import com.nraynaud.sport.web.*;
 import static com.nraynaud.sport.web.action.LoginAction.openSession;
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -15,8 +17,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import javax.servlet.http.HttpServletRequest;
 
 @Results({
-@Result(type = ServletActionRedirectResult.class,
-        value = Constants.WORKOUTS_ACTION),
+@Result(type = ServletActionRedirectResult.class, value = Constants.WORKOUTS_ACTION),
 @Result(type = LayoutResult.class, name = Action.INPUT, value = "/WEB-INF/pages/signup.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
@@ -34,6 +35,10 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
         this.application = application;
     }
 
+    @StringLengthFieldValidator(message = "Votre surnom doit comporter entre 4 et 15 caractères.",
+            minLength = "4",
+            maxLength = "15")
+    @RequiredStringValidator(message = "Le surnom est obligatoire.")
     public String getLogin() {
         return login;
     }
@@ -42,6 +47,10 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
         this.login = login;
     }
 
+    @StringLengthFieldValidator(message = "Votre mot de passe doit comporter entre 5 et 15 caractères.",
+            minLength = "5",
+            maxLength = "15")
+    @RequiredStringValidator(message = "Le mot de passe est obligatoire.")
     public String getPassword() {
         return password;
     }
@@ -66,7 +75,7 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
 
     @SuppressWarnings({"DuplicateStringLiteralInspection"})
     @PostOnly
-    public String execute() {
+    public String create() {
         if (request.getMethod().equals("POST")) {
             try {
                 final User user = application.createUser(login, password);

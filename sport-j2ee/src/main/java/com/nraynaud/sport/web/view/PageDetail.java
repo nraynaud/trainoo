@@ -8,6 +8,7 @@ public class PageDetail {
     private String content = "";
     private String title = "";
     private final List<String> javascript = new ArrayList<String>(1);
+    private boolean loginHeader;
 
     public static PageDetail pageDetailFor(final ServletRequest request) {
         PageDetail detail = (PageDetail) request.getAttribute("detail");
@@ -43,5 +44,13 @@ public class PageDetail {
 
     public List<String> getJavascript() {
         return javascript;
+    }
+
+    public void setLoginHeader(final boolean loginHeader) {
+        this.loginHeader = loginHeader;
+    }
+
+    public boolean isLoginHeader() {
+        return loginHeader;
     }
 }

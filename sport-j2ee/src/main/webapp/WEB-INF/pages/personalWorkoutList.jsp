@@ -2,14 +2,14 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<p:defineTitle value="Vos derniers entraînements"/>
+<p:layoutParams title="Vos derniers entraînements"/>
 
 
 <h1>Vos Entraînements</h1>
     <span style="display:inline-block;">
         <s:component template="workoutTable.jsp"/>
     </span>
-<hr/>
+<hr>
 
 <h2>Nouvel entraînement</h2>
 

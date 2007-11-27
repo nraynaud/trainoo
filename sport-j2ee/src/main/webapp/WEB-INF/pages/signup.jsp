@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<p:defineTitle value="Insrivez-vous !"/>
+<p:layoutParams title="Insrivez-vous !" loginHeader="false"/>
 <h1>Enregistrement</h1>
 
 <div class="aroundForm">

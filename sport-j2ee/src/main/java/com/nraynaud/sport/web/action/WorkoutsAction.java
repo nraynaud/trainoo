@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
+import org.apache.struts2.dispatcher.ServletActionRedirectResult;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
@@ -23,7 +24,8 @@ import java.util.Map;
 @Conversion
 @Results({
 @Result(name = Action.SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
-@Result(name = Action.INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp")
+@Result(name = Action.INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
+@Result(name = "added", type = ServletActionRedirectResult.class, value = "workouts")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class WorkoutsAction extends DefaultAction implements SessionAware {
@@ -74,7 +76,7 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
     @PostOnly
     public String create() {
         application.createWorkout(getNewDate(), getUser(), getDuration());
-        return Action.SUCCESS;
+        return "added";
     }
 
     @SuppressWarnings({"RawUseOfParameterizedType"})

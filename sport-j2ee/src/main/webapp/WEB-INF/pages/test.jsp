@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<p:defineTitle value="Test page"/>
+<p:layoutParams title="Test page"/>
 ééé
 <s:url action='login'/>
 

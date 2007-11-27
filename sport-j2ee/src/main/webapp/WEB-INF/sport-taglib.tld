@@ -25,13 +25,20 @@
         <description>For the layout page : write the scripts from the PageDetail</description>
     </tag>
     <tag>
-        <name>defineTitle</name>
-        <tag-class>com.nraynaud.sport.web.view.DefineTitleTag</tag-class>
+        <name>layoutParams</name>
+        <tag-class>com.nraynaud.sport.web.view.LayoutParamsTag</tag-class>
         <body-content>empty</body-content>
         <description>For the individual pages : declares the page title</description>
         <attribute>
-            <name>value</name>
+            <name>title</name>
             <required>true</required>
+        </attribute>
+        <attribute>
+            <name>loginHeader</name>
+            <required>false</required>
+            <description>
+                Is the login header required ? true by default, remove it for login or signup page.
+            </description>
         </attribute>
 
     </tag>

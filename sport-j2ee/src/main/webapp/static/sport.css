@@ -118,18 +118,18 @@ h2, h1 {
 .aroundForm form p {
     overflow: hidden;
     _overflow: visible;
-    zoom: 1
+    zoom: 1;
 }
 
 .aroundForm form input {
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
-    float: right
+    float: right;
 }
 
 .aroundForm form label {
-    float: left
+    float: left;
 }
 
 .aroundForm {
