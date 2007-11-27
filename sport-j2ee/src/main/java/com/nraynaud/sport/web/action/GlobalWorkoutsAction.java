@@ -4,7 +4,6 @@ import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
-import com.nraynaud.sport.web.LayoutResult;
 import com.nraynaud.sport.web.Public;
 import com.opensymphony.xwork2.Action;
 import org.apache.struts2.config.ParentPackage;
@@ -12,7 +11,7 @@ import org.apache.struts2.config.Result;
 
 import java.util.List;
 
-@Result(type = LayoutResult.class, name = Action.SUCCESS, value = "/WEB-INF/pages/globalWorkouts.jsp")
+@Result(name = Action.SUCCESS, value = "/WEB-INF/pages/globalWorkouts.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class GlobalWorkoutsAction extends DefaultAction {

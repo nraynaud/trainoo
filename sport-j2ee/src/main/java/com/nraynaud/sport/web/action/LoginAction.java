@@ -8,16 +8,14 @@ import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
-import org.apache.struts2.dispatcher.ServletActionRedirectResult;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Results({
-@Result(type = LayoutResult.class, name = Action.INPUT, value = "/WEB-INF/pages/login.jsp"),
-@Result(type = ServletActionRedirectResult.class,
-        value = Constants.WORKOUTS_ACTION)
+@Result(name = Action.INPUT, value = "/WEB-INF/pages/login.jsp"),
+@Result(type = Redirect.class, value = Constants.WORKOUTS_ACTION)
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public

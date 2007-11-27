@@ -11,14 +11,13 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
-import org.apache.struts2.dispatcher.ServletActionRedirectResult;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Results({
-@Result(type = ServletActionRedirectResult.class, value = Constants.WORKOUTS_ACTION),
-@Result(type = LayoutResult.class, name = Action.INPUT, value = "/WEB-INF/pages/signup.jsp")
+@Result(type = Redirect.class, value = Constants.WORKOUTS_ACTION),
+@Result(name = Action.INPUT, value = "/WEB-INF/pages/signup.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
