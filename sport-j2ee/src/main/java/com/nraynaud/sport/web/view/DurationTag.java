@@ -1,6 +1,6 @@
 package com.nraynaud.sport.web.view;
 
-import static com.nraynaud.sport.web.WorkoutDurationConverter.formatDuration;
+import static com.nraynaud.sport.web.converter.DurationConverter.formatDuration;
 import com.opensymphony.xwork2.util.ValueStack;
 import org.apache.struts2.views.jsp.TagUtils;
 

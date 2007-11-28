@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface Application {
-    Workout createWorkout(Date date, final User user, final Long duration);
+    Workout createWorkout(Date date, final User user, final Long duration, final Double distance);
 
     List<Workout> getWorkoutsForUser(final User user);
 

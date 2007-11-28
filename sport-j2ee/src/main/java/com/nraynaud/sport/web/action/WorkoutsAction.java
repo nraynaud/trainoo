@@ -35,13 +35,14 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
     private Long id;
     private Date date = new Date();
     private Long duration;
+    private Double distance;
     private User user;
 
     public WorkoutsAction(final Application app) {
         this.application = app;
     }
 
-    @TypeConversion(converter = "com.nraynaud.sport.web.WorkoutDateConverter")
+    @TypeConversion(converter = "com.nraynaud.sport.web.converter.DateConverter")
     public Date getNewDate() {
         return date;
     }
@@ -75,7 +76,7 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
 
     @PostOnly
     public String create() {
-        application.createWorkout(getNewDate(), getUser(), getDuration());
+        application.createWorkout(getNewDate(), getUser(), getDuration(), getDistance());
         return "added";
     }
 
@@ -88,7 +89,7 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
         return duration;
     }
 
-    @TypeConversion(converter = "com.nraynaud.sport.web.WorkoutDurationConverter")
+    @TypeConversion(converter = "com.nraynaud.sport.web.converter.DurationConverter")
     public void setDuration(final Long duration) {
         this.duration = duration;
     }
@@ -99,5 +100,14 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    @TypeConversion(converter = "com.nraynaud.sport.web.converter.DistanceConverter")
+    public void setDistance(final Double distance) {
+        this.distance = distance;
     }
 }

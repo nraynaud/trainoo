@@ -12,7 +12,7 @@
 <body>
 <div id="center">
     <% if (pageDetailFor(request).isLoginHeader()) {%>
-    <s:component template="header.jsp"/>
+    <s:component template="loginHeader.jsp"/>
     <% } %>
     <hr>
     <r:writeContent/>

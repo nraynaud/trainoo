@@ -10,6 +10,7 @@
         <tr>
             <th><label for="date">Date :</label></th>
             <th><label for="duration">Durée :</label></th>
+            <th><label for="duration">Distance :</label></th>
             <th>&nbsp;</th>
         </tr>
         <tr>
@@ -23,6 +24,12 @@
                              onfocus="Element.show('duration_tip');feedback('duration', this.value)"
                              onblur="Element.hide('duration_tip')"
                              onkeyup="feedback('duration', this.value)"/></td>
+
+            <td><s:textfield id="distance"
+                             name="distance"
+                             onfocus="Element.show('distance_tip');feedback('distance', this.value)"
+                             onblur="Element.hide('distance_tip')"
+                             onkeyup="feedback('distance', this.value)"/></td>
             <td><s:submit value="Ajouter"/></td>
         </tr>
     </table>
@@ -31,5 +38,8 @@
     </div>
     <div class="tip" id="duration_tip" style="display:none;">
         <span class="feedback" id="duration_feedback"> </span><br/><span>Saisissez la durée de l'entraînement au format HHhmm'ss ex: 03h41'17 ou 40'22</span>
+    </div>
+    <div class="tip" id="distance_tip" style="display:none;">
+        <span class="feedback" id="distance_feedback"> </span><br/><span>Saisissez la durée de l'entraînement au format HHhmm'ss ex: 03h41'17 ou 40'22</span>
     </div>
 </s:form>

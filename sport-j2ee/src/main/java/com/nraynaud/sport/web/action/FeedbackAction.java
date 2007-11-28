@@ -2,8 +2,8 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.Public;
-import com.nraynaud.sport.web.WorkoutDateConverter;
-import com.nraynaud.sport.web.WorkoutDurationConverter;
+import com.nraynaud.sport.web.converter.DateConverter;
+import com.nraynaud.sport.web.converter.DurationConverter;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
@@ -42,8 +42,8 @@ public class FeedbackAction {
 
     private String convertDuration() {
         try {
-            final Long globalSeconds = WorkoutDurationConverter.parseDuration(data);
-            return WorkoutDurationConverter.formatDuration(globalSeconds);
+            final Long globalSeconds = DurationConverter.parseDuration(data);
+            return DurationConverter.formatDuration(globalSeconds);
         } catch (IllegalArgumentException e) {
             return "La durée n'a pas été comprise.";
         }
@@ -51,7 +51,7 @@ public class FeedbackAction {
 
     private String convertDate() {
         try {
-            final Date date = WorkoutDateConverter.parseDate(data);
+            final Date date = DateConverter.parseDate(data);
             return LONG_DATEFORMAT.get().format(date);
         } catch (Exception e) {
             return "La date n'a pas été comprise.";
