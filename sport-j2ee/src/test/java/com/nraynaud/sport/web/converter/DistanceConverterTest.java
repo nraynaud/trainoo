@@ -32,6 +32,13 @@ public class DistanceConverterTest {
 
     }
 
+    @Test
+    public void testFormatting() {
+        final DistanceConverter converter = new DistanceConverter();
+        final String result = converter.convertToString(null, Double.valueOf(10.3));
+        Assert.assertEquals("10,3", result);
+    }
+
     private static void checkParsing(final String input, final double expected) {
         final Object result = new DistanceConverter().convertFromString(null, new String[]{input}, Double.class);
         Assert.assertEquals(Double.valueOf(expected), result);
