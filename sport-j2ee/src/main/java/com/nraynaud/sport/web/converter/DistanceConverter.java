@@ -51,6 +51,10 @@ public class DistanceConverter extends StrutsTypeConverter {
     public String convertToString(final Map context, final Object o) {
         if (o == null)
             return "";
-        return String.valueOf(o);
+        return formatNumber(o);
+    }
+
+    public static String formatNumber(final Object o) {
+        return FORMAT.get().format(o);
     }
 }

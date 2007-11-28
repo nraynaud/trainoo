@@ -7,11 +7,13 @@
         <tr>
             <th>Date</th>
             <th>Durée</th>
+            <th>Distance</th>
         </tr>
         <s:iterator value="workouts">
             <tr>
                 <td><s:date name="date" format="E dd/M/yy"/></td>
                 <td><p:duration name="duration"/></td>
+                <td><p:distance name="distance"/></td>
                 <s:if test="%{parameters.displayName}">
                     <td><s:property value="user.name"/></td>
                 </s:if>

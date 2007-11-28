@@ -57,4 +57,14 @@
             <description>name of the duration property</description>
         </attribute>
     </tag>
+    <tag>
+        <name>distance</name>
+        <tag-class>com.nraynaud.sport.web.view.DistanceTag</tag-class>
+        <description>displays distance</description>
+        <attribute>
+            <name>name</name>
+            <required>false</required>
+            <description>name of the distance property</description>
+        </attribute>
+    </tag>
 </taglib>
