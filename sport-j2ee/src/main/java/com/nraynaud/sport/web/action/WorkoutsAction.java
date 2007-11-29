@@ -24,6 +24,8 @@ import java.util.Map;
 @Conversion
 @Results({
 @Result(name = Action.SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
+
+@Result(name = "edit", value = "/WEB-INF/pages/editWorkout.jsp"),
 @Result(name = Action.INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
 @Result(name = "added", type = Redirect.class, value = "workouts")
         })
@@ -71,7 +73,7 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
 
     @SkipValidation
     public String edit() {
-        return Action.SUCCESS;
+        return "edit";
     }
 
     @PostOnly

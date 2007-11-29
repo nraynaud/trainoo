@@ -14,6 +14,8 @@
 <h2>Nouvel entraînement</h2>
 
 <div style="display:block;">
-    <s:component template="workoutForm.jsp"/>
+    <s:component template="workoutForm.jsp">
+        <s:param name="submit" value="'Ajouter'"/>
+    </s:component>
 </div>
 

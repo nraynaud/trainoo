@@ -17,6 +17,7 @@
                 <s:if test="%{parameters.displayName}">
                     <td><s:property value="user.name"/></td>
                 </s:if>
+
             </tr>
         </s:iterator>
     </table>

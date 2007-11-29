@@ -30,7 +30,7 @@
                              onfocus="Element.show('distance_tip');feedback('distance', this.value)"
                              onblur="Element.hide('distance_tip')"
                              onkeyup="feedback('distance', this.value)"/></td>
-            <td><s:submit value="Ajouter"/></td>
+            <td><s:submit value="%{parameters.submit}"/></td>
         </tr>
     </table>
     <div class="tip" id="date_tip" style="display:none;">
