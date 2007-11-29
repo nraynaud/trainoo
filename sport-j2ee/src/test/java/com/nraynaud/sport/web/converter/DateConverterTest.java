@@ -1,6 +1,8 @@
 package com.nraynaud.sport.web.converter;
 
+import com.opensymphony.xwork2.util.TypeConversionException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -19,16 +21,13 @@ public class DateConverterTest {
 
     @Test
     public void testConvertDayAndMonth() throws ParseException {
-        final Date expected = new Date();
-        final String input = new SimpleDateFormat("dd/MM").format(expected);
-        checkDate(expected, input);
+        checkPartialDate("dd/MM");
     }
 
     @Test
     public void testConvertDayOnly() throws ParseException {
-        final Date expected = new Date();
-        final String input = new SimpleDateFormat("dd").format(expected);
-        checkDate(expected, input);
+        final String format = "dd";
+        checkPartialDate(format);
     }
 
     @Test
@@ -37,6 +36,25 @@ public class DateConverterTest {
         final Date input = FORMAT.parse("23/11/2004");
         final String result = converter.convertToString(null, input);
         assertEquals("23/11/04", result);
+        assertEquals("", converter.convertToString(null, null));
+    }
+
+    @Test
+    public void testInputError() throws ParseException {
+        final DateConverter converter = new DateConverter();
+        try {
+            converter.convertFromString(null, new String[]{"lol"}, Date.class);
+            fail();
+        } catch (TypeConversionException e) {
+            //ok
+        }
+    }
+
+
+    private static void checkPartialDate(final String format) {
+        final Date expected = new Date();
+        final String input = new SimpleDateFormat(format).format(expected);
+        checkDate(expected, input);
     }
 
     private static void checkDate(final Date expected, final String input) {

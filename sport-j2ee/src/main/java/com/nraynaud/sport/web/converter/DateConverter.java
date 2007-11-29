@@ -33,11 +33,8 @@ public class DateConverter extends StrutsTypeConverter {
 
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
-        if (values != null && values.length > 0 && values[0] != null && values[0].length() > 0) {
-            final String source = values[0];
-            return parseDate(source);
-        }
-        return null;
+        final String source = values[0];
+        return parseDate(source);
     }
 
     public static Date parseDate(final String source) {

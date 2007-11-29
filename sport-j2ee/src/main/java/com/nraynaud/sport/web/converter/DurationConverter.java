@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class DurationConverter extends StrutsTypeConverter {
-    public static final Pattern DURATION_PATTERN = Pattern.compile("^(?:(\\d+)h)?(\\d+)?'?(?:(\\d+)('')?)?$");
+    public static final Pattern DURATION_PATTERN = Pattern.compile("^(?:(\\d+)h)?(\\d+)?'?(?:(\\d+)(?:'')?)?\\z");
 
 
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
