@@ -33,13 +33,15 @@ public class DistanceConverter extends StrutsTypeConverter {
         final String input = values[0];
         final ParsePosition parsePosition = new ParsePosition(0);
         final Number number = FORMAT.get().parse(input, parsePosition);
+        final Number result;
         if (parsePosition.getIndex() != input.length())
-            return parseWithDot(input);
-        return number;
-
+            result = parseWithDot(input);
+        else
+            result = number;
+        return Double.valueOf(result.doubleValue());
     }
 
-    private static Object parseWithDot(final String input) {
+    private static Number parseWithDot(final String input) {
         final ParsePosition parsePosition = new ParsePosition(0);
         final Number result = FORMAT_WITH_DOT.get().parse(input, parsePosition);
         if (parsePosition.getIndex() != input.length()) {

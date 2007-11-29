@@ -8,15 +8,13 @@ public class DistanceConverterTest {
 
     @Test
     public void testSimpleParsing() {
-        final String input = "10,3";
-        checkParsing(input, 10.3);
+        checkParsing(10.3, "10,3");
+        checkParsing(10.3, "10.3");
+        checkParsing(10, "10");
     }
 
     @Test
     public void testParsingWithDotSeparator() {
-        final String input = "10.3";
-        final double expected = 10.3;
-        checkParsing(input, expected);
     }
 
     @Test
@@ -29,7 +27,6 @@ public class DistanceConverterTest {
         } catch (TypeConversionException e) {
             //ok
         }
-
     }
 
     @Test
@@ -40,7 +37,7 @@ public class DistanceConverterTest {
         Assert.assertEquals("", converter.convertToString(null, null));
     }
 
-    private static void checkParsing(final String input, final double expected) {
+    private static void checkParsing(final double expected, final String input) {
         final Object result = new DistanceConverter().convertFromString(null, new String[]{input}, Double.class);
         Assert.assertEquals(Double.valueOf(expected), result);
     }
