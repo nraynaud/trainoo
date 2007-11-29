@@ -3,6 +3,7 @@ package com.nraynaud.sport.web.action;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.converter.DateConverter;
+import com.nraynaud.sport.web.converter.DistanceConverter;
 import com.nraynaud.sport.web.converter.DurationConverter;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
@@ -36,15 +37,26 @@ public class FeedbackAction {
             return convertDate();
         } else if ("duration".equals(type)) {
             return convertDuration();
+        } else if ("distance".equals(type)) {
+            return convertDistance();
         }
         return "";
+    }
+
+    private String convertDistance() {
+        try {
+            final Double distance = DistanceConverter.parseDistance(data);
+            return DistanceConverter.formatNumber(distance) + "kilomètre(s)";
+        } catch (Exception e) {
+            return "La distance n'a pas été comprise.";
+        }
     }
 
     private String convertDuration() {
         try {
             final Long globalSeconds = DurationConverter.parseDuration(data);
             return DurationConverter.formatDuration(globalSeconds, new String[]{"heures ", "minutes ", "secondes"});
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return "La durée n'a pas été comprise.";
         }
     }

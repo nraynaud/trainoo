@@ -31,6 +31,16 @@ public class DistanceConverter extends StrutsTypeConverter {
 
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
         final String input = values[0];
+        return parseDistance(input);
+    }
+
+    public String convertToString(final Map context, final Object o) {
+        if (o == null)
+            return "";
+        return formatNumber((Double) o);
+    }
+
+    public static Double parseDistance(final String input) {
         final ParsePosition parsePosition = new ParsePosition(0);
         final Number number = FORMAT.get().parse(input, parsePosition);
         final Number result;
@@ -50,13 +60,7 @@ public class DistanceConverter extends StrutsTypeConverter {
         return result;
     }
 
-    public String convertToString(final Map context, final Object o) {
-        if (o == null)
-            return "";
-        return formatNumber(o);
-    }
-
-    public static String formatNumber(final Object o) {
+    public static String formatNumber(final Double o) {
         return FORMAT.get().format(o);
     }
 }
