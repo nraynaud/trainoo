@@ -47,6 +47,10 @@ public class DurationConverter extends StrutsTypeConverter {
         final long hours = dur / 3600;
         final long minutes = (dur % 3600) / 60;
         final long seconds = (dur % 3600) % 60;
-        return String.valueOf(hours) + 'h' + minutes + '\'' + seconds + "''";
+        return nilIfZero(hours, "h") + nilIfZero(minutes, "\'") + nilIfZero(seconds, "''");
+    }
+
+    private static String nilIfZero(final long time, final String suffix) {
+        return time == 0 ? "" : time + suffix;
     }
 }

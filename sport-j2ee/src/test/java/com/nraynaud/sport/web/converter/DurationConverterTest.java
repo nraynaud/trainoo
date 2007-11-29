@@ -18,8 +18,8 @@ public class DurationConverterTest {
 
     @Test
     public void testFormat() {
-        checkFormat("0h0'10''", 10);
-        checkFormat("0h23'11''", 23 * 60 + 11);
+        checkFormat("10''", 10);
+        checkFormat("23'11''", 23 * 60 + 11);
         checkFormat("45h23'11''", 45 * 3600 + 23 * 60 + 11);
         assertEquals("", format(null));
     }

@@ -30,8 +30,8 @@ public class LayoutResult extends StrutsResultSupport {
 
     //HACk HACK HACK
     // Include.include() uses the response encoding to write to the buffer,
-    // but read it with the strut's default encoding
-    // setting the response to the struts encoding before inclusion
+    // but reads it with the strut's default encoding.
+    // setting the response to the struts encoding before inclusion ensures that read and write will occure in the same encoding.
     private void includeWithCharset(final String finalLocation,
                                     final Writer writer,
                                     final HttpServletResponse response,
