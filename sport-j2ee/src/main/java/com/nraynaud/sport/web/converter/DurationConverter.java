@@ -23,7 +23,7 @@ public class DurationConverter extends StrutsTypeConverter {
     public String convertToString(final Map context, final Object o) {
         if (o == null)
             return "";
-        return formatDuration((Long) o);
+        return formatDuration((Long) o, new String[]{"h", "\'", "''"});
     }
 
     public static Long parseDuration(final String duration) throws IllegalArgumentException {
@@ -42,12 +42,12 @@ public class DurationConverter extends StrutsTypeConverter {
         return Long.parseLong(string);
     }
 
-    public static String formatDuration(final Long duration) {
+    public static String formatDuration(final Long duration, final String[] format) {
         final long dur = duration.longValue();
         final long hours = dur / 3600;
         final long minutes = (dur % 3600) / 60;
         final long seconds = (dur % 3600) % 60;
-        return nilIfZero(hours, "h") + nilIfZero(minutes, "\'") + nilIfZero(seconds, "''");
+        return nilIfZero(hours, format[0]) + nilIfZero(minutes, format[1]) + nilIfZero(seconds, format[2]);
     }
 
     private static String nilIfZero(final long time, final String suffix) {
