@@ -7,10 +7,7 @@ import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.apache.struts2.dispatcher.mapper.Restful2ActionMapper;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class SportActionMapper extends Restful2ActionMapper {
@@ -48,15 +45,29 @@ public class SportActionMapper extends Restful2ActionMapper {
                                         final Map<String, PackageConfig> config,
                                         final ActionMapping mapping,
                                         final String httpMethod) {
-        final NamespaceData namespace = extractNamespace(uri, config);
-        mapping.setNamespace(namespace.getNamespace());
-        final String name = uri.substring(namespace.getPrefix().length());
+        final NamespaceMatching matching = extractNamespace(uri, config);
+        mapping.setNamespace(matching.getNamespace());
+        final String name = uri.substring(matching.getIndex());
         final String[] segments = SLASH_PATTERN.split(name);
         mapping.setName(segments[0]);
-        if (segments.length > 1)
+        if (segments.length > 1) {
             mapping.setMethod(segments[1]);
-        else
+            if (segments.length > 2)
+                addParameter(mapping, segments);
+        } else
             mapping.setMethod(defaultMethod(httpMethod));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private static void addParameter(final ActionMapping mapping, final String[] segments) {
+        final Map<String, String> params = mapping.getParams();
+        final Map<String, String> copy;
+        if (params == null)
+            copy = new HashMap<String, String>();
+        else
+            copy = new HashMap<String, String>(params);
+        copy.put("id", segments[2]);
+        mapping.setParams(copy);
     }
 
     private static String defaultMethod(final String httpMethod) {
@@ -66,13 +77,14 @@ public class SportActionMapper extends Restful2ActionMapper {
             return "index";
     }
 
-    private static NamespaceData extractNamespace(final String uri, final Map<String, PackageConfig> config) {
+    private static NamespaceMatching extractNamespace(final String uri, final Map<String, PackageConfig> config) {
         for (final NamespaceData namespace : createNamespaceTable(config)) {
-            if (uri.startsWith(namespace.getPrefix())) {
-                return namespace;
+            final String prefix = namespace.getPrefix();
+            if (uri.startsWith(prefix)) {
+                return new NamespaceMatching(namespace.getNamespace(), prefix.length());
             }
         }
-        return new NamespaceData("");
+        return new NamespaceMatching("", 0);
     }
 
     static Collection<NamespaceData> createNamespaceTable(final Map<String, PackageConfig> configs) {
@@ -81,6 +93,24 @@ public class SportActionMapper extends Restful2ActionMapper {
             namespaces.add(new NamespaceData(config.getNamespace()));
         }
         return namespaces;
+    }
+
+    static class NamespaceMatching {
+        private final String namespace;
+        private final int index;
+
+        NamespaceMatching(final String namespace, final int index) {
+            this.namespace = namespace;
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public String getNamespace() {
+            return namespace;
+        }
     }
 
     static class NamespaceData {
@@ -132,4 +162,22 @@ public class SportActionMapper extends Restful2ActionMapper {
         return request.getRequestURI().substring(request.getContextPath().length());
     }
 
+
+    public String getUriFromActionMapping(final ActionMapping mapping) {
+        final StringBuilder uri = new StringBuilder();
+
+        uri.append(mapping.getNamespace());
+        if (!"/".equals(mapping.getNamespace())) {
+            uri.append('/');
+        }
+        final String name = mapping.getName();
+        uri.append(name);
+
+        final String method = mapping.getMethod();
+        if (!"index".equals(method) && !"create".equals(method))
+            if (null != method && method.length() != 0) {
+                uri.append('/').append(method);
+            }
+        return uri.toString();
+    }
 }

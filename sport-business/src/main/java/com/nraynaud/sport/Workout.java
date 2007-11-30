@@ -16,4 +16,6 @@ public interface Workout {
      * @return workout duration in milleconds
      */
     Long getDuration();
+
+    Long getId();
 }

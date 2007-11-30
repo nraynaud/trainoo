@@ -12,7 +12,7 @@ public class WorkoutImpl implements Workout {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private long id;
+    private Long id;
 
     @Column(name = "WORKOUT_DATE", nullable = false)
     @OrderBy("DESC")
@@ -38,11 +38,11 @@ public class WorkoutImpl implements Workout {
         this.distance = distance;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(final long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
