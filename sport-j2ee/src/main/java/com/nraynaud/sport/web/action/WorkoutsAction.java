@@ -7,7 +7,8 @@ import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.result.Redirect;
-import com.opensymphony.xwork2.Action;
+import static com.opensymphony.xwork2.Action.INPUT;
+import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import org.apache.struts2.config.ParentPackage;
@@ -23,10 +24,9 @@ import java.util.Map;
 @SuppressWarnings({"MethodMayBeStatic"})
 @Conversion
 @Results({
-@Result(name = Action.SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
-
+@Result(name = SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
 @Result(name = "edit", value = "/WEB-INF/pages/editWorkout.jsp"),
-@Result(name = Action.INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
+@Result(name = INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
 @Result(name = "added", type = Redirect.class, value = "workouts")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
@@ -68,19 +68,24 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
 
     @SkipValidation
     public String index() {
-        return Action.SUCCESS;
+        return SUCCESS;
     }
 
     @SkipValidation
     public String edit() {
         if (id != null) {
             final Workout workout = application.getWorkout(id, user);
-            this.setNewDate(workout.getDate());
-            this.setDistance(workout.getDistance());
-            this.setDuration(workout.getDuration());
-            return "edit";
+            if (workout != null) {
+                this.setNewDate(workout.getDate());
+                this.setDistance(workout.getDistance());
+                this.setDuration(workout.getDuration());
+                return "edit";
+            } else {
+                addActionError("l'entraînement désigné n'existe pas");
+                return INPUT;
+            }
         } else
-            return Action.ERROR;
+            return SUCCESS;
     }
 
     @PostOnly
