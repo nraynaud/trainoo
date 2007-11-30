@@ -7,7 +7,9 @@
 
 <h1>Vos Entraînements</h1>
     <span style="display:inline-block;">
-        <s:component template="workoutTable.jsp"/>
+        <s:component template="workoutTable.jsp">
+            <s:param name="displayEdit" value="true"/>
+        </s:component>
     </span>
 <hr>
 

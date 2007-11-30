@@ -73,7 +73,14 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
 
     @SkipValidation
     public String edit() {
-        return "edit";
+        if (id != null) {
+            final Workout workout = application.getWorkout(id, user);
+            this.setNewDate(workout.getDate());
+            this.setDistance(workout.getDistance());
+            this.setDuration(workout.getDuration());
+            return "edit";
+        } else
+            return Action.ERROR;
     }
 
     @PostOnly

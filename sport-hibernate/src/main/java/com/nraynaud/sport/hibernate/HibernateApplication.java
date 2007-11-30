@@ -72,4 +72,17 @@ public class HibernateApplication implements Application {
         query.setMaxResults(15);
         return query.getResultList();
     }
+
+    public Workout getWorkout(final Long id, final User user) {
+        try {
+            final Query query = entityManager.createQuery("select w from WorkoutImpl w where w.id=:id and w.user=:user");
+            query.setParameter("id", id);
+            query.setParameter("user", user);
+            return (Workout) query.getSingleResult();
+        } catch (EntityNotFoundException e) {
+            return null;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

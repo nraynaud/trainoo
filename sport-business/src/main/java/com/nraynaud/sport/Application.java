@@ -15,4 +15,6 @@ public interface Application {
     User find(long id);
 
     List<Workout> getWorkouts();
+
+    Workout getWorkout(final Long id, final User user);
 }

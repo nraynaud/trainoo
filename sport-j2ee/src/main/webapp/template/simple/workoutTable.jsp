@@ -17,11 +17,15 @@
                 <s:if test="%{parameters.displayName}">
                     <td><s:property value="user.name"/></td>
                 </s:if>
-                <td>
-                    <s:url action="workouts" method="edit" includeParams="get">
-                        <s:param name="id" value="id"/>
-                    </s:url>
-                </td>
+                <s:if test="%{parameters.displayEdit}">
+                    <td>
+                        <s:url id="editurl" action="workouts" method="edit" includeParams="get">
+                            <s:param name="id" value="id"/>
+                        </s:url>
+                        <s:a href="%{editurl}">modifier</s:a>
+                    </td>
+                </s:if>
+
             </tr>
         </s:iterator>
     </table>
