@@ -10,7 +10,7 @@
         <tr>
             <th><label for="date">Date :</label></th>
             <th><label for="duration">Durée :</label></th>
-            <th><label for="duration">Distance :</label></th>
+            <th><label for="distance">Distance :</label></th>
             <th>&nbsp;</th>
         </tr>
         <tr>
