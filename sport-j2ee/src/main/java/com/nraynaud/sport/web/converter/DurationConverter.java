@@ -9,7 +9,48 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class DurationConverter extends StrutsTypeConverter {
-    public static final Pattern DURATION_PATTERN = Pattern.compile("^(?:(\\d+)h)?(\\d+)?'?(?:(\\d+)(?:'')?)?\\z");
+
+    private static final int HOUR = 3600;
+
+    private static final int MINUTE = 60;
+
+    private static final int SECOND = 1;
+
+    private enum Parser {
+        HOURS_MINUTES_SECONDS_PATTERN("(\\d+)h(\\d+)'(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
+        HOURS_MINUTES_PATTERN("(\\d+)h(\\d+)'?", HOUR, MINUTE),
+        MINUTES_SECONDS_PATTERN("(\\d+)'(\\d+)(?:'')?", MINUTE, SECOND),
+        MINUTES_PATTERN("(\\d+)'?", MINUTE),
+        SECONDS_PATTERN("(\\d+)''", SECOND);
+
+        private final Pattern pattern;
+        private final int[] multipliers;
+
+        Parser(final String pattern, final int... multipliers) {
+            this.pattern = Pattern.compile('^' + pattern + "\\z");
+            this.multipliers = multipliers;
+        }
+
+        private Long parseInternal(final String text) {
+            final Matcher matcher = pattern.matcher(text);
+            if (!matcher.matches())
+                return null;
+            final int count = matcher.groupCount();
+            long result = 0;
+            for (int i = 0; i < count; i++)
+                result += multipliers[i] * Long.parseLong(matcher.group(i + 1));
+            return Long.valueOf(result);
+        }
+
+        public static Long parse(final String text) {
+            for (final Parser parser : Parser.values()) {
+                final Long result = parser.parseInternal(text);
+                if (result != null)
+                    return result;
+            }
+            throw new IllegalArgumentException();
+        }
+    }
 
 
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
@@ -27,26 +68,14 @@ public class DurationConverter extends StrutsTypeConverter {
     }
 
     public static Long parseDuration(final String duration) throws IllegalArgumentException {
-        final Matcher matcher = DURATION_PATTERN.matcher(duration);
-        if (!matcher.matches())
-            throw new IllegalArgumentException("invalid duration");
-        final long hours = parseIntToZero(matcher.group(1));
-        final long minutes = parseIntToZero(matcher.group(2));
-        final long seconds = parseIntToZero(matcher.group(3));
-        return Long.valueOf(hours * 3600 + minutes * 60 + seconds);
-    }
-
-    public static long parseIntToZero(final String string) throws NumberFormatException {
-        if (string == null)
-            return 0;
-        return Long.parseLong(string);
+        return Parser.parse(duration);
     }
 
     public static String formatDuration(final Long duration, final String[] format) {
         final long dur = duration.longValue();
-        final long hours = dur / 3600;
-        final long minutes = (dur % 3600) / 60;
-        final long seconds = (dur % 3600) % 60;
+        final long hours = dur / HOUR;
+        final long minutes = (dur % HOUR) / MINUTE;
+        final long seconds = (dur % HOUR) % MINUTE;
         return nilIfZero(hours, format[0]) + nilIfZero(minutes, format[1]) + nilIfZero(seconds, format[2]);
     }
 

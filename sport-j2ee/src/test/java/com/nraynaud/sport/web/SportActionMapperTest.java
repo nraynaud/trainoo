@@ -5,9 +5,7 @@ import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import static java.util.Collections.singletonMap;
 import java.util.HashMap;
-import java.util.Map;
 
 public class SportActionMapperTest {
 
@@ -19,12 +17,11 @@ public class SportActionMapperTest {
         config(map, "lol3", "/");
         config(map, "lol4", "/lol");
         config(map, "lol5", "/lol/pop");
-        checkExtract(map, "/", "pouet", "index", null, "/pouet");
-        checkExtract(map, "/lol", "pouet", "index", null, "/lol/pouet");
-        checkExtract(map, "/lol/pop", "pouet", "index", null, "/lol/pop/pouet");
-        checkExtract(map, "/lol", "poppouet", "index", null, "/lol/poppouet");
-        checkExtract(map, "/lol", "poppouet", "new", null, "/lol/poppouet/new");
-        checkExtract(map, "/lol", "poppouet", "edit", singletonMap("id", "1"), "/lol/poppouet/edit/1");
+        checkExtract(map, "/", "pouet", "index", "/pouet");
+        checkExtract(map, "/lol", "pouet", "index", "/lol/pouet");
+        checkExtract(map, "/lol/pop", "pouet", "index", "/lol/pop/pouet");
+        checkExtract(map, "/lol", "poppouet", "index", "/lol/poppouet");
+        checkExtract(map, "/lol", "poppouet", "new", "/lol/poppouet/new");
     }
 
     @Test
@@ -35,14 +32,12 @@ public class SportActionMapperTest {
                                      final String expectedNS,
                                      final String expectedName,
                                      final String method,
-                                     final Map<String, String> params,
                                      final String url) {
         final ActionMapping mapping = new ActionMapping();
         SportActionMapper.extractNamespaceAndName(url, map, mapping, "GET");
         assertEquals(expectedNS, mapping.getNamespace());
         assertEquals(expectedName, mapping.getName());
         assertEquals(method, mapping.getMethod());
-        assertEquals(params, mapping.getParams());
 
         final String recreatedUri = new SportActionMapper().getUriFromActionMapping(mapping);
         assertEquals(url, recreatedUri);

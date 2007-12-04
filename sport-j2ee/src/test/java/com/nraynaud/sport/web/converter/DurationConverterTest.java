@@ -12,8 +12,7 @@ public class DurationConverterTest {
         checkConvertion(10 * 60 + 43, "10'43");
         checkConvertion(3 * 3600 + 10 * 60 + 43, "3h10'43");
         checkConvertion(3 * 3600 + 10 * 60, "3h10");
-        //BUG
-        //checkConvertion(11, "11''");
+        checkConvertion(11, "11''");
     }
 
     @Test

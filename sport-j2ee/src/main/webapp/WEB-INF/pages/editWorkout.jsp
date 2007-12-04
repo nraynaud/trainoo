@@ -6,6 +6,6 @@
 <p:layoutParams title="Modification d'un entraînement"/>
 
 <s:component template="workoutForm.jsp">
-    <s:param name="submit" value="'modifier'"/>
+    <s:param name="submit" value="'Modifier'"/>
 </s:component>
 <p:javascript>Field.activate('date');</p:javascript>
