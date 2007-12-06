@@ -2,10 +2,10 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<p:layoutParams title="Vos derniers entraînements"/>
+<p:layoutParams title="Mes derniers entraînements"/>
 
 
-<h1>Vos Entraînements</h1>
+<h1>Mes Entraînements</h1>
     <span style="display:inline-block;">
         <s:component template="workoutTable.jsp">
             <s:param name="displayEdit" value="true"/>

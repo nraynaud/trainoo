@@ -24,6 +24,9 @@ public class WorkoutImpl implements Workout {
     @Column(name = "DURATION")
     private Long duration;
 
+    @Column(name = "DISCIPLINE")
+    private String discipline;
+
     @ManyToOne(targetEntity = UserImpl.class)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
@@ -31,11 +34,16 @@ public class WorkoutImpl implements Workout {
     public WorkoutImpl() {
     }
 
-    public WorkoutImpl(final User user, final Date date, final Long duration, final Double distance) {
+    public WorkoutImpl(final User user,
+                       final Date date,
+                       final Long duration,
+                       final Double distance,
+                       final String discipline) {
         this.date = date;
         this.user = user;
         this.duration = duration;
         this.distance = distance;
+        this.discipline = discipline;
     }
 
     public Long getId() {
@@ -80,5 +88,13 @@ public class WorkoutImpl implements Workout {
 
     public String toString() {
         return date.toString();
+    }
+
+    public String getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(final String discipline) {
+        this.discipline = discipline;
     }
 }

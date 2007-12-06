@@ -20,8 +20,12 @@ public class HibernateApplication implements Application {
         this.entityManager = entityManager;
     }
 
-    public Workout createWorkout(final Date date, final User user, final Long duration, final Double distance) {
-        final Workout workout = new WorkoutImpl(user, date, duration, distance);
+    public Workout createWorkout(final Date date,
+                                 final User user,
+                                 final Long duration,
+                                 final Double distance,
+                                 final String discipline) {
+        final Workout workout = new WorkoutImpl(user, date, duration, distance, discipline);
         entityManager.persist(workout);
         return workout;
     }

@@ -48,7 +48,8 @@ public class ApplicationTest {
     public void testWorkoutCreation() throws UserAlreadyExistsException {
         Assert.assertNull(hibernateApplication.authenticate("lolé", "pass+é"));
         final User user = hibernateApplication.createUser("lolé", "pass+é");
-        final Workout workout = hibernateApplication.createWorkout(new Date(), user, new Long(12), new Double(10));
+        final Workout workout = hibernateApplication.createWorkout(new Date(), user, new Long(12), new Double(10),
+                "lol");
         Assert.assertEquals(Arrays.asList(workout), hibernateApplication.getWorkouts());
     }
 

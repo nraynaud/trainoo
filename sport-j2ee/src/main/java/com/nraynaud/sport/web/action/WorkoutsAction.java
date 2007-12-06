@@ -90,7 +90,7 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
 
     @PostOnly
     public String create() {
-        application.createWorkout(getNewDate(), getUser(), getDuration(), getDistance());
+        application.createWorkout(getNewDate(), getUser(), getDuration(), getDistance(), "runnning");
         return "added";
     }
 
