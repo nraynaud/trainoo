@@ -8,29 +8,37 @@
     <s:fielderror/>
     <table>
         <tr>
-            <th><label for="date">Date :</label></th>
-            <th><label for="duration">Durée :</label></th>
-            <th><label for="distance">Distance :</label></th>
+            <th><label for="discipline">Discipline</label></th>
+            <th><label for="date">Date</label></th>
+            <th><label for="duration">Durée</label></th>
+            <th><label for="distance">Distance</label></th>
             <th>&nbsp;</th>
         </tr>
         <tr>
+            <td><s:textfield id="discipline"
+                             name="discipline"/></td>
             <td><s:textfield id="date"
                              name="newDate"
+                             size="10"
                              onfocus="Element.show('date_tip');feedback('date', this.value)"
                              onblur="Element.hide('date_tip')"
                              onkeyup="feedback('date', this.value)"/></td>
             <td><s:textfield id="duration"
                              name="duration"
+                             size="7"
                              onfocus="Element.show('duration_tip');feedback('duration', this.value)"
                              onblur="Element.hide('duration_tip')"
                              onkeyup="feedback('duration', this.value)"/></td>
 
             <td><s:textfield id="distance"
                              name="distance"
+                             size="7"
                              onfocus="Element.show('distance_tip');feedback('distance', this.value)"
                              onblur="Element.hide('distance_tip')"
                              onkeyup="feedback('distance', this.value)"/></td>
-            <td><s:submit value="%{parameters.submit}"/></td>
+            <td>
+                <div style="margin-left:2em;"><s:submit value="%{parameters.submit}"/></div>
+            </td>
         </tr>
     </table>
     <div class="tip" id="date_tip" style="display:none;">

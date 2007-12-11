@@ -11,6 +11,7 @@ import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -38,6 +39,7 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
     private Date date = new Date();
     private Long duration;
     private Double distance;
+    private String discipline;
     private User user;
 
     public WorkoutsAction(final Application app) {
@@ -123,5 +125,14 @@ public class WorkoutsAction extends DefaultAction implements SessionAware {
     @TypeConversion(converter = "com.nraynaud.sport.web.converter.DistanceConverter")
     public void setDistance(final Double distance) {
         this.distance = distance;
+    }
+
+    @RequiredFieldValidator(message = "Vous avez oublié la discipline")
+    public String getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(final String discipline) {
+        this.discipline = discipline;
     }
 }
