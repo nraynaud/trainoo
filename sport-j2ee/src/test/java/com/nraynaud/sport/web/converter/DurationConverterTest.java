@@ -9,10 +9,11 @@ public class DurationConverterTest {
     @Test
     public void testVariousConvertions() {
         checkConvertion(10 * 60, "10");
+        checkConvertion(3 * 3600, "3h");
+        checkConvertion(11, "11''");
         checkConvertion(10 * 60 + 43, "10'43");
         checkConvertion(3 * 3600 + 10 * 60 + 43, "3h10'43");
         checkConvertion(3 * 3600 + 10 * 60, "3h10");
-        checkConvertion(11, "11''");
     }
 
     @Test

@@ -18,4 +18,6 @@ public interface Workout {
     Long getDuration();
 
     Long getId();
+
+    String getDiscipline();
 }

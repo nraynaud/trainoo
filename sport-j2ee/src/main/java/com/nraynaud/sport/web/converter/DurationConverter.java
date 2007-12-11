@@ -1,5 +1,6 @@
 package com.nraynaud.sport.web.converter;
 
+import static com.nraynaud.sport.web.converter.DurationConverter.Multiplier.*;
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
 
@@ -10,23 +11,28 @@ import java.util.regex.Pattern;
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class DurationConverter extends StrutsTypeConverter {
 
-    private static final int HOUR = 3600;
+    static enum Multiplier {
+        HOUR(3600), MINUTE(60), SECOND(1);
 
-    private static final int MINUTE = 60;
+        public final int factor;
 
-    private static final int SECOND = 1;
+        Multiplier(final int factor) {
+            this.factor = factor;
+        }
+    }
 
-    private enum Parser {
+    private static enum Parser {
         HOURS_MINUTES_SECONDS_PATTERN("(\\d+)h(\\d+)'(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
         HOURS_MINUTES_PATTERN("(\\d+)h(\\d+)'?", HOUR, MINUTE),
         MINUTES_SECONDS_PATTERN("(\\d+)'(\\d+)(?:'')?", MINUTE, SECOND),
+        HOURS_PATTERN("(\\d+)h", HOUR),
         MINUTES_PATTERN("(\\d+)'?", MINUTE),
         SECONDS_PATTERN("(\\d+)''", SECOND);
 
         private final Pattern pattern;
-        private final int[] multipliers;
+        private final Multiplier[] multipliers;
 
-        Parser(final String pattern, final int... multipliers) {
+        Parser(final String pattern, final Multiplier... multipliers) {
             this.pattern = Pattern.compile('^' + pattern + "\\z");
             this.multipliers = multipliers;
         }
@@ -36,9 +42,17 @@ public class DurationConverter extends StrutsTypeConverter {
             if (!matcher.matches())
                 return null;
             final int count = matcher.groupCount();
+            if (count != multipliers.length)
+                throw new IllegalStateException("pattern "
+                        + pattern.pattern()
+                        + " has "
+                        + count
+                        + " groups but is declared with "
+                        + multipliers.length
+                        + " multiplers");
             long result = 0;
             for (int i = 0; i < count; i++)
-                result += multipliers[i] * Long.parseLong(matcher.group(i + 1));
+                result += multipliers[i].factor * Long.parseLong(matcher.group(i + 1));
             return Long.valueOf(result);
         }
 
@@ -64,19 +78,23 @@ public class DurationConverter extends StrutsTypeConverter {
     public String convertToString(final Map context, final Object o) {
         if (o == null)
             return "";
-        return formatDuration((Long) o, new String[]{"h", "\'", "''"});
+        return formatDuration((Long) o, "h", "\'", "''");
     }
 
     public static Long parseDuration(final String duration) throws IllegalArgumentException {
         return Parser.parse(duration);
     }
 
-    public static String formatDuration(final Long duration, final String[] format) {
+    public static String formatDuration(final Long duration,
+                                        final String hoursFmt,
+                                        final String minutesFmt,
+                                        final String secondsFmt) {
         final long dur = duration.longValue();
-        final long hours = dur / HOUR;
-        final long minutes = (dur % HOUR) / MINUTE;
-        final long seconds = (dur % HOUR) % MINUTE;
-        return nilIfZero(hours, format[0]) + nilIfZero(minutes, format[1]) + nilIfZero(seconds, format[2]);
+        final long hours = dur / HOUR.factor;
+        final long hourRemainder = dur % HOUR.factor;
+        final long minutes = hourRemainder / MINUTE.factor;
+        final long seconds = hourRemainder % MINUTE.factor;
+        return nilIfZero(hours, hoursFmt) + nilIfZero(minutes, minutesFmt) + nilIfZero(seconds, secondsFmt);
     }
 
     private static String nilIfZero(final long time, final String suffix) {

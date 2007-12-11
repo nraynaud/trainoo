@@ -89,4 +89,17 @@ public class HibernateApplication implements Application {
             return null;
         }
     }
+
+    public void updateWorkout(final Workout workout,
+                              final Date date,
+                              final Long duration,
+                              final Double distance,
+                              final String discipline) {
+        final WorkoutImpl workoutImpl = (WorkoutImpl) workout;
+        workoutImpl.setDate(date);
+        workoutImpl.setDuration(duration);
+        workoutImpl.setDistance(distance);
+        workoutImpl.setDiscipline(discipline);
+        entityManager.merge(workoutImpl);
+    }
 }

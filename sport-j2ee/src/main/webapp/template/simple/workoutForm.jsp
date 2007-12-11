@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 
-<s:form action="workouts">
+<s:form action="%{parameters.action}">
     <s:actionerror/>
     <s:actionmessage/>
     <s:fielderror/>
@@ -18,7 +18,7 @@
             <td><s:textfield id="discipline"
                              name="discipline"/></td>
             <td><s:textfield id="date"
-                             name="newDate"
+                             name="date"
                              size="10"
                              onfocus="Element.show('date_tip');feedback('date', this.value)"
                              onblur="Element.hide('date_tip')"

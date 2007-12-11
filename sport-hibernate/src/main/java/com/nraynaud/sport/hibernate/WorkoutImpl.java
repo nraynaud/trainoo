@@ -24,11 +24,11 @@ public class WorkoutImpl implements Workout {
     @Column(name = "DURATION")
     private Long duration;
 
-    @Column(name = "DISCIPLINE")
+    @Column(name = "DISCIPLINE", nullable = false)
     private String discipline;
 
     @ManyToOne(targetEntity = UserImpl.class)
-    @JoinColumn(name = "USER_ID", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
     private User user;
 
     public WorkoutImpl() {

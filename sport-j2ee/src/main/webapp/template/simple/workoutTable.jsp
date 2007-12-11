@@ -19,7 +19,7 @@
                 </s:if>
                 <s:if test="%{parameters.displayEdit}">
                     <td>
-                        <s:url id="editurl" action="workouts" method="edit" includeParams="get">
+                        <s:url id="editurl" action="editWorkout" includeParams="get">
                             <s:param name="id" value="id"/>
                         </s:url>
                         <s:a href="%{editurl}">modifier</s:a>

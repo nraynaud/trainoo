@@ -21,4 +21,10 @@ public interface Application {
     List<Workout> getWorkouts();
 
     Workout getWorkout(final Long id, final User user);
+
+    void updateWorkout(final Workout workout,
+                       final Date date,
+                       final Long duration,
+                       final Double distance,
+                       final String discipline);
 }

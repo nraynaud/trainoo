@@ -55,7 +55,7 @@ public class FeedbackAction {
     private String convertDuration() {
         try {
             final Long globalSeconds = DurationConverter.parseDuration(data);
-            return DurationConverter.formatDuration(globalSeconds, new String[]{"heures ", "minutes ", "secondes"});
+            return DurationConverter.formatDuration(globalSeconds, "heures ", "minutes ", "secondes");
         } catch (Exception e) {
             return "La durée n'a pas été comprise.";
         }
