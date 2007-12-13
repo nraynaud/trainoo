@@ -2,10 +2,7 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
-import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.DefaultAction;
-import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.Public;
+import com.nraynaud.sport.web.*;
 import com.nraynaud.sport.web.result.Redirect;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
@@ -15,7 +12,6 @@ import org.apache.struts2.config.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Results({
 @Result(name = Action.INPUT, value = "/WEB-INF/pages/login.jsp"),
@@ -60,17 +56,11 @@ public class LoginAction extends DefaultAction implements ServletRequestAware {
                 addActionError("Votre surnom ou votre mot de passe sont invalides. Probablement une erreur de frappe.");
                 return Action.INPUT;
             } else {
-                openSession(user, request);
+                SportSession.openSession(user, application, request);
                 return Action.SUCCESS;
             }
         } else
             return Action.INPUT;
-    }
-
-    public static void openSession(final User user, final HttpServletRequest request) {
-        final HttpSession session = request.getSession(true);
-        session.setMaxInactiveInterval(30 * 24 * 3600);
-        session.setAttribute(Constants.USER_KEY, user);
     }
 
     public void setServletRequest(final HttpServletRequest request) {

@@ -10,13 +10,13 @@ public interface Application {
                           final Double distance,
                           final String discipline);
 
-    List<Workout> getWorkoutsForUser(final User user);
+    List<Workout> getWorkoutsForUser(final User user, final int limit);
 
     User createUser(String login, String password) throws UserAlreadyExistsException;
 
     User authenticate(String login, String password);
 
-    User find(long id);
+    User findUser(long id);
 
     List<Workout> getWorkouts();
 

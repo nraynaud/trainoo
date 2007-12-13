@@ -3,9 +3,9 @@ package com.nraynaud.sport.web.action;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.web.AbstractWorkoutAction;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.WorkoutAction;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -26,7 +26,7 @@ import java.util.List;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
-public class WorkoutsAction extends WorkoutAction {
+public class WorkoutsAction extends AbstractWorkoutAction {
 
     public WorkoutsAction(final Application app) {
         super(app);
@@ -42,7 +42,7 @@ public class WorkoutsAction extends WorkoutAction {
     }
 
     public List<Workout> getWorkouts() {
-        return application.getWorkoutsForUser(getUser());
+        return application.getWorkoutsForUser(getUser(), 10);
     }
 
     @SkipValidation

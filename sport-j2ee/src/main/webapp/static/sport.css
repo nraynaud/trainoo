@@ -42,10 +42,6 @@ a:hover {
     text-decoration: underline;
 }
 
-input, select, textarea {
-    font-size: 100%;
-}
-
 input, select {
     border: 1px solid gray;
 }
@@ -111,8 +107,13 @@ h2, h1 {
     border: none;
     cursor: pointer;
     background: none;
-    text-decoration: underline;
+    text-decoration: none;
     color: #588E03;
+    font-family: Verdana, arial, helvetica, sans-serif;
+}
+
+#logoutForm input:hover {
+    text-decoration: underline;
 }
 
 .aroundForm form p {

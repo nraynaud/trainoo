@@ -31,10 +31,11 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public List<Workout> getWorkoutsForUser(final User user) {
+    public List<Workout> getWorkoutsForUser(final User user, final int limit) {
         final Query query = entityManager.createQuery(
                 "select w from WorkoutImpl w where w.user =:user order by  w.date desc");
         query.setParameter("user", user);
+        query.setMaxResults(limit);
         return query.getResultList();
     }
 
@@ -64,7 +65,7 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public User find(final long id) {
+    public User findUser(final long id) {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.id=:id");
         query.setParameter("id", Long.valueOf(id));
         return (User) query.getSingleResult();

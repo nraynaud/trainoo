@@ -5,7 +5,7 @@
 <p:layoutParams title="Mes derniers entraînements"/>
 
 
-<h1>Mes Entraînements</h1>
+<h1>Mes Derniers Entraînements</h1>
     <span style="display:inline-block;">
         <s:component template="workoutTable.jsp">
             <s:param name="displayEdit" value="true"/>

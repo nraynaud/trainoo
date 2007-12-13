@@ -1,17 +1,22 @@
 package com.nraynaud.sport.web;
 
+import com.nraynaud.sport.Application;
 import static com.nraynaud.sport.web.Constants.LOGIN_RESULT;
-import static com.nraynaud.sport.web.Constants.USER_KEY;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 
 public class SportInterceptor implements Interceptor {
-    private static final Class[] NO_PARAMS = new Class[0];
+    private static final Class<?>[] NO_PARAMS = new Class[0];
+
+    private final Application application;
+
+    public SportInterceptor(final Application application) {
+        this.application = application;
+    }
 
     public void destroy() {
     }
@@ -28,14 +33,15 @@ public class SportInterceptor implements Interceptor {
             throw new RuntimeException("méthode d'appel interdite");
         if (actionClass.isAnnotationPresent(Public.class))
             return invocation.invoke();
-        final HttpSession session = servletRequest.getSession(false);
-        if (session == null || session.getAttribute(USER_KEY) == null)
+        final SportSession sportSession = SportSession.toRequest(application, servletRequest);
+        if (sportSession.getUser() == null)
             return LOGIN_RESULT;
         else
             return invocation.invoke();
     }
 
     // FIXME: This is copied from DefaultActionInvocation but should be exposed through the interface
+    @SuppressWarnings({"CaughtExceptionImmediatelyRethrown"})
     protected static Method getActionMethod(final Class<?> actionClass, final String methodName) throws
             NoSuchMethodException {
         Method method;

@@ -2,9 +2,9 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.web.AbstractWorkoutAction;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.WorkoutAction;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -23,7 +23,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
-public class EditWorkoutAction extends WorkoutAction {
+public class EditWorkoutAction extends AbstractWorkoutAction {
 
     private Long id;
 
