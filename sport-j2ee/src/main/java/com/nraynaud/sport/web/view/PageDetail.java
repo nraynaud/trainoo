@@ -10,7 +10,7 @@ public class PageDetail {
     private final List<String> javascript = new ArrayList<String>(1);
     private boolean loginHeader;
 
-    public static PageDetail pageDetailFor(final ServletRequest request) {
+    public static PageDetail detailFor(final ServletRequest request) {
         PageDetail detail = (PageDetail) request.getAttribute("detail");
         if (detail == null) {
             detail = new PageDetail();

@@ -24,7 +24,7 @@ public class LayoutResult extends StrutsResultSupport {
         final HttpServletResponse response = ServletActionContext.getResponse();
         final HttpServletRequest request = ServletActionContext.getRequest();
         includeWithCharset(finalLocation, stringWriter, response, request);
-        PageDetail.pageDetailFor(request).setContent(stringWriter.toString());
+        PageDetail.detailFor(request).setContent(stringWriter.toString());
         execute("/WEB-INF/application.jsp");
     }
 

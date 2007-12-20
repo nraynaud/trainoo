@@ -1,17 +1,19 @@
-<%@ page import="static com.nraynaud.sport.web.view.PageDetail.pageDetailFor" %>
+<%@ page session="false" contentType="text/html; charset=UTF-8" %>
+<%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
-<%@ page session="false" contentType="text/html; charset=UTF-8" %>
+
+<% final PageDetail pageDetail = PageDetail.detailFor(request); %>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title><%= pageDetailFor(request).getTitle()%>
+    <title><%= pageDetail.getTitle()%>
     </title>
     <link href="<s:url value="/static/sport.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="center">
-    <% if (pageDetailFor(request).isLoginHeader()) {%>
+    <% if (pageDetail.isLoginHeader()) {%>
     <s:component template="loginHeader.jsp"/>
     <% } %>
     <hr>

@@ -7,7 +7,7 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 public class JavascriptTag extends BodyTagSupport {
     public int doAfterBody() throws JspException {
         final BodyContent content = getBodyContent();
-        PageDetail.pageDetailFor(pageContext.getRequest()).addJavascript(content.getString());
+        PageDetail.detailFor(pageContext.getRequest()).addJavascript(content.getString());
         return SKIP_BODY;
     }
 }

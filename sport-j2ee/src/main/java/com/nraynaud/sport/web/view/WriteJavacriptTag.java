@@ -8,7 +8,7 @@ import java.util.List;
 
 public class WriteJavacriptTag extends TagSupport {
     public int doStartTag() throws JspException {
-        final PageDetail pageDetail = PageDetail.pageDetailFor(pageContext.getRequest());
+        final PageDetail pageDetail = PageDetail.detailFor(pageContext.getRequest());
         final List<String> javascript = pageDetail.getJavascript();
         if (!javascript.isEmpty()) {
             final JspWriter out = pageContext.getOut();

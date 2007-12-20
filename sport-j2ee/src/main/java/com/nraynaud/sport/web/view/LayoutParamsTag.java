@@ -11,7 +11,7 @@ public class LayoutParamsTag extends TagSupport {
 
     public int doEndTag() throws JspException {
         final ServletRequest request = pageContext.getRequest();
-        final PageDetail pageDetail = PageDetail.pageDetailFor(request);
+        final PageDetail pageDetail = PageDetail.detailFor(request);
         pageDetail.setTitle(title);
         pageDetail.setLoginHeader(loginHeader);
         return EVAL_PAGE;
