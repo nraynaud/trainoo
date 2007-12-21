@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class SportActionMapperTest {
 
     @Test
-    public void testNaspaceExtraction() {
+    public void testReadWriteURL() {
         final HashMap<String, PackageConfig> map = new HashMap<String, PackageConfig>();
         config(map, "lol", "");
         config(map, "lol2", "/");
@@ -22,10 +22,6 @@ public class SportActionMapperTest {
         checkExtract(map, "/lol/pop", "pouet", "index", "/lol/pop/pouet");
         checkExtract(map, "/lol", "poppouet", "index", "/lol/poppouet");
         checkExtract(map, "/lol", "poppouet", "new", "/lol/poppouet/new");
-    }
-
-    @Test
-    public void testURICreation() {
     }
 
     private static void checkExtract(final HashMap<String, PackageConfig> map,

@@ -3,14 +3,14 @@ package com.nraynaud.sport.web;
 import com.opensymphony.xwork2.config.ConfigurationManager;
 import com.opensymphony.xwork2.config.entities.PackageConfig;
 import org.apache.struts2.RequestUtils;
+import org.apache.struts2.dispatcher.mapper.ActionMapper;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import org.apache.struts2.dispatcher.mapper.Restful2ActionMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class SportActionMapper extends Restful2ActionMapper {
+public class SportActionMapper implements ActionMapper {
     private static final Comparator<NamespaceData> NAMESPACE_COMPARATOR = new Comparator<NamespaceData>() {
         public int compare(final NamespaceData o1, final NamespaceData o2) {
             return o2.getPrefix().length() - o1.getPrefix().length();
@@ -26,18 +26,12 @@ public class SportActionMapper extends Restful2ActionMapper {
         if (uri.startsWith("/static"))
             return null;
         final Map<String, PackageConfig> currentConfig = configManager.getConfiguration().getPackageConfigs();
-        final ActionMapping mapping = super.getMapping(request, configManager);
+        final ActionMapping mapping = new ActionMapping();
         extractNamespaceAndName(uri, currentConfig, mapping, request.getMethod());
 
         final String name = mapping.getName();
         if (name.endsWith("/"))
             mapping.setName(name.substring(0, name.length() - 1));
-        /*
-        System.out.println("action name: " + mapping.getName());
-        System.out.println("namespace    " + mapping.getNamespace());
-        System.out.println("method       " + mapping.getMethod());
-        System.out.println("params       " + mapping.getParams());
-        */
         return mapping;
     }
 
