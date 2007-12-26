@@ -65,7 +65,7 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public User findUser(final long id) {
+    public User getUser(final long id) {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.id=:id");
         query.setParameter("id", Long.valueOf(id));
         return (User) query.getSingleResult();

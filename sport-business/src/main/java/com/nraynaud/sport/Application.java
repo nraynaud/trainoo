@@ -3,7 +3,7 @@ package com.nraynaud.sport;
 import java.util.Date;
 import java.util.List;
 
-public interface Application {
+public interface Application extends UserStore {
     Workout createWorkout(Date date,
                           final User user,
                           final Long duration,
@@ -15,8 +15,6 @@ public interface Application {
     User createUser(String login, String password) throws UserAlreadyExistsException;
 
     User authenticate(String login, String password);
-
-    User findUser(long id);
 
     List<Workout> getWorkouts();
 

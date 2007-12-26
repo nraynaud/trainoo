@@ -143,12 +143,7 @@
     <autodetection-disabled>
       <facet-type id="web">
         <modules>
-          <module name="sport-j2ee">
-            <files>
-              <file url="file://$PROJECT_DIR$/sport-j2ee/src/main/webapp/WEB-INF/web.xml" />
-              <file url="file://$PROJECT_DIR$/sport-j2ee/target/sport-j2ee/WEB-INF/web.xml" />
-            </files>
-          </module>
+          <module name="sport-j2ee" />
         </modules>
       </facet-type>
       <facet-type id="struts">
@@ -177,6 +172,15 @@
             </files>
           </module>
           <module name="sport-j2ee" />
+        </modules>
+      </facet-type>
+      <facet-type id="Spring">
+        <modules>
+          <module name="sport-j2ee">
+            <files>
+              <file url="file://$PROJECT_DIR$/sport-j2ee/target/sport-j2ee/WEB-INF/applicationContext.xml" />
+            </files>
+          </module>
         </modules>
       </facet-type>
     </autodetection-disabled>
@@ -616,10 +620,10 @@
       <option name="LOCAL" value="true" />
       <option name="OPEN_IN_BROWSER" value="false" />
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/" />
-      <option name="COMMON_VM_ARGUMENTS" value="-XX:MaxPermSize=192m" />
+      <option name="COMMON_VM_ARGUMENTS" value="-XX:MaxPermSize=192m -Dxwork.profile.activate=true" />
       <JAVAEE_FACET FACET_ID="sport-j2ee/web/Web" DEPLOYMENT_SOURCE_NAME="exploded">
         <option name="CONTEXT_PATH" value="/" />
-        <option name="DEPLOY" value="true" />
+        <option name="DEPLOY" value="false" />
       </JAVAEE_FACET>
       <option name="DEPLOY_TOMCAT_MANAGER" value="false" />
       <option name="BASE_DIRECTORY_NAME" value="tomcat_Unnamed_sport-appaaf511b2" />
