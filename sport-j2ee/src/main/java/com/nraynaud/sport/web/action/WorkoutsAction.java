@@ -1,7 +1,6 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.User;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.AbstractWorkoutAction;
 import com.nraynaud.sport.web.Constants;
@@ -27,14 +26,10 @@ import java.util.List;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
 public class WorkoutsAction extends AbstractWorkoutAction {
+    private final Application application;
 
-    public WorkoutsAction(final Application app) {
-        super(app);
-    }
-
-
-    public User getUser() {
-        return user;
+    public WorkoutsAction(final Application application) {
+        this.application = application;
     }
 
     public String getUserName() {

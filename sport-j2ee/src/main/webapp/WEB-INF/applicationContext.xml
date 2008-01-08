@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringBeanConstructorArgInspection -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -7,9 +8,9 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
         >
+
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
-    <bean id="application" class="com.nraynaud.sport.hibernate.HibernateApplication"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource">
@@ -40,5 +41,9 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="application" class="com.nraynaud.sport.hibernate.HibernateApplication" scope="singleton" lazy-init="true"/>
+    <bean id="lol" class="com.nraynaud.sport.web.RequestFactory" scope="request">
+    </bean>
 </beans>
 

@@ -146,39 +146,11 @@
           <module name="sport-j2ee" />
         </modules>
       </facet-type>
-      <facet-type id="struts">
-        <modules>
-          <module name="sport-j2ee">
-            <files>
-              <file url="file://$PROJECT_DIR$/sport-j2ee/src/main/webapp/WEB-INF/struts-config.xml" />
-            </files>
-          </module>
-        </modules>
-      </facet-type>
-      <facet-type id="hibernate">
-        <modules>
-          <module name="sport-hibernate">
-            <files>
-              <file url="file://$PROJECT_DIR$/sport-hibernate/src/main/java/hibernate.cfg.xml" />
-            </files>
-          </module>
-        </modules>
-      </facet-type>
       <facet-type id="jpa">
         <modules>
           <module name="sport-hibernate">
             <files>
               <file url="file://$PROJECT_DIR$/sport-hibernate/src/main/resources/META-INF/persistence.xml" />
-            </files>
-          </module>
-          <module name="sport-j2ee" />
-        </modules>
-      </facet-type>
-      <facet-type id="Spring">
-        <modules>
-          <module name="sport-j2ee">
-            <files>
-              <file url="file://$PROJECT_DIR$/sport-j2ee/target/sport-j2ee/WEB-INF/applicationContext.xml" />
             </files>
           </module>
         </modules>
@@ -188,7 +160,7 @@
   <component name="IdProvider" IDEtalkID="4A94ADFA5B26007DCAD568514EA01D26" />
   <component name="InspectionProjectProfileManager">
     <option name="PROJECT_PROFILE" value="Project Default" />
-    <option name="USE_PROJECT_LEVEL_SETTINGS" value="true" />
+    <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
     <scopes />
     <profiles>
       <profile version="1.0" is_locked="false">
@@ -202,229 +174,18 @@
         <inspection_tool class="FinallyBlockCannotCompleteNormally" level="WARNING" enabled="false" />
         <inspection_tool class="ReturnFromFinallyBlock" level="WARNING" enabled="false" />
         <inspection_tool class="ThrowFromFinallyBlock" level="WARNING" enabled="false" />
+        <inspection_tool class="NoExplicitFinalizeCalls" level="WARNING" enabled="false" />
+        <inspection_tool class="FinalizeCallsSuperFinalize" level="WARNING" enabled="false">
+          <option name="m_ignoreForObjectSubclasses" value="false" />
+        </inspection_tool>
+        <inspection_tool class="SynchronizeOnNonFinalField" level="WARNING" enabled="false" />
         <inspection_tool class="LocalCanBeFinal" level="WARNING" enabled="true">
           <option name="REPORT_VARIABLES" value="true" />
           <option name="REPORT_PARAMETERS" value="true" />
         </inspection_tool>
-        <inspection_tool class="AutoUnboxing" level="ERROR" enabled="true" />
-        <inspection_tool class="AutoBoxing" level="ERROR" enabled="true">
-          <option name="ignoreAddedToCollection" value="false" />
-        </inspection_tool>
-        <inspection_tool class="SynchronizeOnLock" level="WARNING" enabled="true" />
-        <inspection_tool class="InstanceofChain" level="WARNING" enabled="true" />
-        <inspection_tool class="AssignmentToForLoopParameter" level="WARNING" enabled="true">
-          <option name="m_checkForeachParameters" value="false" />
-        </inspection_tool>
-        <inspection_tool class="ThrowablePrintStackTrace" level="WARNING" enabled="true" />
-        <inspection_tool class="ThreadDumpStack" level="WARNING" enabled="true" />
-        <inspection_tool class="ObsoleteCollection" level="WARNING" enabled="true">
-          <option name="ignoreLibraryArguments" value="false" />
-        </inspection_tool>
-        <inspection_tool class="SystemOutErr" level="WARNING" enabled="true" />
-        <inspection_tool class="ReuseOfLocalVariable" level="WARNING" enabled="true" />
-        <inspection_tool class="TooBroadScope" level="WARNING" enabled="true">
-          <option name="m_allowConstructorAsInitializer" value="false" />
-          <option name="m_onlyLookAtBlocks" value="false" />
-        </inspection_tool>
-        <inspection_tool class="ReuseOfLocalVariableJS" level="WARNING" enabled="true" />
-        <inspection_tool class="RedundantSuppression" level="WARNING" enabled="true" />
-        <inspection_tool class="RedundantThrowsDeclaration" level="WARNING" enabled="true" />
-        <inspection_tool class="UnusedLibrary" level="WARNING" enabled="true" />
-        <inspection_tool class="Finalize" level="WARNING" enabled="true" />
-        <inspection_tool class="FinalizeNotProtected" level="WARNING" enabled="true" />
-        <inspection_tool class="EqualsAndHashcode" level="WARNING" enabled="true" />
-        <inspection_tool class="QuirksModeInspectionTool" level="WARNING" enabled="true">
-          <option name="IE50" value="false" />
-          <option name="IE55" value="false" />
-          <option name="IE6" value="true" />
-          <option name="IE7" value="true" />
-          <option name="IE_MAC" value="false" />
-          <option name="MOZILLA" value="true" />
-          <option name="OPERA7" value="false" />
-          <option name="OPERA8" value="false" />
-          <option name="OPERA85" value="true" />
-          <option name="OPERA9" value="true" />
-          <option name="SAFARI" value="true" />
-        </inspection_tool>
-        <inspection_tool class="ThisEscapedInConstructor" level="WARNING" enabled="true" />
-        <inspection_tool class="NonThreadSafeLazyInitialization" level="WARNING" enabled="true" />
-        <inspection_tool class="DuplicatePropertyInspection" level="WARNING" enabled="true">
-          <option name="CURRENT_FILE" value="true" />
-          <option name="MODULE_WITH_DEPENDENCIES" value="false" />
-          <option name="CHECK_DUPLICATE_VALUES" value="true" />
-          <option name="CHECK_DUPLICATE_KEYS" value="true" />
-          <option name="CHECK_DUPLICATE_KEYS_WITH_DIFFERENT_VALUES" value="true" />
-        </inspection_tool>
-        <inspection_tool class="StringTokenizer" level="WARNING" enabled="true" />
-        <inspection_tool class="IndexOfReplaceableByContains" level="WARNING" enabled="true" />
-        <inspection_tool class="RawUseOfParameterizedType" level="WARNING" enabled="true">
-          <option name="ignoreObjectConstruction" value="false" />
-          <option name="ignoreTypeCasts" value="false" />
-        </inspection_tool>
-        <inspection_tool class="UnnecessaryUnboxing" level="WARNING" enabled="false" />
-        <inspection_tool class="UnnecessaryBoxing" level="WARNING" enabled="false" />
-        <inspection_tool class="PlatformDetectionJS" level="WARNING" enabled="true" />
-        <inspection_tool class="InnerHTMLJS" level="WARNING" enabled="true" />
-        <inspection_tool class="XHTMLIncompatabilitiesJS" level="WARNING" enabled="true" />
-        <inspection_tool class="StaticCollection" level="WARNING" enabled="true">
-          <option name="m_ignoreWeakCollections" value="false" />
-        </inspection_tool>
-        <inspection_tool class="StringBufferField" level="WARNING" enabled="true" />
-        <inspection_tool class="ZeroLengthArrayInitialization" level="WARNING" enabled="true" />
-        <inspection_tool class="AnnotationNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[A-Z][A-Za-z\d]*" />
-          <option name="m_minLength" value="2" />
-          <option name="m_maxLength" value="64" />
-        </inspection_tool>
-        <inspection_tool class="ClassNameSameAsAncestorName" level="WARNING" enabled="true" />
-        <inspection_tool class="ClassNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[A-Z][A-Za-z\d]*" />
-          <option name="m_minLength" value="8" />
-          <option name="m_maxLength" value="64" />
-        </inspection_tool>
-        <inspection_tool class="ConfusingMainMethod" level="WARNING" enabled="true" />
-        <inspection_tool class="ConstantNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[A-Z_\d]*" />
-          <option name="m_minLength" value="2" />
-          <option name="m_maxLength" value="32" />
-        </inspection_tool>
-        <inspection_tool class="EnumeratedClassNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[A-Z][A-Za-z\d]*" />
-          <option name="m_minLength" value="2" />
-          <option name="m_maxLength" value="64" />
-        </inspection_tool>
-        <inspection_tool class="EnumeratedConstantNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[A-Z][A-Za-z_\d]*" />
-          <option name="m_minLength" value="2" />
-          <option name="m_maxLength" value="32" />
-        </inspection_tool>
-        <inspection_tool class="ExceptionNameDoesntEndWithException" level="WARNING" enabled="true" />
-        <inspection_tool class="InstanceMethodNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[a-z][A-Za-z\d]*" />
-          <option name="m_minLength" value="2" />
-          <option name="m_maxLength" value="32" />
-        </inspection_tool>
-        <inspection_tool class="InstanceVariableNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[a-z][A-Za-z\d]*" />
-          <option name="m_minLength" value="1" />
-          <option name="m_maxLength" value="32" />
-        </inspection_tool>
-        <inspection_tool class="InterfaceNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[A-Z][A-Za-z\d]*" />
-          <option name="m_minLength" value="2" />
-          <option name="m_maxLength" value="64" />
-        </inspection_tool>
-        <inspection_tool class="LocalVariableNamingConvention" level="WARNING" enabled="true">
-          <option name="m_ignoreForLoopParameters" value="false" />
-          <option name="m_ignoreCatchParameters" value="false" />
-          <option name="m_regex" value="[a-z][A-Za-z\d]*" />
-          <option name="m_minLength" value="1" />
-          <option name="m_maxLength" value="20" />
-        </inspection_tool>
-        <inspection_tool class="MethodNameSameAsClassName" level="WARNING" enabled="true" />
-        <inspection_tool class="MethodNameSameAsParentName" level="WARNING" enabled="true" />
-        <inspection_tool class="MethodNamesDifferOnlyByCase" level="WARNING" enabled="true" />
-        <inspection_tool class="ParameterNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[a-z][A-Za-z\d]*" />
-          <option name="m_minLength" value="1" />
-          <option name="m_maxLength" value="20" />
-        </inspection_tool>
-        <inspection_tool class="UpperCaseFieldNameNotConstant" level="WARNING" enabled="true" />
-        <inspection_tool class="NonExceptionNameEndsWithException" level="WARNING" enabled="true" />
-        <inspection_tool class="OverloadedMethodsWithSameNumberOfParameters" level="WARNING" enabled="true" />
-        <inspection_tool class="OverloadedVarargsMethod" level="WARNING" enabled="true" />
-        <inspection_tool class="StaticMethodNamingConvention" level="WARNING" enabled="true">
-          <option name="m_regex" value="[a-z][A-Za-z\d]*" />
-          <option name="m_minLength" value="4" />
-          <option name="m_maxLength" value="32" />
-        </inspection_tool>
-        <inspection_tool class="DollarSignInName" level="WARNING" enabled="true" />
-        <inspection_tool class="HardcodedLineSeparators" level="WARNING" enabled="true" />
-        <inspection_tool class="UseOfJDBCDriverClass" level="WARNING" enabled="true" />
-        <inspection_tool class="UseOfProcessBuilder" level="WARNING" enabled="true" />
-        <inspection_tool class="UseOfSunClasses" level="WARNING" enabled="true" />
-        <inspection_tool class="EmptyInitializer" level="WARNING" enabled="true" />
-        <inspection_tool class="CovariantEquals" level="WARNING" enabled="true" />
-        <inspection_tool class="CovariantCompareTo" level="WARNING" enabled="true" />
-        <inspection_tool class="MisspelledEquals" level="WARNING" enabled="true" />
-        <inspection_tool class="ObjectToString" level="WARNING" enabled="true" />
-        <inspection_tool class="ReplaceAllDot" level="WARNING" enabled="true" />
-        <inspection_tool class="CastConflictsWithInstanceof" level="WARNING" enabled="true" />
-        <inspection_tool class="CastToIncompatibleInterface" level="WARNING" enabled="true" />
-        <inspection_tool class="CollectionAddedToSelf" level="WARNING" enabled="true" />
-        <inspection_tool class="ComparableImplementedButEqualsNotOverridden" level="WARNING" enabled="true" />
-        <inspection_tool class="MisspelledCompareTo" level="WARNING" enabled="true" />
-        <inspection_tool class="ForLoopThatDoesntUseLoopVariable" level="WARNING" enabled="true" />
-        <inspection_tool class="MisspelledHashcode" level="WARNING" enabled="true" />
-        <inspection_tool class="InstanceofIncompatibleInterface" level="WARNING" enabled="true" />
-        <inspection_tool class="InstantiationOfUtilityClass" level="WARNING" enabled="true" />
-        <inspection_tool class="IteratorHasNextCallsIteratorNext" level="WARNING" enabled="true" />
-        <inspection_tool class="IteratorNextDoesNotThrowNoSuchElementException" level="WARNING" enabled="true" />
-        <inspection_tool class="CompareToUsesNonFinalVariable" level="WARNING" enabled="true" />
-        <inspection_tool class="NonShortCircuitBoolean" level="WARNING" enabled="true" />
-        <inspection_tool class="ResultOfObjectAllocationIgnored" level="WARNING" enabled="true" />
-        <inspection_tool class="StaticFieldReferenceOnSubclass" level="WARNING" enabled="true" />
-        <inspection_tool class="StaticCallOnSubclass" level="WARNING" enabled="true" />
-        <inspection_tool class="SubtractionInCompareTo" level="WARNING" enabled="true" />
-        <inspection_tool class="TextLabelInSwitchStatement" level="WARNING" enabled="true" />
-        <inspection_tool class="MisspelledToString" level="WARNING" enabled="true" />
-        <inspection_tool class="ArchaicSystemPropertyAccess" level="WARNING" enabled="true" />
-        <inspection_tool class="ResultSetIndexZero" level="WARNING" enabled="true" />
-        <inspection_tool class="UseOfPropertiesAsHashtable" level="WARNING" enabled="true" />
-        <inspection_tool class="IOResource" level="WARNING" enabled="true" />
-        <inspection_tool class="SocketResource" level="WARNING" enabled="true" />
-        <inspection_tool class="DriverManagerGetConnection" level="WARNING" enabled="true" />
-        <inspection_tool class="JDBCPrepareStatementWithNonConstantString" level="WARNING" enabled="true" />
-        <inspection_tool class="UnsecureRandomNumberGeneration" level="WARNING" enabled="true" />
-        <inspection_tool class="ComparatorNotSerializable" level="WARNING" enabled="true" />
-        <inspection_tool class="ExternalizableWithSerializationMethods" level="WARNING" enabled="true" />
-        <inspection_tool class="NonSerializableWithSerializationMethods" level="WARNING" enabled="true" />
-        <inspection_tool class="NonSerializableWithSerialVersionUIDField" level="WARNING" enabled="true" />
-        <inspection_tool class="NonSerializableObjectBoundToHttpSession" level="WARNING" enabled="true" />
-        <inspection_tool class="NonSerializableObjectPassedToObjectStream" level="WARNING" enabled="true" />
-        <inspection_tool class="ReadObjectAndWriteObjectPrivate" level="WARNING" enabled="true" />
-        <inspection_tool class="ReadResolveAndWriteReplaceProtected" level="WARNING" enabled="true" />
-        <inspection_tool class="SerializableWithUnconstructableAncestor" level="WARNING" enabled="true" />
-        <inspection_tool class="SerializableInnerClassWithNonSerializableOuterClass" level="WARNING" enabled="true">
-          <option name="superClassString" value="java.awt.Component" />
-        </inspection_tool>
-        <inspection_tool class="TransientFieldNotInitialized" level="WARNING" enabled="true" />
-        <inspection_tool class="ClassEscapesItsScope" level="WARNING" enabled="true" />
-        <inspection_tool class="AutowiredDependenciesInspection" level="WARNING" enabled="false" />
-        <inspection_tool class="MethodMayBeStatic" level="WARNING" enabled="true">
-          <option name="m_onlyPrivateOrFinal" value="false" />
-          <option name="m_ignoreEmptyMethods" value="true" />
-        </inspection_tool>
-        <inspection_tool class="InnerClassMayBeStatic" level="WARNING" enabled="true" />
-        <inspection_tool class="FieldMayBeStatic" level="WARNING" enabled="true" />
-        <inspection_tool class="StringBufferReplaceableByString" level="WARNING" enabled="true" />
-        <inspection_tool class="TrivialStringConcatenation" level="WARNING" enabled="true" />
-        <inspection_tool class="ConstantStringIntern" level="WARNING" enabled="true" />
-        <inspection_tool class="CollectionContainsUrl" level="WARNING" enabled="true" />
-        <inspection_tool class="MapReplaceableByEnumMap" level="WARNING" enabled="true" />
-        <inspection_tool class="StringReplaceableByStringBuffer" level="WARNING" enabled="true" />
-        <inspection_tool class="SubstringZero" level="WARNING" enabled="true" />
-        <inspection_tool class="LengthOneStringsInConcatenation" level="WARNING" enabled="true" />
-        <inspection_tool class="SetReplaceableByEnumSet" level="WARNING" enabled="true" />
-        <inspection_tool class="LengthOneStringInIndexOf" level="WARNING" enabled="true" />
-        <inspection_tool class="SizeReplaceableByIsEmpty" level="WARNING" enabled="true">
-          <option name="ignoreNegations" value="false" />
-        </inspection_tool>
-        <inspection_tool class="StringConcatenationInLoops" level="WARNING" enabled="true">
-          <option name="m_ignoreUnlessAssigned" value="false" />
-        </inspection_tool>
-        <inspection_tool class="StringEqualsEmptyString" level="WARNING" enabled="true" />
-        <inspection_tool class="StringBufferReplaceableByStringBuilder" level="WARNING" enabled="true" />
-        <inspection_tool class="StringBufferToStringInConcatenation" level="WARNING" enabled="true" />
-        <inspection_tool class="RandomDoubleForRandomInteger" level="WARNING" enabled="true" />
       </profile>
     </profiles>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="SERVER PROBLEM" />
-      <item index="1" class="java.lang.String" itemvalue="INFO" />
-      <item index="2" class="java.lang.String" itemvalue="WARNING" />
-      <item index="3" class="java.lang.String" itemvalue="ERROR" />
-    </list>
+    <list size="0" />
   </component>
   <component name="JavacSettings">
     <option name="DEBUGGING_INFO" value="true" />
@@ -464,16 +225,8 @@
     <option name="FILTER_INFO" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="MavenImporterState">
-    <option name="autoImport">
-      <set>
-        <option value="$PROJECT_DIR$/bcrypt/pom.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/sport-business/pom.xml" />
-        <option value="$PROJECT_DIR$/sport-hibernate/pom.xml" />
-        <option value="$PROJECT_DIR$/sport-j2ee/pom.xml" />
-      </set>
-    </option>
+  <component name="MavenBuilder">
+    <option name="jreName" value="1.4" />
   </component>
   <component name="Palette2">
     <group name="Swing">
@@ -602,72 +355,25 @@
   </component>
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
-    <modules />
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/bcrypt/jbcrypt.iml" filepath="$PROJECT_DIR$/bcrypt/jbcrypt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sport-app.iml" filepath="$PROJECT_DIR$/sport-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sport-business/sport-business.iml" filepath="$PROJECT_DIR$/sport-business/sport-business.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sport-hibernate/sport-hibernate.iml" filepath="$PROJECT_DIR$/sport-hibernate/sport-hibernate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sport-j2ee/sport-j2ee.iml" filepath="$PROJECT_DIR$/sport-j2ee/sport-j2ee.iml" />
+    </modules>
   </component>
   <component name="ProjectRootConfigurable.UI">
     <option name="proportions">
       <SplitterProportionsDataImpl />
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" assert-keyword="false" jdk-15="false" project-jdk-name="1.5" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
-  <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="tomcat local" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 5">
-      <option name="WORKING_DIRECTORY" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="8080" />
-      <option name="LOCAL" value="true" />
-      <option name="OPEN_IN_BROWSER" value="false" />
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/" />
-      <option name="COMMON_VM_ARGUMENTS" value="-XX:MaxPermSize=192m -Dxwork.profile.activate=true" />
-      <JAVAEE_FACET FACET_ID="sport-j2ee/web/Web" DEPLOYMENT_SOURCE_NAME="exploded">
-        <option name="CONTEXT_PATH" value="/" />
-        <option name="DEPLOY" value="false" />
-      </JAVAEE_FACET>
-      <option name="DEPLOY_TOMCAT_MANAGER" value="false" />
-      <option name="BASE_DIRECTORY_NAME" value="tomcat_Unnamed_sport-appaaf511b2" />
-      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="52511" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="/Users/nraynaud/apache-tomcat-5.5.25/bin/catalina.sh" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value=" run" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="/Users/nraynaud/apache-tomcat-5.5.25/bin/catalina.sh" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value=" stop" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="/Users/nraynaud/apache-tomcat-5.5.25/bin/catalina.sh" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value=" run" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="/Users/nraynaud/apache-tomcat-5.5.25/bin/catalina.sh" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value=" stop" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <method>
-        <option name="Make" value="true" />
-      </method>
-    </configuration>
+  <component name="RUBY_DOC_SETTINGS">
+    <RUBY_DOC NAME="DEFAULTS" VALUE="TRUE" />
+    <RUBY_DOC NAME="NUMBER" VALUE="0" />
   </component>
   <component name="ResourceManagerContainer">
     <option name="myResourceBundles">
@@ -746,8 +452,5 @@
     <option name="cycleTableSpecificationString" value="" />
     <option name="shortCycleTableSpecificationString" value="" />
   </component>
-  <UsedPathMacros>
-    <macro name="INTELLIJ_PROJECTS" />
-  </UsedPathMacros>
 </project>
 

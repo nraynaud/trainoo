@@ -1,9 +1,6 @@
 package com.nraynaud.sport.hibernate;
 
-import com.nraynaud.sport.Application;
-import com.nraynaud.sport.User;
-import com.nraynaud.sport.UserAlreadyExistsException;
-import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;

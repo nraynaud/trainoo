@@ -6,12 +6,10 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import org.apache.struts2.ServletActionContext;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 public class SportInterceptor implements Interceptor {
     private static final Class<?>[] NO_PARAMS = new Class[0];
-
     private final UserStore userStore;
 
     public SportInterceptor(final UserStore userStore) {
@@ -25,28 +23,28 @@ public class SportInterceptor implements Interceptor {
     }
 
     public String intercept(final ActionInvocation invocation) throws Exception {
-        final Class<?> actionClass = invocation.getAction().getClass();
+        final SportRequest request = new SportRequest(userStore, ServletActionContext.getRequest());
+        invocation.getInvocationContext().put("sportRequest", request);
+        final Object action = invocation.getAction();
+        final Class<?> actionClass = action.getClass();
         final Method actionMethod = getActionMethod(actionClass, invocation.getProxy().getMethod());
-        final HttpServletRequest servletRequest = ServletActionContext.getRequest();
-        filterPostMethod(actionMethod, servletRequest);
+        filterPostMethod(actionMethod, request);
+        final Method requestMethod;
+        try {
+            requestMethod = actionClass.getMethod("setRequest", SportRequest.class);
+            requestMethod.invoke(action, request);
+        } catch (NoSuchMethodException e) {
+            //ok, no problem
+        }
         if (isPublic(actionClass)) return invocation.invoke();
-        return invokeIfUserLogged(invocation, servletRequest);
-    }
-
-    private String invokeIfUserLogged(final ActionInvocation invocation, final HttpServletRequest servletRequest) throws
-            Exception {
-        return isLogged(servletRequest) ? LOGIN_RESULT : invocation.invoke();
-    }
-
-    private boolean isLogged(final HttpServletRequest servletRequest) {
-        return SportSession.storeIntoRequest(userStore, servletRequest) == null;
+        return request.isLogged() ? LOGIN_RESULT : invocation.invoke();
     }
 
     private static boolean isPublic(final Class<?> actionClass) throws Exception {
         return actionClass.isAnnotationPresent(Public.class);
     }
 
-    private static void filterPostMethod(final Method actionMethod, final HttpServletRequest servletRequest) {
+    private static void filterPostMethod(final Method actionMethod, final SportRequest servletRequest) {
         if (actionMethod.isAnnotationPresent(PostOnly.class) && !servletRequest.getMethod().equals("POST"))
             throw new RuntimeException("méthode d'appel interdite");
     }

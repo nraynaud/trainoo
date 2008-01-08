@@ -26,9 +26,10 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 public class EditWorkoutAction extends AbstractWorkoutAction {
 
     private Long id;
+    private final Application application;
 
     public EditWorkoutAction(final Application app) {
-        super(app);
+        application = app;
     }
 
 
@@ -44,7 +45,7 @@ public class EditWorkoutAction extends AbstractWorkoutAction {
     @PostOnly
     public String update() {
         if (id != null) {
-            final Workout workout = application.getWorkout(id, user);
+            final Workout workout = application.getWorkout(id, getUser());
             if (workout != null) {
                 application.updateWorkout(workout, getDate(), getDuration(), getDistance(), getDiscipline());
                 return "workouts-redirect";
@@ -59,7 +60,7 @@ public class EditWorkoutAction extends AbstractWorkoutAction {
     @SkipValidation
     public String index() {
         if (id != null) {
-            final Workout workout = application.getWorkout(id, user);
+            final Workout workout = application.getWorkout(id, getUser());
             if (workout != null) {
                 this.setDate(workout.getDate());
                 this.setDistance(workout.getDistance());

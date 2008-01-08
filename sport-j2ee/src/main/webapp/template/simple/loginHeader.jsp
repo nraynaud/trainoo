@@ -1,9 +1,12 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.web.SportSession" %>
+<%@ page import="com.opensymphony.xwork2.ActionContext" %>
+<%@ page import="com.nraynaud.sport.web.SportRequest" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<% final SportSession session = SportSession.fromRequest(pageContext.getRequest());
+<% final SportRequest sportRequest = (SportRequest) ActionContext.getContext().get("sportRequest");
+    final SportSession session = sportRequest.getSportSession();
     if (session != null) {
         final User user = session.getUser();%>
 <span id="loginName"><%= user.getName()%> | <a href="<s:url action='workouts'/>">Mes entraînements</a></span> |
