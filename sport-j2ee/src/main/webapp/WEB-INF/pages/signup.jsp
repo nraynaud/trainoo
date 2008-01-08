@@ -3,7 +3,7 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <p:layoutParams title="Insrivez-vous !" loginHeader="false"/>
-<h1>Enregistrement</h1>
+<h1>Inscrivez-vous&nbsp;!</h1>
 
 <div class="aroundForm">
     <s:form action="signup">

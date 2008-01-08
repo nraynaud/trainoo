@@ -1,9 +1,9 @@
 body {
-    font-size: 11px;
+    font-size: 15px;
     text-align: center;
     padding: 0;
     margin: 0;
-    font-family: Verdana, arial, helvetica, sans-serif;
+    font-family: sans-serif;
 }
 
 /* Neutralize styling:
@@ -35,7 +35,7 @@ input, select, textarea {
 
 a, a:visited {
     text-decoration: none;
-    color: #588E03;
+    color: #57470C;
 }
 
 a:hover {
@@ -50,6 +50,7 @@ input, select {
     width: 962px;
     margin: 10px auto 0;
     text-align: left;
+    background-color: #F2F2E8;
 }
 
 table {
@@ -59,18 +60,18 @@ table {
 
 th {
     text-align: left;
-    color: #09460F;
+    color: #57470C;
 }
 
 hr {
-    color: #09460F;
-    background-color: #09460F;
+    color: #57470C;
+    background-color: #57470C;
     height: 5px;
     border: none;
 }
 
 h2, h1 {
-    color: #09460F;
+    color: #57470C;
 }
 
 .flashPart {
@@ -91,7 +92,7 @@ h2, h1 {
 }
 
 .feedback {
-    background-color: #F9630D;
+    background-color: #968148;
     font-weight: bold;
 }
 
@@ -108,7 +109,7 @@ h2, h1 {
     cursor: pointer;
     background: none;
     text-decoration: none;
-    color: #588E03;
+    color: #57470C;
     font-family: Verdana, arial, helvetica, sans-serif;
 }
 
@@ -136,4 +137,22 @@ h2, h1 {
 .aroundForm {
     display: block;
     width: 40em
+}
+
+#logo, #logo a:hover {
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+#logo {
+    font-size: 3em;
+    padding-bottom: 0.5em;
+}
+
+#loginHeader, #loginHeader a, #loginHeader #logoutForm input {
+    font-size: 100%;
+    background-color: #968148;
+    color: #F2F2E8;
+    font-family: Tahoma, sans-serif;
+    font-weight: bold;
 }

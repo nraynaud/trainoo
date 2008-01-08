@@ -13,13 +13,12 @@
 </head>
 <body>
 <div id="center">
+    <div id="logo"><a href="<s:url action='globalWorkouts'/>"> BougeTonBoule.com</a></div>
+    
     <% if (pageDetail.isLoginHeader()) {%>
     <s:component template="loginHeader.jsp"/>
     <% } %>
-    <hr>
     <r:writeContent/>
-    <hr>
-    <a href="<s:url action='globalWorkouts'/>">Les entraînements de tout le monde</a>
 </div>
 <script language="JavaScript" type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
 <script language="JavaScript" type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
