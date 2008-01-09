@@ -11,7 +11,6 @@
             <s:param name="displayEdit" value="true"/>
         </s:component>
     </span>
-<hr>
 
 <h2>Nouvel entraînement</h2>
 

@@ -11,15 +11,18 @@
         <s:actionmessage/>
         <s:fielderror/>
 
-        <p><label for="login">Votre surnom&nbsp;:</label>
-            <s:textfield id="login" name="login"/></p>
+        <p class="loginLabel"><label for="login">Votre surnom</label></p>
 
-        <p><label for="password">Votre mot de passe&nbsp;:</label>
-            <s:password id="password" name="password"/></p>
+        <p><s:textfield id="login" name="login"/></p>
 
-        <p><label for="passwordConfirmation">Confirmation de votre mot de passe&nbsp;:<br>
-            (pour éviter les erreurs de frappe)</label>
-            <s:password id="passwordConfirmation" name="passwordConfirmation"/></p>
+        <p class="loginLabel"><label for="password">Votre mot de passe</label></p>
+
+        <p><s:password id="password" name="password"/></p>
+
+        <p class="loginLabel"><label for="passwordConfirmation">Confirmation de votre mot de passe<br>
+            (pour éviter les erreurs de frappe)</label></p>
+
+        <p><s:password id="passwordConfirmation" name="passwordConfirmation"/></p>
 
         <p><s:submit value="Inscription !"/></p>
 

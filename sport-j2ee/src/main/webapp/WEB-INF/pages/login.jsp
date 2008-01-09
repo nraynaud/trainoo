@@ -12,11 +12,13 @@
         <s:actionmessage/>
         <s:fielderror/>
 
-        <p><label for="login">Votre surnom&nbsp;:</label>
-            <s:textfield id="login" name="login"/><br/></p>
+        <p class="loginLabel"><label for="login">Votre surnom</label></p>
 
-        <p><label for="password">Votre mot de passe&nbsp;:</label>
-            <s:password id="password" name="password"/><br/></p>
+        <p><s:textfield id="login" name="login"/></p>
+
+        <p class="loginLabel"><label for="password">Votre mot de passe</label></p>
+
+        <p><s:password id="password" name="password"/></p>
 
         <p><s:submit value="Entrez !"/></p>
     </s:form>
