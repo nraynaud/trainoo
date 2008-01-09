@@ -15,8 +15,8 @@
             <th>&nbsp;</th>
         </tr>
         <tr>
-            <td><s:textfield id="discipline"
-                             name="discipline"/></td>
+            <td><s:select id="discipline" list="{'course', 'vélo', 'VTT', 'marche', 'natation'}" name="discipline"
+                          value="course" required="true"/></td>
             <td><s:textfield id="date"
                              name="date"
                              size="10"
