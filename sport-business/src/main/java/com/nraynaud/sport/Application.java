@@ -20,9 +20,13 @@ public interface Application extends UserStore {
 
     Workout getWorkout(final Long id, final User user);
 
-    void updateWorkout(final Workout workout,
+
+    void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException;
+
+    void updateWorkout(final Long id,
+                       final User user,
                        final Date date,
                        final Long duration,
                        final Double distance,
-                       final String discipline);
+                       final String discipline) throws WorkoutNotFoundException;
 }

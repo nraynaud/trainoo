@@ -5,11 +5,11 @@
 
 <% final PageDetail pageDetail = PageDetail.detailFor(request); %>
 <html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
     <title><%= pageDetail.getTitle()%>
     </title>
-    <link href="<s:url value="/static/sport.css"/>" rel="stylesheet" type="text/css"/>
+    <link href="<s:url value="/static/sport.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="center">

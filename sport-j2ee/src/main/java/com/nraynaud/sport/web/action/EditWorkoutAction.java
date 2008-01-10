@@ -2,6 +2,7 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.AbstractWorkoutAction;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
@@ -26,6 +27,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 public class EditWorkoutAction extends AbstractWorkoutAction {
 
     private Long id;
+    private boolean delete;
     private final Application application;
 
     public EditWorkoutAction(final Application app) {
@@ -45,12 +47,14 @@ public class EditWorkoutAction extends AbstractWorkoutAction {
     @PostOnly
     public String update() {
         if (id != null) {
-            final Workout workout = application.getWorkout(id, getUser());
-            if (workout != null) {
-                application.updateWorkout(workout, getDate(), getDuration(), getDistance(), getDiscipline());
+            try {
+                if (isDelete())
+                    application.deleteWorkout(id, getUser());
+                else
+                    application.updateWorkout(id, getUser(), getDate(), getDuration(), getDistance(), getDiscipline());
                 return "workouts-redirect";
-            } else {
-                addActionError("l'entraînement désigné n'existe pas");
+            } catch (WorkoutNotFoundException e){
+                addActionError("l'entraînement désigné n'existe pas pour cet utilisateur");
                 return INPUT;
             }
         } else
@@ -73,5 +77,17 @@ public class EditWorkoutAction extends AbstractWorkoutAction {
             }
         } else
             return "workouts-redirect";
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    /*
+     * HACK HACK HACK the client sends delete="Supprimer" pair, and this will be handled here.
+     */
+    @SuppressWarnings({"UnusedDeclaration"})
+    public void setDelete(final boolean delete) {
+        this.delete = true;
     }
 }

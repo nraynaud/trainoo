@@ -9,6 +9,10 @@
         <s:param name="id" value="id"/>
     </s:url>
     <s:param name="action" value="updateurl"/>
+    <s:url id="deleteurl" action="editWorkout" method="delete" includeParams="get">
+        <s:param name="id" value="id"/>
+    </s:url>
+    <s:param name="deleteAction" value="deleteurl"/>
     <s:param name="submit" value="'Modifier'"/>
 </s:component>
 

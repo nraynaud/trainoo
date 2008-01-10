@@ -76,28 +76,36 @@ public class HibernateApplication implements Application {
     }
 
     public Workout getWorkout(final Long id, final User user) {
-        try {
-            final Query query = entityManager.createQuery("select w from WorkoutImpl w where w.id=:id and w.user=:user");
-            query.setParameter("id", id);
-            query.setParameter("user", user);
-            return (Workout) query.getSingleResult();
-        } catch (EntityNotFoundException e) {
+        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
+        if (workout == null)
             return null;
-        } catch (NoResultException e) {
+        if (workout.getUser().getId() == user.getId())
+            return workout;
+        else
             return null;
-        }
     }
 
-    public void updateWorkout(final Workout workout,
+    public void updateWorkout(final Long id,
+                              final User user,
                               final Date date,
                               final Long duration,
                               final Double distance,
-                              final String discipline) {
-        final WorkoutImpl workoutImpl = (WorkoutImpl) workout;
+                              final String discipline) throws WorkoutNotFoundException {
+        final WorkoutImpl workoutImpl = (WorkoutImpl) getWorkout(id, user);
+        if (workoutImpl == null)
+            throw new WorkoutNotFoundException();
         workoutImpl.setDate(date);
         workoutImpl.setDuration(duration);
         workoutImpl.setDistance(distance);
         workoutImpl.setDiscipline(discipline);
         entityManager.merge(workoutImpl);
     }
+
+    public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
+        final Workout workout = getWorkout(id, user);
+        if (workout == null)
+            throw new WorkoutNotFoundException();
+        entityManager.remove(workout);
+    }
+
 }

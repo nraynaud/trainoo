@@ -183,6 +183,12 @@
           <option name="REPORT_VARIABLES" value="true" />
           <option name="REPORT_PARAMETERS" value="true" />
         </inspection_tool>
+        <inspection_tool class="UnnecessaryBoxing" level="WARNING" enabled="false" />
+        <inspection_tool class="UnnecessaryUnboxing" level="WARNING" enabled="false" />
+        <inspection_tool class="AutoBoxing" level="WARNING" enabled="true">
+          <option name="ignoreAddedToCollection" value="false" />
+        </inspection_tool>
+        <inspection_tool class="AutoUnboxing" level="WARNING" enabled="true" />
       </profile>
     </profiles>
     <list size="4">
