@@ -45,5 +45,10 @@
                 <param name="actionName">login</param>
             </result>
         </global-results>
+        <action name="*" class="com.nraynaud.sport.web.DefaultAction">
+            <result type="redirect-action"  >
+                <param name="actionName">globalWorkouts</param>
+            </result>
+        </action>
     </package>
 </struts>

@@ -9,11 +9,12 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Namespace("/")
+@Public
 public class DefaultAction extends ActionSupport {
 
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
     public String index() {
-        return Action.INPUT;
+        return Action.SUCCESS;
     }
 }
