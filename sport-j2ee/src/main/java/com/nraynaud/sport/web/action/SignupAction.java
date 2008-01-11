@@ -12,6 +12,7 @@ import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -85,6 +86,12 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
             }
         }
         return Action.SUCCESS;
+    }
+
+    @SuppressWarnings({"MethodMayBeStatic"})
+    @SkipValidation
+    public String index() {
+        return Action.INPUT;
     }
 
     public void setServletRequest(final HttpServletRequest request) {
