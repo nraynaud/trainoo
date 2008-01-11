@@ -11,17 +11,22 @@ public class DistanceConverterTest {
         checkParsing(10.3, "10,3");
         checkParsing(10.3, "10.3");
         checkParsing(10, "10");
-    }
-
-    @Test
-    public void testParsingWithDotSeparator() {
+        checkParsing(10.3, "10,3km");
+        checkParsing(10.3, "10.3km");
+        checkParsing(10, "10km");
     }
 
     @Test
     public void testParsingWithError() {
+        checkError("10+3");
+        checkError("10kn");
+        checkError("10kms");
+        checkError("a10");
+    }
+
+    private void checkError(final String input) {
         final DistanceConverter converter = new DistanceConverter();
         try {
-            final String input = "10+3";
             converter.convertFromString(null, new String[]{input}, Double.class);
             Assert.fail("exception expected");
         } catch (TypeConversionException e) {

@@ -31,7 +31,16 @@ public class DistanceConverter extends StrutsTypeConverter {
 
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
         final String input = values[0];
-        return parseDistance(input);
+        return parseDistance(removeKmSuffix(input));
+    }
+
+    private String removeKmSuffix(final String input) {
+        final String next;
+        if (input.endsWith("km"))
+            next = input.substring(0, input.length() - 2);
+        else
+            next = input;
+        return next;
     }
 
     public String convertToString(final Map context, final Object o) {
