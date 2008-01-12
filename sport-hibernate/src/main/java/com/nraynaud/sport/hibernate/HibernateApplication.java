@@ -12,10 +12,6 @@ public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
 
-    @PersistenceContext
-    public void setEntityManager(final EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
 
     public Workout createWorkout(final Date date,
                                  final User user,
@@ -101,6 +97,11 @@ public class HibernateApplication implements Application {
         entityManager.merge(workoutImpl);
     }
 
+    public Double globalDistance() {
+        final Query query = entityManager.createQuery("select sum(w.distance) from WorkoutImpl w");
+        return (Double) query.getSingleResult();
+    }
+
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
         final Workout workout = getWorkout(id, user);
         if (workout == null)
@@ -108,4 +109,8 @@ public class HibernateApplication implements Application {
         entityManager.remove(workout);
     }
 
+    @PersistenceContext
+    public void setEntityManager(final EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

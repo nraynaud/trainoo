@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="Console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Threshold" value="DEBUG"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd} %-5p - %r - %c - %t - %m\n"/>
+        </layout>
+    </appender>
+    <logger name="org.apache.jasper" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="Console"/>
+    </logger>
+    <logger name="com.opensymphony.xwork2" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="Console"/>
+    </logger>
+    <logger name="com" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="Console"/>
+    </logger>
+    <logger name="org" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="Console"/>
+    </logger>
+    <root>
+        <priority value="WARN"/>
+        <appender-ref ref="Console"/>
+    </root>
+</log4j:configuration>

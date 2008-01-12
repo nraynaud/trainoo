@@ -29,4 +29,6 @@ public interface Application extends UserStore {
                        final Long duration,
                        final Double distance,
                        final String discipline) throws WorkoutNotFoundException;
+
+    Double globalDistance();
 }

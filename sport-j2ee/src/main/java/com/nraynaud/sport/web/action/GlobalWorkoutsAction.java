@@ -26,6 +26,10 @@ public class GlobalWorkoutsAction extends DefaultAction {
         return application.getWorkouts();
     }
 
+    public Double getGlobalDistance() {
+        return application.globalDistance();
+    }
+
     public String index() {
         return Action.SUCCESS;
     }

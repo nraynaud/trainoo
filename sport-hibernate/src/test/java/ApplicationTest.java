@@ -22,8 +22,8 @@ public class ApplicationTest {
     @Before
     public void setUp() {
         final EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("testPU");
-        hibernateApplication = new HibernateApplication();
         entityManager = managerFactory.createEntityManager();
+        hibernateApplication = new HibernateApplication();
         hibernateApplication.setEntityManager(entityManager);
         entityManager.getTransaction().begin();
     }

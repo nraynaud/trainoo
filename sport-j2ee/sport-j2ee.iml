@@ -105,6 +105,10 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/jboss-archive-browsing-5.0.0alpha-200607201-119.jar" />
           </containerElement>
+          <containerElement type="library" name="log4j:log4j:1.2.14" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/log4j-1.2.14.jar" />
+          </containerElement>
           <containerElement type="library" name="mysql:mysql-connector-java:5.1.5" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
@@ -487,6 +491,19 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/junit/junit/4.0/junit-4.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="log4j:log4j:1.2.14">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

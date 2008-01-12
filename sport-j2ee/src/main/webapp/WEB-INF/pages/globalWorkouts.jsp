@@ -3,7 +3,8 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <p:layoutParams title="Les derniers entraînements"/>
-<h1>Les derniers Entraînements</h1>
+<h2><s:property value="globalDistance"/>km parcourus par les membres.</h2>
+
     <span style="display:inline-block;">
         <s:component template="workoutTable.jsp">
             <s:param name="displayName" value="true"/>
