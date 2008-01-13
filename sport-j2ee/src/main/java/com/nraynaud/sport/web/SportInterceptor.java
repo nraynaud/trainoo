@@ -3,23 +3,17 @@ package com.nraynaud.sport.web;
 import com.nraynaud.sport.UserStore;
 import static com.nraynaud.sport.web.Constants.LOGIN_RESULT;
 import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.Interceptor;
+import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import org.apache.struts2.ServletActionContext;
 
 import java.lang.reflect.Method;
 
-public class SportInterceptor implements Interceptor {
+public class SportInterceptor extends AbstractInterceptor {
     private static final Class<?>[] NO_PARAMS = new Class[0];
     private final UserStore userStore;
 
     public SportInterceptor(final UserStore userStore) {
         this.userStore = userStore;
-    }
-
-    public void destroy() {
-    }
-
-    public void init() {
     }
 
     public String intercept(final ActionInvocation invocation) throws Exception {

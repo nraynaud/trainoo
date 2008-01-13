@@ -25,25 +25,23 @@ public class LayoutResult extends StrutsResultSupport {
         final HttpServletRequest request = ServletActionContext.getRequest();
         includeWithCharset(finalLocation, stringWriter, response, request);
         PageDetail.detailFor(request).setContent(stringWriter.toString());
-        execute("/WEB-INF/application.jsp");
+        execute("/WEB-INF/application.jsp", request, response);
     }
 
     //HACk HACK HACK
     // Include.include() uses the response encoding to write to the buffer,
     // but reads it with the strut's default encoding.
     // setting the response to the struts encoding before inclusion ensures that read and write will occur in the same encoding.
-    private void includeWithCharset(final String finalLocation,
-                                    final Writer writer,
-                                    final HttpServletResponse response,
+    private void includeWithCharset(final String finalLocation, final Writer writer, final HttpServletResponse response,
                                     final HttpServletRequest request) throws ServletException, IOException {
         response.setCharacterEncoding(encoding);
         Include.include(finalLocation, writer, request, response);
     }
 
     @SuppressWarnings({"StringConcatenation"})
-    public static void execute(final String finalLocation) throws Exception {
-        final HttpServletRequest request = ServletActionContext.getRequest();
-        final HttpServletResponse response = ServletActionContext.getResponse();
+    private static void execute(final String finalLocation,
+                                final HttpServletRequest request,
+                                final HttpServletResponse response) throws Exception {
         final RequestDispatcher dispatcher = request.getRequestDispatcher(finalLocation);
 
         // if the view doesn't exist, let's do a 404

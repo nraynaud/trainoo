@@ -6,12 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
-
 
     public Workout createWorkout(final Date date,
                                  final User user,
@@ -92,11 +92,11 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     public FrontPageData fetchFrontPageData() {
-        final Query query = entityManager.createQuery("select sum(w.distance) from WorkoutImpl w");
-        final Double globalDistance = (Double) query.getSingleResult();
-        final Query query1 = entityManager.createQuery("select w from WorkoutImpl w order by w.date desc");
-        query1.setMaxResults(15);
-        final List<Workout> workouts = query1.getResultList();
+        final Double globalDistance = fetchGlobalDistance();
+        final List<Workout> workouts = fetchworkouts();
+
+        final Query query1 = entityManager.createQuery("select distinct(w.discipline) from WorkoutImpl w");
+        final List<String> disciplines = query1.getResultList();
         return new FrontPageData() {
 
             public List<Workout> getWorkouts() {
@@ -106,7 +106,27 @@ public class HibernateApplication implements Application {
             public Double getGlobalDistance() {
                 return globalDistance;
             }
+
+            public List<String> getDisciplines() {
+                return disciplines;
+            }
+
+            public Map<String, Double> getDistanceByDisciplines() {
+                throw new RuntimeException("getDistanceByDisciplines" + " not yet implemented");
+            }
         };
+    }
+
+    private Double fetchGlobalDistance() {
+        final Query query = entityManager.createQuery("select sum(w.distance) from WorkoutImpl w");
+        return (Double) query.getSingleResult();
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private List<Workout> fetchworkouts() {
+        final Query query1 = entityManager.createQuery("select w from WorkoutImpl w order by w.date desc");
+        query1.setMaxResults(15);
+        return (List<Workout>) query1.getResultList();
     }
 
     public WorkoutPageData fetchWorkoutPageData(final User user) {

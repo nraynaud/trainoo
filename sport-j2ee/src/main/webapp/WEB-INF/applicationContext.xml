@@ -43,8 +43,6 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="application" class="com.nraynaud.sport.hibernate.HibernateApplication" scope="singleton"
-          lazy-init="true"/>
-    <bean id="lol" class="com.nraynaud.sport.web.RequestFactory" scope="request"/>
+    <bean id="application" class="com.nraynaud.sport.hibernate.HibernateApplication" scope="singleton" lazy-init="true"/>
 </beans>
 
