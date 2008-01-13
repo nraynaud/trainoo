@@ -21,11 +21,6 @@ public class SportSession {
         assert getUser() != null;
     }
 
-    public SportSession(final UserStore userStore, final HttpSession session, final User user) {
-        this(userStore, session);
-        session.setAttribute(USER, new UserWrapper(user));
-    }
-
     public User getUser() {
         final UserWrapper userWrapper = (UserWrapper) session.getAttribute(USER);
         return userWrapper.getUser(userStore);
@@ -44,12 +39,10 @@ public class SportSession {
         return sportSession;
     }
 
-    public static SportSession openSession(final User user,
-                                           final UserStore userStore,
-                                           final HttpServletRequest request) {
+    public static void openSession(final User user, final HttpServletRequest request) {
         final HttpSession session = request.getSession(true);
         session.setMaxInactiveInterval(30 * 24 * 3600);
-        return new SportSession(userStore, session, user);
+        session.setAttribute(USER, new UserWrapper(user));
     }
 
     public static class UserWrapper implements Serializable {

@@ -24,7 +24,7 @@ public class SportInterceptor implements Interceptor {
 
     public String intercept(final ActionInvocation invocation) throws Exception {
         final SportRequest request = new SportRequest(userStore, ServletActionContext.getRequest());
-        invocation.getInvocationContext().put("sportRequest", request);
+        invocation.getInvocationContext().put(SportRequest.SPORT_REQUEST, request);
         final Object action = invocation.getAction();
         final Class<?> actionClass = action.getClass();
         final Method actionMethod = getActionMethod(actionClass, invocation.getProxy().getMethod());

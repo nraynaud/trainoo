@@ -79,7 +79,7 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
         if (request.getMethod().equals("POST")) {
             try {
                 final User user = application.createUser(login, password);
-                SportSession.openSession(user, application, request);
+                SportSession.openSession(user, request);
             } catch (UserAlreadyExistsException e) {
                 addFieldError(Constants.LOGIN_RESULT, "Désolé, ce surnom est déjà pris !");
                 return Action.INPUT;

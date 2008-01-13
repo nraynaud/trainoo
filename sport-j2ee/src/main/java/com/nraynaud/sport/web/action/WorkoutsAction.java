@@ -1,7 +1,6 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.AbstractWorkoutAction;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
@@ -14,8 +13,6 @@ import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-
-import java.util.List;
 
 @Conversion
 @Results({
@@ -32,16 +29,9 @@ public class WorkoutsAction extends AbstractWorkoutAction {
         this.application = application;
     }
 
-    public String getUserName() {
-        return getUser().getName();
-    }
-
-    public List<Workout> getWorkouts() {
-        return application.getWorkoutsForUser(getUser(), 10);
-    }
-
     @SkipValidation
     public String index() {
+        pushValue(application.fetchWorkoutPageData(getUser()));
         return SUCCESS;
     }
 

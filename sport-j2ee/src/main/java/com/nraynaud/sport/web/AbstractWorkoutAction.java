@@ -14,9 +14,6 @@ public class AbstractWorkoutAction extends DefaultAction {
 
     protected SportRequest request;
 
-    public AbstractWorkoutAction() {
-    }
-
     @TypeConversion(converter = "com.nraynaud.sport.web.converter.DateConverter")
     public void setDate(final Date date) {
         this.date = date;

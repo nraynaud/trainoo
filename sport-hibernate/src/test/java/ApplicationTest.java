@@ -50,7 +50,7 @@ public class ApplicationTest {
         final User user = hibernateApplication.createUser("lolé", "pass+é");
         final Workout workout = hibernateApplication.createWorkout(new Date(), user, new Long(12), new Double(10),
                 "lol");
-        Assert.assertEquals(Arrays.asList(workout), hibernateApplication.getWorkouts());
+        Assert.assertEquals(Arrays.asList(workout), hibernateApplication.fetchFrontPageData().getWorkouts());
     }
 
     @Test

@@ -57,7 +57,7 @@ public class LoginAction extends DefaultAction implements ServletRequestAware {
                 addActionError("Votre surnom ou votre mot de passe sont invalides. Probablement une erreur de frappe.");
                 return Action.INPUT;
             } else {
-                SportSession.openSession(user, application, request);
+                SportSession.openSession(user, request);
                 return Action.SUCCESS;
             }
         } else

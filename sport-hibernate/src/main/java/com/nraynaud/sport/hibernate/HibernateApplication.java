@@ -24,7 +24,7 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public List<Workout> getWorkoutsForUser(final User user, final int limit) {
+    private List<Workout> getWorkoutsForUser(final User user, final int limit) {
         final Query query = entityManager.createQuery(
                 "select w from WorkoutImpl w where w.user =:user order by  w.date desc");
         query.setParameter("user", user);
@@ -64,13 +64,6 @@ public class HibernateApplication implements Application {
         return (User) query.getSingleResult();
     }
 
-    @SuppressWarnings({"unchecked"})
-    public List<Workout> getWorkouts() {
-        final Query query = entityManager.createQuery("select w from WorkoutImpl w order by w.date desc");
-        query.setMaxResults(15);
-        return query.getResultList();
-    }
-
     public Workout getWorkout(final Long id, final User user) {
         final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
         if (workout == null)
@@ -97,9 +90,32 @@ public class HibernateApplication implements Application {
         entityManager.merge(workoutImpl);
     }
 
-    public Double globalDistance() {
+    @SuppressWarnings({"unchecked"})
+    public FrontPageData fetchFrontPageData() {
         final Query query = entityManager.createQuery("select sum(w.distance) from WorkoutImpl w");
-        return (Double) query.getSingleResult();
+        final Double globalDistance = (Double) query.getSingleResult();
+        final Query query1 = entityManager.createQuery("select w from WorkoutImpl w order by w.date desc");
+        query1.setMaxResults(15);
+        final List<Workout> workouts = query1.getResultList();
+        return new FrontPageData() {
+
+            public List<Workout> getWorkouts() {
+                return workouts;
+            }
+
+            public Double getGlobalDistance() {
+                return globalDistance;
+            }
+        };
+    }
+
+    public WorkoutPageData fetchWorkoutPageData(final User user) {
+        final List<Workout> workouts = getWorkoutsForUser(user, 10);
+        return new WorkoutPageData() {
+            public List<Workout> getWorkouts() {
+                return workouts;
+            }
+        };
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {

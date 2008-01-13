@@ -17,11 +17,8 @@
         <level value="WARN"/>
         <appender-ref ref="Console"/>
     </logger>
-    <logger name="com" additivity="false">
-        <level value="WARN"/>
-        <appender-ref ref="Console"/>
-    </logger>
-    <logger name="org" additivity="false">
+
+    <logger name="org.hibernate.transaction.JDBCTransaction" additivity="false">
         <level value="WARN"/>
         <appender-ref ref="Console"/>
     </logger>
