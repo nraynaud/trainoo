@@ -13,6 +13,8 @@ public interface Application extends UserStore {
 
     User authenticate(String login, String password);
 
+    Workout getWorkout(final Long id, final User user);
+
     void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException;
 
     void updateWorkout(final Long id,
@@ -25,4 +27,6 @@ public interface Application extends UserStore {
     FrontPageData fetchFrontPageData();
 
     WorkoutPageData fetchWorkoutPageData(final User user);
+
+
 }
