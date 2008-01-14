@@ -96,17 +96,17 @@ public class HibernateApplication implements Application {
         final List<Workout> workouts = fetchworkouts();
         final Double globalDistance = fetchGlobalDistance(null);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(null);
-        return new MyStatisticsPageData(workouts, globalDistance, distanceByDiscpline);
+        return statistics(workouts, globalDistance, distanceByDiscpline);
     }
 
     @SuppressWarnings({"unchecked"})
     private List<StatisticsPageData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
-        final String string = "select DISCIPLINE, sum(DISTANCE) as DISTANCE from WORKOUTS "
-                + (user != null ? " where USER_ID = :user" : "")
-                + " group by DISCIPLINE";
-        final Query nativeQuery = entityManager.createNativeQuery(string, DisciplineDistanceImpl.class);
+        final String string = "select new DisciplineDistanceImpl(w.discipline, sum(w.distance)) from WorkoutImpl w "
+                + (user != null ? " where w.user = :user" : "")
+                + " group by w.discipline";
+        final Query nativeQuery = entityManager.createQuery(string);
         if (user != null)
-            nativeQuery.setParameter("user", Long.valueOf(user.getId()));
+            nativeQuery.setParameter("user", user);
         return (List<StatisticsPageData.DisciplineDistance>) nativeQuery.getResultList();
     }
 
@@ -129,7 +129,7 @@ public class HibernateApplication implements Application {
         final List<Workout> workouts = getWorkoutsForUser(user, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
-        return new MyStatisticsPageData(workouts, globalDistance, distanceByDiscpline);
+        return statistics(workouts, globalDistance, distanceByDiscpline);
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
@@ -144,29 +144,21 @@ public class HibernateApplication implements Application {
         this.entityManager = entityManager;
     }
 
-    private static class MyStatisticsPageData implements StatisticsPageData {
-        private final List<Workout> workouts;
-        private final Double globalDistance;
-        private final List<DisciplineDistance> distanceByDiscpline;
+    private static StatisticsPageData statistics(final List<Workout> workouts,
+                                                 final Double globalDistance,
+                                                 final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline) {
+        return new StatisticsPageData() {
+            public List<Workout> getWorkouts() {
+                return workouts;
+            }
 
-        public MyStatisticsPageData(final List<Workout> workouts,
-                                    final Double globalDistance,
-                                    final List<DisciplineDistance> distanceByDiscpline) {
-            this.workouts = workouts;
-            this.globalDistance = globalDistance;
-            this.distanceByDiscpline = distanceByDiscpline;
-        }
+            public Double getGlobalDistance() {
+                return globalDistance;
+            }
 
-        public List<Workout> getWorkouts() {
-            return workouts;
-        }
-
-        public Double getGlobalDistance() {
-            return globalDistance;
-        }
-
-        public List<DisciplineDistance> getDistanceByDisciplines() {
-            return distanceByDiscpline;
-        }
+            public List<DisciplineDistance> getDistanceByDisciplines() {
+                return distanceByDiscpline;
+            }
+        };
     }
 }

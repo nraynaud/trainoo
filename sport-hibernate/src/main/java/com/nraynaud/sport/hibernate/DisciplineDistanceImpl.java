@@ -8,8 +8,13 @@ import javax.persistence.Id;
 @Entity
 public class DisciplineDistanceImpl implements StatisticsPageData.DisciplineDistance {
     @Id
-    private String discipline;
-    private Double distance;
+    private final String discipline;
+    private final Double distance;
+
+    public DisciplineDistanceImpl(final String discipline, final Double distance) {
+        this.discipline = discipline;
+        this.distance = distance;
+    }
 
     public String getDiscipline() {
         return discipline;
@@ -17,13 +22,5 @@ public class DisciplineDistanceImpl implements StatisticsPageData.DisciplineDist
 
     public Double getDistance() {
         return distance;
-    }
-
-    public void setDiscipline(final String discipline) {
-        this.discipline = discipline;
-    }
-
-    public void setDistance(final Double distance) {
-        this.distance = distance;
     }
 }

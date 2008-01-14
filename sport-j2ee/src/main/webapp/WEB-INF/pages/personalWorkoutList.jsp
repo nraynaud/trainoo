@@ -5,7 +5,7 @@
 <p:layoutParams title="Mes derniers entraînements"/>
 
 
-<h1>La sueur coulée</h1>
+<h1>Vous avez parcouru <s:property value="globalDistance"/>km</h1>
 <s:component template="distanceByDiscipline.jsp"/>
     <span style="display:inline-block;">
         <s:component template="workoutTable.jsp">
