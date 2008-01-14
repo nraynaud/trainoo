@@ -25,10 +25,14 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    private List<Workout> getWorkoutsForUser(final User user, final int limit) {
+    private List<Workout> getWorkouts(final User user, final int limit) {
+        final String string = "select w from WorkoutImpl w "
+                + (user != null ? "where w.user =:user" : "")
+                + " order by  w.date desc";
         final Query query = entityManager.createQuery(
-                "select w from WorkoutImpl w where w.user =:user order by  w.date desc");
-        query.setParameter("user", user);
+                string);
+        if (user != null)
+            query.setParameter("user", user);
         query.setMaxResults(limit);
         return query.getResultList();
     }
@@ -93,10 +97,7 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     public StatisticsPageData fetchFrontPageData() {
-        final List<Workout> workouts = fetchworkouts();
-        final Double globalDistance = fetchGlobalDistance(null);
-        final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(null);
-        return statistics(workouts, globalDistance, distanceByDiscpline);
+        return fetchWorkoutPageData(null);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -118,15 +119,8 @@ public class HibernateApplication implements Application {
         return (Double) query.getSingleResult();
     }
 
-    @SuppressWarnings({"unchecked"})
-    private List<Workout> fetchworkouts() {
-        final Query query1 = entityManager.createQuery("select w from WorkoutImpl w order by w.date desc");
-        query1.setMaxResults(15);
-        return (List<Workout>) query1.getResultList();
-    }
-
     public StatisticsPageData fetchWorkoutPageData(final User user) {
-        final List<Workout> workouts = getWorkoutsForUser(user, 10);
+        final List<Workout> workouts = getWorkouts(user, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
         return statistics(workouts, globalDistance, distanceByDiscpline);
