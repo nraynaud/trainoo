@@ -6,9 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Transactional
+@SqlResultSetMapping(name = "distanceByDiscipline",
+        entities = {@EntityResult(entityClass = DisciplineDistanceImpl.class)})
 public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
@@ -97,6 +98,10 @@ public class HibernateApplication implements Application {
 
         final Query query1 = entityManager.createQuery("select distinct(w.discipline) from WorkoutImpl w");
         final List<String> disciplines = query1.getResultList();
+        final Query nativeQuery = entityManager.createNativeQuery(
+                "select DISCIPLINE, sum(DISTANCE) as DISTANCE from WORKOUTS group by DISCIPLINE",
+                DisciplineDistanceImpl.class);
+        final List<FrontPageData.DisciplineDistance> distanceByDiscpline = nativeQuery.getResultList();
         return new FrontPageData() {
 
             public List<Workout> getWorkouts() {
@@ -111,8 +116,8 @@ public class HibernateApplication implements Application {
                 return disciplines;
             }
 
-            public Map<String, Double> getDistanceByDisciplines() {
-                throw new RuntimeException("getDistanceByDisciplines" + " not yet implemented");
+            public List<DisciplineDistance> getDistanceByDisciplines() {
+                return distanceByDiscpline;
             }
         };
     }

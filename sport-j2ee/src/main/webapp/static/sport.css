@@ -89,6 +89,7 @@ hr {
 }
 
 h2, h1 {
+    margin-bottom: 0;
     color: #57470C;
 }
 
@@ -140,7 +141,7 @@ h2, h1 {
 }
 
 p.loginLabel {
-    padding-top:1em;
+    padding-top: 1em;
 }
 
 #logo, #logo a : hover {
@@ -160,4 +161,17 @@ p.loginLabel {
     color: #F2F2E8;
     font-family: Tahoma, sans-serif;
     font-weight: bold;
+}
+
+.frontPageBox {
+    width: 49%;
+}
+
+#globalLeft {
+    float: left;
+    border: #4B4C3C solid;
+}
+
+#globalRight {
+    float: right;
 }
