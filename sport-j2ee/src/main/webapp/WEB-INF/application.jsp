@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="center">
-    <div id="logo"><a href="<s:url action='globalWorkouts'/>"> BougeTonBoule.com</a></div>
+    <div id="logo"><a href="/"> BougeTonBoule.com</a></div>
     
     <% if (pageDetail.isLoginHeader()) {%>
     <s:component template="loginHeader.jsp"/>
