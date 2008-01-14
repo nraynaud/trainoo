@@ -52,6 +52,9 @@ input, select {
     margin: 10px auto 0;
     text-align: left;
     background-color: #F2F2E8;
+    overflow: auto;
+    zoom: 1;
+    _overflow: visible;
 }
 
 table {
