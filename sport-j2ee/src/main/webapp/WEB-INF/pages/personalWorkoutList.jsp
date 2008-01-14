@@ -5,19 +5,19 @@
 <p:layoutParams title="Mes derniers entraînements"/>
 
 
-<h1>Mes Derniers Entraînements</h1>
+<h1>La sueur coulée</h1>
+<s:component template="distanceByDiscipline.jsp"/>
     <span style="display:inline-block;">
         <s:component template="workoutTable.jsp">
             <s:param name="displayEdit" value="true"/>
         </s:component>
     </span>
 
-<h2>Nouvel entraînement</h2>
 
+<h2>Nouvel entraînement</h2>
 <div style="display:block;">
     <s:component template="workoutForm.jsp">
         <s:param name="action" value="'workouts'"/>
         <s:param name="submit" value="'Ajouter'"/>
     </s:component>
 </div>
-

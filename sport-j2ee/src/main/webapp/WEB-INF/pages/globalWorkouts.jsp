@@ -5,10 +5,7 @@
 <p:layoutParams title="Les derniers entraînements"/>
 
 <h2><s:property value="globalDistance"/>km parcourus par les membres.</h2>
-|<s:iterator value="distanceByDisciplines" status="row">
-    <s:property value="discipline"/>(<s:property value="distance"/>km) |
-</s:iterator>
-
+<s:component template="distanceByDiscipline.jsp"/>
 <div style="">
     <div style="width:49%; float:left;">
         <h2>Les dernières sorties</h2>

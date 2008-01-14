@@ -1,7 +1,7 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.FrontPageData;
+import com.nraynaud.sport.StatisticsPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.Public;
@@ -13,14 +13,14 @@ import org.apache.struts2.config.Result;
 @Result(name = Action.SUCCESS, value = "/WEB-INF/pages/globalWorkouts.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
-public class GlobalWorkoutsAction extends DefaultAction implements ModelDriven<FrontPageData> {
-    private FrontPageData frontPageData;
+public class GlobalWorkoutsAction extends DefaultAction implements ModelDriven<StatisticsPageData> {
+    private StatisticsPageData statisticsPageData;
 
     public GlobalWorkoutsAction(final Application application) {
-        frontPageData = application.fetchFrontPageData();
+        statisticsPageData = application.fetchFrontPageData();
     }
 
-    public FrontPageData getModel() {
-        return frontPageData;
+    public StatisticsPageData getModel() {
+        return statisticsPageData;
     }
 }

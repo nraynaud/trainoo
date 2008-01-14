@@ -92,38 +92,29 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public FrontPageData fetchFrontPageData() {
-        final Double globalDistance = fetchGlobalDistance();
+    public StatisticsPageData fetchFrontPageData() {
         final List<Workout> workouts = fetchworkouts();
-
-        final Query query1 = entityManager.createQuery("select distinct(w.discipline) from WorkoutImpl w");
-        final List<String> disciplines = query1.getResultList();
-        final Query nativeQuery = entityManager.createNativeQuery(
-                "select DISCIPLINE, sum(DISTANCE) as DISTANCE from WORKOUTS group by DISCIPLINE",
-                DisciplineDistanceImpl.class);
-        final List<FrontPageData.DisciplineDistance> distanceByDiscpline = nativeQuery.getResultList();
-        return new FrontPageData() {
-
-            public List<Workout> getWorkouts() {
-                return workouts;
-            }
-
-            public Double getGlobalDistance() {
-                return globalDistance;
-            }
-
-            public List<String> getDisciplines() {
-                return disciplines;
-            }
-
-            public List<DisciplineDistance> getDistanceByDisciplines() {
-                return distanceByDiscpline;
-            }
-        };
+        final Double globalDistance = fetchGlobalDistance(null);
+        final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(null);
+        return new MyStatisticsPageData(workouts, globalDistance, distanceByDiscpline);
     }
 
-    private Double fetchGlobalDistance() {
-        final Query query = entityManager.createQuery("select sum(w.distance) from WorkoutImpl w");
+    @SuppressWarnings({"unchecked"})
+    private List<StatisticsPageData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
+        final String string = "select DISCIPLINE, sum(DISTANCE) as DISTANCE from WORKOUTS "
+                + (user != null ? " where USER_ID = :user" : "")
+                + " group by DISCIPLINE";
+        final Query nativeQuery = entityManager.createNativeQuery(string, DisciplineDistanceImpl.class);
+        if (user != null)
+            nativeQuery.setParameter("user", Long.valueOf(user.getId()));
+        return (List<StatisticsPageData.DisciplineDistance>) nativeQuery.getResultList();
+    }
+
+    private Double fetchGlobalDistance(final User user) {
+        final String string = "select sum(w.distance) from WorkoutImpl w";
+        final Query query = entityManager.createQuery(string + (user != null ? " where w.user=:user" : ""));
+        if (user != null)
+            query.setParameter("user", user);
         return (Double) query.getSingleResult();
     }
 
@@ -134,13 +125,11 @@ public class HibernateApplication implements Application {
         return (List<Workout>) query1.getResultList();
     }
 
-    public WorkoutPageData fetchWorkoutPageData(final User user) {
+    public StatisticsPageData fetchWorkoutPageData(final User user) {
         final List<Workout> workouts = getWorkoutsForUser(user, 10);
-        return new WorkoutPageData() {
-            public List<Workout> getWorkouts() {
-                return workouts;
-            }
-        };
+        final Double globalDistance = fetchGlobalDistance(user);
+        final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
+        return new MyStatisticsPageData(workouts, globalDistance, distanceByDiscpline);
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
@@ -153,5 +142,31 @@ public class HibernateApplication implements Application {
     @PersistenceContext
     public void setEntityManager(final EntityManager entityManager) {
         this.entityManager = entityManager;
+    }
+
+    private static class MyStatisticsPageData implements StatisticsPageData {
+        private final List<Workout> workouts;
+        private final Double globalDistance;
+        private final List<DisciplineDistance> distanceByDiscpline;
+
+        public MyStatisticsPageData(final List<Workout> workouts,
+                                    final Double globalDistance,
+                                    final List<DisciplineDistance> distanceByDiscpline) {
+            this.workouts = workouts;
+            this.globalDistance = globalDistance;
+            this.distanceByDiscpline = distanceByDiscpline;
+        }
+
+        public List<Workout> getWorkouts() {
+            return workouts;
+        }
+
+        public Double getGlobalDistance() {
+            return globalDistance;
+        }
+
+        public List<DisciplineDistance> getDistanceByDisciplines() {
+            return distanceByDiscpline;
+        }
     }
 }
