@@ -23,8 +23,10 @@ public class DurationConverter extends StrutsTypeConverter {
 
     private static enum Parser {
         HOURS_MINUTES_SECONDS_PATTERN("(\\d+)h(\\d+)'(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
+        HOURS_MINUTES_M_SECONDS_PATTERN("(\\d+)h(\\d+)m(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
         HOURS_MINUTES_PATTERN("(\\d+)h(\\d+)'?", HOUR, MINUTE),
         MINUTES_SECONDS_PATTERN("(\\d+)'(\\d+)(?:'')?", MINUTE, SECOND),
+        MINUTES_M_SECONDS_PATTERN("(\\d+)m(\\d+)(?:'')?", MINUTE, SECOND),
         HOURS_PATTERN("(\\d+)h", HOUR),
         MINUTES_PATTERN("(\\d+)'?", MINUTE),
         SECONDS_PATTERN("(\\d+)''", SECOND);

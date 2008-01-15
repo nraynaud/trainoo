@@ -13,7 +13,11 @@ public class DurationConverterTest {
         checkConvertion(0, 0, 4, "4''");
         checkConvertion(0, 5, 4, "5'4");
         checkConvertion(0, 1, 4, "1'4''");
+        checkConvertion(0, 5, 4, "5m4");
+        checkConvertion(0, 1, 4, "1m4''");
         checkConvertion(3, 1, 4, "3h1'4");
+        checkConvertion(3, 1, 4, "3h1m4");
+        checkConvertion(3, 1, 4, "3h1'4''");
         checkConvertion(3, 1, 4, "3h1'4''");
         checkConvertion(3, 1, 0, "3h1");
         checkConvertion(3, 1, 0, "3h1'");

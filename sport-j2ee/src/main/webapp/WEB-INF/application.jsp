@@ -35,7 +35,7 @@
     </div>
     <hr id="bottom">
     <div><p class="smaller" style="text-align:center;">Copyright Nicolas Raynaud 2008. Une idée, une question&nbsp;? <a
-            href="mailto://nicolas@trainoo.com">Par ici&nbsp;!</a></p></div>
+            href="mailto:nicolas@trainoo.com">Par ici&nbsp;!</a></p></div>
 </div>
 <script language="JavaScript" type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
 <script language="JavaScript" type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
