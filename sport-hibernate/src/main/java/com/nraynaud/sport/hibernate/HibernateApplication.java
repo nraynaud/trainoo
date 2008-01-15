@@ -37,6 +37,7 @@ public class HibernateApplication implements Application {
         return query.getResultList();
     }
 
+    @Transactional(rollbackFor = UserAlreadyExistsException.class)
     public User createUser(final String login, final String password) throws UserAlreadyExistsException {
         try {
             final User user = new UserImpl(login, password);
