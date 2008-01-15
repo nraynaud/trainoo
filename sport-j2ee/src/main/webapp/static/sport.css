@@ -1,5 +1,5 @@
 body {
-    font-size: 15px;
+    font-size: 16px;
     text-align: center;
     padding: 0;
     margin: 0;
@@ -52,9 +52,6 @@ input, select {
     margin: 10px auto 0;
     text-align: left;
     background-color: #F2F2E8;
-    overflow: auto;
-    zoom: 1;
-    _overflow: visible;
 }
 
 table {
@@ -87,7 +84,7 @@ th {
 hr {
     color: #57470C;
     background-color: #57470C;
-    height: 5px;
+    height: 2px;
     border: none;
 }
 
@@ -166,15 +163,31 @@ p.loginLabel {
     font-weight: bold;
 }
 
-.frontPageBox {
-    width: 49%;
+.smaller {
+    font-size: smaller;
 }
 
 #globalLeft {
+    width: 49%;
     float: left;
-    border: #4B4C3C solid;
 }
 
 #globalRight {
+    width: 49%;
     float: right;
+}
+
+#content {
+    overflow: auto;
+    zoom: 1;
+    _overflow: visible;
+}
+
+#bottom {
+    margin-top: 3em;
+}
+
+#ad {
+    text-align: center;
+    margin: 4px 0 0 4px
 }

@@ -7,12 +7,11 @@
 
 <h1>Vous avez parcouru <s:property value="globalDistance"/>km</h1>
 <s:component template="distanceByDiscipline.jsp"/>
-    <span style="display:inline-block;">
-        <s:component template="workoutTable.jsp">
-            <s:param name="displayEdit" value="true"/>
-        </s:component>
-    </span>
 
+<h2>Vos dernières sorties</h2>
+<s:component template="workoutTable.jsp">
+    <s:param name="displayEdit" value="true"/>
+</s:component>
 
 <h2>Nouvel entraînement</h2>
 <div style="display:block;">
