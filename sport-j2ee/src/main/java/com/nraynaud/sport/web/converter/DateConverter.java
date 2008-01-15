@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.converter;
 
 import com.nraynaud.sport.web.SoftThreadLocal;
+import static com.nraynaud.sport.web.converter.ConverterUtil.parseWholeString;
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
 
@@ -38,17 +39,16 @@ public class DateConverter extends StrutsTypeConverter {
     }
 
     public static Date parseDate(final String source) {
-        final DateFormat sdf = FORMAT_WITH_YEAR.get();
         try {
-            return sdf.parse(source);
+            return (Date) parseWholeString(FORMAT_WITH_YEAR.get(), source);
         }
         catch (ParseException e) {
             try {
-                final Date date = FORMAT_WITH_MONTH.get().parse(source);
+                final Date date = (Date) parseWholeString(FORMAT_WITH_MONTH.get(), source);
                 return setCurrentComponents(date, Calendar.YEAR);
             } catch (ParseException e1) {
                 try {
-                    final Date date = FORMAT_WITH_DAY.get().parse(source);
+                    final Date date = (Date) parseWholeString(FORMAT_WITH_DAY.get(), source);
                     return setCurrentComponents(date, Calendar.YEAR, Calendar.MONTH);
                 } catch (ParseException e2) {
                     throw new TypeConversionException(e);

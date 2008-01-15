@@ -41,10 +41,15 @@ public class DateConverterTest {
 
     @Test
     public void testInputError() throws ParseException {
+        checkError("lol");
+        checkError("03/lol");
+    }
+
+    private static void checkError(final String input) {
         final DateConverter converter = new DateConverter();
         try {
-            converter.convertFromString(null, new String[]{"lol"}, Date.class);
-            fail();
+            converter.convertFromString(null, new String[]{input}, Date.class);
+            fail("should have raised error on '" + input + "'");
         } catch (TypeConversionException e) {
             //ok
         }

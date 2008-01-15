@@ -1,13 +1,14 @@
 package com.nraynaud.sport.web.converter;
 
 import com.nraynaud.sport.web.SoftThreadLocal;
+import static com.nraynaud.sport.web.converter.ConverterUtil.parseWholeString;
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.text.ParsePosition;
+import java.text.ParseException;
 import java.util.Locale;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public class DistanceConverter extends StrutsTypeConverter {
         return parseDistance(removeKmSuffix(input));
     }
 
-    private String removeKmSuffix(final String input) {
+    private static String removeKmSuffix(final String input) {
         final String next;
         if (input.endsWith("km"))
             next = input.substring(0, input.length() - 2);
@@ -50,23 +51,19 @@ public class DistanceConverter extends StrutsTypeConverter {
     }
 
     public static Double parseDistance(final String input) {
-        final ParsePosition parsePosition = new ParsePosition(0);
-        final Number number = FORMAT.get().parse(input, parsePosition);
-        final Number result;
-        if (parsePosition.getIndex() != input.length())
-            result = parseWithDot(input);
-        else
-            result = number;
-        return Double.valueOf(result.doubleValue());
+        return Double.valueOf(ParseNumber(input).doubleValue());
     }
 
-    private static Number parseWithDot(final String input) {
-        final ParsePosition parsePosition = new ParsePosition(0);
-        final Number result = FORMAT_WITH_DOT.get().parse(input, parsePosition);
-        if (parsePosition.getIndex() != input.length()) {
-            throw new TypeConversionException("Unparseable number: " + input);
+    private static Number ParseNumber(final String input) {
+        try {
+            return (Number) parseWholeString(FORMAT.get(), input);
+        } catch (ParseException e) {
+            try {
+                return (Number) parseWholeString(FORMAT_WITH_DOT.get(), input);
+            } catch (ParseException e1) {
+                throw new TypeConversionException("Unparseable number: " + input);
+            }
         }
-        return result;
     }
 
     public static String formatNumber(final Double o) {
