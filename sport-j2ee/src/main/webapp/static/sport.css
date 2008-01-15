@@ -144,7 +144,7 @@ p.loginLabel {
     padding-top: 1em;
 }
 
-#logo, #logo a : hover {
+#logo, #logo a:hover {
     font-family: sans-serif;
     text-decoration: none;
 }
