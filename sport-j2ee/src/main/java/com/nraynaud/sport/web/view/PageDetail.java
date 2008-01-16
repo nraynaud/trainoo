@@ -9,6 +9,7 @@ public class PageDetail {
     private String title = "";
     private final List<String> javascript = new ArrayList<String>(1);
     private boolean loginHeader;
+    private boolean showAdvert = true;
 
     public static PageDetail detailFor(final ServletRequest request) {
         PageDetail detail = (PageDetail) request.getAttribute("detail");
@@ -52,5 +53,13 @@ public class PageDetail {
 
     public boolean isLoginHeader() {
         return loginHeader;
+    }
+
+    public boolean isShowAdvert() {
+        return showAdvert;
+    }
+
+    public void setShowAdvert(final boolean showAdvert) {
+        this.showAdvert = showAdvert;
     }
 }

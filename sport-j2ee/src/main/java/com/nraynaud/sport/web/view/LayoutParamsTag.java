@@ -9,11 +9,14 @@ public class LayoutParamsTag extends TagSupport {
 
     private boolean loginHeader = true;
 
+    private boolean showAdvert = true;
+
     public int doEndTag() throws JspException {
         final ServletRequest request = pageContext.getRequest();
         final PageDetail pageDetail = PageDetail.detailFor(request);
         pageDetail.setTitle(title);
         pageDetail.setLoginHeader(loginHeader);
+        pageDetail.setShowAdvert(showAdvert);
         return EVAL_PAGE;
     }
 
@@ -23,5 +26,9 @@ public class LayoutParamsTag extends TagSupport {
 
     public void setLoginHeader(final boolean loginHeader) {
         this.loginHeader = loginHeader;
+    }
+
+    public void setShowAdvert(final boolean showAdvert) {
+        this.showAdvert = showAdvert;
     }
 }

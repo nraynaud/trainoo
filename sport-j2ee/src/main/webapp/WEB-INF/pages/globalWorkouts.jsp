@@ -15,6 +15,6 @@
 <div id="globalRight">
     <h1>Bienvenue !</h1>
 
-    <p>Vous pratiquez le sport en dehors de la Télé&nbsp;? Vous
-        suivrez ici votre vie sportive.</p>
+    <p>Vous pratiquez le sport en dehors de la Télé&nbsp;?<br>
+        Vous suivrez ici votre vie active.</p>
 </div>

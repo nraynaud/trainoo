@@ -15,6 +15,6 @@
         <s:submit cssClass="logoutButton" value="Déconnexion"/>
     </s:form>
     <% } else { %>
-    <a href="<s:url action='login'/>">S'identifier</a> | <a href="<s:url action='signup'/>">S'inscrire</a>
+    <a href="<s:url action='login'/>">S'identifier</a> | <a href="<s:url action='signup'/>">S'inscrire</a>&nbsp;
     <% } %>
 </div>
