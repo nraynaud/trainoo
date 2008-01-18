@@ -57,7 +57,7 @@ public class SportSession {
 
         public User getUser(final UserStore userStore) {
             if (user == null)
-                user = userStore.getUser(userId);
+                user = userStore.fetchUser(userId);
             return user;
         }
     }

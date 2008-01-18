@@ -53,7 +53,7 @@ public class EditWorkoutAction extends AbstractWorkoutAction {
                 else
                     application.updateWorkout(id, getUser(), getDate(), getDuration(), getDistance(), getDiscipline());
                 return "workouts-redirect";
-            } catch (WorkoutNotFoundException e){
+            } catch (WorkoutNotFoundException e) {
                 addActionError("l'entraînement désigné n'existe pas pour cet utilisateur");
                 return INPUT;
             }
@@ -64,7 +64,7 @@ public class EditWorkoutAction extends AbstractWorkoutAction {
     @SkipValidation
     public String index() {
         if (id != null) {
-            final Workout workout = application.getWorkout(id, getUser());
+            final Workout workout = application.fetchWorkout(id, getUser());
             if (workout != null) {
                 this.setDate(workout.getDate());
                 this.setDistance(workout.getDistance());

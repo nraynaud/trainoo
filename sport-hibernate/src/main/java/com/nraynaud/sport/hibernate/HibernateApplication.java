@@ -55,20 +55,18 @@ public class HibernateApplication implements Application {
         try {
             final User user = (User) query.getSingleResult();
             return user.checkPassword(password) ? user : null;
-        } catch (EntityNotFoundException e) {
-            return null;
         } catch (NoResultException e) {
             return null;
         }
     }
 
-    public User getUser(final Long id) {
+    public User fetchUser(final Long id) {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.id=:id");
         query.setParameter("id", id);
         return (User) query.getSingleResult();
     }
 
-    public Workout getWorkout(final Long id, final User user) {
+    public Workout fetchWorkout(final Long id, final User user) {
         final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
         if (workout == null)
             return null;
@@ -84,7 +82,7 @@ public class HibernateApplication implements Application {
                               final Long duration,
                               final Double distance,
                               final String discipline) throws WorkoutNotFoundException {
-        final WorkoutImpl workoutImpl = (WorkoutImpl) getWorkout(id, user);
+        final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkout(id, user);
         if (workoutImpl == null)
             throw new WorkoutNotFoundException();
         workoutImpl.setDate(date);
@@ -128,7 +126,7 @@ public class HibernateApplication implements Application {
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
-        final Workout workout = getWorkout(id, user);
+        final Workout workout = fetchWorkout(id, user);
         if (workout == null)
             throw new WorkoutNotFoundException();
         entityManager.remove(workout);

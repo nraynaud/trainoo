@@ -38,6 +38,13 @@ public class ApplicationTest {
     }
 
     @Test
+    public void testUserFetching() throws UserAlreadyExistsException {
+        final User user = hibernateApplication.createUser("lol", "pouet");
+        final User user1 = hibernateApplication.fetchUser(user.getId());
+        Assert.assertEquals(user, user1);
+    }
+
+    @Test
     public void testUserCreation() throws UserAlreadyExistsException {
         Assert.assertNull(hibernateApplication.authenticate("lolé", "pass+é"));
         hibernateApplication.createUser("lolé", "pass+é");
@@ -59,6 +66,7 @@ public class ApplicationTest {
         hibernateApplication.createUser("lolé", "pass+é");
         Assert.assertNotNull(hibernateApplication.authenticate("lolé", "pass+é"));
         Assert.assertNull(hibernateApplication.authenticate("lolé", "wrongpass"));
+        Assert.assertNull(hibernateApplication.authenticate("jeanLouis", "wrongpass"));
     }
 
     @Test
@@ -70,5 +78,26 @@ public class ApplicationTest {
         } catch (UserAlreadyExistsException e) {
             //great !
         }
+    }
+
+    @Test
+    public void testWorkoutFetching() throws UserAlreadyExistsException {
+        final User user = hibernateApplication.createUser("user", "lol");
+        final Workout workout = hibernateApplication.createWorkout(new Date(), user, new Long(12), new Double(10),
+                "lol");
+        {
+            final Workout workout1 = hibernateApplication.fetchWorkout(workout.getId(), user);
+            Assert.assertEquals(workout, workout1);
+        }
+        {
+            final Workout workout2 = hibernateApplication.fetchWorkout(Long.valueOf(1043345), user);
+            Assert.assertNull(workout2);
+        }
+        {
+            final User user1 = hibernateApplication.createUser("user1", "lol");
+            final Workout workout3 = hibernateApplication.fetchWorkout(workout.getId(), user1);
+            Assert.assertNull(workout3);
+        }
+
     }
 }

@@ -13,7 +13,7 @@ public interface Application extends UserStore {
 
     User authenticate(String login, String password);
 
-    Workout getWorkout(final Long id, final User user);
+    Workout fetchWorkout(final Long id, final User user);
 
     void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException;
 
