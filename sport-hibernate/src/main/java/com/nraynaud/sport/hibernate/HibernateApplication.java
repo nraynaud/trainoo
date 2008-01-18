@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 @Transactional
-@SqlResultSetMapping(name = "distanceByDiscipline",
-        entities = {@EntityResult(entityClass = DisciplineDistanceImpl.class)})
 public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
