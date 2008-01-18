@@ -1,17 +1,28 @@
 package com.nraynaud.sport.web;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import com.opensymphony.xwork2.ActionContext;
+import org.apache.commons.logging.LogFactory;
+
+import javax.servlet.*;
 import java.beans.Introspector;
+import java.io.IOException;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Enumeration;
 
-public class CleanupListener implements ServletContextListener {
-    public void contextInitialized(final ServletContextEvent event) {
+public class CleanupFilter implements Filter {
+    public void init(final FilterConfig filterConfig) throws ServletException {
+        ActionContext.setContext(null);
     }
 
-    public void contextDestroyed(final ServletContextEvent event) {
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws
+            IOException,
+            ServletException {
+        chain.doFilter(request, response);
+    }
+
+    public void destroy() {
+        ActionContext.setContext(null);
         try {
             Introspector.flushCaches();
             for (Enumeration e = DriverManager.getDrivers(); e.hasMoreElements();) {
@@ -24,5 +35,6 @@ public class CleanupListener implements ServletContextListener {
             System.err.println("Failled to cleanup ClassLoader for webapp");
             e.printStackTrace();
         }
-    } 
+        LogFactory.release(Thread.currentThread().getContextClassLoader());
+    }
 }

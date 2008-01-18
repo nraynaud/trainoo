@@ -1,6 +1,5 @@
 package com.nraynaud.sport.web.converter;
 
-import com.nraynaud.sport.web.SoftThreadLocal;
 import static com.nraynaud.sport.web.converter.ConverterUtil.parseWholeString;
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
@@ -14,23 +13,6 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 
 public class DateConverter extends StrutsTypeConverter {
-    public static final SoftThreadLocal<DateFormat> FORMAT_WITH_YEAR = new SoftThreadLocal<DateFormat>() {
-        protected DateFormat createValue() {
-            return new SimpleDateFormat("dd/MM/yy");
-        }
-    };
-
-    public static final SoftThreadLocal<DateFormat> FORMAT_WITH_MONTH = new SoftThreadLocal<DateFormat>() {
-        protected DateFormat createValue() {
-            return new SimpleDateFormat("dd/MM");
-        }
-    };
-
-    public static final SoftThreadLocal<DateFormat> FORMAT_WITH_DAY = new SoftThreadLocal<DateFormat>() {
-        protected DateFormat createValue() {
-            return new SimpleDateFormat("dd");
-        }
-    };
 
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
@@ -40,15 +22,15 @@ public class DateConverter extends StrutsTypeConverter {
 
     public static Date parseDate(final String source) {
         try {
-            return (Date) parseWholeString(FORMAT_WITH_YEAR.get(), source);
+            return (Date) parseWholeString(getFormatWithYear(), source);
         }
         catch (ParseException e) {
             try {
-                final Date date = (Date) parseWholeString(FORMAT_WITH_MONTH.get(), source);
+                final Date date = (Date) parseWholeString(getFormatWithMonth(), source);
                 return setCurrentComponents(date, Calendar.YEAR);
             } catch (ParseException e1) {
                 try {
-                    final Date date = (Date) parseWholeString(FORMAT_WITH_DAY.get(), source);
+                    final Date date = (Date) parseWholeString(getFormatWithDay(), source);
                     return setCurrentComponents(date, Calendar.YEAR, Calendar.MONTH);
                 } catch (ParseException e2) {
                     throw new TypeConversionException(e);
@@ -73,9 +55,21 @@ public class DateConverter extends StrutsTypeConverter {
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public String convertToString(final Map context, final Object o) {
         if (o instanceof Date) {
-            final DateFormat sdf = FORMAT_WITH_YEAR.get();
+            final DateFormat sdf = getFormatWithYear();
             return sdf.format((Date) o);
         }
         return "";
+    }
+
+    private static DateFormat getFormatWithYear() {
+        return new SimpleDateFormat("dd/MM/yy");
+    }
+
+    private static DateFormat getFormatWithMonth() {
+        return new SimpleDateFormat("dd/MM");
+    }
+
+    private static DateFormat getFormatWithDay() {
+        return new SimpleDateFormat("dd");
     }
 }
