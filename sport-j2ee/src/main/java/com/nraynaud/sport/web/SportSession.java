@@ -48,7 +48,7 @@ public class SportSession {
     public static class UserWrapper implements Serializable {
         @SuppressWarnings({"TransientFieldNotInitialized"})
         private transient User user;
-        private long userId;
+        private Long userId;
 
         public UserWrapper(final User user) {
             this.user = user;

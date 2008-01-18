@@ -5,7 +5,7 @@ import java.io.Serializable;
 public interface User extends Serializable {
     public boolean checkPassword(final String candidate);
 
-    long getId();
+    Long getId();
 
     String getName();
 }

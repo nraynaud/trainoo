@@ -11,7 +11,7 @@ public class UserImpl implements User {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private long id;
+    private Long id;
 
     @Column(name = "NAME", unique = true, nullable = false)
     private String name;
@@ -27,11 +27,11 @@ public class UserImpl implements User {
         this.passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(final long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 

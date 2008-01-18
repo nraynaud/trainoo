@@ -64,9 +64,9 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public User getUser(final long id) {
+    public User getUser(final Long id) {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.id=:id");
-        query.setParameter("id", Long.valueOf(id));
+        query.setParameter("id", id);
         return (User) query.getSingleResult();
     }
 
@@ -74,7 +74,7 @@ public class HibernateApplication implements Application {
         final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
         if (workout == null)
             return null;
-        if (workout.getUser().getId() == user.getId())
+        if (workout.getUser().getId().equals(user.getId()))
             return workout;
         else
             return null;
