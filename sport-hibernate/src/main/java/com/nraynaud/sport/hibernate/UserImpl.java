@@ -31,16 +31,8 @@ public class UserImpl implements User {
         return id;
     }
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
     }
 
     public boolean checkPassword(final String candidate) {
@@ -49,9 +41,5 @@ public class UserImpl implements User {
 
     public String getPasswordHash() {
         return passwordHash;
-    }
-
-    public void setPasswordHash(final String passwordHash) {
-        this.passwordHash = passwordHash;
     }
 }
