@@ -103,9 +103,11 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     private List<StatisticsPageData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
-        final String string = "select new DisciplineDistanceImpl(w.discipline, sum(w.distance)) from WorkoutImpl w "
-                + (user != null ? " where w.user = :user" : "")
-                + " group by w.discipline";
+        final String string =
+                "select new com.nraynaud.sport.hibernate.DisciplineDistanceImpl(w.discipline, sum(w.distance))"
+                        + " from WorkoutImpl w "
+                        + (user != null ? " where w.user = :user" : "")
+                        + " group by w.discipline";
         final Query nativeQuery = entityManager.createQuery(string);
         if (user != null)
             nativeQuery.setParameter("user", user);
@@ -156,4 +158,5 @@ public class HibernateApplication implements Application {
             }
         };
     }
+
 }

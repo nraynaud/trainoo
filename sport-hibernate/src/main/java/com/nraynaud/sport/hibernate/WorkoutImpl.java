@@ -62,10 +62,6 @@ public class WorkoutImpl implements Workout {
         return user;
     }
 
-    public void setUser(final User user) {
-        this.user = user;
-    }
-
     public Double getDistance() {
         return distance;
     }

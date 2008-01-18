@@ -2,12 +2,7 @@ package com.nraynaud.sport.hibernate;
 
 import com.nraynaud.sport.StatisticsPageData;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
 public class DisciplineDistanceImpl implements StatisticsPageData.DisciplineDistance {
-    @Id
     private final String discipline;
     private final Double distance;
 
