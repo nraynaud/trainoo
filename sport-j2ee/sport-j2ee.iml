@@ -66,21 +66,9 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/xwork-2.0.4.jar" />
           </containerElement>
-          <containerElement type="library" name="commons-beanutils:commons-beanutils:1.7.0" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/commons-beanutils-1.7.0.jar" />
-          </containerElement>
           <containerElement type="library" name="commons-collections:commons-collections:2.1.1" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/commons-collections-2.1.1.jar" />
-          </containerElement>
-          <containerElement type="library" name="commons-digester:commons-digester:1.8" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/commons-digester-1.8.jar" />
-          </containerElement>
-          <containerElement type="library" name="commons-logging:commons-logging-api:1.1" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/commons-logging-api-1.1.jar" />
           </containerElement>
           <containerElement type="library" name="commons-logging:commons-logging:1.0.4" level="module">
             <attribute name="method" value="1" />
@@ -114,10 +102,6 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/jboss-archive-browsing-5.0.0alpha-200607201-119.jar" />
           </containerElement>
-          <containerElement type="library" name="log4j:log4j:1.2.14" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/log4j-1.2.14.jar" />
-          </containerElement>
           <containerElement type="library" name="mysql:mysql-connector-java:5.1.5" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
@@ -137,18 +121,6 @@
           <containerElement type="library" name="org.apache.struts:struts2-spring-plugin:2.0.11" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/struts2-spring-plugin-2.0.11.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.apache.struts:struts2-tiles-plugin:2.0.11" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/struts2-tiles-plugin-2.0.11.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.apache.tiles:tiles-api:2.0.4" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/tiles-api-2.0.4.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.apache.tiles:tiles-core:2.0.4" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/tiles-core-2.0.4.jar" />
           </containerElement>
           <containerElement type="library" name="org.hibernate:hibernate-annotations:3.2.1.ga" level="module">
             <attribute name="method" value="1" />
@@ -213,7 +185,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/sport-j2ee" />
-      <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/war" />
     </content>
@@ -313,19 +284,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="commons-beanutils:commons-beanutils:1.7.0">
-        <CLASSES>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
       <library name="commons-collections:commons-collections:2.1.1">
         <CLASSES>
           <root url="jar:///Users/nraynaud/.m2/repository/commons-collections/commons-collections/2.1.1/commons-collections-2.1.1.jar!/" />
@@ -335,32 +293,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/commons-collections/commons-collections/2.1.1/commons-collections-2.1.1-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="commons-digester:commons-digester:1.8">
-        <CLASSES>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-digester/commons-digester/1.8/commons-digester-1.8.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-digester/commons-digester/1.8/commons-digester-1.8-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-digester/commons-digester/1.8/commons-digester-1.8-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="commons-logging:commons-logging-api:1.1">
-        <CLASSES>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar:///Users/nraynaud/.m2/repository/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -495,19 +427,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="log4j:log4j:1.2.14">
-        <CLASSES>
-          <root url="jar:///Users/nraynaud/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar:///Users/nraynaud/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar:///Users/nraynaud/.m2/repository/log4j/log4j/1.2.14/log4j-1.2.14-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
       <library name="mysql:mysql-connector-java:5.1.5">
         <CLASSES>
           <root url="jar:///Users/nraynaud/.m2/repository/mysql/mysql-connector-java/5.1.5/mysql-connector-java-5.1.5.jar!/" />
@@ -569,45 +488,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/org/apache/struts/struts2-spring-plugin/2.0.11/struts2-spring-plugin-2.0.11-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.apache.struts:struts2-tiles-plugin:2.0.11">
-        <CLASSES>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/struts/struts2-tiles-plugin/2.0.11/struts2-tiles-plugin-2.0.11.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/struts/struts2-tiles-plugin/2.0.11/struts2-tiles-plugin-2.0.11-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/struts/struts2-tiles-plugin/2.0.11/struts2-tiles-plugin-2.0.11-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.apache.tiles:tiles-api:2.0.4">
-        <CLASSES>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/tiles/tiles-api/2.0.4/tiles-api-2.0.4.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/tiles/tiles-api/2.0.4/tiles-api-2.0.4-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/tiles/tiles-api/2.0.4/tiles-api-2.0.4-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.apache.tiles:tiles-core:2.0.4">
-        <CLASSES>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/tiles/tiles-core/2.0.4/tiles-core-2.0.4.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/tiles/tiles-core/2.0.4/tiles-core-2.0.4-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar:///Users/nraynaud/.m2/repository/org/apache/tiles/tiles-core/2.0.4/tiles-core-2.0.4-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

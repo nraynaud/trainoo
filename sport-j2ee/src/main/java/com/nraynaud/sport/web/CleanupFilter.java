@@ -1,7 +1,6 @@
 package com.nraynaud.sport.web;
 
 import com.opensymphony.xwork2.ActionContext;
-import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.*;
 import java.beans.Introspector;
@@ -35,6 +34,5 @@ public class CleanupFilter implements Filter {
             System.err.println("Failled to cleanup ClassLoader for webapp");
             e.printStackTrace();
         }
-        LogFactory.release(Thread.currentThread().getContextClassLoader());
     }
 }
