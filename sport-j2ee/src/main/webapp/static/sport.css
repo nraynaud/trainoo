@@ -152,6 +152,7 @@ p.loginLabel {
 #logo {
     font-size: 3em;
     padding-bottom: 0.5em;
+    position: relative;
 }
 
 #loginHeader, #loginHeader a, #loginHeader #logoutForm input {
@@ -190,4 +191,14 @@ p.loginLabel {
 #ad {
     text-align: center;
     margin: 4px 0 0 4px
+}
+
+#gloss {
+    background: transparent url( /static/gradient-white.png ) repeat-x scroll 0%;
+    display: block;
+    height: 31px;
+    height: 31px;
+    position: absolute;
+    display: block;
+    width: 100%;
 }

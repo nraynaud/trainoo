@@ -12,15 +12,27 @@
     <link href="<s:url value="/static/sport.css"/>" rel="stylesheet" type="text/css">
     <script type="text/javascript"><!--
     google_ad_client = "pub-6101279689689980";
-    //468x60, trainoo
     google_ad_slot = "7291082437";
     google_ad_width = 468;
     google_ad_height = 60;
     //--></script>
+
+    <!--[if lt IE 7]>
+        <style  type="text/css">
+            #gloss {
+                background: none;
+                filter: progid: DXImageTransform . Microsoft . AlphaImageLoader( src = 'gradient.png', sizingMethod = 'scale' );
+            }
+        </style>
+    <![endif]-->
 </head>
 <body>
 <div id="center">
-    <div id="logo"><a href="/">Train<span style="color:#968148;">oo</span>.com</a></div>
+    <!-- thanks to http://www.webdesignerwall.com/tutorials/css-gradient-text-effect/ -->
+    <div id="logo">
+        <span id="gloss"></span>
+        <a href="/">Train<span style="color:#968148;">oo</span>.com</a>
+    </div>
 
     <% if (pageDetail.isLoginHeader()) {%>
     <s:component template="loginHeader.jsp"/>
