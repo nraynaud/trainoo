@@ -155,7 +155,8 @@ public class HibernateApplication implements Application {
         };
     }
 
-    public Message createMessage(final User sender, final User receiver, final String content, final Date date) {
+    public Message createMessage(final User sender, final Long receiverId, final String content, final Date date) {
+        final User receiver = fetchUser(receiverId);
         final MessageImpl message = new MessageImpl(sender, receiver, date, content);
         entityManager.persist(message);
         return message;

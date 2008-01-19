@@ -1,6 +1,7 @@
 package com.nraynaud.sport;
 
 import java.util.Date;
+import java.util.List;
 
 public interface Application extends UserStore {
     Workout createWorkout(Date date,
@@ -27,4 +28,9 @@ public interface Application extends UserStore {
     StatisticsPageData fetchFrontPageData();
 
     StatisticsPageData fetchWorkoutPageData(final User user);
+
+    Message createMessage(User sender, Long receiverId, String content, Date date);
+
+    @SuppressWarnings({"unchecked"})
+    List<Message> fetchMessages(User receiver);
 }

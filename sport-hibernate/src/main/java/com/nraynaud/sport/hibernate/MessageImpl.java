@@ -42,7 +42,7 @@ public class MessageImpl implements Message {
         return id;
     }
 
-    public String content() {
+    public String getContent() {
         return content;
     }
 

@@ -52,7 +52,7 @@ public class LayoutResult extends StrutsResultSupport {
 
         // If we're included, then include the view
         // Otherwise do forward
-        // This allow the page to, for example, set content type
+        // This allow the page to, for example, set getContent type
         if (!response.isCommitted() && (request.getAttribute("javax.servlet.include.servlet_path") == null)) {
             request.setAttribute("struts.view_uri", finalLocation);
             request.setAttribute("struts.request_uri", request.getRequestURI());
