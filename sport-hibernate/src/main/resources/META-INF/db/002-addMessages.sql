@@ -6,6 +6,7 @@ USE sport_java;
 
 CREATE TABLE  `MESSAGES` (
     `ID` bigint(20) NOT NULL auto_increment,
+    `DATE` datetime NOT NULL,
     `USER_ID` bigint(20) NOT NULL,
     `WORKOUT_ID` bigint(20),
     `CONTENT` varchar(255) character set utf8 NOT NULL,

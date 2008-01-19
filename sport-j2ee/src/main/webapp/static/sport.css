@@ -60,7 +60,7 @@ table {
 }
 
 table.workouts {
-    border: #4B4C3C solid;
+    border: #4B4C3C solid thin;
 }
 
 .workouts tr td {
@@ -89,6 +89,7 @@ hr {
 }
 
 h2, h1 {
+    margin-top: 2em;
     margin-bottom: 0;
     color: #57470C;
 }
@@ -111,7 +112,6 @@ h2, h1 {
 }
 
 .feedback {
-    background-color: #968148;
     font-weight: bold;
 }
 

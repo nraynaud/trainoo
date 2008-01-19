@@ -27,14 +27,15 @@
     <% } %>
 
     <div id="ad">
-        <script type='text/javascript' src='http://pagead2.googlesyndication.com/pagead/show_ads.js' defer="defer"></script>
+        <script type='text/javascript' src='http://pagead2.googlesyndication.com/pagead/show_ads.js'
+                defer="defer"></script>
     </div>
     <div id="content">
         <r:writeContent/>
     </div>
     <hr id="bottom">
-    <div><p class="smaller" style="text-align:center;">Copyright Nicolas Raynaud 2008. Une idée, une question&nbsp;? <a
-            href="mailto:nicolas@trainoo.com">Par ici&nbsp;!</a></p></div>
+    <div><p class="smaller" style="text-align:center;">Copyright Nicolas Raynaud 2008.
+        <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
 </div>
 <script type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>

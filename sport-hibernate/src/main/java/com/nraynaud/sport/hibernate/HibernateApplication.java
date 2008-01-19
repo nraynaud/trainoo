@@ -101,8 +101,8 @@ public class HibernateApplication implements Application {
     private List<StatisticsPageData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
         final String string =
                 "select new com.nraynaud.sport.hibernate.DisciplineDistanceImpl(w.discipline, sum(w.distance))"
-                        + " from WorkoutImpl w "
-                        + (user != null ? " where w.user = :user" : "")
+                        + " from WorkoutImpl w where w.distance is not null"
+                        + (user != null ? " and w.user = :user" : "")
                         + " group by w.discipline";
         final Query nativeQuery = entityManager.createQuery(string);
         if (user != null)
@@ -155,4 +155,16 @@ public class HibernateApplication implements Application {
         };
     }
 
+    public Message createMessage(final User sender, final User receiver, final String content, final Date date) {
+        final MessageImpl message = new MessageImpl(sender, receiver, date, content);
+        entityManager.persist(message);
+        return message;
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public List<Message> fetchMessages(final User receiver) {
+        final Query query = entityManager.createQuery("select m from MessageImpl m where m.receiver=:receiver");
+        query.setParameter("receiver", receiver);
+        return query.getResultList();
+    }
 }

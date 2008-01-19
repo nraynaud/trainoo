@@ -4,4 +4,6 @@ public interface Message {
     Long getId();
 
     String content();
+
+    User getSender();
 }

@@ -36,7 +36,7 @@
                              onblur="Element.hide('distance_tip')"
                              onkeyup="feedback('distance', this.value)"/></td>
             <td>
-                <div style="margin-left:2em;">
+                <div style="margin-left:1em;">
                     <input type="submit" name="submit" value="<s:property value="%{parameters.submit}"/>">
                 </div>
             </td>
