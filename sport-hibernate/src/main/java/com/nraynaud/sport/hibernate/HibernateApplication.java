@@ -66,6 +66,12 @@ public class HibernateApplication implements Application {
         return (User) query.getSingleResult();
     }
 
+    public User fetchUser(final String name) {
+        final Query query = entityManager.createQuery("select u from UserImpl u where u.name=:name");
+        query.setParameter("name", name);
+        return (User) query.getSingleResult();
+    }
+
     public Workout fetchWorkout(final Long id, final User user) {
         final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
         if (workout == null)
@@ -155,8 +161,8 @@ public class HibernateApplication implements Application {
         };
     }
 
-    public Message createMessage(final User sender, final Long receiverId, final String content, final Date date) {
-        final User receiver = fetchUser(receiverId);
+    public Message createMessage(final User sender, final String receiverName, final String content, final Date date) {
+        final User receiver = fetchUser(receiverName);
         final MessageImpl message = new MessageImpl(sender, receiver, date, content);
         entityManager.persist(message);
         return message;
@@ -164,7 +170,8 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     public List<Message> fetchMessages(final User receiver) {
-        final Query query = entityManager.createQuery("select m from MessageImpl m where m.receiver=:receiver");
+        final Query query = entityManager.createQuery(
+                "select m from MessageImpl m where m.receiver=:receiver order by m.date asc");
         query.setParameter("receiver", receiver);
         return query.getResultList();
     }

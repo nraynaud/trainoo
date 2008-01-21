@@ -107,7 +107,7 @@ public class ApplicationTest {
     public void testSendMessage() throws UserAlreadyExistsException {
         final User sender = application.createUser("sender", "lol");
         final User receiver = application.createUser("receiver", "lol");
-        final Message message = application.createMessage(sender, receiver.getId(), "Lol", new Date());
+        final Message message = application.createMessage(sender, receiver.getName(), "Lol", new Date());
         final List<Message> messages = application.fetchMessages(receiver);
         Assert.assertEquals(Arrays.asList(message), messages);
     }

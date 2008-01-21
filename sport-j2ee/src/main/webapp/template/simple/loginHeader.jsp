@@ -10,7 +10,7 @@
         if (session != null) {
             final User user = session.getUser();%>
     <span id="loginName"><%= TextUtils.htmlEncode(user.getName()) + "<!-- " + user.getId() + " -->"%> | <a
-            href="<s:url action='workouts'/>">Mes entraînements</a></span> |
+            href="<s:url action='workouts'/>">Mon vestiaire</a></span> |
     <s:form id="logoutForm" action="logout" method="POST">
         <s:submit cssClass="logoutButton" value="Déconnexion"/>
     </s:form>

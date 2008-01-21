@@ -21,7 +21,8 @@ import java.util.Date;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class MessagesAction extends DefaultAction {
 
-    String content;
+    private String content;
+    private String receiver;
     private final Application application;
     private SportRequest request;
 
@@ -35,7 +36,7 @@ public class MessagesAction extends DefaultAction {
 
     @PostOnly
     public String create() {
-        application.createMessage(getUser(), getUser().getId(), content, new Date());
+        application.createMessage(getUser(), receiver, content, new Date());
         return SUCCESS;
     }
 
@@ -45,5 +46,9 @@ public class MessagesAction extends DefaultAction {
 
     public User getUser() {
         return request.getSportSession().getUser();
+    }
+
+    public void setReceiver(final String receiver) {
+        this.receiver = receiver;
     }
 }

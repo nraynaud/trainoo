@@ -11,7 +11,6 @@ import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -36,7 +35,7 @@ public class FeedbackAction {
 
     @SuppressWarnings({"MethodMayBeStatic"})
     public String create() {
-        return "logins".equals(type) ? Constants.FEEDBACK : "logins";
+        return "logins".equals(type) ? "logins" : Constants.FEEDBACK;
     }
 
     public String getResult() {
@@ -52,7 +51,6 @@ public class FeedbackAction {
 
     public List<String> getLogins() {
         final List<String> list = application.fechLoginBeginningBy(data);
-        System.out.println(new ArrayList(list));
         return list;
     }
 

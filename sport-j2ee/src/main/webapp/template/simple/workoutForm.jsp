@@ -14,7 +14,8 @@
             <th><label for="distance">Distance</label></th>
         </tr>
         <tr>
-            <td><s:select id="discipline" list="{'course', 'vélo', 'VTT', 'marche', 'natation'}" name="discipline"
+            <td><s:select id="discipline" list="{'course', 'vélo', 'VTT', 'marche', 'natation', 'roller'}"
+                          name="discipline"
                           required="true"/></td>
             <td><s:textfield id="date"
                              name="date"
@@ -55,12 +56,13 @@
 </form>
 <div class="tip" id="date_tip" style="display:none;">
     <span class="feedback"
-          id="date_feedback"> </span><br/><span>Saisissez la date au format jj/mm/aaaa ex: 03/10/2006.</span>
+          id="date_feedback"> </span><br/><span>Format&nbsp;: jj/mm/aaaa ex&nbsp;: 03/10/2006.</span>
 </div>
 <div class="tip" id="duration_tip" style="display:none;">
-    <span class="feedback" id="duration_feedback"> </span><br/><span>Saisissez la durée de l'entraînement au format HHhmm'ss ex: 03h41'17 ou 40'22</span>
+    <span class="feedback"
+          id="duration_feedback"> </span><br/><span>Format&nbsp;: HHhmm'ss ex&nbsp;: 03h41'17 ou 40'22</span>
 </div>
 <div class="tip" id="distance_tip" style="display:none;">
     <span class="feedback"
-          id="distance_feedback"> </span><br/><span>Saisissez la distance d'entraînement en kilomètres.</span>
+          id="distance_feedback"> </span><br/><span>En kilomètres.</span>
 </div>

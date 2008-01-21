@@ -26,12 +26,15 @@ form label {
 }
 
 fieldset {
-    border: thin #4B4C3C solid;
+    border: none;
+    border-top: thin #C9C9B1 solid;
 }
 
 input, select, textarea {
     font-size: 100%;
     border: gray solid thin;
+    margin: 0;
+    padding: 0;
 }
 
 a, a:visited {
@@ -171,7 +174,7 @@ p.loginLabel {
 }
 
 #globalLeft {
-    width: 59.5%;
+    width: 49.5%;
     float: left;
     padding-left: 5px;
 }
@@ -220,13 +223,31 @@ div.autocomplete ul li {
     display: block;
     margin: 0;
     padding: 2px;
-    height: 32px;
     cursor: pointer;
 }
 
 .messageHeading {
     font-size: smaller;
     color: #968148;
+}
+
+.messageContent {
+    padding-left: 1em;
+}
+
+.message {
+    border-top: #C9C9B1 solid thin;
+    padding-top: 0.1em;
+    margin-top: 0.5em
+}
+
+.messages {
+    border-bottom: #C9C9B1 solid thin;
+}
+
+.message_from {
+    color: #57470C;
+    font-weight: bold;
 }
 
 textarea#messageContent {

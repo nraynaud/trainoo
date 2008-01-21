@@ -25,7 +25,7 @@ public class MessageImpl implements Message {
     private User receiver;
 
     @Column(name = "DATE", nullable = false)
-    @OrderBy("DESC")
+    @OrderBy("ASC")
     private Date date;
 
     public MessageImpl() {
