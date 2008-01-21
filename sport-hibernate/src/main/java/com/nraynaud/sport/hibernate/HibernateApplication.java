@@ -4,6 +4,7 @@ import com.nraynaud.sport.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -132,7 +133,8 @@ public class HibernateApplication implements Application {
         final List<Workout> workouts = getWorkouts(user, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
-        return statistics(workouts, globalDistance, distanceByDiscpline);
+        final List<Message> messages = user != null ? fetchMessages(user) : Collections.<Message>emptyList();
+        return statistics(workouts, globalDistance, distanceByDiscpline, messages);
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
@@ -149,7 +151,8 @@ public class HibernateApplication implements Application {
 
     private static StatisticsPageData statistics(final List<Workout> workouts,
                                                  final Double globalDistance,
-                                                 final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline) {
+                                                 final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline,
+                                                 final List<Message> messages) {
         return new StatisticsPageData() {
             public List<Workout> getWorkouts() {
                 return workouts;
@@ -161,6 +164,10 @@ public class HibernateApplication implements Application {
 
             public List<DisciplineDistance> getDistanceByDisciplines() {
                 return distanceByDiscpline;
+            }
+
+            public List<Message> getMessages() {
+                return messages;
             }
         };
     }

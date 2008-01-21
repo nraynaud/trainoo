@@ -158,8 +158,7 @@ public class SportActionMapper implements ActionMapper {
 
 
     public String getUriFromActionMapping(final ActionMapping mapping) {
-        final StringBuilder uri = new StringBuilder();
-
+        final StringBuilder uri = new StringBuilder(20);
         uri.append(mapping.getNamespace());
         if (!"/".equals(mapping.getNamespace())) {
             uri.append('/');

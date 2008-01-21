@@ -4,7 +4,7 @@
 
 <p:layoutParams title="Mon Vestiaire"/>
 
-<s:if test="%{globalDistance != null}">
+<s:if test="%{update}">
     <h2>Vous avez parcouru <s:property value="globalDistance"/>km</h2>
     <s:component template="distanceByDiscipline.jsp"/>
 </s:if>
@@ -17,8 +17,11 @@
     <h2>Nouvel entraînement</h2>
 
     <div>
+        <s:url id="createteurl" namespace="workout" action="create" includeParams="get">
+            <s:param name="id" value="id"/>
+        </s:url>
         <s:component template="workoutForm.jsp">
-            <s:param name="action" value="'workouts'"/>
+            <s:param name="action" value="createteurl"/>
             <s:param name="submit" value="'Ajouter'"/>
         </s:component>
     </div>
@@ -26,6 +29,5 @@
 
 <div id="globalRight" class="messages">
     <h2>Messagerie</h2>
-
     <s:component template="messages.jsp"/>
 </div>

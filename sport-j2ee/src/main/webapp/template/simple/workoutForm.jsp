@@ -44,11 +44,9 @@
 
             <s:if test="%{parameters.deleteAction != null}">
                 <td>
-                    <div>
-                        <form action="<s:property value="%{parameters.deleteAction}"/>">
-                            <input type="submit" name="delete" value="Supprimer"/>
-                        </form>
-                    </div>
+                    <form action="<s:property value="%{parameters.deleteAction}"/>">
+                        <input type="submit" name="delete" value="Supprimer"/>
+                    </form>
                 </td>
             </s:if>
         </tr>

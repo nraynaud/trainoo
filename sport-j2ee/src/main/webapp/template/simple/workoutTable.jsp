@@ -15,7 +15,7 @@
                 <td><p:distance name="distance"/></td>
                 <s:if test="%{parameters.displayEdit}">
                     <td>
-                        <s:url id="editurl" action="editWorkout" includeParams="get">
+                        <s:url id="editurl" namespace="workout" action="edit" includeParams="get">
                             <s:param name="id" value="id"/>
                         </s:url>
                         <s:a href="%{editurl}">modifier</s:a>

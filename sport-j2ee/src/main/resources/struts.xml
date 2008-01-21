@@ -43,6 +43,7 @@
         <global-results>
             <result name="login" type="redirectAction">
                 <param name="actionName">login</param>
+                <param name="namespace">/</param>
             </result>
         </global-results>
         <action name="*" class="com.nraynaud.sport.web.action.GlobalWorkoutsAction">

@@ -14,4 +14,6 @@ public interface StatisticsPageData {
 
         Double getDistance();
     }
+
+    public List<Message> getMessages();
 }
