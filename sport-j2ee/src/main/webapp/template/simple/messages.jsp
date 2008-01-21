@@ -23,7 +23,7 @@
 </s:form>
 <s:iterator value="messages">
     <div class="message" style="">
-                <span class="messageHeading"><s:date name="date" format="E dd/M à hh:mm"/>
+                <span class="messageHeading"><s:date name="date" format="E dd/M à HH:mm"/>
                         <span class="message_from">
                     <s:property value="sender.name" escape="true"/>
                         </span> a écrit&nbsp;:
