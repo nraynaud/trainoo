@@ -66,10 +66,14 @@ public class HibernateApplication implements Application {
         return (User) query.getSingleResult();
     }
 
-    public User fetchUser(final String name) {
+    public User fetchUser(final String name) throws UserNotFoundException {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.name=:name");
         query.setParameter("name", name);
-        return (User) query.getSingleResult();
+        try {
+            return (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            throw new UserNotFoundException();
+        }
     }
 
     public Workout fetchWorkout(final Long id, final User user) {
@@ -161,7 +165,11 @@ public class HibernateApplication implements Application {
         };
     }
 
-    public Message createMessage(final User sender, final String receiverName, final String content, final Date date) {
+    public Message createMessage(final User sender,
+                                 final String receiverName,
+                                 final String content,
+                                 final Date date) throws
+            UserNotFoundException {
         final User receiver = fetchUser(receiverName);
         final MessageImpl message = new MessageImpl(sender, receiver, date, content);
         entityManager.persist(message);

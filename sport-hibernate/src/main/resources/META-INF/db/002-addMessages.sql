@@ -10,7 +10,7 @@ CREATE TABLE  `MESSAGES` (
     `SENDER_ID` bigint(20) NOT NULL,
     `RECEIVER_ID` bigint(20) NOT NULL,
     `WORKOUT_ID` bigint(20),
-    `CONTENT` varchar(255) character set utf8 NOT NULL,
+    `CONTENT` TEXT character set utf8 NOT NULL,
     PRIMARY KEY  (`ID`),
     KEY `messages_receiver_ID` USING BTREE (`RECEIVER_ID`),
     CONSTRAINT `messages_receiver_fk` FOREIGN KEY (`RECEIVER_ID`) REFERENCES `USERS` (`ID`),
