@@ -14,7 +14,7 @@ public class WriteJavacriptTag extends TagSupport {
             final JspWriter out = pageContext.getOut();
             try {
                 for (final String script : javascript) {
-                    out.write("<script language=\"JavaScript\" type=\"text/javascript\">");
+                    out.write("<script type=\"text/javascript\">");
                     out.write(script);
                     out.write("</script>");
                 }

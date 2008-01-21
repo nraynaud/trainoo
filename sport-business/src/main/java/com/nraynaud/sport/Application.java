@@ -33,4 +33,6 @@ public interface Application extends UserStore {
 
     @SuppressWarnings({"unchecked"})
     List<Message> fetchMessages(User receiver);
+
+    List<String> fechLoginBeginningBy(final String prefix);
 }

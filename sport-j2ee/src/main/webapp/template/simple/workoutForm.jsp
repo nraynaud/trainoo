@@ -24,14 +24,14 @@
                              onkeyup="feedback('date', this.value)"/></td>
             <td><s:textfield id="duration"
                              name="duration"
-                             size="7"
+                             size="6"
                              onfocus="Element.show('duration_tip');feedback('duration', this.value)"
                              onblur="Element.hide('duration_tip')"
                              onkeyup="feedback('duration', this.value)"/></td>
 
             <td><s:textfield id="distance"
                              name="distance"
-                             size="7"
+                             size="6"
                              onfocus="Element.show('distance_tip');feedback('distance', this.value)"
                              onblur="Element.hide('distance_tip')"
                              onkeyup="feedback('distance', this.value)"/></td>

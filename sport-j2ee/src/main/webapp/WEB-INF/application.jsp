@@ -4,11 +4,13 @@
 <%@ taglib prefix="r" uri="/sport-tags" %>
 
 <% final PageDetail pageDetail = PageDetail.detailFor(request); %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
     <title><%= pageDetail.getTitle()%>
     </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <link href="<s:url value="/static/sport.css"/>" rel="stylesheet" type="text/css">
     <script type="text/javascript"><!--
     google_ad_client = "pub-6101279689689980";
@@ -21,7 +23,7 @@
         <style  type="text/css">
             #gloss {
                 background: none;
-                filter: progid: DXImageTransform . Microsoft . AlphaImageLoader( src = 'gradient.png', sizingMethod = 'scale' );
+                filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='gradient.png', sizingMethod='scale');
             }
         </style>
     <![endif]-->
@@ -29,10 +31,9 @@
 <body>
 <div id="center">
     <!-- thanks to http://www.webdesignerwall.com/tutorials/css-gradient-text-effect/ -->
-    <div id="logo">
-        <span id="gloss"></span>
+    <h1 id="logo">
         <a href="/">Train<span style="color:#968148;">oo</span>.com</a>
-    </div>
+    </h1>
 
     <% if (pageDetail.isLoginHeader()) {%>
     <s:component template="loginHeader.jsp"/>
@@ -50,6 +51,7 @@
         <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
 </div>
 <script type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
+<script type="text/javascript" src="<s:url value="/static/scriptaculous.js"/>"></script>
 <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
 <r:writeJavascript/>
 <script type="text/javascript">

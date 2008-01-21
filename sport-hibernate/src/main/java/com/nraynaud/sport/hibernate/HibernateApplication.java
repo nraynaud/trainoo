@@ -168,4 +168,12 @@ public class HibernateApplication implements Application {
         query.setParameter("receiver", receiver);
         return query.getResultList();
     }
+
+    @SuppressWarnings({"unchecked"})
+    public List<String> fechLoginBeginningBy(final String prefix) {
+        final Query query = entityManager.createQuery(
+                "select u.name from UserImpl u where u.name LIKE CONCAT(:prefix, '%')");
+        query.setParameter("prefix", prefix);
+        return query.getResultList();
+    }
 }

@@ -14,7 +14,7 @@
         <p class="loginLabel"><label for="login">Votre surnom</label></p>
 
         <p><s:textfield id="login" name="login"/></p>
-
+        <p:javascript>Field.activate('login');</p:javascript>
         <p class="loginLabel"><label for="password">Votre mot de passe</label></p>
 
         <p><s:password id="password" name="password"/></p>
@@ -29,5 +29,3 @@
     </s:form>
 </div>
 Déjà un compte&nbsp;? <a href="<s:url action='login'/>">Identifiez-vous&nbsp;!</a>
-
-<p:javascript>Field.activate('login');</p:javascript>

@@ -1,35 +1,42 @@
 package com.nraynaud.sport.web.action;
 
+import com.nraynaud.sport.Application;
 import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.converter.DateConverter;
 import com.nraynaud.sport.web.converter.DistanceConverter;
 import com.nraynaud.sport.web.converter.DurationConverter;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
+import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-@Result(type = ServletDispatcherResult.class, name = Constants.FEEDBACK, value = "/WEB-INF/pages/feedback.jsp")
+@Results({
+        //the type avoid having the page decorated by application.jsp
+@Result(name = Constants.FEEDBACK, type = ServletDispatcherResult.class, value = "/WEB-INF/pages/feedback.jsp"),
+@Result(name = "logins", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/logins.jsp")
+        })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-@Public
 public class FeedbackAction {
-    private static final ThreadLocal<DateFormat> LONG_DATEFORMAT = new ThreadLocal<DateFormat>() {
-        protected DateFormat initialValue() {
-            return DateFormat.getDateInstance(DateFormat.FULL, Locale.FRANCE);
-        }
-    };
-
+    public static final Object DATE_LOCK = new Object();
 
     private String data;
     private String type;
 
+    private final Application application;
+
+    public FeedbackAction(final Application application) {
+        this.application = application;
+    }
+
     @SuppressWarnings({"MethodMayBeStatic"})
     public String create() {
-        return Constants.FEEDBACK;
+        return "logins".equals(type) ? Constants.FEEDBACK : "logins";
     }
 
     public String getResult() {
@@ -41,6 +48,12 @@ public class FeedbackAction {
             return convertDistance();
         }
         return "";
+    }
+
+    public List<String> getLogins() {
+        final List<String> list = application.fechLoginBeginningBy(data);
+        System.out.println(new ArrayList(list));
+        return list;
     }
 
     private String convertDistance() {
@@ -64,7 +77,9 @@ public class FeedbackAction {
     private String convertDate() {
         try {
             final Date date = DateConverter.parseDate(data);
-            return LONG_DATEFORMAT.get().format(date);
+            synchronized (DATE_LOCK) {
+                return DateFormat.getDateInstance(DateFormat.FULL, Locale.FRANCE).format(date);
+            }
         } catch (Exception e) {
             return "La date n'a pas été comprise.";
         }
