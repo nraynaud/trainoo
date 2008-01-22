@@ -24,7 +24,7 @@ public class DistanceConverterTest {
         checkError("a10");
     }
 
-    private void checkError(final String input) {
+    private static void checkError(final String input) {
         final DistanceConverter converter = new DistanceConverter();
         try {
             converter.convertFromString(null, new String[]{input}, Double.class);

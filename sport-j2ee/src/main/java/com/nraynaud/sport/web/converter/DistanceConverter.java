@@ -16,7 +16,17 @@ public class DistanceConverter extends StrutsTypeConverter {
 
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
         final String input = values[0];
-        return parseDistance(removeKmSuffix(input));
+        return parseDistance(input);
+    }
+
+    public String convertToString(final Map context, final Object o) {
+        if (o == null)
+            return "";
+        return formatNumber((Double) o);
+    }
+
+    public static Double parseDistance(final String input) {
+        return Double.valueOf(parseNumber(removeKmSuffix(input)).doubleValue());
     }
 
     private static String removeKmSuffix(final String input) {
@@ -28,17 +38,7 @@ public class DistanceConverter extends StrutsTypeConverter {
         return next;
     }
 
-    public String convertToString(final Map context, final Object o) {
-        if (o == null)
-            return "";
-        return formatNumber((Double) o);
-    }
-
-    public static Double parseDistance(final String input) {
-        return Double.valueOf(ParseNumber(input).doubleValue());
-    }
-
-    private static Number ParseNumber(final String input) {
+    private static Number parseNumber(final String input) {
         try {
             return (Number) parseWholeString(getFormat(), input);
         } catch (ParseException e) {

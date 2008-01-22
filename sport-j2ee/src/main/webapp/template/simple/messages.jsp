@@ -5,10 +5,10 @@
 <s:actionerror/>
 <s:actionmessage/>
 <s:fielderror/>
-<s:form action="/messages">
+
+<s:form action="messages">
     <fieldset>
         <legend>Écrire</legend>
-        <s:token/>
         <label for="receiver">Destinataire&nbsp;:</label><br>
         <s:textfield name="receiver" id="receiver" maxlength="20"/>
 

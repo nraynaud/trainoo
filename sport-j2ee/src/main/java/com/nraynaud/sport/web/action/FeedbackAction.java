@@ -50,8 +50,7 @@ public class FeedbackAction {
     }
 
     public List<String> getLogins() {
-        final List<String> list = application.fechLoginBeginningBy(data);
-        return list;
+        return application.fechLoginBeginningBy(data);
     }
 
     private String convertDistance() {
