@@ -3,7 +3,7 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <p:layoutParams title="Identification" loginHeader="false"/>
-<h1>Identification</h1>
+<h1>Connexion</h1>
 
 <div class="aroundForm">
     <s:form id="login_form" action="login">

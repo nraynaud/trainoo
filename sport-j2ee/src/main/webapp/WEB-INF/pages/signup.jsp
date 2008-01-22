@@ -5,6 +5,8 @@
 <p:layoutParams title="Insrivez-vous !" loginHeader="false"/>
 <h1>Inscrivez-vous&nbsp;!</h1>
 
+<p>Vous pourrez suivre votre vie sportive et rencontrer d'autres amateurs comme vous&nbsp;!</p>
+
 <div class="aroundForm">
     <s:form action="signup">
         <s:actionerror/>
@@ -28,4 +30,4 @@
 
     </s:form>
 </div>
-Déjà un compte&nbsp;? <a href="<s:url action='login'/>">Identifiez-vous&nbsp;!</a>
+Déjà un compte&nbsp;? <a href="<s:url action='login'/>">Connectez-vous&nbsp;!</a>

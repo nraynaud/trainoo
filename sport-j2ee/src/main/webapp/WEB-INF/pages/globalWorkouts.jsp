@@ -17,4 +17,6 @@
 
     <p>Vous pratiquez le sport en dehors de la Télé&nbsp;?<br>
         Vous suivrez ici votre vie active.</p>
+
+    <p><a href="<s:url action='signup'/>">Inscrivez-vous</a></p>
 </div>
