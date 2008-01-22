@@ -241,11 +241,16 @@ div.autocomplete ul li {
     margin-top: 0.5em
 }
 
+.received {
+    background-color: white;
+    border: #C9C9B1 solid thin;
+}
+
 .messages {
     border-bottom: #C9C9B1 solid thin;
 }
 
-.message_from {
+.received .messageHeading .message_from {
     color: #57470C;
     font-weight: bold;
 }

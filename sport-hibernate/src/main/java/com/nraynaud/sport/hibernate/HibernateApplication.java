@@ -186,7 +186,7 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     public List<Message> fetchMessages(final User receiver) {
         final Query query = entityManager.createQuery(
-                "select m from MessageImpl m where m.receiver=:receiver order by m.date desc");
+                "select m from MessageImpl m where m.receiver=:receiver OR m.sender=:receiver order by m.date desc");
         query.setParameter("receiver", receiver);
         return query.getResultList();
     }

@@ -2,6 +2,7 @@ package com.nraynaud.sport.web;
 
 import com.nraynaud.sport.UserStore;
 import static com.nraynaud.sport.web.Constants.LOGIN_RESULT;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import org.apache.struts2.ServletActionContext;
@@ -18,7 +19,9 @@ public class SportInterceptor extends AbstractInterceptor {
 
     public String intercept(final ActionInvocation invocation) throws Exception {
         final SportRequest request = new SportRequest(userStore, ServletActionContext.getRequest());
-        invocation.getInvocationContext().put(SportRequest.SPORT_REQUEST, request);
+        final ActionContext invocationContext = invocation.getInvocationContext();
+        invocationContext.put(SportRequest.SPORT_REQUEST, request);
+        invocationContext.getValueStack().push(request);
         final Object action = invocation.getAction();
         final Class<?> actionClass = action.getClass();
         final Method actionMethod = getActionMethod(actionClass, invocation.getProxy().getMethod());

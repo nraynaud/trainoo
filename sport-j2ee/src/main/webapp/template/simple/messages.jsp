@@ -22,11 +22,18 @@
     </fieldset>
 </s:form>
 <s:iterator value="messages">
-    <div class="message" style="">
-                <span class="messageHeading"><s:date name="date" format="E dd/M à HH:mm"/>
+    <s:if test="%{sportSession.user.id == receiver.id}">
+        <s:set name="cssClass" value="'received'"/>
+    </s:if>
+    <s:else>
+        <s:set name="cssClass" value="'sent'"/>
+    </s:else>
+    <div class="message <s:property value="cssClass"/>">
+                <span class="messageHeading">
+                    <s:date name="date" format="E dd/M à HH:mm"/>
                         <span class="message_from">
                     <s:property value="sender.name" escape="true"/>
-                        </span> a écrit&nbsp;:
+                        </span> pour <s:property value="receiver.name" escape="true"/>&nbsp;:
                 </span>
 
         <p class="messageContent"><s:property value="content" escape="true"/></p>
