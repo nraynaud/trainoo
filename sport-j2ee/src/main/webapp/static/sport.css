@@ -255,6 +255,10 @@ div.autocomplete ul li {
     font-weight: bold;
 }
 
+.sent .messageContent {
+    color: gray;
+}
+
 textarea#messageContent {
     width: 100%;
 }
