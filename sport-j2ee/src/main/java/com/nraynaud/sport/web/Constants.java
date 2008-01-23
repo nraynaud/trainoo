@@ -1,6 +1,6 @@
 package com.nraynaud.sport.web;
 
-public class Constants {
+public interface Constants {
     public static final String FEEDBACK = "feedback";
     public static final String WORKOUTS_ACTION = "workouts";
     public static final String LOGIN_RESULT = "login";
