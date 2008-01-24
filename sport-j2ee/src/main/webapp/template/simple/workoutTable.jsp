@@ -1,3 +1,4 @@
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.isLogged" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -8,7 +9,16 @@
             <tr class="<s:if test="#rowstatus.odd == true ">odd</s:if><s:else>even</s:else>">
                 <td><s:date name="date" format="E dd/M"/></td>
                 <s:if test="%{parameters.displayName}">
-                    <td><s:property value="user.name"/></td>
+                    <td>
+                        <% if (isLogged()) {%>
+                        <s:url id="bibUrl" namespace="bib" action="" includeParams="get">
+                            <s:param name="id" value="user.id"/>
+                        </s:url>
+                        <s:a href="%{bibUrl}" title="Voir son dossard"><s:property value="user.name"/></s:a>
+                        <% } else {%>
+                        <s:property value="user.name"/>
+                        <%}%>
+                    </td>
                 </s:if>
                 <td><s:property value="discipline" escape="true"/></td>
                 <td><p:duration name="duration"/></td>

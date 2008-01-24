@@ -2,8 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<p:layoutParams title="Identification" loginHeader="false"/>
-<h1>Connexion</h1>
+<p:layoutParams title="Connectez-vous !" loginHeader="false"/>
 
 <div class="aroundForm">
     <s:form id="login_form" action="login">

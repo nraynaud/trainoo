@@ -3,8 +3,6 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <p:layoutParams title="Insrivez-vous !" loginHeader="false"/>
-<h1>Inscrivez-vous&nbsp;!</h1>
-
 <p>Vous pourrez suivre votre vie sportive et rencontrer d'autres amateurs comme vous&nbsp;!</p>
 
 <div class="aroundForm">

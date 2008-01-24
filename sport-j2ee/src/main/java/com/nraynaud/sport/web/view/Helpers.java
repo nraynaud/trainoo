@@ -48,4 +48,8 @@ public class Helpers {
     public static Object top() {
         return stack().peek();
     }
+
+    public static boolean isLogged() {
+        return SportRequest.getSportRequest().isLogged();
+    }
 }

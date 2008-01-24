@@ -17,7 +17,7 @@ public class SportRequest {
     }
 
     public boolean isLogged() {
-        return getSportSession() == null;
+        return getSportSession() != null;
     }
 
     public SportSession getSportSession() {

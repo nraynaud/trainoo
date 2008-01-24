@@ -3,10 +3,17 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
+<% final boolean isCurrentUser = currentUser().equals(top());
+    final String title = isCurrentUser ? "Mon dossard" : "Le dossard de " + escaped("name"); %>
+<p:layoutParams title="<%=title%>"/>
 
-<% final String login = escaped("name"); %>
-<p:layoutParams title="<%="Le dossard de " + login%>"/>
 <% final String defaultValue = "<span class='unknown'>non précisé</span>"; %>
+
+<% if (isCurrentUser) {%>
+<p><a href="<s:url action="edit" namespace="/bib"/>">Mettre à jour</a></p>
+<%} else {%>
+<p>&nbsp;</p>
+<%}%>
 
 <p>Ville&nbsp;: <%=escapedOrNull("town", defaultValue)%>
 </p>
@@ -16,7 +23,3 @@
 
 <p>Mon site&nbsp;: <%=formatUrl(property("webSite"), defaultValue)%>
 </p>
-
-<%if (currentUser().equals(top())) {%>
-<a href="<s:url action="edit" namespace="/bib"/>">Mettre à jour</a>
-<%}%>
