@@ -198,4 +198,12 @@ public class HibernateApplication implements Application {
         query.setParameter("prefix", prefix);
         return query.getResultList();
     }
+
+    public void updateBib(final User user, final String town, final String description, final String webSite) {
+        final UserImpl userImpl = (UserImpl) user;
+        userImpl.setTown(town);
+        userImpl.setDescription(description);
+        userImpl.setWebSite(webSite);
+        entityManager.merge(user);
+    }
 }

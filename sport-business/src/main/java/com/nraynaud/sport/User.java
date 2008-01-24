@@ -8,4 +8,10 @@ public interface User extends Serializable {
     Long getId();
 
     String getName();
+
+    String getTown();
+
+    String getDescription();
+
+    String getWebSite();
 }

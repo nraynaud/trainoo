@@ -11,10 +11,10 @@
             final User user = session.getUser();%>
     <span id="loginName"><%= TextUtils.htmlEncode(user.getName()) + "<!-- " + user.getId() + " -->"%> | <a
             href="<s:url namespace="/" action='workouts'/>">Mon vestiaire</a></span> |
-    <s:form id="logoutForm" action="logout" method="POST">
+    <s:form id="logoutForm" namespace="/" action="logout" method="POST">
         <s:submit cssClass="logoutButton" value="Déconnexion"/>
     </s:form>
     <% } else { %>
-    <a href="<s:url namespace="/" action='login'/>">Connexion</a> | <a href="<s:url action='signup'/>">Inscription</a>&nbsp;
+    <a href="<s:url namespace="/" action='login'/>">Connexion</a> | <a href="<s:url namespace="/" action='signup'/>">Inscription</a>&nbsp;
     <% } %>
 </div>

@@ -9,9 +9,9 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.Enumeration;
 
-public class CleanupFilter implements Filter {
+public class SportFilter implements Filter {
     public void init(final FilterConfig filterConfig) throws ServletException {
-        ActionContext.setContext(null);
+        cleanupActionContext();
     }
 
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws
@@ -21,7 +21,7 @@ public class CleanupFilter implements Filter {
     }
 
     public void destroy() {
-        ActionContext.setContext(null);
+        cleanupActionContext();
         try {
             Introspector.flushCaches();
             for (Enumeration e = DriverManager.getDrivers(); e.hasMoreElements();) {
@@ -34,5 +34,12 @@ public class CleanupFilter implements Filter {
             System.err.println("Failled to cleanup ClassLoader for webapp");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * necessary because struts creates threadlocals at deploy and undeploy
+     */
+    private static void cleanupActionContext() {
+        ActionContext.setContext(null);
     }
 }

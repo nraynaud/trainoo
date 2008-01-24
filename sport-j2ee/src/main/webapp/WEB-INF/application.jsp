@@ -18,15 +18,6 @@
     google_ad_width = 468;
     google_ad_height = 60;
     //--></script>
-
-    <!--[if lt IE 7]>
-        <style  type="text/css">
-            #gloss {
-                background: none;
-                filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='gradient.png', sizingMethod='scale');
-            }
-        </style>
-    <![endif]-->
 </head>
 <body>
 <div id="center">

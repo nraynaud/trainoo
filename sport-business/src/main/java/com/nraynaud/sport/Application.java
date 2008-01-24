@@ -35,4 +35,6 @@ public interface Application extends UserStore {
     List<Message> fetchMessages(User receiver);
 
     List<String> fechLoginBeginningBy(final String prefix);
+
+    void updateBib(final User user, final String town, final String description, final String webSite);
 }

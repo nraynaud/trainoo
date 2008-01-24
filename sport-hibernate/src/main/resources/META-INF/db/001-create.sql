@@ -1,15 +1,3 @@
-
---
--- Create schema sport_java
---
-
-CREATE DATABASE IF NOT EXISTS sport_java;
-USE sport_java;
-
-
---
--- Definition of table `USERS`
---
 CREATE TABLE  `USERS` (
   `ID` bigint(20) NOT NULL auto_increment,
   `NAME` varchar(255) character set utf8 NOT NULL,
@@ -18,10 +6,6 @@ CREATE TABLE  `USERS` (
   UNIQUE KEY `NAME` (`NAME`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-
---
--- Definition of table `WORKOUTS`
---
 CREATE TABLE  `WORKOUTS` (
   `ID` bigint(20) NOT NULL auto_increment,
   `WORKOUT_DATE` datetime NOT NULL,

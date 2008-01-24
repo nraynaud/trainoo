@@ -19,6 +19,19 @@ public class UserImpl implements User {
     @Column(name = "HASH", nullable = false)
     private String passwordHash;
 
+    @SuppressWarnings({"UnusedDeclaration"})
+    @Column(name = "TOWN")
+    private String town;
+
+    @SuppressWarnings({"UnusedDeclaration"})
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+
+    @SuppressWarnings({"UnusedDeclaration"})
+    @Column(name = "WEBSITE")
+    private String webSite;
+
     public UserImpl() {
     }
 
@@ -35,11 +48,31 @@ public class UserImpl implements User {
         return name;
     }
 
-    public boolean checkPassword(final String candidate) {
-        return BCrypt.checkpw(candidate, passwordHash);
+    public String getTown() {
+        return town;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getDescription() {
+        return description;
+    }
+
+    public String getWebSite() {
+        return webSite;
+    }
+
+    public void setTown(final String town) {
+        this.town = town;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    public void setWebSite(final String webSite) {
+        this.webSite = webSite;
+    }
+
+    public boolean checkPassword(final String candidate) {
+        return BCrypt.checkpw(candidate, passwordHash);
     }
 }

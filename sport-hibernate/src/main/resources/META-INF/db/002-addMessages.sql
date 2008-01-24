@@ -1,9 +1,3 @@
-
-USE sport_java;
-
-
-
-
 CREATE TABLE  `MESSAGES` (
     `ID` bigint(20) NOT NULL auto_increment,
     `DATE` datetime NOT NULL,

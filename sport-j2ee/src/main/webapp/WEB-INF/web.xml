@@ -17,7 +17,7 @@
     </filter>
     <filter>
         <filter-name>cleanup</filter-name>
-        <filter-class>com.nraynaud.sport.web.CleanupFilter</filter-class>
+        <filter-class>com.nraynaud.sport.web.SportFilter</filter-class>
     </filter>
 
     <filter-mapping>
