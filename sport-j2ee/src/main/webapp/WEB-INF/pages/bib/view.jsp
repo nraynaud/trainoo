@@ -14,5 +14,9 @@
 <p>Moi&nbsp;: <%=escapedOrNull("description", defaultValue)%>
 </p>
 
-<p>Mon site&nbsp;: <%= formatUrl(property("webSite"), defaultValue)%>
+<p>Mon site&nbsp;: <%=formatUrl(property("webSite"), defaultValue)%>
 </p>
+
+<%if (currentUser().equals(top())) {%>
+<a href="<s:url action="edit" namespace="/bib"/>">Mettre à jour</a>
+<%}%>

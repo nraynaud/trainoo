@@ -5,7 +5,7 @@ import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.UserStore;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
-import com.nraynaud.sport.web.SportRequest;
+import com.nraynaud.sport.web.view.Helpers;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.config.ParentPackage;
@@ -24,9 +24,10 @@ public class Action extends DefaultAction implements ModelDriven<User> {
 
     public User getModel() {
         if (user == null) {
-            if (id == null)
-                user = SportRequest.getSportRequest().getSportSession().getUser();
-            else
+            final User currentUser = Helpers.currentUser();
+            if (id == null || id.equals(currentUser.getId())) {
+                user = currentUser;
+            } else
                 try {
                     user = application.fetchUser(id);
                 } catch (UserNotFoundException e) {
