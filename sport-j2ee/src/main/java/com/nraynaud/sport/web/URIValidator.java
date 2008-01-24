@@ -24,8 +24,7 @@ public class URIValidator extends FieldValidatorSupport {
 
     private static boolean verifyUrI(final String candidate) {
         try {
-            new URI(candidate);
-            return true;
+            return "http".equals(new URI(candidate).getScheme());
         } catch (URISyntaxException e) {
             return false;
         }

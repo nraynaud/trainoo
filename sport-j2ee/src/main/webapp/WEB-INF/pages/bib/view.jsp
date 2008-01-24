@@ -15,7 +15,7 @@
 <p>&nbsp;</p>
 <%}%>
 
-<p>Ville&nbsp;: <%=escapedOrNull("town", defaultValue)%>
+<p>Ma ville&nbsp;: <%=escapedOrNull("town", defaultValue)%>
 </p>
 
 <p>Moi&nbsp;: <%=escapedOrNull("description", defaultValue)%>

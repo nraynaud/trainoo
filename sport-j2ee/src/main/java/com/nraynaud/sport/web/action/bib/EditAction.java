@@ -64,7 +64,8 @@ public class EditAction extends DefaultAction {
         return description;
     }
 
-    @StringLengthFieldValidator(message = "Votre description doit faire moins de 200 caratères.", maxLength = "200")
+    @StringLengthFieldValidator(message = "Votre description doit faire moins de ${maxLength} caratères.",
+            maxLength = "200")
     public void setDescription(final String description) {
         this.description = description;
     }
@@ -73,7 +74,7 @@ public class EditAction extends DefaultAction {
         return webSite;
     }
 
-    @StringLengthFieldValidator(message = "L'adresse de votre site web doit faire moins de 200 caratères.",
+    @StringLengthFieldValidator(message = "L'adresse de votre site web doit faire moins de ${maxLength} caratères.",
             maxLength = "200")
     @CustomValidator(message = "Le site web doit être une adresse web (URL)", type = "uri")
     public void setWebSite(final String webSite) {
