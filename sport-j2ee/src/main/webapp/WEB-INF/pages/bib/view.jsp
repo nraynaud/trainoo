@@ -4,12 +4,15 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<p:layoutParams title="Mon Dossard"/>
+<% final String login = escaped("name"); %>
+<p:layoutParams title="<%="Le dossard de " + login%>"/>
+<% final String defaultValue = "<span class='unknown'>non précisé</span>"; %>
 
+<p>Ville&nbsp;: <%=escapedOrNull("town", defaultValue)%>
+</p>
 
-<p>Ville&nbsp;: <s:property value="town" default="<i>non précisé</i>"/></p>
+<p>Moi&nbsp;: <%=escapedOrNull("description", defaultValue)%>
+</p>
 
-<p>Moi&nbsp;: <s:property value="description" default="<i>non précisé</i>"/></p>
-
-<p>Mon site&nbsp;: <%= formatUrl(property("webSite"), "<i>non précisé</i>")%>
+<p>Mon site&nbsp;: <%= formatUrl(property("webSite"), defaultValue)%>
 </p>

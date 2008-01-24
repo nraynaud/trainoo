@@ -61,10 +61,14 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public User fetchUser(final Long id) {
+    public User fetchUser(final Long id) throws UserNotFoundException {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.id=:id");
         query.setParameter("id", id);
-        return (User) query.getSingleResult();
+        try {
+            return (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            throw new UserNotFoundException();
+        }
     }
 
     public User fetchUser(final String name) throws UserNotFoundException {

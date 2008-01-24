@@ -9,8 +9,9 @@
     <% final SportSession session = getSportRequest().getSportSession();
         if (session != null) {
             final User user = session.getUser();%>
-    <span id="loginName"><%= TextUtils.htmlEncode(user.getName()) + "<!-- " + user.getId() + " -->"%> | <a
-            href="<s:url namespace="/" action='workouts'/>">Mon vestiaire</a></span> |
+    <span id="loginName"><%= TextUtils.htmlEncode(user.getName()) + "<!-- " + user.getId() + " -->"%></span> |
+    <a href="<s:url namespace="/" action='workouts'/>">Mon vestiaire</a> |
+    <a href="<s:url namespace="/bib" action=''/>">Mon dossard</a> |
     <s:form id="logoutForm" namespace="/" action="logout" method="POST">
         <s:submit cssClass="logoutButton" value="Déconnexion"/>
     </s:form>

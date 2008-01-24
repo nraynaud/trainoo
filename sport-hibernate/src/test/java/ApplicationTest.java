@@ -37,7 +37,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testUserFetching() throws UserAlreadyExistsException {
+    public void testUserFetching() throws UserAlreadyExistsException, UserNotFoundException {
         final User user = application.createUser("lol", "pouet");
         final User user1 = application.fetchUser(user.getId());
         assertEquals(user, user1);

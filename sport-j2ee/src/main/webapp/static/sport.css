@@ -262,3 +262,8 @@ div.autocomplete ul li {
 textarea#messageContent {
     width: 100%;
 }
+
+.unknown {
+    color: gray;
+    font-style: italic;
+}

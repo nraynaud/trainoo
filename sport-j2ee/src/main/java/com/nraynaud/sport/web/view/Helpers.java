@@ -20,7 +20,17 @@ public class Helpers {
         }
     }
 
-    public static String property(final String property) {
-        return (String) ActionContext.getContext().getValueStack().findValue(property, String.class);
+    public static String property(final String expression) {
+        return (String) ActionContext.getContext().getValueStack().findValue(expression, String.class);
+    }
+
+
+    public static String escaped(final String expression) {
+        return TextUtils.htmlEncode(property(expression));
+    }
+
+    public static String escapedOrNull(final String expression, final String ifNull) {
+        final String result = property(expression);
+        return result == null ? ifNull : TextUtils.htmlEncode(result);
     }
 }

@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web;
 
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.UserStore;
 
 import javax.servlet.ServletRequest;
@@ -58,7 +59,11 @@ public class SportSession {
 
         public User getUser(final UserStore userStore) {
             if (user == null)
-                user = userStore.fetchUser(userId);
+                try {
+                    user = userStore.fetchUser(userId);
+                } catch (UserNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             return user;
         }
     }

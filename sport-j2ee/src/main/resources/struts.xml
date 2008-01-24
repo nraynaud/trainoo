@@ -7,6 +7,7 @@
         <result-types>
             <result-type name="layout" class="com.nraynaud.sport.web.result.LayoutResult" default="true"/>
         </result-types>
+
         <interceptors>
             <interceptor name="sportPermissionInterceptor" class="com.nraynaud.sport.web.SportInterceptor"/>
             <interceptor-stack name="sportStack">
@@ -20,7 +21,6 @@
                 <interceptor-ref name="debugging"/>
                 <interceptor-ref name="profiling"/>
                 <interceptor-ref name="scopedModelDriven"/>
-                <interceptor-ref name="modelDriven"/>
                 <interceptor-ref name="fileUpload"/>
                 <interceptor-ref name="checkbox"/>
                 <interceptor-ref name="staticParams"/>
@@ -31,6 +31,7 @@
                 <interceptor-ref name="validation">
                     <param name="excludeMethods">input,back,cancel,browse</param>
                 </interceptor-ref>
+                <interceptor-ref name="modelDriven"/>
                 <interceptor-ref name="workflow">
                     <param name="excludeMethods">input,back,cancel,browse</param>
                 </interceptor-ref>
@@ -44,7 +45,16 @@
                 <param name="actionName">login</param>
                 <param name="namespace">/</param>
             </result>
+            <result name="userError" type="chain">
+                <param name="actionName">error</param>
+                <param name="namespace">/</param>
+            </result>
         </global-results>
+        <!--
+            <global-exception-mappings>
+           <     <exception-mapping exception="com.nraynaud.sport.UserNotFoundException" result="userError"/>
+            </global-exception-mappings>
+        -->
         <action name="" class="com.nraynaud.sport.web.action.GlobalWorkoutsAction">
             <result>/WEB-INF/pages/globalWorkouts.jsp</result>
         </action>
