@@ -1,4 +1,6 @@
 <%@ page import="static com.nraynaud.sport.web.action.MessagesAction.CONTENT_MAX_LENGTH" %>
+<%@ page import="com.nraynaud.sport.Message" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -24,13 +26,8 @@
     </fieldset>
 </s:form>
 <s:iterator value="messages">
-    <s:if test="%{sportSession.user.id == receiver.id}">
-        <s:set name="cssClass" value="'received'"/>
-    </s:if>
-    <s:else>
-        <s:set name="cssClass" value="'sent'"/>
-    </s:else>
-    <div class="message <s:property value="cssClass"/>">
+    <%final String cssClass = currentUser().equals(((Message) top()).getReceiver()) ? "received" : "sent";%>
+    <div class="message <%=cssClass%>">
                 <span class="messageHeading">
                     <s:date name="date" format="E dd/M à HH:mm"/>
                         <span class="message_from">

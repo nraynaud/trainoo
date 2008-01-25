@@ -56,7 +56,7 @@ public class FeedbackAction {
     private String convertDistance() {
         try {
             final Double distance = DistanceConverter.parseDistance(data);
-            return DistanceConverter.formatNumber(distance) + "kilomètre(s)";
+            return DistanceConverter.formatNumber(distance) + " kilomètre(s)";
         } catch (Exception e) {
             return "La distance n'a pas été comprise.";
         }
@@ -65,7 +65,7 @@ public class FeedbackAction {
     private String convertDuration() {
         try {
             final Long globalSeconds = DurationConverter.parseDuration(data);
-            return DurationConverter.formatDuration(globalSeconds, "heures ", "minutes ", "secondes");
+            return DurationConverter.formatDuration(globalSeconds, " heures ", " minutes ", " secondes");
         } catch (Exception e) {
             return "La durée n'a pas été comprise.";
         }

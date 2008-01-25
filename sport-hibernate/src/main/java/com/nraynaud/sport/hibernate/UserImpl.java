@@ -37,7 +37,7 @@ public class UserImpl implements User {
 
     public UserImpl(final String name, final String password) {
         this.name = name;
-        this.passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+        passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public Long getId() {
@@ -74,5 +74,19 @@ public class UserImpl implements User {
 
     public boolean checkPassword(final String candidate) {
         return BCrypt.checkpw(candidate, passwordHash);
+    }
+
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserImpl)) return false;
+
+        final UserImpl user = (UserImpl) o;
+
+        return !(id != null ? !id.equals(user.id) : user.id != null);
+
+    }
+
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
