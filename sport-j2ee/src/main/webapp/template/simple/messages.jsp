@@ -10,13 +10,13 @@
 <s:actionmessage/>
 <s:fielderror/>
 
-<s:form action="messages">
+<s:form action="messages" namespace="/">
     <fieldset>
         <legend>Écrire</legend>
         <label for="receiver">Destinataire&nbsp;:</label><br>
         <s:textfield name="receiver" id="receiver" maxlength="20"
                      value="%{parameters.receiver != null ? parameters.receiver : receiver}"/>
-        <s:hidden name="aboutWorkout"/>
+        <s:hidden name="aboutWorkoutId"/>
         <div id="aboutWorkoutDiv" class="workout">
             <% final Workout workout = (Workout) property("aboutWorkout");
                 if (workout != null) {

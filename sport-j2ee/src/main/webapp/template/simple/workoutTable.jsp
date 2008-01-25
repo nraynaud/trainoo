@@ -31,6 +31,15 @@
                         <s:a href="%{editurl}">modifier</s:a>
                     </td>
                 </s:if>
+                <% if (isLogged()) {%>
+                <td>
+                    <s:url id="answerUrl" action="messages" namespace="/" includeParams="get">
+                        <s:param name="receiver" value="user.name"/>
+                        <s:param name="aboutWorkoutId" value="id"/>
+                    </s:url>
+                    <s:a href="%{answerUrl}" title="Commenter"><img src="/static/bulle.png" alt="commenter"></s:a>
+                </td>
+                <%}%>
             </tr>
         </s:iterator>
 

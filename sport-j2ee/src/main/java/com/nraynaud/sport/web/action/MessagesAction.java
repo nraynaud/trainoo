@@ -31,7 +31,9 @@ public class MessagesAction extends DefaultAction {
     private final Application application;
     private SportRequest request;
     private Workout aboutWorkout;
+
     private Long aboutWorkoutId;
+
     public static final String CONTENT_MAX_LENGTH = "4000";
 
     public MessagesAction(final Application application) {
@@ -41,20 +43,25 @@ public class MessagesAction extends DefaultAction {
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
     public String index() {
-        if (aboutWorkoutId != null)
-            aboutWorkout = application.fetchWorkoutAndCheckUser(aboutWorkoutId, getUser(), false);
+        populateWorkout();
         return INPUT;
     }
 
     @PostOnly
     public String create() {
+        populateWorkout();
         try {
-            application.createMessage(getUser(), receiver, content, new Date());
+            application.createMessage(getUser(), receiver, content, new Date(), aboutWorkout);
         } catch (UserNotFoundException e) {
             addFieldError("receiver", "L'utilisateur '" + getReceiver() + "' n'existe pas.");
             return INPUT;
         }
         return SUCCESS;
+    }
+
+    private void populateWorkout() {
+        if (aboutWorkoutId != null && aboutWorkout == null)
+            aboutWorkout = application.fetchWorkoutAndCheckUser(aboutWorkoutId, getUser(), false);
     }
 
     @RequiredStringValidator(message = "Vous avez oublié le message.")
@@ -85,7 +92,12 @@ public class MessagesAction extends DefaultAction {
     }
 
     public Workout getAboutWorkout() {
+        populateWorkout();
         return aboutWorkout;
+    }
+
+    public Long getAboutWorkoutId() {
+        return aboutWorkoutId;
     }
 
     public void setAboutWorkoutId(final Long aboutWorkoutId) {

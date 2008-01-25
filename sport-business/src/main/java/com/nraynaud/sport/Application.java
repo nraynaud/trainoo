@@ -29,7 +29,11 @@ public interface Application extends UserStore {
 
     StatisticsPageData fetchWorkoutPageData(final User user);
 
-    Message createMessage(User sender, String receiverName, String content, Date date) throws UserNotFoundException;
+    Message createMessage(User sender,
+                          String receiverName,
+                          String content,
+                          Date date,
+                          final Workout aboutWorkout) throws UserNotFoundException;
 
     @SuppressWarnings({"unchecked"})
     List<Message> fetchMessages(User receiver);

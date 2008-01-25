@@ -52,6 +52,15 @@ public class MessageImpl implements Message {
         this.date = date;
     }
 
+    public MessageImpl(final User sender,
+                       final User receiver,
+                       final Date date,
+                       final String content,
+                       final Workout workout) {
+        this(sender, receiver, date, content);
+        this.workout = workout;
+    }
+
     public Long getId() {
         return id;
     }

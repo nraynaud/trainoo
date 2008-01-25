@@ -179,10 +179,10 @@ public class HibernateApplication implements Application {
     public Message createMessage(final User sender,
                                  final String receiverName,
                                  final String content,
-                                 final Date date) throws
+                                 final Date date, final Workout workout) throws
             UserNotFoundException {
         final User receiver = fetchUser(receiverName);
-        final MessageImpl message = new MessageImpl(sender, receiver, date, content);
+        final MessageImpl message = new MessageImpl(sender, receiver, date, content, workout);
         entityManager.persist(message);
         return message;
     }

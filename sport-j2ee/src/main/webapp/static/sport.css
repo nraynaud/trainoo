@@ -30,6 +30,12 @@ fieldset {
     border-top: thin #C9C9B1 solid;
 }
 
+img {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
 input, select, textarea {
     font-size: 100%;
     border: gray solid thin;
@@ -291,4 +297,8 @@ textarea#messageContent {
     width: 40%;
     margin-left: auto;
     margin-right: auto
+}
+
+.workout .tinyWorkout {
+    font-weight: bold;
 }
