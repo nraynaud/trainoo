@@ -32,13 +32,21 @@ public class Helpers {
     }
 
 
-    public static String escaped(final String expression) {
-        return TextUtils.htmlEncode(property(expression));
+    public static String escapedProperty(final String expression) {
+        return escaped(property(expression));
     }
 
-    public static String escapedOrNull(final String expression, final String ifNull) {
+    public static String escaped(final String string) {
+        return TextUtils.htmlEncode(string);
+    }
+
+    public static String propertyEscapedOrNull(final String expression, final String ifNull) {
         final String result = property(expression);
         return result == null ? ifNull : TextUtils.htmlEncode(result);
+    }
+
+    public static String escapedOrNull(final String string, final String ifNull) {
+        return string == null ? ifNull : TextUtils.htmlEncode(string);
     }
 
     public static User currentUser() {

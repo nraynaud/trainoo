@@ -216,6 +216,12 @@
         <inspection_tool class="AccessToNonThreadSafeStaticFieldFromInstance" level="WARNING" enabled="true">
           <option name="nonThreadSafeTypes" value="java.text.DateFormat,java.util.Calendar" />
         </inspection_tool>
+        <inspection_tool class="UnnecessaryConstructor" level="WARNING" enabled="true" />
+        <inspection_tool class="UnnecessarySuperConstructor" level="WARNING" enabled="true" />
+        <inspection_tool class="UnnecessaryThis" level="WARNING" enabled="true" />
+        <inspection_tool class="UnnecessaryEnumModifier" level="WARNING" enabled="true" />
+        <inspection_tool class="UnnecessaryParentheses" level="WARNING" enabled="true" />
+        <inspection_tool class="UnnecessaryQualifierForThis" level="WARNING" enabled="true" />
       </profile>
     </profiles>
     <list size="4">

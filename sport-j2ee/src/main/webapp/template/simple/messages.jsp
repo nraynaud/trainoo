@@ -1,3 +1,4 @@
+<%@ page import="static com.nraynaud.sport.web.action.MessagesAction.CONTENT_MAX_LENGTH" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,7 +11,7 @@
     <fieldset>
         <legend>Écrire</legend>
         <label for="receiver">Destinataire&nbsp;:</label><br>
-        <s:textfield name="receiver" id="receiver" maxlength="20"/>
+        <s:textfield name="receiver" id="receiver" maxlength="20" value="%{parameters.receiver}"/>
 
         <div id="receiver_choices" class="autocomplete">&nbsp;</div>
         <p:javascript>
@@ -18,6 +19,7 @@
             {paramName: "data", minChars:1, parameters:"type=logins"});
         </p:javascript>
         <s:textarea id="messageContent" name="content" rows="5"/><br>
+        <p:javascript>makeItCount('messageContent', <%= CONTENT_MAX_LENGTH%>);</p:javascript>
         <s:submit value="Envoyer"/>
     </fieldset>
 </s:form>

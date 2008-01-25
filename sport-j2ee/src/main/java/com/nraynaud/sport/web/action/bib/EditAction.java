@@ -27,6 +27,10 @@ public class EditAction extends DefaultAction {
     private String webSite;
     private final Application application;
 
+    public static final String TOWN_MAX_LENGTH = "25";
+    public static final String DESCRIPTION_MAX_LENGTH = "500";
+    public static final String WEBSITE_MAX_LENGTH = "200";
+
     public EditAction(final Application application) {
         this.application = application;
         ValidatorFactory.registerValidator("uri", "com.nraynaud.sport.web.URIValidator");
@@ -55,7 +59,8 @@ public class EditAction extends DefaultAction {
         return town;
     }
 
-    @StringLengthFieldValidator(message = "La ville doit faire moins de ${maxLength} caratères.", maxLength = "25")
+    @StringLengthFieldValidator(message = "La ville doit faire moins de ${maxLength} caratères.",
+            maxLength = TOWN_MAX_LENGTH)
     public void setTown(final String town) {
         this.town = town;
     }
@@ -65,7 +70,7 @@ public class EditAction extends DefaultAction {
     }
 
     @StringLengthFieldValidator(message = "Votre description doit faire moins de ${maxLength} caratères.",
-            maxLength = "200")
+            maxLength = DESCRIPTION_MAX_LENGTH)
     public void setDescription(final String description) {
         this.description = description;
     }
@@ -75,7 +80,7 @@ public class EditAction extends DefaultAction {
     }
 
     @StringLengthFieldValidator(message = "L'adresse de votre site web doit faire moins de ${maxLength} caratères.",
-            maxLength = "200")
+            maxLength = WEBSITE_MAX_LENGTH)
     @CustomValidator(message = "Le site web doit être une adresse web (URL)", type = "uri")
     public void setWebSite(final String webSite) {
         this.webSite = webSite;

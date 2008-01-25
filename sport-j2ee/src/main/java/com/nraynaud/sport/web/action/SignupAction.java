@@ -30,6 +30,8 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
     private String password;
     private String passwordConfirmation;
     private HttpServletRequest request;
+    public static final String LOGIN_MAX_LENGTH = "20";
+    public static final String PASSWORD_MAX_LENGTH = "20";
 
     public SignupAction(final Application application) {
         this.application = application;
@@ -37,7 +39,7 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
 
     @StringLengthFieldValidator(message = "Votre surnom doit comporter entre 4 et 15 caractères.",
             minLength = "4",
-            maxLength = "15")
+            maxLength = LOGIN_MAX_LENGTH)
     @RequiredStringValidator(message = "Le surnom est obligatoire.")
     public String getLogin() {
         return login;
@@ -49,7 +51,7 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
 
     @StringLengthFieldValidator(message = "Votre mot de passe doit comporter entre 5 et 15 caractères.",
             minLength = "5",
-            maxLength = "15")
+            maxLength = PASSWORD_MAX_LENGTH)
     @RequiredStringValidator(message = "Le mot de passe est obligatoire.")
     public String getPassword() {
         return password;

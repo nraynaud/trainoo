@@ -1,8 +1,9 @@
 package com.nraynaud.sport.web.action.bib;
 
+import com.nraynaud.sport.Application;
+import com.nraynaud.sport.BibPageData;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserNotFoundException;
-import com.nraynaud.sport.UserStore;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.view.Helpers;
@@ -13,28 +14,26 @@ import org.apache.struts2.config.Result;
 
 @Result(name = SUCCESS, value = "/WEB-INF/pages/bib/view.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class Action extends DefaultAction implements ModelDriven<User> {
+public class Action extends DefaultAction implements ModelDriven<BibPageData> {
     private Long id;
-    final private UserStore application;
-    private User user;
+    final private Application application;
+    private BibPageData data;
 
-    public Action(final UserStore application) {
+    public Action(final Application application) {
         this.application = application;
     }
 
-    public User getModel() {
-        if (user == null) {
-            final User currentUser = Helpers.currentUser();
-            if (id == null || id.equals(currentUser.getId())) {
-                user = currentUser;
-            } else
-                try {
-                    user = application.fetchUser(id);
-                } catch (UserNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+    public BibPageData getModel() {
+        if (data == null) {
+            try {
+                final User currentUser = Helpers.currentUser();
+                final Long myId = id == null ? currentUser.getId() : id;
+                data = application.fetchBibPageData(myId, currentUser);
+            } catch (UserNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return user;
+        return data;
     }
 
 

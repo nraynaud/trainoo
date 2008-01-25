@@ -37,4 +37,6 @@ public interface Application extends UserStore {
     List<String> fechLoginBeginningBy(final String prefix);
 
     void updateBib(final User user, final String town, final String description, final String webSite);
+
+    BibPageData fetchBibPageData(final Long userId, final User currentUser) throws UserNotFoundException;
 }

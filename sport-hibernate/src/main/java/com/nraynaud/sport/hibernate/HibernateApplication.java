@@ -210,4 +210,23 @@ public class HibernateApplication implements Application {
         userImpl.setWebSite(webSite);
         entityManager.merge(user);
     }
+
+    @SuppressWarnings({"unchecked"})
+    public BibPageData fetchBibPageData(final Long userId, final User currentUser) throws UserNotFoundException {
+        final User target = currentUser.getId().equals(userId) ? currentUser : fetchUser(userId);
+        final Query query = entityManager.createQuery(
+                "select m from MessageImpl m where ((m.receiver=:user AND m.sender=:currentUser)OR(m.receiver=:currentUser AND m.sender=:user)) order by m.date desc");
+        query.setParameter("currentUser", currentUser);
+        query.setParameter("user", target);
+        final List<Message> messages = query.getResultList();
+        return new BibPageData() {
+            public User getUser() {
+                return target;
+            }
+
+            public List<Message> getMessages() {
+                return messages;
+            }
+        };
+    }
 }

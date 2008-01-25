@@ -10,6 +10,7 @@ import com.nraynaud.sport.web.SportRequest;
 import com.nraynaud.sport.web.result.Redirect;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -27,12 +28,15 @@ public class MessagesAction extends DefaultAction {
     private String receiver;
     private final Application application;
     private SportRequest request;
+    public static final String CONTENT_MAX_LENGTH = "4000";
 
     public MessagesAction(final Application application) {
         this.application = application;
     }
 
     @RequiredStringValidator(message = "Vous avez oublié le message.")
+    @StringLengthFieldValidator(message = "La ville doit faire moins de ${maxLength} caratères.",
+            maxLength = CONTENT_MAX_LENGTH)
     public void setContent(final String content) {
         this.content = content;
     }
