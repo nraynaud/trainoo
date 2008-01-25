@@ -145,6 +145,9 @@ public class HibernateApplication implements Application {
         final Workout workout = fetchWorkoutAndCheckUser(id, user, true);
         if (workout == null)
             throw new WorkoutNotFoundException();
+        final Query query = entityManager.createNativeQuery("UPDATE MESSAGES SET WORKOUT_ID=NULL WHERE WORKOUT_ID=:id");
+        query.setParameter("id", id);
+        query.executeUpdate();
         entityManager.remove(workout);
     }
 
