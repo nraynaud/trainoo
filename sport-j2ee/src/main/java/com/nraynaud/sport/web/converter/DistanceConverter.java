@@ -63,6 +63,8 @@ public class DistanceConverter extends StrutsTypeConverter {
     }
 
     private static DecimalFormat getFormat() {
-        return (DecimalFormat) NumberFormat.getInstance(Locale.FRANCE);
+        final DecimalFormat format = (DecimalFormat) NumberFormat.getInstance(Locale.FRANCE);
+        format.setGroupingUsed(false);
+        return format;
     }
 }

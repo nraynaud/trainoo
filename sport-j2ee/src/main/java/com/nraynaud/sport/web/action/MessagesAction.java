@@ -1,9 +1,9 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.ConversationData;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserNotFoundException;
-import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.PostOnly;
@@ -30,9 +30,8 @@ public class MessagesAction extends DefaultAction {
     private String receiver;
     private final Application application;
     private SportRequest request;
-    private Workout aboutWorkout;
-
     private Long aboutWorkoutId;
+    private ConversationData conversationData;
 
     public static final String CONTENT_MAX_LENGTH = "4000";
 
@@ -43,15 +42,13 @@ public class MessagesAction extends DefaultAction {
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
     public String index() {
-        populateWorkout();
         return INPUT;
     }
 
     @PostOnly
     public String create() {
-        populateWorkout();
         try {
-            application.createMessage(getUser(), receiver, content, new Date(), aboutWorkout);
+            application.createMessage(getUser(), receiver, content, new Date(), aboutWorkoutId);
         } catch (UserNotFoundException e) {
             addFieldError("receiver", "L'utilisateur '" + getReceiver() + "' n'existe pas.");
             return INPUT;
@@ -59,9 +56,11 @@ public class MessagesAction extends DefaultAction {
         return SUCCESS;
     }
 
-    private void populateWorkout() {
-        if (aboutWorkoutId != null && aboutWorkout == null)
-            aboutWorkout = application.fetchWorkoutAndCheckUser(aboutWorkoutId, getUser(), false);
+    public ConversationData getConversationData() {
+        if (conversationData == null) {
+            conversationData = application.fetchConvertationData(getUser(), receiver, aboutWorkoutId);
+        }
+        return conversationData;
     }
 
     @RequiredStringValidator(message = "Vous avez oublié le message.")
@@ -89,11 +88,6 @@ public class MessagesAction extends DefaultAction {
 
     public String getReceiver() {
         return receiver;
-    }
-
-    public Workout getAboutWorkout() {
-        populateWorkout();
-        return aboutWorkout;
     }
 
     public Long getAboutWorkoutId() {

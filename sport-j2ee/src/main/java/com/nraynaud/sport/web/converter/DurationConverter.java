@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class DurationConverter extends StrutsTypeConverter {
 
-    static enum Multiplier {
+    enum Multiplier {
         HOUR(3600), MINUTE(60), SECOND(1);
 
         public final int factor;
@@ -21,7 +21,7 @@ public class DurationConverter extends StrutsTypeConverter {
         }
     }
 
-    private static enum Parser {
+    private enum Parser {
         HOURS_MINUTES_SECONDS_PATTERN("(\\d+)h(\\d+)'(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
         HOURS_MINUTES_M_SECONDS_PATTERN("(\\d+)h(\\d+)m(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
         HOURS_MINUTES_PATTERN("(\\d+)h(\\d+)'?", HOUR, MINUTE),
@@ -71,7 +71,8 @@ public class DurationConverter extends StrutsTypeConverter {
 
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
         try {
-            return parseDuration(values[0]);
+            final String input = values[0];
+            return input.length() == 0 ? null : parseDuration(input);
         } catch (IllegalArgumentException e) {
             throw new TypeConversionException(e);
         }

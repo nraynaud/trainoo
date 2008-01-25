@@ -179,9 +179,10 @@ public class HibernateApplication implements Application {
     public Message createMessage(final User sender,
                                  final String receiverName,
                                  final String content,
-                                 final Date date, final Workout workout) throws
+                                 final Date date, final Long workoutId) throws
             UserNotFoundException {
         final User receiver = fetchUser(receiverName);
+        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, workoutId);
         final MessageImpl message = new MessageImpl(sender, receiver, date, content, workout);
         entityManager.persist(message);
         return message;
@@ -211,14 +212,9 @@ public class HibernateApplication implements Application {
         entityManager.merge(user);
     }
 
-    @SuppressWarnings({"unchecked"})
     public BibPageData fetchBibPageData(final Long userId, final User currentUser) throws UserNotFoundException {
         final User target = currentUser.getId().equals(userId) ? currentUser : fetchUser(userId);
-        final Query query = entityManager.createQuery(
-                "select m from MessageImpl m where ((m.receiver=:user AND m.sender=:currentUser)OR(m.receiver=:currentUser AND m.sender=:user)) order by m.date desc");
-        query.setParameter("currentUser", currentUser);
-        query.setParameter("user", target);
-        final List<Message> messages = query.getResultList();
+        final List<Message> messages = fetchConversation(currentUser, target);
         return new BibPageData() {
             public User getUser() {
                 return target;
@@ -228,5 +224,31 @@ public class HibernateApplication implements Application {
                 return messages;
             }
         };
+    }
+
+    public List<Message> fetchConversation(final User currentUser, final String receiverName) {
+        final User target;
+        try {
+            target = currentUser.getName().equals(receiverName) ? currentUser : fetchUser(receiverName);
+        } catch (UserNotFoundException e) {
+            return Collections.emptyList();
+        }
+        return fetchConversation(currentUser, target);
+    }
+
+    public ConversationData fetchConvertationData(final User sender,
+                                                  final String receiver,
+                                                  final Long aboutWorkoutId) {
+        return new ConversationData(fetchConversation(sender, receiver),
+                fetchWorkoutAndCheckUser(aboutWorkoutId, sender, false));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private List<Message> fetchConversation(final User currentUser, final User target) {
+        final Query query = entityManager.createQuery(
+                "select m from MessageImpl m where ((m.receiver=:user AND m.sender=:currentUser)OR(m.receiver=:currentUser AND m.sender=:user)) order by m.date desc");
+        query.setParameter("currentUser", currentUser);
+        query.setParameter("user", target);
+        return query.getResultList();
     }
 }

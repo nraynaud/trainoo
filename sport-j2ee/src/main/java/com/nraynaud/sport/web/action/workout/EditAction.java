@@ -15,7 +15,10 @@ import org.apache.struts2.config.Namespace;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Conversion
 @Results({
@@ -25,7 +28,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Namespace("/workout")
 @Validation
-public class EditAction extends AbstractWorkoutAction {
+public class EditAction extends AbstractWorkoutAction implements ServletRequestAware {
     private Long id;
 
     private final Application application;
@@ -57,7 +60,7 @@ public class EditAction extends AbstractWorkoutAction {
     public String create() {
         if (id != null) {
             try {
-                if (isDelete())
+                if (delete)
                     application.deleteWorkout(id, getUser());
                 else
                     application.updateWorkout(id, getUser(), getDate(), getDuration(), getDistance(), getDiscipline());
@@ -78,15 +81,7 @@ public class EditAction extends AbstractWorkoutAction {
         return id;
     }
 
-    public boolean isDelete() {
-        return delete;
-    }
-
-    /*
-    * HACK HACK HACK the client sends delete="Supprimer" pair, and this will be handled here.
-    */
-    @SuppressWarnings({"UnusedDeclaration"})
-    public void setDelete(final boolean delete) {
-        this.delete = true;
+    public void setServletRequest(final HttpServletRequest request) {
+        delete = request.getParameter("delete") != null;
     }
 }

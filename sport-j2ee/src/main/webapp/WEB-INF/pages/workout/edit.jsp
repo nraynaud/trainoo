@@ -9,7 +9,7 @@
         <s:param name="id" value="id"/>
     </s:url>
     <s:param name="action" value="updateurl"/>
-    <s:param name="deleteAction" value="delete"/>
+    <s:param name="showDelete" value="true"/>
     <s:param name="submit" value="'Modifier'"/>
 </s:component>
 
