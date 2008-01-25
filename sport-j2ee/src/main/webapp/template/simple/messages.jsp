@@ -26,12 +26,18 @@
     </fieldset>
 </s:form>
 <s:iterator value="messages">
-    <%final String cssClass = currentUser().equals(((Message) top()).getReceiver()) ? "received" : "sent";%>
+    <%
+        final Message message = (Message) top();
+        final String cssClass = currentUser().equals(message.getReceiver()) ? "received" : "sent";
+    %>
     <div class="message <%=cssClass%>">
                 <span class="messageHeading">
                     <s:date name="date" format="E dd/M à HH:mm"/>
+                    <% final String name = escaped(message.getSender().getName()); %>
                         <span class="message_from">
-                    <s:property value="sender.name" escape="true"/>
+                            <a href="#" title="répondre"
+                               onclick="$('receiver').value = '<%=name%>'; Field.activate('receiver'); Field.activate('content'); return false;"><%=name%>
+                            </a>
                         </span> pour <s:property value="receiver.name" escape="true"/>&nbsp;:
                 </span>
 
