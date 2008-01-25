@@ -3,6 +3,7 @@ package com.nraynaud.sport.web.action;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserNotFoundException;
+import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.PostOnly;
@@ -14,6 +15,7 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import java.util.Date;
 
@@ -28,17 +30,20 @@ public class MessagesAction extends DefaultAction {
     private String receiver;
     private final Application application;
     private SportRequest request;
+    private Workout aboutWorkout;
+    private Long aboutWorkoutId;
     public static final String CONTENT_MAX_LENGTH = "4000";
 
     public MessagesAction(final Application application) {
         this.application = application;
     }
 
-    @RequiredStringValidator(message = "Vous avez oublié le message.")
-    @StringLengthFieldValidator(message = "La ville doit faire moins de ${maxLength} caratères.",
-            maxLength = CONTENT_MAX_LENGTH)
-    public void setContent(final String content) {
-        this.content = content;
+    @SuppressWarnings({"MethodMayBeStatic"})
+    @SkipValidation
+    public String index() {
+        if (aboutWorkoutId != null)
+            aboutWorkout = application.fetchWorkoutAndCheckUser(aboutWorkoutId, getUser(), false);
+        return INPUT;
     }
 
     @PostOnly
@@ -50,6 +55,13 @@ public class MessagesAction extends DefaultAction {
             return INPUT;
         }
         return SUCCESS;
+    }
+
+    @RequiredStringValidator(message = "Vous avez oublié le message.")
+    @StringLengthFieldValidator(message = "La ville doit faire moins de ${maxLength} caratères.",
+            maxLength = CONTENT_MAX_LENGTH)
+    public void setContent(final String content) {
+        this.content = content;
     }
 
     public void setRequest(final SportRequest request) {
@@ -70,5 +82,13 @@ public class MessagesAction extends DefaultAction {
 
     public String getReceiver() {
         return receiver;
+    }
+
+    public Workout getAboutWorkout() {
+        return aboutWorkout;
+    }
+
+    public void setAboutWorkoutId(final Long aboutWorkoutId) {
+        this.aboutWorkoutId = aboutWorkoutId;
     }
 }

@@ -14,8 +14,21 @@
     <fieldset>
         <legend>Écrire</legend>
         <label for="receiver">Destinataire&nbsp;:</label><br>
-        <s:textfield name="receiver" id="receiver" maxlength="20" value="%{parameters.receiver}"/>
-
+        <s:textfield name="receiver" id="receiver" maxlength="20"
+                     value="%{parameters.receiver != null ? parameters.receiver : receiver}"/>
+        <s:hidden name="aboutWorkout"/>
+        <div id="aboutWorkoutDiv" class="workout">
+            <% final Workout workout = (Workout) property("aboutWorkout");
+                if (workout != null) {
+                    try {
+                        push(workout);%>
+            à propos de la sortie&nbsp;:<s:component template="tinyWorkout.jsp"/>
+            <%
+                    } finally {
+                        pop();
+                    }
+                }%>
+        </div>
         <div id="receiver_choices" class="autocomplete">&nbsp;</div>
         <p:javascript>
             new Ajax.Autocompleter("receiver", "receiver_choices", "/feedback",
@@ -32,19 +45,22 @@
         final String cssClass = currentUser().equals(message.getReceiver()) ? "received" : "sent";
     %>
     <div class="message <%=cssClass%>">
+        <% final Workout workout = message.getWorkout();%>
                 <span class="messageHeading">
                     <s:date name="date" format="E dd/M à HH:mm"/>
                     <% final String name = escaped(message.getSender().getName()); %>
                         <span class="message_from">
-                            <a href="#" title="répondre"
-                               onclick="$('receiver').value = '<%=name%>'; Field.activate('receiver'); Field.activate('content'); return false;"><%=name%>
-                            </a>
+                            <s:url id="answerUrl" action="messages" namespace="/" includeParams="get">
+                                <s:param name="receiver" value="sender.name"/>
+                                <s:param name="aboutWorkoutId" value="%{workout != null ? workout.id : ''}"/>
+                            </s:url>
+                            <s:a href="%{answerUrl}" title="répondre"><%=name%>
+                            </s:a>
                         </span> pour <s:property value="receiver.name" escape="true"/>&nbsp;:
                 </span>
-        <% final Workout workout = message.getWorkout();
-            if (workout != null) {
-                try {
-                    push(workout);%>
+        <% if (workout != null) {
+            try {
+                push(workout);%>
         <div class="workout">à propos de la sortie&nbsp;:<s:component template="tinyWorkout.jsp"/></div>
         <%
                 } finally {

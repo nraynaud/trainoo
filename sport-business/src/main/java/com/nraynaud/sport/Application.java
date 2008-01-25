@@ -14,7 +14,7 @@ public interface Application extends UserStore {
 
     User authenticate(String login, String password);
 
-    Workout fetchWorkout(final Long id, final User user);
+    Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite);
 
     void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException;
 

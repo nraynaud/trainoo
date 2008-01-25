@@ -81,11 +81,11 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public Workout fetchWorkout(final Long id, final User user) {
+    public Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) {
         final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
         if (workout == null)
             return null;
-        if (workout.getUser().getId().equals(user.getId()))
+        if (!willWrite || workout.getUser().getId().equals(user.getId()))
             return workout;
         else
             return null;
@@ -97,7 +97,7 @@ public class HibernateApplication implements Application {
                               final Long duration,
                               final Double distance,
                               final String discipline) throws WorkoutNotFoundException {
-        final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkout(id, user);
+        final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutAndCheckUser(id, user, true);
         if (workoutImpl == null)
             throw new WorkoutNotFoundException();
         workoutImpl.setDate(date);
@@ -142,7 +142,7 @@ public class HibernateApplication implements Application {
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
-        final Workout workout = fetchWorkout(id, user);
+        final Workout workout = fetchWorkoutAndCheckUser(id, user, true);
         if (workout == null)
             throw new WorkoutNotFoundException();
         entityManager.remove(workout);

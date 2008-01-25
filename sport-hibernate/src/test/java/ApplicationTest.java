@@ -85,16 +85,16 @@ public class ApplicationTest {
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
                 "lol");
         {
-            final Workout workout1 = application.fetchWorkout(workout.getId(), user);
+            final Workout workout1 = application.fetchWorkoutAndCheckUser(workout.getId(), user, true);
             assertEquals(workout, workout1);
         }
         {
-            final Workout workout2 = application.fetchWorkout(Long.valueOf(1043345), user);
+            final Workout workout2 = application.fetchWorkoutAndCheckUser(Long.valueOf(1043345), user, true);
             assertNull(workout2);
         }
         {
             final User user1 = application.createUser("user1", "lol");
-            final Workout workout3 = application.fetchWorkout(workout.getId(), user1);
+            final Workout workout3 = application.fetchWorkoutAndCheckUser(workout.getId(), user1, true);
             assertNull(workout3);
         }
 

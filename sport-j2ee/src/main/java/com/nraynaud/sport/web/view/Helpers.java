@@ -23,8 +23,12 @@ public class Helpers {
         }
     }
 
-    public static String property(final String expression) {
+    public static String stringProperty(final String expression) {
         return (String) stack().findValue(expression, String.class);
+    }
+
+    public static Object property(final String expression) {
+        return stack().findValue(expression, Object.class);
     }
 
     private static ValueStack stack() {
@@ -33,7 +37,7 @@ public class Helpers {
 
 
     public static String escapedProperty(final String expression) {
-        return escaped(property(expression));
+        return escaped(stringProperty(expression));
     }
 
     public static String escaped(final String string) {
@@ -41,7 +45,7 @@ public class Helpers {
     }
 
     public static String propertyEscapedOrNull(final String expression, final String ifNull) {
-        final String result = property(expression);
+        final String result = stringProperty(expression);
         return result == null ? ifNull : TextUtils.htmlEncode(result);
     }
 

@@ -38,12 +38,12 @@ public class EditAction extends AbstractWorkoutAction {
     @SkipValidation
     public String index() {
         if (id != null) {
-            final Workout workout = application.fetchWorkout(id, getUser());
+            final Workout workout = application.fetchWorkoutAndCheckUser(id, getUser(), true);
             if (workout != null) {
-                this.setDate(workout.getDate());
-                this.setDistance(workout.getDistance());
-                this.setDuration(workout.getDuration());
-                this.setDiscipline(workout.getDiscipline());
+                setDate(workout.getDate());
+                setDistance(workout.getDistance());
+                setDuration(workout.getDuration());
+                setDiscipline(workout.getDiscipline());
                 return INPUT;
             } else {
                 addActionError("l'entraînement désigné n'existe pas");
