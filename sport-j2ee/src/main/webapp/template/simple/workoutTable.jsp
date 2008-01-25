@@ -20,7 +20,7 @@
                         <%}%>
                     </td>
                 </s:if>
-                <td><s:property value="discipline" escape="true"/></td>
+                <td><s:property value="discipline"/></td>
                 <td><p:duration name="duration"/></td>
                 <td><p:distance name="distance"/></td>
                 <s:if test="%{parameters.displayEdit}">

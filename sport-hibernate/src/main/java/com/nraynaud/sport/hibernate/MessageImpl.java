@@ -2,6 +2,7 @@ package com.nraynaud.sport.hibernate;
 
 import com.nraynaud.sport.Message;
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.Workout;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,7 +29,20 @@ public class MessageImpl implements Message {
     @OrderBy("ASC")
     private Date date;
 
+    @ManyToOne(targetEntity = WorkoutImpl.class)
+    @JoinColumn(name = "WORKOUT_ID", updatable = false)
+    private Workout workout;
+
     public MessageImpl() {
+    }
+
+    public MessageImpl(final User sender,
+                       final User receiver,
+                       final Workout workout,
+                       final Date date,
+                       final String content) {
+        this(sender, receiver, date, content);
+        this.workout = workout;
     }
 
     public MessageImpl(final User sender, final User receiver, final Date date, final String content) {
@@ -60,5 +74,9 @@ public class MessageImpl implements Message {
 
     public User getReceiver() {
         return receiver;
+    }
+
+    public Workout getWorkout() {
+        return workout;
     }
 }

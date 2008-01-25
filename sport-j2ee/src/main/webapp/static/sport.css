@@ -225,6 +225,8 @@ div.autocomplete ul li {
 .messageHeading {
     font-size: smaller;
     color: #968148;
+    background-color: lightgray;
+    display: block;
 }
 
 .messageContent {
@@ -232,9 +234,12 @@ div.autocomplete ul li {
 }
 
 .message {
-    border-top: #C9C9B1 solid thin;
-    padding-top: 0.1em;
     margin-top: 0.5em
+}
+
+.message .workout {
+    font-size: smaller;
+    color: #968148;
 }
 
 .received {
@@ -242,13 +247,18 @@ div.autocomplete ul li {
     border: #C9C9B1 solid thin;
 }
 
-.messages {
-    border-bottom: #C9C9B1 solid thin;
-}
-
 .received .messageHeading .message_from {
     color: #57470C;
     font-weight: bold;
+}
+
+.sent {
+    border-top: #C9C9B1 solid thin;
+}
+
+.sent .messageHeading {
+    color: gray;
+    background: none;
 }
 
 .sent .messageContent {

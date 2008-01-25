@@ -60,4 +60,12 @@ public class Helpers {
     public static boolean isLogged() {
         return SportRequest.getSportRequest().isLogged();
     }
+
+    public static void push(final Object object) {
+        stack().push(object);
+    }
+
+    public static Object pop() {
+        return stack().pop();
+    }
 }

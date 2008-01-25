@@ -8,4 +8,6 @@ public interface Message {
     User getSender();
 
     User getReceiver();
+
+    Workout getWorkout();
 }

@@ -1,6 +1,7 @@
 <%@ page import="static com.nraynaud.sport.web.action.MessagesAction.CONTENT_MAX_LENGTH" %>
 <%@ page import="com.nraynaud.sport.Message" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -40,6 +41,17 @@
                             </a>
                         </span> pour <s:property value="receiver.name" escape="true"/>&nbsp;:
                 </span>
+        <% final Workout workout = message.getWorkout();
+            if (workout != null) {
+                try {
+                    push(workout);%>
+        <div class="workout">à propos de la sortie&nbsp;:<s:component template="tinyWorkout.jsp"/></div>
+        <%
+                } finally {
+                    pop();
+                }
+            }
+        %>
 
         <p class="messageContent"><s:property value="content" escape="true"/></p>
     </div>
