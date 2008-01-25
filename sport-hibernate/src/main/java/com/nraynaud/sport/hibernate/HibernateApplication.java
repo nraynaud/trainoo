@@ -115,7 +115,7 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     private List<StatisticsPageData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
         final String string =
-                "select new com.nraynaud.sport.hibernate.DisciplineDistanceImpl(w.discipline, sum(w.distance))"
+                "select new com.nraynaud.sport.StatisticsPageData$DisciplineDistance(w.discipline, sum(w.distance))"
                         + " from WorkoutImpl w where w.distance is not null"
                         + (user != null ? " and w.user = :user" : "")
                         + " group by w.discipline";
@@ -138,7 +138,7 @@ public class HibernateApplication implements Application {
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
         final List<Message> messages = user != null ? fetchMessages(user) : Collections.<Message>emptyList();
-        return statistics(workouts, globalDistance, distanceByDiscpline, messages);
+        return new StatisticsPageData(workouts, globalDistance, distanceByDiscpline, messages);
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
@@ -151,29 +151,6 @@ public class HibernateApplication implements Application {
     @PersistenceContext
     public void setEntityManager(final EntityManager entityManager) {
         this.entityManager = entityManager;
-    }
-
-    private static StatisticsPageData statistics(final List<Workout> workouts,
-                                                 final Double globalDistance,
-                                                 final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline,
-                                                 final List<Message> messages) {
-        return new StatisticsPageData() {
-            public List<Workout> getWorkouts() {
-                return workouts;
-            }
-
-            public Double getGlobalDistance() {
-                return globalDistance;
-            }
-
-            public List<DisciplineDistance> getDistanceByDisciplines() {
-                return distanceByDiscpline;
-            }
-
-            public List<Message> getMessages() {
-                return messages;
-            }
-        };
     }
 
     public Message createMessage(final User sender,

@@ -56,7 +56,7 @@ public class ApplicationTest {
         final User user = application.createUser("lolé", "pass+é");
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
                 "lol");
-        assertEquals(Arrays.asList(workout), application.fetchFrontPageData().getWorkouts());
+        assertEquals(Arrays.asList(workout), application.fetchFrontPageData().workouts);
     }
 
     @Test

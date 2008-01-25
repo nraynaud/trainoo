@@ -74,8 +74,8 @@ table.workouts {
 }
 
 .workouts tr td {
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 table.workouts tr.odd td {
@@ -250,7 +250,7 @@ div.autocomplete ul li {
 
 .received {
     background-color: white;
-    border: #C9C9B1 solid thin;
+    border: black solid thin;
 }
 
 .received .messageHeading .message_from {
