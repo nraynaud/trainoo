@@ -8,6 +8,11 @@
     <packaging>pom</packaging>
     <name>sport-app</name>
     <url>http://nraynaud.fr</url>
+    <scm>
+        <connection>scm:svn:file:///Users/nraynaud/.svn-repository/sport-app/trunk</connection>
+        <developerConnection>scm:svn:file:///Users/nraynaud/.svn-repository/sport-app/trunk</developerConnection>
+        <url>http://somerepository.com/view.cvs</url>
+    </scm>
     <modules>
         <module>sport-j2ee</module>
         <module>sport-hibernate</module>
@@ -25,6 +30,37 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <goals>install</goals>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mojo</id>
+            <name>Codehaus</name>
+            <url>http://repository.codehaus.org</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
