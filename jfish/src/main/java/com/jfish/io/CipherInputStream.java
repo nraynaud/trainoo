@@ -10,10 +10,10 @@ import java.io.IOException;
 public class CipherInputStream {
 
     //The underlying BufferedInputStream instance
-    private BufferedInputStream bis;
+    private final BufferedInputStream bis;
 
     //The underlying block cipher instance
-    private JFish algorithm;
+    private final JFish algorithm;
 
     /**
      * Creates a new instance of CipherInputStream

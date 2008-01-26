@@ -11,10 +11,10 @@ import java.io.*;
  */
 public class TestTwofishECB {
 
-    private String inText = "This is a test of JFish. This text will be encrypted, then decrypted using ECB mode.";
+    private final String inText = "This is a test of JFish. This text will be encrypted, then decrypted using ECB mode.";
     private byte[] cipherText = null;
     private byte[] decText = null;
-    private String passphrase = "testkey";
+    private final String passphrase = "testkey";
     int keysize = 32;
 
     /**
@@ -63,7 +63,7 @@ public class TestTwofishECB {
         System.out.println("");
         System.out.println("Encrypted Text: " + new String(cipherText));
 
-        jfish.clear();
+        JFish.clear();
     }
 
     public void decrypt() {
@@ -82,7 +82,7 @@ public class TestTwofishECB {
         System.out.println("");
         System.out.println("Decrypted Text: " + new String(decText));
 
-        jfish.clear();
+        JFish.clear();
     }
 
     public void testSingleBlock() {
@@ -98,7 +98,7 @@ public class TestTwofishECB {
 
         final byte[] encryptedBlock = jfish.encryptBlock(inputBlock);
 
-        jfish.clear();
+        JFish.clear();
 
         //Decryption phase
 

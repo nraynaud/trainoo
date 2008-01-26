@@ -10,10 +10,10 @@ import java.io.IOException;
 public class CipherOutputStream {
 
     //The underlying BufferedOutputStream instance
-    private BufferedOutputStream bos;
+    private final BufferedOutputStream bos;
 
     //The underlying block cipher instance
-    private JFish algorithm;
+    private final JFish algorithm;
 
     /**
      * Creates a new instance of CipherOutputStream
@@ -53,7 +53,7 @@ public class CipherOutputStream {
      */
     public void close() throws IOException {
         //Clear the block cipher
-        algorithm.clear();
+        JFish.clear();
 
         //Close the BufferedOutputStream
         bos.close();

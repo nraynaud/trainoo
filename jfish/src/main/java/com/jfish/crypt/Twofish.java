@@ -211,11 +211,13 @@ public final class Twofish {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
     };
 
+    private Twofish() {
+    }
+
 // Static code - to intialise the MDS matrix
 //...........................................................................
 
     static {
-        long time = System.currentTimeMillis();
 
         //
         // precompute the MDS matrix
@@ -252,9 +254,6 @@ public final class Twofish {
                     mY[P_30] << 16 |
                     mX[P_30] << 24;
         }
-
-        time = System.currentTimeMillis() - time;
-
     }
 
     private static final int LFSR1(final int x) {

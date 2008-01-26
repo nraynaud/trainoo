@@ -12,12 +12,10 @@ import java.util.Arrays;
  */
 public class JFish {
 
-    private Twofish algorithm;
     private Object key;
 
     //The constructor
     public JFish() {
-        algorithm = new Twofish();
         key = null;
     }
 
@@ -54,16 +52,11 @@ public class JFish {
         byte[] result = null;
 
         try {
-            result = algorithm.encryptArray(string.getBytes(), offset, key);
+            result = Twofish.encryptArray(string.getBytes(), offset, key);
         } catch (CryptoException ex) {
             ex.printStackTrace();
         }
         return result;
-    }
-
-    //Decrypts a supplied string using the internal key
-    public byte[] decryptString(final String string) {
-        return decryptString(string, 0);
     }
 
     //Decrypts a supplied string from the offset point on using the internal key
@@ -71,7 +64,7 @@ public class JFish {
         byte[] result = null;
 
         try {
-            result = algorithm.decryptArray(string.getBytes(), offset, key);
+            result = Twofish.decryptArray(string.getBytes(), offset, key);
         } catch (CryptoException ex) {
             ex.printStackTrace();
         }
@@ -89,7 +82,7 @@ public class JFish {
         byte[] result = null;
 
         try {
-            result = algorithm.encryptArray(bytes, offset, key);
+            result = Twofish.encryptArray(bytes, offset, key);
         } catch (CryptoException ex) {
             ex.printStackTrace();
         }
@@ -107,7 +100,7 @@ public class JFish {
         byte[] result = null;
 
         try {
-            result = algorithm.decryptArray(bytes, offset, key);
+            result = Twofish.decryptArray(bytes, offset, key);
         } catch (CryptoException ex) {
             ex.printStackTrace();
         }
@@ -141,12 +134,6 @@ public class JFish {
     //Compares two byte arrays to determine whether they are equal
     public static boolean compareArrays(final byte[] a, final byte[] b) {
         return Arrays.equals(a, b);
-    }
-
-    //Returns the Twofish algorithm's block size
-    public int getBlockSize() {
-
-        return Twofish.blockSize();
     }
 
     //Clears the internal variables
