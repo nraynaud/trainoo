@@ -31,6 +31,7 @@ public class MessagesAction extends DefaultAction {
     private final Application application;
     private SportRequest request;
     private Long aboutWorkoutId;
+    private boolean confidential;
     private ConversationData conversationData;
 
     public static final String CONTENT_MAX_LENGTH = "4000";

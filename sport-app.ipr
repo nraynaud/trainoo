@@ -430,7 +430,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/bcrypt/jbcrypt.iml" filepath="$PROJECT_DIR$/bcrypt/jbcrypt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jfish/jfish.iml" filepath="$PROJECT_DIR$/jfish/jfish.iml" />
       <module fileurl="file://$PROJECT_DIR$/sport-app.iml" filepath="$PROJECT_DIR$/sport-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/sport-business/sport-business.iml" filepath="$PROJECT_DIR$/sport-business/sport-business.iml" />
       <module fileurl="file://$PROJECT_DIR$/sport-hibernate/sport-hibernate.iml" filepath="$PROJECT_DIR$/sport-hibernate/sport-hibernate.iml" />

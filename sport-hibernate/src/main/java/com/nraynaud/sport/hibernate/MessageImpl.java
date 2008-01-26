@@ -22,7 +22,7 @@ public class MessageImpl implements Message {
     @JoinColumn(name = "SENDER_ID", nullable = false, updatable = false)
     private User sender;
     @ManyToOne(targetEntity = UserImpl.class)
-    @JoinColumn(name = "RECEIVER_ID", nullable = false, updatable = false)
+    @JoinColumn(name = "RECEIVER_ID", nullable = true, updatable = false)
     private User receiver;
 
     @Column(name = "DATE", nullable = false)

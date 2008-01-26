@@ -1,3 +1,4 @@
+import org.junit.Test;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -14,11 +15,12 @@ import java.util.Arrays;
 public class TestCrypto {
     private static final byte[] KEY = {9, -41, -108, 91, 110, 22, 79, -105, -47, -33, 90, 46, 16, 96, 40, 13};
 
-    private TestCrypto() {
+    @Test
+    public void testLol() {
+
     }
 
-
-    public static void testCrypto() throws
+    public static void goCrypto() throws
             NoSuchAlgorithmException,
             NoSuchPaddingException,
             InvalidKeyException,
@@ -40,6 +42,6 @@ public class TestCrypto {
     }
 
     public static void main(final String[] args) throws Exception {
-        testCrypto();
+        goCrypto();
     }
 }
