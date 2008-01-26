@@ -23,6 +23,7 @@ li, dd, blockquote {
 /* Miscellaneous conveniences: */
 form label {
     cursor: pointer;
+    font-weight: bold;
 }
 
 fieldset {

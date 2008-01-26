@@ -11,6 +11,10 @@
     <s:actionmessage/>
     <s:fielderror/>
     <div id="tinyCenter">
+        <p>En mettant à jour votre dossard, les autres pourront mieux vous connaître.<br>
+            Aucun champ n'est obligatoire.
+        </p>
+
         <p><label for="town">Ma ville&nbsp;: </label><br>
             <s:textfield id="town" name="town" cssStyle="width:100%;"/>
         </p>
