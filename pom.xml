@@ -18,6 +18,7 @@
         <module>sport-hibernate</module>
         <module>sport-business</module>
         <module>bcrypt</module>
+        <module>jfish</module>
     </modules>
     <build>
         <plugins>
