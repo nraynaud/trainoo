@@ -6,7 +6,11 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.TextUtils;
 import com.opensymphony.xwork2.util.ValueStack;
 
+import java.util.StringTokenizer;
+
 public class Helpers {
+    private static final String HEX_CHARS = "0123456789ABCDEF";
+
     private Helpers() {
     }
 
@@ -41,7 +45,58 @@ public class Helpers {
     }
 
     public static String escaped(final String string) {
-        return TextUtils.htmlEncode(string);
+        final String s = TextUtils.noNull(string);
+        final StringBuilder str = new StringBuilder();
+
+        escape(s, str);
+
+        return str.toString();
+    }
+
+    private static void escape(final String input, final StringBuilder collector) {
+        for (int j = 0; j < input.length(); j++) {
+            final char c = input.charAt(j);
+
+            // encode standard ASCII characters into HTML entities where needed
+            if (c < '\200') {
+                switch (c) {
+                    case '"':
+                        collector.append("&quot;");
+
+                        break;
+
+                    case '&':
+                        collector.append("&amp;");
+
+                        break;
+
+                    case '<':
+                        collector.append("&lt;");
+
+                        break;
+
+                    case '>':
+                        collector.append("&gt;");
+
+                        break;
+
+                    default:
+                        collector.append(c);
+                }
+            }
+            // encode 'ugly' characters (ie Word "curvy" quotes etc)
+            else if (c < '\377') {
+                final int a = c % 16;
+                final int b = (c - a) / 16;
+                final String hex = "" + HEX_CHARS.charAt(b) + HEX_CHARS.charAt(a);
+                collector.append("&#x").append(hex).append(";");
+            }
+            //add other characters back in - to handle charactersets
+            //other than ascii
+            else {
+                collector.append(c);
+            }
+        }
     }
 
     public static String propertyEscapedOrNull(final String expression, final String ifNull) {
@@ -71,5 +126,15 @@ public class Helpers {
 
     public static Object pop() {
         return stack().pop();
+    }
+
+    public static String multilineText(final String input) {
+        final StringBuilder builder = new StringBuilder((int) (input.length() * 1.2));
+        final StringTokenizer tokenizer = new StringTokenizer(input, "\n");
+        while (tokenizer.hasMoreTokens()) {
+            escape(tokenizer.nextToken(), builder);
+            builder.append("<br>");
+        }
+        return builder.toString();
     }
 }

@@ -24,7 +24,7 @@
                 <td><p:duration name="duration"/></td>
                 <td><p:distance name="distance"/></td>
                 <s:if test="%{parameters.displayEdit}">
-                    <td>
+                    <td class="img">
                         <s:url id="editurl" namespace="workout" action="edit" includeParams="get">
                             <s:param name="id" value="id"/>
                         </s:url>
@@ -32,7 +32,7 @@
                     </td>
                 </s:if>
                 <% if (isLogged()) {%>
-                <td>
+                <td class="img">
                     <s:url id="answerUrl" action="messages" namespace="/" includeParams="get">
                         <s:param name="receiver" value="user.name"/>
                         <s:param name="aboutWorkoutId" value="id"/>

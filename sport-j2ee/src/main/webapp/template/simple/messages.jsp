@@ -68,7 +68,7 @@
                 }
             }
         %>
-
-        <p class="messageContent"><s:property value="content" escape="true"/></p>
+        <p class="messageContent"><%= multilineText(message.getContent())%>
+        </p>
     </div>
 </s:iterator>
