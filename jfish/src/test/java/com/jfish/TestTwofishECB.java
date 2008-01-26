@@ -11,10 +11,10 @@ import java.io.*;
  */
 public class TestTwofishECB {
 
-    String inText = "This is a test of JFish. This text will be encrypted, then decrypted using ECB mode.";
-    byte[] cipherText = null;
-    byte[] decText = null;
-    String passphrase = "testkey";
+    private String inText = "This is a test of JFish. This text will be encrypted, then decrypted using ECB mode.";
+    private byte[] cipherText = null;
+    private byte[] decText = null;
+    private String passphrase = "testkey";
     int keysize = 32;
 
     /**
@@ -67,7 +67,7 @@ public class TestTwofishECB {
     }
 
     public void decrypt() {
-        JFish jfish = new JFish();
+        final JFish jfish = new JFish();
 
         System.out.println("Passphrase: " + passphrase + "\n");
 
@@ -88,15 +88,15 @@ public class TestTwofishECB {
     public void testSingleBlock() {
         System.out.println("Performing Single Block Test...");
 
-        JFish jfish = new JFish();
+        final JFish jfish = new JFish();
 
         jfish.generateKey(passphrase, 32);
 
-        byte[] inputBlock = new byte[16];
+        final byte[] inputBlock = new byte[16];
 
         System.out.println("Input Block: " + new String(inputBlock));
 
-        byte[] encryptedBlock = jfish.encryptBlock(inputBlock);
+        final byte[] encryptedBlock = jfish.encryptBlock(inputBlock);
 
         jfish.clear();
 
@@ -104,7 +104,7 @@ public class TestTwofishECB {
 
         jfish.generateKey(passphrase, 32);
 
-        byte[] outputBlock = jfish.decryptBlock(encryptedBlock);
+        final byte[] outputBlock = jfish.decryptBlock(encryptedBlock);
 
         System.out.println("Decrypted Block: " + new String(outputBlock));
 
@@ -112,7 +112,7 @@ public class TestTwofishECB {
         System.out.println("--------------------");
         System.out.println("");
 
-        System.out.println("Single Block Success: " + jfish.compareArrays(inputBlock, outputBlock));
+        System.out.println("Single Block Success: " + JFish.compareArrays(inputBlock, outputBlock));
 
         System.out.println("");
         System.out.println("--------------------");
@@ -124,7 +124,7 @@ public class TestTwofishECB {
         System.out.println("Performing Output Stream Test...\n");
 
         System.out.println("Opening File Streams...");
-        File testFile = new File("test.txt");
+        final File testFile = new File("test.txt");
         FileOutputStream fos = null;
         try {
             testFile.createNewFile();
@@ -136,7 +136,7 @@ public class TestTwofishECB {
         }
 
         System.out.println("Opening Cipher Stream...");
-        CipherOutputStream cos = new CipherOutputStream(fos, passphrase, 32);
+        final CipherOutputStream cos = new CipherOutputStream(fos, passphrase, 32);
         System.out.println("");
         System.out.println("Writing Text...");
         try {
@@ -159,7 +159,7 @@ public class TestTwofishECB {
         FileInputStream fis = null;
 
         System.out.println("Opening File Streams...");
-        File testFile = new File("test.txt");
+        final File testFile = new File("test.txt");
         try {
             fis = new FileInputStream(testFile);
         } catch (FileNotFoundException ex) {
@@ -167,7 +167,7 @@ public class TestTwofishECB {
         }
 
         System.out.println("Opening Cipher Stream...");
-        CipherInputStream cis = new CipherInputStream(fis, passphrase, 32);
+        final CipherInputStream cis = new CipherInputStream(fis, passphrase, 32);
         System.out.println("");
         System.out.println("Reading Text...");
         byte[] output = null;
@@ -178,7 +178,7 @@ public class TestTwofishECB {
             ex.printStackTrace();
         }
 
-        String outText = new String(output);
+        final String outText = new String(output);
 
         System.out.println("\nDecrypted Text: " + outText);
 
@@ -194,7 +194,7 @@ public class TestTwofishECB {
         System.out.println("");
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         new TestTwofishECB();
     }
 }

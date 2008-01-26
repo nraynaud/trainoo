@@ -222,6 +222,9 @@
         <inspection_tool class="UnnecessaryEnumModifier" level="WARNING" enabled="true" />
         <inspection_tool class="UnnecessaryParentheses" level="WARNING" enabled="true" />
         <inspection_tool class="UnnecessaryQualifierForThis" level="WARNING" enabled="true" />
+        <inspection_tool class="PointlessBitwiseExpression" level="WARNING" enabled="false">
+          <option name="m_ignoreExpressionsContainingConstants" value="false" />
+        </inspection_tool>
       </profile>
     </profiles>
     <list size="4">

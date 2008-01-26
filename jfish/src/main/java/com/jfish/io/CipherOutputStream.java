@@ -18,7 +18,7 @@ public class CipherOutputStream {
     /**
      * Creates a new instance of CipherOutputStream
      */
-    public CipherOutputStream(FileOutputStream fos, String passphrase, int keylength) {
+    public CipherOutputStream(final FileOutputStream fos, final String passphrase, final int keylength) {
         //Create a new instance of the BufferedOutputStream
         bos = new BufferedOutputStream(fos);
 
@@ -32,9 +32,9 @@ public class CipherOutputStream {
     /**
      * Encrypts then writes a byte array to the BufferedOutputStream
      */
-    public void write(byte[] b) throws IOException {
+    public void write(final byte[] b) throws IOException {
         //Encrypt the supplyed byte array
-        byte[] cipherText = algorithm.encryptByteArray(b);
+        final byte[] cipherText = algorithm.encryptByteArray(b);
 
         //Write the encrypted bytes to the BufferedOutputStream
         bos.write(cipherText);

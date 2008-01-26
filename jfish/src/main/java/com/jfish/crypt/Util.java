@@ -8,9 +8,9 @@ public final class Util {
     }
 
     //Adds two byte arrays together.
-    public static byte[] addByteArrays(byte[] first, byte[] second) {
+    public static byte[] addByteArrays(final byte[] first, final byte[] second) {
 
-        byte[] result = new byte[first.length + second.length];
+        final byte[] result = new byte[first.length + second.length];
 
         System.arraycopy(first, 0, result, 0, first.length);
         System.arraycopy(second, 0, result, first.length, second.length);

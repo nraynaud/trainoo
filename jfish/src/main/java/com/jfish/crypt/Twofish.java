@@ -8,7 +8,7 @@ public final class Twofish {
 // Constants and variables
 //...........................................................................
 
-    static final int BLOCK_SIZE = 16; // bytes in a data-block
+    private static final int BLOCK_SIZE = 16; // bytes in a data-block
     private static final int ROUNDS = 16;
     private static final int MAX_ROUNDS = 16; // max # rounds (for allocating subkeys)
 
@@ -220,9 +220,9 @@ public final class Twofish {
         //
         // precompute the MDS matrix
         //
-        int[] m1 = new int[2];
-        int[] mX = new int[2];
-        int[] mY = new int[2];
+        final int[] m1 = new int[2];
+        final int[] mX = new int[2];
+        final int[] mY = new int[2];
         int i, j;
         for (i = 0; i < 256; i++) {
             j = P[0][i] & 0xFF; // compute all the matrix elements
@@ -257,26 +257,24 @@ public final class Twofish {
 
     }
 
-    private static final int LFSR1(int x) {
-        return (x >> 1) ^
-                ((x & 0x01) != 0 ? GF256_FDBK_2 : 0);
+    private static final int LFSR1(final int x) {
+        return x >> 1 ^ ((x & 0x01) != 0 ? GF256_FDBK_2 : 0);
     }
 
-    private static final int LFSR2(int x) {
-        return (x >> 2) ^
-                ((x & 0x02) != 0 ? GF256_FDBK_2 : 0) ^
+    private static final int LFSR2(final int x) {
+        return x >> 2 ^ ((x & 0x02) != 0 ? GF256_FDBK_2 : 0) ^
                 ((x & 0x01) != 0 ? GF256_FDBK_4 : 0);
     }
 
-    private static final int Mx_1(int x) {
+    private static final int Mx_1(final int x) {
         return x;
     }
 
-    private static final int Mx_X(int x) {
+    private static final int Mx_X(final int x) {
         return x ^ LFSR2(x);
     }            // 5B
 
-    private static final int Mx_Y(int x) {
+    private static final int Mx_Y(final int x) {
         return x ^ LFSR1(x) ^ LFSR2(x);
     } // EF
 
@@ -290,31 +288,29 @@ public final class Twofish {
      * @return This cipher's round keys.
      * @throws InvalidKeyException If the key is invalid.
      */
-    public static synchronized Object makeKey(byte[] k) throws InvalidKeyException {
+    public static synchronized Object makeKey(final byte[] k) throws InvalidKeyException {
 
         if (k == null)
             throw new InvalidKeyException("Empty key");
-        int length = k.length;
+        final int length = k.length;
         if (!(length == 8 || length == 16 || length == 24 || length == 32))
             throw new InvalidKeyException("Incorrect key length");
 
-        int k64Cnt = length / 8;
-        int subkeyCnt = ROUND_SUBKEYS + 2 * ROUNDS;
-        int[] k32e = new int[4]; // even 32-bit entities
-        int[] k32o = new int[4]; // odd 32-bit entities
-        int[] sBoxKey = new int[4];
+        final int k64Cnt = length / 8;
+        final int subkeyCnt = ROUND_SUBKEYS + 2 * ROUNDS;
+        final int[] k32e = new int[4]; // even 32-bit entities
+        final int[] k32o = new int[4]; // odd 32-bit entities
+        final int[] sBoxKey = new int[4];
         //
         // split user key material into even and odd 32-bit entities and
         // compute S-box keys using (12, 8) Reed-Solomon code over GF(256)
         //
         int i, j, offset = 0;
         for (i = 0, j = k64Cnt - 1; i < 4 && offset < length; i++, j--) {
-            k32e[i] = (k[offset++] & 0xFF) |
-                    (k[offset++] & 0xFF) << 8 |
+            k32e[i] = k[offset++] & 0xFF | (k[offset++] & 0xFF) << 8 |
                     (k[offset++] & 0xFF) << 16 |
                     (k[offset++] & 0xFF) << 24;
-            k32o[i] = (k[offset++] & 0xFF) |
-                    (k[offset++] & 0xFF) << 8 |
+            k32o[i] = k[offset++] & 0xFF | (k[offset++] & 0xFF) << 8 |
                     (k[offset++] & 0xFF) << 16 |
                     (k[offset++] & 0xFF) << 24;
             sBoxKey[j] = RS_MDS_Encode(k32e[i], k32o[i]); // reverse order
@@ -322,7 +318,7 @@ public final class Twofish {
         // compute the round decryption subkeys for PHT. these same subkeys
         // will be used in encryption but will be applied in reverse order.
         int q, A, B;
-        int[] subKeys = new int[subkeyCnt];
+        final int[] subKeys = new int[subkeyCnt];
         for (i = q = 0; i < subkeyCnt / 2; i++, q += SK_STEP) {
             A = F32(k64Cnt, q, k32e); // A uses even key entities
             B = F32(k64Cnt, q + SK_BUMP, k32o); // B uses odd  key entities
@@ -330,47 +326,45 @@ public final class Twofish {
             A += B;
             subKeys[2 * i] = A;               // combine with a PHT
             A += B;
-            subKeys[2 * i + 1] = A << SK_ROTL | A >>> (32 - SK_ROTL);
+            subKeys[2 * i + 1] = A << SK_ROTL | A >>> 32 - SK_ROTL;
         }
         //
         // fully expand the table for speed
         //
-        int k0 = sBoxKey[0];
-        int k1 = sBoxKey[1];
-        int k2 = sBoxKey[2];
-        int k3 = sBoxKey[3];
+        final int k0 = sBoxKey[0];
+        final int k1 = sBoxKey[1];
+        final int k2 = sBoxKey[2];
+        final int k3 = sBoxKey[3];
         int b0, b1, b2, b3;
-        int[] sBox = new int[4 * 256];
+        final int[] sBox = new int[4 * 256];
         for (i = 0; i < 256; i++) {
             b0 = b1 = b2 = b3 = i;
             switch (k64Cnt & 3) {
                 case 1:
-                    sBox[2 * i] = MDS[0][(P[P_01][b0] & 0xFF) ^ b0(k0)];
-                    sBox[2 * i + 1] = MDS[1][(P[P_11][b1] & 0xFF) ^ b1(k0)];
-                    sBox[0x200 + 2 * i] = MDS[2][(P[P_21][b2] & 0xFF) ^ b2(k0)];
-                    sBox[0x200 + 2 * i + 1] = MDS[3][(P[P_31][b3] & 0xFF) ^ b3(k0)];
+                    sBox[2 * i] = MDS[0][(P[P_01][b0] & 0xFF ^ b0(k0))];
+                    sBox[2 * i + 1] = MDS[1][(P[P_11][b1] & 0xFF ^ b1(k0))];
+                    sBox[0x200 + 2 * i] = MDS[2][(P[P_21][b2] & 0xFF ^ b2(k0))];
+                    sBox[0x200 + 2 * i + 1] = MDS[3][(P[P_31][b3] & 0xFF ^ b3(k0))];
                     break;
                 case 0: // same as 4
-                    b0 = (P[P_04][b0] & 0xFF) ^ b0(k3);
-                    b1 = (P[P_14][b1] & 0xFF) ^ b1(k3);
-                    b2 = (P[P_24][b2] & 0xFF) ^ b2(k3);
-                    b3 = (P[P_34][b3] & 0xFF) ^ b3(k3);
+                    b0 = P[P_04][b0] & 0xFF ^ b0(k3);
+                    b1 = P[P_14][b1] & 0xFF ^ b1(k3);
+                    b2 = P[P_24][b2] & 0xFF ^ b2(k3);
+                    b3 = P[P_34][b3] & 0xFF ^ b3(k3);
                 case 3:
-                    b0 = (P[P_03][b0] & 0xFF) ^ b0(k2);
-                    b1 = (P[P_13][b1] & 0xFF) ^ b1(k2);
-                    b2 = (P[P_23][b2] & 0xFF) ^ b2(k2);
-                    b3 = (P[P_33][b3] & 0xFF) ^ b3(k2);
+                    b0 = P[P_03][b0] & 0xFF ^ b0(k2);
+                    b1 = P[P_13][b1] & 0xFF ^ b1(k2);
+                    b2 = P[P_23][b2] & 0xFF ^ b2(k2);
+                    b3 = P[P_33][b3] & 0xFF ^ b3(k2);
                 case 2: // 128-bit keys
-                    sBox[2 * i] = MDS[0][(P[P_01][(P[P_02][b0] & 0xFF) ^ b0(k1)] & 0xFF) ^ b0(k0)];
-                    sBox[2 * i + 1] = MDS[1][(P[P_11][(P[P_12][b1] & 0xFF) ^ b1(k1)] & 0xFF) ^ b1(k0)];
-                    sBox[0x200 + 2 * i] = MDS[2][(P[P_21][(P[P_22][b2] & 0xFF) ^ b2(k1)] & 0xFF) ^ b2(k0)];
-                    sBox[0x200 + 2 * i + 1] = MDS[3][(P[P_31][(P[P_32][b3] & 0xFF) ^ b3(k1)] & 0xFF) ^ b3(k0)];
+                    sBox[2 * i] = MDS[0][(P[P_01][P[P_02][b0] & 0xFF ^ b0(k1)] & 0xFF ^ b0(k0))];
+                    sBox[2 * i + 1] = MDS[1][(P[P_11][P[P_12][b1] & 0xFF ^ b1(k1)] & 0xFF ^ b1(k0))];
+                    sBox[0x200 + 2 * i] = MDS[2][(P[P_21][P[P_22][b2] & 0xFF ^ b2(k1)] & 0xFF ^ b2(k0))];
+                    sBox[0x200 + 2 * i + 1] = MDS[3][(P[P_31][P[P_32][b3] & 0xFF ^ b3(k1)] & 0xFF ^ b3(k0))];
             }
         }
 
-        Object sessionKey = new Object[]{sBox, subKeys};
-
-        return sessionKey;
+        return new Object[]{sBox, subKeys};
     }
 
     /**
@@ -381,27 +375,23 @@ public final class Twofish {
      * @param sessionKey The session key to use for encryption.
      * @return The ciphertext generated from a plaintext using the session key.
      */
-    public static byte[] encryptBlock(byte[] in, int inOffset, Object sessionKey) {
+    public static byte[] encryptBlock(final byte[] in, int inOffset, final Object sessionKey) {
 
-        Object[] sk = (Object[]) sessionKey; // extract S-box and session key
-        int[] sBox = (int[]) sk[0];
-        int[] sKey = (int[]) sk[1];
+        final Object[] sk = (Object[]) sessionKey; // extract S-box and session key
+        final int[] sBox = (int[]) sk[0];
+        final int[] sKey = (int[]) sk[1];
 
 
-        int x0 = (in[inOffset++] & 0xFF) |
-                (in[inOffset++] & 0xFF) << 8 |
+        int x0 = in[inOffset++] & 0xFF | (in[inOffset++] & 0xFF) << 8 |
                 (in[inOffset++] & 0xFF) << 16 |
                 (in[inOffset++] & 0xFF) << 24;
-        int x1 = (in[inOffset++] & 0xFF) |
-                (in[inOffset++] & 0xFF) << 8 |
+        int x1 = in[inOffset++] & 0xFF | (in[inOffset++] & 0xFF) << 8 |
                 (in[inOffset++] & 0xFF) << 16 |
                 (in[inOffset++] & 0xFF) << 24;
-        int x2 = (in[inOffset++] & 0xFF) |
-                (in[inOffset++] & 0xFF) << 8 |
+        int x2 = in[inOffset++] & 0xFF | (in[inOffset++] & 0xFF) << 8 |
                 (in[inOffset++] & 0xFF) << 16 |
                 (in[inOffset++] & 0xFF) << 24;
-        int x3 = (in[inOffset++] & 0xFF) |
-                (in[inOffset++] & 0xFF) << 8 |
+        int x3 = in[inOffset++] & 0xFF | (in[inOffset++] & 0xFF) << 8 |
                 (in[inOffset++] & 0xFF) << 16 |
                 (in[inOffset++] & 0xFF) << 24;
 
@@ -436,14 +426,12 @@ public final class Twofish {
         x1 ^= sKey[OUTPUT_WHITEN + 3];
 
 
-        byte[] result = new byte[]{
+        return new byte[]{
                 (byte) x2, (byte) (x2 >>> 8), (byte) (x2 >>> 16), (byte) (x2 >>> 24),
                 (byte) x3, (byte) (x3 >>> 8), (byte) (x3 >>> 16), (byte) (x3 >>> 24),
                 (byte) x0, (byte) (x0 >>> 8), (byte) (x0 >>> 16), (byte) (x0 >>> 24),
                 (byte) x1, (byte) (x1 >>> 8), (byte) (x1 >>> 16), (byte) (x1 >>> 24),
         };
-
-        return result;
     }
 
     /**
@@ -454,25 +442,21 @@ public final class Twofish {
      * @param sessionKey The session key to use for decryption.
      * @return The plaintext generated from a ciphertext using the session key.
      */
-    public static byte[] decryptBlock(byte[] in, int inOffset, Object sessionKey) {
-        Object[] sk = (Object[]) sessionKey; // extract S-box and session key
-        int[] sBox = (int[]) sk[0];
-        int[] sKey = (int[]) sk[1];
+    public static byte[] decryptBlock(final byte[] in, int inOffset, final Object sessionKey) {
+        final Object[] sk = (Object[]) sessionKey; // extract S-box and session key
+        final int[] sBox = (int[]) sk[0];
+        final int[] sKey = (int[]) sk[1];
 
-        int x2 = (in[inOffset++] & 0xFF) |
-                (in[inOffset++] & 0xFF) << 8 |
+        int x2 = in[inOffset++] & 0xFF | (in[inOffset++] & 0xFF) << 8 |
                 (in[inOffset++] & 0xFF) << 16 |
                 (in[inOffset++] & 0xFF) << 24;
-        int x3 = (in[inOffset++] & 0xFF) |
-                (in[inOffset++] & 0xFF) << 8 |
+        int x3 = in[inOffset++] & 0xFF | (in[inOffset++] & 0xFF) << 8 |
                 (in[inOffset++] & 0xFF) << 16 |
                 (in[inOffset++] & 0xFF) << 24;
-        int x0 = (in[inOffset++] & 0xFF) |
-                (in[inOffset++] & 0xFF) << 8 |
+        int x0 = in[inOffset++] & 0xFF | (in[inOffset++] & 0xFF) << 8 |
                 (in[inOffset++] & 0xFF) << 16 |
                 (in[inOffset++] & 0xFF) << 24;
-        int x1 = (in[inOffset++] & 0xFF) |
-                (in[inOffset++] & 0xFF) << 8 |
+        int x1 = in[inOffset++] & 0xFF | (in[inOffset++] & 0xFF) << 8 |
                 (in[inOffset++] & 0xFF) << 16 |
                 (in[inOffset++] & 0xFF) << 24;
 
@@ -504,33 +488,31 @@ public final class Twofish {
         x2 ^= sKey[INPUT_WHITEN + 2];
         x3 ^= sKey[INPUT_WHITEN + 3];
 
-        byte[] result = new byte[]{
+        return new byte[]{
                 (byte) x0, (byte) (x0 >>> 8), (byte) (x0 >>> 16), (byte) (x0 >>> 24),
                 (byte) x1, (byte) (x1 >>> 8), (byte) (x1 >>> 16), (byte) (x1 >>> 24),
                 (byte) x2, (byte) (x2 >>> 8), (byte) (x2 >>> 16), (byte) (x2 >>> 24),
                 (byte) x3, (byte) (x3 >>> 8), (byte) (x3 >>> 16), (byte) (x3 >>> 24),
         };
-
-        return result;
     }
 
 // own methods
 //...........................................................................
 
-    private static final int b0(int x) {
+    private static final int b0(final int x) {
         return x & 0xFF;
     }
 
-    private static final int b1(int x) {
-        return (x >>> 8) & 0xFF;
+    private static final int b1(final int x) {
+        return x >>> 8 & 0xFF;
     }
 
-    private static final int b2(int x) {
-        return (x >>> 16) & 0xFF;
+    private static final int b2(final int x) {
+        return x >>> 16 & 0xFF;
     }
 
-    private static final int b3(int x) {
-        return (x >>> 24) & 0xFF;
+    private static final int b3(final int x) {
+        return x >>> 24 & 0xFF;
     }
 
     /**
@@ -541,7 +523,7 @@ public final class Twofish {
      * @param k1 2nd 32-bit entity.
      * @return Remainder polynomial generated using RS code
      */
-    private static final int RS_MDS_Encode(int k0, int k1) {
+    private static final int RS_MDS_Encode(final int k0, final int k1) {
         int r = k1;
         for (int i = 0; i < 4; i++) // shift 1 byte at a time
             r = RS_rem(r);
@@ -558,62 +540,61 @@ public final class Twofish {
     * </pre>
     * where a = primitive root of field generator 0x14D
     */
-    private static final int RS_rem(int x) {
-        int b = (x >>> 24) & 0xFF;
-        int g2 = ((b << 1) ^ ((b & 0x80) != 0 ? RS_GF_FDBK : 0)) & 0xFF;
-        int g3 = (b >>> 1) ^ ((b & 0x01) != 0 ? (RS_GF_FDBK >>> 1) : 0) ^ g2;
-        int result = (x << 8) ^ (g3 << 24) ^ (g2 << 16) ^ (g3 << 8) ^ b;
-        return result;
+    private static final int RS_rem(final int x) {
+        final int b = x >>> 24 & 0xFF;
+        final int g2 = (b << 1 ^ ((b & 0x80) != 0 ? RS_GF_FDBK : 0)) & 0xFF;
+        final int g3 = b >>> 1 ^ ((b & 0x01) != 0 ? RS_GF_FDBK >>> 1 : 0) ^ g2;
+        return x << 8 ^ g3 << 24 ^ g2 << 16 ^ g3 << 8 ^ b;
     }
 
-    private static final int F32(int k64Cnt, int x, int[] k32) {
+    private static final int F32(final int k64Cnt, final int x, final int[] k32) {
         int b0 = b0(x);
         int b1 = b1(x);
         int b2 = b2(x);
         int b3 = b3(x);
-        int k0 = k32[0];
-        int k1 = k32[1];
-        int k2 = k32[2];
-        int k3 = k32[3];
+        final int k0 = k32[0];
+        final int k1 = k32[1];
+        final int k2 = k32[2];
+        final int k3 = k32[3];
 
         int result = 0;
         switch (k64Cnt & 3) {
             case 1:
                 result =
-                        MDS[0][(P[P_01][b0] & 0xFF) ^ b0(k0)] ^
-                                MDS[1][(P[P_11][b1] & 0xFF) ^ b1(k0)] ^
-                                MDS[2][(P[P_21][b2] & 0xFF) ^ b2(k0)] ^
-                                MDS[3][(P[P_31][b3] & 0xFF) ^ b3(k0)];
+                        MDS[0][(P[P_01][b0] & 0xFF ^ b0(k0))] ^
+                                MDS[1][(P[P_11][b1] & 0xFF ^ b1(k0))] ^
+                                MDS[2][(P[P_21][b2] & 0xFF ^ b2(k0))] ^
+                                MDS[3][(P[P_31][b3] & 0xFF ^ b3(k0))];
                 break;
             case 0:  // same as 4
-                b0 = (P[P_04][b0] & 0xFF) ^ b0(k3);
-                b1 = (P[P_14][b1] & 0xFF) ^ b1(k3);
-                b2 = (P[P_24][b2] & 0xFF) ^ b2(k3);
-                b3 = (P[P_34][b3] & 0xFF) ^ b3(k3);
+                b0 = P[P_04][b0] & 0xFF ^ b0(k3);
+                b1 = P[P_14][b1] & 0xFF ^ b1(k3);
+                b2 = P[P_24][b2] & 0xFF ^ b2(k3);
+                b3 = P[P_34][b3] & 0xFF ^ b3(k3);
             case 3:
-                b0 = (P[P_03][b0] & 0xFF) ^ b0(k2);
-                b1 = (P[P_13][b1] & 0xFF) ^ b1(k2);
-                b2 = (P[P_23][b2] & 0xFF) ^ b2(k2);
-                b3 = (P[P_33][b3] & 0xFF) ^ b3(k2);
+                b0 = P[P_03][b0] & 0xFF ^ b0(k2);
+                b1 = P[P_13][b1] & 0xFF ^ b1(k2);
+                b2 = P[P_23][b2] & 0xFF ^ b2(k2);
+                b3 = P[P_33][b3] & 0xFF ^ b3(k2);
             case 2:                             // 128-bit keys (optimize for this case)
                 result =
-                        MDS[0][(P[P_01][(P[P_02][b0] & 0xFF) ^ b0(k1)] & 0xFF) ^ b0(k0)] ^
-                                MDS[1][(P[P_11][(P[P_12][b1] & 0xFF) ^ b1(k1)] & 0xFF) ^ b1(k0)] ^
-                                MDS[2][(P[P_21][(P[P_22][b2] & 0xFF) ^ b2(k1)] & 0xFF) ^ b2(k0)] ^
-                                MDS[3][(P[P_31][(P[P_32][b3] & 0xFF) ^ b3(k1)] & 0xFF) ^ b3(k0)];
+                        MDS[0][(P[P_01][P[P_02][b0] & 0xFF ^ b0(k1)] & 0xFF ^ b0(k0))] ^
+                                MDS[1][(P[P_11][P[P_12][b1] & 0xFF ^ b1(k1)] & 0xFF ^ b1(k0))] ^
+                                MDS[2][(P[P_21][P[P_22][b2] & 0xFF ^ b2(k1)] & 0xFF ^ b2(k0))] ^
+                                MDS[3][(P[P_31][P[P_32][b3] & 0xFF ^ b3(k1)] & 0xFF ^ b3(k0))];
                 break;
         }
         return result;
     }
 
-    private static final int Fe32(int[] sBox, int x, int R) {
+    private static final int Fe32(final int[] sBox, final int x, final int R) {
         return sBox[2 * _b(x, R)] ^
                 sBox[2 * _b(x, R + 1) + 1] ^
                 sBox[0x200 + 2 * _b(x, R + 2)] ^
                 sBox[0x200 + 2 * _b(x, R + 3) + 1];
     }
 
-    private static final int _b(int x, int N) {
+    private static final int _b(final int x, final int N) {
         int result = 0;
         switch (N % 4) {
             case 0:
@@ -639,20 +620,20 @@ public final class Twofish {
         return BLOCK_SIZE;
     }
 
-    public byte[] encryptArray(byte[] message, int offset, Object key) throws CryptoException {
+    public static byte[] encryptArray(final byte[] message, final int offset, final Object key) throws CryptoException {
         //Check for a bad offset
         if (offset > message.length) {
             throw new CryptoException("Offset is greater than length of message");
         }
 
         //Length of message to process
-        int length = message.length - offset;
+        final int length = message.length - offset;
 
         //Number of whole blocks
         int numOfBlocks = length / BLOCK_SIZE;
 
         //Length of the last part
-        int lengthOfLastPart = length - (numOfBlocks * BLOCK_SIZE);
+        int lengthOfLastPart = length - numOfBlocks * BLOCK_SIZE;
 
         //If message was mutliple of BLOCK_SIZE
         if (lengthOfLastPart == 0) {
@@ -661,17 +642,17 @@ public final class Twofish {
         }
 
         byte[] result = new byte[0];
-        byte[] block = new byte[BLOCK_SIZE];
+        final byte[] block = new byte[BLOCK_SIZE];
 
         //Process whole blocks
         for (int i = 0; i < numOfBlocks; i++) {
-            System.arraycopy(message, offset + (i * BLOCK_SIZE), block, 0, BLOCK_SIZE);
+            System.arraycopy(message, offset + i * BLOCK_SIZE, block, 0, BLOCK_SIZE);
             result = Util.addByteArrays(result, encryptBlock(block, offset, key));
         }
 
         //Now do the last part (or last block if message was multiple of BLOCK_SIZE)
         byte last[] = new byte[lengthOfLastPart];
-        System.arraycopy(message, offset + (numOfBlocks * BLOCK_SIZE), last, 0, lengthOfLastPart);
+        System.arraycopy(message, offset + numOfBlocks * BLOCK_SIZE, last, 0, lengthOfLastPart);
 
         //Number of padding bytes required
         int numOfPads = BLOCK_SIZE - last.length;
@@ -682,7 +663,7 @@ public final class Twofish {
         }
 
         //Set the padding bytes
-        byte pads[] = new byte[numOfPads];
+        final byte[] pads = new byte[numOfPads];
         for (int i = 0; i < numOfPads; i++) {
             pads[i] = (byte) numOfPads;
         }
@@ -706,20 +687,20 @@ public final class Twofish {
         return result;
     }
 
-    public byte[] decryptArray(byte[] message, int offset, Object key) throws CryptoException {
+    public static byte[] decryptArray(final byte[] message, final int offset, final Object key) throws CryptoException {
         //Check for a bad offset
         if (offset > message.length) {
             throw new CryptoException("Offset is greater than length of message");
         }
 
         //Length of message to process
-        int length = message.length - offset;
+        final int length = message.length - offset;
 
         //Number of whole blocks
         int numOfBlocks = length / BLOCK_SIZE;
 
         //Length of the last part
-        int lengthOfLastPart = length - (numOfBlocks * BLOCK_SIZE);
+        int lengthOfLastPart = length - numOfBlocks * BLOCK_SIZE;
 
         //If message was mutliple of BLOCK_SIZE
         if (lengthOfLastPart == 0) {
@@ -728,24 +709,24 @@ public final class Twofish {
         }
 
         byte[] result = new byte[0];
-        byte[] block = new byte[BLOCK_SIZE];
+        final byte[] block = new byte[BLOCK_SIZE];
 
         //Process whole blocks
         for (int i = 0; i < numOfBlocks; i++) {
-            System.arraycopy(message, offset + (i * BLOCK_SIZE), block, 0, BLOCK_SIZE);
+            System.arraycopy(message, offset + i * BLOCK_SIZE, block, 0, BLOCK_SIZE);
             result = Util.addByteArrays(result, decryptBlock(block, offset, key));
         }
 
         //Now do the last part (or last block if message was multiple of BLOCK_SIZE)
-        byte last[] = new byte[lengthOfLastPart];
-        System.arraycopy(message, offset + (numOfBlocks * BLOCK_SIZE), last, 0, lengthOfLastPart);
+        final byte[] last = new byte[lengthOfLastPart];
+        System.arraycopy(message, offset + numOfBlocks * BLOCK_SIZE, last, 0, lengthOfLastPart);
 
         //Decrypt the last block
-        byte[] tmp = decryptBlock(last, offset, key);
+        final byte[] tmp = decryptBlock(last, offset, key);
 
-        int numOfPads = tmp[tmp.length - 1];
+        final int numOfPads = tmp[tmp.length - 1];
 
-        byte[] lastBlock = new byte[BLOCK_SIZE - numOfPads];
+        final byte[] lastBlock = new byte[BLOCK_SIZE - numOfPads];
 
         System.arraycopy(tmp, 0, lastBlock, 0, lastBlock.length);
 

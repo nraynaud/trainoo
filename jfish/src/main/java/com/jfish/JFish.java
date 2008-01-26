@@ -79,14 +79,13 @@ public class JFish {
     }
 
     //Encrypts a supplied byte array using the internal key
-    public byte[] encryptByteArray(byte[] bytes) {
-        byte[] result = encryptByteArray(bytes, 0);
+    public byte[] encryptByteArray(final byte[] bytes) {
 
-        return result;
+        return encryptByteArray(bytes, 0);
     }
 
     //Encrypts a supplied byte array from the offset point on using the internal key
-    public byte[] encryptByteArray(byte[] bytes, int offset) {
+    public byte[] encryptByteArray(final byte[] bytes, final int offset) {
         byte[] result = null;
 
         try {
@@ -98,14 +97,13 @@ public class JFish {
     }
 
     //Decrypts a supplied byte array using the internal key
-    public byte[] decryptByteArray(byte[] bytes) {
-        byte[] result = decryptByteArray(bytes, 0);
+    public byte[] decryptByteArray(final byte[] bytes) {
 
-        return result;
+        return decryptByteArray(bytes, 0);
     }
 
     //Decrypts a supplied string from the offset point on using the internal key
-    public byte[] decryptByteArray(byte[] bytes, int offset) {
+    public byte[] decryptByteArray(final byte[] bytes, final int offset) {
         byte[] result = null;
 
         try {
@@ -117,47 +115,42 @@ public class JFish {
     }
 
     //Encrypts a supplied block using the internal key
-    public byte[] encryptBlock(byte[] block) {
-        byte[] result = encryptBlock(block, 0);
+    public byte[] encryptBlock(final byte[] block) {
 
-        return result;
+        return encryptBlock(block, 0);
     }
 
     //Encrypts a supplied block from the offset point on using the internal key
-    public byte[] encryptBlock(byte[] block, int offset) {
-        byte[] result = algorithm.encryptBlock(block, offset, key);
+    public byte[] encryptBlock(final byte[] block, final int offset) {
 
-        return result;
+        return Twofish.encryptBlock(block, offset, key);
     }
 
     //Decrypts a supplied block using the internal key
-    public byte[] decryptBlock(byte[] block) {
-        byte[] result = decryptBlock(block, 0);
+    public byte[] decryptBlock(final byte[] block) {
 
-        return result;
+        return decryptBlock(block, 0);
     }
 
     //Decrypts a supplied block from the offset point on using the internal key
-    public byte[] decryptBlock(byte[] block, int offset) {
-        byte[] result = algorithm.decryptBlock(block, offset, key);
+    public byte[] decryptBlock(final byte[] block, final int offset) {
 
-        return result;
+        return Twofish.decryptBlock(block, offset, key);
     }
 
     //Compares two byte arrays to determine whether they are equal
-    public static boolean compareArrays(byte[] a, byte[] b) {
+    public static boolean compareArrays(final byte[] a, final byte[] b) {
         return Arrays.equals(a, b);
     }
 
     //Returns the Twofish algorithm's block size
     public int getBlockSize() {
-        int blocksize = algorithm.blockSize();
 
-        return blocksize;
+        return Twofish.blockSize();
     }
 
     //Clears the internal variables
-    public void clear() {
+    public static void clear() {
         new JFish();
     }
 }
