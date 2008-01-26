@@ -10,9 +10,24 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
+      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="junit:junit:4.0">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/junit/junit/4.0/junit-4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/junit/junit/4.0/junit-4.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/junit/junit/4.0/junit-4.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntryProperties />
   </component>
 </module>

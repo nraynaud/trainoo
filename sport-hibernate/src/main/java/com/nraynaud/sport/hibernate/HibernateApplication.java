@@ -162,7 +162,7 @@ public class HibernateApplication implements Application {
                                  final Date date, final Long workoutId) throws
             UserNotFoundException {
         final User receiver = fetchUser(receiverName);
-        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, workoutId);
+        final WorkoutImpl workout = workoutId != null ? entityManager.find(WorkoutImpl.class, workoutId) : null;
         final MessageImpl message = new MessageImpl(sender, receiver, date, content, workout);
         entityManager.persist(message);
         return message;
