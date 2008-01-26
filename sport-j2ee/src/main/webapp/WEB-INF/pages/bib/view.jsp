@@ -22,7 +22,7 @@
     </p>
 
     <p><span style="vertical-align:top;">Moi&nbsp;: </span><span
-            style="display:inline-block;"><%=escapedOrNullmultilines(user.getDescription(),
+            style="display:inline-block"><%=escapedOrNullmultilines(user.getDescription(),
             defaultValue)%></span></p>
 
     <p>Mon site&nbsp;: <%=formatUrl(user.getWebSite(), defaultValue)%>
