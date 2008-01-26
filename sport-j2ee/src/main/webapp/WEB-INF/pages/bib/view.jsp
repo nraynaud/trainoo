@@ -17,16 +17,25 @@
     <p>&nbsp;</p>
     <%}%>
 
-    <% final String defaultValue = "<span class='unknown'>non précisé</span>"; %>
-    <p>Ma ville&nbsp;: <%=escapedOrNull(user.getTown(), defaultValue)%>
-    </p>
-
-    <p><span style="vertical-align:top;">Moi&nbsp;: </span><span
-            style="display:inline-block"><%=escapedOrNullmultilines(user.getDescription(),
-            defaultValue)%></span></p>
-
-    <p>Mon site&nbsp;: <%=formatUrl(user.getWebSite(), defaultValue)%>
-    </p>
+    <% final String defaultValue = "non précisé";
+        final String town = user.getTown();
+        final String townLabel = "Ma ville";%>
+    <table class="displayFormLayoutTable">
+        <tr>
+            <td><span class="label"><%=townLabel%>&nbsp;:</span></td>
+            <td><span class="<%=className(town)%>"><%=escapedOrNull(town, defaultValue)%></span></td>
+        </tr>
+        <tr>
+            <td><span class="label">Moi&nbsp;:</span></td>
+            <td><span class="<%=className(user.getDescription())%>"><%=escapedOrNullmultilines(user.getDescription(),
+                    defaultValue)%></span></td>
+        </tr>
+        <tr>
+            <td><span class="label">Mon site&nbsp;: </span></td>
+            <td><span class="<%=className(user.getDescription())%>"><%=formatUrl(user.getWebSite(),
+                    defaultValue)%></span></td>
+        </tr>
+    </table>
 </div>
 <%if (!lookingOwnBib) {%>
 <div id="globalRight">
@@ -36,3 +45,8 @@
     </s:component>
 </div>
 <%}%>
+<%!
+    private static String className(final String town) {
+        return town == null ? "serverDefault" : "userSupplied";
+    }
+%>

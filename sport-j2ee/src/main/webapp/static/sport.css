@@ -22,7 +22,6 @@ li, dd, blockquote {
 
 /* Miscellaneous conveniences: */
 form label {
-    cursor: pointer;
     font-weight: bold;
 }
 
@@ -281,11 +280,6 @@ textarea#messageContent {
     width: 100%;
 }
 
-.unknown {
-    color: gray;
-    font-style: italic;
-}
-
 .charcount-safe {
     color: gray;
     font-size: smaller;
@@ -307,4 +301,28 @@ textarea#messageContent {
 
 .workout .tinyWorkout {
     font-weight: bold;
+}
+
+table.displayFormLayoutTable {
+    border-collapse: separate;
+    border: none;
+    font-size: larger;
+}
+
+table.displayFormLayoutTable tr td {
+    vertical-align: text-top;
+    padding-top: 1em;
+}
+
+table.displayFormLayoutTable tr td .label {
+    white-space: nowrap;
+    text-align: right;
+    display: block;
+    font-size: smaller;
+}
+
+.serverDefault {
+    color: gray;
+    font-style: italic;
+    font-size: smaller;
 }
