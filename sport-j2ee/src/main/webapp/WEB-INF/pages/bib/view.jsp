@@ -10,7 +10,7 @@
     final boolean lookingOwnBib = currentUser().equals(user);%>
 <p:layoutParams title="<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + escaped(user.getName())%>"/>
 
-<div id="globalLeft">
+<div id="<%= lookingOwnBib ? "tinyCenter" : "globalLeft"%>">
     <% if (lookingOwnBib) {%>
     <p><a href="<s:url action="edit" namespace="/bib"/>">Mettre à jour</a></p>
     <%} else {%>
@@ -21,8 +21,9 @@
     <p>Ma ville&nbsp;: <%=escapedOrNull(user.getTown(), defaultValue)%>
     </p>
 
-    <p>Moi&nbsp;: <%=escapedOrNull(user.getDescription(), defaultValue)%>
-    </p>
+    <p><span style="vertical-align:top;">Moi&nbsp;: </span><span
+            style="display:inline-block;"><%=escapedOrNullmultilines(user.getDescription(),
+            defaultValue)%></span></p>
 
     <p>Mon site&nbsp;: <%=formatUrl(user.getWebSite(), defaultValue)%>
     </p>

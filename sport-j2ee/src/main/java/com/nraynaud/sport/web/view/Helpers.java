@@ -18,12 +18,14 @@ public class Helpers {
         if (url == null)
             return ifNull;
         else {
-            return "<a href='"
-                    + TextUtils.htmlEncode(url)
-                    + "'>"
-                    + TextUtils.htmlEncode(url)
-                    + "</a>";
 
+            final StringBuilder builder = new StringBuilder();
+            builder.append("<a href='");
+            escape(url, builder);
+            builder.append("'>");
+            escape(url, builder);
+            builder.append("</a>");
+            return builder.toString();
         }
     }
 
@@ -101,11 +103,15 @@ public class Helpers {
 
     public static String propertyEscapedOrNull(final String expression, final String ifNull) {
         final String result = stringProperty(expression);
-        return result == null ? ifNull : TextUtils.htmlEncode(result);
+        return result == null ? ifNull : escaped(result);
     }
 
     public static String escapedOrNull(final String string, final String ifNull) {
-        return string == null ? ifNull : TextUtils.htmlEncode(string);
+        return string == null ? ifNull : escaped(string);
+    }
+
+    public static String escapedOrNullmultilines(final String string, final String ifNull) {
+        return string == null ? ifNull : multilineText(string);
     }
 
     public static User currentUser() {

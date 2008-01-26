@@ -62,7 +62,11 @@ public class EditAction extends DefaultAction {
     @StringLengthFieldValidator(message = "La ville doit faire moins de ${maxLength} caratères.",
             maxLength = TOWN_MAX_LENGTH)
     public void setTown(final String town) {
-        this.town = town;
+        this.town = nullIfEmpty(town);
+    }
+
+    private static String nullIfEmpty(final String string) {
+        return string.length() > 0 ? string : null;
     }
 
     public String getDescription() {
@@ -72,7 +76,7 @@ public class EditAction extends DefaultAction {
     @StringLengthFieldValidator(message = "Votre description doit faire moins de ${maxLength} caratères.",
             maxLength = DESCRIPTION_MAX_LENGTH)
     public void setDescription(final String description) {
-        this.description = description;
+        this.description = nullIfEmpty(description);
     }
 
     public String getWebSite() {
@@ -83,6 +87,6 @@ public class EditAction extends DefaultAction {
             maxLength = WEBSITE_MAX_LENGTH)
     @CustomValidator(message = "Le site web doit être une adresse web (URL)", type = "uri")
     public void setWebSite(final String webSite) {
-        this.webSite = webSite;
+        this.webSite = nullIfEmpty(webSite);
     }
 }
