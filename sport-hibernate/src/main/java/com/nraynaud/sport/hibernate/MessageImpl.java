@@ -61,6 +61,13 @@ public class MessageImpl implements Message {
         this.workout = workout;
     }
 
+    public MessageImpl(final User sender, final Date date, final String content, final WorkoutImpl workout) {
+        this.sender = sender;
+        this.content = content;
+        this.date = date;
+        this.workout = workout;
+    }
+
     public Long getId() {
         return id;
     }
@@ -87,5 +94,9 @@ public class MessageImpl implements Message {
 
     public Workout getWorkout() {
         return workout;
+    }
+
+    public boolean isPublic() {
+        return receiver == null;
     }
 }

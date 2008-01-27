@@ -28,6 +28,9 @@ form label {
 fieldset {
     border: none;
     border-top: thin #C9C9B1 solid;
+    border-bottom: thin #C9C9B1 solid;
+    margin: 0 0 10px 0;
+    padding: 10px 0 10px 0;
 }
 
 img {
@@ -41,6 +44,7 @@ input, select, textarea {
     border: gray solid thin;
     margin: 0;
     padding: 0;
+    vertical-align: baseline;
 }
 
 a, a:visited {
@@ -51,10 +55,6 @@ a, a:visited {
 
 a:hover {
     text-decoration: underline;
-}
-
-input, select {
-    border: 1px solid gray;
 }
 
 #center {
@@ -277,7 +277,7 @@ div.autocomplete ul li {
 }
 
 textarea#messageContent {
-    width: 100%;
+    width: 99%;
 }
 
 .charcount-safe {

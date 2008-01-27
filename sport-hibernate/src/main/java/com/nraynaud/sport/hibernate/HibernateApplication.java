@@ -156,14 +156,25 @@ public class HibernateApplication implements Application {
         this.entityManager = entityManager;
     }
 
-    public Message createMessage(final User sender,
-                                 final String receiverName,
-                                 final String content,
-                                 final Date date, final Long workoutId) throws
+    public Message createPrivateMessage(final User sender,
+                                        final String receiverName,
+                                        final String content,
+                                        final Date date, final Long workoutId) throws
             UserNotFoundException {
         final User receiver = fetchUser(receiverName);
         final WorkoutImpl workout = workoutId != null ? entityManager.find(WorkoutImpl.class, workoutId) : null;
         final MessageImpl message = new MessageImpl(sender, receiver, date, content, workout);
+        entityManager.persist(message);
+        return message;
+    }
+
+    public Message createPublicMessage(final User sender,
+                                       final String content,
+                                       final Date date,
+                                       final Long aboutWorkoutId) {
+        final WorkoutImpl workout = aboutWorkoutId != null ? entityManager.find(WorkoutImpl.class,
+                aboutWorkoutId) : null;
+        final MessageImpl message = new MessageImpl(sender, date, content, workout);
         entityManager.persist(message);
         return message;
     }

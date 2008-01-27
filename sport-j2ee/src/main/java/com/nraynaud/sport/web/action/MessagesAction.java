@@ -31,7 +31,7 @@ public class MessagesAction extends DefaultAction {
     private final Application application;
     private SportRequest request;
     private Long aboutWorkoutId;
-    private boolean confidential;
+    private boolean publicMessage = false;
     private ConversationData conversationData;
 
     public static final String CONTENT_MAX_LENGTH = "4000";
@@ -48,17 +48,29 @@ public class MessagesAction extends DefaultAction {
 
     @PostOnly
     public String create() {
+        if (!publicMessage && receiver == null) {
+            addFieldError("receiver", "Vous avez oublié le destinataire.");
+            return INPUT;
+        }
+        if (publicMessage) {
+            application.createPublicMessage(getUser(), content, new Date(), aboutWorkoutId);
+        } else
+            return sendPrivvateMessage();
+        return SUCCESS;
+    }
+
+    private String sendPrivvateMessage() {
         try {
-            application.createMessage(getUser(), receiver, content, new Date(), aboutWorkoutId);
+            application.createPrivateMessage(getUser(), receiver, content, new Date(), aboutWorkoutId);
+            return SUCCESS;
         } catch (UserNotFoundException e) {
             addFieldError("receiver", "L'utilisateur '" + getReceiver() + "' n'existe pas.");
             return INPUT;
         }
-        return SUCCESS;
     }
 
     public ConversationData getConversationData() {
-        if (conversationData == null) {
+        if (conversationData == null && receiver != null) {
             conversationData = application.fetchConvertationData(getUser(), receiver, aboutWorkoutId);
         }
         return conversationData;
@@ -80,7 +92,7 @@ public class MessagesAction extends DefaultAction {
     }
 
     public void setReceiver(final String receiver) {
-        this.receiver = receiver;
+        this.receiver = receiver.length() > 0 ? receiver : null;
     }
 
     public String getContent() {
@@ -97,5 +109,13 @@ public class MessagesAction extends DefaultAction {
 
     public void setAboutWorkoutId(final Long aboutWorkoutId) {
         this.aboutWorkoutId = aboutWorkoutId;
+    }
+
+    public boolean isPublicMessage() {
+        return publicMessage;
+    }
+
+    public void setPublicMessage(final boolean publicMessage) {
+        this.publicMessage = publicMessage;
     }
 }

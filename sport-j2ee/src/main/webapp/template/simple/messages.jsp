@@ -12,29 +12,45 @@
 
 <s:form action="messages" namespace="/">
     <fieldset>
-        <legend>Écrire</legend>
-        <label for="receiver">Destinataire&nbsp;:</label><br>
-        <s:textfield name="receiver" id="receiver" maxlength="20"
-                     value="%{parameters.receiver != null ? parameters.receiver : receiver}"/>
+        <legend>Nouveau message</legend>
+        <div id="answerReceiver">
+            <div id="privateReceiver" style="display:inline;">
+                <label for="receiver">Destinataire&nbsp;:</label><br>
+                <s:textfield name="receiver" id="receiver" maxlength="20"
+                             value="%{parameters.receiver != null ? parameters.receiver : receiver}"/>
+            </div>
+            <% final Workout answerWorkout = (Workout) property("aboutWorkout");%>
+            <% if (answerWorkout != null) {%>
+            <s:checkbox id="publicMessage" name="publicMessage"/><label for="publicMessage">Message publique</label>
+            <p:javascript>$("publicMessage").observe("change", function(event){
+                if ($F(event.element())) $("receiver").disable();
+                else $("receiver").enable();
+                });
+            </p:javascript>
+
+            <%}%>
+        </div>
+
         <s:hidden name="aboutWorkoutId"/>
         <div id="aboutWorkoutDiv" class="workout">
-            <% final Workout workout = (Workout) property("aboutWorkout");
-                if (workout != null) {
+            <%
+                if (answerWorkout != null) {
                     try {
-                        push(workout);%>
+                        push(answerWorkout);%>
             à propos de la sortie&nbsp;:<s:component template="tinyWorkout.jsp"/>
             <%
                     } finally {
                         pop();
                     }
-                }%>
+                }
+            %>
         </div>
         <div id="receiver_choices" class="autocomplete">&nbsp;</div>
         <p:javascript>
             new Ajax.Autocompleter("receiver", "receiver_choices", "/feedback",
             {paramName: "data", minChars:1, parameters:"type=logins"});
         </p:javascript>
-        <s:textarea id="messageContent" name="content" rows="5"/><br>
+        <s:textarea id="messageContent" name="content" rows="5"/>
         <p:javascript>makeItCount('messageContent', <%= CONTENT_MAX_LENGTH%>);</p:javascript>
         <s:submit value="Envoyer"/>
     </fieldset>
@@ -56,7 +72,10 @@
                             </s:url>
                             <s:a href="%{answerUrl}" title="répondre"><%=name%>
                             </s:a>
-                        </span> pour <s:property value="receiver.name" escape="true"/>&nbsp;:
+                        </span>
+                    <% if (!message.isPublic()) {%>
+                    pour <s:property value="receiver.name" escape="true"/>&nbsp;:
+                    <%}%>
                 </span>
         <% if (workout != null) {
             try {

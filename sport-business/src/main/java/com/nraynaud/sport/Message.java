@@ -10,4 +10,6 @@ public interface Message {
     User getReceiver();
 
     Workout getWorkout();
+
+    boolean isPublic();
 }
