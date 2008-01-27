@@ -37,7 +37,7 @@
                 if (answerWorkout != null) {
                     try {
                         push(answerWorkout);%>
-            à propos de la sortie&nbsp;:<s:component template="tinyWorkout.jsp"/>
+            à propos de la sortie&nbsp;: <span class="tinyWorkout"><s:component template="workoutComponent.jsp"/></span>
             <%
                     } finally {
                         pop();
@@ -80,7 +80,9 @@
         <% if (workout != null) {
             try {
                 push(workout);%>
-        <div class="workout">à propos de la sortie&nbsp;:<s:component template="tinyWorkout.jsp"/></div>
+        <div class="workout">à propos de la sortie&nbsp;:
+            <span class="tinyWorkout"><s:component template="workoutComponent.jsp"/></span>
+        </div>
         <%
                 } finally {
                     pop();

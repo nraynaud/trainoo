@@ -27,7 +27,7 @@ public interface Application extends UserStore {
 
     StatisticsPageData fetchFrontPageData();
 
-    StatisticsPageData fetchWorkoutPageData(final User user);
+    StatisticsPageData fetchUserPageData(final User user);
 
     Message createPrivateMessage(User sender,
                                  String receiverName,
@@ -47,4 +47,6 @@ public interface Application extends UserStore {
     ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId);
 
     Message createPublicMessage(final User sender, final String content, final Date date, final Long aboutWorkoutId);
+
+    Workout fetchWorkout(Long id);
 }

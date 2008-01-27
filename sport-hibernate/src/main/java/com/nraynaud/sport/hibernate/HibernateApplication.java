@@ -83,13 +83,15 @@ public class HibernateApplication implements Application {
     }
 
     public Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) {
-        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
-        if (workout == null)
-            return null;
-        if (!willWrite || workout.getUser().getId().equals(user.getId()))
+        final Workout workout = fetchWorkout(id);
+        if (workout == null || !willWrite || workout.getUser().getId().equals(user.getId()))
             return workout;
         else
             return null;
+    }
+
+    public Workout fetchWorkout(final Long id) {
+        return entityManager.find(WorkoutImpl.class, id);
     }
 
     public void updateWorkout(final Long id,
@@ -110,7 +112,7 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     public StatisticsPageData fetchFrontPageData() {
-        return fetchWorkoutPageData(null);
+        return fetchUserPageData(null);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -134,7 +136,7 @@ public class HibernateApplication implements Application {
         return (Double) query.getSingleResult();
     }
 
-    public StatisticsPageData fetchWorkoutPageData(final User user) {
+    public StatisticsPageData fetchUserPageData(final User user) {
         final List<Workout> workouts = getWorkouts(user, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
@@ -167,7 +169,7 @@ public class HibernateApplication implements Application {
     private Message createMessage(final User sender, final User receiver, final String content, final Date date,
                                   final Long workoutId
     ) {
-        final WorkoutImpl workout = workoutId != null ? entityManager.find(WorkoutImpl.class, workoutId) : null;
+        final Workout workout = workoutId != null ? fetchWorkout(workoutId) : null;
         final MessageImpl message = new MessageImpl(sender, receiver, date, content, workout);
         entityManager.persist(message);
         return message;
@@ -221,8 +223,7 @@ public class HibernateApplication implements Application {
     }
 
     public ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId) {
-        return new ConversationData(fetchConversation(sender, receiver),
-                fetchWorkoutAndCheckUser(aboutWorkoutId, sender, false));
+        return new ConversationData(fetchConversation(sender, receiver), fetchWorkout(aboutWorkoutId));
     }
 
     @SuppressWarnings({"unchecked"})

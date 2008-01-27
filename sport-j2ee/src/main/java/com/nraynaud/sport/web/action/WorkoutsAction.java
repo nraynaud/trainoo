@@ -30,7 +30,7 @@ public class WorkoutsAction extends AbstractWorkoutAction {
 
     @SkipValidation
     public String index() {
-        pushValue(application.fetchWorkoutPageData(getUser()));
+        pushValue(application.fetchUserPageData(getUser()));
         return SUCCESS;
     }
 }
