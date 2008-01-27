@@ -8,6 +8,8 @@ import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Pattern;
 
 public class SportActionMapper implements ActionMapper {
@@ -17,6 +19,9 @@ public class SportActionMapper implements ActionMapper {
         }
     };
     private static final Pattern SLASH_PATTERN = Pattern.compile("/");
+
+    public static final ConcurrentMap<Map<String, PackageConfig>, Collection<NamespaceData>> CONFIG_CACHE = new ConcurrentHashMap<Map<String, PackageConfig>, Collection<NamespaceData>>(
+            1);
 
     @SuppressWarnings({"unchecked"})
     public ActionMapping getMapping(final HttpServletRequest request, final ConfigurationManager configManager) {
@@ -82,9 +87,14 @@ public class SportActionMapper implements ActionMapper {
     }
 
     static Collection<NamespaceData> createNamespaceTable(final Map<String, PackageConfig> configs) {
-        final TreeSet<NamespaceData> namespaces = new TreeSet<NamespaceData>(NAMESPACE_COMPARATOR);
-        for (final PackageConfig config : configs.values()) {
-            namespaces.add(new NamespaceData(config.getNamespace()));
+        Collection<NamespaceData> namespaces = CONFIG_CACHE.get(configs);
+        if (namespaces == null) {
+            namespaces = new TreeSet<NamespaceData>(NAMESPACE_COMPARATOR);
+            for (final PackageConfig config : configs.values()) {
+                namespaces.add(new NamespaceData(config.getNamespace()));
+            }
+            if (CONFIG_CACHE.putIfAbsent(configs, namespaces) != namespaces)
+                System.out.println("config cache update ! new size :" + CONFIG_CACHE.size());
         }
         return namespaces;
     }
