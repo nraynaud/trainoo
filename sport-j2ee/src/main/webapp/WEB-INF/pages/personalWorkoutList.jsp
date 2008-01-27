@@ -29,5 +29,5 @@
 
 <div id="globalRight" class="messages">
     <h2>Messagerie</h2>
-    <s:component template="messages.jsp"/>
+    <s:component template="messagesComponent.jsp"/>
 </div>

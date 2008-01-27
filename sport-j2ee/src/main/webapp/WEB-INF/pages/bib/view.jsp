@@ -40,7 +40,7 @@
 <%if (!lookingOwnBib) {%>
 <div id="globalRight">
     <h2>Lui envoyer un message ?</h2>
-    <s:component template="messages.jsp">
+    <s:component template="messagesComponent.jsp">
         <s:param name="receiver" value="%{user.name}"/>
     </s:component>
 </div>

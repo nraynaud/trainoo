@@ -8,7 +8,7 @@
 <div id="tinyCenter">
     <% push(property("conversationData"));
         try {%>
-    <s:component template="messages.jsp"/>
+    <s:component template="messagesComponent.jsp"/>
     <%
         } finally {
             pop();
