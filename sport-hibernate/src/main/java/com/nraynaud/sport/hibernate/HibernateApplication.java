@@ -203,8 +203,8 @@ public class HibernateApplication implements Application {
         entityManager.merge(user);
     }
 
-    public BibPageData fetchBibPageData(final Long userId, final User currentUser) throws UserNotFoundException {
-        final User target = currentUser.getId().equals(userId) ? currentUser : fetchUser(userId);
+    public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId) throws UserNotFoundException {
+        final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
         final List<Message> messages = fetchConversation(currentUser, target);
         return new BibPageData() {
             public User getUser() {
@@ -237,7 +237,7 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     private List<Message> fetchConversation(final User currentUser, final User target) {
         final Query query = entityManager.createQuery(
-                "select m from MessageImpl m where ((m.receiver=:user AND m.sender=:currentUser)OR(m.receiver=:currentUser AND m.sender=:user)) order by m.date desc");
+                "select m from MessageImpl m where (m.receiver=:user AND m.sender=:currentUser)OR(m.receiver=:currentUser AND m.sender=:user) order by m.date desc");
         query.setParameter("currentUser", currentUser);
         query.setParameter("user", target);
         return query.getResultList();

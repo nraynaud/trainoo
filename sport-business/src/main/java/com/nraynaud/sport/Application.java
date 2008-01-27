@@ -42,7 +42,7 @@ public interface Application extends UserStore {
 
     void updateBib(final User user, final String town, final String description, final String webSite);
 
-    BibPageData fetchBibPageData(final Long userId, final User currentUser) throws UserNotFoundException;
+    BibPageData fetchBibPageData(final User currentUser, final Long targetUserId) throws UserNotFoundException;
 
     ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId);
 
