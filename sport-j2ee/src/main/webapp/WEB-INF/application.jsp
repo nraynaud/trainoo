@@ -16,10 +16,14 @@
 </head>
 <body>
 <div id="center">
-    <!-- thanks to http://www.webdesignerwall.com/tutorials/css-gradient-text-effect/ -->
-    <h1 id="logo">
-        <a href="/">Train<span style="color:#968148;">oo</span>.com</a>
-    </h1>
+    <div style="overflow:hidden;">
+        <h1 id="logo" style="float:left;position:relative;">
+            <a id="logoHref" href="/">
+                <canvas id="gradient" width="1" height="150" style="position:absolute;height:100%;width:100%;">
+                </canvas>
+                Train<span style="color:#968148;">oo</span>.com</a>
+        </h1>
+    </div>
 
     <% if (pageDetail.isLoginHeader()) {%>
     <s:component template="loginHeader.jsp"/>
@@ -61,6 +65,17 @@
     var pageTracker = _gat._getTracker("UA-3412937-1");
     pageTracker._initData();
     pageTracker._trackPageview();
+</script>
+<script type="text/javascript">
+    var canvas = document.getElementById('gradient');
+    var ctx = canvas.getContext('2d');
+    var lineargradient = ctx.createLinearGradient(0, 0, 0, 150);
+    lineargradient.addColorStop(0.8, 'rgba(255,255,255,0)');
+    lineargradient.addColorStop(0.1, '#F2F2E8');
+    //document.getElementById('center').backgroundColor);
+    ctx.clearRect(0, 0, 1, 150);
+    ctx.fillStyle = lineargradient;
+    ctx.fillRect(0, 0, 1, 150);
 </script>
 </body>
 </html>
