@@ -6,7 +6,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <% final BibPageData data = (BibPageData) top();
-    final User user = data.getUser();
+    final User user = data.user;
     final boolean lookingOwnBib = currentUser().equals(user);%>
 <p:layoutParams title="<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + escaped(user.getName())%>"/>
 

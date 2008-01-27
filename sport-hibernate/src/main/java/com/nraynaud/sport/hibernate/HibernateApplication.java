@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings({"unchecked"})
 @Transactional
 public class HibernateApplication implements Application {
 
@@ -156,35 +157,30 @@ public class HibernateApplication implements Application {
         this.entityManager = entityManager;
     }
 
-    public Message createPrivateMessage(final User sender,
-                                        final String receiverName,
-                                        final String content,
+    public Message createPrivateMessage(final User sender, final String receiverName, final String content,
                                         final Date date, final Long workoutId) throws
             UserNotFoundException {
-        final User receiver = fetchUser(receiverName);
+        final User receiver = receiverName != null ? fetchUser(receiverName) : null;
+        return createMessage(sender, receiver, content, date, workoutId);
+    }
+
+    private Message createMessage(final User sender, final User receiver, final String content, final Date date,
+                                  final Long workoutId
+    ) {
         final WorkoutImpl workout = workoutId != null ? entityManager.find(WorkoutImpl.class, workoutId) : null;
         final MessageImpl message = new MessageImpl(sender, receiver, date, content, workout);
         entityManager.persist(message);
         return message;
     }
 
-    public Message createPublicMessage(final User sender,
-                                       final String content,
-                                       final Date date,
+    public Message createPublicMessage(final User sender, final String content, final Date date,
                                        final Long aboutWorkoutId) {
-        final WorkoutImpl workout = aboutWorkoutId != null ? entityManager.find(WorkoutImpl.class,
-                aboutWorkoutId) : null;
-        final MessageImpl message = new MessageImpl(sender, date, content, workout);
-        entityManager.persist(message);
-        return message;
+        return createMessage(sender, null, content, date, aboutWorkoutId);
     }
 
     @SuppressWarnings({"unchecked"})
     public List<Message> fetchMessages(final User receiver) {
-        final Query query = entityManager.createQuery(
-                "select m from MessageImpl m where m.receiver=:receiver OR m.sender=:receiver order by m.date desc");
-        query.setParameter("receiver", receiver);
-        return query.getResultList();
+        return fetchConversation("m.receiver=:receiver OR m.sender=:receiver", "receiver", receiver);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -205,41 +201,43 @@ public class HibernateApplication implements Application {
 
     public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId) throws UserNotFoundException {
         final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
-        final List<Message> messages = fetchConversation(currentUser, target);
-        return new BibPageData() {
-            public User getUser() {
-                return target;
-            }
-
-            public List<Message> getMessages() {
-                return messages;
-            }
-        };
+        final List<Message> messages = fetchConversation("(m.receiver.id=:userId AND m.sender=:currentUser)"
+                + "OR(m.receiver=:currentUser AND m.sender.id=:userId)",
+                "currentUser",
+                currentUser,
+                "userId",
+                targetUserId);
+        return new BibPageData(target, messages);
     }
 
     public List<Message> fetchConversation(final User currentUser, final String receiverName) {
-        final User target;
-        try {
-            target = currentUser.getName().equals(receiverName) ? currentUser : fetchUser(receiverName);
-        } catch (UserNotFoundException e) {
-            return Collections.emptyList();
-        }
-        return fetchConversation(currentUser, target);
+        return fetchConversation(
+                "(m.receiver.name=:receiverName AND m.sender=:currentUser)"
+                        + "OR(m.receiver=:currentUser AND m.sender.name=:receiverName)",
+                "currentUser",
+                currentUser,
+                "receiverName",
+                receiverName);
     }
 
-    public ConversationData fetchConvertationData(final User sender,
-                                                  final String receiver,
-                                                  final Long aboutWorkoutId) {
+    public ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId) {
         return new ConversationData(fetchConversation(sender, receiver),
                 fetchWorkoutAndCheckUser(aboutWorkoutId, sender, false));
     }
 
     @SuppressWarnings({"unchecked"})
-    private List<Message> fetchConversation(final User currentUser, final User target) {
+    public List<Message> fetchPublicMessagesForWorkout(final Long workoutId) {
+        return fetchConversation("m.workout.id =:workoutId AND m.sender is null", "workoutId", workoutId);
+    }
+
+    public List<Message> fetchConversation(final String where, final Object... args) {
         final Query query = entityManager.createQuery(
-                "select m from MessageImpl m where (m.receiver=:user AND m.sender=:currentUser)OR(m.receiver=:currentUser AND m.sender=:user) order by m.date desc");
-        query.setParameter("currentUser", currentUser);
-        query.setParameter("user", target);
+                "select m from MessageImpl m where (" + where + ") order by m.date desc");
+        if (args.length % 2 != 0)
+            throw new IllegalArgumentException(
+                    "arg count should be even. \"argname1\",argvalue1, \"argname2\", argavalue2");
+        for (int i = 0; i < args.length; i += 2)
+            query.setParameter((String) args[i], args[i + 1]);
         return query.getResultList();
     }
 }

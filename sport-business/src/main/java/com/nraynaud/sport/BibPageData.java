@@ -2,8 +2,13 @@ package com.nraynaud.sport;
 
 import java.util.List;
 
-public interface BibPageData {
-    User getUser();
+public class BibPageData {
+    public final User user;
 
-    public List<Message> getMessages();
+    public final List<Message> messages;
+
+    public BibPageData(final User user, final List<Message> messages) {
+        this.user = user;
+        this.messages = messages;
+    }
 }
