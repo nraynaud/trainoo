@@ -77,7 +77,7 @@ public class SportActionMapper implements ActionMapper {
     }
 
     private static NamespaceMatching extractNamespace(final String uri, final Map<String, PackageConfig> config) {
-        for (final NamespaceData namespace : createNamespaceTable(config)) {
+        for (final NamespaceData namespace : getNamespaceTable(config)) {
             final String prefix = namespace.getPrefix();
             if (uri.startsWith(prefix)) {
                 return new NamespaceMatching(namespace.getNamespace(), prefix.length());
@@ -86,7 +86,7 @@ public class SportActionMapper implements ActionMapper {
         return new NamespaceMatching("", 0);
     }
 
-    static Collection<NamespaceData> createNamespaceTable(final Map<String, PackageConfig> configs) {
+    static Collection<NamespaceData> getNamespaceTable(final Map<String, PackageConfig> configs) {
         Collection<NamespaceData> namespaces = CONFIG_CACHE.get(configs);
         if (namespaces == null) {
             namespaces = new TreeSet<NamespaceData>(NAMESPACE_COMPARATOR);
