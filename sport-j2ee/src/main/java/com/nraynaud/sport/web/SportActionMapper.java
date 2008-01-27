@@ -91,10 +91,11 @@ public class SportActionMapper implements ActionMapper {
         if (namespaces == null) {
             namespaces = new TreeSet<NamespaceData>(NAMESPACE_COMPARATOR);
             for (final PackageConfig config : configs.values()) {
-                namespaces.add(new NamespaceData(config.getNamespace()));
+                if (config.getActionConfigs().size() > 0)
+                    namespaces.add(new NamespaceData(config.getNamespace()));
             }
             if (CONFIG_CACHE.putIfAbsent(configs, namespaces) != namespaces)
-                System.out.println("config cache update ! new size :" + CONFIG_CACHE.size());
+                System.out.println("config cache update ! new size :" + CONFIG_CACHE.size() + " added:" + namespaces);
         }
         return namespaces;
     }
@@ -151,6 +152,10 @@ public class SportActionMapper implements ActionMapper {
 
         public int hashCode() {
             return namespace.hashCode();
+        }
+
+        public String toString() {
+            return prefix;
         }
     }
 
