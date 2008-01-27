@@ -39,6 +39,40 @@
         <hr id="bottom">
         <div><p class="smaller" style="text-align:center;">Copyright Nicolas Raynaud 2008.
             <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
+
+
+        <script type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
+        <script type="text/javascript" src="<s:url value="/static/scriptaculous.js"/>"></script>
+        <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
+
+        <r:writeJavascript/>
+        <!--[if lt IE 7]>
+        <script type="text/javascript">
+            fixPNGIE();
+        </script>
+        <![endif]-->
+        <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            var pageTracker = _gat._getTracker("UA-3412937-1");
+            pageTracker._initData();
+            pageTracker._trackPageview();
+        </script>
+        <script type="text/javascript">
+            var canvas = document.getElementById('gradient');
+            var height = $('logoHref').getHeight();
+            canvas.height = height
+            var ctx = canvas.getContext('2d');
+            var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
+            lineargradient.addColorStop(0.8, 'rgba(255,255,255,0)');
+            lineargradient.addColorStop(0, '#F2F2E8');
+            //document.getElementById('center').backgroundColor);
+            ctx.clearRect(0, 0, 1, height);
+            ctx.fillStyle = lineargradient;
+            ctx.fillRect(0, 0, 1, height);
+        </script>
         <div id="ad">
             <script type="text/javascript"><!--
             google_ad_client = "pub-6101279689689980";
@@ -51,36 +85,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
-<script type="text/javascript" src="<s:url value="/static/scriptaculous.js"/>"></script>
-<script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
-<r:writeJavascript/>
-<!--[if lt IE 7]>
-<script type="text/javascript">
-    fixPNGIE();
-</script>
-<![endif]-->
-<script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-    var pageTracker = _gat._getTracker("UA-3412937-1");
-    pageTracker._initData();
-    pageTracker._trackPageview();
-</script>
-<script type="text/javascript">
-    var canvas = document.getElementById('gradient');
-    var height = $('logoHref').getHeight();
-    canvas.height = height
-    var ctx = canvas.getContext('2d');
-    var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
-    lineargradient.addColorStop(0.8, 'rgba(255,255,255,0)');
-    lineargradient.addColorStop(0, '#F2F2E8');
-    //document.getElementById('center').backgroundColor);
-    ctx.clearRect(0, 0, 1, height);
-    ctx.fillStyle = lineargradient;
-    ctx.fillRect(0, 0, 1, height);
-</script>
 </body>
 </html>
