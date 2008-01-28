@@ -1,7 +1,7 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.StatisticsPageData;
+import com.nraynaud.sport.data.StatisticsPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.Public;

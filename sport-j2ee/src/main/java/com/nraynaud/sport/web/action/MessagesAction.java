@@ -1,13 +1,11 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.ConversationData;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserNotFoundException;
-import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.DefaultAction;
-import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.SportRequest;
+import com.nraynaud.sport.WorkoutNotFoundException;
+import com.nraynaud.sport.data.ConversationData;
+import com.nraynaud.sport.web.*;
 import com.nraynaud.sport.web.result.Redirect;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -53,25 +51,35 @@ public class MessagesAction extends DefaultAction {
             return INPUT;
         }
         if (publicMessage) {
-            application.createPublicMessage(getUser(), content, new Date(), aboutWorkoutId);
+            try {
+                application.createPublicMessage(getUser(), content, new Date(), aboutWorkoutId);
+            } catch (WorkoutNotFoundException e) {
+                throw new DataInputException(e);
+            }
         } else
-            return sendPrivvateMessage();
+            return sendPrivateMessage();
         return SUCCESS;
     }
 
-    private String sendPrivvateMessage() {
+    private String sendPrivateMessage() {
         try {
             application.createPrivateMessage(getUser(), receiver, content, new Date(), aboutWorkoutId);
             return SUCCESS;
         } catch (UserNotFoundException e) {
             addFieldError("receiver", "L'utilisateur '" + getReceiver() + "' n'existe pas.");
             return INPUT;
+        } catch (WorkoutNotFoundException e) {
+            throw new DataInputException(e);
         }
     }
 
     public ConversationData getConversationData() {
         if (conversationData == null && receiver != null) {
-            conversationData = application.fetchConvertationData(getUser(), receiver, aboutWorkoutId);
+            try {
+                conversationData = application.fetchConvertationData(getUser(), receiver, aboutWorkoutId);
+            } catch (WorkoutNotFoundException e) {
+                throw new DataInputException(e);
+            }
         }
         return conversationData;
     }

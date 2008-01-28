@@ -34,7 +34,12 @@ public class SportInterceptor extends AbstractInterceptor {
             //ok, no problem
         }
         if (isPublic(actionClass)) return invocation.invoke();
-        return request.isLogged() ? invocation.invoke() : LOGIN_RESULT;
+        return request.isLogged() ? invocation.invoke() : forceLogin(invocationContext);
+    }
+
+    private static String forceLogin(final ActionContext invocationContext) {
+        invocationContext.getParameters().clear();
+        return LOGIN_RESULT;
     }
 
     private static boolean isPublic(final Class<?> actionClass) throws Exception {

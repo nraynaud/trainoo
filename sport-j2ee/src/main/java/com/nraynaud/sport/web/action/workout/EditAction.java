@@ -41,14 +41,15 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
     @SkipValidation
     public String index() {
         if (id != null) {
-            final Workout workout = application.fetchWorkoutAndCheckUser(id, getUser(), true);
-            if (workout != null) {
+            final Workout workout;
+            try {
+                workout = application.fetchWorkoutAndCheckUser(id, getUser(), true);
                 setDate(workout.getDate());
                 setDistance(workout.getDistance());
                 setDuration(workout.getDuration());
                 setDiscipline(workout.getDiscipline());
                 return INPUT;
-            } else {
+            } catch (WorkoutNotFoundException e) {
                 addActionError("l'entraînement désigné n'existe pas");
                 return INPUT;
             }

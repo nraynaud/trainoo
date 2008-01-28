@@ -1,10 +1,13 @@
 package com.nraynaud.sport.hibernate;
 
 import com.nraynaud.sport.*;
+import com.nraynaud.sport.data.BibPageData;
+import com.nraynaud.sport.data.ConversationData;
+import com.nraynaud.sport.data.StatisticsPageData;
+import com.nraynaud.sport.data.WorkoutPageData;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -82,7 +85,8 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) {
+    public Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) throws
+            WorkoutNotFoundException {
         final Workout workout = fetchWorkout(id);
         if (workout == null || !willWrite || workout.getUser().getId().equals(user.getId()))
             return workout;
@@ -90,8 +94,15 @@ public class HibernateApplication implements Application {
             return null;
     }
 
-    public Workout fetchWorkout(final Long id) {
+    public Workout fetchWorkout(final Long id) throws WorkoutNotFoundException {
         return entityManager.find(WorkoutImpl.class, id);
+    }
+
+    public WorkoutPageData fetchWorkoutPageData(final Long workoutId) throws WorkoutNotFoundException {
+        final Workout workout = fetchWorkout(workoutId);
+        return new WorkoutPageData(workout,
+                fetchConversation("receiver IS NULL AND workout.id=:workoutId", "workoutId", workoutId),
+                getWorkouts(workout.getUser(), 10));
     }
 
     public void updateWorkout(final Long id,
@@ -101,8 +112,6 @@ public class HibernateApplication implements Application {
                               final Double distance,
                               final String discipline) throws WorkoutNotFoundException {
         final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutAndCheckUser(id, user, true);
-        if (workoutImpl == null)
-            throw new WorkoutNotFoundException();
         workoutImpl.setDate(date);
         workoutImpl.setDuration(duration);
         workoutImpl.setDistance(distance);
@@ -118,7 +127,7 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     private List<StatisticsPageData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
         final String string =
-                "select new com.nraynaud.sport.StatisticsPageData$DisciplineDistance(w.discipline, sum(w.distance))"
+                "select new com.nraynaud.sport.data.StatisticsPageData$DisciplineDistance(w.discipline, sum(w.distance))"
                         + " from WorkoutImpl w where w.distance is not null"
                         + (user != null ? " and w.user = :user" : "")
                         + " group by w.discipline";
@@ -140,14 +149,12 @@ public class HibernateApplication implements Application {
         final List<Workout> workouts = getWorkouts(user, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
-        final List<Message> messages = user != null ? fetchMessages(user) : Collections.<Message>emptyList();
+        final List<Message> messages = fetchMessages(user);
         return new StatisticsPageData(workouts, globalDistance, distanceByDiscpline, messages);
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
         final Workout workout = fetchWorkoutAndCheckUser(id, user, true);
-        if (workout == null)
-            throw new WorkoutNotFoundException();
         final Query query = entityManager.createNativeQuery("UPDATE MESSAGES SET WORKOUT_ID=NULL WHERE WORKOUT_ID=:id");
         query.setParameter("id", id);
         query.executeUpdate();
@@ -161,14 +168,13 @@ public class HibernateApplication implements Application {
 
     public Message createPrivateMessage(final User sender, final String receiverName, final String content,
                                         final Date date, final Long workoutId) throws
-            UserNotFoundException {
+            UserNotFoundException, WorkoutNotFoundException {
         final User receiver = receiverName != null ? fetchUser(receiverName) : null;
         return createMessage(sender, receiver, content, date, workoutId);
     }
 
     private Message createMessage(final User sender, final User receiver, final String content, final Date date,
-                                  final Long workoutId
-    ) {
+                                  final Long workoutId) throws WorkoutNotFoundException {
         final Workout workout = workoutId != null ? fetchWorkout(workoutId) : null;
         final MessageImpl message = new MessageImpl(sender, receiver, date, content, workout);
         entityManager.persist(message);
@@ -176,13 +182,13 @@ public class HibernateApplication implements Application {
     }
 
     public Message createPublicMessage(final User sender, final String content, final Date date,
-                                       final Long aboutWorkoutId) {
+                                       final Long aboutWorkoutId) throws WorkoutNotFoundException {
         return createMessage(sender, null, content, date, aboutWorkoutId);
     }
 
     @SuppressWarnings({"unchecked"})
-    public List<Message> fetchMessages(final User receiver) {
-        return fetchConversation("m.receiver=:receiver OR m.sender=:receiver", "receiver", receiver);
+    public List<Message> fetchMessages(final User user) {
+        return fetchConversation("m.receiver=:user OR (m.sender=:user AND m.receiver IS NOT NULL)", "user", user);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -222,7 +228,10 @@ public class HibernateApplication implements Application {
                 receiverName);
     }
 
-    public ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId) {
+    public ConversationData fetchConvertationData(final User sender,
+                                                  final String receiver,
+                                                  final Long aboutWorkoutId) throws
+            WorkoutNotFoundException {
         return new ConversationData(fetchConversation(sender, receiver), fetchWorkout(aboutWorkoutId));
     }
 
@@ -233,7 +242,7 @@ public class HibernateApplication implements Application {
 
     public List<Message> fetchConversation(final String where, final Object... args) {
         final Query query = entityManager.createQuery(
-                "select m from MessageImpl m where (" + where + ") order by m.date desc");
+                "select m from MessageImpl m where (" + where + ") order by m.date asc");
         if (args.length % 2 != 0)
             throw new IllegalArgumentException(
                     "arg count should be even. \"argname1\",argvalue1, \"argname2\", argavalue2");

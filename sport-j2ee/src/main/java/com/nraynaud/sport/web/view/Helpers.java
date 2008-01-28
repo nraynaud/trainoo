@@ -3,9 +3,15 @@ package com.nraynaud.sport.web.view;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.web.SportRequest;
 import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.util.CreateIfNull;
 import com.opensymphony.xwork2.util.TextUtils;
 import com.opensymphony.xwork2.util.ValueStack;
+import org.apache.struts2.components.Include;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Helpers {
@@ -18,7 +24,6 @@ public class Helpers {
         if (url == null)
             return ifNull;
         else {
-
             final StringBuilder builder = new StringBuilder();
             builder.append("<a href='");
             escape(url, builder);
@@ -37,10 +42,13 @@ public class Helpers {
         return stack().findValue(expression, Object.class);
     }
 
+    public static Object parameter(final String expression) {
+        return property("parameters." + expression);
+    }
+
     private static ValueStack stack() {
         return ActionContext.getContext().getValueStack();
     }
-
 
     public static String escapedProperty(final String expression) {
         return escaped(stringProperty(expression));
@@ -49,9 +57,7 @@ public class Helpers {
     public static String escaped(final String string) {
         final String s = TextUtils.noNull(string);
         final StringBuilder str = new StringBuilder();
-
         escape(s, str);
-
         return str.toString();
     }
 
@@ -64,24 +70,16 @@ public class Helpers {
                 switch (c) {
                     case '"':
                         collector.append("&quot;");
-
                         break;
-
                     case '&':
                         collector.append("&amp;");
-
                         break;
-
                     case '<':
                         collector.append("&lt;");
-
                         break;
-
                     case '>':
                         collector.append("&gt;");
-
                         break;
-
                     default:
                         collector.append(c);
                 }
@@ -142,5 +140,46 @@ public class Helpers {
             builder.append("<br>");
         }
         return builder.toString();
+    }
+
+    public static void call(final PageContext context,
+                            final String template,
+                            final Object stackTop,
+                            final Object... arguments) throws Exception {
+        push(new Object() {
+            public Map<String, Object> parameters = new HashMap<String, Object>(1) {
+                public Object put(final String key, final Object value) {
+                    return super.put(key, value);
+                }
+            };
+
+            {
+                for (int i = 0; i < arguments.length; i += 2) {
+                    final Object arg = arguments[i + 1];
+                    final Object value = arg instanceof String ? stack().findValue((String) arg) : arg;
+                    parameters.put((String) arguments[i], value);
+                }
+            }
+
+            @CreateIfNull(false)
+            Map<String, Object> getParameters() {
+                return parameters;
+            }
+        });
+        try {
+            push(stackTop);
+            try {
+                call(context, template);
+            } finally {
+                pop();
+            }
+        } finally {
+            pop();
+        }
+    }
+
+    public static void call(final PageContext context, final String template) throws Exception {
+        final HttpServletResponse httpServletResponse = (HttpServletResponse) context.getResponse();
+        Include.include("/template/simple/" + template, context.getOut(), context.getRequest(), httpServletResponse);
     }
 }

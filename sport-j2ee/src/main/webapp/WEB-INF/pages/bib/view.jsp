@@ -1,6 +1,6 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="com.nraynaud.sport.BibPageData" %>
 <%@ page import="com.nraynaud.sport.User" %>
+<%@ page import="com.nraynaud.sport.data.BibPageData" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -40,9 +40,7 @@
 <%if (!lookingOwnBib) {%>
 <div id="globalRight">
     <h2>Lui envoyer un message ?</h2>
-    <s:component template="messagesComponent.jsp">
-        <s:param name="receiver" value="%{user.name}"/>
-    </s:component>
+    <% call(pageContext, "messagesComponent.jsp", null, "receiver", "%{user.name}");%>
 </div>
 <%}%>
 <%!

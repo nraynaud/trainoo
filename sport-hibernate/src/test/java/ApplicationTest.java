@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-
 public class ApplicationTest {
     private HibernateApplication application;
     private EntityManager entityManager;
@@ -49,7 +48,6 @@ public class ApplicationTest {
         application.createUser("lolé", "pass+é");
     }
 
-
     @Test
     public void testWorkoutCreation() throws UserAlreadyExistsException {
         assertNull(application.authenticate("lolé", "pass+é"));
@@ -80,7 +78,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testWorkoutFetching() throws UserAlreadyExistsException {
+    public void testWorkoutFetching() throws UserAlreadyExistsException, WorkoutNotFoundException {
         final User user = application.createUser("user", "lol");
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
                 "lol");
@@ -97,11 +95,10 @@ public class ApplicationTest {
             final Workout workout3 = application.fetchWorkoutAndCheckUser(workout.getId(), user1, true);
             assertNull(workout3);
         }
-
     }
 
     @Test
-    public void testSendMessage() throws UserAlreadyExistsException, UserNotFoundException {
+    public void testSendMessage() throws UserAlreadyExistsException, UserNotFoundException, WorkoutNotFoundException {
         final User sender = application.createUser("sender", "lol");
         final User receiver = application.createUser("receiver", "lol");
         final Message message = application.createPrivateMessage(sender, receiver.getName(), "Lol", new Date(), null);

@@ -29,7 +29,7 @@ fieldset {
     border: none;
     border-top: thin #C9C9B1 solid;
     border-bottom: thin #C9C9B1 solid;
-    margin: 0 0 10px 0;
+    margin: 10px 0 10px 0;
     padding: 10px 0 10px 0;
 }
 
@@ -67,6 +67,7 @@ a:hover {
 table {
     border-collapse: collapse;
     font-size: 100%;
+    margin: auto;
 }
 
 table.workouts {
@@ -89,6 +90,10 @@ table.workouts tr.odd td {
 
 table.workouts tr.even td {
     background-color: #EBE1C6;
+}
+
+table.workouts tr.highLight td {
+    background-color: #9C9A69;
 }
 
 th {
@@ -161,12 +166,17 @@ p.loginLabel {
 }
 
 #logo {
-    margin-top: 0;
+    margin: 0 0 0 0.5em;
     padding-top: 0;
     font-size: 3em;
     padding-bottom: 0;
     float: left;
     position: relative;
+
+}
+
+#loginHeader {
+    margin-bottom: 0.5em;
 }
 
 #loginHeader, #loginHeader a, #loginHeader #logoutForm input {
@@ -185,12 +195,14 @@ p.loginLabel {
 #globalLeft {
     width: 49.5%;
     float: left;
+    padding: 2px;
     padding-left: 5px;
 }
 
 #globalRight {
     width: 46%;
     float: right;
+    padding: 2px;
 }
 
 #content {
@@ -255,12 +267,12 @@ div.autocomplete ul li {
     color: #968148;
 }
 
-.received {
+.received, .public {
     background-color: white;
     border: black solid thin;
 }
 
-.received .messageHeading .message_from {
+.received .messageHeading .message_from, .public .messageHeading .message_from {
     color: #57470C;
     font-weight: bold;
 }
@@ -348,3 +360,11 @@ table.displayFormLayoutTable tr td .label {
 #adPlaceHolder {
     height: 60px;
 }
+
+.bigWorkout {
+    font-size: larger;
+    border: solid thick #57470C;
+    text-align: center;
+}
+
+

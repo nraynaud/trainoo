@@ -1,4 +1,5 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
+<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
@@ -24,10 +25,9 @@
                 Train<span style="color:#968148;">oo</span>.com</a>
         </h1>
     </div>
-
-    <% if (pageDetail.isLoginHeader()) {%>
-    <s:component template="loginHeader.jsp"/>
-    <% } %>
+    <% if (pageDetail.isLoginHeader()) {
+        Helpers.call(pageContext, "loginHeader.jsp");
+    } %>
     <div style="position:relative;">
         <div id="adPlaceHolder">
         </div>

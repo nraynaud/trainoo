@@ -54,7 +54,7 @@ public class SportSession {
 
         public UserWrapper(final User user) {
             this.user = user;
-            this.userId = user.getId();
+            userId = user.getId();
         }
 
         public User getUser(final UserStore userStore) {
@@ -62,7 +62,9 @@ public class SportSession {
                 try {
                     user = userStore.fetchUser(userId);
                 } catch (UserNotFoundException e) {
-                    throw new RuntimeException(e);
+                    throw new IllegalStateException("user "
+                            + userId
+                            + " had an open session, but unpon session hydratation it had disapeared from base");
                 }
             return user;
         }

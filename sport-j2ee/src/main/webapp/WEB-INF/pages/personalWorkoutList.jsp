@@ -1,3 +1,4 @@
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -6,13 +7,11 @@
 
 <s:if test="%{update}">
     <h2>Vous avez parcouru <s:property value="globalDistance"/>km</h2>
-    <s:component template="distanceByDiscipline.jsp"/>
+    <%call(pageContext, "distanceByDiscipline.jsp");%>
 </s:if>
 <div id="globalLeft">
     <h2>Mes dernières sorties</h2>
-    <s:component template="workoutTable.jsp">
-        <s:param name="displayEdit" value="true"/>
-    </s:component>
+    <% call(pageContext, "workoutTable.jsp", property("workouts"), "displayEdit", "true");%>
 
     <h2>Nouvel entraînement</h2>
 
@@ -20,10 +19,7 @@
         <s:url id="createteurl" namespace="workout" action="create" includeParams="get">
             <s:param name="id" value="id"/>
         </s:url>
-        <s:component template="workoutForm.jsp">
-            <s:param name="action" value="createteurl"/>
-            <s:param name="submit" value="'Ajouter'"/>
-        </s:component>
+        <%call(pageContext, "workoutForm.jsp", null, "action", "createteurl", "submit", "'Ajouter'");%>
     </div>
 </div>
 

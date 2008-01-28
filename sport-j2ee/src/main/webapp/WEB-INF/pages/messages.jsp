@@ -6,12 +6,7 @@
 
 <p:layoutParams title="Messagerie"/>
 <div id="tinyCenter">
-    <% push(property("conversationData"));
-        try {%>
-    <s:component template="messagesComponent.jsp"/>
-    <%
-        } finally {
-            pop();
-        }
-    %>
+
+    <%call(pageContext, "privateMessageForm.jsp", property("conversationData"));%>
+    <%call(pageContext, "messageList.jsp", property("conversationData.messages"));%>
 </div>

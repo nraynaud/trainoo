@@ -37,8 +37,34 @@
     <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
   </component>
   <component name="CodeStyleSettingsManager">
-    <option name="PER_PROJECT_SETTINGS" />
-    <option name="USE_PER_PROJECT_SETTINGS" value="false" />
+    <option name="PER_PROJECT_SETTINGS">
+      <value>
+        <option name="USE_SAME_INDENTS" value="false" />
+        <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
+        <option name="KEEP_BLANK_LINES_IN_CODE" value="0" />
+        <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0" />
+        <option name="BLANK_LINES_BEFORE_IMPORTS" value="0" />
+        <option name="GENERATE_FINAL_LOCALS" value="true" />
+        <option name="GENERATE_FINAL_PARAMETERS" value="true" />
+        <option name="CALL_PARAMETERS_WRAP" value="1" />
+        <option name="METHOD_PARAMETERS_WRAP" value="1" />
+        <option name="THROWS_LIST_WRAP" value="5" />
+        <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
+        <option name="BINARY_OPERATION_WRAP" value="5" />
+        <option name="BINARY_OPERATION_SIGN_ON_NEXT_LINE" value="true" />
+        <option name="ARRAY_INITIALIZER_WRAP" value="5" />
+        <ADDITIONAL_INDENT_OPTIONS fileType="js">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+      </value>
+    </option>
+    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
   </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
@@ -254,6 +280,8 @@
           <option name="IGNORE_JAVADOC_PERIOD" value="true" />
           <option name="myAdditionalJavadocTags" value="" />
         </inspection_tool>
+        <inspection_tool class="UnhandledExceptionInJSP" level="WARNING" enabled="false" />
+        <inspection_tool class="UNCHECKED_WARNING" level="WARNING" enabled="false" />
       </profile>
     </profiles>
     <list size="4">

@@ -1,10 +1,11 @@
 package com.nraynaud.sport.web.action.bib;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.BibPageData;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserNotFoundException;
+import com.nraynaud.sport.data.BibPageData;
 import com.nraynaud.sport.web.Constants;
+import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.view.Helpers;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -30,12 +31,11 @@ public class Action extends DefaultAction implements ModelDriven<BibPageData> {
                 final Long myId = id == null ? currentUser.getId() : id;
                 data = application.fetchBibPageData(currentUser, myId);
             } catch (UserNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new DataInputException(e);
             }
         }
         return data;
     }
-
 
     public Long getId() {
         return id;

@@ -1,5 +1,10 @@
 package com.nraynaud.sport;
 
+import com.nraynaud.sport.data.BibPageData;
+import com.nraynaud.sport.data.ConversationData;
+import com.nraynaud.sport.data.StatisticsPageData;
+import com.nraynaud.sport.data.WorkoutPageData;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +19,8 @@ public interface Application extends UserStore {
 
     User authenticate(String login, String password);
 
-    Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite);
+    Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) throws
+            WorkoutNotFoundException;
 
     void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException;
 
@@ -33,7 +39,7 @@ public interface Application extends UserStore {
                                  String receiverName,
                                  String content,
                                  Date date,
-                                 final Long aboutWorkout) throws UserNotFoundException;
+                                 final Long aboutWorkout) throws UserNotFoundException, WorkoutNotFoundException;
 
     @SuppressWarnings({"unchecked"})
     List<Message> fetchMessages(User receiver);
@@ -44,9 +50,16 @@ public interface Application extends UserStore {
 
     BibPageData fetchBibPageData(final User currentUser, final Long targetUserId) throws UserNotFoundException;
 
-    ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId);
+    ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId) throws
+            WorkoutNotFoundException;
 
-    Message createPublicMessage(final User sender, final String content, final Date date, final Long aboutWorkoutId);
+    Message createPublicMessage(final User sender,
+                                final String content,
+                                final Date date,
+                                final Long aboutWorkoutId) throws
+            WorkoutNotFoundException;
 
-    Workout fetchWorkout(Long id);
+    Workout fetchWorkout(Long id) throws WorkoutNotFoundException;
+
+    WorkoutPageData fetchWorkoutPageData(final Long workoutId) throws WorkoutNotFoundException;
 }
