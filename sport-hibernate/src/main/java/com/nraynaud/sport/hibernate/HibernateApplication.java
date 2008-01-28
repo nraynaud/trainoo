@@ -155,10 +155,23 @@ public class HibernateApplication implements Application {
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
         final Workout workout = fetchWorkoutAndCheckUser(id, user, true);
-        final Query query = entityManager.createNativeQuery("UPDATE MESSAGES SET WORKOUT_ID=NULL WHERE WORKOUT_ID=:id");
+        separatePrivateMessagesFromWorkout(id);
+        deletePublicMessageAboutWorkout(id);
+        entityManager.remove(workout);
+    }
+
+    private void deletePublicMessageAboutWorkout(final Long id) {
+        final Query query = entityManager.createNativeQuery(
+                "DELETE FROM MESSAGES WHERE WORKOUT_ID=:id AND RECEIVER_ID IS NULL");
         query.setParameter("id", id);
         query.executeUpdate();
-        entityManager.remove(workout);
+    }
+
+    private void separatePrivateMessagesFromWorkout(final Long id) {
+        final Query query = entityManager.createNativeQuery(
+                "UPDATE MESSAGES SET WORKOUT_ID=NULL WHERE WORKOUT_ID=:id AND RECEIVER_ID IS NOT NULL");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
     @PersistenceContext
