@@ -6,6 +6,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
+<% allowOverrides();%>
 <% final Workout workout = (Workout) top();%>
 <s:form action="messages" namespace="/">
     <fieldset>

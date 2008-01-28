@@ -1,7 +1,7 @@
 package com.nraynaud.sport.web.result;
 
 import com.nraynaud.sport.web.ActionDetail;
-import com.nraynaud.sport.web.action.MessagesAction;
+import com.nraynaud.sport.web.ChainBackCapable;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.Result;
 import com.opensymphony.xwork2.inject.Inject;
@@ -14,8 +14,8 @@ public class RedirectBack implements Result {
 
     public void execute(final ActionInvocation invocation) throws Exception {
         final Object action = invocation.getAction();
-        if (action instanceof MessagesAction) {
-            final MessagesAction messageAction = (MessagesAction) action;
+        if (action instanceof ChainBackCapable) {
+            final ChainBackCapable messageAction = (ChainBackCapable) action;
             final String fromAction = messageAction.getFromAction();
             final ActionDetail detail = new ActionDetail(fromAction);
             final Redirect result = new Redirect(detail.namespace, detail.name, "index");

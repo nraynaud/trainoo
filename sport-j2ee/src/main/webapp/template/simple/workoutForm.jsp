@@ -1,11 +1,15 @@
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.allowOverrides" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
+<% allowOverrides();%>
 <form action="<s:property value="%{parameters.action}"/>" method="post">
 
     <s:actionerror/>
     <s:actionmessage/>
     <s:fielderror/>
+
+    <s:hidden name="fromAction" value="%{actionDescription}"/>
     <table>
         <tr>
             <th><label for="discipline">Discipline</label></th>

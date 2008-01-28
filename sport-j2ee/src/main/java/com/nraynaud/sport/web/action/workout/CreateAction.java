@@ -2,6 +2,7 @@ package com.nraynaud.sport.web.action.workout;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.web.AbstractWorkoutAction;
+import com.nraynaud.sport.web.ChainBackCapable;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.result.ChainBack;
@@ -23,9 +24,11 @@ import org.apache.struts2.config.Results;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Namespace("/workout")
 @Validation
-public class CreateAction extends AbstractWorkoutAction {
+public class CreateAction extends AbstractWorkoutAction implements ChainBackCapable {
 
     private final Application application;
+
+    private String fromAction;
 
     public CreateAction(final Application application) {
         this.application = application;
@@ -35,5 +38,18 @@ public class CreateAction extends AbstractWorkoutAction {
     public String create() {
         application.createWorkout(getDate(), getUser(), getDuration(), getDistance(), getDiscipline());
         return SUCCESS;
+    }
+
+    public String getFromAction() {
+        return fromAction;
+    }
+
+    public void setFromAction(final String fromAction) {
+        this.fromAction = fromAction;
+    }
+
+    //transparent action passing
+    public String getActionDescription() {
+        return getFromAction();
     }
 }

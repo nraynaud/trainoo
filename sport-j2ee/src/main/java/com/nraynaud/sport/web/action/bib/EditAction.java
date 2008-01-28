@@ -4,7 +4,6 @@ import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
-import com.nraynaud.sport.web.SportRequest;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -49,10 +48,6 @@ public class EditAction extends DefaultAction {
     public String create() {
         application.updateBib(getUser(), town, description, webSite);
         return SUCCESS;
-    }
-
-    private static User getUser() {
-        return SportRequest.getSportRequest().getSportSession().getUser();
     }
 
     public String getTown() {

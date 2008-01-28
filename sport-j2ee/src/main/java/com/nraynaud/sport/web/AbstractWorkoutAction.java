@@ -1,6 +1,5 @@
 package com.nraynaud.sport.web;
 
-import com.nraynaud.sport.User;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
@@ -11,8 +10,6 @@ public class AbstractWorkoutAction extends DefaultAction {
     private Long duration;
     private Double distance;
     private String discipline;
-
-    protected SportRequest request;
 
     @TypeConversion(converter = "com.nraynaud.sport.web.converter.DateConverter")
     public void setDate(final Date date) {
@@ -52,13 +49,5 @@ public class AbstractWorkoutAction extends DefaultAction {
 
     public SportRequest getRequest() {
         return request;
-    }
-
-    public void setRequest(final SportRequest request) {
-        this.request = request;
-    }
-
-    public User getUser() {
-        return request.getSportSession().getUser();
     }
 }

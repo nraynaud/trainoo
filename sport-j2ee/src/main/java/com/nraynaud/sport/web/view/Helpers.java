@@ -16,6 +16,7 @@ import java.util.StringTokenizer;
 
 public class Helpers {
     private static final String HEX_CHARS = "0123456789ABCDEF";
+    private static final String OVERRIDES_KEY = "overrides";
 
     private Helpers() {
     }
@@ -179,8 +180,38 @@ public class Helpers {
     }
 
     public static void call(final PageContext context, final String template) throws Exception {
-        final HttpServletResponse httpServletResponse = (HttpServletResponse) context.getResponse();
-        Include.include("/template/simple/" + template, context.getOut(), context.getRequest(), httpServletResponse);
+        saveAndUnplugOverrides();
+        try {
+            final HttpServletResponse httpServletResponse = (HttpServletResponse) context.getResponse();
+            Include.include("/template/simple/" + template, context.getOut(), context.getRequest(),
+                    httpServletResponse);
+        } finally {
+            unplugOverridesIfNecessary();
+        }
+    }
+
+    public static void allowOverrides() {
+        final Map overrides = (Map) ActionContext.getContext().get(OVERRIDES_KEY);
+        if (overrides != null)
+            stack().setExprOverrides(overrides);
+    }
+
+    private static void unplugOverridesIfNecessary() {
+        final Map exprOverrides = stack().getExprOverrides();
+        if (exprOverrides != null)
+            exprOverrides.clear();
+    }
+
+    private static void saveAndUnplugOverrides() {
+        final ActionContext context = ActionContext.getContext();
+        final ValueStack stack = context.getValueStack();
+        final Map overrides = stack.getExprOverrides();
+        if (overrides != null) {
+            final Map overridesCopy = new HashMap(overrides);
+            if (context.get(OVERRIDES_KEY) == null)
+                context.put(OVERRIDES_KEY, overridesCopy);
+            unplugOverridesIfNecessary();
+        }
     }
 
     public static String literal(final String string) {

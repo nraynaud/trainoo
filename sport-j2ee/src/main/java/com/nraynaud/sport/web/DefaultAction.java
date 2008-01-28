@@ -1,5 +1,6 @@
 package com.nraynaud.sport.web;
 
+import com.nraynaud.sport.User;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -12,6 +13,8 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @Public
 public class DefaultAction extends ActionSupport {
     private String actionDescription;
+
+    protected SportRequest request;
 
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
@@ -29,5 +32,13 @@ public class DefaultAction extends ActionSupport {
 
     public void setActionDescription(final String actionDescription) {
         this.actionDescription = actionDescription;
+    }
+
+    public void setRequest(final SportRequest request) {
+        this.request = request;
+    }
+
+    public User getUser() {
+        return request.getSportSession().getUser();
     }
 }

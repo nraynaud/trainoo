@@ -16,7 +16,7 @@
     <h2>Nouvel entraînement</h2>
 
     <div>
-        <s:url id="createteurl" namespace="workout" action="create" includeParams="none">
+        <s:url id="createteurl" namespace="/workout" action="create" includeParams="none">
             <s:param name="id" value="id"/>
         </s:url>
         <%call(pageContext, "workoutForm.jsp", null, "action", "createteurl", "submit", literal("Ajouter"));%>

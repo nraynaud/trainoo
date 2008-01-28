@@ -25,7 +25,7 @@ import java.util.Date;
 @Result(name = "site-index", type = Redirect.class, value = "globalWorkouts", params = {"namespace", "/"})
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class MessagesAction extends DefaultAction {
+public class MessagesAction extends DefaultAction implements ChainBackCapable {
     private String content;
     private String receiver;
     private final Application application;
