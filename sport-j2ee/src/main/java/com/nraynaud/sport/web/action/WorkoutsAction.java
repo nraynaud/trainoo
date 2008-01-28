@@ -6,7 +6,6 @@ import com.nraynaud.sport.data.StatisticsPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import com.nraynaud.sport.web.SportRequest;
-import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ModelDriven;
@@ -20,8 +19,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @Conversion
 @Results({
 @Result(name = SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
-@Result(name = INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
-@Result(name = "workouts-redirect", type = Redirect.class, value = "workouts")
+@Result(name = INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation

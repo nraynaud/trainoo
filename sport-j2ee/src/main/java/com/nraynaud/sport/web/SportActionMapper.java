@@ -33,7 +33,6 @@ public class SportActionMapper implements ActionMapper {
         final Map<String, PackageConfig> currentConfig = configManager.getConfiguration().getPackageConfigs();
         final ActionMapping mapping = new ActionMapping();
         extractNamespaceAndName(uri, currentConfig, mapping, request.getMethod());
-
         final String name = mapping.getName();
         if (name.endsWith("/"))
             mapping.setName(name.substring(0, name.length() - 1));
@@ -91,8 +90,7 @@ public class SportActionMapper implements ActionMapper {
         if (namespaces == null) {
             namespaces = new TreeSet<NamespaceData>(NAMESPACE_COMPARATOR);
             for (final PackageConfig config : configs.values()) {
-                if (config.getActionConfigs().size() > 0)
-                    namespaces.add(new NamespaceData(config.getNamespace()));
+                namespaces.add(new NamespaceData(config.getNamespace()));
             }
             if (CONFIG_CACHE.putIfAbsent(configs, namespaces) != namespaces)
                 System.out.println("config cache update ! new size :" + CONFIG_CACHE.size() + " added:" + namespaces);
@@ -147,7 +145,6 @@ public class SportActionMapper implements ActionMapper {
             if (!(o instanceof NamespaceData)) return false;
             final NamespaceData that = (NamespaceData) o;
             return namespace.equals(that.namespace);
-
         }
 
         public int hashCode() {
@@ -171,7 +168,6 @@ public class SportActionMapper implements ActionMapper {
         return request.getRequestURI().substring(request.getContextPath().length());
     }
 
-
     public String getUriFromActionMapping(final ActionMapping mapping) {
         final StringBuilder uri = new StringBuilder(20);
         uri.append(mapping.getNamespace());
@@ -180,7 +176,6 @@ public class SportActionMapper implements ActionMapper {
         }
         final String name = mapping.getName();
         uri.append(name);
-
         final String method = mapping.getMethod();
         if (!"index".equals(method) && !"create".equals(method))
             if (null != method && method.length() != 0) {
