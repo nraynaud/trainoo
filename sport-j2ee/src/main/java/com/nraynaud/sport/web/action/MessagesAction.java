@@ -6,7 +6,9 @@ import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.data.ConversationData;
 import com.nraynaud.sport.web.*;
+import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.Redirect;
+import com.nraynaud.sport.web.result.RedirectBack;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
@@ -18,12 +20,12 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import java.util.Date;
 
 @Results({
-@Result(type = Redirect.class, value = Constants.WORKOUTS_ACTION),
-@Result(name = Action.INPUT, value = "/WEB-INF/pages/messages.jsp")
+@Result(type = RedirectBack.class, value = Constants.WORKOUTS_ACTION),
+@Result(name = Action.INPUT, type = ChainBack.class, value = "LOL"),
+@Result(name = "site-index", type = Redirect.class, value = "globalWorkouts", params = {"namespace", "/"})
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class MessagesAction extends DefaultAction {
-
     private String content;
     private String receiver;
     private final Application application;
@@ -31,6 +33,8 @@ public class MessagesAction extends DefaultAction {
     private Long aboutWorkoutId;
     private boolean publicMessage = false;
     private ConversationData conversationData;
+
+    private String fromAction;
 
     public static final String CONTENT_MAX_LENGTH = "4000";
 
@@ -41,7 +45,7 @@ public class MessagesAction extends DefaultAction {
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
     public String index() {
-        return INPUT;
+        return "site-index";
     }
 
     @PostOnly
@@ -125,5 +129,18 @@ public class MessagesAction extends DefaultAction {
 
     public void setPublicMessage(final boolean publicMessage) {
         this.publicMessage = publicMessage;
+    }
+
+    public String getFromAction() {
+        return fromAction;
+    }
+
+    public void setFromAction(final String fromAction) {
+        this.fromAction = fromAction;
+    }
+
+    //transparent action
+    public String getActionDescription() {
+        return getFromAction();
     }
 }

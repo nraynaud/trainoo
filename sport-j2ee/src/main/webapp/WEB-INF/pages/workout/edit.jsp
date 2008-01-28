@@ -5,7 +5,7 @@
 <p:layoutParams title="Modification d'un entraînement"/>
 
 <s:component template="workoutForm.jsp">
-    <s:url id="updateurl" namespace="/workout" action="edit" includeParams="get">
+    <s:url id="updateurl" namespace="/workout" action="edit" includeParams="none">
         <s:param name="id" value="id"/>
     </s:url>
     <s:param name="action" value="updateurl"/>

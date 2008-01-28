@@ -16,7 +16,8 @@
                     <s:date name="date" format="E dd/M à HH:mm"/>
                     <% final String name = escaped(message.getSender().getName()); %>
                         <span class="message_from">
-                            <s:url id="answerUrl" action="messages" namespace="/" includeParams="get">
+                            <% if (isLogged()) {%>
+                            <s:url id="answerUrl" action="messages" namespace="/" includeParams="none">
                                 <s:param name="receiver" value="sender.name"/>
                                 <% if (workout != null) {%>
                                 <s:param name="aboutWorkoutId" value="workout.id"/>
@@ -24,10 +25,11 @@
                             </s:url>
                             <s:a href="%{answerUrl}" title="répondre"><%=name%>
                             </s:a>
+                            <% } else {%>
+                            <%=name%>
+                            <%}%>
                         </span>
-                    <% if (!message.isPublic()) {%>
-                    pour <s:property value="receiver.name" escape="true"/>&nbsp;:
-                    <%}%>
+                    a écrit&nbsp;:
                 </span>
         <% if (workout != null) {%>
         <div class="workout">à propos de la sortie&nbsp;:

@@ -182,4 +182,8 @@ public class Helpers {
         final HttpServletResponse httpServletResponse = (HttpServletResponse) context.getResponse();
         Include.include("/template/simple/" + template, context.getOut(), context.getRequest(), httpServletResponse);
     }
+
+    public static String literal(final String string) {
+        return '\'' + string + '\'';
+    }
 }

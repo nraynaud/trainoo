@@ -13,8 +13,8 @@
         <% call(pageContext, "workoutComponent.jsp", data.workout); %>
     </div>
     <h2>Les réactions à cette sortie</h2>
-    <% call(pageContext, "messageList.jsp", data.messages);%>
-    <% call(pageContext, "publicMessageForm.jsp", data.workout);%>
+    <% call(pageContext, "messageList.jsp", data.messages);
+        if (isLogged()) call(pageContext, "publicMessageForm.jsp", data.workout);%>
 </div>
 
 <div id="globalRight">

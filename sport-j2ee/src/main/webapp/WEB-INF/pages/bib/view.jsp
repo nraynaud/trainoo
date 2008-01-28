@@ -40,7 +40,10 @@
 <%if (!lookingOwnBib) {%>
 <div id="globalRight">
     <h2>Lui envoyer un message ?</h2>
-    <% call(pageContext, "messagesComponent.jsp", null, "receiver", "%{user.name}");%>
+    <%
+        call(pageContext, "privateMessageForm.jsp", null, "receiver", literal(data.user.getName()));
+        call(pageContext, "messageList.jsp", data.messages);
+    %>
 </div>
 <%}%>
 <%!

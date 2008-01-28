@@ -5,14 +5,14 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<s:actionerror/>
-<s:actionmessage/>
-<s:fielderror/>
-
 <% final Workout answerWorkout = (Workout) property("aboutWorkout");%>
 <s:form action="messages" namespace="/">
     <fieldset>
         <legend>Nouveau message</legend>
+
+        <s:actionerror/>
+        <s:actionmessage/>
+        <s:fielderror/>
         <div id="answerReceiver">
             <div id="privateReceiver" style="display:inline;">
                 <label for="receiver">Destinataire&nbsp;:</label><br>
@@ -26,6 +26,7 @@
             </div>
         </div>
 
+        <s:hidden name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="publicMessage" value="false"/>
         <s:hidden name="aboutWorkoutId"/>
         <div id="aboutWorkoutDiv" class="workout">

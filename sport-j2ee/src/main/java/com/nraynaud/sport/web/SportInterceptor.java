@@ -4,6 +4,7 @@ import com.nraynaud.sport.UserStore;
 import static com.nraynaud.sport.web.Constants.LOGIN_RESULT;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import org.apache.struts2.ServletActionContext;
 
@@ -24,8 +25,10 @@ public class SportInterceptor extends AbstractInterceptor {
         invocationContext.getValueStack().push(request);
         final Object action = invocation.getAction();
         final Class<?> actionClass = action.getClass();
-        final Method actionMethod = getActionMethod(actionClass, invocation.getProxy().getMethod());
+        final ActionProxy actionProxy = invocation.getProxy();
+        final Method actionMethod = getActionMethod(actionClass, actionProxy.getMethod());
         filterPostMethod(actionMethod, request);
+        setMetadata(action, actionProxy, invocationContext);
         final Method requestMethod;
         try {
             requestMethod = actionClass.getMethod("setRequest", SportRequest.class);
@@ -34,12 +37,16 @@ public class SportInterceptor extends AbstractInterceptor {
             //ok, no problem
         }
         if (isPublic(actionClass)) return invocation.invoke();
-        return request.isLogged() ? invocation.invoke() : forceLogin(invocationContext);
+        return request.isLogged() ? invocation.invoke() : LOGIN_RESULT;
     }
 
-    private static String forceLogin(final ActionContext invocationContext) {
-        invocationContext.getParameters().clear();
-        return LOGIN_RESULT;
+    private static void setMetadata(final Object action, final ActionProxy actionProxy,
+                                    final ActionContext invocationContext) {
+        if (action instanceof DefaultAction) {
+            final String encodedAction = new ActionDetail(actionProxy.getNamespace(), actionProxy.getActionName(),
+                    invocationContext.getParameters()).encodedAction;
+            ((DefaultAction) action).setActionDescription(encodedAction);
+        }
     }
 
     private static boolean isPublic(final Class<?> actionClass) throws Exception {

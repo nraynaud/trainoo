@@ -16,14 +16,17 @@
     <h2>Nouvel entraînement</h2>
 
     <div>
-        <s:url id="createteurl" namespace="workout" action="create" includeParams="get">
+        <s:url id="createteurl" namespace="workout" action="create" includeParams="none">
             <s:param name="id" value="id"/>
         </s:url>
-        <%call(pageContext, "workoutForm.jsp", null, "action", "createteurl", "submit", "'Ajouter'");%>
+        <%call(pageContext, "workoutForm.jsp", null, "action", "createteurl", "submit", literal("Ajouter"));%>
     </div>
 </div>
 
 <div id="globalRight" class="messages">
     <h2>Messagerie</h2>
-    <s:component template="messagesComponent.jsp"/>
+    <%
+        call(pageContext, "privateMessageForm.jsp");
+        call(pageContext, "messageList.jsp", property("messages"));
+    %>
 </div>
