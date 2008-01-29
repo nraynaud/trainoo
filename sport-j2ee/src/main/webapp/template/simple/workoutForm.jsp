@@ -31,7 +31,8 @@
                              size="10"
                              onfocus="Element.show('date_tip');feedback('date', this.value)"
                              onblur="Element.hide('date_tip')"
-                             onkeyup="feedback('date', this.value)"/></td>
+                             onkeyup="feedback('date', this.value)"
+                             value="%{date == null  ? 'aujourd\\'hui' : date}"/></td>
             <td><s:textfield id="duration"
                              name="duration"
                              size="6"

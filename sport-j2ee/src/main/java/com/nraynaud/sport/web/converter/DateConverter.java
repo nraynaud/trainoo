@@ -30,8 +30,12 @@ public class DateConverter extends StrutsTypeConverter {
 
     public static final Parser TODAY_PARSER = new Parser() {
         public Date parse(final String source) throws IllegalArgumentException {
-            if (source.equalsIgnoreCase("aujourd'hui"))
+            if ("aujourd'hui".equalsIgnoreCase(source.toLowerCase()))
                 return new Date();
+            if ("hier".equalsIgnoreCase(source.toLowerCase()))
+                return new DateTime().minusDays(1).toDate();
+            if ("avant-hier".equalsIgnoreCase(source.toLowerCase()))
+                return new DateTime().minusDays(2).toDate();
             throw new IllegalArgumentException();
         }
     };
