@@ -14,6 +14,7 @@
         <s:actionerror/>
         <s:actionmessage/>
         <s:fielderror/>
+        <% if (parameter("hideReceiverBox") == null || !boolParam("hideReceiverBox")) {%>
         <div id="answerReceiver">
             <div id="privateReceiver" style="display:inline;">
                 <label for="receiver">Destinataire&nbsp;:</label><br>
@@ -26,7 +27,9 @@
                 </p:javascript>
             </div>
         </div>
-
+        <% } else {%>
+        <s:hidden name="receiver" value="%{parameters.receiver != null ? parameters.receiver : receiver}"/>
+        <%}%>
         <s:hidden name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="publicMessage" value="false"/>
         <s:hidden name="aboutWorkoutId"/>

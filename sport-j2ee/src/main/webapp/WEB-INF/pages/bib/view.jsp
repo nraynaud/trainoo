@@ -39,10 +39,12 @@
 </div>
 <%if (!lookingOwnBib) {%>
 <div id="globalRight">
-    <h2>Lui envoyer un message ?</h2>
+    <h2>Mes discussions avec <%=escaped(user.getName())%>
+    </h2>
     <%
-        call(pageContext, "privateMessageForm.jsp", null, "receiver", literal(data.user.getName()));
         call(pageContext, "messageList.jsp", data.messages);
+        call(pageContext, "privateMessageForm.jsp", null, "receiver", literal(data.user.getName()), "hideReceiverBox",
+                "true");
     %>
 </div>
 <%}%>

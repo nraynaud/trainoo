@@ -47,6 +47,10 @@ public class Helpers {
         return property("parameters." + expression);
     }
 
+    public static boolean boolParam(final String expression) {
+        return ((Boolean) stack().findValue("parameters." + expression, Boolean.class)).booleanValue();
+    }
+
     private static ValueStack stack() {
         return ActionContext.getContext().getValueStack();
     }
