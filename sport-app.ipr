@@ -211,9 +211,6 @@
         </inspection_tool>
         <inspection_tool class="UnnecessaryBoxing" level="WARNING" enabled="false" />
         <inspection_tool class="UnnecessaryUnboxing" level="WARNING" enabled="false" />
-        <inspection_tool class="AutoBoxing" level="WARNING" enabled="true">
-          <option name="ignoreAddedToCollection" value="false" />
-        </inspection_tool>
         <inspection_tool class="AutoUnboxing" level="WARNING" enabled="true" />
         <inspection_tool class="ClassMayBeInterface" level="WARNING" enabled="true" />
         <inspection_tool class="UtilityClassWithoutPrivateConstructor" level="WARNING" enabled="true">

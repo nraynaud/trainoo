@@ -8,6 +8,7 @@ import com.nraynaud.sport.data.WorkoutPageData;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -98,11 +99,13 @@ public class HibernateApplication implements Application {
         return entityManager.find(WorkoutImpl.class, id);
     }
 
-    public WorkoutPageData fetchWorkoutPageData(final Long workoutId) throws WorkoutNotFoundException {
+    public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId) throws
+            WorkoutNotFoundException {
         final Workout workout = fetchWorkout(workoutId);
         return new WorkoutPageData(workout,
                 fetchConversation("receiver IS NULL AND workout.id=:workoutId", "workoutId", workoutId),
-                getWorkouts(workout.getUser(), 10));
+                getWorkouts(workout.getUser(), 10), (List<Message>) (currentUser == null ? Collections.emptyList() :
+                fetchPrivateConversation(currentUser, workout.getUser().getId())));
     }
 
     public void updateWorkout(final Long id,
@@ -222,13 +225,17 @@ public class HibernateApplication implements Application {
 
     public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId) throws UserNotFoundException {
         final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
-        final List<Message> messages = fetchConversation("(m.receiver.id=:userId AND m.sender=:currentUser)"
+        final List<Message> messages = fetchPrivateConversation(currentUser, targetUserId);
+        return new BibPageData(target, messages);
+    }
+
+    private List<Message> fetchPrivateConversation(final User currentUser, final Long targetUserId) {
+        return fetchConversation("(m.receiver.id=:userId AND m.sender=:currentUser)"
                 + "OR(m.receiver=:currentUser AND m.sender.id=:userId)",
                 "currentUser",
                 currentUser,
                 "userId",
                 targetUserId);
-        return new BibPageData(target, messages);
     }
 
     public List<Message> fetchConversation(final User currentUser, final String receiverName) {

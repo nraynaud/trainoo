@@ -112,6 +112,7 @@ h2, h1 {
     margin-top: 1em;
     margin-bottom: 0.5em;
     color: #57470C;
+    font-size: larger;
 }
 
 .flashPart {
@@ -209,6 +210,7 @@ p.loginLabel {
     overflow: auto;
     zoom: 1;
     _overflow: visible;
+    padding-top: 1em;
 }
 
 #bottom {
@@ -291,7 +293,7 @@ div.autocomplete ul li {
     color: gray;
 }
 
-textarea#messageContent {
+textarea.messageContentArea {
     width: 99%;
 }
 

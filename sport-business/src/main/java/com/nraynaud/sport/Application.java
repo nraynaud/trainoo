@@ -61,5 +61,5 @@ public interface Application extends UserStore {
 
     Workout fetchWorkout(Long id) throws WorkoutNotFoundException;
 
-    WorkoutPageData fetchWorkoutPageData(final Long workoutId) throws WorkoutNotFoundException;
+    WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId) throws WorkoutNotFoundException;
 }

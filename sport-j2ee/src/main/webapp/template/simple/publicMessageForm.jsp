@@ -25,7 +25,7 @@
             à propos de la sortie&nbsp;: <span class="tinyWorkout"><%
             call(pageContext, "workoutComponent.jsp", workout);%></span>
         </div>
-        <s:textarea id="messageContent" name="content" rows="5"/>
+        <s:textarea id="messageContent" cssClass="messageContentArea" name="content" rows="5"/>
         <p:javascript>makeItCount('messageContent', <%= CONTENT_MAX_LENGTH%>);</p:javascript>
         <s:submit value="Envoyer"/>
     </fieldset>

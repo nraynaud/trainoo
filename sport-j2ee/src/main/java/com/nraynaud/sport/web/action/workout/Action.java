@@ -42,7 +42,7 @@ public class Action extends DefaultAction implements ModelDriven<WorkoutPageData
     public WorkoutPageData getModel() {
         if (data == null)
             try {
-                data = application.fetchWorkoutPageData(id);
+                data = application.fetchWorkoutPageData(getUser(), id);
             } catch (WorkoutNotFoundException e) {
                 throw new DataInputException(e);
             }

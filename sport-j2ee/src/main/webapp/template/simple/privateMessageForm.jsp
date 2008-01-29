@@ -6,7 +6,8 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <% allowOverrides();%>
-<% final Workout answerWorkout = (Workout) property("aboutWorkout");%>
+<% final Object o = property("aboutWorkout");
+    final Workout answerWorkout = (Workout) (o != null ? o : parameter("aboutWorkout"));%>
 <s:form action="messages" namespace="/">
     <fieldset>
         <legend>Nouveau message privé</legend>
@@ -36,14 +37,14 @@
         <s:hidden name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="publicMessage" value="false"/>
         <s:hidden name="aboutWorkoutId"/>
-        <div id="aboutWorkoutDiv" class="workout">
+        <div id="priv_aboutWorkoutDiv" class="workout">
             <% if (answerWorkout != null) {%>
             à propos de la sortie&nbsp;: <span class="tinyWorkout"><%
             call(pageContext, "workoutComponent.jsp", answerWorkout);%></span>
             <%}%>
         </div>
-        <s:textarea id="messageContent" name="content" rows="5"/>
-        <p:javascript>makeItCount('messageContent', <%= CONTENT_MAX_LENGTH%>);</p:javascript>
+        <s:textarea id="priv_messageContent" cssClass="messageContentArea" name="content" rows="5"/>
+        <p:javascript>makeItCount('priv_messageContent', <%= CONTENT_MAX_LENGTH%>);</p:javascript>
         <s:submit value="Envoyer"/>
     </fieldset>
 </s:form>

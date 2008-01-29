@@ -39,6 +39,6 @@ public class DefaultAction extends ActionSupport {
     }
 
     public User getUser() {
-        return request.getSportSession().getUser();
+        return request.isLogged() ? request.getSportSession().getUser() : null;
     }
 }

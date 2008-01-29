@@ -122,7 +122,8 @@ public class Helpers {
     }
 
     public static User currentUser() {
-        return SportRequest.getSportRequest().getSportSession().getUser();
+        final SportRequest request = SportRequest.getSportRequest();
+        return request.isLogged() ? request.getSportSession().getUser() : null;
     }
 
     public static Object top() {
