@@ -14,7 +14,9 @@
 
         <s:actionerror/>
         <s:actionmessage/>
-        <s:fielderror/>
+        <s:fielderror>
+            <s:param value="'content'"/>
+        </s:fielderror>
 
         <s:hidden name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="publicMessage" value="true"/>

@@ -13,7 +13,10 @@
 
         <s:actionerror/>
         <s:actionmessage/>
-        <s:fielderror/>
+        <s:fielderror>
+            <s:param value="'receiver'"/>
+            <s:param value="'content'"/>
+        </s:fielderror>
         <% if (parameter("hideReceiverBox") == null || !boolParam("hideReceiverBox")) {%>
         <div id="answerReceiver">
             <div id="privateReceiver" style="display:inline;">

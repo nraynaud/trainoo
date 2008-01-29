@@ -7,7 +7,12 @@
 
     <s:actionerror/>
     <s:actionmessage/>
-    <s:fielderror/>
+    <s:fielderror>
+        <s:param value="'discipline'"/>
+        <s:param value="'date'"/>
+        <s:param value="'duration'"/>
+        <s:param value="'distance'"/>
+    </s:fielderror>
 
     <s:hidden name="fromAction" value="%{actionDescription}"/>
     <table>
