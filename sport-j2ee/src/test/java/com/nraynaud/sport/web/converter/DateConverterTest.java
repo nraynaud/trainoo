@@ -31,6 +31,11 @@ public class DateConverterTest {
     }
 
     @Test
+    public void testWordDate() throws ParseException {
+        checkDate(FORMAT.parse(FORMAT.format(new Date())), "aujourd'hui");
+    }
+
+    @Test
     public void testStringFormatter() throws ParseException {
         final DateConverter converter = new DateConverter();
         final Date input = FORMAT.parse("23/11/2004");
@@ -43,6 +48,7 @@ public class DateConverterTest {
     public void testInputError() throws ParseException {
         checkError("lol");
         checkError("03/lol");
+        checkError("03lol");
     }
 
     private static void checkError(final String input) {
@@ -54,7 +60,6 @@ public class DateConverterTest {
             //ok
         }
     }
-
 
     private static void checkPartialDate(final String format) {
         final Date expected = new Date();

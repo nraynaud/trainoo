@@ -1,18 +1,42 @@
 package com.nraynaud.sport.web.converter;
 
-import static com.nraynaud.sport.web.converter.ConverterUtil.parseWholeString;
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Map;
 
 public class DateConverter extends StrutsTypeConverter {
+    private static final Parser FULL_FORMAT_PARSER = new Parser() {
+        public Date parse(final String source) throws IllegalArgumentException {
+            return DateTimeFormat.forPattern("dd/MM/yy").parseDateTime(source).toDate();
+        }
+    };
+    private static final Parser DAY_MOUTH_PARSER = new Parser() {
+        public Date parse(final String source) throws IllegalArgumentException {
+            final DateTime dateTime = DateTimeFormat.forPattern("dd/MM").parseDateTime(source);
+            return dateTime.withYear(new DateTime().getYear()).toDate();
+        }
+    };
+    private static final Parser DAY_PARSER = new Parser() {
+        public Date parse(final String source) throws IllegalArgumentException {
+            final DateTime dateTime = DateTimeFormat.forPattern("dd").parseDateTime(source);
+            final DateTime now = new DateTime();
+            return dateTime.withYear(now.getYear()).withMonthOfYear(now.getMonthOfYear()).toDate();
+        }
+    };
+
+    public static final Parser TODAY_PARSER = new Parser() {
+        public Date parse(final String source) throws IllegalArgumentException {
+            if (source.equalsIgnoreCase("aujourd'hui"))
+                return new Date();
+            throw new IllegalArgumentException();
+        }
+    };
+
+    private static final Parser[] PARSERS = {FULL_FORMAT_PARSER, DAY_MOUTH_PARSER, DAY_PARSER, TODAY_PARSER};
 
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
@@ -20,56 +44,27 @@ public class DateConverter extends StrutsTypeConverter {
         return parseDate(source);
     }
 
-    public static Date parseDate(final String source) {
-        try {
-            return (Date) parseWholeString(getFormatWithYear(), source);
-        }
-        catch (ParseException e) {
-            try {
-                final Date date = (Date) parseWholeString(getFormatWithMonth(), source);
-                return setCurrentComponents(date, Calendar.YEAR);
-            } catch (ParseException e1) {
-                try {
-                    final Date date = (Date) parseWholeString(getFormatWithDay(), source);
-                    return setCurrentComponents(date, Calendar.YEAR, Calendar.MONTH);
-                } catch (ParseException e2) {
-                    throw new TypeConversionException(e);
-                }
-            }
-        }
-    }
-
-
-    // returns a new date whose component (like Calendar.YEAR) are overriden with the current one.
-    private static Date setCurrentComponents(final Date date, final int... compents) {
-        final GregorianCalendar calendar = new GregorianCalendar();
-        final int saved[] = new int[compents.length];
-        for (int i = 0; i < compents.length; i++)
-            saved[i] = calendar.get(compents[i]);
-        calendar.setTime(date);
-        for (int i = 0; i < saved.length; i++)
-            calendar.set(compents[i], saved[i]);
-        return calendar.getTime();
-    }
-
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public String convertToString(final Map context, final Object o) {
         if (o instanceof Date) {
-            final DateFormat sdf = getFormatWithYear();
-            return sdf.format((Date) o);
+            return DateTimeFormat.forPattern("dd/MM/yy").print(new DateTime(o));
         }
         return "";
     }
 
-    private static DateFormat getFormatWithYear() {
-        return new SimpleDateFormat("dd/MM/yy");
+    public static Date parseDate(final String source) {
+        IllegalArgumentException initialException = null;
+        for (final Parser parser : PARSERS)
+            try {
+                return parser.parse(source);
+            } catch (IllegalArgumentException e) {
+                if (initialException == null)
+                    initialException = e;
+            }
+        throw new TypeConversionException(initialException);
     }
 
-    private static DateFormat getFormatWithMonth() {
-        return new SimpleDateFormat("dd/MM");
-    }
-
-    private static DateFormat getFormatWithDay() {
-        return new SimpleDateFormat("dd");
+    private interface Parser {
+        Date parse(final String source) throws IllegalArgumentException;
     }
 }

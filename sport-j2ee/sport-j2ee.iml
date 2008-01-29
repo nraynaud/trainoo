@@ -102,6 +102,10 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/jboss-archive-browsing-5.0.0alpha-200607201-119.jar" />
           </containerElement>
+          <containerElement type="library" name="joda-time:joda-time:1.5.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/joda-time-1.5.1.jar" />
+          </containerElement>
           <containerElement type="library" name="mysql:mysql-connector-java:5.1.5" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
@@ -412,6 +416,19 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/jboss/jboss-archive-browsing/5.0.0alpha-200607201-119/jboss-archive-browsing-5.0.0alpha-200607201-119-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="joda-time:joda-time:1.5.1">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
