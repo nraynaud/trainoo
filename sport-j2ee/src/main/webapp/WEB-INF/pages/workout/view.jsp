@@ -21,6 +21,11 @@
 
     <h2><%if (!data.messages.isEmpty()) {%>Les réactions à cette sortie<%} else {%>Aucune réaction pour
         l'instant.<%}%></h2>
+    <%if (!isLogged()) {%>
+    <p>En vous <a href="<s:url action="signup" namespace="/" includeParams="none"/>">inscrivant</a> ou en vous <a
+            href="<s:url action="login" namespace="/" includeParams="none"/>">connectant</a> vous pourriez
+        régir à cette sortie.</p>
+    <%}%>
     <% call(pageContext, "messageList.jsp", data.messages);
         if (isLogged()) call(pageContext, "publicMessageForm.jsp", workout);%>
 </div>

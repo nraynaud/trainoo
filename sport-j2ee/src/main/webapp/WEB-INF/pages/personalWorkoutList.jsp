@@ -27,6 +27,5 @@
     <h2>Messagerie</h2>
     <%
         call(pageContext, "privateMessageForm.jsp");
-        call(pageContext, "messageList.jsp", property("messages"));
     %>
 </div>

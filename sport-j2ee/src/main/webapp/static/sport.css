@@ -268,6 +268,7 @@ div.autocomplete ul li {
 .workout {
     font-size: smaller;
     color: #968148;
+    padding-left: 0.5em;
 }
 
 .received, .public {
@@ -318,7 +319,6 @@ textarea.messageContentArea {
 
 .workout .tinyWorkout {
     font-weight: bold;
-    padding-left: 0.5em;
 }
 
 table.displayFormLayoutTable {
