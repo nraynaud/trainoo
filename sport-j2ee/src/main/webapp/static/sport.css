@@ -270,7 +270,7 @@ div.autocomplete ul li {
 
 .received, .public {
     background-color: white;
-    border: black solid thin;
+    border: darkgray solid thin;
 }
 
 .received .messageHeading .message_from, .public .messageHeading .message_from {
