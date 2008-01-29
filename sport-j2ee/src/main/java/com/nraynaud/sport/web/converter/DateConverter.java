@@ -2,40 +2,45 @@ package com.nraynaud.sport.web.converter;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Date;
 import java.util.Map;
 
 public class DateConverter extends StrutsTypeConverter {
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("dd/MM/yy");
     private static final Parser FULL_FORMAT_PARSER = new Parser() {
-        public Date parse(final String source) throws IllegalArgumentException {
-            return DateTimeFormat.forPattern("dd/MM/yy").parseDateTime(source).toDate();
+        public DateTime parse(final String source) throws IllegalArgumentException {
+            return DATE_FORMATTER.parseDateTime(source);
         }
     };
     private static final Parser DAY_MOUTH_PARSER = new Parser() {
-        public Date parse(final String source) throws IllegalArgumentException {
+        public DateTime parse(final String source) throws IllegalArgumentException {
             final DateTime dateTime = DateTimeFormat.forPattern("dd/MM").parseDateTime(source);
-            return dateTime.withYear(new DateTime().getYear()).toDate();
+            return dateTime.withYear(new DateTime().getYear());
         }
     };
     private static final Parser DAY_PARSER = new Parser() {
-        public Date parse(final String source) throws IllegalArgumentException {
+        public DateTime parse(final String source) throws IllegalArgumentException {
             final DateTime dateTime = DateTimeFormat.forPattern("dd").parseDateTime(source);
             final DateTime now = new DateTime();
-            return dateTime.withYear(now.getYear()).withMonthOfYear(now.getMonthOfYear()).toDate();
+            return dateTime.withYear(now.getYear()).withMonthOfYear(now.getMonthOfYear());
         }
     };
 
     public static final Parser TODAY_PARSER = new Parser() {
-        public Date parse(final String source) throws IllegalArgumentException {
-            if ("aujourd'hui".equalsIgnoreCase(source.toLowerCase()))
-                return new Date();
-            if ("hier".equalsIgnoreCase(source.toLowerCase()))
-                return new DateTime().minusDays(1).toDate();
-            if ("avant-hier".equalsIgnoreCase(source.toLowerCase()))
-                return new DateTime().minusDays(2).toDate();
+        public DateTime parse(final String source) throws IllegalArgumentException {
+            if (source.length() > 0) {
+                if ("aujourd'hui".startsWith(source.toLowerCase()))
+                    return new DateTime();
+                if ("hier".startsWith(source.toLowerCase()))
+                    return new DateTime().minusDays(1);
+                if ("avant-hier".startsWith(source.toLowerCase()))
+                    return new DateTime().minusDays(2);
+            }
             throw new IllegalArgumentException();
         }
     };
@@ -51,12 +56,16 @@ public class DateConverter extends StrutsTypeConverter {
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public String convertToString(final Map context, final Object o) {
         if (o instanceof Date) {
-            return DateTimeFormat.forPattern("dd/MM/yy").print(new DateTime(o));
+            return DATE_FORMATTER.print(new DateTime(o));
         }
         return "";
     }
 
     public static Date parseDate(final String source) {
+        return parseDateTime(source).toDate();
+    }
+
+    private static DateTime parseDateTime(final String source) {
         IllegalArgumentException initialException = null;
         for (final Parser parser : PARSERS)
             try {
@@ -68,7 +77,20 @@ public class DateConverter extends StrutsTypeConverter {
         throw new TypeConversionException(initialException);
     }
 
+    public static String parseAndPrettyPrint(final String source) {
+        final DateMidnight now = new DateMidnight();
+        final DateMidnight date = parseDateTime(source).toDateMidnight();
+        final String formatted = DATE_FORMATTER.print(date);
+        if (now.equals(date))
+            return "Aujourd'hui (" + formatted + ")";
+        if (now.minusDays(1).equals(date))
+            return "Hier (" + formatted + ")";
+        if (now.minusDays(2).equals(date))
+            return "Avant-hier (" + formatted + ")";
+        return formatted;
+    }
+
     private interface Parser {
-        Date parse(final String source) throws IllegalArgumentException;
+        DateTime parse(final String source) throws IllegalArgumentException;
     }
 }

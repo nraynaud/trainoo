@@ -10,10 +10,7 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Results({
         //the type avoid having the page decorated by application.jsp
@@ -22,7 +19,6 @@ import java.util.Locale;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class FeedbackAction {
-    public static final Object DATE_LOCK = new Object();
 
     private String data;
     private String type;
@@ -73,10 +69,7 @@ public class FeedbackAction {
 
     private String convertDate() {
         try {
-            final Date date = DateConverter.parseDate(data);
-            synchronized (DATE_LOCK) {
-                return DateFormat.getDateInstance(DateFormat.FULL, Locale.FRANCE).format(date);
-            }
+            return DateConverter.parseAndPrettyPrint(data);
         } catch (Exception e) {
             return "La date n'a pas été comprise.";
         }

@@ -1,7 +1,7 @@
 package com.nraynaud.sport.web.converter;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
-import org.joda.time.DateTime;
+import org.joda.time.DateMidnight;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -33,10 +33,13 @@ public class DateConverterTest {
 
     @Test
     public void testWordDate() throws ParseException {
-        final DateTime now = new DateTime().withTime(0, 0, 0, 0);
+        final DateMidnight now = new DateMidnight();
         checkDate(now.toDate(), "aujourd'hui");
         checkDate(now.minusDays(1).toDate(), "hier");
         checkDate(now.minusDays(2).toDate(), "avant-hier");
+        checkDate(now.toDate(), "auj");
+        checkDate(now.minusDays(1).toDate(), "hi");
+        checkDate(now.minusDays(2).toDate(), "ava");
     }
 
     @Test
@@ -74,6 +77,6 @@ public class DateConverterTest {
     private static void checkDate(final Date expected, final String input) {
         final DateConverter converter = new DateConverter();
         final Object result = converter.convertFromString(null, new String[]{input}, Date.class);
-        assertEquals(FORMAT.format(expected), FORMAT.format(result));
+        assertEquals(new DateMidnight(expected), new DateMidnight(result));
     }
 }
