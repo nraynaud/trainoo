@@ -17,14 +17,11 @@
                     <% final String name = escaped(message.getSender().getName()); %>
                         <span class="message_from">
                             <% if (isLogged()) {%>
-                            <s:url id="answerUrl" action="messages" namespace="/" includeParams="none">
-                                <s:param name="receiver" value="sender.name"/>
-                                <% if (workout != null) {%>
-                                <s:param name="aboutWorkoutId" value="workout.id"/>
-                                <%}%>
+                            <s:url id="bibUrl" action="" namespace="/bib" includeParams="none">
+                                <s:param name="id" value="sender.id"/>
                             </s:url>
-                            <s:a href="%{answerUrl}" title="répondre"><%=name%>
-                            </s:a>
+                            <a href="<%=property("bibUrl")%>" title="Voir son dossard"><%=name%>
+                            </a>
                             <% } else {%>
                             <%=name%>
                             <%}%>

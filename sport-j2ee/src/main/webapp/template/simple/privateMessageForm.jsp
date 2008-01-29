@@ -9,7 +9,7 @@
 <% final Workout answerWorkout = (Workout) property("aboutWorkout");%>
 <s:form action="messages" namespace="/">
     <fieldset>
-        <legend>Nouveau message</legend>
+        <legend>Nouveau message privé</legend>
 
         <s:actionerror/>
         <s:actionmessage/>
