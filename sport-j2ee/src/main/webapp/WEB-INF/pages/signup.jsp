@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<p:layoutParams title="Inscrivez-vous !" loginHeader="false"/>
+<p:layoutParams title="Inscrivez-vous !"/>
 <p>Vous pourrez suivre votre vie sportive et rencontrer d'autres amateurs comme vous&nbsp;!</p>
 
 <div id="tinyCenter">

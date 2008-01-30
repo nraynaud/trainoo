@@ -25,9 +25,7 @@
                 Train<span style="color:#968148;">oo</span>.com</a>
         </h1>
     </div>
-    <% if (pageDetail.isLoginHeader()) {
-        Helpers.call(pageContext, "loginHeader.jsp");
-    } %>
+    <%Helpers.call(pageContext, "loginHeader.jsp");%>
     <div style="position:relative;">
         <div id="adPlaceHolder">
         </div>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<p:layoutParams title="Connectez-vous !" loginHeader="false"/>
+<p:layoutParams title="Connectez-vous !"/>
 
 <div id="tinyCenter">
     <s:form id="login_form" action="login">

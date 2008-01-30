@@ -34,14 +34,6 @@
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-        <attribute>
-            <name>loginHeader</name>
-            <required>false</required>
-            <description>
-                Is the login header required ? true by default, remove it for login or signup page.
-            </description>
-        </attribute>
-
     </tag>
     <tag>
         <name>javascript</name>

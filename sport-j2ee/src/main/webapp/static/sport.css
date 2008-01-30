@@ -59,7 +59,7 @@ a:hover {
 
 #center {
     width: 962px;
-    margin: 10px auto 0;
+    margin: 0 auto 0;
     text-align: left;
     background-color: #F2F2E8;
 }
@@ -163,26 +163,50 @@ p.loginLabel {
 }
 
 #logo {
-    margin: 0 0 0.2em 0;
+    margin: 0;
     padding-top: 0;
     font-size: 3em;
     padding-bottom: 0;
     float: left;
     position: relative;
-
 }
 
 #loginHeader {
     margin-bottom: 0.5em;
-}
-
-#loginHeader, #loginHeader a, #loginHeader #logoutForm input {
     text-align: right;
     font-size: 100%;
     background-color: #968148;
-    color: #F2F2E8;
     font-family: Tahoma, sans-serif;
     font-weight: bold;
+    color: #F2F2E8;
+    overflow: hidden;
+    padding: 0.5em 0.5em 0;
+}
+
+#loginHeader a, #loginHeader #logoutForm input {
+    font-weight: bold;
+    color: #F2F2E8;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+#loginHeader * .selected {
+    background-color: #F2F2E8;
+    color: #968148;
+}
+
+#loginHeader #loginName {
+    color: black;
+}
+
+#loginHeader .left {
+    text-align: left;
+    float: left;
+}
+
+#loginHeader .right {
+    text-align: right;
+    float: right;
 }
 
 .smaller {
