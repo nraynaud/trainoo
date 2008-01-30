@@ -80,7 +80,7 @@ public class DateConverter extends StrutsTypeConverter {
     public static String parseAndPrettyPrint(final String source) {
         final DateMidnight now = new DateMidnight();
         final DateMidnight date = parseDateTime(source).toDateMidnight();
-        final String formatted = DATE_FORMATTER.print(date);
+        final String formatted = DateTimeFormat.forPattern("EEEE dd/MM/yy").print(date);
         if (now.equals(date))
             return "Aujourd'hui (" + formatted + ")";
         if (now.minusDays(1).equals(date))
