@@ -31,22 +31,22 @@
             <td><s:textfield id="date"
                              name="date"
                              size="10"
-                             onfocus="$('info').show(); feedback('date', this.value); $('tip').update('Format&nbsp;: jj/mm/aaaa ex&nbsp;: 03/10/2006.')"
-                             onblur="$('info').hide()"
+                             onfocus="$('info').style.visibility='visible'; feedback('date', this.value); $('tip').update('Format&nbsp;: jj/mm/aaaa ex&nbsp;: 03/10/2006.')"
+                             onblur="$('info').style.visibility='hidden'"
                              onkeyup="feedback('date', this.value)"
                              value="%{date == null  ? 'aujourd\\'hui' : date}"/></td>
             <td><s:textfield id="duration"
                              name="duration"
                              size="6"
-                             onfocus="Element.show('info');feedback('duration', this.value); $('tip').update('Format&nbsp;: HHhmm\\'ss ex&nbsp;: 03h41\\'17 ou 40\\'22')"
-                             onblur="Element.hide('info')"
+                             onfocus="$('info').style.visibility='visible';feedback('duration', this.value); $('tip').update('Format&nbsp;: HHhmm\\'ss ex&nbsp;: 03h41\\'17 ou 40\\'22')"
+                             onblur="$('info').style.visibility='hidden'"
                              onkeyup="feedback('duration', this.value)"/></td>
 
             <td><s:textfield id="distance"
                              name="distance"
                              size="6"
-                             onfocus="Element.show('info');feedback('distance', this.value); $('tip').update('En kilomètres.')"
-                             onblur="Element.hide('info')"
+                             onfocus="$('info').style.visibility='visible';feedback('distance', this.value); $('tip').update('En kilomètres.')"
+                             onblur="$('info').style.visibility='hidden'"
                              onkeyup="feedback('distance', this.value)"/></td>
             <td>
                 <div style="margin-left:1em;">
@@ -62,7 +62,12 @@
         </tr>
     </table>
 </form>
-<span id="info" style="display:none;">
-    <span class="feedback" id="feedback"> </span><br/>
-    <span id="tip"> </span>
+<span id="info" style="visibility:hidden;">
+    <span class="feedback" id="feedback">&nbsp;</span><br/>
+    <span id="tip">&nbsp;</span>
 </span>
+<s:if test="%{parameters.showDelete}">
+    <div style="text-align:center;margin-top:2em"><a
+            href="<s:url action="workouts" namespace="/" includeParams="none"/>">Annuler et
+        revenir à la liste des entraînements</a></div>
+</s:if>
