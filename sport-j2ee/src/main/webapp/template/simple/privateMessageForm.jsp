@@ -8,7 +8,8 @@
 <% allowOverrides();%>
 <% final Object o = property("aboutWorkout");
     final Workout answerWorkout = (Workout) (o != null ? o : parameter("aboutWorkout"));%>
-<s:form action="messages" namespace="/">
+
+<form action="<s:url action="write" namespace="/messages" anchor="errorMessage" includeParams="none"/>" method="post">
     <fieldset>
         <legend>Nouveau message privé</legend>
 
@@ -18,12 +19,13 @@
             <s:param value="'receiver'"/>
             <s:param value="'content'"/>
         </s:fielderror>
+        <a name="errorMessage"> </a>
         <% if (parameter("hideReceiverBox") == null || !boolParam("hideReceiverBox")) {%>
         <div id="answerReceiver">
             <div id="privateReceiver" style="display:inline;">
                 <label for="receiver">Destinataire&nbsp;:</label><br>
                 <s:textfield name="receiver" id="receiver" maxlength="20"
-                             value="%{parameters.receiver != null ? parameters.receiver : receiver}"/>
+                             value="%{receiver != null ? receiver : parameters.receiver}"/>
                 <div id="receiver_choices" class="autocomplete">&nbsp;</div>
                 <p:javascript>
                     new Ajax.Autocompleter("receiver", "receiver_choices", "/feedback",
@@ -47,4 +49,4 @@
         <p:javascript>makeItCount('priv_messageContent', <%= CONTENT_MAX_LENGTH%>);</p:javascript>
         <s:submit value="Envoyer"/>
     </fieldset>
-</s:form>
+</form>

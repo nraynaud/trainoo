@@ -47,9 +47,4 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
     public void setFromAction(final String fromAction) {
         this.fromAction = fromAction;
     }
-
-    //transparent action passing
-    public String getActionDescription() {
-        return getFromAction();
-    }
 }

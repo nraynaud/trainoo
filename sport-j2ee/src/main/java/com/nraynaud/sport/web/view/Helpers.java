@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.view;
 
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.SportRequest;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.CreateIfNull;
@@ -225,5 +226,9 @@ public class Helpers {
 
     public static String literal(final String string) {
         return '\'' + string + '\'';
+    }
+
+    public static PrivateMessageFormConfig privateFormConfig(final Workout workout, final User runner) {
+        return new PrivateMessageFormConfig(runner.getName(), workout);
     }
 }

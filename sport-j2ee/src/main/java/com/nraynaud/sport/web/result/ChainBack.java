@@ -11,7 +11,7 @@ import com.opensymphony.xwork2.inject.Inject;
  * When an error arise in an action, we go to the previous user action by chaining, so that we render the
  * same page to the user, but with the error fields shawn.
  */
-public class ChainBack extends BackResult implements Result {
+public class ChainBack extends BackResult {
     private ActionProxyFactory actionProxyFactory;
 
     protected Result createRealResult(final ActionInvocation invocation, final ActionDetail detail) {

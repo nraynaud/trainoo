@@ -124,10 +124,6 @@ h2, h1 {
     background-color: #F9630D;
 }
 
-.tip {
-    display: inline;
-}
-
 .time_col, .distance_col {
     text-align: right;
 }

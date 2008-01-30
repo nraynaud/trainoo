@@ -8,7 +8,10 @@ import org.apache.struts2.dispatcher.mapper.ActionMapper;
 
 import java.util.Map;
 
-public class RedirectBack extends BackResult implements Result {
+/**
+ * Redirect (with 302) to the previous action.
+ */
+public class RedirectBack extends BackResult {
     private ActionMapper actionMapper;
 
     protected Result createRealResult(final ActionInvocation invocation, final ActionDetail detail) {

@@ -2,7 +2,6 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
-<%@ page import="com.nraynaud.sport.web.view.PrivateMessageData" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -37,7 +36,7 @@
     <h2>Envoyer un message à <%=escaped(runner.getName())%>
     </h2>
     <%
-            call(pageContext, "privateMessageForm.jsp", new PrivateMessageData(runner.getName(), workout),
+            call(pageContext, "privateMessageForm.jsp", privateFormConfig(workout, runner),
                     "hideReceiverBox", true);
             call(pageContext, "messageList.jsp", data.privateMessages);
         }

@@ -1,16 +1,11 @@
 package com.nraynaud.sport.hibernate;
 
 import com.nraynaud.sport.*;
-import com.nraynaud.sport.data.BibPageData;
-import com.nraynaud.sport.data.ConversationData;
-import com.nraynaud.sport.data.StatisticsPageData;
-import com.nraynaud.sport.data.WorkoutPageData;
+import com.nraynaud.sport.data.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SuppressWarnings({"unchecked"})
 @Transactional
@@ -148,12 +143,27 @@ public class HibernateApplication implements Application {
         return (Double) query.getSingleResult();
     }
 
-    public StatisticsPageData fetchUserPageData(final User user) {
+    public UserPageData fetchUserPageData(final User user) {
         final List<Workout> workouts = getWorkouts(user, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
-        final List<Message> messages = fetchMessages(user);
-        return new StatisticsPageData(workouts, globalDistance, distanceByDiscpline, messages);
+        final Collection<String> correspondants = fetchCorrespondants(user);
+        return new UserPageData(workouts, globalDistance, distanceByDiscpline, correspondants);
+    }
+
+    private TreeSet<String> fetchCorrespondants(final User user) {
+        final TreeSet<String> correspondants = new TreeSet<String>();
+        {
+            final Query query = entityManager.createQuery(
+                    "select distinct m.sender.name from MessageImpl m where m.receiver=:user");
+            query.setParameter("user", user);
+            correspondants.addAll(query.getResultList());
+        }
+        final Query query = entityManager.createQuery(
+                "select distinct m.receiver.name from MessageImpl m where m.sender=:user");
+        query.setParameter("user", user);
+        correspondants.addAll(query.getResultList());
+        return correspondants;
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
@@ -252,7 +262,8 @@ public class HibernateApplication implements Application {
                                                   final String receiver,
                                                   final Long aboutWorkoutId) throws
             WorkoutNotFoundException {
-        return new ConversationData(fetchConversation(sender, receiver), fetchWorkout(aboutWorkoutId));
+        final Workout aboutWorkout = aboutWorkoutId == null ? null : fetchWorkout(aboutWorkoutId);
+        return new ConversationData(fetchConversation(sender, receiver), aboutWorkout);
     }
 
     @SuppressWarnings({"unchecked"})

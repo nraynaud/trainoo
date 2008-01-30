@@ -1,7 +1,7 @@
 var oldValue = ''
 function feedback(field_name, val)
 {
-    var feedbackElement = field_name + '_feedback';
+    var feedbackElement = 'feedback';
     if (val.length != 0) {
         if (oldValue != val) {
             new Ajax.Updater(feedbackElement, '/feedback',
@@ -14,8 +14,6 @@ function feedback(field_name, val)
     oldValue = val;
 }
 ;
-
-
 /* MIT licence bablaba */
 function charCounter(id, maxlimit) {
     if (!$('counter-' + id)) {
@@ -30,9 +28,7 @@ function charCounter(id, maxlimit) {
         $('counter-' + id).addClassName('charcount-safe');
     }
     $('counter-' + id).update($F(id).length + '/' + maxlimit);
-
 }
-
 function makeItCount(id, maxsize) {
     if ($(id)) {
         Event.observe($(id), 'keyup', function() {
@@ -50,7 +46,6 @@ function makeItCount(id, maxsize) {
 function fixPNGIE() {
     var arVersion = navigator.appVersion.split("MSIE")
     var version = parseFloat(arVersion[1])
-
     if ((version >= 5.5) && (document.body.filters))
     {
         for (var i = 0; i < document.images.length; i++)
@@ -75,5 +70,4 @@ function fixPNGIE() {
         }
     }
 }
-
 /* end from */

@@ -2,6 +2,7 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.data.StatisticsPageData;
+import com.nraynaud.sport.data.UserPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DefaultAction;
 import static com.opensymphony.xwork2.Action.INPUT;
@@ -23,7 +24,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @Validation
 public class WorkoutsAction extends DefaultAction implements ModelDriven<StatisticsPageData> {
     private final Application application;
-    private StatisticsPageData data;
+    private UserPageData data;
 
     public WorkoutsAction(final Application application) {
         this.application = application;

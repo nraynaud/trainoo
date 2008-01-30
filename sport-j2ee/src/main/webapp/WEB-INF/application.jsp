@@ -42,9 +42,20 @@
 
 
         <script type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
+        <script type="text/javascript">
+            var canvas = document.getElementById('gradient');
+            var height = $('logoHref').getHeight();
+            canvas.height = height
+            var ctx = canvas.getContext('2d');
+            var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
+            lineargradient.addColorStop(0.8, 'rgba(255,255,255,0)');
+            lineargradient.addColorStop(0, '#F2F2E8');
+            //ctx.clearRect(0, 0, 1, height);
+            ctx.fillStyle = lineargradient;
+            ctx.fillRect(0, 0, 1, height);
+        </script>
         <script type="text/javascript" src="<s:url value="/static/scriptaculous.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
-
         <r:writeJavascript/>
         <!--[if lt IE 7]>
         <script type="text/javascript">
@@ -60,19 +71,7 @@
             pageTracker._initData();
             pageTracker._trackPageview();
         </script>
-        <script type="text/javascript">
-            var canvas = document.getElementById('gradient');
-            var height = $('logoHref').getHeight();
-            canvas.height = height
-            var ctx = canvas.getContext('2d');
-            var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
-            lineargradient.addColorStop(0.8, 'rgba(255,255,255,0)');
-            lineargradient.addColorStop(0, '#F2F2E8');
-            //ctx.clearRect(0, 0, 1, height);
-            ctx.fillStyle = lineargradient;
-            ctx.fillRect(0, 0, 1, height);
-        </script>
-        <% if (false) {%>
+
         <div id="ad">
             <script type="text/javascript"><!--
             google_ad_client = "pub-6101279689689980";
@@ -82,7 +81,6 @@
             //--></script>
             <script type='text/javascript' src='http://pagead2.googlesyndication.com/pagead/show_ads.js'
                     defer="defer"></script>
-            <%}%>
         </div>
     </div>
 </div>

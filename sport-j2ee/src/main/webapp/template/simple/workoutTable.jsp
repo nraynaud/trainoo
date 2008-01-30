@@ -15,11 +15,11 @@
             <s:url id="workoutUrl" action="" namespace="/workout" includeParams="none">
                 <s:param name="id" value="id"/>
             </s:url>
-            <td><s:a href="%{workoutUrl}" title="détails"><s:date name="date" format="E dd/M"/></s:a></td>
+            <td><s:date name="date" format="E dd/M"/></td>
             <s:if test="%{parameters.displayName}">
                 <td>
                     <% if (isLogged()) {%>
-                    <s:url id="bibUrl" namespace="bib" action="" includeParams="none">
+                    <s:url id="bibUrl" namespace="bib" action="" includeParams="none" anchor="">
                         <s:param name="id" value="user.id"/>
                     </s:url>
                     <s:a href="%{bibUrl}" title="Voir son dossard"><s:property value="user.name"/></s:a>
@@ -28,22 +28,20 @@
                     <%}%>
                 </td>
             </s:if>
-            <td><s:a href="%{workoutUrl}" title="détails"><s:property value="discipline"/></s:a></td>
-            <td><s:a href="%{workoutUrl}" title="détails"><p:duration name="duration"/></s:a></td>
-            <td><s:a href="%{workoutUrl}" title="détails"><p:distance name="distance"/></s:a></td>
+            <td><s:property value="discipline"/></td>
+            <td><p:duration name="duration"/></td>
+            <td><p:distance name="distance"/></td>
             <s:if test="%{parameters.displayEdit}">
                 <td class="img">
-                    <s:url id="editurl" namespace="workout" action="edit" includeParams="none">
+                    <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
                         <s:param name="id" value="id"/>
                     </s:url>
                     <s:a href="%{editurl}"><img src="/static/pen.png" alt="modifier ou effacer"></s:a>
                 </td>
             </s:if>
             <td class="img">
-                <s:url id="replyUrl" action="" namespace="/workout" includeParams="none">
-                    <s:param name="id" value="id"/>
-                </s:url>
-                <s:a href="%{replyUrl}" title="Commenter"><img src="/static/bulle.png" alt="commenter"></s:a>
+                <s:a href="%{workoutUrl}" title="Discussions à propos de cet entraînement"><img src="/static/bulle.png"
+                                                                                                alt="commenter"></s:a>
             </td>
         </tr>
     </s:iterator>

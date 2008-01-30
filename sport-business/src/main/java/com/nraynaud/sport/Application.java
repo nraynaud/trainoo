@@ -1,9 +1,6 @@
 package com.nraynaud.sport;
 
-import com.nraynaud.sport.data.BibPageData;
-import com.nraynaud.sport.data.ConversationData;
-import com.nraynaud.sport.data.StatisticsPageData;
-import com.nraynaud.sport.data.WorkoutPageData;
+import com.nraynaud.sport.data.*;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +30,7 @@ public interface Application extends UserStore {
 
     StatisticsPageData fetchFrontPageData();
 
-    StatisticsPageData fetchUserPageData(final User user);
+    UserPageData fetchUserPageData(final User user);
 
     Message createPrivateMessage(User sender,
                                  String receiverName,

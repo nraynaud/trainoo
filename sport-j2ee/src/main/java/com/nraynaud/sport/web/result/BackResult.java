@@ -7,16 +7,18 @@ import com.opensymphony.xwork2.Result;
 
 import java.util.Collections;
 
-public abstract class BackResult {
+public abstract class BackResult implements Result {
+
     public void execute(final ActionInvocation invocation) throws Exception {
         final Object action = invocation.getAction();
         if (action instanceof ChainBackCapable) {
             final ChainBackCapable messageAction = (ChainBackCapable) action;
-            final String fromAction = messageAction.getFromAction();
-            final ActionDetail detail = new ActionDetail(fromAction);
+            final ActionDetail fromActionDetail = new ActionDetail(messageAction.getFromAction());
+            //remove our tracks
+            messageAction.setActionDescription(messageAction.getFromAction());
             //resets conversion error to avoid double reporting
             invocation.getInvocationContext().setConversionErrors(Collections.emptyMap());
-            final Result result = createRealResult(invocation, detail);
+            final Result result = createRealResult(invocation, fromActionDetail);
             result.execute(invocation);
         } else
             throw new RuntimeException("I'm lost, Action doesn't upport ChainBackCapable");

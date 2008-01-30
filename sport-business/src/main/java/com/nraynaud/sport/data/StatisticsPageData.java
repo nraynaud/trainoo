@@ -1,6 +1,5 @@
 package com.nraynaud.sport.data;
 
-import com.nraynaud.sport.Message;
 import com.nraynaud.sport.Workout;
 
 import java.util.List;
@@ -23,15 +22,11 @@ public class StatisticsPageData {
         }
     }
 
-    public final List<Message> messages;
-
     public StatisticsPageData(final List<Workout> workouts,
                               final Double globalDistance,
-                              final List<DisciplineDistance> distanceByDisciplines,
-                              final List<Message> messages) {
+                              final List<DisciplineDistance> distanceByDisciplines) {
         this.workouts = workouts;
         this.globalDistance = globalDistance;
         this.distanceByDisciplines = distanceByDisciplines;
-        this.messages = messages;
     }
 }

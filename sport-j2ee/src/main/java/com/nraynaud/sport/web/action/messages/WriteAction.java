@@ -1,12 +1,10 @@
-package com.nraynaud.sport.web.action;
+package com.nraynaud.sport.web.action.messages;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.WorkoutNotFoundException;
-import com.nraynaud.sport.data.ConversationData;
 import com.nraynaud.sport.web.*;
 import com.nraynaud.sport.web.result.ChainBack;
-import com.nraynaud.sport.web.result.Redirect;
 import com.nraynaud.sport.web.result.RedirectBack;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -14,37 +12,27 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import java.util.Date;
 
 @Results({
 @Result(type = RedirectBack.class, value = Constants.WORKOUTS_ACTION),
-@Result(name = "privateConversation", value = "/WEB-INF/pages/messages.jsp"),
-@Result(name = Action.INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp"),
-@Result(name = "site-index", type = Redirect.class, value = "globalWorkouts", params = {"namespace", "/"})
+@Result(name = Action.INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class MessagesAction extends DefaultAction implements ChainBackCapable {
+public class WriteAction extends DefaultAction implements ChainBackCapable {
+    private final Application application;
     private String content;
     private String receiver;
-    private final Application application;
     private Long aboutWorkoutId;
     private boolean publicMessage = false;
-    private ConversationData conversationData;
 
     private String fromAction;
 
     public static final String CONTENT_MAX_LENGTH = "4000";
 
-    public MessagesAction(final Application application) {
+    public WriteAction(final Application application) {
         this.application = application;
-    }
-
-    @SuppressWarnings({"MethodMayBeStatic"})
-    @SkipValidation
-    public String index() {
-        return receiver == null ? "site-index" : "privateConversation";
     }
 
     @PostOnly
@@ -74,17 +62,6 @@ public class MessagesAction extends DefaultAction implements ChainBackCapable {
         } catch (WorkoutNotFoundException e) {
             throw new DataInputException(e);
         }
-    }
-
-    public ConversationData getConversationData() {
-        if (conversationData == null && receiver != null) {
-            try {
-                conversationData = application.fetchConvertationData(getUser(), receiver, aboutWorkoutId);
-            } catch (WorkoutNotFoundException e) {
-                throw new DataInputException(e);
-            }
-        }
-        return conversationData;
     }
 
     @RequiredStringValidator(message = "Vous avez oublié le message.")

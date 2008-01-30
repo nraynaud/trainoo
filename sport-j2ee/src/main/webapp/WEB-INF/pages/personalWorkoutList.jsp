@@ -1,7 +1,7 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page session="false" contentType="text/html; charset=UTF-8" %>
 
 <p:layoutParams title="Mon Vestiaire"/>
 
@@ -28,4 +28,16 @@
     <%
         call(pageContext, "privateMessageForm.jsp");
     %>
+    <fieldset>
+        <legend>Mes correspondances</legend>
+        <ul>
+            <s:iterator value="%{privateMessageReceivers}">
+                <s:url id="messageUrl" action="" namespace="/messages">
+                    <s:param name="receiver" value="%{top}"/>
+                </s:url>
+                <li><a href="<s:property value="messageUrl"/>"><s:property value="%{top}"/></a>
+                </li>
+            </s:iterator>
+        </ul>
+    </fieldset>
 </div>
