@@ -36,7 +36,7 @@
         <% } else {%>
         <s:hidden name="receiver" value="%{parameters.receiver != null ? parameters.receiver : receiver}"/>
         <%}%>
-        <s:hidden name="fromAction" value="%{actionDescription}"/>
+        <s:hidden id="priv_fromAction" name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="publicMessage" value="false"/>
         <s:hidden name="aboutWorkoutId"/>
         <div id="priv_aboutWorkoutDiv" class="workout">
@@ -45,8 +45,8 @@
             call(pageContext, "workoutComponent.jsp", answerWorkout);%></span>
             <%}%>
         </div>
-        <s:textarea id="priv_messageContent" cssClass="messageContentArea" name="content" rows="5"/>
+        <s:textarea id="priv_messageContent" cssClass="messageContentArea" name="content" cols="40" rows="5"/>
         <p:javascript>makeItCount('priv_messageContent', <%= CONTENT_MAX_LENGTH%>);</p:javascript>
-        <s:submit value="Envoyer"/>
+        <s:submit id="priv_submit" value="Envoyer"/>
     </fieldset>
 </form>
