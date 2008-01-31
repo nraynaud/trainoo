@@ -37,7 +37,7 @@ public class WorkoutsAction extends DefaultAction implements ModelDriven<Statist
 
     public StatisticsPageData getModel() {
         if (data == null)
-            data = application.fetchUserPageData(getUser());
+            data = application.fetchUserPageData(getUser(), 0);
         return data;
     }
 }

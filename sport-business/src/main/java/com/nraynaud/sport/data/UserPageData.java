@@ -8,7 +8,7 @@ import java.util.List;
 public class UserPageData extends StatisticsPageData {
     public final Collection<ConversationSumary> privateMessageReceivers;
 
-    public UserPageData(final List<Workout> workouts, final Double globalDistance,
+    public UserPageData(final PaginatedCollection<Workout> workouts, final Double globalDistance,
                         final List<DisciplineDistance> distanceByDisciplines,
                         final Collection<ConversationSumary> privateMessageReceivers) {
         super(workouts, globalDistance, distanceByDisciplines);

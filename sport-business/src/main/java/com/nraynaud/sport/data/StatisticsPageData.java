@@ -5,7 +5,7 @@ import com.nraynaud.sport.Workout;
 import java.util.List;
 
 public class StatisticsPageData {
-    public final List<Workout> workouts;
+    public final PaginatedCollection<Workout> workouts;
 
     public final Double globalDistance;
 
@@ -22,7 +22,7 @@ public class StatisticsPageData {
         }
     }
 
-    public StatisticsPageData(final List<Workout> workouts,
+    public StatisticsPageData(final PaginatedCollection<Workout> workouts,
                               final Double globalDistance,
                               final List<DisciplineDistance> distanceByDisciplines) {
         this.workouts = workouts;

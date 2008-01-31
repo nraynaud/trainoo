@@ -1,17 +1,22 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.isLogged" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
-<%@ page import="java.util.List" %>
+<%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<table class="workouts">
-    <% final List<Workout> workouts = (List<Workout>) top();%>
-    <% if (workouts.size() != 0) {%>
-    <s:iterator value="top" status="rowstatus">
-        <%final Workout workout = (Workout) top(); %>
-        <tr class="<%=workout.getId().equals(parameter("highLight")) ? "highLight " : ""%><s:if test="#rowstatus.odd == true">odd</s:if><s:else>even</s:else>">
+
+<div class="pagination" style="overflow:hidden;margin-right:auto;margin-left:auto;">
+    <table class="workouts" style="clear:both;">
+        <% final PaginatedCollection<Workout> workouts = (PaginatedCollection<Workout>) top();%>
+        <% if (!workouts.isEmpty()) {
+            boolean parity = false;
+            for (final Workout workout : workouts) {
+                push(workout);
+                parity = !parity;
+        %>
+        <tr class="<%=workout.getId().equals(parameter("highLight")) ? "highLight " : ""%><%=parity ? "odd":"even"%>">
             <s:url id="workoutUrl" action="" namespace="/workout" includeParams="none">
                 <s:param name="id" value="id"/>
             </s:url>
@@ -47,10 +52,23 @@
                 </s:if></s:a>
             </td>
         </tr>
-    </s:iterator>
-    <%} else {%>
-    <tr>
-        <td>Rien, il va falloir bouger&nbsp;!</td>
-    </tr>
-    <% } %>
-</table>
+        <%}%>
+        <%} else {%>
+        <tr>
+            <td>Rien, il va falloir bouger&nbsp;!</td>
+        </tr>
+        <% } %>
+    </table>
+    <%if (workouts.hasPrevious()) { %>
+    <s:url id="previousPageUrl">
+        <s:param name="workoutPage" value="previousIndex"/>
+    </s:url>
+    <div class="paginationPrevious" style="float:left;"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
+    <%}%>
+    <%if (workouts.hasNext()) { %>
+    <s:url id="nextPageUrl">
+        <s:param name="workoutPage" value="nextIndex"/>
+    </s:url>
+    <div class="paginationNext" style="float:right;"><s:a href="%{nextPageUrl}">Suivants->></s:a></div>
+    <%}%>
+</div>

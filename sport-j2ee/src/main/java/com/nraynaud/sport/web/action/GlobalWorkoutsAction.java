@@ -15,12 +15,24 @@ import org.apache.struts2.config.Result;
 @Public
 public class GlobalWorkoutsAction extends DefaultAction implements ModelDriven<StatisticsPageData> {
     private StatisticsPageData statisticsPageData;
+    private int workoutPage;
+    private final Application application;
 
     public GlobalWorkoutsAction(final Application application) {
-        statisticsPageData = application.fetchFrontPageData();
+        this.application = application;
     }
 
     public StatisticsPageData getModel() {
+        if (statisticsPageData == null)
+            statisticsPageData = application.fetchFrontPageData(workoutPage);
         return statisticsPageData;
+    }
+
+    public int getWorkoutPage() {
+        return workoutPage;
+    }
+
+    public void setWorkoutPage(final int workoutPage) {
+        this.workoutPage = workoutPage;
     }
 }

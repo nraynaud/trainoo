@@ -24,14 +24,15 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    private List<Workout> getWorkouts(final User user, final int limit) {
+    private PaginatedCollection<Workout> getWorkouts(final User user, final int startIndex, final int pageSize) {
         final Query query = entityManager.createQuery(
                 "select w, count(m) from WorkoutImpl w left join w.messages m where m.receiver is null "
                         + (user != null ? "AND w.user =:user" : "")
                         + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
         if (user != null)
             query.setParameter("user", user);
-        query.setMaxResults(limit);
+        query.setFirstResult(startIndex);
+        query.setMaxResults(startIndex + pageSize);
         final List<Object[]> result = query.getResultList();
         final List<Workout> list = new ArrayList(result.size());
         for (final Object[] row : result) {
@@ -39,7 +40,31 @@ public class HibernateApplication implements Application {
             workout.setMessageNumber(((Number) row[1]).longValue());
             list.add(workout);
         }
-        return list;
+        return new PaginatedCollection<Workout>() {
+            public boolean hasPrevious() {
+                return list.size() >= pageSize;
+            }
+
+            public boolean hasNext() {
+                return startIndex > 0;
+            }
+
+            public int getPreviousIndex() {
+                return startIndex + pageSize;
+            }
+
+            public int getNextIndex() {
+                return startIndex - pageSize;
+            }
+
+            public boolean isEmpty() {
+                return list.isEmpty();
+            }
+
+            public Iterator<Workout> iterator() {
+                return list.iterator();
+            }
+        };
     }
 
     @Transactional(rollbackFor = UserAlreadyExistsException.class)
@@ -103,10 +128,11 @@ public class HibernateApplication implements Application {
     public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId) throws
             WorkoutNotFoundException {
         final Workout workout = fetchWorkout(workoutId);
+        final List<Message> privateConversation = (List<Message>) (currentUser == null ? Collections.emptyList() :
+                fetchPrivateConversation(currentUser, workout.getUser().getId()));
         return new WorkoutPageData(workout,
                 fetchConversation("receiver IS NULL AND workout.id=:workoutId", "workoutId", workoutId),
-                getWorkouts(workout.getUser(), 10), (List<Message>) (currentUser == null ? Collections.emptyList() :
-                fetchPrivateConversation(currentUser, workout.getUser().getId())));
+                getWorkouts(workout.getUser(), 10, 10), privateConversation);
     }
 
     public boolean checkAndChangePassword(final User user, final String oldPassword, final String password) {
@@ -133,8 +159,8 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public StatisticsPageData fetchFrontPageData() {
-        return fetchUserPageData(null);
+    public StatisticsPageData fetchFrontPageData(final int firstIndex) {
+        return fetchUserPageData(null, firstIndex);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -158,8 +184,8 @@ public class HibernateApplication implements Application {
         return (Double) query.getSingleResult();
     }
 
-    public UserPageData fetchUserPageData(final User user) {
-        final List<Workout> workouts = getWorkouts(user, 10);
+    public UserPageData fetchUserPageData(final User user, final int firstIndex) {
+        final PaginatedCollection<Workout> workouts = getWorkouts(user, firstIndex, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
         final Collection<ConversationSumary> correspondants = fetchCorrespondants(user);
