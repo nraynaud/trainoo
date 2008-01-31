@@ -20,4 +20,6 @@ public interface Workout {
     Long getId();
 
     String getDiscipline();
+
+    Long getMessageNumber();
 }

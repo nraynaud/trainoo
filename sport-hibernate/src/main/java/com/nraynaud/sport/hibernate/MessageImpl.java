@@ -26,7 +26,7 @@ public class MessageImpl implements Message {
     private User receiver;
 
     @Column(name = "DATE", nullable = false)
-    @OrderBy("ASC")
+    @OrderBy
     private Date date;
 
     @ManyToOne(targetEntity = WorkoutImpl.class)

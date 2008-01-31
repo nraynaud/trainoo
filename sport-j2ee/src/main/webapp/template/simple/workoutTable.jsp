@@ -40,8 +40,11 @@
                 </td>
             </s:if>
             <td class="img">
-                <s:a href="%{workoutUrl}" title="Discussions à propos de cet entraînement"><img src="/static/bulle.png"
-                                                                                                alt="commenter"></s:a>
+                <s:a cssClass="messageLink" href="%{workoutUrl}"
+                     title="Discussions à propos de cet entraînement"><img
+                        src="/static/bulle.png" alt="commenter"><s:if test="%{messageNumber > 0}">
+                    <div class="messageNumber"><s:property value="messageNumber"/></div>
+                </s:if></s:a>
             </td>
         </tr>
     </s:iterator>

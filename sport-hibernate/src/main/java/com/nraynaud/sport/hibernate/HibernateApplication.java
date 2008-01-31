@@ -25,15 +25,21 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     private List<Workout> getWorkouts(final User user, final int limit) {
-        final String string = "select w from WorkoutImpl w "
-                + (user != null ? "where w.user =:user" : "")
-                + " order by  w.date desc";
         final Query query = entityManager.createQuery(
-                string);
+                "select w, count(m) from WorkoutImpl w left join w.messages m where m.receiver is null "
+                        + (user != null ? "AND w.user =:user" : "")
+                        + " group by w.id order by  w.date desc");
         if (user != null)
             query.setParameter("user", user);
         query.setMaxResults(limit);
-        return query.getResultList();
+        final List<Object[]> result = query.getResultList();
+        final List<Workout> list = new ArrayList(result.size());
+        for (final Object[] row : result) {
+            final WorkoutImpl workout = (WorkoutImpl) row[0];
+            workout.setMessageNumber(((Number) row[1]).longValue());
+            list.add(workout);
+        }
+        return list;
     }
 
     @Transactional(rollbackFor = UserAlreadyExistsException.class)

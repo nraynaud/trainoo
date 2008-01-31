@@ -62,6 +62,7 @@ a:hover {
     margin: 0 auto 0;
     text-align: left;
     background-color: #F2F2E8;
+    padding: 0 10px 10px 10px;
 }
 
 table {
@@ -398,4 +399,19 @@ table.displayFormLayoutTable tr td .label {
     text-align: center;
 }
 
+.messageNumber, .messageNumber:hover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    vertical-align: sub;
+    font-size: x-small;
+    background-color: rgba( 255, 255, 255, 0.3 );
+    margin-right: 0.2em;
+    padding: 0 0.3em 0;
+    text-decoration: none;
+}
 
+.messageLink {
+    position: relative;
+    display: block;
+}

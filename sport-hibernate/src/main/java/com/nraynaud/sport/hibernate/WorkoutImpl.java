@@ -1,9 +1,11 @@
 package com.nraynaud.sport.hibernate;
 
+import com.nraynaud.sport.Message;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.Workout;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -15,7 +17,7 @@ public class WorkoutImpl implements Workout {
     private Long id;
 
     @Column(name = "WORKOUT_DATE", nullable = false)
-    @OrderBy("DESC")
+    @OrderBy
     private Date date;
 
     @Column(name = "DISTANCE")
@@ -30,6 +32,11 @@ public class WorkoutImpl implements Workout {
     @ManyToOne(targetEntity = UserImpl.class)
     @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
     private User user;
+
+    @OneToMany(targetEntity = MessageImpl.class, mappedBy = "workout")
+    private Collection<Message> messages;
+
+    transient Long messageNumber;
 
     public WorkoutImpl() {
     }
@@ -88,5 +95,17 @@ public class WorkoutImpl implements Workout {
 
     public void setDiscipline(final String discipline) {
         this.discipline = discipline;
+    }
+
+    public Long getMessageNumber() {
+        return messageNumber;
+    }
+
+    public void setMessageNumber(final Long messageNumber) {
+        this.messageNumber = messageNumber;
+    }
+
+    public Collection<Message> getMessages() {
+        return messages;
     }
 }
