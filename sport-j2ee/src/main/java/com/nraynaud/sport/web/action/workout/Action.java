@@ -24,6 +24,7 @@ public class Action extends DefaultAction implements ModelDriven<WorkoutPageData
     private Long id;
     private WorkoutPageData data;
     private final Application application;
+    public int workoutPage;
 
     public Action(final Application application) {
         this.application = application;
@@ -40,7 +41,7 @@ public class Action extends DefaultAction implements ModelDriven<WorkoutPageData
     public WorkoutPageData getModel() {
         if (data == null)
             try {
-                data = application.fetchWorkoutPageData(getUser(), id);
+                data = application.fetchWorkoutPageData(getUser(), id, workoutPage);
             } catch (WorkoutNotFoundException e) {
                 throw new DataInputException(e);
             }

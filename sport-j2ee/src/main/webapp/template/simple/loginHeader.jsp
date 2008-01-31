@@ -17,8 +17,9 @@
             <s:submit cssClass="logoutButton" value="Déconnexion"/>
         </s:form>
         <% } else { %>
-        <a <%=c2("/|login?")%> href="<s:url namespace="/" action='login'/>">Connexion</a> <a <%=c2("/|signup?")%>
-            href="<s:url namespace="/" action='signup'/>">Inscription</a>&nbsp;
+        <a <%=c2("/|login?")%> href="<s:url namespace="/" action='login' includeParams="none"/>">Connexion</a> <a <%=c2(
+            "/|signup?")%>
+            href="<s:url namespace="/" action='signup' includeParams="none"/>">Inscription</a>&nbsp;
         <% } %>
     </div>
 </div>

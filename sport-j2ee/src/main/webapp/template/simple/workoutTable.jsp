@@ -7,14 +7,15 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 
-<div class="pagination" style="overflow:hidden;margin-right:auto;margin-left:auto;">
+<div class="pagination">
     <table class="workouts" style="clear:both;">
         <% final PaginatedCollection<Workout> workouts = (PaginatedCollection<Workout>) top();%>
         <% if (!workouts.isEmpty()) {
             boolean parity = false;
             for (final Workout workout : workouts) {
                 push(workout);
-                parity = !parity;
+                try {
+                    parity = !parity;
         %>
         <tr class="<%=workout.getId().equals(parameter("highLight")) ? "highLight " : ""%><%=parity ? "odd":"even"%>">
             <s:url id="workoutUrl" action="" namespace="/workout" includeParams="none">
@@ -52,8 +53,12 @@
                 </s:if></s:a>
             </td>
         </tr>
-        <%}%>
-        <%} else {%>
+        <%
+                } finally {
+                    pop();
+                }
+            }
+        } else {%>
         <tr>
             <td>Rien, il va falloir bouger&nbsp;!</td>
         </tr>
@@ -63,12 +68,12 @@
     <s:url id="previousPageUrl">
         <s:param name="workoutPage" value="previousIndex"/>
     </s:url>
-    <div class="paginationPrevious" style="float:left;"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
+    <div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
     <%}%>
     <%if (workouts.hasNext()) { %>
     <s:url id="nextPageUrl">
         <s:param name="workoutPage" value="nextIndex"/>
     </s:url>
-    <div class="paginationNext" style="float:right;"><s:a href="%{nextPageUrl}">Suivants->></s:a></div>
+    <div class="paginationNext"><s:a href="%{nextPageUrl}">Suivants->></s:a></div>
     <%}%>
 </div>

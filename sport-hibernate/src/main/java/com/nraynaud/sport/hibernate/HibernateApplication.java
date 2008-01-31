@@ -25,6 +25,11 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     private PaginatedCollection<Workout> getWorkouts(final User user, final int startIndex, final int pageSize) {
+        return fetchWorkouts(user, startIndex, pageSize, false);
+    }
+
+    private PaginatedCollection<Workout> fetchWorkouts(final User user, final int startIndex, final int pageSize,
+                                                       final boolean lastpage) {
         final Query query = entityManager.createQuery(
                 "select w, count(m) from WorkoutImpl w left join w.messages m where m.receiver is null "
                         + (user != null ? "AND w.user =:user" : "")
@@ -32,8 +37,11 @@ public class HibernateApplication implements Application {
         if (user != null)
             query.setParameter("user", user);
         query.setFirstResult(startIndex);
-        query.setMaxResults(startIndex + pageSize);
+        query.setMaxResults(pageSize);
         final List<Object[]> result = query.getResultList();
+        // we went too far, get back one page.
+        if (result.isEmpty() && startIndex != 0)
+            return fetchWorkouts(user, startIndex - pageSize, pageSize, true);
         final List<Workout> list = new ArrayList(result.size());
         for (final Object[] row : result) {
             final WorkoutImpl workout = (WorkoutImpl) row[0];
@@ -42,7 +50,7 @@ public class HibernateApplication implements Application {
         }
         return new PaginatedCollection<Workout>() {
             public boolean hasPrevious() {
-                return list.size() >= pageSize;
+                return !lastpage && list.size() >= pageSize;
             }
 
             public boolean hasNext() {
@@ -125,14 +133,15 @@ public class HibernateApplication implements Application {
         return entityManager.find(WorkoutImpl.class, id);
     }
 
-    public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId) throws
+    public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId,
+                                                final int startIndex) throws
             WorkoutNotFoundException {
         final Workout workout = fetchWorkout(workoutId);
         final List<Message> privateConversation = (List<Message>) (currentUser == null ? Collections.emptyList() :
                 fetchPrivateConversation(currentUser, workout.getUser().getId()));
         return new WorkoutPageData(workout,
                 fetchConversation("receiver IS NULL AND workout.id=:workoutId", "workoutId", workoutId),
-                getWorkouts(workout.getUser(), 10, 10), privateConversation);
+                getWorkouts(workout.getUser(), startIndex, 10), privateConversation);
     }
 
     public boolean checkAndChangePassword(final User user, final String oldPassword, final String password) {

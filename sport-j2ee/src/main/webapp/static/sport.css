@@ -415,3 +415,17 @@ table.displayFormLayoutTable tr td .label {
     position: relative;
     display: block;
 }
+
+.pagination {
+    overflow: hidden;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.paginationPrevious {
+    float: left;
+}
+
+.paginationNext {
+    float: right;
+}
