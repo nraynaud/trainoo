@@ -1,6 +1,6 @@
-<%@ page import="static com.nraynaud.sport.web.action.MessagesAction.CONTENT_MAX_LENGTH" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -26,7 +26,7 @@
             call(pageContext, "workoutComponent.jsp", workout);%></span>
         </div>
         <s:textarea id="messageContent" cssClass="messageContentArea" name="content" rows="5"/>
-        <p:javascript>makeItCount('messageContent', <%= CONTENT_MAX_LENGTH%>);</p:javascript>
+        <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
         <s:submit value="Envoyer"/>
     </fieldset>
 </s:form>

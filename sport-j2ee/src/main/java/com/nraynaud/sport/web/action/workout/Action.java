@@ -10,7 +10,6 @@ import com.nraynaud.sport.web.Public;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ModelDriven;
-import org.apache.struts2.config.Namespace;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -20,7 +19,6 @@ import org.apache.struts2.config.Results;
 @Result(name = INPUT, value = "/WEB-INF/pages/workout/view.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-@Namespace("/workout")
 @Public
 public class Action extends DefaultAction implements ModelDriven<WorkoutPageData> {
     private Long id;

@@ -38,7 +38,10 @@
         <div id="content">
             <h1><%=pageDetail.getTitle()%>
             </h1>
-            <r:writeContent/>
+            <% /* the page content*/
+                final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
+                out.append(detail.getContent());
+            %>
         </div>
         <hr id="bottom">
         <div><p class="smaller" style="text-align:center;">Copyright Nicolas Raynaud 2008.

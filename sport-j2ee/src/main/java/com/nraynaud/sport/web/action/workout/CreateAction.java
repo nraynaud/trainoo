@@ -11,7 +11,6 @@ import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.validator.annotations.Validation;
-import org.apache.struts2.config.Namespace;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -22,7 +21,6 @@ import org.apache.struts2.config.Results;
 @Result(name = SUCCESS, type = RedirectBack.class, params = {"namespace", "/"}, value = "workouts")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-@Namespace("/workout")
 @Validation
 public class CreateAction extends AbstractWorkoutAction implements ChainBackCapable {
 

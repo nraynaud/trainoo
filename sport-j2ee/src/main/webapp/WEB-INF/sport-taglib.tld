@@ -13,12 +13,6 @@
                     to ensure that input is correct and output is localized.
                     The Struts Tags can be used with JSP FreeMarker or Velocity."]]></description>
     <tag>
-        <name>writeContent</name>
-        <tag-class>com.nraynaud.sport.web.view.ContentTag</tag-class>
-        <body-content>empty</body-content>
-        <description>For the layout page : write the content from the PageDetail</description>
-    </tag>
-    <tag>
         <name>writeJavascript</name>
         <tag-class>com.nraynaud.sport.web.view.WriteJavacriptTag</tag-class>
         <body-content>empty</body-content>
