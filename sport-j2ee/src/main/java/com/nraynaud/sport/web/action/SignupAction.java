@@ -3,7 +3,11 @@ package com.nraynaud.sport.web.action;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserAlreadyExistsException;
-import com.nraynaud.sport.web.*;
+import com.nraynaud.sport.web.Constants;
+import com.nraynaud.sport.web.PostOnly;
+import com.nraynaud.sport.web.Public;
+import com.nraynaud.sport.web.SportSession;
+import com.nraynaud.sport.web.actionsupport.PasswordAction;
 import com.nraynaud.sport.web.result.Redirect;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -22,23 +26,25 @@ import javax.servlet.http.HttpServletRequest;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
-public class SignupAction extends DefaultAction implements ServletRequestAware {
+public class SignupAction extends PasswordAction implements ServletRequestAware {
 
     private final Application application;
 
     private String login;
-    private String password;
-    private String passwordConfirmation;
     private HttpServletRequest request;
     public static final String LOGIN_MAX_LENGTH = "20";
-    public static final String PASSWORD_MAX_LENGTH = "20";
+    private static final String LOGIN_MIN_LENGTH = "4";
 
     public SignupAction(final Application application) {
         this.application = application;
     }
 
-    @StringLengthFieldValidator(message = "Votre surnom doit comporter entre 4 et 15 caractères.",
-            minLength = "4",
+    @StringLengthFieldValidator(message = "Votre surnom doit comporter entre "
+            + LOGIN_MIN_LENGTH
+            + " et "
+            + LOGIN_MAX_LENGTH
+            + " caractères.",
+            minLength = LOGIN_MIN_LENGTH,
             maxLength = LOGIN_MAX_LENGTH)
     @RequiredStringValidator(message = "Le surnom est obligatoire.")
     public String getLogin() {
@@ -47,32 +53,6 @@ public class SignupAction extends DefaultAction implements ServletRequestAware {
 
     public void setLogin(final String login) {
         this.login = login;
-    }
-
-    @StringLengthFieldValidator(message = "Votre mot de passe doit comporter entre 5 et 15 caractères.",
-            minLength = "5",
-            maxLength = PASSWORD_MAX_LENGTH)
-    @RequiredStringValidator(message = "Le mot de passe est obligatoire.")
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(final String password) {
-        this.password = password;
-    }
-
-    public String getPasswordConfirmation() {
-        return passwordConfirmation;
-    }
-
-    public void setPasswordConfirmation(final String passwordConfirmation) {
-        this.passwordConfirmation = passwordConfirmation;
-    }
-
-    public void validate() {
-        if (request.getMethod().equals("POST") && (passwordConfirmation == null || !passwordConfirmation.equals(
-                password)))
-            addFieldError("passwordConfirmation", "Le mot de passe et la confirmation doivent être identiques.");
     }
 
     @SuppressWarnings({"DuplicateStringLiteralInspection"})

@@ -2,6 +2,7 @@ package com.nraynaud.sport.web;
 
 import com.nraynaud.sport.UserStore;
 import static com.nraynaud.sport.web.Constants.LOGIN_RESULT;
+import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionProxy;

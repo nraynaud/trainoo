@@ -5,7 +5,7 @@ import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.data.ConversationData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
-import com.nraynaud.sport.web.DefaultAction;
+import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import static com.opensymphony.xwork2.Action.INPUT;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;

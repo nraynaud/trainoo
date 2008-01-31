@@ -109,6 +109,15 @@ public class HibernateApplication implements Application {
                 fetchPrivateConversation(currentUser, workout.getUser().getId())));
     }
 
+    public boolean checkAndChangePassword(final User user, final String oldPassword, final String password) {
+        if (user.checkPassword(oldPassword)) {
+            ((UserImpl) user).setPassword(password);
+            entityManager.merge(user);
+            return true;
+        }
+        return false;
+    }
+
     public void updateWorkout(final Long id,
                               final User user,
                               final Date date,

@@ -27,7 +27,6 @@ public class UserImpl implements User {
     @Column(name = "DESCRIPTION")
     private String description;
 
-
     @SuppressWarnings({"UnusedDeclaration"})
     @Column(name = "WEBSITE")
     private String webSite;
@@ -37,7 +36,7 @@ public class UserImpl implements User {
 
     public UserImpl(final String name, final String password) {
         this.name = name;
-        passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+        setPassword(password);
     }
 
     public Long getId() {
@@ -79,14 +78,15 @@ public class UserImpl implements User {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof UserImpl)) return false;
-
         final UserImpl user = (UserImpl) o;
-
         return !(id != null ? !id.equals(user.id) : user.id != null);
-
     }
 
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public void setPassword(final String password) {
+        passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }

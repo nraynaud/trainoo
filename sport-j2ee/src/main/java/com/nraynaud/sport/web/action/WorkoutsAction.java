@@ -4,7 +4,7 @@ import com.nraynaud.sport.Application;
 import com.nraynaud.sport.data.StatisticsPageData;
 import com.nraynaud.sport.data.UserPageData;
 import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.DefaultAction;
+import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ModelDriven;

@@ -59,4 +59,6 @@ public interface Application extends UserStore {
     Workout fetchWorkout(Long id) throws WorkoutNotFoundException;
 
     WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId) throws WorkoutNotFoundException;
+
+    boolean checkAndChangePassword(final User user, final String oldPassword, final String password);
 }

@@ -8,7 +8,9 @@
 
     <div class="right">
         <% if (isLogged()) {%>
-        <span id="loginName"><%= escaped(currentUser().getName())%><!--<%=currentUser().getId()%> --></span>
+        <span id="loginName"><!--<%=currentUser().getId()%> --><%= escaped(currentUser().getName())%><a
+                href="<s:url action="" namespace="privatedata" includeParams="none"/>" style="font-size:x-small;">(mot
+            de passe)</a></span>
         <a <%=c2("/|workouts?")%> href="<s:url namespace="/" action='workouts' includeParams="none"/>">Mon vestiaire</a>
         <a <%=c2("/bib|?")%> href="<s:url namespace="/bib" action='' includeParams="none"/>">Mon dossard</a>
         <s:form id="logoutForm" namespace="/" action="logout" method="POST">

@@ -1,10 +1,10 @@
 package com.nraynaud.sport.web.action.workout;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.web.AbstractWorkoutAction;
 import com.nraynaud.sport.web.ChainBackCapable;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
+import com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.RedirectBack;
 import static com.opensymphony.xwork2.Action.INPUT;
