@@ -1,4 +1,5 @@
 <%@ page import="static com.nraynaud.sport.web.action.SignupAction.*" %>
+<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -17,16 +18,7 @@
         <p><s:textfield id="login" name="login" cssStyle="width:100%"/></p>
         <p:javascript>Field.activate('login');</p:javascript>
         <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>);</p:javascript>
-        <p class="loginLabel"><label for="password">Votre mot de passe</label></p>
-
-        <p><s:password id="password" name="password" cssStyle="width:100%"/></p>
-        <p:javascript>makeItCount('password', <%= PASSWORD_MAX_LENGTH%>);</p:javascript>
-
-        <p class="loginLabel"><label for="passwordConfirmation">Confirmation de votre mot de passe<br>
-            (pour éviter les erreurs de frappe)</label></p>
-
-        <p><s:password id="passwordConfirmation" name="passwordConfirmation" cssStyle="width:100%"/></p>
-
+        <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null); %>
         <p><s:submit value="Inscription !"/></p>
     </s:form>
 </div>
