@@ -12,6 +12,14 @@
     <title><%= pageDetail.getTitle()%>
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--[if IE ]>
+    <style>
+    #gradient {
+      background: none;
+      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/gradient.png', sizingMethod='scale');
+    }
+    </style>
+    <![endif]-->
 
     <link href="<s:url value="/static/sport.css"/>" rel="stylesheet" type="text/css">
 </head>
@@ -20,8 +28,6 @@
     <div style="overflow:hidden;">
         <h1 id="logo">
             <a id="logoHref" href="/">
-                <canvas id="gradient" width="1" height="50">
-                </canvas>
                 Train<span style="color:#968148;">oo</span>.com</a>
         </h1>
     </div>
@@ -40,21 +46,30 @@
 
 
         <script type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
+        <!--[if !IE]>-->
         <script type="text/javascript">
-            var canvas = document.getElementById('gradient');
+            var canvas = new Element('canvas', {'id': 'gradient'});
+            $('logoHref').insert(canvas);
             var height = $('logoHref').getHeight();
+            var width = $('logoHref').getWidth();
             canvas.height = height
+            canvas.width = width
             var ctx = canvas.getContext('2d');
             var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
             lineargradient.addColorStop(0.8, 'rgba(255,255,255,0)');
             lineargradient.addColorStop(0, '#F2F2E8');
-            //ctx.clearRect(0, 0, 1, height);
             ctx.fillStyle = lineargradient;
-            ctx.fillRect(0, 0, 1, height);
+            ctx.fillRect(0, 0, width, height);
         </script>
+        <!--<![endif]-->
         <script type="text/javascript" src="<s:url value="/static/scriptaculous.js"/>"></script>
         <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
         <r:writeJavascript/>
+        <!--[if IE]>
+        <script type="text/javascript">
+              $('logoHref').insert("<div id='gradient'><"+"/div>");
+        </script>
+        <![endif]-->
         <!--[if lt IE 7]>
         <script type="text/javascript">
             fixPNGIE();
@@ -77,8 +92,7 @@
             google_ad_width = 468;
             google_ad_height = 60;
             //--></script>
-            <script type='text/javascript' src='http://pagead2.googlesyndication.com/pagead/show_ads.js'
-                    defer="defer"></script>
+            <script type='text/javascript' src='http://pagead2.googlesyndication.com/pagead/show_ads.js'></script>
         </div>
     </div>
 </div>
