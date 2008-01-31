@@ -25,7 +25,7 @@
 </head>
 <body>
 <div id="center">
-    <div style="overflow:hidden;">
+    <div style="overflow:hidden;width: 100%">
         <h1 id="logo">
             <a id="logoHref" href="/">
                 Train<span style="color:#968148;">oo</span>.com</a>
