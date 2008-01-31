@@ -28,7 +28,7 @@ public class HibernateApplication implements Application {
         final Query query = entityManager.createQuery(
                 "select w, count(m) from WorkoutImpl w left join w.messages m where m.receiver is null "
                         + (user != null ? "AND w.user =:user" : "")
-                        + " group by w.id order by  w.date desc");
+                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
         if (user != null)
             query.setParameter("user", user);
         query.setMaxResults(limit);
@@ -161,7 +161,7 @@ public class HibernateApplication implements Application {
         final Map<String, ConversationSumary> correspondants = new HashMap<String, ConversationSumary>();
         {
             final Query query = entityManager.createQuery(
-                    "select m.sender.name, m.receiver.name, count(m) from MessageImpl m where m.receiver=:user OR (m.sender=:user AND m.receiver IS NOT NULL) group by m.sender, m.receiver");
+                    "select m.sender.name, m.receiver.name, count(m) from MessageImpl m where m.receiver=:user OR (m.sender=:user AND m.receiver IS NOT NULL) group by m.sender.name, m.receiver.name");
             query.setParameter("user", user);
             for (final Object[] row : (List<Object[]>) query.getResultList()) {
                 final String name = (String) (row[0].equals(user.getName()) ? row[1] : row[0]);
