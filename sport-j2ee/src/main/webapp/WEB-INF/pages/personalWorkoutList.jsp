@@ -33,9 +33,10 @@
         <ul>
             <s:iterator value="%{privateMessageReceivers}">
                 <s:url id="messageUrl" action="" namespace="/messages">
-                    <s:param name="receiver" value="%{top}"/>
+                    <s:param name="receiver" value="%{top.correspondentName}"/>
                 </s:url>
-                <li><a href="<s:property value="messageUrl"/>"><s:property value="%{top}"/></a>
+                <li><a href="<s:property value="messageUrl"/>"><s:property value="%{top.correspondentName}"/>
+                    (<s:property value="%{top.messageCount}"/>)</a>
                 </li>
             </s:iterator>
         </ul>

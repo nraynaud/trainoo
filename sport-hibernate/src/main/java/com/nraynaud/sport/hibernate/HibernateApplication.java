@@ -147,23 +147,28 @@ public class HibernateApplication implements Application {
         final List<Workout> workouts = getWorkouts(user, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
-        final Collection<String> correspondants = fetchCorrespondants(user);
+        final Collection<ConversationSumary> correspondants = fetchCorrespondants(user);
         return new UserPageData(workouts, globalDistance, distanceByDiscpline, correspondants);
     }
 
-    private TreeSet<String> fetchCorrespondants(final User user) {
-        final TreeSet<String> correspondants = new TreeSet<String>();
+    private Collection<ConversationSumary> fetchCorrespondants(final User user) {
+        final Map<String, ConversationSumary> correspondants = new HashMap<String, ConversationSumary>();
         {
             final Query query = entityManager.createQuery(
-                    "select distinct m.sender.name from MessageImpl m where m.receiver=:user");
+                    "select m.sender.name, m.receiver.name, count(m) from MessageImpl m where m.receiver=:user OR (m.sender=:user AND m.receiver IS NOT NULL) group by m.sender, m.receiver");
             query.setParameter("user", user);
-            correspondants.addAll(query.getResultList());
+            for (final Object[] row : (List<Object[]>) query.getResultList()) {
+                final String name = (String) (row[0].equals(user.getName()) ? row[1] : row[0]);
+                final ConversationSumary previous = correspondants.get(name);
+                final long count = ((Number) row[2]).longValue();
+                if (previous != null) {
+                    correspondants.put(name, new ConversationSumary(name,
+                            count + previous.messageCount));
+                } else
+                    correspondants.put(name, new ConversationSumary(name, count));
+            }
         }
-        final Query query = entityManager.createQuery(
-                "select distinct m.receiver.name from MessageImpl m where m.sender=:user");
-        query.setParameter("user", user);
-        correspondants.addAll(query.getResultList());
-        return correspondants;
+        return new TreeSet<ConversationSumary>(correspondants.values());
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {

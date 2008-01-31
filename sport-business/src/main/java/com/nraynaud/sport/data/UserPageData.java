@@ -6,11 +6,11 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserPageData extends StatisticsPageData {
-    public final Collection<String> privateMessageReceivers;
+    public final Collection<ConversationSumary> privateMessageReceivers;
 
     public UserPageData(final List<Workout> workouts, final Double globalDistance,
                         final List<DisciplineDistance> distanceByDisciplines,
-                        final Collection<String> privateMessageReceivers) {
+                        final Collection<ConversationSumary> privateMessageReceivers) {
         super(workouts, globalDistance, distanceByDisciplines);
         this.privateMessageReceivers = privateMessageReceivers;
     }
