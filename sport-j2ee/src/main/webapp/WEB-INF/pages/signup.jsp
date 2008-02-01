@@ -14,7 +14,7 @@
 
         <p class="loginLabel"><label for="login">Votre surnom</label></p>
 
-        <p><s:textfield id="login" name="login" cssStyle="width:100%"/></p>
+        <div><s:textfield id="login" name="login" cssStyle="width:100%"/></div>
         <p:javascript>Field.activate('login');</p:javascript>
         <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>);</p:javascript>
         <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null); %>
