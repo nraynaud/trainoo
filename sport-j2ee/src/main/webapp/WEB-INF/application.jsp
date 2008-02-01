@@ -38,6 +38,7 @@
         <div id="content">
             <h1><%=pageDetail.getTitle()%>
             </h1>
+            <s:actionmessage/>
             <% /* the page content*/
                 final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
                 out.append(detail.getContent());

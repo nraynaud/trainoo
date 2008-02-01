@@ -6,7 +6,6 @@
 <form action="<s:property value="%{parameters.action + '#workoutMessage'}"/>" method="post">
 
     <s:actionerror/>
-    <s:actionmessage/>
 
     <s:fielderror id="workoutMessage">
         <s:param value="'discipline'"/>

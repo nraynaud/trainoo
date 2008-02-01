@@ -13,7 +13,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Result(type = Redirect.class, value = "/")
+@Result(type = Redirect.class, params = {"namespace", "/"}, value = "")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class LogoutAction extends DefaultAction implements ServletRequestAware {

@@ -8,7 +8,6 @@
 
 <s:form action="edit" namespace="/bib">
     <s:actionerror/>
-    <s:actionmessage/>
     <s:fielderror/>
     <div id="tinyCenter">
         <p>En mettant à jour votre dossard, les autres pourront mieux vous connaître.<br>

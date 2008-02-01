@@ -13,7 +13,6 @@
         <legend>Nouveau message</legend>
 
         <s:actionerror/>
-        <s:actionmessage/>
         <s:fielderror>
             <s:param value="'content'"/>
         </s:fielderror>

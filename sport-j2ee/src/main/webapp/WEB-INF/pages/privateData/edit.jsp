@@ -6,9 +6,8 @@
 <p:layoutParams title="Modification des données personnelles"/>
 
 <div id="tinyCenter">
-    <s:form id="privatedata_form" action="" namespace="/">
+    <s:form name="privatedata_form" id="privatedata_form" action="" namespace="/privatedata">
         <s:actionerror/>
-        <s:actionmessage/>
         <s:fielderror/>
         <s:hidden id="fromAction" name="fromAction" value="%{actionDescription}"/>
         <p class="loginLabel"><label for="oldPassword">Votre mot de passe actuel</label></p>

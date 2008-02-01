@@ -10,7 +10,6 @@
 <div id="tinyCenter">
     <s:form action="signup">
         <s:actionerror/>
-        <s:actionmessage/>
         <s:fielderror/>
 
         <p class="loginLabel"><label for="login">Votre surnom</label></p>

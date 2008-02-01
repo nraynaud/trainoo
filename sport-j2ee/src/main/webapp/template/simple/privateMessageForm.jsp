@@ -14,7 +14,6 @@
         <legend>Nouveau message privé</legend>
 
         <s:actionerror/>
-        <s:actionmessage/>
         <s:fielderror>
             <s:param value="'receiver'"/>
             <s:param value="'content'"/>

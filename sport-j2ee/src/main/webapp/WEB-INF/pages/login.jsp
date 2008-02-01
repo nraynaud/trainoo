@@ -8,7 +8,6 @@
     <s:form id="login_form" action="login">
 
         <s:actionerror/>
-        <s:actionmessage/>
         <s:fielderror/>
 
         <p class="loginLabel"><label for="login">Votre surnom</label></p>
