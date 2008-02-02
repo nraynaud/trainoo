@@ -49,7 +49,7 @@
             <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
 
 
-        <script type="text/javascript" src="<s:url value="/static/prototype_packed.js"/>"></script>
+        <script type="text/javascript" src="<s:url value="/static/prototype.js"/>"></script>
         <!--[if !IE]>-->
         <script type="text/javascript">
             var canvas = new Element('canvas', {'id': 'gradient'});

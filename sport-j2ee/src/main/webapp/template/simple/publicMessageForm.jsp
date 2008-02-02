@@ -8,7 +8,7 @@
 
 <% allowOverrides();%>
 <% final Workout workout = (Workout) top();%>
-<s:form action="write" namespace="/messages">
+<s:form id="writeMessage" name="writeMessage" action="write" namespace="/messages">
     <fieldset>
         <legend>Nouveau message</legend>
 

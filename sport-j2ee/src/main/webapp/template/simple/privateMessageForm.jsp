@@ -9,7 +9,8 @@
 <% final Object o = property("aboutWorkout");
     final Workout answerWorkout = (Workout) (o != null ? o : parameter("aboutWorkout"));%>
 
-<form action="<s:url action="write" namespace="/messages" anchor="errorMessage" includeParams="none"/>" method="post">
+<form id="writeMessage" name="writeMessage"
+      action="<s:url action="write" namespace="/messages" anchor="errorMessage" includeParams="none"/>" method="post">
     <fieldset>
         <legend>Nouveau message privé</legend>
 
