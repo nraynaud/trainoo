@@ -14,20 +14,23 @@
             Aucun champ n'est obligatoire.
         </p>
 
-        <p><label for="town">Ma ville&nbsp;: </label><br>
-            <s:textfield id="town" name="town" cssStyle="width:100%;"/>
-        </p>
+        <p><label for="town">Ma ville&nbsp;: </label></p>
+
+        <div><s:textfield id="town" name="town" cssStyle="width:100%;"/></div>
+
         <p:javascript>makeItCount('town', <%=TOWN_MAX_LENGTH%>);</p:javascript>
 
-        <p><label for="description">Moi&nbsp;: </label><br>
-            <span style="font-size:smaller; color:gray;">C'est l'occasion de vous présenter.</span><br>
-            <s:textarea id="description" name="description" rows="5" cssStyle="width:100%;"/>
-        </p>
+        <p><label for="description">Moi&nbsp;: </label></p>
+        <span style="font-size:smaller; color:gray;">C'est l'occasion de vous présenter.</span><br>
+
+        <div><s:textarea id="description" name="description" rows="5" cssStyle="width:100%;"/></div>
+
         <p:javascript>makeItCount('description', <%=DESCRIPTION_MAX_LENGTH%>);</p:javascript>
 
-        <p><label for="webSite">Mon site&nbsp;: </label><br>
-            <s:textfield id="webSite" name="webSite" cssStyle="width:100%;"/>
-        </p>
+        <p><label for="webSite">Mon site&nbsp;: </label></p>
+
+        <div><s:textfield id="webSite" name="webSite" cssStyle="width:100%;"/></div>
+
         <p:javascript>makeItCount('webSite', <%=WEBSITE_MAX_LENGTH%>);</p:javascript>
         <p><s:submit value="Valider !"/></p>
     </div>

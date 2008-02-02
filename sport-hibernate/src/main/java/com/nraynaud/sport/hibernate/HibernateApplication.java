@@ -108,7 +108,7 @@ public class HibernateApplication implements Application {
 
     private static String generateToken() {
         final StringBuilder builder = new StringBuilder(260);
-        while (builder.length() < 255) {
+        while (builder.length() < 256) {
             builder.append(Long.toHexString(TOKEN_GENERATOR.nextLong()));
         }
         return builder.substring(0, 256);
