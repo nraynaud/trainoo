@@ -1,5 +1,7 @@
 package com.nraynaud.sport.web;
 
+import com.nraynaud.sport.User;
+import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.UserStore;
 import static com.nraynaud.sport.web.Constants.LOGIN_RESULT;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
@@ -9,6 +11,9 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import org.apache.struts2.ServletActionContext;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 public class SportInterceptor extends AbstractInterceptor {
@@ -20,7 +25,9 @@ public class SportInterceptor extends AbstractInterceptor {
     }
 
     public String intercept(final ActionInvocation invocation) throws Exception {
-        final SportRequest request = new SportRequest(userStore, ServletActionContext.getRequest());
+        final HttpServletRequest servletRequest = ServletActionContext.getRequest();
+        handleRememberMe(servletRequest, ServletActionContext.getResponse());
+        final SportRequest request = new SportRequest(userStore, servletRequest);
         final ActionContext invocationContext = invocation.getInvocationContext();
         invocationContext.put(SportRequest.SPORT_REQUEST, request);
         invocationContext.getValueStack().push(request);
@@ -39,6 +46,24 @@ public class SportInterceptor extends AbstractInterceptor {
         }
         if (isPublic(actionClass)) return invocation.invoke();
         return request.isLogged() ? invocation.invoke() : LOGIN_RESULT;
+    }
+
+    private void handleRememberMe(final HttpServletRequest servletRequest, final HttpServletResponse response) {
+        final Cookie[] cookies = servletRequest.getCookies();
+        if (cookies == null)
+            return;
+        for (final Cookie cookie : cookies) {
+            if (cookie.getName().equals(Constants.REMEMBER_COOKIE_NAME)) {
+                try {
+                    final User user = userStore.fetchRememberedUser(cookie.getValue());
+                    SportSession.openSession(user, servletRequest, true);
+                } catch (UserNotFoundException e) {
+                    //no problem, forget it
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+        }
     }
 
     private static void setMetadata(final Object action, final ActionProxy actionProxy,

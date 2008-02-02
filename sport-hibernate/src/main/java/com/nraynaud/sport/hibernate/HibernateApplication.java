@@ -12,6 +12,7 @@ import java.util.*;
 public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
+    private static final Random TOKEN_GENERATOR = new Random();
 
     public Workout createWorkout(final Date date,
                                  final User user,
@@ -89,20 +90,44 @@ public class HibernateApplication implements Application {
     /**
      * @return null if auth failed, user otherwise
      */
-    public User authenticate(final String login, final String password) {
+    public User authenticate(final String login, final String password, final boolean rememberMe) {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.name=:user_login");
         query.setParameter("user_login", login);
         try {
-            final User user = (User) query.getSingleResult();
+            final UserImpl user = (UserImpl) query.getSingleResult();
+            if (rememberMe && user.getRememberToken() == null) {
+                final String token = generateToken();
+                user.setRememberToken(token);
+                entityManager.merge(user);
+            }
             return user.checkPassword(password) ? user : null;
         } catch (NoResultException e) {
             return null;
         }
     }
 
+    private static String generateToken() {
+        final StringBuilder builder = new StringBuilder(260);
+        while (builder.length() < 255) {
+            builder.append(Long.toHexString(TOKEN_GENERATOR.nextLong()));
+        }
+        return builder.substring(0, 256);
+    }
+
     public User fetchUser(final Long id) throws UserNotFoundException {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.id=:id");
         query.setParameter("id", id);
+        try {
+            return (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            throw new UserNotFoundException();
+        }
+    }
+
+    public User fetchRememberedUser(final String rememberCookie) throws UserNotFoundException {
+        final Query query = entityManager.createQuery(
+                "select u from UserImpl u where u.rememberToken =:rememberCookie");
+        query.setParameter("rememberCookie", rememberCookie);
         try {
             return (User) query.getSingleResult();
         } catch (NoResultException e) {
@@ -151,6 +176,11 @@ public class HibernateApplication implements Application {
             return true;
         }
         return false;
+    }
+
+    public void forgetMe(final User user) {
+        ((UserImpl) user).setRememberToken(null);
+        entityManager.merge(user);
     }
 
     public void updateWorkout(final Long id,

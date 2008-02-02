@@ -31,6 +31,9 @@ public class UserImpl implements User {
     @Column(name = "WEBSITE")
     private String webSite;
 
+    @Column(name = "REMEMBER_ME")
+    private String rememberToken;
+
     public UserImpl() {
     }
 
@@ -88,5 +91,13 @@ public class UserImpl implements User {
 
     public void setPassword(final String password) {
         passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public String getRememberToken() {
+        return rememberToken;
+    }
+
+    public void setRememberToken(final String token) {
+        rememberToken = token == null ? null : token.substring(0, 255);
     }
 }

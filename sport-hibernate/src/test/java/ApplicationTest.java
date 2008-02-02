@@ -44,13 +44,13 @@ public class ApplicationTest {
 
     @Test
     public void testUserCreation() throws UserAlreadyExistsException {
-        assertNull(application.authenticate("lolé", "pass+é"));
+        assertNull(application.authenticate("lolé", "pass+é", false));
         application.createUser("lolé", "pass+é");
     }
 
     @Test
     public void testWorkoutCreation() throws UserAlreadyExistsException {
-        assertNull(application.authenticate("lolé", "pass+é"));
+        assertNull(application.authenticate("lolé", "pass+é", false));
         final User user = application.createUser("lolé", "pass+é");
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
                 "lol");
@@ -60,11 +60,11 @@ public class ApplicationTest {
 
     @Test
     public void testUserAuth() throws UserAlreadyExistsException {
-        assertNull(application.authenticate("lolé", "pass+é"));
+        assertNull(application.authenticate("lolé", "pass+é", false));
         application.createUser("lolé", "pass+é");
-        assertNotNull(application.authenticate("lolé", "pass+é"));
-        assertNull(application.authenticate("lolé", "wrongpass"));
-        assertNull(application.authenticate("jeanLouis", "wrongpass"));
+        assertNotNull(application.authenticate("lolé", "pass+é", false));
+        assertNull(application.authenticate("lolé", "wrongpass", false));
+        assertNull(application.authenticate("jeanLouis", "wrongpass", false));
     }
 
     @Test

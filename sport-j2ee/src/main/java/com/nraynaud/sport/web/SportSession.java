@@ -40,10 +40,11 @@ public class SportSession {
         return sportSession;
     }
 
-    public static void openSession(final User user, final HttpServletRequest request) {
+    public static void openSession(final User user, final HttpServletRequest request, final boolean rememberMe) {
         final HttpSession session = request.getSession(true);
         session.setMaxInactiveInterval(30 * 24 * 3600);
         session.setAttribute(USER, new UserWrapper(user));
+        session.setAttribute(Constants.REMEMBER_COOKIE_NAME, rememberMe);
     }
 
     public static class UserWrapper implements Serializable {

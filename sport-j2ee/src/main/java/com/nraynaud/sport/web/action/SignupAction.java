@@ -34,6 +34,7 @@ public class SignupAction extends PasswordAction implements ServletRequestAware 
     private HttpServletRequest request;
     public static final String LOGIN_MAX_LENGTH = "20";
     private static final String LOGIN_MIN_LENGTH = "4";
+    private boolean rememberMe = false;
 
     public SignupAction(final Application application) {
         this.application = application;
@@ -61,7 +62,7 @@ public class SignupAction extends PasswordAction implements ServletRequestAware 
         if (request.getMethod().equals("POST")) {
             try {
                 final User user = application.createUser(login, password);
-                SportSession.openSession(user, request);
+                SportSession.openSession(user, request, rememberMe);
             } catch (UserAlreadyExistsException e) {
                 addFieldError(Constants.LOGIN_RESULT, "Désolé, ce surnom est déjà pris !");
                 return Action.INPUT;
@@ -78,5 +79,13 @@ public class SignupAction extends PasswordAction implements ServletRequestAware 
 
     public void setServletRequest(final HttpServletRequest request) {
         this.request = request;
+    }
+
+    public boolean isRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(final boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 }

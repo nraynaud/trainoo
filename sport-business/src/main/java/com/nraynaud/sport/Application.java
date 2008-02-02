@@ -14,7 +14,7 @@ public interface Application extends UserStore {
 
     User createUser(String login, String password) throws UserAlreadyExistsException;
 
-    User authenticate(String login, String password);
+    User authenticate(String login, String password, final boolean rememberMe);
 
     Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) throws
             WorkoutNotFoundException;
@@ -62,4 +62,6 @@ public interface Application extends UserStore {
             WorkoutNotFoundException;
 
     boolean checkAndChangePassword(final User user, final String oldPassword, final String password);
+
+    void forgetMe(final User user);
 }

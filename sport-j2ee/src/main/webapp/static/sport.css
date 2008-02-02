@@ -438,3 +438,8 @@ table.displayFormLayoutTable tr td .label {
     margin-right: 20%;
     margin-left: 20%;
 }
+
+label .labelComplement {
+    font-weight: normal;
+    font-size: small;
+}

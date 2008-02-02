@@ -14,9 +14,12 @@ import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Results({
 @Result(name = Action.INPUT, value = "/WEB-INF/pages/login.jsp"),
@@ -24,12 +27,14 @@ import javax.servlet.http.HttpServletRequest;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
-public class LoginAction extends DefaultAction implements ServletRequestAware {
+public class LoginAction extends DefaultAction implements ServletRequestAware, ServletResponseAware {
     private final Application application;
 
     private String login;
     private String password;
     private HttpServletRequest request;
+    public boolean rememberMe = false;
+    private HttpServletResponse response;
 
     public LoginAction(final Application application) {
         this.application = application;
@@ -56,12 +61,17 @@ public class LoginAction extends DefaultAction implements ServletRequestAware {
     @PostOnly
     public String create() {
         if (getActionErrors().isEmpty()) {
-            final User user = application.authenticate(login, password);
+            final User user = application.authenticate(login, password, rememberMe);
             if (user == null) {
                 addActionError("Votre surnom ou votre mot de passe sont invalides. Probablement une erreur de frappe.");
                 return Action.INPUT;
             } else {
-                SportSession.openSession(user, request);
+                if (rememberMe) {
+                    final Cookie cookie = new Cookie(Constants.REMEMBER_COOKIE_NAME, user.getRememberToken());
+                    cookie.setMaxAge(3600 * 24 * 365);
+                    response.addCookie(cookie);
+                }
+                SportSession.openSession(user, request, rememberMe);
                 return Action.SUCCESS;
             }
         } else
@@ -76,5 +86,9 @@ public class LoginAction extends DefaultAction implements ServletRequestAware {
 
     public void setServletRequest(final HttpServletRequest request) {
         this.request = request;
+    }
+
+    public void setServletResponse(final HttpServletResponse response) {
+        this.response = response;
     }
 }

@@ -14,4 +14,6 @@ public interface User extends Serializable {
     String getDescription();
 
     String getWebSite();
+
+    String getRememberToken();
 }
