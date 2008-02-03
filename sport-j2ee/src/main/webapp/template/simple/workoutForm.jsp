@@ -30,14 +30,14 @@
             <td><s:textfield id="date"
                              name="date"
                              size="10"
-                             onfocus="$('info').style.visibility='visible'; feedback('date', this.value); $('tip').update('Format&nbsp;: jj/mm/aaaa ex&nbsp;: 03/10/2006.')"
+                             onfocus="$('info').style.visibility='visible'; feedback('date', this.value); $('tip').update('ex&nbsp;: 03/10/2006 ou \"hier\"')"
                              onblur="$('info').style.visibility='hidden'"
                              onkeyup="feedback('date', this.value)"
                              value="%{date == null  ? 'aujourd\\'hui' : date}"/></td>
             <td><s:textfield id="duration"
                              name="duration"
                              size="6"
-                             onfocus="$('info').style.visibility='visible';feedback('duration', this.value); $('tip').update('Format&nbsp;: HHhmm\\'ss ex&nbsp;: 03h41\\'17 ou 40\\'22')"
+                             onfocus="$('info').style.visibility='visible';feedback('duration', this.value); $('tip').update('ex&nbsp;: 03h41\\'17 ou 40\\'22')"
                              onblur="$('info').style.visibility='hidden'"
                              onkeyup="feedback('duration', this.value)"/></td>
 

@@ -233,7 +233,7 @@ p.loginLabel {
 }
 
 #content {
-    overflow: auto;
+    overflow: hidden;
     zoom: 1;
     _overflow: visible;
     padding-top: 1em;
@@ -417,7 +417,7 @@ table.displayFormLayoutTable tr td .label {
 }
 
 .pagination {
-    overflow: auto;
+    overflow: hidden;
     margin-right: auto;
     margin-left: auto;
 }
