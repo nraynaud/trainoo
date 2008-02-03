@@ -12,6 +12,7 @@
     <% call(pageContext, "workoutTable.jsp", property("workouts"), "displayEdit", "false", "displayName", "true");%>
 </div>
 <div id="globalRight">
+
     <h1>Bienvenue !</h1>
 
     <p>Vous pratiquez le sport en dehors de la Télé&nbsp;?<br>

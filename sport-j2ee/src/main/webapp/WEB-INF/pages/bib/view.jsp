@@ -11,12 +11,6 @@
 <p:layoutParams title="<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + escaped(user.getName())%>"/>
 
 <div id="<%= lookingOwnBib ? "tinyCenter" : "globalLeft"%>">
-    <% if (lookingOwnBib) {%>
-    <p><a href="<s:url action="edit" namespace="/bib"/>">Mettre à jour</a></p>
-    <%} else {%>
-    <p>&nbsp;</p>
-    <%}%>
-
     <% final String defaultValue = "non précisé";
         final String town = user.getTown();
         final String townLabel = "Ma ville";%>
@@ -36,6 +30,11 @@
                     defaultValue)%></span></td>
         </tr>
     </table>
+    <% if (lookingOwnBib) {%>
+    <p align="right"><a href="<s:url action="edit" namespace="/bib"/>">Mettre à jour</a></p>
+    <%} else {%>
+    <p>&nbsp;</p>
+    <%}%>
 </div>
 <%if (!lookingOwnBib) {%>
 <div id="globalRight">

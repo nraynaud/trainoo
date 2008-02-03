@@ -14,7 +14,7 @@
 
         <p><s:password id="oldPassword" name="oldPassword" cssStyle="width:100%"/></p>
         <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null, "adjective", "'nouveau'"); %>
-        <s:submit id="submit" value="Valider !"/>
+        <p><s:submit id="submit" value="Valider !"/></p>
     </s:form>
 
     <p style="text-align:right;"><a href="<s:url action="workouts" namespace="/"/>">Revenir à mon vestiaire</a></p>
