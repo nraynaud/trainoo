@@ -331,10 +331,12 @@ public class HibernateApplication implements Application {
         entityManager.merge(user);
     }
 
-    public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId) throws UserNotFoundException {
+    public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId,
+                                        final int workoutStartIndex) throws UserNotFoundException {
         final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
         final List<Message> messages = fetchPrivateConversation(currentUser, targetUserId);
-        return new BibPageData(target, messages);
+        final PaginatedCollection<Workout> workouts = getWorkouts(target, workoutStartIndex, 10);
+        return new BibPageData(target, messages, workouts);
     }
 
     private List<Message> fetchPrivateConversation(final User currentUser, final Long targetUserId) {
@@ -381,7 +383,7 @@ public class HibernateApplication implements Application {
 
     public List<Message> fetchConversation(final String where, final Object... args) {
         final Query query = entityManager.createQuery(
-                "select m from MessageImpl m where (" + where + ") order by m.date asc");
+                "select m from MessageImpl m where (" + where + ") order by m.date desc");
         if (args.length % 2 != 0)
             throw new IllegalArgumentException(
                     "arg count should be even. \"argname1\",argvalue1, \"argname2\", argavalue2");

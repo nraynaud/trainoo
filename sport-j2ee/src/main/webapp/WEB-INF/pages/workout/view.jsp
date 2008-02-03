@@ -25,8 +25,10 @@
             href="<s:url action="login" namespace="/" includeParams="none"/>">connectant</a> vous pourriez
         régir à cette sortie.</p>
     <%}%>
-    <% call(pageContext, "messageList.jsp", data.messages);
-        if (isLogged()) call(pageContext, "publicMessageForm.jsp", workout);%>
+    <%
+        if (isLogged()) call(pageContext, "publicMessageForm.jsp", workout);
+        call(pageContext, "messageList.jsp", data.messages);
+    %>
 </div>
 
 <div id="globalRight">

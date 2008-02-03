@@ -35,15 +35,17 @@
     <%} else {%>
     <p>&nbsp;</p>
     <%}%>
+    <h2>Ses derniers entraînements</h2>
+    <% call(pageContext, "workoutTable.jsp", data.workouts);%>
 </div>
 <%if (!lookingOwnBib) {%>
 <div id="globalRight">
-    <h2>Mes discussions avec <%=escaped(user.getName())%>
+    <h2>Envoyer un message à <%=escaped(user.getName())%>
     </h2>
     <%
-        call(pageContext, "messageList.jsp", data.messages);
         call(pageContext, "privateMessageForm.jsp", null, "receiver", literal(data.user.getName()), "hideReceiverBox",
                 "true");
+        call(pageContext, "messageList.jsp", data.messages);
     %>
 </div>
 <%}%>

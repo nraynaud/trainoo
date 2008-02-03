@@ -65,13 +65,13 @@
         <% } %>
     </table>
     <%if (workouts.hasPrevious()) { %>
-    <s:url id="previousPageUrl">
+    <s:url id="previousPageUrl" includeParams="get">
         <s:param name="workoutPage" value="previousIndex"/>
     </s:url>
     <div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
     <%}%>
     <%if (workouts.hasNext()) { %>
-    <s:url id="nextPageUrl">
+    <s:url id="nextPageUrl" includeParams="get">
         <s:param name="workoutPage" value="nextIndex"/>
     </s:url>
     <div class="paginationNext"><s:a href="%{nextPageUrl}">Suivants->></s:a></div>
