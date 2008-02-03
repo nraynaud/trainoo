@@ -15,6 +15,8 @@ import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
+import java.util.Date;
+
 @Conversion
 @Results({
 @Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/workout/create.jsp"),
@@ -34,6 +36,12 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
     public String create() {
         application.createWorkout(getDate(), getUser(), getDuration(), getDistance(), getDiscipline());
         return SUCCESS;
+    }
+
+    public void validate() {
+        super.validate();
+        if (getDate().compareTo(new Date()) > 0)
+            addFieldError("date", "Cette date est dans le futur");
     }
 
     public String getFromAction() {
