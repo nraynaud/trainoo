@@ -21,18 +21,20 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class EditAction extends DefaultAction {
+    static {
+        ValidatorFactory.registerValidator("uri", "com.nraynaud.sport.web.URIValidator");
+    }
+
     private String town;
     private String description;
     private String webSite;
-    private final Application application;
 
     public static final String TOWN_MAX_LENGTH = "25";
     public static final String DESCRIPTION_MAX_LENGTH = "500";
     public static final String WEBSITE_MAX_LENGTH = "200";
 
     public EditAction(final Application application) {
-        this.application = application;
-        ValidatorFactory.registerValidator("uri", "com.nraynaud.sport.web.URIValidator");
+        super(application);
     }
 
     @SuppressWarnings({"MethodMayBeStatic"})

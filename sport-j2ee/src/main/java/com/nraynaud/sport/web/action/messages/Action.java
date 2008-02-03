@@ -19,10 +19,9 @@ import org.apache.struts2.config.Results;
 public class Action extends DefaultAction {
     private String receiver;
     private ConversationData conversationData;
-    private final Application application;
 
     public Action(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     public ConversationData getConversationData() {

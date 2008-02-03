@@ -37,6 +37,11 @@
                 </s:url>
                 <li><a href="<s:property value="messageUrl"/>"><s:property value="%{top.correspondentName}"/>
                     (<s:property value="%{top.messageCount}"/>)</a>
+                    <s:if test="%{top.newMessageCount > 0}">
+                        <span style="font-size: small;vertical-align:super;color:red;font-weight:normal;"><s:property
+                                value="%{top.newMessageCount}"/> <s:if
+                                test="%{top.newMessageCount > 1}">nouveaux</s:if><s:else>nouveau</s:else></span>
+                    </s:if>
                 </li>
             </s:iterator>
         </ul>

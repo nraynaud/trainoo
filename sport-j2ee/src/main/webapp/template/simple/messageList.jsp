@@ -7,10 +7,11 @@
 <s:iterator value="top">
     <%
         final Message message = (Message) top();
-        final String cssClass = message.isPublic() ? "public" : currentUser().equals(
+        final String receivedSentClass = message.isPublic() ? "public" : currentUser().equals(
                 message.getReceiver()) ? "received" : "sent";
+        final String newClass = message.isNew() ? "newMessage" : "";
     %>
-    <div class="message <%=cssClass%>">
+    <div class="message <%=receivedSentClass%> <%=newClass%>">
         <% final Workout workout = message.getWorkout();%>
                 <span class="messageHeading">
                     <s:date name="date" format="E dd/M à HH:mm"/>

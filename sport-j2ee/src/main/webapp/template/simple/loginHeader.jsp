@@ -10,6 +10,10 @@
     </div>
     <div class="right">
         <% if (isLogged()) {%>
+        <% final Long newCount = (Long) property("newMessageCount");
+            if (newCount != null && newCount.longValue() > 0) {%>
+        <a href="<s:url action="workouts" namespace="/"/>" style="color:red"><%=newCount%> nouveau(x) message(s)</a>
+        <%}%>
         <span id="loginName"><!--<%=currentUser().getId()%> --><%= escaped(currentUser().getName())%>
             <span style="font-size:x-small;"><%= tabElement("/privatedata", "", "(mot de passe)")%></span>
         </span>

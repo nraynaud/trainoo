@@ -25,7 +25,6 @@ import java.util.Date;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class WriteAction extends DefaultAction implements ChainBackCapable {
-    private final Application application;
     private String content;
     private String receiver;
     private Long aboutWorkoutId;
@@ -36,7 +35,7 @@ public class WriteAction extends DefaultAction implements ChainBackCapable {
     public static final String CONTENT_MAX_LENGTH = "4000";
 
     public WriteAction(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     @PostOnly

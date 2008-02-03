@@ -27,13 +27,11 @@ import javax.servlet.http.HttpServletRequest;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
 public class EditAction extends AbstractWorkoutAction implements ServletRequestAware {
-    private Long id;
-
-    private final Application application;
+    public Long id;
     private boolean delete;
 
     public EditAction(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     @SkipValidation
@@ -70,14 +68,6 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
             }
         } else
             return SUCCESS;
-    }
-
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void setServletRequest(final HttpServletRequest request) {

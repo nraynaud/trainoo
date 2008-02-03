@@ -1,5 +1,6 @@
 package com.nraynaud.sport.web.actionsupport;
 
+import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.Public;
@@ -15,9 +16,14 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @Namespace("/")
 @Public
 public class DefaultAction extends ActionSupport {
-    private String actionDescription;
-
+    public String actionDescription;
     protected SportRequest request;
+    protected final Application application;
+    private Long newMessageCount;
+
+    public DefaultAction(final Application application) {
+        this.application = application;
+    }
 
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
@@ -29,19 +35,21 @@ public class DefaultAction extends ActionSupport {
         ActionContext.getContext().getValueStack().push(data);
     }
 
-    public String getActionDescription() {
-        return actionDescription;
-    }
-
-    public void setActionDescription(final String actionDescription) {
-        this.actionDescription = actionDescription;
-    }
-
     public void setRequest(final SportRequest request) {
         this.request = request;
     }
 
     public User getUser() {
         return request.isLogged() ? request.getSportSession().getUser() : null;
+    }
+
+    public void setActionDescription(final String actionDescription) {
+        this.actionDescription = actionDescription;
+    }
+
+    public Long getNewMessageCount() {
+        if (newMessageCount == null)
+            newMessageCount = application.fetchNewMessagesCount(getUser());
+        return newMessageCount;
     }
 }

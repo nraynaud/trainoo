@@ -307,6 +307,10 @@ div.autocomplete ul li {
     font-weight: bold;
 }
 
+.newMessage {
+    border: black solid thick;
+}
+
 .sent {
     border-top: #C9C9B1 solid thin;
 }

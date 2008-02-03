@@ -16,10 +16,9 @@ import org.apache.struts2.config.Result;
 public class GlobalWorkoutsAction extends DefaultAction implements ModelDriven<StatisticsPageData> {
     private StatisticsPageData statisticsPageData;
     private int workoutPage;
-    private final Application application;
 
     public GlobalWorkoutsAction(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     public StatisticsPageData getModel() {

@@ -1,13 +1,18 @@
 package com.nraynaud.sport.web.actionsupport;
 
+import com.nraynaud.sport.Application;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
-public class PasswordAction extends DefaultAction {
+public abstract class PasswordAction extends DefaultAction {
     protected String password;
     protected String passwordConfirmation;
     public static final String PASSWORD_MAX_LENGTH = "20";
     public static final String PASSWORD_MIN_LENGTH = "5";
+
+    public PasswordAction(final Application application) {
+        super(application);
+    }
 
     public String getPassword() {
         return password;

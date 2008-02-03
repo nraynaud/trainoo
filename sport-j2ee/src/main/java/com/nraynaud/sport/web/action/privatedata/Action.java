@@ -18,10 +18,8 @@ import org.apache.struts2.config.Results;
 public class Action extends PasswordAction {
     private String oldPassword;
 
-    private final Application application;
-
     public Action(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     @PostOnly

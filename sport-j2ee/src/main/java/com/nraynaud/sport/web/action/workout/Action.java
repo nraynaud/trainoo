@@ -21,21 +21,12 @@ import org.apache.struts2.config.Results;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class Action extends DefaultAction implements ModelDriven<WorkoutPageData> {
-    private Long id;
+    public Long id;
     private WorkoutPageData data;
-    private final Application application;
     public int workoutPage;
 
     public Action(final Application application) {
-        this.application = application;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(final Long id) {
-        this.id = id;
+        super(application);
     }
 
     public WorkoutPageData getModel() {

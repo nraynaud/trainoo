@@ -22,11 +22,10 @@ import org.apache.struts2.config.Results;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class Action extends DefaultAction implements ModelDriven<BibPageData> {
     private Long id;
-    final private Application application;
     private BibPageData data;
 
     public Action(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     public BibPageData getModel() {

@@ -24,12 +24,10 @@ import org.apache.struts2.config.Results;
 @Validation
 public class CreateAction extends AbstractWorkoutAction implements ChainBackCapable {
 
-    private final Application application;
-
     private String fromAction;
 
     public CreateAction(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     @PostOnly

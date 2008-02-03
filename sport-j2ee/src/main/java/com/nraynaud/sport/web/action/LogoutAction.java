@@ -23,10 +23,9 @@ import javax.servlet.http.HttpSession;
 public class LogoutAction extends DefaultAction implements ServletRequestAware, ServletResponseAware {
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private final Application application;
 
     public LogoutAction(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     @PostOnly

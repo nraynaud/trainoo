@@ -64,4 +64,6 @@ public interface Application extends UserStore {
     boolean checkAndChangePassword(final User user, final String oldPassword, final String password);
 
     void forgetMe(final User user);
+
+    Long fetchNewMessagesCount(final User user);
 }

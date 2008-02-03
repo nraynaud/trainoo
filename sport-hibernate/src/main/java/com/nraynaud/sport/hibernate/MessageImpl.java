@@ -33,6 +33,11 @@ public class MessageImpl implements Message {
     @JoinColumn(name = "WORKOUT_ID", updatable = false)
     private Workout workout;
 
+    @Column(name = "IS_READ")
+    private boolean read;
+
+    private transient boolean isNew;
+
     public MessageImpl() {
     }
 
@@ -98,5 +103,21 @@ public class MessageImpl implements Message {
 
     public boolean isPublic() {
         return receiver == null;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(final boolean aNew) {
+        isNew = aNew;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(final boolean read) {
+        this.read = read;
     }
 }

@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class LoginAction extends DefaultAction implements ServletRequestAware, ServletResponseAware {
-    private final Application application;
 
     private String login;
     private String password;
@@ -37,7 +36,7 @@ public class LoginAction extends DefaultAction implements ServletRequestAware, S
     private HttpServletResponse response;
 
     public LoginAction(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     @RequiredFieldValidator(message = "Le surnom n'est pas renseigné.")

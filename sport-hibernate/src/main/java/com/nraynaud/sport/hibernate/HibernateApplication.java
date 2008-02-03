@@ -183,6 +183,13 @@ public class HibernateApplication implements Application {
         entityManager.merge(user);
     }
 
+    public Long fetchNewMessagesCount(final User user) {
+        final Query query = entityManager.createQuery(
+                "select count(m) from MessageImpl m where m.receiver = :user and m.read = false ");
+        query.setParameter("user", user);
+        return (Long) query.getSingleResult();
+    }
+
     public void updateWorkout(final Long id,
                               final User user,
                               final Date date,
@@ -227,25 +234,31 @@ public class HibernateApplication implements Application {
         final PaginatedCollection<Workout> workouts = getWorkouts(user, firstIndex, 10);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
-        final Collection<ConversationSumary> correspondants = fetchCorrespondants(user);
+        final Collection<ConversationSumary> correspondants = fetchCorrespondents(user);
         return new UserPageData(workouts, globalDistance, distanceByDiscpline, correspondants);
     }
 
-    private Collection<ConversationSumary> fetchCorrespondants(final User user) {
+    private Collection<ConversationSumary> fetchCorrespondents(final User user) {
         final Map<String, ConversationSumary> correspondants = new HashMap<String, ConversationSumary>();
         {
             final Query query = entityManager.createQuery(
-                    "select m.sender.name, m.receiver.name, count(m) from MessageImpl m where m.receiver=:user OR (m.sender=:user AND m.receiver IS NOT NULL) group by m.sender.name, m.receiver.name");
+                    "select m.sender.name, m.receiver.name, count(m), m.read from MessageImpl m where m.receiver=:user OR (m.sender=:user AND m.receiver IS NOT NULL) group by m.sender.name, m.receiver.name, m.read");
             query.setParameter("user", user);
             for (final Object[] row : (List<Object[]>) query.getResultList()) {
-                final String name = (String) (row[0].equals(user.getName()) ? row[1] : row[0]);
+                final boolean sent = row[0].equals(user.getName());
+                final String name = (String) (sent ? row[1] : row[0]);
                 final ConversationSumary previous = correspondants.get(name);
                 final long count = ((Number) row[2]).longValue();
+                final long newCount;
+                if (row[3].equals(Boolean.FALSE) && !sent)
+                    newCount = count;
+                else
+                    newCount = 0;
                 if (previous != null) {
                     correspondants.put(name, new ConversationSumary(name,
-                            count + previous.messageCount));
+                            count + previous.messageCount, newCount + previous.newMessageCount));
                 } else
-                    correspondants.put(name, new ConversationSumary(name, count));
+                    correspondants.put(name, new ConversationSumary(name, count, newCount));
             }
         }
         return new TreeSet<ConversationSumary>(correspondants.values());
@@ -348,7 +361,17 @@ public class HibernateApplication implements Application {
                                                   final Long aboutWorkoutId) throws
             WorkoutNotFoundException {
         final Workout aboutWorkout = aboutWorkoutId == null ? null : fetchWorkout(aboutWorkoutId);
-        return new ConversationData(fetchConversation(sender, receiver), aboutWorkout);
+        final ConversationData conversationData = new ConversationData(fetchConversation(sender, receiver),
+                aboutWorkout);
+        for (final Message message : conversationData.messages) {
+            final MessageImpl message1 = (MessageImpl) message;
+            if (!message1.isRead() && message1.getReceiver().equals(sender)) {
+                message1.setRead(true);
+                message1.setNew(true);
+                entityManager.merge(message);
+            }
+        }
+        return conversationData;
     }
 
     @SuppressWarnings({"unchecked"})

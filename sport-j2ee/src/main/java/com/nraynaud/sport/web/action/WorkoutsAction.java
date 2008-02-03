@@ -23,12 +23,11 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
 public class WorkoutsAction extends DefaultAction implements ModelDriven<StatisticsPageData> {
-    private final Application application;
     private UserPageData data;
     public int workoutPage;
 
     public WorkoutsAction(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     @SkipValidation

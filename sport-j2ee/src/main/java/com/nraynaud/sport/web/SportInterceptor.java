@@ -69,9 +69,9 @@ public class SportInterceptor extends AbstractInterceptor {
     private static void setMetadata(final Object action, final ActionProxy actionProxy,
                                     final ActionContext invocationContext) {
         if (action instanceof DefaultAction) {
-            final String encodedAction = new ActionDetail(actionProxy.getNamespace(), actionProxy.getActionName(),
+            ((DefaultAction) action).actionDescription = new ActionDetail(actionProxy.getNamespace(),
+                    actionProxy.getActionName(),
                     invocationContext.getParameters()).encodedAction;
-            ((DefaultAction) action).setActionDescription(encodedAction);
         }
     }
 

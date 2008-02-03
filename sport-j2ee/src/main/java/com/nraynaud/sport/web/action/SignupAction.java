@@ -27,9 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class SignupAction extends PasswordAction implements ServletRequestAware {
-
-    private final Application application;
-
     private String login;
     private HttpServletRequest request;
     public static final String LOGIN_MAX_LENGTH = "20";
@@ -37,7 +34,7 @@ public class SignupAction extends PasswordAction implements ServletRequestAware 
     private boolean rememberMe = false;
 
     public SignupAction(final Application application) {
-        this.application = application;
+        super(application);
     }
 
     @StringLengthFieldValidator(message = "Votre surnom doit comporter entre "

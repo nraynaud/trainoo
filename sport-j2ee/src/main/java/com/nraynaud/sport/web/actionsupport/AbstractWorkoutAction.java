@@ -1,5 +1,6 @@
 package com.nraynaud.sport.web.actionsupport;
 
+import com.nraynaud.sport.Application;
 import com.nraynaud.sport.web.SportRequest;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -11,6 +12,10 @@ public class AbstractWorkoutAction extends DefaultAction {
     private Long duration;
     private Double distance;
     private String discipline;
+
+    public AbstractWorkoutAction(final Application application) {
+        super(application);
+    }
 
     @TypeConversion(converter = "com.nraynaud.sport.web.converter.DateConverter")
     public void setDate(final Date date) {

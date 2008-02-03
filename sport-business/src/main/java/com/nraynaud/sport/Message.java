@@ -12,4 +12,6 @@ public interface Message {
     Workout getWorkout();
 
     boolean isPublic();
+
+    boolean isNew();
 }
