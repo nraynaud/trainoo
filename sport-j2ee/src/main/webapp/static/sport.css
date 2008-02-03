@@ -397,6 +397,7 @@ table.displayFormLayoutTable tr td .label {
     font-size: larger;
     border: solid thick #57470C;
     text-align: center;
+    margin: 1.5em;
 }
 
 .messageNumber, .messageNumber:hover {

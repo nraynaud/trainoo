@@ -30,7 +30,7 @@
 </div>
 
 <div id="globalRight">
-    <h2><%=currentUser() != null && currentUser().equals(runner) ? "Mes" : "Ses"%> dernier entraînements</h2>
+    <h2><%=currentUser() != null && currentUser().equals(runner) ? "Mes" : "Ses"%> derniers entraînements</h2>
     <% call(pageContext, "workoutTable.jsp", data.lastWorkouts, "highLight", workout.getId());%>
     <% if (isLogged() && !runner.equals(currentUser())) {%>
     <h2>Envoyer un message à <%=escaped(runner.getName())%>
