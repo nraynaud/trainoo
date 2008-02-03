@@ -48,8 +48,12 @@
         <div><p class="smaller" style="text-align:center;">Copyright Nicolas Raynaud 2008.
             <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
 
-
+        <% if (pageContext.getRequest().getParameter("noCompress") != null) {%>
         <script type="text/javascript" src="<s:url value="/static/prototype.js"/>"></script>
+        <script type="text/javascript" src="<s:url value="/static/scriptaculous.js"/>"></script>
+        <%} else {%>
+        <script type="text/javascript" src="<s:url value="/static/protoaculous1.6.packed.js"/>"></script>
+        <%}%>
         <!--[if !IE]>-->
         <script type="text/javascript">
             var canvas = new Element('canvas', {'id': 'gradient'});
@@ -66,14 +70,14 @@
             ctx.fillRect(0, 0, width, height);
         </script>
         <!--<![endif]-->
-        <script type="text/javascript" src="<s:url value="/static/scriptaculous.js"/>"></script>
-        <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
-        <r:writeJavascript/>
         <!--[if IE]>
         <script type="text/javascript">
               $('logoHref').insert("<div id='gradient'><"+"/div>");
         </script>
         <![endif]-->
+        <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
+        <r:writeJavascript/>
+
         <!--[if lt IE 7]>
         <script type="text/javascript">
             fixPNGIE();
