@@ -13,7 +13,8 @@
         <span id="loginName"><!--<%=currentUser().getId()%> --><%= escaped(currentUser().getName())%>
             <span style="font-size:x-small;"><%= tabElement("/privatedata", "", "(mot de passe)")%></span>
         </span>
-        <%= tabElement("/", "workouts", "Mon vestiaire")%><%= tabElement("/bib", "", "Mon dossard")%>
+        <%= tabElement("/", "workouts", "Mon vestiaire")%><%= tabElement("/bib", "", "Mon dossard", "id",
+            String.valueOf(currentUser().getId()))%>
         <s:form id="logoutForm" namespace="/" action="logout" method="POST">
             <s:submit cssClass="logoutButton" value="Déconnexion"/>
         </s:form>
@@ -23,13 +24,32 @@
     </div>
 </div>
 <%!
+    private static String getFirstValue(final String key) {
+        final Object val = ActionContext.getContext().getParameters().get(key);
+        if (val != null)
+            return ((String[]) val)[0];
+        return null;
+    }
+
     private static final SportActionMapper MAPPER = new SportActionMapper();
 
-    private static String tabElement(final String namespace, final String action, final String content) {
+    private static String tabElement(final String namespace, final String action, final String content,
+                                     final String... params) {
         final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
-        final String cssClass = namespace.equals(mapping.getNamespace()) && action.equals(
-                mapping.getName()) ? "class='selected'" : "";
+        boolean selected = namespace.equals(mapping.getNamespace()) && action.equals(
+                mapping.getName());
         final String url = MAPPER.getUriFromActionMapping(new ActionMapping(action, namespace, null, null));
-        return "<a " + cssClass + " href='" + url + "'>" + content + "</a>";
+        final String query;
+        if (params.length > 0) {
+            final StringBuilder getParams = new StringBuilder(20);
+            getParams.append("?");
+            for (int i = 0; i < params.length; i += 2) {
+                getParams.append(params[i]).append('=').append(params[i + 1]);
+                selected &= params[i + 1].equals(getFirstValue(params[i]));
+            }
+            query = getParams.toString();
+        } else
+            query = "";
+        return "<a " + (selected ? "class='selected'" : "") + " href='" + url + query + "'>" + content + "</a>";
     }
 %>
