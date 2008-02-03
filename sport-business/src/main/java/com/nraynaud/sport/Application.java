@@ -66,5 +66,5 @@ public interface Application extends UserStore {
 
     void forgetMe(final User user);
 
-    Long fetchNewMessagesCount(final User user);
+    List<NewMessageData> fetchNewMessagesCount(final User user);
 }

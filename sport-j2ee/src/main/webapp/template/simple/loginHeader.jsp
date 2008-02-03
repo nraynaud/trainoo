@@ -1,18 +1,27 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.data.NewMessageData" %>
 <%@ page import="com.nraynaud.sport.web.SportActionMapper" %>
 <%@ page import="com.opensymphony.xwork2.ActionContext" %>
 <%@ page import="org.apache.struts2.dispatcher.mapper.ActionMapping" %>
+<%@ page import="java.util.List" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="loginHeader">
     <div class="left"><%= tabElement("/", "", "Tableau général")%>
     </div>
     <div class="right">
-        <% if (isLogged()) {%>
-        <% final Long newCount = (Long) property("newMessageCount");
-            if (newCount != null && newCount.longValue() > 0) {%>
-        <a href="<s:url action="workouts" namespace="/"/>" style="color:red"><%=newCount%> nouveau(x) message(s)</a>
+        <% if (isLogged()) {
+            final List<NewMessageData> newMessages = (List<NewMessageData>) property("newMessages");
+            if (newMessages.size() > 0) {
+                int count = 0;
+                for (final NewMessageData message : newMessages) {
+                    count += message.messageCount;
+                }%>
+        <s:url id="messagesURL" action="" namespace="/messages">
+            <s:param name="receiver" value="newMessages.get(0).sender"/>
+        </s:url>
+        <a href="<s:property value="%{messagesURL}"/>" style="color:red"><%=count%> nouveau(x) message(s)</a>
         <%}%>
         <span id="loginName"><!--<%=currentUser().getId()%> --><%= escaped(currentUser().getName())%>
             <span style="font-size:x-small;"><%= tabElement("/privatedata", "", "(mot de passe)")%></span>

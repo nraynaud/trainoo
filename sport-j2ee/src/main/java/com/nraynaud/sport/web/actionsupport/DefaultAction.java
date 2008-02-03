@@ -2,6 +2,7 @@ package com.nraynaud.sport.web.actionsupport;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.data.NewMessageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.SportRequest;
@@ -12,6 +13,8 @@ import org.apache.struts2.config.Namespace;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
+import java.util.List;
+
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Namespace("/")
 @Public
@@ -19,7 +22,7 @@ public class DefaultAction extends ActionSupport {
     public String actionDescription;
     protected SportRequest request;
     protected final Application application;
-    private Long newMessageCount;
+    private List<NewMessageData> newMessages;
 
     public DefaultAction(final Application application) {
         this.application = application;
@@ -47,9 +50,9 @@ public class DefaultAction extends ActionSupport {
         this.actionDescription = actionDescription;
     }
 
-    public Long getNewMessageCount() {
-        if (newMessageCount == null)
-            newMessageCount = application.fetchNewMessagesCount(getUser());
-        return newMessageCount;
+    public List<NewMessageData> getNewMessages() {
+        if (newMessages == null)
+            newMessages = application.fetchNewMessagesCount(getUser());
+        return newMessages;
     }
 }

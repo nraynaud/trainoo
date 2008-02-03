@@ -183,11 +183,11 @@ public class HibernateApplication implements Application {
         entityManager.merge(user);
     }
 
-    public Long fetchNewMessagesCount(final User user) {
+    public List<NewMessageData> fetchNewMessagesCount(final User user) {
         final Query query = entityManager.createQuery(
-                "select count(m) from MessageImpl m where m.receiver = :user and m.read = false ");
+                "select new com.nraynaud.sport.data.NewMessageData(m.sender.name, count(m)) from MessageImpl m where m.receiver = :user and m.read = false group by m.sender.name");
         query.setParameter("user", user);
-        return (Long) query.getSingleResult();
+        return query.getResultList();
     }
 
     public void updateWorkout(final Long id,
