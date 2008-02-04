@@ -33,10 +33,9 @@
     <% if (lookingOwnBib) {%>
     <p align="right"><a href="<s:url action="edit" namespace="/bib"/>">Mettre à jour</a></p>
     <%} else {%>
-    <p>&nbsp;</p>
-    <%}%>
-    <h2>Ses derniers entraînements</h2>
+    <h2>Ses dernières sorties</h2>
     <% call(pageContext, "workoutTable.jsp", data.workouts);%>
+    <%}%>
 </div>
 <%if (!lookingOwnBib) {%>
 <div id="globalRight">

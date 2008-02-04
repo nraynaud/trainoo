@@ -28,9 +28,7 @@
         </span>
         <%= tabElement("/", "workouts", "Mon vestiaire")%><%= tabElement("/bib", "", "Mon dossard", "id",
             String.valueOf(currentUser().getId()))%>
-        <s:form id="logoutForm" namespace="/" action="logout" method="POST">
-            <s:submit cssClass="logoutButton" value="Déconnexion"/>
-        </s:form>
+        <a href="<s:url action="logout" namespace="/"/>">Déconnexion</a>
         <% } else { %>
         <%= tabElement("/", "login", "Connexion")%> <%= tabElement("/", "signup", "Inscription")%>
         <% } %>
