@@ -318,7 +318,7 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     public List<String> fechLoginBeginningBy(final String prefix) {
         final Query query = entityManager.createQuery(
-                "select u.name from UserImpl u where u.name LIKE CONCAT(:prefix, '%')");
+                "select u.name from UserImpl u where u.name<>'googlebot' AND u.name LIKE CONCAT(:prefix, '%')");
         query.setParameter("prefix", prefix);
         return query.getResultList();
     }
