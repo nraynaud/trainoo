@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DateConverter extends StrutsTypeConverter {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("dd/MM/yy");
     private static final Parser FULL_FORMAT_PARSER = new Parser() {
         public DateTime parse(final String source) throws IllegalArgumentException {
             return DATE_FORMATTER.parseDateTime(source);
