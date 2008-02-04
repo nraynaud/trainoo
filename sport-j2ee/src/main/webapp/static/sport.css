@@ -47,6 +47,11 @@ input, select, textarea {
     vertical-align: baseline;
 }
 
+form {
+    margin: 0;
+    padding: 0;
+}
+
 a, a:visited {
     text-decoration: none;
     color: #57470C;
@@ -137,23 +142,6 @@ h2, h1 {
     color: red;
 }
 
-#logoutForm {
-    display: inline;
-}
-
-#logoutForm input {
-    border: none;
-    cursor: pointer;
-    background: none;
-    text-decoration: none;
-    color: #57470C;
-    font-family: Verdana, arial, helvetica, sans-serif;
-}
-
-#logoutForm input:hover {
-    text-decoration: underline;
-}
-
 p.loginLabel {
     padding-top: 1em;
 }
@@ -189,7 +177,7 @@ p.loginLabel {
     padding: 0.5em 0.5em 0;
 }
 
-#loginHeader a, #loginHeader #logoutForm input {
+#loginHeader a {
     font-weight: bold;
     color: #F2F2E8;
     padding-left: 0.3em;
@@ -280,6 +268,13 @@ div.autocomplete ul li {
     color: #968148;
     background-color: lightgray;
     padding-left: 0.5em;
+    border: none;
+}
+
+.messageHeading form input {
+    background-color: lightgray;
+    color: black;
+    border: none;
 }
 
 .messageContent {
@@ -314,9 +309,10 @@ div.autocomplete ul li {
     border-top: #C9C9B1 solid thin;
 }
 
-.sent .messageHeading {
+.sent .messageHeading, .sent form input {
     color: gray;
     background: none;
+    border: none;
 }
 
 .sent .messageContent {
