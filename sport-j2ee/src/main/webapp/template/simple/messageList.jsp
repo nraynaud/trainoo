@@ -13,9 +13,10 @@
     %>
     <div class="message <%=receivedSentClass%> <%=newClass%>">
         <% final Workout workout = message.getWorkout();%>
-                <span class="messageHeading">
-                    <s:date name="date" format="E dd/M à HH:mm"/>
-                    <% final String name = escaped(message.getSender().getName()); %>
+        <div class="messageHeading" style="overflow:hidden;">
+            <div style="float:left;">
+                <s:date name="date" format="E dd/M à HH:mm"/>
+                <% final String name = escaped(message.getSender().getName()); %>
                         <span class="message_from">
                             <% if (isLogged()) {%>
                             <s:url id="bibUrl" action="" namespace="/bib" includeParams="none">
@@ -27,8 +28,16 @@
                             <%=name%>
                             <%}%>
                         </span>
-                    a écrit&nbsp;:
-                </span>
+                a écrit&nbsp;:
+            </div>
+            <div style="float:right;">
+                <s:form action="delete" namespace="/messages">
+                    <s:hidden name="id" value="%{id}"/>
+                    <s:hidden name="fromAction" value="%{actionDescription}"/>
+                    <s:submit value="X" label="supprimer"/>
+                </s:form>
+            </div>
+        </div>
         <% if (workout != null) {%>
         <div class="workout">à propos de la sortie&nbsp;:
             <span class="tinyWorkout"><% call(pageContext, "workoutComponent.jsp", workout);%></span>

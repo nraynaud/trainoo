@@ -190,6 +190,20 @@ public class HibernateApplication implements Application {
         return query.getResultList();
     }
 
+    public void deleteMessageFor(final Long id, final User user) {
+        final Query query = entityManager.createNativeQuery(
+                "update MESSAGES SET deleted_by=:user_id where ID=:id and deleted_by IS NULL and receiver_id <> sender_id");
+        query.setParameter("user_id", user.getId());
+        query.setParameter("id", id);
+        final int updated = query.executeUpdate();
+        if (updated == 0) {
+            final Query query2 = entityManager.createNativeQuery(
+                    "delete from MESSAGES where ID=:id");
+            query2.setParameter("id", id);
+            query2.executeUpdate();
+        }
+    }
+
     public void updateWorkout(final Long id,
                               final User user,
                               final Date date,
@@ -242,7 +256,9 @@ public class HibernateApplication implements Application {
         final Map<String, ConversationSumary> correspondants = new HashMap<String, ConversationSumary>();
         {
             final Query query = entityManager.createQuery(
-                    "select m.sender.name, m.receiver.name, count(m), m.read from MessageImpl m where m.receiver=:user OR (m.sender=:user AND m.receiver IS NOT NULL) group by m.sender.name, m.receiver.name, m.read");
+                    "select m.sender.name, m.receiver.name, count(m), m.read from MessageImpl m where (m.receiver=:user OR "
+                            + "(m.sender=:user AND m.receiver IS NOT NULL)) AND(m.deleter IS NULL OR m.deleter <> :user) "
+                            + "group by m.sender.name, m.receiver.name, m.read");
             query.setParameter("user", user);
             for (final Object[] row : (List<Object[]>) query.getResultList()) {
                 final boolean sent = row[0].equals(user.getName());
@@ -340,8 +356,9 @@ public class HibernateApplication implements Application {
     }
 
     private List<Message> fetchPrivateConversation(final User currentUser, final Long targetUserId) {
-        return fetchConversation("(m.receiver.id=:userId AND m.sender=:currentUser)"
-                + "OR(m.receiver=:currentUser AND m.sender.id=:userId)",
+        return fetchConversation("((m.receiver.id=:userId AND m.sender=:currentUser)"
+                + "OR(m.receiver=:currentUser AND m.sender.id=:userId))"
+                + "AND (deleter <> :currentUser OR deleter IS NULL)",
                 "currentUser",
                 currentUser,
                 "userId",
@@ -350,8 +367,9 @@ public class HibernateApplication implements Application {
 
     public List<Message> fetchConversation(final User currentUser, final String receiverName) {
         return fetchConversation(
-                "(m.receiver.name=:receiverName AND m.sender=:currentUser)"
-                        + "OR(m.receiver=:currentUser AND m.sender.name=:receiverName)",
+                "((m.receiver.name=:receiverName AND m.sender=:currentUser)"
+                        + "OR(m.receiver=:currentUser AND m.sender.name=:receiverName)) "
+                        + "AND (deleter <> :currentUser OR deleter IS NULL)",
                 "currentUser",
                 currentUser,
                 "receiverName",
@@ -381,7 +399,7 @@ public class HibernateApplication implements Application {
         return fetchConversation("m.workout.id =:workoutId AND m.sender is null", "workoutId", workoutId);
     }
 
-    public List<Message> fetchConversation(final String where, final Object... args) {
+    private List<Message> fetchConversation(final String where, final Object... args) {
         final Query query = entityManager.createQuery(
                 "select m from MessageImpl m where (" + where + ") order by m.date desc");
         if (args.length % 2 != 0)

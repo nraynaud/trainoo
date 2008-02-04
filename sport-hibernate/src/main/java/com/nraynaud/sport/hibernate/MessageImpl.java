@@ -25,6 +25,10 @@ public class MessageImpl implements Message {
     @JoinColumn(name = "RECEIVER_ID", nullable = true, updatable = false)
     private User receiver;
 
+    @ManyToOne(targetEntity = UserImpl.class)
+    @JoinColumn(name = "DELETED_BY", nullable = true)
+    private User deleter;
+
     @Column(name = "DATE", nullable = false)
     @OrderBy
     private Date date;
@@ -119,5 +123,9 @@ public class MessageImpl implements Message {
 
     public void setRead(final boolean read) {
         this.read = read;
+    }
+
+    public User getDeleter() {
+        return deleter;
     }
 }
