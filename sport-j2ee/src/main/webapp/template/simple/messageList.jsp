@@ -30,6 +30,7 @@
                         </span>
                 a écrit&nbsp;:
             </div>
+            <%if (message.isPublic() && message.getSender().equals(currentUser()) || !message.isPublic()) {%>
             <div style="float:right;">
                 <s:form action="delete" namespace="/messages">
                     <s:hidden name="id" value="%{id}"/>
@@ -37,6 +38,7 @@
                     <s:submit value="X" label="supprimer"/>
                 </s:form>
             </div>
+            <%}%>
         </div>
         <% if (workout != null) {%>
         <div class="workout">à propos de la sortie&nbsp;:

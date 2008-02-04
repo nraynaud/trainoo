@@ -192,14 +192,15 @@ public class HibernateApplication implements Application {
 
     public void deleteMessageFor(final Long id, final User user) {
         final Query query = entityManager.createNativeQuery(
-                "update MESSAGES SET deleted_by=:user_id where ID=:id and deleted_by IS NULL and receiver_id <> sender_id");
+                "update MESSAGES SET deleted_by=:user_id where ID=:id and deleted_by IS NULL and receiver_id <> sender_id and (receiver_id=:user_id or sender_id=:user_id)");
         query.setParameter("user_id", user.getId());
         query.setParameter("id", id);
         final int updated = query.executeUpdate();
         if (updated == 0) {
             final Query query2 = entityManager.createNativeQuery(
-                    "delete from MESSAGES where ID=:id");
+                    "delete from MESSAGES where ID=:id and (receiver_id IS NOT NULL OR sender_id=:user_id)");
             query2.setParameter("id", id);
+            query2.setParameter("user_id", user.getId());
             query2.executeUpdate();
         }
     }
