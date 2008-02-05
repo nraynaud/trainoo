@@ -35,7 +35,7 @@
                 <s:form action="delete" namespace="/messages">
                     <s:hidden name="id" value="%{id}"/>
                     <s:hidden name="fromAction" value="%{actionDescription}"/>
-                    <s:submit value="X" label="supprimer"/>
+                    <s:submit value="X" title="supprimer"/>
                 </s:form>
             </div>
             <%}%>

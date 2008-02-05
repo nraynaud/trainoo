@@ -11,7 +11,7 @@
     <s:form action="signup">
         <s:actionerror/>
         <s:fielderror/>
-
+        <s:hidden name="fromAction" value="%{fromAction}"/>
         <p class="loginLabel"><label for="login">Votre surnom</label></p>
 
         <div><s:textfield id="login" name="login" cssStyle="width:100%"/></div>

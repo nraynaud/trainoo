@@ -2,12 +2,9 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
-import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.Public;
-import com.nraynaud.sport.web.SportSession;
+import com.nraynaud.sport.web.*;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
-import com.nraynaud.sport.web.result.Redirect;
+import com.nraynaud.sport.web.result.RedirectBack;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import org.apache.struts2.config.ParentPackage;
@@ -23,17 +20,18 @@ import javax.servlet.http.HttpServletResponse;
 
 @Results({
 @Result(name = Action.INPUT, value = "/WEB-INF/pages/login.jsp"),
-@Result(type = Redirect.class, value = Constants.WORKOUTS_ACTION)
+@Result(type = RedirectBack.class, value = Constants.WORKOUTS_ACTION)
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
-public class LoginAction extends DefaultAction implements ServletRequestAware, ServletResponseAware {
+public class LoginAction extends DefaultAction implements ServletRequestAware, ServletResponseAware, ChainBackCapable {
 
     private String login;
     private String password;
     private HttpServletRequest request;
     public boolean rememberMe = false;
     private HttpServletResponse response;
+    public String fromAction;
 
     public LoginAction(final Application application) {
         super(application);
@@ -89,5 +87,9 @@ public class LoginAction extends DefaultAction implements ServletRequestAware, S
 
     public void setServletResponse(final HttpServletResponse response) {
         this.response = response;
+    }
+
+    public String getFromAction() {
+        return fromAction;
     }
 }

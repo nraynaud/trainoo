@@ -272,9 +272,10 @@ div.autocomplete ul li {
 }
 
 .messageHeading form input {
-    background-color: lightgray;
+    background: none;
     color: black;
     border: none;
+    padding: 1px;
 }
 
 .messageContent {
@@ -309,14 +310,24 @@ div.autocomplete ul li {
     border-top: #C9C9B1 solid thin;
 }
 
-.sent .messageHeading, .sent form input {
+.sent .messageHeading {
     color: gray;
     background: none;
     border: none;
 }
 
+.sent .messageHeading form input {
+    color: gray;
+}
+
 .sent .messageContent {
     color: gray;
+}
+
+.messageHeading form input:hover {
+    border: solid darkgray 1px;
+    padding: 0;
+    cursor: pointer;
 }
 
 textarea.messageContentArea {

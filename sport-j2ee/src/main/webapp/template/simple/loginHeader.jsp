@@ -4,6 +4,8 @@
 <%@ page import="com.nraynaud.sport.web.SportActionMapper" %>
 <%@ page import="com.opensymphony.xwork2.ActionContext" %>
 <%@ page import="org.apache.struts2.dispatcher.mapper.ActionMapping" %>
+<%@ page import="java.io.UnsupportedEncodingException" %>
+<%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.List" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -29,13 +31,16 @@
         <%= tabElement("/", "workouts", "Mon vestiaire")%><%= tabElement("/bib", "", "Mon dossard", "id",
             String.valueOf(currentUser().getId()))%>
         <a href="<s:url action="logout" namespace="/"/>">Déconnexion</a>
-        <% } else { %>
-        <%= tabElement("/", "login", "Connexion")%> <%= tabElement("/", "signup", "Inscription")%>
+        <% } else {
+            final String from = stringProperty("fromAction") == null ? stringProperty(
+                    "actionDescription") : stringProperty("fromAction");%>
+        <%= tabElement("/", "login", "Connexion", "fromAction", from)%> <%= tabElement("/", "signup", "Inscription",
+            "fromAction", from)%>
         <% } %>
     </div>
 </div>
 <%!
-    private static String getFirstValue(final String key) {
+    private static String getFirstValueEncoded(final String key) {
         final Object val = ActionContext.getContext().getParameters().get(key);
         if (val != null)
             return ((String[]) val)[0];
@@ -45,7 +50,7 @@
     private static final SportActionMapper MAPPER = new SportActionMapper();
 
     private static String tabElement(final String namespace, final String action, final String content,
-                                     final String... params) {
+                                     final String... params) throws UnsupportedEncodingException {
         final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
         boolean selected = namespace.equals(mapping.getNamespace()) && action.equals(
                 mapping.getName());
@@ -55,8 +60,8 @@
             final StringBuilder getParams = new StringBuilder(20);
             getParams.append("?");
             for (int i = 0; i < params.length; i += 2) {
-                getParams.append(params[i]).append('=').append(params[i + 1]);
-                selected &= params[i + 1].equals(getFirstValue(params[i]));
+                getParams.append(params[i]).append('=').append(URLEncoder.encode(params[i + 1], "UTF-8"));
+                selected &= params[i + 1].equals(getFirstValueEncoded(params[i]));
             }
             query = getParams.toString();
         } else
