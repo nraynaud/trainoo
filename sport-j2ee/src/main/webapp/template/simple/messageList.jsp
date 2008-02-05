@@ -19,7 +19,7 @@
     %>
     <div class="message <%=cssClasses%>">
         <% final Workout workout = message.getWorkout();%>
-        <div class="messageHeading" style="overflow:hidden;">
+        <div class="messageHeading">
             <div style="float:left;">
                 <s:date name="date" format="E dd/M à HH:mm"/>
                 <% final String name = escaped(message.getSender().getName()); %>

@@ -266,9 +266,10 @@ div.autocomplete ul li {
 .messageHeading {
     font-size: smaller;
     color: #968148;
-    background-color: lightgray;
+    background-color: #D3D3D3;
     padding-left: 0.5em;
     border: none;
+    overflow: hidden;
 }
 
 .messageHeading form input {
@@ -294,7 +295,7 @@ div.autocomplete ul li {
 
 .received, .public {
     background-color: white;
-    border: darkgray solid thin;
+    border: #A9A9A9 solid thin;
 }
 
 .received .messageHeading .message_from, .public .messageHeading .message_from {
@@ -325,7 +326,7 @@ div.autocomplete ul li {
 }
 
 .messageHeading form input:hover {
-    border: solid darkgray 1px;
+    border: solid #A9A9A9 1px;
     padding: 0;
     cursor: pointer;
 }

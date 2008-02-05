@@ -106,7 +106,7 @@ public class PrivateMessageImpl implements PrivateMessage {
     }
 
     public boolean canDelete(final User user) {
-        return user.equals(sender) || user.equals(receiver);
+        return user != null && (user.equals(sender) || user.equals(receiver));
     }
 
     public User getReceiver() {

@@ -74,7 +74,7 @@ public class PublicMessageImpl implements PublicMessage {
     }
 
     public boolean canDelete(final User user) {
-        return user.equals(sender);
+        return user != null && user.equals(sender);
     }
 
     public boolean isNew() {
