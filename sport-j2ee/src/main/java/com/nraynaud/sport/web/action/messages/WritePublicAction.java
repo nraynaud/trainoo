@@ -1,7 +1,6 @@
 package com.nraynaud.sport.web.action.messages;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.ChainBackCapable;
 import com.nraynaud.sport.web.Constants;
@@ -10,7 +9,7 @@ import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.RedirectBack;
-import com.opensymphony.xwork2.Action;
+import static com.opensymphony.xwork2.Action.INPUT;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
@@ -21,33 +20,28 @@ import java.util.Date;
 
 @Results({
 @Result(type = RedirectBack.class, value = Constants.WORKOUTS_ACTION),
-@Result(name = Action.INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
+@Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class WriteAction extends DefaultAction implements ChainBackCapable {
+public class WritePublicAction extends DefaultAction implements ChainBackCapable {
     private String content;
-    private String receiver;
-    private Long aboutWorkoutId;
-
-    private String fromAction;
+    public Long aboutWorkoutId;
+    public String fromAction;
 
     public static final String CONTENT_MAX_LENGTH = "4000";
 
-    public WriteAction(final Application application) {
+    public WritePublicAction(final Application application) {
         super(application);
     }
 
     @PostOnly
     public String create() {
         try {
-            application.createPrivateMessage(getUser(), receiver, content, new Date(), aboutWorkoutId);
-            return SUCCESS;
-        } catch (UserNotFoundException e) {
-            addFieldError("receiver", "L'utilisateur '" + getReceiver() + "' n'existe pas.");
-            return INPUT;
+            application.createPublicMessage(getUser(), content, new Date(), aboutWorkoutId);
         } catch (WorkoutNotFoundException e) {
             throw new DataInputException(e);
         }
+        return SUCCESS;
     }
 
     @RequiredStringValidator(message = "Vous avez oublié le message.")
@@ -57,32 +51,11 @@ public class WriteAction extends DefaultAction implements ChainBackCapable {
         this.content = content;
     }
 
-    @RequiredStringValidator(message = "vous avez oublié le destinataire")
-    public void setReceiver(final String receiver) {
-        this.receiver = receiver.length() > 0 ? receiver : null;
-    }
-
     public String getContent() {
         return content;
     }
 
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public Long getAboutWorkoutId() {
-        return aboutWorkoutId;
-    }
-
-    public void setAboutWorkoutId(final Long aboutWorkoutId) {
-        this.aboutWorkoutId = aboutWorkoutId;
-    }
-
     public String getFromAction() {
         return fromAction;
-    }
-
-    public void setFromAction(final String fromAction) {
-        this.fromAction = fromAction;
     }
 }

@@ -1,7 +1,7 @@
 
 <#if (actionMessages?exists && actionMessages?size > 0)>
 	<ul class="actionMessages">
-		<#list actionMessages as message>
+		<#list actionMessages as privateMessage>
 			<li<#rt/>
 <#if parameters.cssClass?exists>
  class="${parameters.cssClass?html} "<#rt/>
@@ -11,7 +11,7 @@
 <#if parameters.cssStyle?exists>
  style="${parameters.cssStyle?html}"<#rt/>
 </#if>
->${message}</li>
+>${privateMessage}</li>
 		</#list>
 	</ul>
 </#if>

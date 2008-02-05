@@ -32,14 +32,14 @@ public interface Application extends UserStore {
 
     UserPageData fetchUserPageData(final User user, final int firstIndex);
 
-    Message createPrivateMessage(User sender,
-                                 String receiverName,
-                                 String content,
-                                 Date date,
-                                 final Long aboutWorkout) throws UserNotFoundException, WorkoutNotFoundException;
+    PrivateMessage createPrivateMessage(User sender,
+                                        String receiverName,
+                                        String content,
+                                        Date date,
+                                        final Long aboutWorkout) throws UserNotFoundException, WorkoutNotFoundException;
 
     @SuppressWarnings({"unchecked"})
-    List<Message> fetchMessages(User receiver);
+    List<PrivateMessage> fetchMessages(User receiver);
 
     List<String> fechLoginBeginningBy(final String prefix);
 
@@ -51,10 +51,10 @@ public interface Application extends UserStore {
     ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId) throws
             WorkoutNotFoundException;
 
-    Message createPublicMessage(final User sender,
-                                final String content,
-                                final Date date,
-                                final Long aboutWorkoutId) throws
+    PublicMessage createPublicMessage(final User sender,
+                                      final String content,
+                                      final Date date,
+                                      final Long aboutWorkoutId) throws
             WorkoutNotFoundException;
 
     Workout fetchWorkout(Long id) throws WorkoutNotFoundException;
@@ -69,4 +69,6 @@ public interface Application extends UserStore {
     List<NewMessageData> fetchNewMessagesCount(final User user);
 
     void deleteMessageFor(final Long id, final User user);
+
+    void deletePublicMessageFor(final Long messageId, final User user);
 }

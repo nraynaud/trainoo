@@ -1,6 +1,6 @@
 package com.nraynaud.sport.hibernate;
 
-import com.nraynaud.sport.Message;
+import com.nraynaud.sport.PublicMessage;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.Workout;
 
@@ -33,8 +33,8 @@ public class WorkoutImpl implements Workout {
     @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
     private User user;
 
-    @OneToMany(targetEntity = MessageImpl.class, mappedBy = "workout")
-    private Collection<Message> messages;
+    @OneToMany(targetEntity = PublicMessageImpl.class, mappedBy = "workout")
+    private Collection<PublicMessage> publicMessages;
 
     transient Long messageNumber;
 
@@ -105,7 +105,7 @@ public class WorkoutImpl implements Workout {
         this.messageNumber = messageNumber;
     }
 
-    public Collection<Message> getMessages() {
-        return messages;
+    public Collection<PublicMessage> getMessages() {
+        return publicMessages;
     }
 }

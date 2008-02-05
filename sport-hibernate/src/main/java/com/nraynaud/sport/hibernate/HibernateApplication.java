@@ -32,8 +32,8 @@ public class HibernateApplication implements Application {
     private PaginatedCollection<Workout> fetchWorkouts(final User user, final int startIndex, final int pageSize,
                                                        final boolean lastpage) {
         final Query query = entityManager.createQuery(
-                "select w, count(m) from WorkoutImpl w left join w.messages m where m.receiver is null "
-                        + (user != null ? "AND w.user =:user" : "")
+                "select w, count(m) from WorkoutImpl w left join w.publicMessages m"
+                        + (user != null ? " where w.user =:user" : "")
                         + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
         if (user != null)
             query.setParameter("user", user);
@@ -162,11 +162,18 @@ public class HibernateApplication implements Application {
                                                 final int startIndex) throws
             WorkoutNotFoundException {
         final Workout workout = fetchWorkout(workoutId);
-        final List<Message> privateConversation = (List<Message>) (currentUser == null ? Collections.emptyList() :
+        final List<PrivateMessage> privateConversation = (List<PrivateMessage>) (currentUser
+                == null ? Collections.emptyList() :
                 fetchPrivateConversation(currentUser, workout.getUser().getId()));
-        return new WorkoutPageData(workout,
-                fetchConversation("receiver IS NULL AND workout.id=:workoutId", "workoutId", workoutId),
+        return new WorkoutPageData(workout, fetchPublicMessages(workoutId),
                 getWorkouts(workout.getUser(), startIndex, 10), privateConversation);
+    }
+
+    private Collection<PublicMessage> fetchPublicMessages(final Long workoutId) {
+        final Query query = entityManager.createQuery(
+                "select m from PublicMessageImpl m where m.workout.id=:workoutId order by m.date desc");
+        query.setParameter("workoutId", workoutId);
+        return query.getResultList();
     }
 
     public boolean checkAndChangePassword(final User user, final String oldPassword, final String password) {
@@ -185,7 +192,7 @@ public class HibernateApplication implements Application {
 
     public List<NewMessageData> fetchNewMessagesCount(final User user) {
         final Query query = entityManager.createQuery(
-                "select new com.nraynaud.sport.data.NewMessageData(m.sender.name, count(m)) from MessageImpl m where m.receiver = :user and m.read = false group by m.sender.name");
+                "select new com.nraynaud.sport.data.NewMessageData(m.sender.name, count(m)) from PrivateMessageImpl m where m.receiver = :user and m.read = false group by m.sender.name");
         query.setParameter("user", user);
         return query.getResultList();
     }
@@ -198,11 +205,19 @@ public class HibernateApplication implements Application {
         final int updated = query.executeUpdate();
         if (updated == 0) {
             final Query query2 = entityManager.createNativeQuery(
-                    "delete from MESSAGES where ID=:id and (receiver_id IS NOT NULL OR sender_id=:user_id)");
+                    "delete from MESSAGES where ID=:id and (receiver_id=:user_id or sender_id=:user_id)");
             query2.setParameter("id", id);
             query2.setParameter("user_id", user.getId());
             query2.executeUpdate();
         }
+    }
+
+    public void deletePublicMessageFor(final Long messageId, final User user) {
+        final Query query = entityManager.createNativeQuery(
+                "delete from PUBLIC_MESSAGES where ID=:id and sender_id=:user_id");
+        query.setParameter("user_id", user.getId());
+        query.setParameter("id", messageId);
+        query.executeUpdate();
     }
 
     public void updateWorkout(final Long id,
@@ -257,8 +272,8 @@ public class HibernateApplication implements Application {
         final Map<String, ConversationSumary> correspondants = new HashMap<String, ConversationSumary>();
         {
             final Query query = entityManager.createQuery(
-                    "select m.sender.name, m.receiver.name, count(m), m.read from MessageImpl m where (m.receiver=:user OR "
-                            + "(m.sender=:user AND m.receiver IS NOT NULL)) AND(m.deleter IS NULL OR m.deleter <> :user) "
+                    "select m.sender.name, m.receiver.name, count(m), m.read from PrivateMessageImpl m where (m.receiver=:user OR "
+                            + "(m.sender=:user)) AND(m.deleter IS NULL OR m.deleter <> :user) "
                             + "group by m.sender.name, m.receiver.name, m.read");
             query.setParameter("user", user);
             for (final Object[] row : (List<Object[]>) query.getResultList()) {
@@ -307,29 +322,32 @@ public class HibernateApplication implements Application {
         this.entityManager = entityManager;
     }
 
-    public Message createPrivateMessage(final User sender, final String receiverName, final String content,
-                                        final Date date, final Long workoutId) throws
+    public PrivateMessage createPrivateMessage(final User sender, final String receiverName, final String content,
+                                               final Date date, final Long workoutId) throws
             UserNotFoundException, WorkoutNotFoundException {
         final User receiver = receiverName != null ? fetchUser(receiverName) : null;
         return createMessage(sender, receiver, content, date, workoutId);
     }
 
-    private Message createMessage(final User sender, final User receiver, final String content, final Date date,
-                                  final Long workoutId) throws WorkoutNotFoundException {
+    private PrivateMessage createMessage(final User sender, final User receiver, final String content, final Date date,
+                                         final Long workoutId) throws WorkoutNotFoundException {
         final Workout workout = workoutId != null ? fetchWorkout(workoutId) : null;
-        final MessageImpl message = new MessageImpl(sender, receiver, date, content, workout);
+        final PrivateMessageImpl message = new PrivateMessageImpl(sender, receiver, date, content, workout);
         entityManager.persist(message);
         return message;
     }
 
-    public Message createPublicMessage(final User sender, final String content, final Date date,
-                                       final Long aboutWorkoutId) throws WorkoutNotFoundException {
-        return createMessage(sender, null, content, date, aboutWorkoutId);
+    public PublicMessage createPublicMessage(final User sender, final String content, final Date date,
+                                             final Long aboutWorkoutId) throws WorkoutNotFoundException {
+        final Workout workout = aboutWorkoutId != null ? fetchWorkout(aboutWorkoutId) : null;
+        final PublicMessageImpl message = new PublicMessageImpl(sender, date, content, workout);
+        entityManager.persist(message);
+        return message;
     }
 
     @SuppressWarnings({"unchecked"})
-    public List<Message> fetchMessages(final User user) {
-        return fetchConversation("m.receiver=:user OR (m.sender=:user AND m.receiver IS NOT NULL)", "user", user);
+    public List<PrivateMessage> fetchMessages(final User user) {
+        return fetchConversation("m.receiver=:user OR m.sender=:user", "user", user);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -351,12 +369,12 @@ public class HibernateApplication implements Application {
     public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId,
                                         final int workoutStartIndex) throws UserNotFoundException {
         final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
-        final List<Message> messages = fetchPrivateConversation(currentUser, targetUserId);
+        final List<PrivateMessage> privateMessages = fetchPrivateConversation(currentUser, targetUserId);
         final PaginatedCollection<Workout> workouts = getWorkouts(target, workoutStartIndex, 10);
-        return new BibPageData(target, messages, workouts);
+        return new BibPageData(target, privateMessages, workouts);
     }
 
-    private List<Message> fetchPrivateConversation(final User currentUser, final Long targetUserId) {
+    private List<PrivateMessage> fetchPrivateConversation(final User currentUser, final Long targetUserId) {
         return fetchConversation("((m.receiver.id=:userId AND m.sender=:currentUser)"
                 + "OR(m.receiver=:currentUser AND m.sender.id=:userId))"
                 + "AND (deleter <> :currentUser OR deleter IS NULL)",
@@ -366,7 +384,7 @@ public class HibernateApplication implements Application {
                 targetUserId);
     }
 
-    public List<Message> fetchConversation(final User currentUser, final String receiverName) {
+    public List<PrivateMessage> fetchConversation(final User currentUser, final String receiverName) {
         return fetchConversation(
                 "((m.receiver.name=:receiverName AND m.sender=:currentUser)"
                         + "OR(m.receiver=:currentUser AND m.sender.name=:receiverName)) "
@@ -384,25 +402,25 @@ public class HibernateApplication implements Application {
         final Workout aboutWorkout = aboutWorkoutId == null ? null : fetchWorkout(aboutWorkoutId);
         final ConversationData conversationData = new ConversationData(fetchConversation(sender, receiver),
                 aboutWorkout);
-        for (final Message message : conversationData.messages) {
-            final MessageImpl message1 = (MessageImpl) message;
+        for (final PrivateMessage privateMessage : conversationData.privateMessages) {
+            final PrivateMessageImpl message1 = (PrivateMessageImpl) privateMessage;
             if (!message1.isRead() && message1.getReceiver().equals(sender)) {
                 message1.setRead(true);
                 message1.setNew(true);
-                entityManager.merge(message);
+                entityManager.merge(privateMessage);
             }
         }
         return conversationData;
     }
 
     @SuppressWarnings({"unchecked"})
-    public List<Message> fetchPublicMessagesForWorkout(final Long workoutId) {
+    public List<PrivateMessage> fetchPublicMessagesForWorkout(final Long workoutId) {
         return fetchConversation("m.workout.id =:workoutId AND m.sender is null", "workoutId", workoutId);
     }
 
-    private List<Message> fetchConversation(final String where, final Object... args) {
+    private List<PrivateMessage> fetchConversation(final String where, final Object... args) {
         final Query query = entityManager.createQuery(
-                "select m from MessageImpl m where (" + where + ") order by m.date desc");
+                "select m from PrivateMessageImpl m where (" + where + ") order by m.date desc");
         if (args.length % 2 != 0)
             throw new IllegalArgumentException(
                     "arg count should be even. \"argname1\",argvalue1, \"argname2\", argavalue2");

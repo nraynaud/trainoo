@@ -102,9 +102,10 @@ public class ApplicationTest {
     public void testSendMessage() throws UserAlreadyExistsException, UserNotFoundException, WorkoutNotFoundException {
         final User sender = application.createUser("sender", "lol");
         final User receiver = application.createUser("receiver", "lol");
-        final Message message = application.createPrivateMessage(sender, receiver.getName(), "Lol", new Date(), null);
-        final List<Message> messages = application.fetchMessages(receiver);
-        assertEquals(Arrays.asList(message), messages);
+        final PrivateMessage privateMessage = application.createPrivateMessage(sender, receiver.getName(), "Lol",
+                new Date(), null);
+        final List<PrivateMessage> privateMessages = application.fetchMessages(receiver);
+        assertEquals(Arrays.asList(privateMessage), privateMessages);
     }
 
     @Test

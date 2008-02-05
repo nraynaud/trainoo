@@ -12,8 +12,8 @@
             final List<NewMessageData> newMessages = (List<NewMessageData>) property("newMessages");
             if (newMessages.size() > 0) {
                 int count = 0;
-                for (final NewMessageData message : newMessages) {
-                    count += message.messageCount;
+                for (final NewMessageData privateMessage : newMessages) {
+                    count += privateMessage.messageCount;
                 }%>
         <s:url id="messagesURL" action="" namespace="/messages">
             <s:param name="receiver" value="newMessages.get(0).sender"/>

@@ -1,17 +1,23 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.nraynaud.sport.Message" %>
-<%@ page import="com.nraynaud.sport.Workout" %>
+<%@ page import="com.nraynaud.sport.PrivateMessage" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 
 <s:iterator value="top">
     <%
         final Message message = (Message) top();
-        final String receivedSentClass = message.isPublic() ? "public" : currentUser().equals(
-                message.getReceiver()) ? "received" : "sent";
-        final String newClass = message.isNew() ? "newMessage" : "";
+        final String cssClasses;
+        if (message instanceof PrivateMessage) {
+            final PrivateMessage privateMessage = (PrivateMessage) message;
+            cssClasses = (currentUser().equals(privateMessage.getReceiver()) ? "received" : "sent")
+                    + (privateMessage.isNew() ? " newMessage" : "");
+        } else {
+            cssClasses = "public";
+        }
     %>
-    <div class="message <%=receivedSentClass%> <%=newClass%>">
+    <div class="message <%=cssClasses%>">
         <% final Workout workout = message.getWorkout();%>
         <div class="messageHeading" style="overflow:hidden;">
             <div style="float:left;">
@@ -30,13 +36,13 @@
                         </span>
                 a écrit&nbsp;:
             </div>
-            <%if (message.isPublic() && message.getSender().equals(currentUser()) || !message.isPublic()) {%>
+            <%if (message.canDelete(currentUser())) {%>
             <div style="float:right;">
-                <s:form action="delete" namespace="/messages">
+                <form name="delete" action="<%=deleteUrl(message)%>" method="post">
                     <s:hidden name="id" value="%{id}"/>
                     <s:hidden name="fromAction" value="%{actionDescription}"/>
                     <s:submit value="X" title="supprimer"/>
-                </s:form>
+                </form>
             </div>
             <%}%>
         </div>
@@ -48,4 +54,12 @@
         <p class="messageContent"><%= multilineText(message.getContent())%>
         </p>
     </div>
-</s:iterator>
+</s:iterator><%!
+    private static String deleteUrl(final Message message) {
+        return message instanceof PrivateMessage ? urlFor("/messages", "delete") : urlFor("/messages", "deletePublic");
+    }
+
+    private static String urlFor(final String namespace, final String action) {
+        return namespace + '/' + action;
+    }
+%>

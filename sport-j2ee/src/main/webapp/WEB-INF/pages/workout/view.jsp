@@ -17,7 +17,7 @@
     <% call(pageContext, "workoutComponent.jsp", workout, "extended", Boolean.TRUE); %>
 </div>
 <div id="globalLeft">
-    <h2><%=!data.messages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>
+    <h2><%=!data.privateMessages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>
     </h2>
     <%if (!isLogged()) {%>
     <p>En vous <%=signupUrl("inscrivant")%> ou en vous <%=loginUrl("connectant")%> vous pourriez réagir à cette

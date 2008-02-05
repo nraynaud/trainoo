@@ -7,11 +7,7 @@ public interface Message {
 
     User getSender();
 
-    User getReceiver();
-
     Workout getWorkout();
 
-    boolean isPublic();
-
-    boolean isNew();
+    boolean canDelete(User user);
 }
