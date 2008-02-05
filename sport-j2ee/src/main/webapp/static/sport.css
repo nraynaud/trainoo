@@ -333,6 +333,7 @@ div.autocomplete ul li {
 
 textarea.messageContentArea {
     width: 99%;
+    font-size: small;
 }
 
 .charcount-safe {
