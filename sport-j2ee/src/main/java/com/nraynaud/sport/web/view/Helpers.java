@@ -2,15 +2,19 @@ package com.nraynaud.sport.web.view;
 
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.CreateIfNull;
 import com.opensymphony.xwork2.util.TextUtils;
 import com.opensymphony.xwork2.util.ValueStack;
 import org.apache.struts2.components.Include;
+import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -18,6 +22,7 @@ import java.util.StringTokenizer;
 public class Helpers {
     private static final String HEX_CHARS = "0123456789ABCDEF";
     private static final String OVERRIDES_KEY = "overrides";
+    public static final SportActionMapper MAPPER = new SportActionMapper();
 
     private Helpers() {
     }
@@ -230,5 +235,48 @@ public class Helpers {
 
     public static PrivateMessageFormConfig privateFormConfig(final Workout workout, final User runner) {
         return new PrivateMessageFormConfig(runner.getName(), workout);
+    }
+
+    public static String signupUrl(final String text) {
+        final String from = stringProperty("fromAction") == null ? stringProperty(
+                "actionDescription") : stringProperty("fromAction");
+        return selectableUrl("/", "signup", text, "fromAction", from);
+    }
+
+    public static String loginUrl(final String text) {
+        final String from = stringProperty("fromAction") == null ? stringProperty(
+                "actionDescription") : stringProperty("fromAction");
+        return selectableUrl("/", "login", text, "fromAction", from);
+    }
+
+    public static String getFirstValueEncoded(final String key) {
+        final Object val = ActionContext.getContext().getParameters().get(key);
+        if (val != null)
+            return ((String[]) val)[0];
+        return null;
+    }
+
+    public static String selectableUrl(final String namespace, final String action, final String content,
+                                       final String... params) {
+        final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
+        boolean selected = namespace.equals(mapping.getNamespace()) && action.equals(
+                mapping.getName());
+        final String url = MAPPER.getUriFromActionMapping(new ActionMapping(action, namespace, null, null));
+        final String query;
+        if (params.length > 0) {
+            final StringBuilder getParams = new StringBuilder(20);
+            getParams.append("?");
+            for (int i = 0; i < params.length; i += 2) {
+                try {
+                    getParams.append(params[i]).append('=').append(URLEncoder.encode(params[i + 1], "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+                selected &= params[i + 1].equals(getFirstValueEncoded(params[i]));
+            }
+            query = getParams.toString();
+        } else
+            query = "";
+        return "<a " + (selected ? "class='selected'" : "") + " href='" + url + query + "'>" + content + "</a>";
     }
 }

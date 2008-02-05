@@ -18,6 +18,7 @@
     <p>Vous pratiquez le sport en dehors de la Télé&nbsp;?<br>
         Vous suivrez ici votre vie active.</p>
 
-    <p><a href="<s:url action='signup'/>">Inscrivez-vous</a>, vous pourrez publier dans ce tableau vos entraînements,
-        les commenter ainsi que celui des autres et participer à des sorties collectives.</p>
+    <p><%=signupUrl("Inscrivez-vous")%>, vous pourrez publier dans ce tableau vos entraînements,
+        les commenter ainsi que ceux des autres. Vous pourrez dialoguer avec d'autres sportifs comme vous et organiser
+        des sorties collectives.</p>
 </div>
