@@ -4,6 +4,6 @@
 <s:if test="%{distanceByDisciplines.size > 0}">
     <span class="smaller">|
     <s:iterator value="distanceByDisciplines" status="row">
-        <s:property value="discipline"/> (<s:property value="distance"/>km)&nbsp;|
+        <s:property value="discipline"/>&nbsp;(<s:property value="distance"/>km)&nbsp;|
     </s:iterator></span>
 </s:if>
