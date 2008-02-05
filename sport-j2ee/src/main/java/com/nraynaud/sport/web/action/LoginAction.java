@@ -29,7 +29,7 @@ public class LoginAction extends DefaultAction implements ServletRequestAware, S
     private String login;
     private String password;
     private HttpServletRequest request;
-    public boolean rememberMe = false;
+    public boolean rememberMe = true;
     private HttpServletResponse response;
     public String fromAction;
 

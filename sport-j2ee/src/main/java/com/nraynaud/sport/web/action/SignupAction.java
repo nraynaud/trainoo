@@ -30,7 +30,7 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
     private HttpServletRequest request;
     public static final String LOGIN_MAX_LENGTH = "20";
     private static final String LOGIN_MIN_LENGTH = "4";
-    private boolean rememberMe = false;
+    private boolean rememberMe = true;
     public String fromAction;
 
     public SignupAction(final Application application) {

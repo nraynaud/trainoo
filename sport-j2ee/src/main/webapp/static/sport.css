@@ -85,7 +85,7 @@ table.workouts {
     padding-right: 0.5em;
 }
 
-.workouts tr td.img {
+.workouts tr tdg {
     padding-left: 0;
     padding-right: 0;
 }
@@ -418,7 +418,7 @@ table.displayFormLayoutTable tr td .label {
     right: 0;
     vertical-align: sub;
     font-size: x-small;
-    background-color: rgba( 255, 255, 255, 0.3 );
+    background-color: rgba( 255, 255, 255, 0.4 );
     margin-right: 0.2em;
     padding: 0 0.3em 0;
     text-decoration: none;
@@ -427,6 +427,10 @@ table.displayFormLayoutTable tr td .label {
 .messageLink {
     position: relative;
     display: block;
+}
+
+.messageLink img {
+    vertical-align: bottom;
 }
 
 .pagination {
