@@ -438,6 +438,10 @@ table.displayFormLayoutTable tr td .label {
     margin-left: auto;
 }
 
+.paginationPrevious, .paginationNext {
+    margin-top: 0.5em;
+}
+
 .paginationPrevious {
     float: left;
 }
