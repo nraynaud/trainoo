@@ -305,7 +305,7 @@ public class HibernateApplication implements Application {
 
     private void deletePublicMessageAboutWorkout(final Long id) {
         final Query query = entityManager.createNativeQuery(
-                "DELETE FROM MESSAGES WHERE WORKOUT_ID=:id AND RECEIVER_ID IS NULL");
+                "DELETE FROM PUBLIC_MESSAGES WHERE WORKOUT_ID=:id");
         query.setParameter("id", id);
         query.executeUpdate();
     }
