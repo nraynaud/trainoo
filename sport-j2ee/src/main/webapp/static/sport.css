@@ -78,6 +78,7 @@ table {
 
 table.workouts {
     border: #4B4C3C solid thin;
+    margin: 2px auto;
 }
 
 .workouts tr td {
@@ -147,11 +148,12 @@ p.loginLabel {
 }
 
 #logo, #logo a:hover {
-    font-family: sans-serif;
+    font-family: helvetica;
     text-decoration: none;
 }
 
 #logo {
+    font-family: helvetica;
     margin: 0;
     padding-top: 0;
     font-size: 3em;
