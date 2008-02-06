@@ -4,8 +4,10 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <p:layoutParams title="Les derniers entraînements"/>
-
-<h2><s:property value="globalDistance"/>km parcourus par les membres.</h2>
+<%final String discipline = stringProperty("discipline");%>
+<h2>
+    <s:property value="globalDistance"/>km <%if (discipline == null) {%>parcourus par les membres.<%} else {%>
+    de <%=discipline%><%}%></h2>
 <% call(pageContext, "distanceByDiscipline.jsp");%>
 <div id="globalLeft">
     <h2>Les dernières sorties</h2>

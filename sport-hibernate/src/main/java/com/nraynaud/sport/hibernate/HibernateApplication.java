@@ -25,24 +25,29 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    private PaginatedCollection<Workout> getWorkouts(final User user, final int startIndex, final int pageSize) {
-        return fetchWorkouts(user, startIndex, pageSize, false);
+    private PaginatedCollection<Workout> getWorkouts(final User user, final String discipline, final int startIndex,
+                                                     final int pageSize) {
+        return fetchWorkouts(user, discipline, startIndex, pageSize, false);
     }
 
-    private PaginatedCollection<Workout> fetchWorkouts(final User user, final int startIndex, final int pageSize,
+    private PaginatedCollection<Workout> fetchWorkouts(final User user, final String discipline, final int startIndex,
+                                                       final int pageSize,
                                                        final boolean lastpage) {
         final Query query = entityManager.createQuery(
-                "select w, count(m) from WorkoutImpl w left join w.publicMessages m"
-                        + (user != null ? " where w.user =:user" : "")
+                "select w, count(m) from WorkoutImpl w left join w.publicMessages m where 1=1"
+                        + (user != null ? " and w.user =:user" : "")
+                        + (discipline != null ? " and w.discipline =:discipline" : "")
                         + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
         if (user != null)
             query.setParameter("user", user);
+        if (discipline != null)
+            query.setParameter("discipline", discipline);
         query.setFirstResult(startIndex);
         query.setMaxResults(pageSize);
         final List<Object[]> result = query.getResultList();
         // we went too far, get back one page.
         if (result.isEmpty() && startIndex != 0)
-            return fetchWorkouts(user, startIndex - pageSize, pageSize, true);
+            return fetchWorkouts(user, discipline, startIndex - pageSize, pageSize, true);
         final List<Workout> list = new ArrayList(result.size());
         for (final Object[] row : result) {
             final WorkoutImpl workout = (WorkoutImpl) row[0];
@@ -166,7 +171,7 @@ public class HibernateApplication implements Application {
                 == null ? Collections.emptyList() :
                 fetchPrivateConversation(currentUser, workout.getUser().getId()));
         return new WorkoutPageData(workout, fetchPublicMessages(workoutId),
-                getWorkouts(workout.getUser(), startIndex, 10), privateConversation);
+                getWorkouts(workout.getUser(), null, startIndex, 10), privateConversation);
     }
 
     private Collection<PublicMessage> fetchPublicMessages(final Long workoutId) {
@@ -235,8 +240,8 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public StatisticsPageData fetchFrontPageData(final int firstIndex) {
-        return fetchUserPageData(null, firstIndex);
+    public StatisticsPageData fetchFrontPageData(final int firstIndex, final String discipline) {
+        return fetchUserPageData(null, firstIndex, discipline);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -252,17 +257,21 @@ public class HibernateApplication implements Application {
         return (List<StatisticsPageData.DisciplineDistance>) nativeQuery.getResultList();
     }
 
-    private Double fetchGlobalDistance(final User user) {
-        final String string = "select sum(w.distance) from WorkoutImpl w";
-        final Query query = entityManager.createQuery(string + (user != null ? " where w.user=:user" : ""));
+    private Double fetchGlobalDistance(final User user, final String discipline) {
+        final String string = "select sum(w.distance) from WorkoutImpl w where 1=1";
+        final Query query = entityManager.createQuery(string
+                + (user != null ? " and w.user=:user" : "")
+                + (discipline != null ? " and w.discipline=:discipline" : ""));
         if (user != null)
             query.setParameter("user", user);
+        if (discipline != null)
+            query.setParameter("discipline", discipline);
         return (Double) query.getSingleResult();
     }
 
-    public UserPageData fetchUserPageData(final User user, final int firstIndex) {
-        final PaginatedCollection<Workout> workouts = getWorkouts(user, firstIndex, 10);
-        final Double globalDistance = fetchGlobalDistance(user);
+    public UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline) {
+        final PaginatedCollection<Workout> workouts = getWorkouts(user, discipline, firstIndex, 10);
+        final Double globalDistance = fetchGlobalDistance(user, discipline);
         final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
         final Collection<ConversationSumary> correspondants = fetchCorrespondents(user);
         return new UserPageData(workouts, globalDistance, distanceByDiscpline, correspondants);
@@ -370,7 +379,7 @@ public class HibernateApplication implements Application {
                                         final int workoutStartIndex) throws UserNotFoundException {
         final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
         final List<PrivateMessage> privateMessages = fetchPrivateConversation(currentUser, targetUserId);
-        final PaginatedCollection<Workout> workouts = getWorkouts(target, workoutStartIndex, 10);
+        final PaginatedCollection<Workout> workouts = getWorkouts(target, null, workoutStartIndex, 10);
         return new BibPageData(target, privateMessages, workouts);
     }
 
