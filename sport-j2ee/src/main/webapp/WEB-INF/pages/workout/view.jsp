@@ -15,6 +15,12 @@
 
 <div class="bigWorkout">
     <% call(pageContext, "workoutComponent.jsp", workout, "extended", Boolean.TRUE); %>
+    <%if (isCurrentUser) {%>
+    <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
+        <s:param name="id" value="id"/>
+    </s:url>
+    <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="/static/pen.png" alt=""></s:a>
+    <%}%>
 </div>
 <div id="globalLeft">
     <h2><%=!data.messages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>
