@@ -414,12 +414,13 @@ table.displayFormLayoutTable tr td .label {
 
 .messageNumber {
     position: absolute;
-    top: 0;
+    bottom: 0;
     font-size: 11px;
-    padding: 5px 2px;
+    padding: 0 2px 6px;
     text-decoration: none;
     text-align: center;
     width: 100%;
+    left: 0;
 }
 
 .messageLink {
