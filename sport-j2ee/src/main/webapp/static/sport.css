@@ -428,6 +428,10 @@ table.displayFormLayoutTable tr td .label {
     display: block;
 }
 
+.messageLink:hover {
+    text-decoration: none;
+}
+
 .messageLink img {
     vertical-align: bottom;
 }
