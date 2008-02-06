@@ -54,7 +54,7 @@ public class ActionDetail {
             encoded.append(entry.getKey());
             encoded.append('=');
             try {
-                encoded.append(URLEncoder.encode(((String[]) entry.getValue())[0], "UTF-8"));
+                encoded.append(URLEncoder.encode(((String[]) entry.getValue())[0], "ISO-8859-1"));
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }

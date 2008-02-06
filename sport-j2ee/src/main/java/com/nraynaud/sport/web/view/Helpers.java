@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.CreateIfNull;
 import com.opensymphony.xwork2.util.TextUtils;
 import com.opensymphony.xwork2.util.ValueStack;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.components.Include;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
@@ -15,9 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Helpers {
     private static final String HEX_CHARS = "0123456789ABCDEF";
@@ -259,24 +258,50 @@ public class Helpers {
     public static String selectableUrl(final String namespace, final String action, final String content,
                                        final String... params) {
         final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
+        final String url = MAPPER.getUriFromActionMapping(new ActionMapping(action, namespace, null, null));
         boolean selected = namespace.equals(mapping.getNamespace()) && action.equals(
                 mapping.getName());
-        final String url = MAPPER.getUriFromActionMapping(new ActionMapping(action, namespace, null, null));
         final String query;
         if (params.length > 0) {
             final StringBuilder getParams = new StringBuilder(20);
             getParams.append("?");
             for (int i = 0; i < params.length; i += 2) {
-                try {
-                    getParams.append(params[i]).append('=').append(URLEncoder.encode(params[i + 1], "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException(e);
-                }
+                pushParam(getParams.append('&'), params[i], params[i + 1]);
                 selected &= params[i + 1].equals(getFirstValueEncoded(params[i]));
             }
             query = getParams.toString();
         } else
             query = "";
         return "<a " + (selected ? "class='selected'" : "") + " href='" + url + query + "'>" + content + "</a>";
+    }
+
+    public static String currentUrlAndParams(final String... params) {
+        final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
+        final String base = MAPPER.getUriFromActionMapping(
+                new ActionMapping(mapping.getName(), mapping.getNamespace(), null, null));
+        final Map<String, String[]> queryString = ServletActionContext.getRequest().getParameterMap();
+        final StringBuilder url = new StringBuilder(20);
+        url.append(base);
+        url.append('?');
+        final Set<String> newParams = new HashSet<String>();
+        for (int i = 0; i < params.length; i += 2) {
+            if (i > 0)
+                url.append('&');
+            newParams.add(params[i]);
+            pushParam(url, params[i], params[i + 1]);
+        }
+        for (final Map.Entry<String, String[]> entry : queryString.entrySet()) {
+            if (!newParams.contains(entry.getKey()))
+                pushParam(url.append('&'), entry.getKey(), entry.getValue()[0]);
+        }
+        return url.toString();
+    }
+
+    private static void pushParam(final StringBuilder url, final String key, final String value) {
+        try {
+            url.append(key).append('=').append(URLEncoder.encode(value, "ISO-8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
