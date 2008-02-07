@@ -16,7 +16,7 @@ public class GroupImpl implements Group {
     private Long id;
 
     @Column(name = "NAME", nullable = false)
-    private String Name;
+    private String name;
 
     @Column(name = "DESCRIPTION")
     private String description;
@@ -37,7 +37,7 @@ public class GroupImpl implements Group {
     }
 
     public GroupImpl(final String name, final User owner, final String description, final Date creationDate) {
-        Name = name;
+        this.name = name;
         this.owner = owner;
         this.description = description;
         this.creationDate = creationDate;
@@ -48,7 +48,7 @@ public class GroupImpl implements Group {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public User getOwner() {

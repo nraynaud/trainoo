@@ -225,13 +225,23 @@ public class HibernateApplication implements Application {
         query.executeUpdate();
     }
 
-    public Collection<Group> fetchGroups() {
-        return entityManager.createQuery("select g from GroupImpl g").getResultList();
+    public Collection<GroupData> fetchGroups(final User user) {
+        final Query query = entityManager.createNativeQuery(
+                "select GROUPS.ID, name, count(USER_ID), count(USER_ID=:userId)>0 "
+                        + "from GROUPS left join  GROUP_USER on GROUP_ID=ID group by GROUP_ID");
+        query.setParameter("userId", user.getId());
+        final List<Object[]> list = query.getResultList();
+        final Collection<GroupData> result = new ArrayList<GroupData>(list.size());
+        for (final Object[] o : list)
+            result.add(new GroupData(((Number) o[0]).longValue(), String.valueOf(o[1]), ((Number) o[2]).longValue(),
+                    ((Number) o[3]).intValue() != 0));
+        return result;
     }
 
     public void createGroup(final User user, final String name, final String description) {
         final GroupImpl group = new GroupImpl(name, user, description, new Date());
         entityManager.persist(group);
+        joinGroup(user, group.getId());
     }
 
     public void joinGroup(final User user, final Long groupId) {
@@ -240,6 +250,14 @@ public class HibernateApplication implements Application {
         query.setParameter("groupId", groupId);
         query.setParameter("userId", user.getId());
         query.setParameter("joiningDate", new Date());
+        query.executeUpdate();
+    }
+
+    public void partGroup(final User user, final Long groupId) {
+        final Query query = entityManager.createNativeQuery(
+                "DELETE FROM GROUP_USER WHERE GROUP_ID=:groupId AND USER_ID=:userId");
+        query.setParameter("groupId", groupId);
+        query.setParameter("userId", user.getId());
         query.executeUpdate();
     }
 

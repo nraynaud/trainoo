@@ -13,7 +13,7 @@ import org.apache.struts2.config.Results;
 
 @Results({
 @Result(type = RedirectBack.class, value = Constants.WORKOUTS_ACTION),
-@Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/group.jsp")
+@Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/groups/view.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class JoinAction extends ChainBackAction {

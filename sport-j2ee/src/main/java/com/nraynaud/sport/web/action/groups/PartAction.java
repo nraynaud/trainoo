@@ -16,17 +16,17 @@ import org.apache.struts2.config.Results;
 @Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/groups/view.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class CreateAction extends ChainBackAction {
-    public String name;
-    public String description;
+public class PartAction extends ChainBackAction {
 
-    public CreateAction(final Application application) {
+    public Long groupId;
+
+    public PartAction(final Application application) {
         super(application);
     }
 
     @PostOnly
     public String create() {
-        application.createGroup(getUser(), name, description);
+        application.partGroup(getUser(), groupId);
         return SUCCESS;
     }
 }

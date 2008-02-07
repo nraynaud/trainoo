@@ -73,9 +73,11 @@ public interface Application extends UserStore {
 
     void deletePublicMessageFor(final Long messageId, final User user);
 
-    Collection<Group> fetchGroups();
+    Collection<GroupData> fetchGroups(final User user);
 
     void createGroup(final User user, final String name, final String description);
 
     void joinGroup(final User user, final Long groupId);
+
+    void partGroup(final User user, final Long groupId);
 }
