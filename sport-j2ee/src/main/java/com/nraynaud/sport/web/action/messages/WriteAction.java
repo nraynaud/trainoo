@@ -3,11 +3,10 @@ package com.nraynaud.sport.web.action.messages;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.WorkoutNotFoundException;
-import com.nraynaud.sport.web.ChainBackCapable;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.actionsupport.DefaultAction;
+import com.nraynaud.sport.web.actionsupport.ChainBackAction;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.RedirectBack;
 import com.opensymphony.xwork2.Action;
@@ -24,12 +23,10 @@ import java.util.Date;
 @Result(name = Action.INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class WriteAction extends DefaultAction implements ChainBackCapable {
-    private String content;
-    private String receiver;
-    private Long aboutWorkoutId;
-
-    private String fromAction;
+public class WriteAction extends ChainBackAction {
+    public String content;
+    public String receiver;
+    public Long aboutWorkoutId;
 
     public static final String CONTENT_MAX_LENGTH = "4000";
 
@@ -43,7 +40,7 @@ public class WriteAction extends DefaultAction implements ChainBackCapable {
             application.createPrivateMessage(getUser(), receiver, content, new Date(), aboutWorkoutId);
             return SUCCESS;
         } catch (UserNotFoundException e) {
-            addFieldError("receiver", "L'utilisateur '" + getReceiver() + "' n'existe pas.");
+            addFieldError("receiver", "L'utilisateur '" + receiver + "' n'existe pas.");
             return INPUT;
         } catch (WorkoutNotFoundException e) {
             throw new DataInputException(e);
@@ -60,29 +57,5 @@ public class WriteAction extends DefaultAction implements ChainBackCapable {
     @RequiredStringValidator(message = "vous avez oublié le destinataire")
     public void setReceiver(final String receiver) {
         this.receiver = receiver.length() > 0 ? receiver : null;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public Long getAboutWorkoutId() {
-        return aboutWorkoutId;
-    }
-
-    public void setAboutWorkoutId(final Long aboutWorkoutId) {
-        this.aboutWorkoutId = aboutWorkoutId;
-    }
-
-    public String getFromAction() {
-        return fromAction;
-    }
-
-    public void setFromAction(final String fromAction) {
-        this.fromAction = fromAction;
     }
 }

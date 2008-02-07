@@ -2,11 +2,10 @@ package com.nraynaud.sport.web.action.messages;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.WorkoutNotFoundException;
-import com.nraynaud.sport.web.ChainBackCapable;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.actionsupport.DefaultAction;
+import com.nraynaud.sport.web.actionsupport.ChainBackAction;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.RedirectBack;
 import static com.opensymphony.xwork2.Action.INPUT;
@@ -23,10 +22,9 @@ import java.util.Date;
 @Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class WritePublicAction extends DefaultAction implements ChainBackCapable {
-    private String content;
+public class WritePublicAction extends ChainBackAction {
+    public String content;
     public Long aboutWorkoutId;
-    public String fromAction;
 
     public static final String CONTENT_MAX_LENGTH = "4000";
 
@@ -49,13 +47,5 @@ public class WritePublicAction extends DefaultAction implements ChainBackCapable
             maxLength = CONTENT_MAX_LENGTH)
     public void setContent(final String content) {
         this.content = content;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getFromAction() {
-        return fromAction;
     }
 }

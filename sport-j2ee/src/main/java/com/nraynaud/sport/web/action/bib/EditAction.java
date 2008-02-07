@@ -3,6 +3,7 @@ package com.nraynaud.sport.web.action.bib;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.web.Constants;
+import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
@@ -47,6 +48,7 @@ public class EditAction extends DefaultAction {
         return INPUT;
     }
 
+    @PostOnly
     public String create() {
         application.updateBib(getUser(), town, description, webSite);
         return SUCCESS;

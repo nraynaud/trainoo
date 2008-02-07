@@ -2,8 +2,11 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
-import com.nraynaud.sport.web.*;
-import com.nraynaud.sport.web.actionsupport.DefaultAction;
+import com.nraynaud.sport.web.Constants;
+import com.nraynaud.sport.web.PostOnly;
+import com.nraynaud.sport.web.Public;
+import com.nraynaud.sport.web.SportSession;
+import com.nraynaud.sport.web.actionsupport.ChainBackAction;
 import com.nraynaud.sport.web.result.RedirectBack;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
@@ -24,14 +27,12 @@ import javax.servlet.http.HttpServletResponse;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
-public class LoginAction extends DefaultAction implements ServletRequestAware, ServletResponseAware, ChainBackCapable {
-
-    private String login;
-    private String password;
+public class LoginAction extends ChainBackAction implements ServletRequestAware, ServletResponseAware {
+    public String login;
+    public String password;
     private HttpServletRequest request;
     public boolean rememberMe = true;
     private HttpServletResponse response;
-    public String fromAction;
 
     public LoginAction(final Application application) {
         super(application);
@@ -42,17 +43,9 @@ public class LoginAction extends DefaultAction implements ServletRequestAware, S
         return login;
     }
 
-    public void setLogin(final String login) {
-        this.login = login;
-    }
-
     @RequiredFieldValidator(message = "Le mot de passe n'est pas renseigné.")
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(final String password) {
-        this.password = password;
     }
 
     @PostOnly
@@ -87,9 +80,5 @@ public class LoginAction extends DefaultAction implements ServletRequestAware, S
 
     public void setServletResponse(final HttpServletResponse response) {
         this.response = response;
-    }
-
-    public String getFromAction() {
-        return fromAction;
     }
 }
