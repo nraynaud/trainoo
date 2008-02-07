@@ -26,11 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class SignupAction extends PasswordAction implements ServletRequestAware, ChainBackCapable {
-    private String login;
-    private HttpServletRequest request;
     public static final String LOGIN_MAX_LENGTH = "20";
     private static final String LOGIN_MIN_LENGTH = "4";
-    private boolean rememberMe = true;
+    public String login;
+    private HttpServletRequest request;
+    public boolean rememberMe = true;
     public String fromAction;
 
     public SignupAction(final Application application) {
@@ -47,10 +47,6 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
     @RequiredStringValidator(message = "Le surnom est obligatoire.")
     public String getLogin() {
         return login;
-    }
-
-    public void setLogin(final String login) {
-        this.login = login;
     }
 
     @SuppressWarnings({"DuplicateStringLiteralInspection"})
@@ -75,14 +71,6 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
 
     public void setServletRequest(final HttpServletRequest request) {
         this.request = request;
-    }
-
-    public boolean isRememberMe() {
-        return rememberMe;
-    }
-
-    public void setRememberMe(final boolean rememberMe) {
-        this.rememberMe = rememberMe;
     }
 
     public String getFromAction() {
