@@ -225,6 +225,24 @@ public class HibernateApplication implements Application {
         query.executeUpdate();
     }
 
+    public Collection<Group> fetchGroups() {
+        return entityManager.createQuery("select g from GroupImpl g").getResultList();
+    }
+
+    public void createGroup(final User user, final String name, final String description) {
+        final GroupImpl group = new GroupImpl(name, user, description, new Date());
+        entityManager.persist(group);
+    }
+
+    public void joinGroup(final User user, final Long groupId) {
+        final Query query = entityManager.createNativeQuery(
+                "insert GROUP_USER SET GROUP_ID=:groupId, USER_ID=:userId, JOINING_DATE=:joiningDate");
+        query.setParameter("groupId", groupId);
+        query.setParameter("userId", user.getId());
+        query.setParameter("joiningDate", new Date());
+        query.executeUpdate();
+    }
+
     public void updateWorkout(final Long id,
                               final User user,
                               final Date date,

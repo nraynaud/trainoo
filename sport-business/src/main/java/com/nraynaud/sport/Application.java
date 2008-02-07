@@ -2,6 +2,7 @@ package com.nraynaud.sport;
 
 import com.nraynaud.sport.data.*;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -71,4 +72,10 @@ public interface Application extends UserStore {
     void deleteMessageFor(final Long id, final User user);
 
     void deletePublicMessageFor(final Long messageId, final User user);
+
+    Collection<Group> fetchGroups();
+
+    void createGroup(final User user, final String name, final String description);
+
+    void joinGroup(final User user, final Long groupId);
 }
