@@ -1,19 +1,33 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.Group" %>
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
+<%@ page import="com.nraynaud.sport.data.GroupPageData" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<p:layoutParams title="liste des groupes"/>
+<%final GroupPageData groupPage = (GroupPageData) top();%>
+<%final Group group = groupPage.group;%>
+<p:layoutParams title="<%=group == null ? "Liste des groupes" : "Groupe : " + group.getName()%>"/>
 
-<div id="tinyCenter">
+<% if (group != null) {%>
+<s:property value="group.name"/><br>
+Créé le&nbsp;: <%=new SimpleDateFormat("dd/MM/yyyy").format(group.getCreationDate())%> par&nbsp;: <%=escaped(
+        group.getOwner().getName())%><br>
+
+<%}%>
+<div id="<%=group == null ? "tinyCenter" : "globalRight"%>">
     <h2>Les groupes</h2>
     <table>
-        <s:iterator>
+        <s:iterator value="%{others}">
             <%final GroupData groupData = (GroupData) top();%>
             <tr>
-                <td><s:property value="name"/></td>
+                <s:url id="groupURL" action="" namespace="/groups" includeParams="get">
+                    <s:param name="id" value="%{id}"/>
+                </s:url>
+                <td><a href="<s:property value="%{groupURL}" />"><s:property value="name"/></a></td>
                 <td><s:property value="memberCount"/> membre(s)</td>
 
                 <% if (isLogged()) {%>
@@ -22,13 +36,13 @@
                     <s:form action="join" namespace="/groups">
                         <s:hidden name="fromAction" value="%{actionDescription}"/>
                         <s:hidden name="groupId" value="%{id}"/>
-                        <s:submit value="Rejoindre" cssStyle="with:100%"/>
+                        <s:submit value="Rejoindre" cssStyle="wdith:100%"/>
                     </s:form>
                     <%} else {%>
                     <s:form action="part" namespace="/groups">
                         <s:hidden name="fromAction" value="%{actionDescription}"/>
                         <s:hidden name="groupId" value="%{id}"/>
-                        <s:submit value="Quitter" cssStyle="with:100%"/>
+                        <s:submit value="Quitter" cssStyle="width:100%"/>
                     </s:form>
                     <% }%>
                 </td>

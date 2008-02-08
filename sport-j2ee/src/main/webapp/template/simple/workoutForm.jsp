@@ -68,5 +68,5 @@
 <s:if test="%{parameters.showDelete}">
     <div style="text-align:center;margin-top:2em"><a
             href="<s:url action="workouts" namespace="/" includeParams="none"/>">Annuler et
-        revenir à la liste des entraînements</a></div>
+        revenir à mon vestiaire</a></div>
 </s:if>
