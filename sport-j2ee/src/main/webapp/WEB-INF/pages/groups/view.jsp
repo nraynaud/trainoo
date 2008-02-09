@@ -13,13 +13,29 @@
 <p:layoutParams title="<%=group == null ? "Liste des groupes" : "Groupe : " + group.getName()%>"/>
 
 <% if (group != null) {%>
-<s:property value="group.name"/><br>
-Créé le&nbsp;: <%=new SimpleDateFormat("dd/MM/yyyy").format(group.getCreationDate())%> par&nbsp;: <%=escaped(
-        group.getOwner().getName())%><br>
-
-<%}%>
+<div id="globalLeft">
+    <table class="displayFormLayoutTable">
+        <tr>
+            <td><span class="label">Créé le&nbsp;: </span></td>
+            <td><span class="userSupplied"><%=new SimpleDateFormat("dd/MM/yyyy").format(
+                    group.getCreationDate())%></span>
+            </td>
+        </tr>
+        <tr>
+            <td><span class="label">par&nbsp;:</span></td>
+            <td><span class="userSupplied"><%=escaped(group.getOwner().getName())%></span>
+            </td>
+        </tr>
+    </table>
+    <%
+            if (isLogged()) {
+                call(pageContext, "publicMessageForm.jsp", group);
+                call(pageContext, "messageList.jsp", groupPage.messages);
+            }
+        }%>
+</div>
 <div id="<%=group == null ? "tinyCenter" : "globalRight"%>">
-    <h2>Les groupes</h2>
+    <h2>Les<%=group != null ? " autres" : ""%> groupes</h2>
     <table>
         <s:iterator value="%{others}">
             <%final GroupData groupData = (GroupData) top();%>

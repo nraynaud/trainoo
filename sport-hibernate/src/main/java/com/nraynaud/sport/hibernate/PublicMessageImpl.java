@@ -1,8 +1,6 @@
 package com.nraynaud.sport.hibernate;
 
-import com.nraynaud.sport.PublicMessage;
-import com.nraynaud.sport.User;
-import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -30,7 +28,12 @@ public class PublicMessageImpl implements PublicMessage {
     @JoinColumn(name = "WORKOUT_ID", updatable = false)
     private Workout workout;
 
+    @ManyToOne(targetEntity = GroupImpl.class)
+    @JoinColumn(name = "GROUP_ID", updatable = false)
+    private Group group;
+
     private transient boolean isNew;
+    private transient Topic.Kind topic;
 
     public PublicMessageImpl() {
     }
@@ -47,6 +50,22 @@ public class PublicMessageImpl implements PublicMessage {
                              final Workout workout) {
         this(sender, date, content);
         this.workout = workout;
+    }
+
+    public PublicMessageImpl(final User sender,
+                             final Date date,
+                             final String content,
+                             final Group group) {
+        this(sender, date, content);
+        this.group = group;
+    }
+
+    @PostLoad
+    public void correctTopic() {
+        if (group == null)
+            topic = Topic.Kind.WORKOUT;
+        else
+            topic = Topic.Kind.WORKOUT;
     }
 
     public Long getId() {
@@ -83,5 +102,13 @@ public class PublicMessageImpl implements PublicMessage {
 
     public void setNew(final boolean aNew) {
         isNew = aNew;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public Topic.Kind getTopic() {
+        return topic;
     }
 }

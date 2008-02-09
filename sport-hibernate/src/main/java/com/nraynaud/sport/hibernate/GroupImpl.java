@@ -47,6 +47,10 @@ public class GroupImpl implements Group {
         return id;
     }
 
+    public Kind getKind() {
+        return Kind.GROUP;
+    }
+
     public String getName() {
         return name;
     }

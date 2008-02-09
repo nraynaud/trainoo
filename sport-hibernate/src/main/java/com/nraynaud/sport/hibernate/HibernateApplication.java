@@ -170,14 +170,16 @@ public class HibernateApplication implements Application {
         final List<PrivateMessage> privateConversation = (List<PrivateMessage>) (currentUser
                 == null ? Collections.emptyList() :
                 fetchPrivateConversation(currentUser, workout.getUser().getId()));
-        return new WorkoutPageData(workout, fetchPublicMessages(workoutId),
+        return new WorkoutPageData(workout, fetchPublicMessages(Topic.Kind.WORKOUT, workoutId),
                 getWorkouts(workout.getUser(), null, startIndex, 10), privateConversation);
     }
 
-    private Collection<PublicMessage> fetchPublicMessages(final Long workoutId) {
+    private Collection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id) {
         final Query query = entityManager.createQuery(
-                "select m from PublicMessageImpl m where m.workout.id=:workoutId order by m.date desc");
-        query.setParameter("workoutId", workoutId);
+                "select m from PublicMessageImpl m where m."
+                        + (kind == Topic.Kind.WORKOUT ? "workout" : "group")
+                        + ".id=:id order by m.date desc");
+        query.setParameter("id", id);
         return query.getResultList();
     }
 
@@ -227,9 +229,11 @@ public class HibernateApplication implements Application {
 
     public GroupPageData fetchGroupPageData(final User user, final Long groupId) {
         final Query query = entityManager.createNativeQuery(
-                "select GROUPS.ID, name, count(USER_ID), max(ifnull(USER_ID=:userId, false))>0 "
-                        + "from GROUPS left join  GROUP_USER on GROUP_ID=ID group by GROUPS.ID order by CREATION_DATE");
-        query.setParameter("userId", user.getId());
+                "select GROUPS.ID, name, count(USER_ID), "
+                        + (user != null ? "max(ifnull(USER_ID=:userId, false))>0" : "0")
+                        + " from GROUPS left join  GROUP_USER on GROUP_ID=ID group by GROUPS.ID order by CREATION_DATE");
+        if (user != null)
+            query.setParameter("userId", user.getId());
         final List<Object[]> list = query.getResultList();
         final Collection<GroupData> result = new ArrayList<GroupData>(list.size());
         for (final Object[] o : list)
@@ -240,7 +244,7 @@ public class HibernateApplication implements Application {
             group = entityManager.find(GroupImpl.class, groupId);
         } else
             group = null;
-        return new GroupPageData(group, result);
+        return new GroupPageData(group, result, fetchPublicMessages(Topic.Kind.GROUP, groupId));
     }
 
     public void createGroup(final User user, final String name, final String description) {
@@ -388,9 +392,16 @@ public class HibernateApplication implements Application {
     }
 
     public PublicMessage createPublicMessage(final User sender, final String content, final Date date,
-                                             final Long aboutWorkoutId) throws WorkoutNotFoundException {
-        final Workout workout = aboutWorkoutId != null ? fetchWorkout(aboutWorkoutId) : null;
-        final PublicMessageImpl message = new PublicMessageImpl(sender, date, content, workout);
+                                             final Long topicId, final Topic.Kind topicKind) throws
+            WorkoutNotFoundException {
+        final PublicMessageImpl message;
+        if (topicKind == Topic.Kind.WORKOUT) {
+            final Workout workout = fetchWorkout(topicId);
+            message = new PublicMessageImpl(sender, date, content, workout);
+        } else {
+            final GroupImpl group = entityManager.find(GroupImpl.class, topicId);
+            message = new PublicMessageImpl(sender, date, content, group);
+        }
         entityManager.persist(message);
         return message;
     }

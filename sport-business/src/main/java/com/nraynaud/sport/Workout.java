@@ -2,7 +2,7 @@ package com.nraynaud.sport;
 
 import java.util.Date;
 
-public interface Workout {
+public interface Workout extends Topic {
     Date getDate();
 
     User getUser();

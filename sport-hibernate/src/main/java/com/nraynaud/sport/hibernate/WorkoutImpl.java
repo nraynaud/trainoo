@@ -57,6 +57,10 @@ public class WorkoutImpl implements Workout {
         return id;
     }
 
+    public Kind getKind() {
+        return Kind.WORKOUT;
+    }
+
     public Date getDate() {
         return date;
     }

@@ -54,7 +54,7 @@ public interface Application extends UserStore {
     PublicMessage createPublicMessage(final User sender,
                                       final String content,
                                       final Date date,
-                                      final Long aboutWorkoutId) throws
+                                      final Long topicId, final Topic.Kind topicKind) throws
             WorkoutNotFoundException;
 
     Workout fetchWorkout(Long id) throws WorkoutNotFoundException;

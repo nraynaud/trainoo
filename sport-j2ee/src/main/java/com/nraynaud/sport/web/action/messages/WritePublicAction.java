@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.action.messages;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.Topic;
 import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
@@ -9,6 +10,7 @@ import com.nraynaud.sport.web.actionsupport.ChainBackAction;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.RedirectBack;
 import static com.opensymphony.xwork2.Action.INPUT;
+import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
@@ -24,7 +26,14 @@ import java.util.Date;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class WritePublicAction extends ChainBackAction {
     public String content;
-    public Long aboutWorkoutId;
+
+    public void setAboutId(final Long aboutId) {
+        this.aboutId = aboutId;
+    }
+
+    public Long aboutId;
+
+    public Topic.Kind topicKind;
 
     public static final String CONTENT_MAX_LENGTH = "4000";
 
@@ -35,11 +44,16 @@ public class WritePublicAction extends ChainBackAction {
     @PostOnly
     public String create() {
         try {
-            application.createPublicMessage(getUser(), content, new Date(), aboutWorkoutId);
+            application.createPublicMessage(getUser(), content, new Date(), aboutId, topicKind);
         } catch (WorkoutNotFoundException e) {
             throw new DataInputException(e);
         }
         return SUCCESS;
+    }
+
+    @TypeConversion(converter = "com.opensymphony.xwork2.util.EnumTypeConverter")
+    public void setTopicKind(final Topic.Kind topicKind) {
+        this.topicKind = topicKind;
     }
 
     @RequiredStringValidator(message = "Vous avez oublié le message.")

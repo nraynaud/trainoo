@@ -3,7 +3,6 @@
 <%@ page import="com.nraynaud.sport.Message" %>
 <%@ page import="com.nraynaud.sport.PrivateMessage" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="com.nraynaud.sport.Workout" %>
 
 <s:iterator value="top">
     <%
@@ -18,22 +17,21 @@
         }
     %>
     <div class="message <%=cssClasses%>">
-        <% final Workout workout = message.getWorkout();%>
         <div class="messageHeading">
             <div style="float:left;">
                 <s:date name="date" format="E dd/M à HH:mm"/>
                 <% final String name = escaped(message.getSender().getName()); %>
-                        <span class="message_from">
-                            <% if (isLogged()) {%>
-                            <s:url id="bibUrl" action="" namespace="/bib" includeParams="none">
-                                <s:param name="id" value="sender.id"/>
-                            </s:url>
-                            <a href="<%=property("bibUrl")%>" title="Voir son dossard"><%=name%>
-                            </a>
-                            <% } else {%>
-                            <%=name%>
-                            <%}%>
-                        </span>
+                <span class="message_from">
+                    <% if (isLogged()) {%>
+                    <s:url id="bibUrl" action="" namespace="/bib" includeParams="none">
+                        <s:param name="id" value="sender.id"/>
+                    </s:url>
+                    <a href="<%=property("bibUrl")%>" title="Voir son dossard"><%=name%>
+                    </a>
+                    <% } else {%>
+                    <%=name%>
+                    <%}%>
+                </span>
                 a écrit&nbsp;:
             </div>
             <%if (message.canDelete(currentUser())) {%>
@@ -46,9 +44,9 @@
             </div>
             <%}%>
         </div>
-        <% if (workout != null) {%>
+        <% if (message.getWorkout() != null) {%>
         <div class="workout">à propos de la sortie&nbsp;:
-            <span class="tinyWorkout"><% call(pageContext, "workoutComponent.jsp", workout);%></span>
+            <span class="tinyWorkout"><% call(pageContext, "workoutComponent.jsp", message.getWorkout());%></span>
         </div>
         <% } %>
         <p class="messageContent"><%= multilineText(message.getContent())%>
