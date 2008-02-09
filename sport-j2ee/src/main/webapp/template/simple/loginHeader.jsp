@@ -5,7 +5,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="loginHeader">
-    <div class="left"><%= selectableUrl("/", "", "Tableau général")%>
+    <div class="left"><%= selectableUrl("/", "", "Tableau général")%> <%=selectableUrl("/groups", "", "Groupes")%>
     </div>
     <div class="right">
         <% if (isLogged()) {

@@ -28,12 +28,12 @@
         </tr>
     </table>
     <%
-            if (isLogged()) {
-                call(pageContext, "publicMessageForm.jsp", group);
-                call(pageContext, "messageList.jsp", groupPage.messages);
-            }
+        if (isLogged()) {
+            call(pageContext, "publicMessageForm.jsp", group);
+            call(pageContext, "messageList.jsp", groupPage.messages);
         }%>
 </div>
+<%}%>
 <div id="<%=group == null ? "tinyCenter" : "globalRight"%>">
     <h2>Les<%=group != null ? " autres" : ""%> groupes</h2>
     <table>

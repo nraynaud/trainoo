@@ -266,7 +266,7 @@ public class Helpers {
             final StringBuilder getParams = new StringBuilder(20);
             getParams.append("?");
             for (int i = 0; i < params.length; i += 2) {
-                pushParam(getParams.append('&'), params[i], params[i + 1]);
+                pushParam(getParams.append("&amp;"), params[i], params[i + 1]);
                 selected &= params[i + 1].equals(getFirstValueEncoded(params[i]));
             }
             query = getParams.toString();
