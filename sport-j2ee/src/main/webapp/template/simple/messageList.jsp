@@ -64,13 +64,13 @@
     %>
     <%if (messages.hasPrevious()) { %>
     <s:url id="previousPageUrl" includeParams="get">
-        <s:param name="messagesStartIndex" value="previousIndex"/>
+        <s:param name="%{parameters.pageVariable}" value="previousIndex"/>
     </s:url>
     <div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
     <%}%>
     <%if (messages.hasNext()) { %>
     <s:url id="nextPageUrl" includeParams="get">
-        <s:param name="messagesStartIndex" value="nextIndex"/>
+        <s:param name="%{parameters.pageVariable}" value="nextIndex"/>
     </s:url>
     <div class="paginationNext"><s:a href="%{nextPageUrl}">Suivants->></s:a></div>
     <%}%>

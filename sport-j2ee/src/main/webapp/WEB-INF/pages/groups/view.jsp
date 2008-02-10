@@ -34,7 +34,7 @@
     <h2>Aucun message pour l'instant.</h2>
     <%
         }
-        call(pageContext, "messageList.jsp", groupPage.messages);
+        call(pageContext, "messageList.jsp", groupPage.messages, "pageVariable", "'messagesStartIndex'");
     %>
 </div>
 <%}%>

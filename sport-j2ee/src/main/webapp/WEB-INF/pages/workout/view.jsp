@@ -31,7 +31,7 @@
     <%
         } else
             call(pageContext, "publicMessageForm.jsp", workout);
-        call(pageContext, "messageList.jsp", data.messages);
+        call(pageContext, "messageList.jsp", data.messages, "pageVariable", "'publicMessagesPageIndex'");
     %>
 </div>
 
