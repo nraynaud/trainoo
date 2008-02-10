@@ -56,7 +56,8 @@ public interface Application extends UserStore {
 
     Workout fetchWorkout(Long id) throws WorkoutNotFoundException;
 
-    WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId, final int startIndex) throws
+    WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId, final int startIndex,
+                                         final int messagesStartIndex) throws
             WorkoutNotFoundException;
 
     boolean checkAndChangePassword(final User user, final String oldPassword, final String password);
@@ -69,7 +70,7 @@ public interface Application extends UserStore {
 
     void deletePublicMessageFor(final Long messageId, final User user);
 
-    GroupPageData fetchGroupPageData(final User user, final Long groupId);
+    GroupPageData fetchGroupPageData(final User user, final Long groupId, final int messageStartIndex);
 
     void createGroup(final User user, final String name, final String description);
 

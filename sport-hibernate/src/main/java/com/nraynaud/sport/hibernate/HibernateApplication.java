@@ -164,7 +164,7 @@ public class HibernateApplication implements Application {
     }
 
     public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId,
-                                                final int startIndex) throws
+                                                final int workoutStartIndex, final int messagesStartIndex) throws
             WorkoutNotFoundException {
         final PaginatedCollection<PrivateMessage> emptyPage = new PaginatedCollection<PrivateMessage>() {
 
@@ -208,36 +208,39 @@ public class HibernateApplication implements Application {
         final Workout workout = fetchWorkout(workoutId);
         final PaginatedCollection<PrivateMessage> privateConversation = currentUser
                 == null ? emptyPage : fetchPrivateConversation(currentUser, workout.getUser().getId());
-        return new WorkoutPageData(workout, fetchPublicMessages(Topic.Kind.WORKOUT, workoutId),
-                getWorkouts(workout.getUser(), null, startIndex, 10), privateConversation);
+        return new WorkoutPageData(workout, fetchPublicMessages(Topic.Kind.WORKOUT, workoutId, 5, messagesStartIndex),
+                getWorkouts(workout.getUser(), null, workoutStartIndex, 10), privateConversation);
     }
 
-    private PaginatedCollection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id) {
+    private PaginatedCollection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id,
+                                                                   final int pageSize, final int pageIndex) {
         final Query query = entityManager.createQuery(
                 "select m from PublicMessageImpl m where m."
                         + (kind == Topic.Kind.WORKOUT ? "workout" : "group")
                         + ".id=:id order by m.date desc");
         query.setParameter("id", id);
+        query.setMaxResults(pageSize);
+        query.setFirstResult(pageIndex);
         final List list = query.getResultList();
         return new PaginatedCollection<PublicMessage>() {
             public boolean hasPrevious() {
-                return false;
+                return list.size() == pageSize;
             }
 
             public boolean hasNext() {
-                return false;
+                return pageIndex > 0;
             }
 
             public int getPreviousIndex() {
-                return 0;
+                return pageIndex + pageSize;
             }
 
             public int getNextIndex() {
-                return 0;
+                return pageIndex - pageSize;
             }
 
             public boolean isEmpty() {
-                return list.isEmpty();
+                return list.isEmpty() && pageIndex == 0;
             }
 
             public Iterator<PublicMessage> iterator() {
@@ -290,7 +293,7 @@ public class HibernateApplication implements Application {
         query.executeUpdate();
     }
 
-    public GroupPageData fetchGroupPageData(final User user, final Long groupId) {
+    public GroupPageData fetchGroupPageData(final User user, final Long groupId, final int messageStartIndex) {
         final Query query = entityManager.createNativeQuery(
                 "select GROUPS.ID, name, count(USER_ID), "
                         + (user != null ? "max(ifnull(USER_ID=:userId, false))>0" : "0")
@@ -307,7 +310,7 @@ public class HibernateApplication implements Application {
             group = entityManager.find(GroupImpl.class, groupId);
         } else
             group = null;
-        return new GroupPageData(group, result, fetchPublicMessages(Topic.Kind.GROUP, groupId));
+        return new GroupPageData(group, result, fetchPublicMessages(Topic.Kind.GROUP, groupId, 5, messageStartIndex));
     }
 
     public void createGroup(final User user, final String name, final String description) {

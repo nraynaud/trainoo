@@ -20,12 +20,13 @@ import org.apache.struts2.config.Results;
 @Public
 public class Action extends DefaultAction implements ModelDriven<GroupPageData> {
     public Long id;
+    public int messagesStartIndex;
 
     public Action(final Application application) {
         super(application);
     }
 
     public GroupPageData getModel() {
-        return application.fetchGroupPageData(getUser(), id);
+        return application.fetchGroupPageData(getUser(), id, messagesStartIndex);
     }
 }
