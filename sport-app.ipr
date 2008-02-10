@@ -278,7 +278,33 @@
           <option name="myAdditionalJavadocTags" value="" />
         </inspection_tool>
         <inspection_tool class="UnhandledExceptionInJSP" level="WARNING" enabled="false" />
-        <inspection_tool class="UNCHECKED_WARNING" level="WARNING" enabled="false" />
+        <inspection_tool class="CovariantCompareTo" level="WARNING" enabled="true" />
+        <inspection_tool class="CovariantEquals" level="WARNING" enabled="true" />
+        <inspection_tool class="MisspelledCompareTo" level="WARNING" enabled="true" />
+        <inspection_tool class="CollectionAddedToSelf" level="WARNING" enabled="true" />
+        <inspection_tool class="ObjectToString" level="WARNING" enabled="true" />
+        <inspection_tool class="ComparableImplementedButEqualsNotOverridden" level="WARNING" enabled="true" />
+        <inspection_tool class="EmptyInitializer" level="WARNING" enabled="true" />
+        <inspection_tool class="MisspelledEquals" level="WARNING" enabled="true" />
+        <inspection_tool class="ForLoopThatDoesntUseLoopVariable" level="WARNING" enabled="true" />
+        <inspection_tool class="MisspelledHashcode" level="WARNING" enabled="true" />
+        <inspection_tool class="InstanceofIncompatibleInterface" level="WARNING" enabled="true" />
+        <inspection_tool class="InstantiationOfUtilityClass" level="WARNING" enabled="true" />
+        <inspection_tool class="IteratorHasNextCallsIteratorNext" level="WARNING" enabled="true" />
+        <inspection_tool class="IteratorNextDoesNotThrowNoSuchElementException" level="WARNING" enabled="true" />
+        <inspection_tool class="CompareToUsesNonFinalVariable" level="WARNING" enabled="true" />
+        <inspection_tool class="EqualsUsesNonFinalVariable" level="WARNING" enabled="true" />
+        <inspection_tool class="HashCodeUsesNonFinalVariable" level="WARNING" enabled="true" />
+        <inspection_tool class="NonShortCircuitBoolean" level="WARNING" enabled="true" />
+        <inspection_tool class="TextLabelInSwitchStatement" level="WARNING" enabled="true" />
+        <inspection_tool class="MisspelledToString" level="WARNING" enabled="true" />
+        <inspection_tool class="ArchaicSystemPropertyAccess" level="WARNING" enabled="true" />
+        <inspection_tool class="ResultSetIndexZero" level="WARNING" enabled="true" />
+        <inspection_tool class="OverlyStrongTypeCast" level="WARNING" enabled="true">
+          <option name="ignoreInMatchingInstanceof" value="false" />
+        </inspection_tool>
+        <inspection_tool class="CastConflictsWithInstanceof" level="WARNING" enabled="true" />
+        <inspection_tool class="CastToIncompatibleInterface" level="WARNING" enabled="true" />
       </profile>
     </profiles>
     <list size="4">

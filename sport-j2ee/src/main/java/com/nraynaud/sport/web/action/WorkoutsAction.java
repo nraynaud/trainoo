@@ -1,7 +1,6 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.data.StatisticsPageData;
 import com.nraynaud.sport.data.UserPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
@@ -22,9 +21,10 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
-public class WorkoutsAction extends DefaultAction implements ModelDriven<StatisticsPageData> {
+public class WorkoutsAction extends DefaultAction implements ModelDriven<UserPageData> {
     private UserPageData data;
     public int workoutPage;
+    public String discipline = "";
 
     public WorkoutsAction(final Application application) {
         super(application);
@@ -35,9 +35,9 @@ public class WorkoutsAction extends DefaultAction implements ModelDriven<Statist
         return SUCCESS;
     }
 
-    public StatisticsPageData getModel() {
+    public UserPageData getModel() {
         if (data == null)
-            data = application.fetchUserPageData(getUser(), workoutPage, null);
+            data = application.fetchUserPageData(getUser(), workoutPage, discipline.length() > 0 ? discipline : null);
         return data;
     }
 }

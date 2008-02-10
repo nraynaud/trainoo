@@ -28,7 +28,7 @@ public interface Application extends UserStore {
                        final Double distance,
                        final String discipline) throws WorkoutNotFoundException;
 
-    StatisticsPageData fetchFrontPageData(final int firstIndex, final String discipline);
+    GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final String discipline);
 
     UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline);
 

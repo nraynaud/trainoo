@@ -299,21 +299,21 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public StatisticsPageData fetchFrontPageData(final int firstIndex, final String discipline) {
-        return fetchUserPageData(null, firstIndex, discipline);
+    public GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final String discipline) {
+        return new GlobalWorkoutsPageData(null, fetchUserPageData(null, firstIndex, discipline).getStatisticsData());
     }
 
     @SuppressWarnings({"unchecked"})
-    private List<StatisticsPageData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
+    private List<StatisticsData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
         final String string =
-                "select new com.nraynaud.sport.data.StatisticsPageData$DisciplineDistance(w.discipline, sum(w.distance))"
+                "select new com.nraynaud.sport.data.StatisticsData$DisciplineDistance(w.discipline, sum(w.distance))"
                         + " from WorkoutImpl w where w.distance is not null"
                         + (user != null ? " and w.user = :user" : "")
                         + " group by w.discipline";
         final Query nativeQuery = entityManager.createQuery(string);
         if (user != null)
             nativeQuery.setParameter("user", user);
-        return (List<StatisticsPageData.DisciplineDistance>) nativeQuery.getResultList();
+        return (List<StatisticsData.DisciplineDistance>) nativeQuery.getResultList();
     }
 
     private Double fetchGlobalDistance(final User user, final String discipline) {
@@ -331,9 +331,9 @@ public class HibernateApplication implements Application {
     public UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline) {
         final PaginatedCollection<Workout> workouts = getWorkouts(user, discipline, firstIndex, 10);
         final Double globalDistance = fetchGlobalDistance(user, discipline);
-        final List<StatisticsPageData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
+        final List<StatisticsData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
         final Collection<ConversationSumary> correspondants = fetchCorrespondents(user);
-        return new UserPageData(workouts, globalDistance, distanceByDiscpline, correspondants);
+        return new UserPageData(correspondants, new StatisticsData(workouts, globalDistance, distanceByDiscpline));
     }
 
     private Collection<ConversationSumary> fetchCorrespondents(final User user) {

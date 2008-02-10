@@ -1,17 +1,17 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.data.UserPageData" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 
 <p:layoutParams title="Mon Vestiaire"/>
 
-<s:if test="%{update}">
-    <h2>Vous avez parcouru <s:property value="globalDistance"/>km</h2>
-    <%call(pageContext, "distanceByDiscipline.jsp");%>
-</s:if>
+<%final UserPageData data = (UserPageData) top();%>
+<h2>Vous avez parcouru <%=data.getStatisticsData().globalDistance%>km</h2>
+<%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
 <div id="globalLeft">
     <h2>Mes dernières sorties</h2>
-    <% call(pageContext, "workoutTable.jsp", property("workouts"), "displayEdit", "true");%>
+    <% call(pageContext, "workoutTable.jsp", data.getStatisticsData().workouts, "displayEdit", "true");%>
 
     <h2>Nouvel entraînement</h2>
 
