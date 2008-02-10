@@ -491,10 +491,11 @@ public class HibernateApplication implements Application {
     }
 
     public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId,
-                                        final int workoutStartIndex, final int pageIndex) throws UserNotFoundException {
+                                        final int workoutStartIndex, final int privateMessagesPageIndex) throws
+            UserNotFoundException {
         final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
         final PaginatedCollection<PrivateMessage> privateMessages = fetchPrivateConversation(currentUser, targetUserId,
-                pageIndex);
+                privateMessagesPageIndex);
         final PaginatedCollection<Workout> workouts = getWorkouts(target, null, workoutStartIndex, 10);
         return new BibPageData(target, privateMessages, workouts);
     }
@@ -507,20 +508,19 @@ public class HibernateApplication implements Application {
                 "userId", targetUserId);
     }
 
-    public PaginatedCollection<PrivateMessage> fetchConversation(final User currentUser, final String receiverName) {
+    public PaginatedCollection<PrivateMessage> fetchConversation(final User currentUser, final String receiverName,
+                                                                 final int startIndex) {
         return fetchConversation(
                 "((m.receiver.name=:receiverName AND m.sender=:currentUser)"
                         + "OR(m.receiver=:currentUser AND m.sender.name=:receiverName)) "
-                        + "AND (deleter <> :currentUser OR deleter IS NULL)", 5, 0, "currentUser", currentUser,
+                        + "AND (deleter <> :currentUser OR deleter IS NULL)", 5, startIndex, "currentUser", currentUser,
                 "receiverName", receiverName);
     }
 
-    public ConversationData fetchConvertationData(final User sender,
-                                                  final String receiver,
-                                                  final Long aboutWorkoutId) throws
-            WorkoutNotFoundException {
+    public ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId,
+                                                  final int startIndex) throws WorkoutNotFoundException {
         final Workout aboutWorkout = aboutWorkoutId == null ? null : fetchWorkout(aboutWorkoutId);
-        final ConversationData conversationData = new ConversationData(fetchConversation(sender, receiver),
+        final ConversationData conversationData = new ConversationData(fetchConversation(sender, receiver, startIndex),
                 aboutWorkout);
         for (final PrivateMessage privateMessage : conversationData.privateMessages) {
             final PrivateMessageImpl message1 = (PrivateMessageImpl) privateMessage;

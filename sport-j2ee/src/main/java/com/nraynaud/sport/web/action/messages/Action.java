@@ -17,8 +17,9 @@ import org.apache.struts2.config.Results;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class Action extends DefaultAction {
-    private String receiver;
+    public String receiver;
     private ConversationData conversationData;
+    public int pageIndex;
 
     public Action(final Application application) {
         super(application);
@@ -27,19 +28,11 @@ public class Action extends DefaultAction {
     public ConversationData getConversationData() {
         if (conversationData == null && receiver != null) {
             try {
-                conversationData = application.fetchConvertationData(getUser(), receiver, null);
+                conversationData = application.fetchConvertationData(getUser(), receiver, null, pageIndex);
             } catch (WorkoutNotFoundException e) {
                 throw new DataInputException(e);
             }
         }
         return conversationData;
-    }
-
-    public void setReceiver(final String receiver) {
-        this.receiver = receiver;
-    }
-
-    public String getReceiver() {
-        return receiver;
     }
 }

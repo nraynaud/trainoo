@@ -24,6 +24,7 @@ public class Action extends DefaultAction implements ModelDriven<BibPageData> {
     private Long id;
     private BibPageData data;
     public int workoutPage = 0;
+    public int messagePageIndex;
 
     public Action(final Application application) {
         super(application);
@@ -34,7 +35,7 @@ public class Action extends DefaultAction implements ModelDriven<BibPageData> {
             try {
                 final User currentUser = Helpers.currentUser();
                 final Long myId = id == null ? currentUser.getId() : id;
-                data = application.fetchBibPageData(currentUser, myId, workoutPage, workoutPage);
+                data = application.fetchBibPageData(currentUser, myId, workoutPage, messagePageIndex);
             } catch (UserNotFoundException e) {
                 throw new DataInputException(e);
             }

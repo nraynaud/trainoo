@@ -46,7 +46,8 @@ public interface Application extends UserStore {
                                  final int privateMessagesPageIndex) throws
             UserNotFoundException;
 
-    ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId) throws
+    ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId,
+                                           final int startIndex) throws
             WorkoutNotFoundException;
 
     PublicMessage createPublicMessage(final User sender,

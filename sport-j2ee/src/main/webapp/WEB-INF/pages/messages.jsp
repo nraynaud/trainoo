@@ -11,6 +11,6 @@
     <% final ConversationData data = (ConversationData) property("conversationData");
         call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(stringProperty("receiver"), null),
                 "hideReceiverBox", true);
-        call(pageContext, "messageList.jsp", data.privateMessages);
+        call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'pageIndex'");
     %>
 </div>
