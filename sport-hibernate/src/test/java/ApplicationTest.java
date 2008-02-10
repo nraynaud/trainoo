@@ -11,7 +11,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class ApplicationTest {
     private HibernateApplication application;
@@ -96,16 +95,6 @@ public class ApplicationTest {
             final Workout workout3 = application.fetchWorkoutAndCheckUser(workout.getId(), user1, true);
             assertNull(workout3);
         }
-    }
-
-    @Test
-    public void testSendMessage() throws UserAlreadyExistsException, UserNotFoundException, WorkoutNotFoundException {
-        final User sender = application.createUser("sender", "lol");
-        final User receiver = application.createUser("receiver", "lol");
-        final PrivateMessage privateMessage = application.createPrivateMessage(sender, receiver.getName(), "Lol",
-                new Date(), null);
-        final List<PrivateMessage> privateMessages = application.fetchMessages(receiver);
-        assertEquals(Arrays.asList(privateMessage), privateMessages);
     }
 
     @Test

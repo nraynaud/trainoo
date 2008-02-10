@@ -3,18 +3,22 @@
 <%@ page import="com.nraynaud.sport.Message" %>
 <%@ page import="com.nraynaud.sport.PrivateMessage" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 
-<s:iterator value="top">
+<div class="pagination">
+    <% final PaginatedCollection<Message> messages = (PaginatedCollection<Message>) top();%>
     <%
-        final Message message = (Message) top();
-        final String cssClasses;
-        if (message instanceof PrivateMessage) {
-            final PrivateMessage privateMessage = (PrivateMessage) message;
-            cssClasses = (currentUser().equals(privateMessage.getReceiver()) ? "received" : "sent")
-                    + (privateMessage.isNew() ? " newMessage" : "");
-        } else {
-            cssClasses = "public";
-        }
+        for (final Message message : messages) {
+            push(message);
+            try {
+                final String cssClasses;
+                if (message instanceof PrivateMessage) {
+                    final PrivateMessage privateMessage = (PrivateMessage) message;
+                    cssClasses = (currentUser().equals(privateMessage.getReceiver()) ? "received" : "sent")
+                            + (privateMessage.isNew() ? " newMessage" : "");
+                } else {
+                    cssClasses = "public";
+                }
     %>
     <div class="message <%=cssClasses%>">
         <div class="messageHeading">
@@ -52,14 +56,41 @@
         <p class="messageContent"><%= multilineText(message.getContent())%>
         </p>
     </div>
-</s:iterator>
-
+    <%
+            } finally {
+                pop();
+            }
+        }
+    %>
+    <%if (messages.hasPrevious()) { %>
+    <s:url id="previousPageUrl" includeParams="get">
+        <s:param name="messagesPage" value="previousIndex"/>
+    </s:url>
+    <div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
+    <%}%>
+    <%if (messages.hasNext()) { %>
+    <s:url id="nextPageUrl" includeParams="get">
+        <s:param name="messagesPage" value="nextIndex"/>
+    </s:url>
+    <div class="paginationNext"><s:a href="%{nextPageUrl}">Suivants->></s:a></div>
+    <%}%>
+</div>
 <%!
     private static String deleteUrl(final Message message) {
         return message instanceof PrivateMessage ? urlFor("/messages", "delete") : urlFor("/messages", "deletePublic");
     }
 
-    private static String urlFor(final String namespace, final String action) {
-        return namespace + '/' + action;
+    private static String urlFor
+            (
+                    final String namespace,
+                    final String action
+            ) {
+        return
+                namespace
+                        +
+                        '/'
+                        +
+                        action
+                ;
     }
 %>

@@ -166,21 +166,84 @@ public class HibernateApplication implements Application {
     public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId,
                                                 final int startIndex) throws
             WorkoutNotFoundException {
+        final PaginatedCollection<PrivateMessage> emptyPage = new PaginatedCollection<PrivateMessage>() {
+
+            public boolean hasPrevious() {
+                return false;
+            }
+
+            public boolean hasNext() {
+                return false;
+            }
+
+            public int getPreviousIndex() {
+                return 0;
+            }
+
+            public int getNextIndex() {
+                return 0;
+            }
+
+            public boolean isEmpty() {
+                return true;
+            }
+
+            public Iterator<PrivateMessage> iterator() {
+                return new Iterator<PrivateMessage>() {
+
+                    public boolean hasNext() {
+                        return false;
+                    }
+
+                    public PrivateMessage next() {
+                        throw new NoSuchElementException();
+                    }
+
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                };
+            }
+        };
         final Workout workout = fetchWorkout(workoutId);
-        final List<PrivateMessage> privateConversation = (List<PrivateMessage>) (currentUser
-                == null ? Collections.emptyList() :
-                fetchPrivateConversation(currentUser, workout.getUser().getId()));
+        final PaginatedCollection<PrivateMessage> privateConversation = currentUser
+                == null ? emptyPage : fetchPrivateConversation(currentUser, workout.getUser().getId());
         return new WorkoutPageData(workout, fetchPublicMessages(Topic.Kind.WORKOUT, workoutId),
                 getWorkouts(workout.getUser(), null, startIndex, 10), privateConversation);
     }
 
-    private Collection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id) {
+    private PaginatedCollection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id) {
         final Query query = entityManager.createQuery(
                 "select m from PublicMessageImpl m where m."
                         + (kind == Topic.Kind.WORKOUT ? "workout" : "group")
                         + ".id=:id order by m.date desc");
         query.setParameter("id", id);
-        return query.getResultList();
+        final List list = query.getResultList();
+        return new PaginatedCollection<PublicMessage>() {
+            public boolean hasPrevious() {
+                return false;
+            }
+
+            public boolean hasNext() {
+                return false;
+            }
+
+            public int getPreviousIndex() {
+                return 0;
+            }
+
+            public int getNextIndex() {
+                return 0;
+            }
+
+            public boolean isEmpty() {
+                return list.isEmpty();
+            }
+
+            public Iterator<PublicMessage> iterator() {
+                return list.iterator();
+            }
+        };
     }
 
     public boolean checkAndChangePassword(final User user, final String oldPassword, final String password) {
@@ -407,11 +470,6 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public List<PrivateMessage> fetchMessages(final User user) {
-        return fetchConversation("m.receiver=:user OR m.sender=:user", "user", user);
-    }
-
-    @SuppressWarnings({"unchecked"})
     public List<String> fechLoginBeginningBy(final String prefix) {
         final Query query = entityManager.createQuery(
                 "select u.name from UserImpl u where u.name<>'googlebot' AND u.name LIKE CONCAT(:prefix, '%')");
@@ -430,12 +488,13 @@ public class HibernateApplication implements Application {
     public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId,
                                         final int workoutStartIndex) throws UserNotFoundException {
         final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
-        final List<PrivateMessage> privateMessages = fetchPrivateConversation(currentUser, targetUserId);
+        final PaginatedCollection<PrivateMessage> privateMessages = fetchPrivateConversation(currentUser, targetUserId);
         final PaginatedCollection<Workout> workouts = getWorkouts(target, null, workoutStartIndex, 10);
         return new BibPageData(target, privateMessages, workouts);
     }
 
-    private List<PrivateMessage> fetchPrivateConversation(final User currentUser, final Long targetUserId) {
+    private PaginatedCollection<PrivateMessage> fetchPrivateConversation(final User currentUser,
+                                                                         final Long targetUserId) {
         return fetchConversation("((m.receiver.id=:userId AND m.sender=:currentUser)"
                 + "OR(m.receiver=:currentUser AND m.sender.id=:userId))"
                 + "AND (deleter <> :currentUser OR deleter IS NULL)",
@@ -445,7 +504,7 @@ public class HibernateApplication implements Application {
                 targetUserId);
     }
 
-    public List<PrivateMessage> fetchConversation(final User currentUser, final String receiverName) {
+    public PaginatedCollection<PrivateMessage> fetchConversation(final User currentUser, final String receiverName) {
         return fetchConversation(
                 "((m.receiver.name=:receiverName AND m.sender=:currentUser)"
                         + "OR(m.receiver=:currentUser AND m.sender.name=:receiverName)) "
@@ -475,11 +534,11 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public List<PrivateMessage> fetchPublicMessagesForWorkout(final Long workoutId) {
+    public PaginatedCollection<PrivateMessage> fetchPublicMessagesForWorkout(final Long workoutId) {
         return fetchConversation("m.workout.id =:workoutId AND m.sender is null", "workoutId", workoutId);
     }
 
-    private List<PrivateMessage> fetchConversation(final String where, final Object... args) {
+    private PaginatedCollection<PrivateMessage> fetchConversation(final String where, final Object... args) {
         final Query query = entityManager.createQuery(
                 "select m from PrivateMessageImpl m where (" + where + ") order by m.date desc");
         if (args.length % 2 != 0)
@@ -487,6 +546,31 @@ public class HibernateApplication implements Application {
                     "arg count should be even. \"argname1\",argvalue1, \"argname2\", argavalue2");
         for (int i = 0; i < args.length; i += 2)
             query.setParameter((String) args[i], args[i + 1]);
-        return query.getResultList();
+        final List list = query.getResultList();
+        return new PaginatedCollection<PrivateMessage>() {
+            public boolean hasPrevious() {
+                return false;
+            }
+
+            public boolean hasNext() {
+                return false;
+            }
+
+            public int getPreviousIndex() {
+                return 0;
+            }
+
+            public int getNextIndex() {
+                return 0;
+            }
+
+            public boolean isEmpty() {
+                return list.isEmpty();
+            }
+
+            public Iterator<PrivateMessage> iterator() {
+                return list.iterator();
+            }
+        };
     }
 }

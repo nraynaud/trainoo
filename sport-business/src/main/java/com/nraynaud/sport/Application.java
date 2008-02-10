@@ -38,9 +38,6 @@ public interface Application extends UserStore {
                                         Date date,
                                         final Long aboutWorkout) throws UserNotFoundException, WorkoutNotFoundException;
 
-    @SuppressWarnings({"unchecked"})
-    List<PrivateMessage> fetchMessages(User receiver);
-
     List<String> fechLoginBeginningBy(final String prefix);
 
     void updateBib(final User user, final String town, final String description, final String webSite);
