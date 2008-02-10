@@ -42,19 +42,29 @@ public class HibernateApplication implements Application {
             query.setParameter("user", user);
         if (discipline != null)
             query.setParameter("discipline", discipline);
+        return paginateWorkout(query, startIndex, pageSize, lastpage);
+    }
+
+    private static PaginatedCollection<Workout> paginateWorkout(final Query query, final int startIndex,
+                                                                final int pageSize, final boolean lastpage) {
         query.setFirstResult(startIndex);
         query.setMaxResults(pageSize);
         final List<Object[]> result = query.getResultList();
         // we went too far, get back one page.
         if (result.isEmpty() && startIndex != 0)
-            return fetchWorkouts(user, discipline, startIndex - pageSize, pageSize, true);
+            return paginateWorkout(query, startIndex - pageSize, pageSize, true);
         final List<Workout> list = new ArrayList(result.size());
         for (final Object[] row : result) {
             final WorkoutImpl workout = (WorkoutImpl) row[0];
             workout.setMessageNumber(((Number) row[1]).longValue());
             list.add(workout);
         }
-        return new PaginatedCollection<Workout>() {
+        return paginateList(startIndex, pageSize, lastpage, list);
+    }
+
+    private static <T> PaginatedCollection<T> paginateList(final int startIndex, final int pageSize,
+                                                           final boolean lastpage, final List<T> list) {
+        return new PaginatedCollection<T>() {
             public boolean hasPrevious() {
                 return !lastpage && list.size() >= pageSize;
             }
@@ -75,7 +85,7 @@ public class HibernateApplication implements Application {
                 return list.isEmpty();
             }
 
-            public Iterator<Workout> iterator() {
+            public Iterator<T> iterator() {
                 return list.iterator();
             }
         };
@@ -167,45 +177,8 @@ public class HibernateApplication implements Application {
                                                 final int workoutStartIndex, final int messagesStartIndex,
                                                 final int privateMessagesPageIndex) throws
             WorkoutNotFoundException {
-        final PaginatedCollection<PrivateMessage> emptyPage = new PaginatedCollection<PrivateMessage>() {
-
-            public boolean hasPrevious() {
-                return false;
-            }
-
-            public boolean hasNext() {
-                return false;
-            }
-
-            public int getPreviousIndex() {
-                return 0;
-            }
-
-            public int getNextIndex() {
-                return 0;
-            }
-
-            public boolean isEmpty() {
-                return true;
-            }
-
-            public Iterator<PrivateMessage> iterator() {
-                return new Iterator<PrivateMessage>() {
-
-                    public boolean hasNext() {
-                        return false;
-                    }
-
-                    public PrivateMessage next() {
-                        throw new NoSuchElementException();
-                    }
-
-                    public void remove() {
-                        throw new UnsupportedOperationException();
-                    }
-                };
-            }
-        };
+        final PaginatedCollection<PrivateMessage> emptyPage = paginateList(0, 1, true,
+                Collections.<PrivateMessage>emptyList());
         final Workout workout = fetchWorkout(workoutId);
         final PaginatedCollection<PrivateMessage> privateConversation = currentUser
                 == null ? emptyPage : fetchPrivateConversation(currentUser, workout.getUser().getId(),
@@ -221,34 +194,7 @@ public class HibernateApplication implements Application {
                         + (kind == Topic.Kind.WORKOUT ? "workout" : "group")
                         + ".id=:id order by m.date desc");
         query.setParameter("id", id);
-        query.setMaxResults(pageSize);
-        query.setFirstResult(pageIndex);
-        final List list = query.getResultList();
-        return new PaginatedCollection<PublicMessage>() {
-            public boolean hasPrevious() {
-                return list.size() == pageSize;
-            }
-
-            public boolean hasNext() {
-                return pageIndex > 0;
-            }
-
-            public int getPreviousIndex() {
-                return pageIndex + pageSize;
-            }
-
-            public int getNextIndex() {
-                return pageIndex - pageSize;
-            }
-
-            public boolean isEmpty() {
-                return list.isEmpty() && pageIndex == 0;
-            }
-
-            public Iterator<PublicMessage> iterator() {
-                return list.iterator();
-            }
-        };
+        return paginateQuery(pageSize, pageIndex, query);
     }
 
     public boolean checkAndChangePassword(final User user, final String oldPassword, final String password) {
@@ -547,33 +493,14 @@ public class HibernateApplication implements Application {
                     "arg count should be even. \"argname1\",argvalue1, \"argname2\", argavalue2");
         for (int i = 0; i < args.length; i += 2)
             query.setParameter((String) args[i], args[i + 1]);
+        return paginateQuery(pageSize, startIndex, query);
+    }
+
+    private static <T> PaginatedCollection<T> paginateQuery(final int pageSize, final int startIndex,
+                                                            final Query query) {
         query.setMaxResults(pageSize);
         query.setFirstResult(startIndex);
         final List list = query.getResultList();
-        return new PaginatedCollection<PrivateMessage>() {
-            public boolean hasPrevious() {
-                return list.size() == pageSize;
-            }
-
-            public boolean hasNext() {
-                return startIndex > 0;
-            }
-
-            public int getPreviousIndex() {
-                return startIndex + pageSize;
-            }
-
-            public int getNextIndex() {
-                return startIndex - pageSize;
-            }
-
-            public boolean isEmpty() {
-                return list.isEmpty();
-            }
-
-            public Iterator<PrivateMessage> iterator() {
-                return list.iterator();
-            }
-        };
+        return paginateList(startIndex, pageSize, false, list);
     }
 }
