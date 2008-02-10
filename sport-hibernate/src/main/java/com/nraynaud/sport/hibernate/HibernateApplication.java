@@ -164,7 +164,8 @@ public class HibernateApplication implements Application {
     }
 
     public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId,
-                                                final int workoutStartIndex, final int messagesStartIndex) throws
+                                                final int workoutStartIndex, final int messagesStartIndex,
+                                                final int privateMessagesPageIndex) throws
             WorkoutNotFoundException {
         final PaginatedCollection<PrivateMessage> emptyPage = new PaginatedCollection<PrivateMessage>() {
 
@@ -207,7 +208,8 @@ public class HibernateApplication implements Application {
         };
         final Workout workout = fetchWorkout(workoutId);
         final PaginatedCollection<PrivateMessage> privateConversation = currentUser
-                == null ? emptyPage : fetchPrivateConversation(currentUser, workout.getUser().getId());
+                == null ? emptyPage : fetchPrivateConversation(currentUser, workout.getUser().getId(),
+                privateMessagesPageIndex);
         return new WorkoutPageData(workout, fetchPublicMessages(Topic.Kind.WORKOUT, workoutId, 5, messagesStartIndex),
                 getWorkouts(workout.getUser(), null, workoutStartIndex, 10), privateConversation);
     }
@@ -489,33 +491,28 @@ public class HibernateApplication implements Application {
     }
 
     public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId,
-                                        final int workoutStartIndex) throws UserNotFoundException {
+                                        final int workoutStartIndex, final int pageIndex) throws UserNotFoundException {
         final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
-        final PaginatedCollection<PrivateMessage> privateMessages = fetchPrivateConversation(currentUser, targetUserId);
+        final PaginatedCollection<PrivateMessage> privateMessages = fetchPrivateConversation(currentUser, targetUserId,
+                pageIndex);
         final PaginatedCollection<Workout> workouts = getWorkouts(target, null, workoutStartIndex, 10);
         return new BibPageData(target, privateMessages, workouts);
     }
 
     private PaginatedCollection<PrivateMessage> fetchPrivateConversation(final User currentUser,
-                                                                         final Long targetUserId) {
+                                                                         final Long targetUserId, final int pageIndex) {
         return fetchConversation("((m.receiver.id=:userId AND m.sender=:currentUser)"
                 + "OR(m.receiver=:currentUser AND m.sender.id=:userId))"
-                + "AND (deleter <> :currentUser OR deleter IS NULL)",
-                "currentUser",
-                currentUser,
-                "userId",
-                targetUserId);
+                + "AND (deleter <> :currentUser OR deleter IS NULL)", 5, pageIndex, "currentUser", currentUser,
+                "userId", targetUserId);
     }
 
     public PaginatedCollection<PrivateMessage> fetchConversation(final User currentUser, final String receiverName) {
         return fetchConversation(
                 "((m.receiver.name=:receiverName AND m.sender=:currentUser)"
                         + "OR(m.receiver=:currentUser AND m.sender.name=:receiverName)) "
-                        + "AND (deleter <> :currentUser OR deleter IS NULL)",
-                "currentUser",
-                currentUser,
-                "receiverName",
-                receiverName);
+                        + "AND (deleter <> :currentUser OR deleter IS NULL)", 5, 0, "currentUser", currentUser,
+                "receiverName", receiverName);
     }
 
     public ConversationData fetchConvertationData(final User sender,
@@ -538,10 +535,11 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     public PaginatedCollection<PrivateMessage> fetchPublicMessagesForWorkout(final Long workoutId) {
-        return fetchConversation("m.workout.id =:workoutId AND m.sender is null", "workoutId", workoutId);
+        return fetchConversation("m.workout.id =:workoutId AND m.sender is null", 5, 0, "workoutId", workoutId);
     }
 
-    private PaginatedCollection<PrivateMessage> fetchConversation(final String where, final Object... args) {
+    private PaginatedCollection<PrivateMessage> fetchConversation(final String where, final int pageSize,
+                                                                  final int startIndex, final Object... args) {
         final Query query = entityManager.createQuery(
                 "select m from PrivateMessageImpl m where (" + where + ") order by m.date desc");
         if (args.length % 2 != 0)
@@ -549,22 +547,24 @@ public class HibernateApplication implements Application {
                     "arg count should be even. \"argname1\",argvalue1, \"argname2\", argavalue2");
         for (int i = 0; i < args.length; i += 2)
             query.setParameter((String) args[i], args[i + 1]);
+        query.setMaxResults(pageSize);
+        query.setFirstResult(startIndex);
         final List list = query.getResultList();
         return new PaginatedCollection<PrivateMessage>() {
             public boolean hasPrevious() {
-                return false;
+                return list.size() == pageSize;
             }
 
             public boolean hasNext() {
-                return false;
+                return startIndex > 0;
             }
 
             public int getPreviousIndex() {
-                return 0;
+                return startIndex + pageSize;
             }
 
             public int getNextIndex() {
-                return 0;
+                return startIndex - pageSize;
             }
 
             public boolean isEmpty() {

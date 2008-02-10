@@ -42,7 +42,8 @@ public interface Application extends UserStore {
 
     void updateBib(final User user, final String town, final String description, final String webSite);
 
-    BibPageData fetchBibPageData(final User currentUser, final Long targetUserId, final int workoutStartIndex) throws
+    BibPageData fetchBibPageData(final User currentUser, final Long targetUserId, final int workoutStartIndex,
+                                 final int privateMessagesPageIndex) throws
             UserNotFoundException;
 
     ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId) throws
@@ -57,7 +58,7 @@ public interface Application extends UserStore {
     Workout fetchWorkout(Long id) throws WorkoutNotFoundException;
 
     WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId, final int startIndex,
-                                         final int messagesStartIndex) throws
+                                         final int messagesStartIndex, final int privateMessagesPageIndex) throws
             WorkoutNotFoundException;
 
     boolean checkAndChangePassword(final User user, final String oldPassword, final String password);

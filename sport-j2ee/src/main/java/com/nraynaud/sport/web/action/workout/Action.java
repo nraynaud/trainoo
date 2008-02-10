@@ -25,6 +25,7 @@ public class Action extends DefaultAction implements ModelDriven<WorkoutPageData
     private WorkoutPageData data;
     public int workoutPage;
     public int publicMessagesPageIndex;
+    public int privateMessagesPageIndex;
 
     public Action(final Application application) {
         super(application);
@@ -33,7 +34,8 @@ public class Action extends DefaultAction implements ModelDriven<WorkoutPageData
     public WorkoutPageData getModel() {
         if (data == null)
             try {
-                data = application.fetchWorkoutPageData(getUser(), id, workoutPage, publicMessagesPageIndex);
+                data = application.fetchWorkoutPageData(getUser(), id, workoutPage, publicMessagesPageIndex,
+                        privateMessagesPageIndex);
             } catch (WorkoutNotFoundException e) {
                 throw new DataInputException(e);
             }

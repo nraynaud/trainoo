@@ -42,6 +42,6 @@
     <h2>Envoyer un message à <%=escaped(runner.getName())%>
     </h2>
     <% call(pageContext, "privateMessageForm.jsp", privateFormConfig(workout, runner), "hideReceiverBox", true);
-        call(pageContext, "messageList.jsp", data.privateMessages);
+        call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'privateMessagesPageIndex'");
     }%>
 </div>

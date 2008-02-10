@@ -34,7 +34,7 @@ public class Action extends DefaultAction implements ModelDriven<BibPageData> {
             try {
                 final User currentUser = Helpers.currentUser();
                 final Long myId = id == null ? currentUser.getId() : id;
-                data = application.fetchBibPageData(currentUser, myId, workoutPage);
+                data = application.fetchBibPageData(currentUser, myId, workoutPage, workoutPage);
             } catch (UserNotFoundException e) {
                 throw new DataInputException(e);
             }
