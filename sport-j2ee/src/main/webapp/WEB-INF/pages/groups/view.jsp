@@ -28,10 +28,14 @@
         </tr>
     </table>
     <%
-        if (isLogged()) {
+        if (isLogged())
             call(pageContext, "publicMessageForm.jsp", group);
-            call(pageContext, "messageList.jsp", groupPage.messages);
-        }%>
+        if (groupPage.messages.isEmpty()) {%>
+    <h2>Aucun message pour l'instant.</h2>
+    <%
+        }
+        call(pageContext, "messageList.jsp", groupPage.messages);
+    %>
 </div>
 <%}%>
 <div id="<%=group == null ? "tinyCenter" : "globalRight"%>">

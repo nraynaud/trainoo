@@ -52,7 +52,9 @@
         <p class="messageContent"><%= multilineText(message.getContent())%>
         </p>
     </div>
-</s:iterator><%!
+</s:iterator>
+
+<%!
     private static String deleteUrl(final Message message) {
         return message instanceof PrivateMessage ? urlFor("/messages", "delete") : urlFor("/messages", "deletePublic");
     }
