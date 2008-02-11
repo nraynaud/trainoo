@@ -54,7 +54,7 @@ form {
 
 a, a:visited {
     text-decoration: none;
-    color: #57470C;
+    color: #968148;
     font-weight: bold;
 }
 
@@ -163,6 +163,10 @@ p.loginLabel {
     zoom: 1;
     _overflow: visible;
 
+}
+
+#logoHref {
+    color: #57470C;
 }
 
 #loginHeader {
