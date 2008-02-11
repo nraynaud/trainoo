@@ -58,8 +58,29 @@ public class HibernateApplication implements Application {
     }
 
     private PaginatedCollection<Workout> getWorkouts(final Group group, final String discipline, final int firstIndex,
-                                                     final int pageSize) {
-        return paginateList(0, 1, true, Collections.<Workout>emptyList());
+                                                     final int pageSize, final boolean lastpage) {
+        final Query query = entityManager.createQuery(
+                "select w, count(m) "
+                        + "from GroupImpl g inner join g.members u inner join u.workouts w left join w.publicMessages m "
+                        + "where g =:group"
+                        + (discipline != null ? " and w.discipline =:discipline" : "")
+                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
+        query.setParameter("group", group);
+        if (discipline != null)
+            query.setParameter("discipline", discipline);
+        query.setFirstResult(firstIndex);
+        query.setMaxResults(pageSize);
+        final List<Object[]> result = query.getResultList();
+        // we went too far, get back one page.
+        if (result.isEmpty() && firstIndex != 0)
+            return getWorkouts(group, discipline, firstIndex - pageSize, pageSize, true);
+        final List<Workout> list = new ArrayList(result.size());
+        for (final Object[] row : result) {
+            final WorkoutImpl workout = (WorkoutImpl) row[0];
+            workout.setMessageNumber(((Number) row[1]).longValue());
+            list.add(workout);
+        }
+        return paginateList(firstIndex, pageSize, lastpage, list);
     }
 
     private static <T> PaginatedCollection<T> paginateList(final int startIndex, final int pageSize,
@@ -241,7 +262,8 @@ public class HibernateApplication implements Application {
         query.executeUpdate();
     }
 
-    public GroupPageData fetchGroupPageData(final User user, final Long groupId, final int messageStartIndex) {
+    public GroupPageData fetchGroupPageData(final User user, final Long groupId, final int messageStartIndex,
+                                            final int workoutStartIndex, final String discipline) {
         final Query query = entityManager.createNativeQuery(
                 "select GROUPS.ID, name, count(USER_ID), "
                         + (user != null ? "max(ifnull(USER_ID=:userId, false))>0" : "0")
@@ -257,12 +279,12 @@ public class HibernateApplication implements Application {
         final StatisticsData statisticsData;
         if (groupId != null) {
             group = entityManager.find(GroupImpl.class, groupId);
-            statisticsData = fetchStatisticsData(group, 0, null);
+            statisticsData = fetchStatisticsData(group, workoutStartIndex, discipline);
         } else {
             statisticsData = null;
             group = null;
         }
-        return new GroupPageData(group, result, fetchPublicMessages(Topic.Kind.GROUP, groupId, 5, messageStartIndex),
+        return new GroupPageData(group, result, fetchPublicMessages(Topic.Kind.GROUP, groupId, 10, messageStartIndex),
                 statisticsData);
     }
 
@@ -309,28 +331,41 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    private List<StatisticsData.DisciplineDistance> fetchDistanceByDiscipline(final User user) {
+    private List<DisciplineDistance> fetchDistanceByDiscipline(final User user) {
         final String string =
-                "select new com.nraynaud.sport.data.StatisticsData$DisciplineDistance(w.discipline, sum(w.distance))"
+                "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, sum(w.distance))"
                         + " from WorkoutImpl w where w.distance is not null"
                         + (user != null ? " and w.user = :user" : "")
                         + " group by w.discipline";
         final Query nativeQuery = entityManager.createQuery(string);
         if (user != null)
             nativeQuery.setParameter("user", user);
-        return (List<StatisticsData.DisciplineDistance>) nativeQuery.getResultList();
+        return (List<DisciplineDistance>) nativeQuery.getResultList();
+    }
+
+    private List<DisciplineDistance> fetchDistanceByDiscipline(final Group group) {
+        final String sum = "sum(w.distance)";
+        final String string =
+                "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, " + sum + ")"
+                        + " from GroupImpl g left join g.members u left join u.workouts w where w.distance is not null"
+                        + " and g=:group group by w.discipline";
+        final Query query = entityManager.createQuery(string);
+        query.setParameter("group", group);
+        return (List<DisciplineDistance>) query.getResultList();
     }
 
     private Double fetchGlobalDistance(final Group group, final String discipline) {
-        final Query query = entityManager.createNativeQuery(
-                "select ifnull(sum(workout3_.DISTANCE),0) as col_0_0_ from GROUPS groupimpl0_ left outer join GROUP_USER members1_ on groupimpl0_.ID=members1_.GROUP_ID left outer join USERS userimpl2_ on members1_.USER_ID=userimpl2_.ID left outer join WORKOUTS workout3_ on userimpl2_.ID=workout3_.USER_ID where groupimpl0_.ID=:groupId");
-        query.setParameter("groupId", group.getId());
+        final Query query = entityManager.createQuery(
+                "select sum(w.distance) from GroupImpl g left join g.members u left join u.workouts w where g=:group"
+                        + (discipline != null ? " and w.discipline=:discipline" : ""));
+        query.setParameter("group", group);
+        if (discipline != null)
+            query.setParameter("discipline", discipline);
         return (Double) query.getSingleResult();
     }
 
     private Double fetchGlobalDistance(final User user, final String discipline) {
-        final String string = "select sum(w.distance) from WorkoutImpl w where 1=1";
-        final Query query = entityManager.createQuery(string
+        final Query query = entityManager.createQuery("select sum(w.distance) from WorkoutImpl w where 1=1"
                 + (user != null ? " and w.user=:user" : "")
                 + (discipline != null ? " and w.discipline=:discipline" : ""));
         if (user != null)
@@ -348,14 +383,14 @@ public class HibernateApplication implements Application {
     private StatisticsData fetchStatisticsData(final User user, final int firstIndex, final String discipline) {
         final PaginatedCollection<Workout> workouts = getWorkouts(user, discipline, firstIndex, 10);
         final Double globalDistance = fetchGlobalDistance(user, discipline);
-        final List<StatisticsData.DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
+        final List<DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
         return new StatisticsData(workouts, globalDistance, distanceByDiscpline);
     }
 
     private StatisticsData fetchStatisticsData(final Group group, final int firstIndex, final String discipline) {
-        final PaginatedCollection<Workout> workouts = getWorkouts(group, discipline, firstIndex, 10);
+        final PaginatedCollection<Workout> workouts = getWorkouts(group, discipline, firstIndex, 10, false);
         final Double globalDistance = fetchGlobalDistance(group, discipline);
-        final List<StatisticsData.DisciplineDistance> distanceByDiscpline = Collections.emptyList();
+        final List<DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(group);
         return new StatisticsData(workouts, globalDistance, distanceByDiscpline);
     }
 

@@ -11,17 +11,6 @@ public class StatisticsData {
 
     public final List<DisciplineDistance> distanceByDisciplines;
 
-    public static class DisciplineDistance {
-        public final String discipline;
-
-        public final Double distance;
-
-        public DisciplineDistance(final String discipline, final Double distance) {
-            this.discipline = discipline;
-            this.distance = distance;
-        }
-    }
-
     public StatisticsData(final PaginatedCollection<Workout> workouts,
                           final Double globalDistance,
                           final List<DisciplineDistance> distanceByDisciplines) {

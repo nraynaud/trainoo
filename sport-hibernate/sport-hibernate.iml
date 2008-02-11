@@ -285,6 +285,7 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga-sources.jar!/" />
+          <root url="intellijad://intellijad" />
         </SOURCES>
       </library>
     </orderEntry>

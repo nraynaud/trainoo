@@ -43,8 +43,8 @@ public class UserImpl implements User {
     private Collection<UserImpl> groups;
 
     @OneToMany(targetEntity = WorkoutImpl.class, fetch = FetchType.LAZY)
-    @JoinTable(name = "WORKOUTS", joinColumns = @JoinColumn(name = "USER_ID"))
-    private Collection<Workout> workout;
+    @JoinColumn(name = "USER_ID")
+    private Collection<Workout> workouts;
 
     public UserImpl() {
     }
@@ -58,8 +58,8 @@ public class UserImpl implements User {
         return id;
     }
 
-    public Collection<Workout> getWorkout() {
-        return workout;
+    public Collection<Workout> getWorkouts() {
+        return workouts;
     }
 
     public String getName() {

@@ -12,9 +12,11 @@
 <%final Group group = groupPage.group;%>
 <p:layoutParams title="<%=group == null ? "Liste des groupes" : "Groupe : " + group.getName()%>"/>
 
-<% if (group != null) {%>
+<% if (group != null) {
+    final String discipline = stringProperty("discipline");%>
 <div id="globalLeft">
-    <h2><%=groupPage.statistics.globalDistance%>km parcourus par les membres du groupe</h2>
+    <h2><%=groupPage.statistics.globalDistance%>km <%=discipline != null ? "de " + discipline : ""%> parcourus par les
+        membres</h2>
     <table class="displayFormLayoutTable">
         <tr>
             <td><span class="label">Créé le&nbsp;: </span></td>
@@ -40,12 +42,22 @@
 </div>
 <%}%>
 <div id="<%=group == null ? "tinyCenter" : "globalRight"%>">
+    <%
+        if (group != null) {
+    %>
+    <h2>Les entraînements du groupe</h2>
+    <%
+            call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
+            call(pageContext, "workoutTable.jsp", groupPage.statistics.workouts, "displayEdit", "false", "displayName",
+                    "true");
+        }
+    %>
     <h2>Les<%=group != null ? " autres" : ""%> groupes</h2>
     <table>
         <s:iterator value="%{others}">
             <%final GroupData groupData = (GroupData) top();%>
             <tr>
-                <s:url id="groupURL" action="" namespace="/groups" includeParams="get">
+                <s:url id="groupURL" action="" namespace="/groups" includeParams="none">
                     <s:param name="id" value="%{id}"/>
                 </s:url>
                 <td><a href="<s:property value="%{groupURL}" />"><s:property value="name"/></a></td>
@@ -73,7 +85,7 @@
     </table>
 
     <%if (isLogged()) {%>
-    <h2>créer un groupe</h2>
+    <h2>Créer un groupe</h2>
     <s:form action="create" namespace="/groups">
         <s:hidden name="fromAction" value="%{actionDescription}"/>
         <s:textfield name="name"/>
