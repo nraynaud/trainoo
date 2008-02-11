@@ -1,10 +1,13 @@
 package com.nraynaud.sport.hibernate;
 
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.Workout;
 import org.mindrot.bcrypt.BCrypt;
 
 import javax.persistence.*;
+import java.util.Collection;
 
+@SuppressWarnings({"UnusedDeclaration", "NonFinalFieldReferenceInEquals", "NonFinalFieldReferencedInHashCode"})
 @Entity
 @Table(name = "USERS")
 public class UserImpl implements User {
@@ -34,6 +37,15 @@ public class UserImpl implements User {
     @Column(name = "REMEMBER_ME")
     private String rememberToken;
 
+    @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "GROUP_USER", joinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "GROUP_ID", nullable = false, updatable = false))
+    private Collection<UserImpl> groups;
+
+    @OneToMany(targetEntity = WorkoutImpl.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "WORKOUTS", joinColumns = @JoinColumn(name = "USER_ID"))
+    private Collection<Workout> workout;
+
     public UserImpl() {
     }
 
@@ -44,6 +56,10 @@ public class UserImpl implements User {
 
     public Long getId() {
         return id;
+    }
+
+    public Collection<Workout> getWorkout() {
+        return workout;
     }
 
     public String getName() {
@@ -99,5 +115,9 @@ public class UserImpl implements User {
 
     public void setRememberToken(final String token) {
         rememberToken = token == null ? null : token.substring(0, 255);
+    }
+
+    public Collection<UserImpl> getGroups() {
+        return groups;
     }
 }

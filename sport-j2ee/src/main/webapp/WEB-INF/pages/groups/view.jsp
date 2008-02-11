@@ -14,6 +14,7 @@
 
 <% if (group != null) {%>
 <div id="globalLeft">
+    <h2><%=groupPage.statistics.globalDistance%>km parcourus par les membres du groupe</h2>
     <table class="displayFormLayoutTable">
         <tr>
             <td><span class="label">Créé le&nbsp;: </span></td>
