@@ -327,7 +327,14 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     public GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final String discipline) {
-        return new GlobalWorkoutsPageData(null, fetchStatisticsData((User) null, firstIndex, discipline));
+        return new GlobalWorkoutsPageData(fetchRecentMessages(),
+                fetchStatisticsData((User) null, firstIndex, discipline));
+    }
+
+    private PaginatedCollection<PublicMessage> fetchRecentMessages() {
+        final Query query = entityManager.createQuery("select m from PublicMessageImpl m order by m.date desc");
+        query.setMaxResults(5);
+        return paginateList(0, 5, true, query.getResultList());
     }
 
     @SuppressWarnings({"unchecked"})

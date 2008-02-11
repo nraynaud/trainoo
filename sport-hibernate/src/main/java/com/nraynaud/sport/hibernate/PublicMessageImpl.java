@@ -62,10 +62,7 @@ public class PublicMessageImpl implements PublicMessage {
 
     @PostLoad
     public void correctTopic() {
-        if (group == null)
-            topic = Topic.Kind.WORKOUT;
-        else
-            topic = Topic.Kind.WORKOUT;
+        topic = group == null ? Topic.Kind.WORKOUT : Topic.Kind.GROUP;
     }
 
     public Long getId() {

@@ -17,7 +17,7 @@
             "true");%>
 </div>
 <div id="globalRight">
-
+    <%if (!isLogged()) {%>
     <h1>Bienvenue !</h1>
 
     <p>Vous pratiquez le sport en dehors de la Télé&nbsp;?<br>
@@ -26,7 +26,7 @@
     <p><%=signupUrl("Inscrivez-vous")%>, vous pourrez publier dans ce tableau vos entraînements,
         les commenter ainsi que ceux des autres. Vous pourrez dialoguer avec d'autres sportifs comme vous et organiser
         des sorties collectives.</p>
-
+    <%}%>
     <h2>Les derniers messages</h2>
-
+    <%call(pageContext, "messageList.jsp", data.recentMessages, "showTopicLink", "true");%>
 </div>

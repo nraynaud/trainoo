@@ -1,9 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.nraynaud.sport.Message" %>
-<%@ page import="com.nraynaud.sport.PrivateMessage" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.*" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
+<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 
 <div class="pagination">
     <% final PaginatedCollection<Message> messages = (PaginatedCollection<Message>) top();%>
@@ -55,6 +55,23 @@
         <% } %>
         <p class="messageContent"><%= multilineText(message.getContent())%>
         </p>
+        <s:if test="%{parameters.showTopicLink}">
+            <div class="messageFooter">
+                <% if (message instanceof PublicMessage) {
+                    final PublicMessage publicMessage = (PublicMessage) message;
+                    if (publicMessage.getTopic() == Topic.Kind.WORKOUT) {
+                        out.append(Helpers.selectableUrl("/workout", "", "Voir la page de l'entraînement", "id",
+                                String.valueOf(publicMessage.getWorkout().getId())));
+                    } else {
+                        final Group group = publicMessage.getGroup();
+                        out.append(
+                                Helpers.selectableUrl("/groups", "", "Voir la page du groupe " + group.getName(), "id",
+                                        String.valueOf(group.getId())));
+                    }
+                }
+                %>
+            </div>
+        </s:if>
     </div>
     <%
             } finally {
@@ -80,17 +97,7 @@
         return message instanceof PrivateMessage ? urlFor("/messages", "delete") : urlFor("/messages", "deletePublic");
     }
 
-    private static String urlFor
-            (
-                    final String namespace,
-                    final String action
-            ) {
-        return
-                namespace
-                        +
-                        '/'
-                        +
-                        action
-                ;
+    private static String urlFor(final String namespace, final String action) {
+        return namespace + '/' + action;
     }
 %>
