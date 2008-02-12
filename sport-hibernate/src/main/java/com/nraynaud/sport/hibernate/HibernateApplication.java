@@ -361,24 +361,18 @@ public class HibernateApplication implements Application {
         return (List<DisciplineDistance>) query.getResultList();
     }
 
-    private Double fetchGlobalDistance(final Group group, final String discipline) {
+    private Double fetchGlobalDistance(final Group group) {
         final Query query = entityManager.createQuery(
-                "select sum(w.distance) from GroupImpl g left join g.members u left join u.workouts w where g=:group"
-                        + (discipline != null ? " and w.discipline=:discipline" : ""));
+                "select sum(w.distance) from GroupImpl g left join g.members u left join u.workouts w where g=:group");
         query.setParameter("group", group);
-        if (discipline != null)
-            query.setParameter("discipline", discipline);
         return (Double) query.getSingleResult();
     }
 
-    private Double fetchGlobalDistance(final User user, final String discipline) {
+    private Double fetchGlobalDistance(final User user) {
         final Query query = entityManager.createQuery("select sum(w.distance) from WorkoutImpl w where 1=1"
-                + (user != null ? " and w.user=:user" : "")
-                + (discipline != null ? " and w.discipline=:discipline" : ""));
+                + (user != null ? " and w.user=:user" : ""));
         if (user != null)
             query.setParameter("user", user);
-        if (discipline != null)
-            query.setParameter("discipline", discipline);
         return (Double) query.getSingleResult();
     }
 
@@ -387,16 +381,20 @@ public class HibernateApplication implements Application {
         return new UserPageData(correspondants, fetchStatisticsData(user, firstIndex, discipline));
     }
 
-    private StatisticsData fetchStatisticsData(final User user, final int firstIndex, final String discipline) {
+    private StatisticsData fetchStatisticsData(final User user, final int firstIndex, String discipline) {
+        if (discipline != null && discipline.length() == 0)
+            discipline = null;
         final PaginatedCollection<Workout> workouts = getWorkouts(user, discipline, firstIndex, 10);
-        final Double globalDistance = fetchGlobalDistance(user, discipline);
+        final Double globalDistance = fetchGlobalDistance(user);
         final List<DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
         return new StatisticsData(workouts, globalDistance, distanceByDiscpline);
     }
 
-    private StatisticsData fetchStatisticsData(final Group group, final int firstIndex, final String discipline) {
+    private StatisticsData fetchStatisticsData(final Group group, final int firstIndex, String discipline) {
+        if (discipline != null && discipline.length() == 0)
+            discipline = null;
         final PaginatedCollection<Workout> workouts = getWorkouts(group, discipline, firstIndex, 10, false);
-        final Double globalDistance = fetchGlobalDistance(group, discipline);
+        final Double globalDistance = fetchGlobalDistance(group);
         final List<DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(group);
         return new StatisticsData(workouts, globalDistance, distanceByDiscpline);
     }

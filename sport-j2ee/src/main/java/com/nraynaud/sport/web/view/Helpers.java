@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 public class Helpers {
     private static final String HEX_CHARS = "0123456789ABCDEF";
@@ -272,29 +274,38 @@ public class Helpers {
             query = getParams.toString();
         } else
             query = "";
-        return "<a " + (selected ? "class='selected'" : "") + " href='" + url + query + "'>" + content + "</a>";
+        final String finalUrl = url + query;
+        return selectableAnchorTag(content, selected, finalUrl);
     }
 
-    public static String currentUrlAndParams(final String... params) {
+    private static String selectableAnchorTag(final String content, final boolean selected, final String finalUrl) {
+        return "<a " + (selected ? "class='selected'" : "") + " href='" + finalUrl + "'>" + content + "</a>";
+    }
+
+    public static String currentUrlAndParams(final String content, final String... params) {
         final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
         final String base = MAPPER.getUriFromActionMapping(
                 new ActionMapping(mapping.getName(), mapping.getNamespace(), null, null));
         final Map<String, String[]> queryString = ServletActionContext.getRequest().getParameterMap();
+        boolean selected = false;
         final StringBuilder url = new StringBuilder(20);
         url.append(base);
         url.append('?');
-        final Set<String> newParams = new HashSet<String>();
+        final Map<String, String> newParams = new HashMap<String, String>();
         for (int i = 0; i < params.length; i += 2) {
             if (i > 0)
-                url.append('&');
-            newParams.add(params[i]);
+                url.append("&amp;");
+            newParams.put(params[i], params[i + 1]);
             pushParam(url, params[i], params[i + 1]);
         }
         for (final Map.Entry<String, String[]> entry : queryString.entrySet()) {
-            if (!newParams.contains(entry.getKey()))
-                pushParam(url.append('&'), entry.getKey(), entry.getValue()[0]);
+            if (!newParams.containsKey(entry.getKey()))
+                pushParam(url.append("&amp;"), entry.getKey(), entry.getValue()[0]);
+            else {
+                selected |= newParams.get(entry.getKey()).equals(entry.getValue()[0]);
+            }
         }
-        return url.toString();
+        return selectableAnchorTag(content, selected, url.toString());
     }
 
     private static void pushParam(final StringBuilder url, final String key, final String value) {

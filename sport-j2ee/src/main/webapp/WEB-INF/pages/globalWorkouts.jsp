@@ -6,10 +6,6 @@
 
 <p:layoutParams title="Les derniers entraînements"/>
 <%final GlobalWorkoutsPageData data = (GlobalWorkoutsPageData) top();%>
-<%final String discipline = stringProperty("discipline");%>
-<h2>
-    <%=data.statisticsData.globalDistance%>km <%if (discipline == null) {%>parcourus par les membres.<%} else {%>
-    de <%=discipline%><%}%></h2>
 <% call(pageContext, "distanceByDiscipline.jsp", data.statisticsData);%>
 <div id="globalLeft">
     <h2>Les dernières sorties</h2>

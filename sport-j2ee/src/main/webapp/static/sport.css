@@ -473,3 +473,7 @@ label .labelComplement {
     font-weight: normal;
     font-size: small;
 }
+
+a.selected {
+    font-size: large;
+}

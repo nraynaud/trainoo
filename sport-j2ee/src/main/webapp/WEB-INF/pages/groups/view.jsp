@@ -15,8 +15,6 @@
 <% if (group != null) {
     final String discipline = stringProperty("discipline");%>
 <div id="globalLeft">
-    <h2><%=groupPage.statistics.globalDistance%>km <%=discipline != null ? "de " + discipline : ""%> parcourus par les
-        membres</h2>
     <table class="displayFormLayoutTable">
         <tr>
             <td><span class="label">Créé le&nbsp;: </span></td>

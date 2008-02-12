@@ -5,7 +5,11 @@
 <s:if test="%{distanceByDisciplines.size > 0}">
     <span class="smaller">|
     <s:iterator value="distanceByDisciplines">
-        <a href="<%=currentUrlAndParams("discipline", stringProperty("discipline"))%>"><s:property value="discipline"/>&nbsp;(<s:property
-                value="distance"/>km)</a>&nbsp;|
-    </s:iterator></span>
+        <% final String discipline = stringProperty("discipline"); %>
+        <%=currentUrlAndParams(discipline + "&nbsp;(" + stringProperty("distance") + "km)", "discipline",
+                discipline)%>&nbsp;|
+    </s:iterator>
+        <%=currentUrlAndParams("toutes disciplines&nbsp;(" + stringProperty("globalDistance") + "km)", "discipline",
+                "")%>&nbsp;|
+    </span>
 </s:if>
