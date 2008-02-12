@@ -13,8 +13,7 @@
 <%final Group group = groupPage.group;%>
 <p:layoutParams title="<%=group == null ? "Liste des groupes" : "Groupe : " + group.getName()%>"/>
 
-<% if (group != null) {
-    final String discipline = stringProperty("discipline");%>
+<% if (group != null) {%>
 <div id="globalLeft">
     <table class="displayFormLayoutTable">
         <tr>
@@ -49,6 +48,7 @@
         call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
         call(pageContext, "workoutTable.jsp", groupPage.statistics.workouts, "displayEdit", "false", "displayName",
                 "true");
+        if (!groupPage.users.isEmpty()) {
     %>
     <h2>Les membres</h2>
     <ul>
@@ -56,10 +56,12 @@
             out.append("<li>")
                     .append(selectableUrl("/bib", "", user.getName(), "id", String.valueOf(user.getId())))
                     .append("</li>\n");
-        }
-        %>
+        }%>
     </ul>
     <%
+            } else {
+                out.append("<h2>Aucun membre</h2>\n");
+            }
         }
     %>
     <h2>Tous les groupes</h2>
@@ -71,7 +73,9 @@
                     <s:param name="id" value="%{id}"/>
                 </s:url>
                 <td><a href="<s:property value="%{groupURL}" />"><s:property value="name"/></a></td>
-                <td><s:property value="memberCount"/> membre(s)</td>
+                <td><%final long count = ((Long) property("memberCount")).longValue();%>
+                    <%=count > 1 ? count + " membres" : count == 1 ? "un membre" : "aucun membre"%>
+                </td>
 
                 <% if (isLogged()) {%>
                 <td>
