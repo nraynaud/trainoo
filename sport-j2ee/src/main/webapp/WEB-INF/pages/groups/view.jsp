@@ -1,5 +1,6 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.Group" %>
+<%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="com.nraynaud.sport.data.GroupPageData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -45,12 +46,23 @@
     %>
     <h2>Les entraînements du groupe</h2>
     <%
-            call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
-            call(pageContext, "workoutTable.jsp", groupPage.statistics.workouts, "displayEdit", "false", "displayName",
-                    "true");
+        call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
+        call(pageContext, "workoutTable.jsp", groupPage.statistics.workouts, "displayEdit", "false", "displayName",
+                "true");
+    %>
+    <h2>Les membres</h2>
+    <ul>
+        <% for (final User user : groupPage.users) {
+            out.append("<li>")
+                    .append(selectableUrl("/bib", "", user.getName(), "id", String.valueOf(user.getId())))
+                    .append("</li>\n");
+        }
+        %>
+    </ul>
+    <%
         }
     %>
-    <h2>Les<%=group != null ? " autres" : ""%> groupes</h2>
+    <h2>Tous les groupes</h2>
     <table>
         <s:iterator value="%{others}">
             <%final GroupData groupData = (GroupData) top();%>

@@ -33,11 +33,10 @@ public class HibernateApplication implements Application {
     private PaginatedCollection<Workout> fetchWorkouts(final User user, final String discipline, final int startIndex,
                                                        final int pageSize,
                                                        final boolean lastpage) {
-        final Query query = entityManager.createQuery(
-                "select w, count(m) from WorkoutImpl w left join w.publicMessages m where 1=1"
-                        + (user != null ? " and w.user =:user" : "")
-                        + (discipline != null ? " and w.discipline =:discipline" : "")
-                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
+        final Query query = query("select w, count(m) from WorkoutImpl w left join w.publicMessages m where 1=1"
+                + (user != null ? " and w.user =:user" : "")
+                + (discipline != null ? " and w.discipline =:discipline" : "")
+                + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
         if (user != null)
             query.setParameter("user", user);
         if (discipline != null)
@@ -59,12 +58,11 @@ public class HibernateApplication implements Application {
 
     private PaginatedCollection<Workout> getWorkouts(final Group group, final String discipline, final int firstIndex,
                                                      final int pageSize, final boolean lastpage) {
-        final Query query = entityManager.createQuery(
-                "select w, count(m) "
-                        + "from GroupImpl g inner join g.members u inner join u.workouts w left join w.publicMessages m "
-                        + "where g =:group"
-                        + (discipline != null ? " and w.discipline =:discipline" : "")
-                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
+        final Query query = query("select w, count(m) "
+                + "from GroupImpl g inner join g.members u inner join u.workouts w left join w.publicMessages m "
+                + "where g =:group"
+                + (discipline != null ? " and w.discipline =:discipline" : "")
+                + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
         query.setParameter("group", group);
         if (discipline != null)
             query.setParameter("discipline", discipline);
@@ -127,7 +125,7 @@ public class HibernateApplication implements Application {
      * @return null if auth failed, user otherwise
      */
     public User authenticate(final String login, final String password, final boolean rememberMe) {
-        final Query query = entityManager.createQuery("select u from UserImpl u where u.name=:user_login");
+        final Query query = query("select u from UserImpl u where u.name=:user_login");
         query.setParameter("user_login", login);
         try {
             final UserImpl user = (UserImpl) query.getSingleResult();
@@ -151,7 +149,7 @@ public class HibernateApplication implements Application {
     }
 
     public User fetchUser(final Long id) throws UserNotFoundException {
-        final Query query = entityManager.createQuery("select u from UserImpl u where u.id=:id");
+        final Query query = query("select u from UserImpl u where u.id=:id");
         query.setParameter("id", id);
         try {
             return (User) query.getSingleResult();
@@ -161,8 +159,7 @@ public class HibernateApplication implements Application {
     }
 
     public User fetchRememberedUser(final String rememberCookie) throws UserNotFoundException {
-        final Query query = entityManager.createQuery(
-                "select u from UserImpl u where u.rememberToken =:rememberCookie");
+        final Query query = query("select u from UserImpl u where u.rememberToken =:rememberCookie");
         query.setParameter("rememberCookie", rememberCookie);
         try {
             return (User) query.getSingleResult();
@@ -172,7 +169,7 @@ public class HibernateApplication implements Application {
     }
 
     public User fetchUser(final String name) throws UserNotFoundException {
-        final Query query = entityManager.createQuery("select u from UserImpl u where u.name=:name");
+        final Query query = query("select u from UserImpl u where u.name=:name");
         query.setParameter("name", name);
         try {
             return (User) query.getSingleResult();
@@ -196,11 +193,9 @@ public class HibernateApplication implements Application {
 
     public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId,
                                                 final int workoutStartIndex, final int messagesStartIndex,
-                                                final int privateMessagesPageIndex) throws
-            WorkoutNotFoundException {
-        final PaginatedCollection<PrivateMessage> emptyPage = paginateList(0, 1, true,
-                Collections.<PrivateMessage>emptyList());
+                                                final int privateMessagesPageIndex) throws WorkoutNotFoundException {
         final Workout workout = fetchWorkout(workoutId);
+        final PaginatedCollection<PrivateMessage> emptyPage = emptyPage();
         final PaginatedCollection<PrivateMessage> privateConversation = currentUser
                 == null ? emptyPage : fetchPrivateConversation(currentUser, workout.getUser().getId(),
                 privateMessagesPageIndex);
@@ -210,10 +205,9 @@ public class HibernateApplication implements Application {
 
     private PaginatedCollection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id,
                                                                    final int pageSize, final int pageIndex) {
-        final Query query = entityManager.createQuery(
-                "select m from PublicMessageImpl m where m."
-                        + (kind == Topic.Kind.WORKOUT ? "workout" : "group")
-                        + ".id=:id order by m.date desc");
+        final Query query = query("select m from PublicMessageImpl m where m."
+                + (kind == Topic.Kind.WORKOUT ? "workout" : "group")
+                + ".id=:id order by m.date desc");
         query.setParameter("id", id);
         return paginateQuery(pageSize, pageIndex, query);
     }
@@ -233,7 +227,7 @@ public class HibernateApplication implements Application {
     }
 
     public List<NewMessageData> fetchNewMessagesCount(final User user) {
-        final Query query = entityManager.createQuery(
+        final Query query = query(
                 "select new com.nraynaud.sport.data.NewMessageData(m.sender.name, count(m)) from PrivateMessageImpl m where m.receiver = :user and m.read = false group by m.sender.name");
         query.setParameter("user", user);
         return query.getResultList();
@@ -277,15 +271,33 @@ public class HibernateApplication implements Application {
                     ((Number) o[3]).intValue() != 0));
         final GroupImpl group;
         final StatisticsData statisticsData;
+        final PaginatedCollection<User> users;
         if (groupId != null) {
             group = entityManager.find(GroupImpl.class, groupId);
             statisticsData = fetchStatisticsData(group, workoutStartIndex, discipline);
+            users = fetchGroupMembers(group);
         } else {
             statisticsData = null;
             group = null;
+            users = emptyPage();
         }
         return new GroupPageData(group, result, fetchPublicMessages(Topic.Kind.GROUP, groupId, 10, messageStartIndex),
-                statisticsData);
+                statisticsData, users);
+    }
+
+    private static <T> PaginatedCollection<T> emptyPage() {
+        return paginateList(0, 1, true, Collections.<T>emptyList());
+    }
+
+    private PaginatedCollection<User> fetchGroupMembers(final Group group) {
+        final String queryString = "select u from GroupImpl g inner join g.members u where g=:group";
+        final Query query = query(queryString);
+        query.setParameter("group", group);
+        return paginateList(0, 100, true, query.getResultList());
+    }
+
+    private Query query(final String queryString) {
+        return entityManager.createQuery(queryString);
     }
 
     public void createGroup(final User user, final String name, final String description) {
@@ -332,7 +344,7 @@ public class HibernateApplication implements Application {
     }
 
     private PaginatedCollection<PublicMessage> fetchRecentMessages() {
-        final Query query = entityManager.createQuery("select m from PublicMessageImpl m order by m.date desc");
+        final Query query = query("select m from PublicMessageImpl m order by m.date desc");
         query.setMaxResults(5);
         return paginateList(0, 5, true, query.getResultList());
     }
@@ -344,7 +356,7 @@ public class HibernateApplication implements Application {
                         + " from WorkoutImpl w where w.distance is not null"
                         + (user != null ? " and w.user = :user" : "")
                         + " group by w.discipline";
-        final Query nativeQuery = entityManager.createQuery(string);
+        final Query nativeQuery = query(string);
         if (user != null)
             nativeQuery.setParameter("user", user);
         return (List<DisciplineDistance>) nativeQuery.getResultList();
@@ -356,20 +368,20 @@ public class HibernateApplication implements Application {
                 "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, " + sum + ")"
                         + " from GroupImpl g left join g.members u left join u.workouts w where w.distance is not null"
                         + " and g=:group group by w.discipline";
-        final Query query = entityManager.createQuery(string);
+        final Query query = query(string);
         query.setParameter("group", group);
         return (List<DisciplineDistance>) query.getResultList();
     }
 
     private Double fetchGlobalDistance(final Group group) {
-        final Query query = entityManager.createQuery(
+        final Query query = query(
                 "select sum(w.distance) from GroupImpl g left join g.members u left join u.workouts w where g=:group");
         query.setParameter("group", group);
         return (Double) query.getSingleResult();
     }
 
     private Double fetchGlobalDistance(final User user) {
-        final Query query = entityManager.createQuery("select sum(w.distance) from WorkoutImpl w where 1=1"
+        final Query query = query("select sum(w.distance) from WorkoutImpl w where 1=1"
                 + (user != null ? " and w.user=:user" : ""));
         if (user != null)
             query.setParameter("user", user);
@@ -402,7 +414,7 @@ public class HibernateApplication implements Application {
     private Collection<ConversationSumary> fetchCorrespondents(final User user) {
         final Map<String, ConversationSumary> correspondants = new HashMap<String, ConversationSumary>();
         {
-            final Query query = entityManager.createQuery(
+            final Query query = query(
                     "select m.sender.name, m.receiver.name, count(m), m.read from PrivateMessageImpl m where (m.receiver=:user OR "
                             + "(m.sender=:user)) AND(m.deleter IS NULL OR m.deleter <> :user) "
                             + "group by m.sender.name, m.receiver.name, m.read");
@@ -485,7 +497,7 @@ public class HibernateApplication implements Application {
 
     @SuppressWarnings({"unchecked"})
     public List<String> fechLoginBeginningBy(final String prefix) {
-        final Query query = entityManager.createQuery(
+        final Query query = query(
                 "select u.name from UserImpl u where u.name<>'googlebot' AND u.name LIKE CONCAT(:prefix, '%')");
         query.setParameter("prefix", prefix);
         return query.getResultList();
@@ -549,8 +561,7 @@ public class HibernateApplication implements Application {
 
     private PaginatedCollection<PrivateMessage> fetchConversation(final String where, final int pageSize,
                                                                   final int startIndex, final Object... args) {
-        final Query query = entityManager.createQuery(
-                "select m from PrivateMessageImpl m where (" + where + ") order by m.date desc");
+        final Query query = query("select m from PrivateMessageImpl m where (" + where + ") order by m.date desc");
         if (args.length % 2 != 0)
             throw new IllegalArgumentException(
                     "arg count should be even. \"argname1\",argvalue1, \"argname2\", argavalue2");

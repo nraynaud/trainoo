@@ -428,14 +428,12 @@ table.displayFormLayoutTable tr td .label {
     text-decoration: none;
     text-align: center;
     width: 100%;
-    left: 0;
-/ / background-color : green;
+    left: 0; /* background-color : green;*/
 }
 
 .messageLink {
     position: relative;
-    display: block;
-/ / background-color : red;
+    display: block; /* background-color : red;*/
 }
 
 .messageLink:hover {
