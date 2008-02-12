@@ -390,7 +390,14 @@ public class HibernateApplication implements Application {
 
     public UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline) {
         final Collection<ConversationSumary> correspondants = fetchCorrespondents(user);
-        return new UserPageData(correspondants, fetchStatisticsData(user, firstIndex, discipline));
+        return new UserPageData(correspondants, fetchStatisticsData(user, firstIndex, discipline),
+                fetchGroupMembership(user));
+    }
+
+    private Collection<Group> fetchGroupMembership(final User user) {
+        final Query query = query("select g from GroupImpl g inner join g.members u where u=:user");
+        query.setParameter("user", user);
+        return query.getResultList();
     }
 
     private StatisticsData fetchStatisticsData(final User user, final int firstIndex, String discipline) {

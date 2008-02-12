@@ -424,7 +424,7 @@ table.displayFormLayoutTable tr td .label {
     position: absolute;
     bottom: 0;
     font-size: 11px;
-    padding: 0 2px 6px;
+    padding: 0 0 6px;
     text-decoration: none;
     text-align: center;
     width: 100%;

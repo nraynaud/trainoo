@@ -51,7 +51,7 @@
                     <s:a cssClass="messageLink" href="%{workoutUrl}"
                          title="Discussions à propos de cet entraînement"><img
                             src="/static/bulle.png" alt="commenter"><s:if test="%{messageNumber > 0}">
-                        <div class="messageNumber"><s:property value="messageNumber"/></div>
+                        <span class="messageNumber"><s:property value="messageNumber"/></span>
                     </s:if></s:a>
                 </div>
             </td>

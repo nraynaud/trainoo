@@ -46,4 +46,13 @@
             </s:iterator>
         </ul>
     </fieldset>
+    <h2>Les groupes dont je suis membre</h2>
+    <ul>
+        <s:iterator value="%{groupMembership}">
+            <s:url id="groupUrl" namespace="/groups" action="" includeParams="none">
+                <s:param name="id" value="%{id}"/>
+            </s:url>
+            <li><a href="<s:property value="%{groupUrl}"/>"><s:property value="name"/></a></li>
+        </s:iterator>
+    </ul>
 </div>
