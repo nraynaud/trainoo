@@ -25,7 +25,7 @@
             <s:if test="%{parameters.displayName}">
                 <td>
                     <% if (isLogged()) {%>
-                    <s:url id="bibUrl" namespace="bib" action="" includeParams="none" anchor="">
+                    <s:url id="bibUrl" namespace="/bib" action="" includeParams="none" anchor="">
                         <s:param name="id" value="user.id"/>
                     </s:url>
                     <s:a href="%{bibUrl}" title="Voir son dossard"><s:property value="user.name"/></s:a>

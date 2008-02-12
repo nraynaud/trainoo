@@ -23,7 +23,7 @@
     <div class="message <%=cssClasses%>">
         <div class="messageHeading">
             <div style="float:left;">
-                <s:date name="date" format="E dd/M à HH:mm"/>
+                <s:date name="date" format="E dd/M à HH:mm:ss"/>
                 <% final String name = escaped(message.getSender().getName()); %>
                 <span class="message_from">
                     <% if (isLogged()) {%>
