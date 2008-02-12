@@ -276,6 +276,8 @@ div.autocomplete ul li {
     padding-left: 0.5em;
     border: none;
     overflow: hidden;
+    zoom: 1;
+    _overflow: visible;
 }
 
 .messageHeading form input {
@@ -427,11 +429,13 @@ table.displayFormLayoutTable tr td .label {
     text-align: center;
     width: 100%;
     left: 0;
+/ / background-color : green;
 }
 
 .messageLink {
     position: relative;
     display: block;
+/ / background-color : red;
 }
 
 .messageLink:hover {
