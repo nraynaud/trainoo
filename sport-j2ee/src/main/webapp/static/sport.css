@@ -479,3 +479,10 @@ label .labelComplement {
 a.selected {
     font-size: large;
 }
+
+.newMessages {
+    font-size: small;
+    vertical-align: super;
+    color: red;
+    font-weight: normal;
+}

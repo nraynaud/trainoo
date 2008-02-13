@@ -258,20 +258,7 @@ public class HibernateApplication implements Application {
 
     public GroupPageData fetchGroupPageData(final User user, final Long groupId, final int messageStartIndex,
                                             final int workoutStartIndex, final String discipline) {
-        final String ifConnectedColumns = "max(ifnull(USER_ID=:userId, false))>0, sum(ifnull(USER_ID=:userId AND LAST_VISIT<PUBLIC_MESSAGES.`DATE`, false))";
-        final Query query = entityManager.createNativeQuery(
-                "select GROUPS.ID, name, count(DISTINCT GROUP_USER.USER_ID), "
-                        + (user != null ? ifConnectedColumns : "0,0")
-                        + " from GROUPS left join  GROUP_USER on GROUP_ID=ID "
-                        + "left join PUBLIC_MESSAGES on PUBLIC_MESSAGES.GROUP_ID=GROUP_USER.GROUP_ID "
-                        + "group by GROUPS.ID order by CREATION_DATE");
-        if (user != null)
-            query.setParameter("userId", user.getId());
-        final List<Object[]> list = query.getResultList();
-        final Collection<GroupData> result = new ArrayList<GroupData>(list.size());
-        for (final Object[] o : list)
-            result.add(new GroupData(((Number) o[0]).longValue(), String.valueOf(o[1]), ((Number) o[2]).longValue(),
-                    ((Number) o[3]).intValue() != 0, ((Number) o[4]).intValue()));
+        final Collection<GroupData> result = fetchGroupDataForUser(user, false);
         final GroupImpl group;
         final StatisticsData statisticsData;
         final PaginatedCollection<User> users;
@@ -290,6 +277,25 @@ public class HibernateApplication implements Application {
             updateLastGroupVisit(user, group);
         return new GroupPageData(group, result, messagePaginatedCollection,
                 statisticsData, users);
+    }
+
+    private Collection<GroupData> fetchGroupDataForUser(final User user, final boolean restrictToSuscribed) {
+        final String ifConnectedColumns = "max(ifnull(USER_ID=:userId, false))>0, sum(ifnull(USER_ID=:userId AND LAST_VISIT<PUBLIC_MESSAGES.`DATE`, false))";
+        final Query query = entityManager.createNativeQuery(
+                "select GROUPS.ID, name, count(DISTINCT GROUP_USER.USER_ID), "
+                        + (user != null ? ifConnectedColumns : " 0,0")
+                        + " from GROUPS left join  GROUP_USER on GROUP_ID=ID "
+                        + " left join PUBLIC_MESSAGES on PUBLIC_MESSAGES.GROUP_ID=GROUP_USER.GROUP_ID "
+                        + (restrictToSuscribed ? " where GROUP_USER.USER_ID=:userId" : "")
+                        + " group by GROUPS.ID order by CREATION_DATE");
+        if (user != null)
+            query.setParameter("userId", user.getId());
+        final List<Object[]> list = query.getResultList();
+        final Collection<GroupData> result = new ArrayList<GroupData>(list.size());
+        for (final Object[] o : list)
+            result.add(new GroupData(((Number) o[0]).longValue(), String.valueOf(o[1]), ((Number) o[2]).longValue(),
+                    ((Number) o[3]).intValue() != 0, ((Number) o[4]).intValue()));
+        return result;
     }
 
     private void updateLastGroupVisit(final User user, final GroupImpl group) {
@@ -409,13 +415,7 @@ public class HibernateApplication implements Application {
     public UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline) {
         final Collection<ConversationSumary> correspondants = fetchCorrespondents(user);
         return new UserPageData(correspondants, fetchStatisticsData(user, firstIndex, discipline),
-                fetchGroupMembership(user));
-    }
-
-    private Collection<Group> fetchGroupMembership(final User user) {
-        final Query query = query("select g from GroupImpl g inner join g.members u where u=:user");
-        query.setParameter("user", user);
-        return query.getResultList();
+                fetchGroupDataForUser(user, true));
     }
 
     private StatisticsData fetchStatisticsData(final User user, final int firstIndex, String discipline) {
