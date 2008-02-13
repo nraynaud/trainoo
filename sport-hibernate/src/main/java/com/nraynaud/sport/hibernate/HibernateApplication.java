@@ -258,17 +258,20 @@ public class HibernateApplication implements Application {
 
     public GroupPageData fetchGroupPageData(final User user, final Long groupId, final int messageStartIndex,
                                             final int workoutStartIndex, final String discipline) {
+        final String ifConnectedColumns = "max(ifnull(USER_ID=:userId, false))>0, sum(ifnull(USER_ID=:userId AND LAST_VISIT<PUBLIC_MESSAGES.`DATE`, false))";
         final Query query = entityManager.createNativeQuery(
-                "select GROUPS.ID, name, count(USER_ID), "
-                        + (user != null ? "max(ifnull(USER_ID=:userId, false))>0" : "0")
-                        + " from GROUPS left join  GROUP_USER on GROUP_ID=ID group by GROUPS.ID order by CREATION_DATE");
+                "select GROUPS.ID, name, count(DISTINCT GROUP_USER.USER_ID), "
+                        + (user != null ? ifConnectedColumns : "0,0")
+                        + " from GROUPS left join  GROUP_USER on GROUP_ID=ID "
+                        + "left join PUBLIC_MESSAGES on PUBLIC_MESSAGES.GROUP_ID=GROUP_USER.GROUP_ID "
+                        + "group by GROUPS.ID order by CREATION_DATE");
         if (user != null)
             query.setParameter("userId", user.getId());
         final List<Object[]> list = query.getResultList();
         final Collection<GroupData> result = new ArrayList<GroupData>(list.size());
         for (final Object[] o : list)
             result.add(new GroupData(((Number) o[0]).longValue(), String.valueOf(o[1]), ((Number) o[2]).longValue(),
-                    ((Number) o[3]).intValue() != 0));
+                    ((Number) o[3]).intValue() != 0, ((Number) o[4]).intValue()));
         final GroupImpl group;
         final StatisticsData statisticsData;
         final PaginatedCollection<User> users;
@@ -281,8 +284,23 @@ public class HibernateApplication implements Application {
             group = null;
             users = emptyPage();
         }
-        return new GroupPageData(group, result, fetchPublicMessages(Topic.Kind.GROUP, groupId, 10, messageStartIndex),
+        final PaginatedCollection<PublicMessage> messagePaginatedCollection = fetchPublicMessages(Topic.Kind.GROUP,
+                groupId, 10, messageStartIndex);
+        if (user != null && group != null)
+            updateLastGroupVisit(user, group);
+        return new GroupPageData(group, result, messagePaginatedCollection,
                 statisticsData, users);
+    }
+
+    private void updateLastGroupVisit(final User user, final GroupImpl group) {
+        if (group != null) {
+            final Query query = entityManager.createNativeQuery(
+                    "update GROUP_USER SET LAST_VISIT=:now where GROUP_ID=:groupId and USER_ID=:userId");
+            query.setParameter("now", new Date());
+            query.setParameter("groupId", group.getId());
+            query.setParameter("userId", user.getId());
+            query.executeUpdate();
+        }
     }
 
     private static <T> PaginatedCollection<T> emptyPage() {
@@ -308,7 +326,7 @@ public class HibernateApplication implements Application {
 
     public void joinGroup(final User user, final Long groupId) {
         final Query query = entityManager.createNativeQuery(
-                "insert GROUP_USER SET GROUP_ID=:groupId, USER_ID=:userId, JOINING_DATE=:joiningDate");
+                "insert GROUP_USER SET GROUP_ID=:groupId, USER_ID=:userId, JOINING_DATE=:joiningDate, LAST_VISIT=:joiningDate");
         query.setParameter("groupId", groupId);
         query.setParameter("userId", user.getId());
         query.setParameter("joiningDate", new Date());
@@ -521,9 +539,15 @@ public class HibernateApplication implements Application {
     public BibPageData fetchBibPageData(final User currentUser, final Long targetUserId,
                                         final int workoutStartIndex, final int privateMessagesPageIndex) throws
             UserNotFoundException {
-        final User target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
-        final PaginatedCollection<PrivateMessage> privateMessages = fetchPrivateConversation(currentUser, targetUserId,
-                privateMessagesPageIndex);
+        final User target;
+        final PaginatedCollection<PrivateMessage> privateMessages;
+        if (currentUser == null) {
+            target = fetchUser(targetUserId);
+            privateMessages = emptyPage();
+        } else {
+            target = currentUser.getId().equals(targetUserId) ? currentUser : fetchUser(targetUserId);
+            privateMessages = fetchPrivateConversation(currentUser, targetUserId, privateMessagesPageIndex);
+        }
         final PaginatedCollection<Workout> workouts = getWorkouts(target, null, workoutStartIndex, 10);
         return new BibPageData(target, privateMessages, workouts);
     }

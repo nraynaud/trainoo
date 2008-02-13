@@ -21,7 +21,8 @@ public class ActionDetail {
     public ActionDetail(final String encodedAction) {
         this.encodedAction = encodedAction;
         final Matcher matcher = FROM_ACTION_PATTERN.matcher(encodedAction);
-        matcher.matches();
+        if (!matcher.matches())
+            throw new RuntimeException("action invalide : '" + encodedAction + "'");
         namespace = matcher.group(1);
         name = matcher.group(2);
         final String[] params = AND_PATTERN.split(matcher.group(3));

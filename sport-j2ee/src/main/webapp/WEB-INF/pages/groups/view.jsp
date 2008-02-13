@@ -66,13 +66,16 @@
     %>
     <h2>Tous les groupes</h2>
     <table>
-        <s:iterator value="%{others}">
+        <s:iterator value="%{allGroups}">
             <%final GroupData groupData = (GroupData) top();%>
             <tr>
                 <s:url id="groupURL" action="" namespace="/groups" includeParams="none">
                     <s:param name="id" value="%{id}"/>
                 </s:url>
-                <td><a href="<s:property value="%{groupURL}" />"><s:property value="name"/></a></td>
+                <td><a href="<s:property value="%{groupURL}" />"><s:property
+                        value="name"/><% final int newCount = groupData.newMessagesCount; %></a></td>
+                <td><%=newCount > 0 ? newCount + (newCount == 1 ? " nouveau message" : " nouveaux messages") : ""%>
+                </td>
                 <td><%final long count = ((Long) property("memberCount")).longValue();%>
                     <%=count > 1 ? count + " membres" : count == 1 ? "un membre" : "aucun membre"%>
                 </td>

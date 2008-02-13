@@ -6,6 +6,7 @@ import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.data.BibPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
+import com.nraynaud.sport.web.Public;
 import static com.nraynaud.sport.web.action.bib.Action.INPUT;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.nraynaud.sport.web.view.Helpers;
@@ -20,6 +21,7 @@ import org.apache.struts2.config.Results;
 @Result(name = INPUT, value = "/WEB-INF/pages/bib/view.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
+@Public
 public class Action extends DefaultAction implements ModelDriven<BibPageData> {
     private Long id;
     private BibPageData data;

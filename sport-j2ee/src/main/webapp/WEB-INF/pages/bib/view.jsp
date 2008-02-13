@@ -7,10 +7,10 @@
 
 <% final BibPageData data = (BibPageData) top();
     final User user = data.user;
-    final boolean lookingOwnBib = currentUser().equals(user);%>
+    final boolean lookingOwnBib = user.equals(currentUser());%>
 <p:layoutParams title="<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + escaped(user.getName())%>"/>
 
-<div id="<%= lookingOwnBib ? "tinyCenter" : "globalLeft"%>">
+<div id="<%= lookingOwnBib || !isLogged() ? "tinyCenter" : "globalLeft"%>">
     <% final String defaultValue = "non précisé";
         final String town = user.getTown();
         final String townLabel = "Ma ville";%>
@@ -37,7 +37,7 @@
     <% call(pageContext, "workoutTable.jsp", data.workouts);%>
     <%}%>
 </div>
-<%if (!lookingOwnBib) {%>
+<%if (!lookingOwnBib && isLogged()) {%>
 <div id="globalRight">
     <h2>Envoyer un message à <%=escaped(user.getName())%>
     </h2>
