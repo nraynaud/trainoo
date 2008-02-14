@@ -26,7 +26,10 @@ public class DistanceConverter extends StrutsTypeConverter {
     }
 
     public static Double parseDistance(final String input) {
-        return Double.valueOf(parseNumber(removeKmSuffix(input)).doubleValue());
+        final double result = parseNumber(removeKmSuffix(input)).doubleValue();
+        if (result <= 0)
+            throw new TypeConversionException("Negative or null number");
+        return Double.valueOf(result);
     }
 
     private static String removeKmSuffix(final String input) {
