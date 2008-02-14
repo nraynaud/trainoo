@@ -36,6 +36,12 @@ public class WorkoutImpl implements Workout {
     @OneToMany(targetEntity = PublicMessageImpl.class, mappedBy = "workout")
     private Collection<PublicMessage> publicMessages;
 
+    @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "WORKOUT_USER",
+            joinColumns = @JoinColumn(name = "WORKOUT_ID", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false))
+    private Collection<User> participants;
+
     transient Long messageNumber;
 
     public WorkoutImpl() {
@@ -111,5 +117,9 @@ public class WorkoutImpl implements Workout {
 
     public Collection<PublicMessage> getMessages() {
         return publicMessages;
+    }
+
+    public Collection<User> getParticipants() {
+        return participants;
     }
 }

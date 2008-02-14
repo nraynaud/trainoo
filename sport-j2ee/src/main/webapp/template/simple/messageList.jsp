@@ -65,7 +65,8 @@
                     } else {
                         final Group group = publicMessage.getGroup();
                         out.append(
-                                Helpers.selectableUrl("/groups", "", "Voir la page du groupe " + group.getName(), "id",
+                                Helpers.selectableUrl("/groups", "",
+                                        "<span style='font-weight:normal'>Groupe </span>" + group.getName(), "id",
                                         String.valueOf(group.getId())));
                     }
                 }

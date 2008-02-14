@@ -28,7 +28,7 @@ public class GroupImpl implements Group {
     @JoinColumn(name = "OWNER_ID", nullable = false, updatable = false)
     private User owner;
 
-    @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
     @JoinTable(name = "GROUP_USER", joinColumns = @JoinColumn(name = "GROUP_ID", nullable = false, updatable = false),
             inverseJoinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false))
     private Collection<UserImpl> members;
