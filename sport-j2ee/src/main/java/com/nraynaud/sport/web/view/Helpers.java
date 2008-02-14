@@ -278,4 +278,8 @@ public class Helpers {
             throw new RuntimeException(e);
         }
     }
+
+    public static String pluralize(final int count, final String one, final String various) {
+        return count > 1 ? various : one;
+    }
 }

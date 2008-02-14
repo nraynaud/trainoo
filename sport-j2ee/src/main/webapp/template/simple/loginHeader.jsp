@@ -18,7 +18,9 @@
         <s:url id="messagesURL" action="" namespace="/messages">
             <s:param name="receiver" value="newMessages.get(0).sender"/>
         </s:url>
-        <a href="<s:property value="%{messagesURL}"/>" style="color:red"><%=count%> nouveau(x) message(s)</a>
+        <a href="<s:property value="%{messagesURL}"/>" style="color:red"><%=count + " " + pluralize(count,
+                "nouveau message", "nouveaux messages")%>
+        </a>
         <%}%>
         <span id="loginName"><!--<%=currentUser().getId()%> --><%= currentUser().getName()%>
             <span style="font-size:x-small;"><%= selectableUrl("/privatedata", "", "(mot de passe)")%></span>
