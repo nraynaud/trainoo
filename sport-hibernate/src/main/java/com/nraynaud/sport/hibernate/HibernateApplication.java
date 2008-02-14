@@ -409,7 +409,8 @@ public class HibernateApplication implements Application {
                 + (user != null ? " and w.user=:user" : ""));
         if (user != null)
             query.setParameter("user", user);
-        return (Double) query.getSingleResult();
+        final Double result = (Double) query.getSingleResult();
+        return result == null ? Double.valueOf(0) : result;
     }
 
     public UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline) {
