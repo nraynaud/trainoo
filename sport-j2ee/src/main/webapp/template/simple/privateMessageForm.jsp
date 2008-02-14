@@ -38,7 +38,7 @@
         <%}%>
         <s:hidden id="priv_fromAction" name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="publicMessage" value="false"/>
-        <s:hidden name="aboutWorkoutId"/>
+        <s:hidden name="aboutWorkoutId" value="%{aboutWorkout.id}"/>
         <div id="priv_aboutWorkoutDiv" class="workout">
             <% if (answerWorkout != null) {%>
             à propos de la sortie&nbsp;: <span class="tinyWorkout"><%
