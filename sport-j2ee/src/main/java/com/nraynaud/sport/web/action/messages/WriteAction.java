@@ -48,13 +48,13 @@ public class WriteAction extends ChainBackAction {
     }
 
     @RequiredStringValidator(message = "Vous avez oublié le message.")
-    @StringLengthFieldValidator(message = "La ville doit faire moins de ${maxLength} caratères.",
+    @StringLengthFieldValidator(message = "Le message doit faire moins de ${maxLength} caratères.",
             maxLength = CONTENT_MAX_LENGTH)
     public void setContent(final String content) {
         this.content = content;
     }
 
-    @RequiredStringValidator(message = "vous avez oublié le destinataire")
+    @RequiredStringValidator(message = "Vous avez oublié le destinataire")
     public void setReceiver(final String receiver) {
         this.receiver = receiver.length() > 0 ? receiver : null;
     }
