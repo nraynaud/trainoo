@@ -24,7 +24,7 @@
         <div class="messageHeading">
             <div style="float:left;">
                 <s:date name="date" format="E dd/M à HH:mm:ss"/>
-                <% final String name = escaped(message.getSender().getName()); %>
+                <% final String name = message.getSender().getName().toString(); %>
                 <span class="message_from">
                     <% if (isLogged()) {%>
                     <s:url id="bibUrl" action="" namespace="/bib" includeParams="none">

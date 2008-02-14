@@ -6,7 +6,7 @@ import java.util.Date;
 public interface Group extends Topic {
     Long getId();
 
-    String getName();
+    UserString getName();
 
     User getOwner();
 

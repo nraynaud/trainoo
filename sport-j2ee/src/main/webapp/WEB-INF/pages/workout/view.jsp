@@ -11,7 +11,7 @@
     final User runner = workout.getUser();
     final User currentUser = currentUser();
     final boolean isCurrentUser = currentUser != null && currentUser.equals(runner); %>
-<p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + escaped(runner.getName())%>"/>
+<p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"/>
 
 <div class="bigWorkout">
     <% call(pageContext, "workoutComponent.jsp", workout, "extended", Boolean.TRUE); %>
@@ -39,7 +39,7 @@
     <h2><%=isCurrentUser ? "Mes" : "Ses"%> derniers entraînements</h2>
     <% call(pageContext, "workoutTable.jsp", data.lastWorkouts, "highLight", workout.getId());
         if (isLogged() && !isCurrentUser) {%>
-    <h2>Envoyer un message à <%=escaped(runner.getName())%>
+    <h2>Envoyer un message à <%=runner.getName()%>
     </h2>
     <% call(pageContext, "privateMessageForm.jsp", privateFormConfig(workout, runner), "hideReceiverBox", true);
         call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'privateMessagesPageIndex'");

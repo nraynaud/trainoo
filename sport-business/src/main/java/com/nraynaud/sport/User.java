@@ -7,13 +7,13 @@ public interface User extends Serializable {
 
     Long getId();
 
-    String getName();
+    UserString getName();
 
-    String getTown();
+    UserString getTown();
 
-    String getDescription();
+    UserString getDescription();
 
-    String getWebSite();
+    UserString getWebSite();
 
     String getRememberToken();
 }

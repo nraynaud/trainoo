@@ -2,6 +2,8 @@
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -28,13 +30,15 @@
                     <s:url id="bibUrl" namespace="/bib" action="" includeParams="none" anchor="">
                         <s:param name="id" value="user.id"/>
                     </s:url>
-                    <s:a href="%{bibUrl}" title="Voir son dossard"><s:property value="user.name"/></s:a>
+                    <s:a href="%{bibUrl}" title="Voir son dossard"><%=stringProperty("user.name")%>
+                    </s:a>
                     <% } else {%>
-                    <s:property value="user.name"/>
+                    <%=stringProperty("user.name")%>
                     <%}%>
                 </td>
             </s:if>
-            <td><s:property value="discipline"/></td>
+            <td><%=stringProperty("discipline")%>
+            </td>
             <td><p:duration name="duration"/></td>
             <td><p:distance name="distance"/></td>
             <s:if test="%{parameters.displayEdit}">

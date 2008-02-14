@@ -1,12 +1,13 @@
 package com.nraynaud.sport.web.view;
 
+import com.nraynaud.sport.Helper;
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.CreateIfNull;
-import com.opensymphony.xwork2.util.TextUtils;
 import com.opensymphony.xwork2.util.ValueStack;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.components.Include;
@@ -21,22 +22,21 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Helpers {
-    private static final String HEX_CHARS = "0123456789ABCDEF";
     private static final String OVERRIDES_KEY = "overrides";
     public static final SportActionMapper MAPPER = new SportActionMapper();
 
     private Helpers() {
     }
 
-    public static String formatUrl(final String url, final String ifNull) {
+    public static String formatUrl(final UserString url, final String ifNull) {
         if (url == null)
             return ifNull;
         else {
             final StringBuilder builder = new StringBuilder();
             builder.append("<a href='");
-            escape(url, builder);
+            builder.append(url.toString());
             builder.append("'>");
-            escape(url, builder);
+            builder.append(url.toString());
             builder.append("</a>");
             return builder.toString();
         }
@@ -44,6 +44,10 @@ public class Helpers {
 
     public static String stringProperty(final String expression) {
         return (String) stack().findValue(expression, String.class);
+    }
+
+    public static UserString userStringProperty(final String expression) {
+        return (UserString) stack().findValue(expression, UserString.class);
     }
 
     public static Object property(final String expression) {
@@ -67,64 +71,19 @@ public class Helpers {
     }
 
     public static String escapedProperty(final String expression) {
-        return escaped(stringProperty(expression));
-    }
-
-    public static String escaped(final String string) {
-        final String s = TextUtils.noNull(string);
-        final StringBuilder str = new StringBuilder();
-        escape(s, str);
-        return str.toString();
-    }
-
-    private static void escape(final String input, final StringBuilder collector) {
-        for (int j = 0; j < input.length(); j++) {
-            final char c = input.charAt(j);
-
-            // encode standard ASCII characters into HTML entities where needed
-            if (c < '\200') {
-                switch (c) {
-                    case '"':
-                        collector.append("&quot;");
-                        break;
-                    case '&':
-                        collector.append("&amp;");
-                        break;
-                    case '<':
-                        collector.append("&lt;");
-                        break;
-                    case '>':
-                        collector.append("&gt;");
-                        break;
-                    default:
-                        collector.append(c);
-                }
-            }
-            // encode 'ugly' characters (ie Word "curvy" quotes etc)
-            else if (c < '\377') {
-                final int a = c % 16;
-                final int b = (c - a) / 16;
-                final String hex = "" + HEX_CHARS.charAt(b) + HEX_CHARS.charAt(a);
-                collector.append("&#x").append(hex).append(";");
-            }
-            //add other characters back in - to handle charactersets
-            //other than ascii
-            else {
-                collector.append(c);
-            }
-        }
+        return Helper.escaped(stringProperty(expression));
     }
 
     public static String propertyEscapedOrNull(final String expression, final String ifNull) {
         final String result = stringProperty(expression);
-        return result == null ? ifNull : escaped(result);
+        return result == null ? ifNull : Helper.escaped(result);
     }
 
     public static String escapedOrNull(final String string, final String ifNull) {
-        return string == null ? ifNull : escaped(string);
+        return string == null ? ifNull : Helper.escaped(string);
     }
 
-    public static String escapedOrNullmultilines(final String string, final String ifNull) {
+    public static String escapedOrNullmultilines(final UserString string, final String ifNull) {
         return string == null ? ifNull : multilineText(string);
     }
 
@@ -149,11 +108,11 @@ public class Helpers {
         return stack().pop();
     }
 
-    public static String multilineText(final String input) {
-        final StringBuilder builder = new StringBuilder((int) (input.length() * 1.2));
-        final StringTokenizer tokenizer = new StringTokenizer(input, "\n");
+    public static String multilineText(final UserString input) {
+        final StringBuilder builder = new StringBuilder((int) (input.nonEscaped().length() * 1.2));
+        final StringTokenizer tokenizer = new StringTokenizer(input.nonEscaped(), "\n");
         while (tokenizer.hasMoreTokens()) {
-            escape(tokenizer.nextToken(), builder);
+            Helper.escape(tokenizer.nextToken(), builder);
             builder.append("<br>");
         }
         return builder.toString();
@@ -232,6 +191,10 @@ public class Helpers {
 
     public static String literal(final String string) {
         return '\'' + string + '\'';
+    }
+
+    public static String literal(final UserString string) {
+        return '\'' + string.toString() + '\'';
     }
 
     public static PrivateMessageFormConfig privateFormConfig(final Workout workout, final User runner) {

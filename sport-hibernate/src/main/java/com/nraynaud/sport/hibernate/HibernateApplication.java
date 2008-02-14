@@ -293,8 +293,8 @@ public class HibernateApplication implements Application {
         final List<Object[]> list = query.getResultList();
         final Collection<GroupData> result = new ArrayList<GroupData>(list.size());
         for (final Object[] o : list)
-            result.add(new GroupData(((Number) o[0]).longValue(), String.valueOf(o[1]), ((Number) o[2]).longValue(),
-                    ((Number) o[3]).intValue() != 0, ((Number) o[4]).intValue()));
+            result.add(new GroupData(((Number) o[0]).longValue(), UserStringImpl.valueOf(String.valueOf(o[1])),
+                    ((Number) o[2]).longValue(), ((Number) o[3]).intValue() != 0, ((Number) o[4]).intValue()));
         return result;
     }
 
@@ -387,9 +387,9 @@ public class HibernateApplication implements Application {
     }
 
     private List<DisciplineDistance> fetchDistanceByDiscipline(final Group group) {
-        final String sum = "sum(w.distance)";
         final String string =
-                "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, " + sum + ")"
+                "select new com.nraynaud.sport.data.DisciplineDistance("
+                        + "w.discipline, sum(w.distance))"
                         + " from GroupImpl g left join g.members u left join u.workouts w where w.distance is not null"
                         + " and g=:group group by w.discipline";
         final Query query = query(string);
@@ -414,7 +414,7 @@ public class HibernateApplication implements Application {
     }
 
     public UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline) {
-        final Collection<ConversationSumary> correspondants = fetchCorrespondents(user);
+        final Collection<ConversationSummary> correspondants = fetchCorrespondents(user);
         return new UserPageData(correspondants, fetchStatisticsData(user, firstIndex, discipline),
                 fetchGroupDataForUser(user, true));
     }
@@ -437,8 +437,8 @@ public class HibernateApplication implements Application {
         return new StatisticsData(workouts, globalDistance, distanceByDiscpline);
     }
 
-    private Collection<ConversationSumary> fetchCorrespondents(final User user) {
-        final Map<String, ConversationSumary> correspondants = new HashMap<String, ConversationSumary>();
+    private Collection<ConversationSummary> fetchCorrespondents(final User user) {
+        final Map<String, ConversationSummary> correspondants = new HashMap<String, ConversationSummary>();
         {
             final Query query = query(
                     "select m.sender.name, m.receiver.name, count(m), m.read from PrivateMessageImpl m where (m.receiver=:user OR "
@@ -448,7 +448,7 @@ public class HibernateApplication implements Application {
             for (final Object[] row : (List<Object[]>) query.getResultList()) {
                 final boolean sent = row[0].equals(user.getName());
                 final String name = (String) (sent ? row[1] : row[0]);
-                final ConversationSumary previous = correspondants.get(name);
+                final ConversationSummary previous = correspondants.get(name);
                 final long count = ((Number) row[2]).longValue();
                 final long newCount;
                 if (row[3].equals(Boolean.FALSE) && !sent)
@@ -456,13 +456,13 @@ public class HibernateApplication implements Application {
                 else
                     newCount = 0;
                 if (previous != null) {
-                    correspondants.put(name, new ConversationSumary(name,
+                    correspondants.put(name, new ConversationSummary(UserStringImpl.valueOf(name),
                             count + previous.messageCount, newCount + previous.newMessageCount));
                 } else
-                    correspondants.put(name, new ConversationSumary(name, count, newCount));
+                    correspondants.put(name, new ConversationSummary(UserStringImpl.valueOf(name), count, newCount));
             }
         }
-        return new TreeSet<ConversationSumary>(correspondants.values());
+        return new TreeSet<ConversationSummary>(correspondants.values());
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
@@ -574,7 +574,7 @@ public class HibernateApplication implements Application {
                                                   final int startIndex) throws WorkoutNotFoundException {
         final Workout aboutWorkout = aboutWorkoutId == null ? null : fetchWorkout(aboutWorkoutId);
         final ConversationData conversationData = new ConversationData(fetchConversation(sender, receiver, startIndex),
-                aboutWorkout);
+                aboutWorkout, UserStringImpl.valueOf(receiver));
         for (final PrivateMessage privateMessage : conversationData.privateMessages) {
             final PrivateMessageImpl message1 = (PrivateMessageImpl) privateMessage;
             if (!message1.isRead() && message1.getReceiver().equals(sender)) {

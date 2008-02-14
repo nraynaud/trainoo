@@ -20,7 +20,7 @@
         </s:url>
         <a href="<s:property value="%{messagesURL}"/>" style="color:red"><%=count%> nouveau(x) message(s)</a>
         <%}%>
-        <span id="loginName"><!--<%=currentUser().getId()%> --><%= escaped(currentUser().getName())%>
+        <span id="loginName"><!--<%=currentUser().getId()%> --><%= currentUser().getName()%>
             <span style="font-size:x-small;"><%= selectableUrl("/privatedata", "", "(mot de passe)")%></span>
         </span>
         <%= selectableUrl("/", "workouts", "Mon vestiaire")%><%= selectableUrl("/bib", "", "Mon dossard", "id",

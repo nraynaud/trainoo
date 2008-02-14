@@ -1,4 +1,5 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.data.ConversationSummary" %>
 <%@ page import="com.nraynaud.sport.data.UserPageData" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -32,16 +33,18 @@
         <legend>Mes correspondances</legend>
         <ul>
             <s:iterator value="%{privateMessageReceivers}">
-                <s:url id="messageUrl" action="" namespace="/messages">
-                    <s:param name="receiver" value="%{top.correspondentName}"/>
-                </s:url>
-                <li><a href="<s:property value="messageUrl"/>"><s:property value="%{top.correspondentName}"/>
-                    (<s:property value="%{top.messageCount}"/>)</a>
-                    <s:if test="%{top.newMessageCount > 0}">
-                        <span class="newMessages"><s:property
-                                value="%{top.newMessageCount}"/> <s:if
-                                test="%{top.newMessageCount > 1}">nouveaux</s:if><s:else>nouveau</s:else></span>
-                    </s:if>
+                <%
+                    final ConversationSummary summary = (ConversationSummary) top();
+                %>
+                <li>
+                    <%=selectableUrl("/messages", "", summary.correspondentName.toString(), "receiver",
+                            summary.correspondentName.nonEscaped())%>
+                    <%
+                        final long newCount = summary.newMessageCount;
+                        if (newCount > 0) {
+                    %>
+                    <span class="newMessages"><%=newCount%> <%=newCount > 1 ? "nouveaux" : "nouveau"%></span>
+                    <%}%>
                 </li>
             </s:iterator>
         </ul>
@@ -52,7 +55,8 @@
             <s:url id="groupUrl" namespace="/groups" action="" includeParams="none">
                 <s:param name="id" value="%{id}"/>
             </s:url>
-            <li><a href="<s:property value="%{groupUrl}"/>"><s:property value="name"/></a>
+            <li><a href="<s:property value="%{groupUrl}"/>"><%=stringProperty("name")%>
+            </a>
                 <s:if test="%{top.newMessagesCount > 0}">
                         <span class="newMessages"><s:property
                                 value="%{top.newMessagesCount}"/> <s:if

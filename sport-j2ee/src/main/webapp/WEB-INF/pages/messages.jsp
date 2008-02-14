@@ -5,11 +5,12 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 
-<p:layoutParams title="<%="Messages privés avec " + escaped(stringProperty("receiver"))%>"/>
+<%final ConversationData data = (ConversationData) property("conversationData");%>
+<p:layoutParams title="<%="Messages privés avec " + data.receiver%>"/>
 
 <div id="tinyCenter">
-    <% final ConversationData data = (ConversationData) property("conversationData");
-        call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(stringProperty("receiver"), null),
+    <%
+        call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.receiver, null),
                 "hideReceiverBox", true);
         call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'pageIndex'");
     %>

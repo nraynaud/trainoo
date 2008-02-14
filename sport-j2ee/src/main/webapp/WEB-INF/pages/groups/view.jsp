@@ -4,6 +4,7 @@
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="com.nraynaud.sport.data.GroupPageData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -24,7 +25,7 @@
         </tr>
         <tr>
             <td><span class="label">par&nbsp;:</span></td>
-            <td><span class="userSupplied"><%=escaped(group.getOwner().getName())%></span>
+            <td><span class="userSupplied"><%=group.getOwner().getName()%></span>
             </td>
         </tr>
     </table>
@@ -54,7 +55,7 @@
     <ul>
         <% for (final User user : groupPage.users) {
             out.append("<li>")
-                    .append(selectableUrl("/bib", "", user.getName(), "id", String.valueOf(user.getId())))
+                    .append(selectableUrl("/bib", "", user.getName().toString(), "id", String.valueOf(user.getId())))
                     .append("</li>\n");
         }%>
     </ul>
@@ -69,11 +70,9 @@
         <s:iterator value="%{allGroups}">
             <%final GroupData groupData = (GroupData) top();%>
             <tr>
-                <s:url id="groupURL" action="" namespace="/groups" includeParams="none">
-                    <s:param name="id" value="%{id}"/>
-                </s:url>
-                <td><a href="<s:property value="%{groupURL}" />"><s:property
-                        value="name"/><% final int newCount = groupData.newMessagesCount; %></a></td>
+                <td><%=selectableUrl("/groups", "", groupData.name.toString(), "id", String.valueOf(groupData.id))%>
+                </td>
+                <%final int newCount = groupData.newMessagesCount; %>
                 <td><%=newCount > 0 ? newCount + (newCount == 1 ? " nouveau message" : " nouveaux messages") : ""%>
                 </td>
                 <td><%final long count = ((Long) property("memberCount")).longValue();%>

@@ -19,7 +19,7 @@ public interface Workout extends Topic {
 
     Long getId();
 
-    String getDiscipline();
+    UserString getDiscipline();
 
     Long getMessageNumber();
 }

@@ -69,8 +69,8 @@ public class PublicMessageImpl implements PublicMessage {
         return id;
     }
 
-    public String getContent() {
-        return content;
+    public UserString getContent() {
+        return UserStringImpl.valueOf(content);
     }
 
     public void setContent(final String content) {

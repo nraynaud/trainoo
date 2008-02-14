@@ -43,7 +43,7 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
                 setDate(workout.getDate());
                 setDistance(workout.getDistance());
                 setDuration(workout.getDuration());
-                setDiscipline(workout.getDiscipline());
+                setDiscipline(workout.getDiscipline().nonEscaped());
                 return INPUT;
             } catch (WorkoutNotFoundException e) {
                 addActionError("l'entraînement désigné n'existe pas");

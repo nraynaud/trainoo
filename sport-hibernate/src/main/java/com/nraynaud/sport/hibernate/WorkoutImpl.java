@@ -1,8 +1,6 @@
 package com.nraynaud.sport.hibernate;
 
-import com.nraynaud.sport.PublicMessage;
-import com.nraynaud.sport.User;
-import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -99,8 +97,8 @@ public class WorkoutImpl implements Workout {
         return date.toString();
     }
 
-    public String getDiscipline() {
-        return discipline;
+    public UserString getDiscipline() {
+        return UserStringImpl.valueOf(discipline);
     }
 
     public void setDiscipline(final String discipline) {

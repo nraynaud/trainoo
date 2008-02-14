@@ -100,7 +100,7 @@ public class ApplicationTest {
     @Test
     public void testFetchUser() throws UserAlreadyExistsException, UserNotFoundException {
         final User user = application.createUser("sender", "lol");
-        final User user1 = application.fetchUser(user.getName());
+        final User user1 = application.fetchUser(user.getName().toString());
         assertEquals(user, user1);
         try {
             application.fetchUser("unknown");

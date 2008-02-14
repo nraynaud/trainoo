@@ -2,6 +2,7 @@ package com.nraynaud.sport.web.action.bib;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
@@ -42,10 +43,14 @@ public class EditAction extends DefaultAction {
     @SkipValidation
     public String index() {
         final User user = getUser();
-        town = user.getTown();
-        description = user.getDescription();
-        webSite = user.getWebSite();
+        town = nonEscpaedorNull(user.getTown());
+        description = nonEscpaedorNull(user.getDescription());
+        webSite = nonEscpaedorNull(user.getWebSite());
         return INPUT;
+    }
+
+    private static String nonEscpaedorNull(final UserString string) {
+        return string == null ? null : string.nonEscaped();
     }
 
     @PostOnly

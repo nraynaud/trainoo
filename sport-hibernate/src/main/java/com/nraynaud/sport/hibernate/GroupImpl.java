@@ -2,6 +2,8 @@ package com.nraynaud.sport.hibernate;
 
 import com.nraynaud.sport.Group;
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.UserString;
+import com.nraynaud.sport.UserStringImpl;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -51,8 +53,8 @@ public class GroupImpl implements Group {
         return Kind.GROUP;
     }
 
-    public String getName() {
-        return name;
+    public UserString getName() {
+        return UserStringImpl.valueOf(name);
     }
 
     public User getOwner() {

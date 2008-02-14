@@ -1,8 +1,6 @@
 package com.nraynaud.sport.hibernate;
 
-import com.nraynaud.sport.PrivateMessage;
-import com.nraynaud.sport.User;
-import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -81,8 +79,8 @@ public class PrivateMessageImpl implements PrivateMessage {
         return id;
     }
 
-    public String getContent() {
-        return content;
+    public UserString getContent() {
+        return UserStringImpl.valueOf(content);
     }
 
     public void setContent(final String content) {

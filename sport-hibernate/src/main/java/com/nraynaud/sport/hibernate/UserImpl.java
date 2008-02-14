@@ -1,6 +1,8 @@
 package com.nraynaud.sport.hibernate;
 
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.UserString;
+import com.nraynaud.sport.UserStringImpl;
 import com.nraynaud.sport.Workout;
 import org.mindrot.bcrypt.BCrypt;
 
@@ -62,20 +64,20 @@ public class UserImpl implements User {
         return workouts;
     }
 
-    public String getName() {
-        return name;
+    public UserString getName() {
+        return UserStringImpl.valueOf(name);
     }
 
-    public String getTown() {
-        return town;
+    public UserString getTown() {
+        return UserStringImpl.valueOf(town);
     }
 
-    public String getDescription() {
-        return description;
+    public UserString getDescription() {
+        return UserStringImpl.valueOf(description);
     }
 
-    public String getWebSite() {
-        return webSite;
+    public UserString getWebSite() {
+        return UserStringImpl.valueOf(webSite);
     }
 
     public void setTown(final String town) {
