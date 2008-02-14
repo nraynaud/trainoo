@@ -181,7 +181,7 @@ public class HibernateApplication implements Application {
     public Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) throws
             WorkoutNotFoundException {
         final Workout workout = fetchWorkout(id);
-        if (workout == null || !willWrite || workout.getUser().getId().equals(user.getId()))
+        if (workout == null || !willWrite || workout.getUser().equals(user))
             return workout;
         else
             return null;
@@ -446,7 +446,7 @@ public class HibernateApplication implements Application {
                             + "group by m.sender.name, m.receiver.name, m.read");
             query.setParameter("user", user);
             for (final Object[] row : (List<Object[]>) query.getResultList()) {
-                final boolean sent = row[0].equals(user.getName());
+                final boolean sent = row[0].equals(((UserImpl) user).getBareName());
                 final String name = (String) (sent ? row[1] : row[0]);
                 final ConversationSummary previous = correspondants.get(name);
                 final long count = ((Number) row[2]).longValue();

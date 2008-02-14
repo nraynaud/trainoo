@@ -122,4 +122,8 @@ public class UserImpl implements User {
     public Collection<UserImpl> getGroups() {
         return groups;
     }
+
+    public String getBareName() {
+        return name;
+    }
 }
