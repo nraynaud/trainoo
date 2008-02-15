@@ -273,7 +273,7 @@ public class Helpers {
 
     private static void pushParam(final StringBuilder url, final String key, final String value) {
         try {
-            url.append(key).append('=').append(URLEncoder.encode(value, "ISO-8859-1"));
+            url.append(URLEncoder.encode(key, "ISO-8859-1")).append('=').append(URLEncoder.encode(value, "ISO-8859-1"));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
