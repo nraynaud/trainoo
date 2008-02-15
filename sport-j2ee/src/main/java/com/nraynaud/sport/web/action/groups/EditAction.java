@@ -18,8 +18,8 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 @Results({
 @Result(name = INPUT, value = "/WEB-INF/pages/groups/edit.jsp"),
-@Result(name = "precondError", type = Redirect.class, value = "", params = {"id", "${id}"}),
-@Result(name = SUCCESS, type = Redirect.class, value = "", params = {"id", "${id}"})
+@Result(name = "precondError", type = Redirect.class, value = "", params = {"namespace", "/groups", "id", "${id}"}),
+@Result(name = SUCCESS, type = Redirect.class, value = "", params = {"namespace", "/groups", "id", "${id}"})
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class EditAction extends GroupAction {
