@@ -282,4 +282,8 @@ public class Helpers {
     public static String pluralize(final int count, final String one, final String various) {
         return count > 1 ? various : one;
     }
+
+    public static String defaultOrUserClass(final UserString string) {
+        return string == null ? "serverDefault" : "userSupplied";
+    }
 }

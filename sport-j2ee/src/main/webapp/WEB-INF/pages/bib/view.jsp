@@ -17,17 +17,18 @@
     <table class="displayFormLayoutTable">
         <tr>
             <td><span class="label"><%=townLabel%>&nbsp;:</span></td>
-            <td><span class="<%=className(user.getTown())%>"><%=escapedOrNull(user.getTown(), defaultValue)%></span>
+            <td><span class="<%=defaultOrUserClass(user.getTown())%>"><%=escapedOrNull(user.getTown(),
+                    defaultValue)%></span>
             </td>
         </tr>
         <tr>
             <td><span class="label">Moi&nbsp;:</span></td>
-            <td><span class="<%=className(user.getDescription())%>"><%=escapedOrNullmultilines(
+            <td><span class="<%=defaultOrUserClass(user.getDescription())%>"><%=escapedOrNullmultilines(
                     user.getDescription(), defaultValue)%></span></td>
         </tr>
         <tr>
             <td><span class="label">Mon site&nbsp;: </span></td>
-            <td><span class="<%=className(user.getWebSite())%>"><%=formatUrl(user.getWebSite(),
+            <td><span class="<%=defaultOrUserClass(user.getWebSite())%>"><%=formatUrl(user.getWebSite(),
                     defaultValue)%></span></td>
         </tr>
     </table>
@@ -52,9 +53,5 @@
 <%!
     private static String escapedOrNull(final UserString town, final String defaultValue) {
         return town == null ? defaultValue : town.toString();
-    }
-
-    private static String className(final UserString town) {
-        return town == null ? "serverDefault" : "userSupplied";
     }
 %>

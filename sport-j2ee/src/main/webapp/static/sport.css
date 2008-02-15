@@ -373,9 +373,10 @@ table.displayFormLayoutTable {
     font-size: larger;
 }
 
-table.displayFormLayoutTable tr td {
+table.displayFormLayoutTable tr td, table.displayFormLayoutTable tr td .userSupplied {
     vertical-align: text-top;
     padding-top: 1em;
+    font-size: inherit;
 }
 
 table.displayFormLayoutTable tr td .label {
@@ -389,6 +390,10 @@ table.displayFormLayoutTable tr td .label {
     color: gray;
     font-style: italic;
     font-size: smaller;
+}
+
+.userSupplied {
+    font-size: larger;
 }
 
 #ad {
@@ -485,4 +490,10 @@ a.selected {
     vertical-align: super;
     color: red;
     font-weight: normal;
+}
+
+div.userSupplied {
+    padding: 0.2em;
+    margin: 1em 0;
+    border: gray solid thin;
 }

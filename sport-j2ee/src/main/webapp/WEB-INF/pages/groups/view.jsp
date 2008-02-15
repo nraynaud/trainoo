@@ -20,13 +20,15 @@
         group.getCreationDate())%></span> <span class="label">par&nbsp;:</span> <span
         class="userSupplied"><%=group.getOwner().getName()%></span>
 
-    <div style="border:gray solid thin"><%=escapedOrNullmultilines(group.getDescription(),
-            "<span class='serverDefault'>aucune description</span>")%>
+    <div class="<%=defaultOrUserClass(group.getDescription())%>"><%=escapedOrNullmultilines(group.getDescription(),
+            "Aucune description")%>
     </div>
     <%
         if (isLogged()) {
             if (group.getOwner().equals(currentUser()))
-                out.append(selectableUrl("/groups", "edit", "Mettre à jour", "id", String.valueOf(group.getId())));
+                out.append("<div style='text-align: right'>")
+                        .append(selectableUrl("/groups", "edit", "Mettre à jour", "id", String.valueOf(group.getId())))
+                        .append("</div>");
             call(pageContext, "publicMessageForm.jsp", group);
         }
         if (groupPage.messages.isEmpty()) {%>
