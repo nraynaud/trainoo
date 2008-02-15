@@ -17,8 +17,8 @@ import org.apache.struts2.config.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 @Results({
-@Result(name = INPUT, value = "/WEB-INF/pages/groups/edit.jsp"),
 @Result(name = "precondError", type = Redirect.class, value = "", params = {"namespace", "/groups", "id", "${id}"}),
+@Result(name = INPUT, value = "/WEB-INF/pages/groups/edit.jsp"),
 @Result(name = SUCCESS, type = Redirect.class, value = "", params = {"namespace", "/groups", "id", "${id}"})
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
