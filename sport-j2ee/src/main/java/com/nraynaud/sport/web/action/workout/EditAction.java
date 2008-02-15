@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @Conversion
 @Results({
 @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
-@Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/"}, value = "workouts")
+@Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = "")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation

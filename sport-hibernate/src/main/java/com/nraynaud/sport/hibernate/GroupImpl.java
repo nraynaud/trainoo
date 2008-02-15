@@ -61,8 +61,8 @@ public class GroupImpl implements Group {
         return owner;
     }
 
-    public String getDescription() {
-        return description;
+    public UserString getDescription() {
+        return UserStringImpl.valueOf(description);
     }
 
     public Date getCreationDate() {

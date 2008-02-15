@@ -324,10 +324,11 @@ public class HibernateApplication implements Application {
         return entityManager.createQuery(queryString);
     }
 
-    public void createGroup(final User user, final String name, final String description) {
+    public Group createGroup(final User user, final String name, final String description) {
         final GroupImpl group = new GroupImpl(name, user, description, new Date());
         entityManager.persist(group);
         joinGroup(user, group.getId());
+        return group;
     }
 
     public void joinGroup(final User user, final Long groupId) {

@@ -10,7 +10,7 @@ public interface Group extends Topic {
 
     User getOwner();
 
-    String getDescription();
+    UserString getDescription();
 
     Date getCreationDate();
 

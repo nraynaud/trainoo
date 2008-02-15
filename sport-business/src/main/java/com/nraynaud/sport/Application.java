@@ -75,7 +75,7 @@ public interface Application extends UserStore {
     GroupPageData fetchGroupPageData(final User user, final Long groupId, final int messageStartIndex,
                                      final int workoutStartIndex, final String discipline);
 
-    void createGroup(final User user, final String name, final String description);
+    Group createGroup(final User user, final String name, final String description);
 
     void joinGroup(final User user, final Long groupId);
 
