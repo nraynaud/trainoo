@@ -50,4 +50,8 @@ public class Helper {
             }
         }
     }
+
+    public static String nonEscaped(final UserString string) {
+        return string == null ? null : string.nonEscaped();
+    }
 }

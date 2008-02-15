@@ -16,22 +16,19 @@
 
 <% if (group != null) {%>
 <div id="globalLeft">
-    <table class="displayFormLayoutTable">
-        <tr>
-            <td><span class="label">Créé le&nbsp;: </span></td>
-            <td><span class="userSupplied"><%=new SimpleDateFormat("dd/MM/yyyy").format(
-                    group.getCreationDate())%></span>
-            </td>
-        </tr>
-        <tr>
-            <td><span class="label">par&nbsp;:</span></td>
-            <td><span class="userSupplied"><%=group.getOwner().getName()%></span>
-            </td>
-        </tr>
-    </table>
+    <span class="label">Créé le&nbsp;: </span><span class="userSupplied"><%=new SimpleDateFormat("dd/MM/yyyy").format(
+        group.getCreationDate())%></span> <span class="label">par&nbsp;:</span> <span
+        class="userSupplied"><%=group.getOwner().getName()%></span>
+
+    <div style="border:gray solid thin"><%=escapedOrNullmultilines(group.getDescription(),
+            "<span class='serverDefault'>aucune description</span>")%>
+    </div>
     <%
-        if (isLogged())
+        if (isLogged()) {
+            if (group.getOwner().equals(currentUser()))
+                out.append(selectableUrl("/groups", "edit", "Mettre à jour", "id", String.valueOf(group.getId())));
             call(pageContext, "publicMessageForm.jsp", group);
+        }
         if (groupPage.messages.isEmpty()) {%>
     <h2>Aucun message pour l'instant.</h2>
     <%

@@ -80,4 +80,9 @@ public interface Application extends UserStore {
     void joinGroup(final User user, final Long groupId);
 
     void partGroup(final User user, final Long groupId);
+
+    Group fetchGroupForUpdate(final User user, final Long grouId) throws GroupNotFoundException, AccessDeniedException;
+
+    void updateGroup(final User user, final Long groupId, final String name, final String description) throws
+            GroupNotFoundException, AccessDeniedException;
 }

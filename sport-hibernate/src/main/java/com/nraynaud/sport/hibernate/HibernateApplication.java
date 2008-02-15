@@ -348,6 +348,30 @@ public class HibernateApplication implements Application {
         query.executeUpdate();
     }
 
+    public Group fetchGroupForUpdate(final User user, final Long groupId) throws
+            GroupNotFoundException,
+            AccessDeniedException {
+        final GroupImpl group = entityManager.find(GroupImpl.class, groupId);
+        if (group == null)
+            throw new GroupNotFoundException();
+        if (group.getOwner().equals(user))
+            return group;
+        throw new AccessDeniedException();
+    }
+
+    public void updateGroup(final User user, final Long groupId, final String name, final String description) throws
+            GroupNotFoundException, AccessDeniedException {
+        final GroupImpl group = entityManager.find(GroupImpl.class, groupId);
+        if (group == null)
+            throw new GroupNotFoundException();
+        if (group.getOwner().equals(user)) {
+            group.setName(name);
+            group.setDescription(description);
+            entityManager.merge(group);
+        } else
+            throw new AccessDeniedException();
+    }
+
     public void updateWorkout(final Long id,
                               final User user,
                               final Date date,
