@@ -45,7 +45,7 @@
         </div>
         <%if (message.canDelete(currentUser())) {%>
         <div style="float:right;">
-            <%=currenUrlWithParams("Modifier", isPublicMessage ? EDIT_PUBLIC_MESSAGE : "editPrivateMessage",
+            <%=currenUrlWithParams("Modifier", false, isPublicMessage ? EDIT_PUBLIC_MESSAGE : "editPrivateMessage",
                     String.valueOf(message.getId()))%>
             <form name="delete" action="<%=deleteUrl(message)%>" method="post" style="display:inline;">
                 <s:hidden name="id" value="%{id}"/>

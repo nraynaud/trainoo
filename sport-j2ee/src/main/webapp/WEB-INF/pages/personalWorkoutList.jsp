@@ -8,7 +8,7 @@
 <p:layoutParams title="Mon Vestiaire"/>
 
 <%final UserPageData data = (UserPageData) top();%>
-<h2>Vous avez parcouru <%=data.getStatisticsData().globalDistance%>km</h2>
+<h2>J'ai parcouru <%=data.getStatisticsData().globalDistance%>km</h2>
 <%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
 <div id="globalLeft">
     <h2>Mes dernières sorties</h2>

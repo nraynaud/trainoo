@@ -246,14 +246,15 @@ public class Helpers {
     }
 
     public static String currenUrlWithoutParam(final String content, final String excludedKey) {
-        return currenUrlWithAndWithoutParams(content, excludedKey);
+        return currenUrlWithAndWithoutParams(content, false, excludedKey);
     }
 
-    public static String currenUrlWithParams(final String content, final String... params) {
-        return currenUrlWithAndWithoutParams(content, null, params);
+    public static String currenUrlWithParams(final String content, final boolean selectable, final String... params) {
+        return currenUrlWithAndWithoutParams(content, selectable, null, params);
     }
 
-    public static String currenUrlWithAndWithoutParams(final String content, final String excludedKey,
+    public static String currenUrlWithAndWithoutParams(final String content, final boolean selectable,
+                                                       final String excludedKey,
                                                        final String... params) {
         final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
         final String base = MAPPER.getUriFromActionMapping(
@@ -279,7 +280,7 @@ public class Helpers {
                 selected |= newParams.get(entry.getKey()).equals(entry.getValue()[0]);
             }
         }
-        return selectableAnchorTag(content, selected, url.toString());
+        return selectableAnchorTag(content, selectable && selected, url.toString());
     }
 
     private static void pushParam(final StringBuilder url, final String key, final String value) {
