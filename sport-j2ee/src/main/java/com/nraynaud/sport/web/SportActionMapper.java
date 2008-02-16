@@ -1,7 +1,9 @@
 package com.nraynaud.sport.web;
 
 import com.opensymphony.xwork2.config.ConfigurationManager;
+import com.opensymphony.xwork2.config.entities.ActionConfig;
 import com.opensymphony.xwork2.config.entities.PackageConfig;
+import com.opensymphony.xwork2.config.entities.ResultConfig;
 import org.apache.struts2.RequestUtils;
 import org.apache.struts2.dispatcher.mapper.ActionMapper;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
@@ -92,8 +94,22 @@ public class SportActionMapper implements ActionMapper {
             for (final PackageConfig config : configs.values()) {
                 namespaces.add(new NamespaceData(config.getNamespace()));
             }
-            if (CONFIG_CACHE.putIfAbsent(configs, namespaces) != namespaces)
-                System.out.println("config cache update ! new size :" + CONFIG_CACHE.size() + " added:" + namespaces);
+            if (CONFIG_CACHE.putIfAbsent(configs, namespaces) != namespaces) {
+                System.out.println("config cache update ! new size: " + CONFIG_CACHE.size() + " added:" + namespaces);
+                for (final PackageConfig config : configs.values()) {
+                    for (final ActionConfig actionConfig : config.getActionConfigs().values()) {
+                        System.out.println(actionConfig);
+                        for (final ResultConfig resultConfig : actionConfig.getResults().values()) {
+                            System.out.println("result :"
+                                    + resultConfig.getName()
+                                    + " "
+                                    + resultConfig.getParams()
+                                    + " "
+                                    + resultConfig.getClassName());
+                        }
+                    }
+                }
+            }
         }
         return namespaces;
     }
