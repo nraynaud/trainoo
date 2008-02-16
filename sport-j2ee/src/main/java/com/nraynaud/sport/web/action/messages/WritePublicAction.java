@@ -27,10 +27,6 @@ import java.util.Date;
 public class WritePublicAction extends ChainBackAction {
     public String content;
 
-    public void setAboutId(final Long aboutId) {
-        this.aboutId = aboutId;
-    }
-
     public Long aboutId;
 
     public Topic.Kind topicKind;

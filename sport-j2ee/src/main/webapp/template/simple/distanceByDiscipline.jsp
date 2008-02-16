@@ -6,10 +6,10 @@
     <span class="smaller">|
     <s:iterator value="distanceByDisciplines">
         <% final String discipline = stringProperty("discipline"); %>
-        <%=currentUrlAndParams(discipline + "&nbsp;(" + stringProperty("distance") + "km)", "discipline",
+        <%=currenUrlWithParams(discipline + "&nbsp;(" + stringProperty("distance") + "km)", "discipline",
                 discipline)%>&nbsp;|
     </s:iterator>
-        <%=currentUrlAndParams("toutes disciplines&nbsp;(" + stringProperty("globalDistance") + "km)", "discipline",
+        <%=currenUrlWithParams("toutes disciplines&nbsp;(" + stringProperty("globalDistance") + "km)", "discipline",
                 "")%>&nbsp;|
     </span>
 </s:if>

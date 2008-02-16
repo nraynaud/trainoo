@@ -245,7 +245,16 @@ public class Helpers {
         return "<a " + (selected ? "class='selected'" : "") + " href='" + finalUrl + "'>" + content + "</a>";
     }
 
-    public static String currentUrlAndParams(final String content, final String... params) {
+    public static String currenUrlWithoutParam(final String content, final String excludedKey) {
+        return currenUrlWithAndWithoutParams(content, excludedKey);
+    }
+
+    public static String currenUrlWithParams(final String content, final String... params) {
+        return currenUrlWithAndWithoutParams(content, null, params);
+    }
+
+    public static String currenUrlWithAndWithoutParams(final String content, final String excludedKey,
+                                                       final String... params) {
         final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
         final String base = MAPPER.getUriFromActionMapping(
                 new ActionMapping(mapping.getName(), mapping.getNamespace(), null, null));
@@ -261,6 +270,8 @@ public class Helpers {
             newParams.put(params[i], params[i + 1]);
             pushParam(url, params[i], params[i + 1]);
         }
+        if (excludedKey != null)
+            newParams.put(excludedKey, "lol");
         for (final Map.Entry<String, String[]> entry : queryString.entrySet()) {
             if (!newParams.containsKey(entry.getKey()))
                 pushParam(url.append("&amp;"), entry.getKey(), entry.getValue()[0]);

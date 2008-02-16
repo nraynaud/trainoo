@@ -372,6 +372,17 @@ public class HibernateApplication implements Application {
             throw new AccessDeniedException();
     }
 
+    public void updatePublicMessage(final User user, final Long messageId, final String content) throws
+            AccessDeniedException {
+        final Query query = entityManager.createNativeQuery(
+                "update PUBLIC_MESSAGES SET CONTENT=:content where ID=:id and SENDER_ID=:userId");
+        query.setParameter("content", content);
+        query.setParameter("id", messageId);
+        query.setParameter("userId", user.getId());
+        if (query.executeUpdate() != 1)
+            throw new AccessDeniedException();
+    }
+
     public void updateWorkout(final Long id,
                               final User user,
                               final Date date,

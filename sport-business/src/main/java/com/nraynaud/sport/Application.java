@@ -85,4 +85,6 @@ public interface Application extends UserStore {
 
     void updateGroup(final User user, final Long groupId, final String name, final String description) throws
             GroupNotFoundException, AccessDeniedException;
+
+    void updatePublicMessage(final User user, final Long messageId, final String content) throws AccessDeniedException;
 }
