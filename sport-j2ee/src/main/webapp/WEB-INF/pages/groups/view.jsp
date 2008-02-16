@@ -5,6 +5,7 @@
 <%@ page import="com.nraynaud.sport.data.GroupPageData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.web.action.groups.CreateAction.MAX_NAME_LENGTH" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -102,8 +103,13 @@
     <%if (isLogged()) {%>
     <h2>Créer un groupe</h2>
     <s:form action="create" namespace="/groups">
+
+        <s:actionerror/>
+        <s:fielderror/>
+
         <s:hidden name="fromAction" value="%{actionDescription}"/>
-        <s:textfield name="name"/>
+        <s:textfield id="name" name="name"/>
+        <p:javascript>makeItCount('name', <%=MAX_NAME_LENGTH%>);</p:javascript>
         <s:submit value="Créer !"/>
     </s:form>
     <%}%>

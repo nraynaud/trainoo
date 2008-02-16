@@ -12,7 +12,7 @@
         <s:hidden name="fromAction" value="%{fromAction}"/>
         <p class="loginLabel"><label for="login">Votre surnom</label></p>
 
-        <p><s:textfield id="login" name="login" cssStyle="width:100%;"/></p>
+        <s:textfield id="login" name="login" cssStyle="width:100%;"/>
 
         <p class="loginLabel"><label for="password">Votre mot de passe</label></p>
 
