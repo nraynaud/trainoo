@@ -93,6 +93,10 @@ public class PublicMessageImpl implements PublicMessage {
         return user != null && user.equals(sender);
     }
 
+    public Kind getKind() {
+        return Kind.PUBLIC;
+    }
+
     public boolean isNew() {
         return isNew;
     }

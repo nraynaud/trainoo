@@ -384,10 +384,12 @@ public class HibernateApplication implements Application {
             throw new AccessDeniedException();
     }
 
-    public void updatePublicMessage(final User user, final Long messageId, final String content) throws
+    public void updateMessage(final User user, final Long messageId, final String content,
+                              final Message.Kind kind) throws
             AccessDeniedException {
+        final String table = kind == Message.Kind.PRIVATE ? "MESSAGES" : "PUBLIC_MESSAGES";
         final Query query = entityManager.createNativeQuery(
-                "update PUBLIC_MESSAGES SET CONTENT=:content where ID=:id and SENDER_ID=:userId");
+                "update " + table + " SET CONTENT=:content where ID=:id and SENDER_ID=:userId");
         query.setParameter("content", content);
         query.setParameter("id", messageId);
         query.setParameter("userId", user.getId());

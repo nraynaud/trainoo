@@ -107,6 +107,10 @@ public class PrivateMessageImpl implements PrivateMessage {
         return user != null && (user.equals(sender) || user.equals(receiver));
     }
 
+    public Kind getKind() {
+        return Kind.PRIVATE;
+    }
+
     public User getReceiver() {
         return receiver;
     }

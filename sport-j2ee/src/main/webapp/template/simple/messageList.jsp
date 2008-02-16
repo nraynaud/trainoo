@@ -13,10 +13,9 @@
     for (final Message message : messages) {
         push(message);
         try {
-            final boolean isPublicMessage = message instanceof PublicMessage;
-            final boolean isEditingMessage = isPublicMessage && message.getId()
+            final boolean isEditingMessage = message.getId()
                     .toString()
-                    .equals(pageContext.getRequest().getParameter(EDIT_PUBLIC_MESSAGE));
+                    .equals(pageContext.getRequest().getParameter(EDIT_MESSAGE));
             final String cssClasses;
             if (message instanceof PrivateMessage) {
                 final PrivateMessage privateMessage = (PrivateMessage) message;
@@ -46,8 +45,7 @@
         </div>
         <%if (message.canWrite(currentUser())) {%>
         <div style="float:right;">
-            <%=currenUrlWithParams("Modifier", false, isPublicMessage ? EDIT_PUBLIC_MESSAGE : "editPrivateMessage",
-                    String.valueOf(message.getId()))%>
+            <%=currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId()))%>
             <form name="delete" action="<%=deleteUrl(message)%>" method="post" style="display:inline;">
                 <s:hidden name="id" value="%{id}"/>
                 <s:hidden name="fromAction" value="%{actionDescription}"/>
@@ -62,16 +60,17 @@
     </div>
     <% } %>
     <%if (isEditingMessage) {%>
-    <s:form namespace="/messages" action="editPublic">
+    <form id="edit" name="edit" onsubmit="return true;" action="/messages/edit" method="post">
         <s:hidden name="id"/>
+        <input type="hidden" name="kind" value="<%=message.getKind()%>"/>
         <input type="hidden" name="fromAction"
-               value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_PUBLIC_MESSAGE)%>"/>
+               value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_MESSAGE)%>"/>
 
         <div><s:textarea id="editContent" name="content" rows="5" cssClass="messageContentArea"/></div>
         <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
             Field.activate('editContent');</p:javascript>
-        <s:submit value="Valider"/> <%=currenUrlWithoutParam("Annuler", EDIT_PUBLIC_MESSAGE)%>
-    </s:form>
+        <s:submit value="Valider"/> <%=currenUrlWithoutParam("Annuler", EDIT_MESSAGE)%>
+    </form>
     <%} else {%>
     <p class="messageContent"><%= multilineText(message.getContent())%>
     </p>
@@ -115,7 +114,7 @@
 <%}%>
 </div>
 <%!
-    private static final String EDIT_PUBLIC_MESSAGE = "editPublicMessage";
+    private static final String EDIT_MESSAGE = "editMessage";
 
     private static String deleteUrl(final Message message) {
         return message instanceof PrivateMessage ? urlFor("/messages", "delete") : urlFor("/messages", "deletePublic");
