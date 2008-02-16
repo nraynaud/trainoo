@@ -1,7 +1,6 @@
-package com.nraynaud.sport.web.action.groups;
+package com.nraynaud.sport.web.actionsupport;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 public abstract class GroupAction extends DefaultAction {

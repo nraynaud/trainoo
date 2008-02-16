@@ -3,6 +3,7 @@ package com.nraynaud.sport.web.action.groups;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
+import com.nraynaud.sport.web.actionsupport.GroupAction;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
