@@ -1,7 +1,7 @@
 package com.nraynaud.sport.web;
 
 public interface ChainBackCapable {
-    String getFromAction();
+    ActionDetail getFromAction();
 
-    public void setActionDescription(final String actionDescription);
+    public void setActionDescription(final ActionDetail actionDescription);
 }

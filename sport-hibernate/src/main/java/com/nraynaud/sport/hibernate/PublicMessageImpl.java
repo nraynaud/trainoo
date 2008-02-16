@@ -89,7 +89,7 @@ public class PublicMessageImpl implements PublicMessage {
         return workout;
     }
 
-    public boolean canDelete(final User user) {
+    public boolean canWrite(final User user) {
         return user != null && user.equals(sender);
     }
 

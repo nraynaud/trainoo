@@ -3,6 +3,7 @@ package com.nraynaud.sport.web.actionsupport;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.data.NewMessageData;
+import com.nraynaud.sport.web.ActionDetail;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.SportRequest;
@@ -19,7 +20,7 @@ import java.util.List;
 @Namespace("/")
 @Public
 public class DefaultAction extends ActionSupport {
-    public String actionDescription;
+    public ActionDetail actionDescription;
     protected SportRequest request;
     protected final Application application;
     private List<NewMessageData> newMessages;
@@ -46,7 +47,7 @@ public class DefaultAction extends ActionSupport {
         return request.isLogged() ? request.getSportSession().getUser() : null;
     }
 
-    public void setActionDescription(final String actionDescription) {
+    public void setActionDescription(final ActionDetail actionDescription) {
         this.actionDescription = actionDescription;
     }
 

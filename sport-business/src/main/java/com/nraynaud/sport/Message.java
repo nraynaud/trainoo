@@ -9,5 +9,5 @@ public interface Message {
 
     Workout getWorkout();
 
-    boolean canDelete(User user);
+    boolean canWrite(User user);
 }

@@ -2,10 +2,7 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.NameClashException;
-import com.nraynaud.sport.web.ChainBackCapable;
-import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.Public;
+import com.nraynaud.sport.web.*;
 import com.nraynaud.sport.web.actionsupport.PasswordAction;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionChainResult;
@@ -73,7 +70,7 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
         this.request = request;
     }
 
-    public String getFromAction() {
-        return fromAction;
+    public ActionDetail getFromAction() {
+        return new ActionDetail(fromAction);
     }
 }

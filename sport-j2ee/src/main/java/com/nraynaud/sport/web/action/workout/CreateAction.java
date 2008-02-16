@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.action.workout;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.web.ActionDetail;
 import com.nraynaud.sport.web.ChainBackCapable;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
@@ -44,8 +45,8 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
             addFieldError("date", "Cette date est dans le futur");
     }
 
-    public String getFromAction() {
-        return fromAction;
+    public ActionDetail getFromAction() {
+        return new ActionDetail(fromAction);
     }
 
     public void setFromAction(final String fromAction) {

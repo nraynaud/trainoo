@@ -13,7 +13,7 @@ public abstract class BackResult implements Result {
         final Object action = invocation.getAction();
         if (action instanceof ChainBackCapable) {
             final ChainBackCapable messageAction = (ChainBackCapable) action;
-            final ActionDetail fromActionDetail = new ActionDetail(messageAction.getFromAction());
+            final ActionDetail fromActionDetail = messageAction.getFromAction();
             //remove our tracks
             messageAction.setActionDescription(messageAction.getFromAction());
             //resets conversion error to avoid double reporting

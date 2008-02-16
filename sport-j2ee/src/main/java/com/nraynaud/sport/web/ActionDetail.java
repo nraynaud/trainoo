@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * immutable class
+ */
 public class ActionDetail {
 
     private static final Pattern FROM_ACTION_PATTERN = Pattern.compile("(.*?)\\|(.*?)\\?(.*?)");
@@ -12,7 +15,7 @@ public class ActionDetail {
     private static final Pattern EQUAL_PATTERN = Pattern.compile("=");
     public final String namespace;
     public final String name;
-    public final Map parameters;
+    public final Map<String, String[]> parameters;
     public final String encodedAction;
 
     public ActionDetail(final String encodedAction) {
@@ -34,7 +37,7 @@ public class ActionDetail {
         parameters = map;
     }
 
-    public ActionDetail(final String namespace, final String name, final Map parameters) {
+    public ActionDetail(final String namespace, final String name, final Map<String, String[]> parameters) {
         this.namespace = namespace;
         this.name = name;
         this.parameters = parameters;
@@ -51,5 +54,19 @@ public class ActionDetail {
             encoded.append('&');
         }
         encodedAction = encoded.toString();
+    }
+
+    public String toString() {
+        return encodedAction;
+    }
+
+    /**
+     * @param key
+     * @return a new ActionDetail the param removed
+     */
+    public ActionDetail removeParam(final String key) {
+        final Map<String, String[]> clone = new HashMap<String, String[]>(parameters);
+        clone.remove(key);
+        return new ActionDetail(namespace, name, clone);
     }
 }

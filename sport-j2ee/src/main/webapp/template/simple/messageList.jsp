@@ -4,8 +4,9 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.*" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
-<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
+<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="static com.nraynaud.sport.web.action.messages.WritePublicAction.CONTENT_MAX_LENGTH" %>
+<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 
 <div class="pagination">
 <% final PaginatedCollection<Message> messages = (PaginatedCollection<Message>) top();
@@ -43,7 +44,7 @@
                 </span>
             a écrit&nbsp;:
         </div>
-        <%if (message.canDelete(currentUser())) {%>
+        <%if (message.canWrite(currentUser())) {%>
         <div style="float:right;">
             <%=currenUrlWithParams("Modifier", false, isPublicMessage ? EDIT_PUBLIC_MESSAGE : "editPrivateMessage",
                     String.valueOf(message.getId()))%>
@@ -63,7 +64,9 @@
     <%if (isEditingMessage) {%>
     <s:form namespace="/messages" action="editPublic">
         <s:hidden name="id"/>
-        <s:hidden id="edit_fromAction" name="fromAction" value="%{actionDescription}"/>
+        <input type="hidden" name="fromAction"
+               value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_PUBLIC_MESSAGE)%>"/>
+
         <div><s:textarea id="editContent" name="content" rows="5" cssClass="messageContentArea"/></div>
         <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
             Field.activate('editContent');</p:javascript>

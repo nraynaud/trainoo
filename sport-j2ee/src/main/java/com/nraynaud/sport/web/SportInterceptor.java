@@ -71,7 +71,7 @@ public class SportInterceptor extends AbstractInterceptor {
         if (action instanceof DefaultAction) {
             ((DefaultAction) action).actionDescription = new ActionDetail(actionProxy.getNamespace(),
                     actionProxy.getActionName(),
-                    invocationContext.getParameters()).encodedAction;
+                    invocationContext.getParameters());
         }
     }
 
