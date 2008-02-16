@@ -1,7 +1,7 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
-import com.nraynaud.sport.UserAlreadyExistsException;
+import com.nraynaud.sport.NameClashException;
 import com.nraynaud.sport.web.ChainBackCapable;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
@@ -55,7 +55,7 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
         if (request.getMethod().equals("POST")) {
             try {
                 application.createUser(login, password);
-            } catch (UserAlreadyExistsException e) {
+            } catch (NameClashException e) {
                 addFieldError(Constants.LOGIN_RESULT, "Désolé, ce surnom est déjà pris !");
                 return Action.INPUT;
             }

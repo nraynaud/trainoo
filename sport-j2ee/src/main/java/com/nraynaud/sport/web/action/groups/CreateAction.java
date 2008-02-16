@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.action.groups;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.NameClashException;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.ChainBackAction;
@@ -30,7 +31,12 @@ public class CreateAction extends ChainBackAction {
 
     @PostOnly
     public String create() {
-        id = application.createGroup(getUser(), name, null).getId();
+        try {
+            id = application.createGroup(getUser(), name, null).getId();
+        } catch (NameClashException e) {
+            addActionError("Désolé un groupe avec le même nom existe déjà");
+            return INPUT;
+        }
         return SUCCESS;
     }
 

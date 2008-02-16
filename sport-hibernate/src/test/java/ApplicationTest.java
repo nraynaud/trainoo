@@ -35,20 +35,20 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testUserFetching() throws UserAlreadyExistsException, UserNotFoundException {
+    public void testUserFetching() throws NameClashException, UserNotFoundException {
         final User user = application.createUser("lol", "pouet");
         final User user1 = application.fetchUser(user.getId());
         assertEquals(user, user1);
     }
 
     @Test
-    public void testUserCreation() throws UserAlreadyExistsException {
+    public void testUserCreation() throws NameClashException {
         assertNull(application.authenticate("lolé", "pass+é", false));
         application.createUser("lolé", "pass+é");
     }
 
     @Test
-    public void testWorkoutCreation() throws UserAlreadyExistsException {
+    public void testWorkoutCreation() throws NameClashException {
         assertNull(application.authenticate("lolé", "pass+é", false));
         final User user = application.createUser("lolé", "pass+é");
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
@@ -58,7 +58,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testUserAuth() throws UserAlreadyExistsException {
+    public void testUserAuth() throws NameClashException {
         assertNull(application.authenticate("lolé", "pass+é", false));
         application.createUser("lolé", "pass+é");
         assertNotNull(application.authenticate("lolé", "pass+é", false));
@@ -67,18 +67,18 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testUserSameName() throws UserAlreadyExistsException {
+    public void testUserSameName() throws NameClashException {
         application.createUser("lolé", "pass+é");
         try {
             application.createUser("lolé", "pass+é");
             fail("two users with same name where created");
-        } catch (UserAlreadyExistsException e) {
+        } catch (NameClashException e) {
             //great !
         }
     }
 
     @Test
-    public void testWorkoutFetching() throws UserAlreadyExistsException, WorkoutNotFoundException {
+    public void testWorkoutFetching() throws NameClashException, WorkoutNotFoundException {
         final User user = application.createUser("user", "lol");
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
                 "lol");
@@ -98,7 +98,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testFetchUser() throws UserAlreadyExistsException, UserNotFoundException {
+    public void testFetchUser() throws NameClashException, UserNotFoundException {
         final User user = application.createUser("sender", "lol");
         final User user1 = application.fetchUser(user.getName().toString());
         assertEquals(user, user1);

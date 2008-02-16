@@ -1,9 +1,6 @@
 package com.nraynaud.sport.web.action.groups;
 
-import com.nraynaud.sport.AccessDeniedException;
-import com.nraynaud.sport.Application;
-import com.nraynaud.sport.Group;
-import com.nraynaud.sport.GroupNotFoundException;
+import com.nraynaud.sport.*;
 import static com.nraynaud.sport.Helper.nonEscaped;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
@@ -56,12 +53,18 @@ public class EditAction extends DefaultAction {
     @PostOnly
     public String create() {
         try {
-            application.updateGroup(getUser(), id, name, description);
+            try {
+                application.updateGroup(getUser(), id, name,
+                        description != null && description.length() > 0 ? description : null);
+            } catch (NameClashException e) {
+                addActionError("Ce nom de groupe existe déjà.");
+                return INPUT;
+            }
         } catch (GroupNotFoundException e) {
             addActionError("Le groupe n'existe pas.");
             return INPUT;
         } catch (AccessDeniedException e) {
-            addActionError("vous n'avez pas le droit d'effectuer cette modification");
+            addActionError("Vous n'avez pas le droit d'effectuer cette modification.");
             return INPUT;
         }
         return SUCCESS;

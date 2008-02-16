@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @SuppressWarnings({"unchecked"})
-@Transactional
+@Transactional(rollbackFor = NameClashException.class)
 public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
@@ -110,14 +110,14 @@ public class HibernateApplication implements Application {
         };
     }
 
-    @Transactional(rollbackFor = UserAlreadyExistsException.class)
-    public User createUser(final String login, final String password) throws UserAlreadyExistsException {
+    @Transactional(rollbackFor = NameClashException.class)
+    public User createUser(final String login, final String password) throws NameClashException {
         try {
             final User user = new UserImpl(login, password);
             entityManager.persist(user);
             return user;
         } catch (EntityExistsException e) {
-            throw new UserAlreadyExistsException();
+            throw new NameClashException();
         }
     }
 
@@ -324,11 +324,15 @@ public class HibernateApplication implements Application {
         return entityManager.createQuery(queryString);
     }
 
-    public Group createGroup(final User user, final String name, final String description) {
+    public Group createGroup(final User user, final String name, final String description) throws NameClashException {
         final GroupImpl group = new GroupImpl(name, user, description, new Date());
-        entityManager.persist(group);
-        joinGroup(user, group.getId());
-        return group;
+        try {
+            entityManager.persist(group);
+            joinGroup(user, group.getId());
+            return group;
+        } catch (EntityExistsException e) {
+            throw new NameClashException();
+        }
     }
 
     public void joinGroup(final User user, final Long groupId) {
@@ -360,14 +364,22 @@ public class HibernateApplication implements Application {
     }
 
     public void updateGroup(final User user, final Long groupId, final String name, final String description) throws
-            GroupNotFoundException, AccessDeniedException {
+            GroupNotFoundException, AccessDeniedException, NameClashException {
         final GroupImpl group = entityManager.find(GroupImpl.class, groupId);
         if (group == null)
             throw new GroupNotFoundException();
         if (group.getOwner().equals(user)) {
-            group.setName(name);
-            group.setDescription(description);
-            entityManager.merge(group);
+            final Query query = entityManager.createNativeQuery(
+                    "update GROUPS SET NAME=:name, DESCRIPTION=:description where ID=:groupId and OWNER_ID=:userId");
+            query.setParameter("name", name);
+            query.setParameter("description", description);
+            query.setParameter("groupId", groupId);
+            query.setParameter("userId", user.getId());
+            try {
+                query.executeUpdate();
+            } catch (EntityExistsException e) {
+                throw new NameClashException();
+            }
         } else
             throw new AccessDeniedException();
     }

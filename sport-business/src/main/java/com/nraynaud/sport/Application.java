@@ -12,7 +12,7 @@ public interface Application extends UserStore {
                           final Double distance,
                           final String discipline);
 
-    User createUser(String login, String password) throws UserAlreadyExistsException;
+    User createUser(String login, String password) throws NameClashException;
 
     User authenticate(String login, String password, final boolean rememberMe);
 
@@ -75,7 +75,7 @@ public interface Application extends UserStore {
     GroupPageData fetchGroupPageData(final User user, final Long groupId, final int messageStartIndex,
                                      final int workoutStartIndex, final String discipline);
 
-    Group createGroup(final User user, final String name, final String description);
+    Group createGroup(final User user, final String name, final String description) throws NameClashException;
 
     void joinGroup(final User user, final Long groupId);
 
@@ -84,7 +84,7 @@ public interface Application extends UserStore {
     Group fetchGroupForUpdate(final User user, final Long grouId) throws GroupNotFoundException, AccessDeniedException;
 
     void updateGroup(final User user, final Long groupId, final String name, final String description) throws
-            GroupNotFoundException, AccessDeniedException;
+            GroupNotFoundException, AccessDeniedException, NameClashException;
 
     void updatePublicMessage(final User user, final Long messageId, final String content) throws AccessDeniedException;
 }
