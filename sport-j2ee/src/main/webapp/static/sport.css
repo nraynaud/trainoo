@@ -66,7 +66,7 @@ a:hover {
     width: 962px;
     margin: 0 auto 0;
     text-align: left;
-    background-color: #F2F2E8;
+    background-color: white;
     padding: 0 10px 10px 10px;
 }
 
@@ -92,7 +92,7 @@ table.workouts {
 }
 
 table.workouts tr.odd td {
-    background-color: #C9C9B1;
+    background-color: #D5CED9;
 }
 
 table.workouts tr.even td {
@@ -191,7 +191,7 @@ p.loginLabel {
 }
 
 #loginHeader * .selected {
-    background-color: #F2F2E8;
+    background-color: white;
     color: #968148;
 }
 
@@ -270,9 +270,9 @@ div.autocomplete ul li {
 }
 
 .messageHeading {
-    font-size: smaller;
-    color: #968148;
-    background-color: #D3D3D3;
+    font-size: small;
+    color: gray;
+    background-color: #D5CED9;
     padding-left: 0.5em;
     border: none;
     overflow: hidden;

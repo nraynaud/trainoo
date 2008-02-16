@@ -1,8 +1,5 @@
 package com.nraynaud.sport.web;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -30,12 +27,8 @@ public class ActionDetail {
         for (final String param : params) {
             if (param.length() > 0) {
                 final String[] pair = EQUAL_PATTERN.split(param);
-                try {
-                    final String value = pair.length > 1 ? URLDecoder.decode(pair[1], "UTF-8") : "";
-                    map.put(pair[0], new String[]{value});
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException(e);
-                }
+                final String value = pair.length > 1 ? pair[1] : "";
+                map.put(pair[0], new String[]{value});
             }
         }
         parameters = map;
@@ -54,11 +47,7 @@ public class ActionDetail {
             final Map.Entry entry = (Map.Entry) o;
             encoded.append(entry.getKey());
             encoded.append('=');
-            try {
-                encoded.append(URLEncoder.encode(((String[]) entry.getValue())[0], "ISO-8859-1"));
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
-            }
+            encoded.append(((String[]) entry.getValue())[0]);
             encoded.append('&');
         }
         encodedAction = encoded.toString();

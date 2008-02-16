@@ -34,7 +34,8 @@
             </div>
         </div>
         <% } else {%>
-        <s:hidden name="receiver" value="%{parameters.receiver != null ? parameters.receiver : receiver}"/>
+        <s:hidden name="receiver"
+                  value="%{parameters.receiver != null ? parameters.receiver.nonEscaped() : receiver.nonEscaped()}"/>
         <%}%>
         <s:hidden id="priv_fromAction" name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="publicMessage" value="false"/>
