@@ -43,7 +43,7 @@
                 </span>
             a écrit&nbsp;:
         </div>
-        <%if (message.canWrite(currentUser())) {%>
+        <%if (!Boolean.TRUE.equals(parameter("showTopicLink")) && message.canWrite(currentUser())) {%>
         <div style="float:right;">
             <%=currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId()))%>
             <form name="delete" action="<%=deleteUrl(message)%>" method="post" style="display:inline;">

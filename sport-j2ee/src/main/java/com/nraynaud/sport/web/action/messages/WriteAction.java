@@ -6,12 +6,10 @@ import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.PostOnly;
-import com.nraynaud.sport.web.actionsupport.ChainBackAction;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.RedirectBack;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
-import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -23,8 +21,7 @@ import java.util.Date;
 @Result(name = Action.INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class WriteAction extends ChainBackAction {
-    public String content;
+public class WriteAction extends MessageContentAction {
     public String receiver;
     public Long aboutWorkoutId;
 
@@ -45,13 +42,6 @@ public class WriteAction extends ChainBackAction {
         } catch (WorkoutNotFoundException e) {
             throw new DataInputException(e);
         }
-    }
-
-    @RequiredStringValidator(message = "Vous avez oublié le message.")
-    @StringLengthFieldValidator(message = "Le message doit faire moins de ${maxLength} caratères.",
-            maxLength = CONTENT_MAX_LENGTH)
-    public void setContent(final String content) {
-        this.content = content;
     }
 
     @RequiredStringValidator(message = "Vous avez oublié le destinataire")

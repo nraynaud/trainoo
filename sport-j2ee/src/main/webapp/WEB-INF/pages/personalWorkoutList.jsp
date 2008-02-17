@@ -24,8 +24,7 @@
     </div>
 </div>
 
-<div id="globalRight" class="messages">
-    <h2>Messagerie</h2>
+<div id="globalRight">
     <%
         call(pageContext, "privateMessageForm.jsp");
     %>

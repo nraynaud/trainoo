@@ -4,7 +4,6 @@ import com.nraynaud.sport.AccessDeniedException;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Message;
 import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.actionsupport.ChainBackAction;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.RedirectBack;
 import static com.opensymphony.xwork2.Action.INPUT;
@@ -18,8 +17,7 @@ import org.apache.struts2.config.Results;
 @Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class EditAction extends ChainBackAction {
-    public String content;
+public class EditAction extends MessageContentAction {
     public Long id;
     public Message.Kind kind;
 
