@@ -15,7 +15,7 @@
         try {
             final boolean isEditingMessage = message.getId()
                     .toString()
-                    .equals(pageContext.getRequest().getParameter(EDIT_MESSAGE));
+                    .equals(getFirstValue(EDIT_MESSAGE));
             final String cssClasses;
             if (message instanceof PrivateMessage) {
                 final PrivateMessage privateMessage = (PrivateMessage) message;
@@ -61,15 +61,26 @@
     <% } %>
     <%if (isEditingMessage) {%>
     <form id="edit" name="edit" onsubmit="return true;" action="/messages/edit" method="post">
+        <%
+            allowOverrides();
+            try {
+        %>
         <s:hidden name="id"/>
         <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
         <input type="hidden" name="fromAction"
                value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_MESSAGE)%>"/>
+        <input type="hidden" name="onErrorAction" value="<%=property("actionDescription")%>"/>
 
-        <div><s:textarea id="editContent" name="content" rows="5" cssClass="messageContentArea"/></div>
+        <div><s:textarea id="editContent" name="content" rows="5" cssClass="messageContentArea"
+                         cssStyle="border-width:2px"/></div>
         <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
             Field.activate('editContent');</p:javascript>
         <s:submit value="Valider"/> <%=currenUrlWithoutParam("Annuler", EDIT_MESSAGE)%>
+        <%
+            } finally {
+                disAllowOverrides();
+            }
+        %>
     </form>
     <%} else {%>
     <p class="messageContent"><%= multilineText(message.getContent())%>

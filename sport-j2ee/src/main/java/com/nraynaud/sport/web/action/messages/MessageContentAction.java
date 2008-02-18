@@ -17,7 +17,7 @@ public abstract class MessageContentAction extends ChainBackAction {
         super(application);
     }
 
-    @RequiredStringValidator(message = "Vous avez oublié le message.")
+    @RequiredStringValidator(message = "Le corps du message est vide.")
     @StringLengthFieldValidator(message = "Le message doit faire moins de ${maxLength} caratères.",
             maxLength = CONTENT_MAX_LENGTH)
     public void setContent(final String content) {

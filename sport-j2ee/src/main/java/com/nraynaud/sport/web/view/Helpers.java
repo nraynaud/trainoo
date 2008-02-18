@@ -171,6 +171,10 @@ public class Helpers {
             stack().setExprOverrides(overrides);
     }
 
+    public static void disAllowOverrides() {
+        unplugOverridesIfNecessary();
+    }
+
     private static void unplugOverridesIfNecessary() {
         final Map exprOverrides = stack().getExprOverrides();
         if (exprOverrides != null)
@@ -213,7 +217,7 @@ public class Helpers {
         return selectableUrl("/", "login", text, "fromAction", from);
     }
 
-    public static String getFirstValueEncoded(final String key) {
+    public static String getFirstValue(final String key) {
         final Object val = ActionContext.getContext().getParameters().get(key);
         if (val != null)
             return ((String[]) val)[0];
@@ -232,7 +236,7 @@ public class Helpers {
             getParams.append("?");
             for (int i = 0; i < params.length; i += 2) {
                 pushParam(getParams.append("&amp;"), params[i], params[i + 1]);
-                selected &= params[i + 1].equals(getFirstValueEncoded(params[i]));
+                selected &= params[i + 1].equals(getFirstValue(params[i]));
             }
             query = getParams.toString();
         } else

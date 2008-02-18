@@ -28,6 +28,7 @@ import java.util.Date;
 public class CreateAction extends AbstractWorkoutAction implements ChainBackCapable {
 
     public String fromAction;
+    public String onErrorAction;
 
     public CreateAction(final Application application) {
         super(application);
@@ -47,5 +48,9 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
 
     public ActionDetail getFromAction() {
         return new ActionDetail(fromAction);
+    }
+
+    public ActionDetail getOnErrorAction() {
+        return new ActionDetail(onErrorAction);
     }
 }

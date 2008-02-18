@@ -6,6 +6,7 @@ import com.nraynaud.sport.web.ChainBackCapable;
 
 public class ChainBackAction extends DefaultAction implements ChainBackCapable {
     public String fromAction = "/|workouts?";
+    public String onErrorAction;
 
     public ChainBackAction(final Application application) {
         super(application);
@@ -13,5 +14,9 @@ public class ChainBackAction extends DefaultAction implements ChainBackCapable {
 
     public ActionDetail getFromAction() {
         return new ActionDetail(fromAction);
+    }
+
+    public ActionDetail getOnErrorAction() {
+        return new ActionDetail(onErrorAction);
     }
 }

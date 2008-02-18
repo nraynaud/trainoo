@@ -29,6 +29,7 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
     private HttpServletRequest request;
     public boolean rememberMe = true;
     public String fromAction;
+    public String onErrorAction;
 
     public SignupAction(final Application application) {
         super(application);
@@ -72,5 +73,9 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
 
     public ActionDetail getFromAction() {
         return new ActionDetail(fromAction);
+    }
+
+    public ActionDetail getOnErrorAction() {
+        return new ActionDetail(onErrorAction);
     }
 }
