@@ -65,6 +65,11 @@
             allowOverrides();
             try {
         %>
+        <s:actionerror/>
+        <s:fielderror>
+            <s:param value="'content'"/>
+        </s:fielderror>
+        <a name="errorMessage"> </a>
         <s:hidden name="id"/>
         <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
         <input type="hidden" name="fromAction"
