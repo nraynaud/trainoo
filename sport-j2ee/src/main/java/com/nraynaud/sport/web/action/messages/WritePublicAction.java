@@ -41,7 +41,7 @@ public class WritePublicAction extends MessageContentAction {
         return SUCCESS;
     }
 
-    @TypeConversion(converter = "com.opensymphony.xwork2.util.EnumTypeConverter")
+    @TypeConversion(converter = "com.nraynaud.sport.web.converter.EnumTypeConverter")
     public void setTopicKind(final Topic.Kind topicKind) {
         this.topicKind = topicKind;
     }

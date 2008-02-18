@@ -1,6 +1,7 @@
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
+<%@ page import="static com.nraynaud.sport.MessageKind.PRIVATE" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,12 +15,14 @@
     <fieldset>
         <legend>Nouveau message privé</legend>
 
+        <%if (PRIVATE == property("messageKind")) {%>
         <s:actionerror/>
         <s:fielderror>
             <s:param value="'receiver'"/>
             <s:param value="'content'"/>
         </s:fielderror>
         <a name="errorMessage"> </a>
+        <%}%>
         <% if (parameter("hideReceiverBox") == null || !boolParam("hideReceiverBox")) {%>
         <div id="answerReceiver">
             <div id="privateReceiver" style="display:inline;">
@@ -37,6 +40,7 @@
         <s:hidden name="receiver"
                   value="%{parameters.receiver != null ? parameters.receiver.nonEscaped() : receiver.nonEscaped()}"/>
         <%}%>
+        <input type="hidden" name="messageKind" value="<%=PRIVATE%>"/>
         <s:hidden id="priv_fromAction" name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="publicMessage" value="false"/>
         <s:hidden name="aboutWorkoutId" value="%{aboutWorkout.id}"/>

@@ -62,7 +62,7 @@
     <%if (isEditingMessage) {%>
     <form id="edit" name="edit" onsubmit="return true;" action="/messages/edit" method="post">
         <s:hidden name="id"/>
-        <input type="hidden" name="kind" value="<%=message.getKind()%>"/>
+        <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
         <input type="hidden" name="fromAction"
                value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_MESSAGE)%>"/>
 

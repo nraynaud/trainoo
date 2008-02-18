@@ -1,9 +1,6 @@
 package com.nraynaud.sport;
 
 public interface Message {
-    public enum Kind {
-        PUBLIC, PRIVATE
-    }
 
     Long getId();
 
@@ -15,5 +12,5 @@ public interface Message {
 
     boolean canWrite(User user);
 
-    Kind getKind();
+    MessageKind getMessageKind();
 }

@@ -385,9 +385,9 @@ public class HibernateApplication implements Application {
     }
 
     public void updateMessage(final User user, final Long messageId, final String content,
-                              final Message.Kind kind) throws
+                              final MessageKind kind) throws
             AccessDeniedException {
-        final String table = kind == Message.Kind.PRIVATE ? "MESSAGES" : "PUBLIC_MESSAGES";
+        final String table = kind == MessageKind.PRIVATE ? "MESSAGES" : "PUBLIC_MESSAGES";
         final Query query = entityManager.createNativeQuery(
                 "update " + table + " SET CONTENT=:content where ID=:id and SENDER_ID=:userId");
         query.setParameter("content", content);

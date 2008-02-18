@@ -86,6 +86,6 @@ public interface Application extends UserStore {
     void updateGroup(final User user, final Long groupId, final String name, final String description) throws
             GroupNotFoundException, AccessDeniedException, NameClashException;
 
-    void updateMessage(final User user, final Long messageId, final String content, final Message.Kind kind) throws
+    void updateMessage(final User user, final Long messageId, final String content, final MessageKind kind) throws
             AccessDeniedException;
 }
