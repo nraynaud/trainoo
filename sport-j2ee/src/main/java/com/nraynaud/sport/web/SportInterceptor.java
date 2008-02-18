@@ -19,7 +19,6 @@ import java.lang.reflect.Method;
 public class SportInterceptor extends AbstractInterceptor {
     private static final Class<?>[] NO_PARAMS = new Class[0];
     private final UserStore userStore;
-    public static final String LAST_ACTION = "lastAction";
 
     public SportInterceptor(final UserStore userStore) {
         this.userStore = userStore;
@@ -43,23 +42,10 @@ public class SportInterceptor extends AbstractInterceptor {
             requestMethod = actionClass.getMethod("setRequest", SportRequest.class);
             requestMethod.invoke(action, request);
         } catch (NoSuchMethodException e) {
-            //ok, no problem
+            //ok, no problem, sorry for the inconvenience
         }
-        if (isPublic(actionClass)) return invoke(invocation);
-        return request.isLogged() ? invoke(invocation) : LOGIN_RESULT;
-    }
-
-    private static String invoke(final ActionInvocation invocation) throws Exception {
-        final ActionContext context = invocation.getInvocationContext();
-        if (context.get(LAST_ACTION) == null) {
-            context.put(LAST_ACTION, invocation.getAction().getClass());
-            try {
-                return invocation.invoke();
-            } finally {
-                context.put(LAST_ACTION, null);
-            }
-        } else
-            return invocation.invoke();
+        if (isPublic(actionClass)) return invocation.invoke();
+        return request.isLogged() ? invocation.invoke() : LOGIN_RESULT;
     }
 
     private void handleRememberMe(final HttpServletRequest servletRequest, final HttpServletResponse response) {
@@ -84,8 +70,7 @@ public class SportInterceptor extends AbstractInterceptor {
                                     final ActionContext invocationContext) {
         if (action instanceof DefaultAction) {
             ((DefaultAction) action).actionDescription = new ActionDetail(actionProxy.getNamespace(),
-                    actionProxy.getActionName(),
-                    invocationContext.getParameters());
+                    actionProxy.getActionName(), invocationContext.getParameters());
         }
     }
 
