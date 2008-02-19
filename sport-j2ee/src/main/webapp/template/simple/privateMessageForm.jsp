@@ -3,13 +3,16 @@
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="static com.nraynaud.sport.MessageKind.PRIVATE" %>
 <%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
-<%@ page import="com.opensymphony.xwork2.ActionContext" %>
-<%@ page import="java.util.Arrays" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<% allowOverrides();%>
+<%!
+    private static final String MY_ERROR_CODE = "createPrivate";
+%><%
+    final String errorParam = getFirstValue("error");
+    if (errorParam == null || errorParam.equals(MY_ERROR_CODE)) {
+        allowOverrides();%>
 <% final Object o = property("aboutWorkout");
     final Workout answerWorkout = (Workout) (o != null ? o : parameter("aboutWorkout"));%>
 
@@ -19,8 +22,7 @@
         <legend>Nouveau message privé</legend>
 
         <%
-            if (Arrays.equals((Object[]) ActionContext.getContext().getParameters().get("error"),
-                    new String[]{"createPrivate"})) {
+            if (MY_ERROR_CODE.equals(errorParam)) {
         %>
         <s:actionerror/>
         <s:fielderror>
@@ -49,7 +51,7 @@
         <input type="hidden" name="messageKind" value="<%=PRIVATE%>"/>
         <s:hidden id="priv_fromAction" name="fromAction" value="%{actionDescription}"/>
         <input type="hidden" id="priv_onErrorAction" name="onErrorAction"
-               value="<%=((ActionDetail)property("actionDescription")).addParam("error", "createPrivate")%>"/>
+               value="<%=((ActionDetail)property("actionDescription")).addParam("error", MY_ERROR_CODE)%>"/>
         <s:hidden name="publicMessage" value="false"/>
         <s:hidden name="aboutWorkoutId" value="%{aboutWorkout.id}"/>
         <div id="priv_aboutWorkoutDiv" class="workout">
@@ -63,3 +65,4 @@
         <s:submit id="priv_submit" value="Envoyer"/>
     </fieldset>
 </form>
+<%}%>

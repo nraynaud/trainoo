@@ -74,7 +74,7 @@
         <s:hidden name="id"/>
         <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
         <input type="hidden" name="fromAction"
-               value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_MESSAGE)%>"/>
+               value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_MESSAGE).removeParam("error")%>"/>
         <input type="hidden" name="onErrorAction"
                value="<%=((ActionDetail)property("actionDescription")).addParam("error", "editMessage")%>"/>
 

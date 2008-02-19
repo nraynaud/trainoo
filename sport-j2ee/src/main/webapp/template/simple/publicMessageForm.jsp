@@ -3,20 +3,22 @@
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="static com.nraynaud.sport.MessageKind.PUBLIC" %>
 <%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
-<%@ page import="com.opensymphony.xwork2.ActionContext" %>
-<%@ page import="java.util.Arrays" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-
-<% allowOverrides();%>
+<%!
+    private static final String MY_ERROR_CODE = "createPublic";
+%>
+<%
+    final String errorParam = getFirstValue("error");
+    if (errorParam == null || errorParam.equals(MY_ERROR_CODE)) {
+        allowOverrides();%>
 <s:form id="writeMessage" name="writeMessage" action="writePublic" namespace="/messages">
     <fieldset>
         <legend>Nouveau message</legend>
         <%
-            if (Arrays.equals((Object[]) ActionContext.getContext().getParameters().get("error"),
-                    new String[]{"createPublic"})) {
+            if (MY_ERROR_CODE.equals(errorParam)) {
         %>
         <s:actionerror/>
         <s:fielderror>
@@ -26,7 +28,7 @@
         <%}%>
         <s:hidden name="fromAction" value="%{actionDescription}"/>
         <input type="hidden" id="pub_onErrorAction" name="onErrorAction"
-               value="<%=((ActionDetail)property("actionDescription")).addParam("error", "createPublic")%>"/>
+               value="<%=((ActionDetail)property("actionDescription")).addParam("error", MY_ERROR_CODE)%>"/>
         <s:hidden name="publicMessage" value="true"/>
         <s:hidden name="aboutId" value="%{id}"/>
         <s:hidden name="topicKind" value="%{kind}"/>
@@ -42,3 +44,4 @@
         <s:submit value="Envoyer"/>
     </fieldset>
 </s:form>
+<%}%>

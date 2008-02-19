@@ -219,7 +219,7 @@ public class Helpers {
 
     public static String getFirstValue(final String key) {
         final Object val = ActionContext.getContext().getParameters().get(key);
-        if (val != null)
+        if (val != null && ((String[]) val).length > 0)
             return ((String[]) val)[0];
         return null;
     }
