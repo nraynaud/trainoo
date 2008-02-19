@@ -46,10 +46,11 @@
         <%if (!Boolean.TRUE.equals(parameter("showTopicLink")) && message.canWrite(currentUser())) {%>
         <div style="float:right;">
             <%=currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId()))%>
-            <form name="delete" action="<%=deleteUrl(message)%>" method="post" style="display:inline;">
+            <form name="delete" action="<%=deleteUrl(message)%>" method="post"
+                  style="display:inline;vertical-align:top;padding:0; margin:0;">
                 <s:hidden name="id" value="%{id}"/>
                 <s:hidden name="fromAction" value="%{actionDescription}"/>
-                <s:submit value="X" title="supprimer"/>
+                <s:submit value="X" title="supprimer" cssStyle="vertical-align:top; padding:0; margin:0;"/>
             </form>
         </div>
         <%}%>

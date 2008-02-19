@@ -323,7 +323,7 @@ div.autocomplete ul li {
     border-top: #C9C9B1 solid thin;
 }
 
-.sent .messageHeading {
+.sent .messageHeading, .sent .messageHeading a {
     color: gray;
     background: none;
     border: none;
@@ -338,8 +338,8 @@ div.autocomplete ul li {
 }
 
 .messageHeading form input:hover {
-    border: solid #A9A9A9 1px;
-    padding: 0;
+    background-color: gray;
+    color: black;
     cursor: pointer;
 }
 
