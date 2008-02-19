@@ -271,13 +271,17 @@ div.autocomplete ul li {
 
 .messageHeading {
     font-size: small;
-    color: gray;
-    background-color: #D5CED9;
+    color: white;
+    background-color: #8575FF;
     padding-left: 0.5em;
     border: none;
     overflow: hidden;
     zoom: 1;
     _overflow: visible;
+}
+
+.messageHeading a {
+    color: #EFEDFF;
 }
 
 .messageHeading form input {
