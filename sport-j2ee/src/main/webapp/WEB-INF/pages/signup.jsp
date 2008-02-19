@@ -12,7 +12,8 @@
         <s:actionerror/>
         <s:fielderror/>
         <s:hidden name="fromAction" value="%{fromAction}"/>
-        <p class="loginLabel"><label for="login">Votre surnom</label></p>
+        <p class="loginLabel"><label for="login">Votre surnom <span
+                class="labelComplement">(C'est par ce nom que vous serez visible sur tout le site)</span></label></p>
 
         <s:textfield id="login" name="login" cssStyle="width:100%"/>
         <p:javascript>Field.activate('login');</p:javascript>
