@@ -92,11 +92,11 @@ table.workouts {
 }
 
 table.workouts tr.odd td {
-    background-color: #D5CED9;
+    background-color: #FFF6AA;
 }
 
 table.workouts tr.even td {
-    background-color: #EBE1C6;
+    background-color: #BBCCFF;
 }
 
 table.workouts tr.highLight td {
@@ -272,7 +272,7 @@ div.autocomplete ul li {
 .messageHeading {
     font-size: small;
     color: white;
-    background-color: #868BCC;
+    background-color: #99AADD;
     padding-left: 0.5em;
     border: none;
     overflow: hidden;
@@ -500,4 +500,8 @@ div.userSupplied {
     padding: 0.2em;
     margin: 1em 0;
     border: gray solid thin;
+}
+
+.messageFooter a {
+    color: #996699;
 }
