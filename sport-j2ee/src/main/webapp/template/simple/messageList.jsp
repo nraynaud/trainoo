@@ -75,7 +75,8 @@
         <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
         <input type="hidden" name="fromAction"
                value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_MESSAGE)%>"/>
-        <input type="hidden" name="onErrorAction" value="<%=property("actionDescription")%>"/>
+        <input type="hidden" name="onErrorAction"
+               value="<%=((ActionDetail)property("actionDescription")).addParam("error", "editMessage")%>"/>
 
         <div><s:textarea id="editContent" name="content" rows="5" cssClass="messageContentArea"
                          cssStyle="border-width:2px"/></div>

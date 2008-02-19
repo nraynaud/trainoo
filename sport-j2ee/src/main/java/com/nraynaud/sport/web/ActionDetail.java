@@ -69,4 +69,13 @@ public class ActionDetail {
         clone.remove(key);
         return new ActionDetail(namespace, name, clone);
     }
+
+    /**
+     * @return a new ActionDetail the param added
+     */
+    public ActionDetail addParam(final String key, final String value) {
+        final Map<String, String[]> clone = new HashMap<String, String[]>(parameters);
+        clone.put(key, new String[]{value});
+        return new ActionDetail(namespace, name, clone);
+    }
 }
