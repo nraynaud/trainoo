@@ -27,13 +27,13 @@
 %>
 <div class="message <%=cssClasses%>">
     <div class="messageHeading">
-        <div style="float:left;margin-top:9px;">
+        <div style="float:left;margin-top:5px;">
             <s:date name="date" format="E dd/M à HH:mm:ss"/>
             <span class="message_from"><%=bibLink(message.getSender())%></span>
             a écrit&nbsp;:
         </div>
         <%if (!Boolean.TRUE.equals(parameter("showTopicLink")) && message.canWrite(currentUser())) {%>
-        <div style="float:right;margin-top:9px;">
+        <div style="float:right;margin-top:5px;">
             <%=currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId()))%>
             <form name="delete" action="<%=deleteUrl(message)%>" method="post"
                   style="display:inline;vertical-align:top;padding:0; margin:0;">

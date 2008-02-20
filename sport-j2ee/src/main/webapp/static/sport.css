@@ -178,6 +178,13 @@ p.loginLabel {
     color: #D97900;
 }
 
+#catchPhrase {
+    margin-top: 30px;
+    float: right;
+    font-size: 20px;
+    color: #824900;
+}
+
 #loginHeader {
     margin-bottom: 0.5em;
     text-align: right;
@@ -278,10 +285,10 @@ div.autocomplete ul li {
 
 .messageHeading {
     color: white;
-    background: #824900 url( /static/thbg.gif ) repeat-x scroll 0%;
+    background: #824900 url( /static/thbg.gif ) repeat-x scroll 0;
     padding-left: 0.5em;
     border: none;
-    height: 29px;
+    height: 21px;
     overflow: hidden;
     zoom: 1;
     _overflow: visible;

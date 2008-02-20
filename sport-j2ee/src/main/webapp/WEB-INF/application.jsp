@@ -30,6 +30,10 @@
             <span style="position:relative;display:block;"><a id="logoHref" href="/">
                 Train<span id="oo">oo</span>.com</a></span>
         </h1>
+
+        <div id="catchPhrase">
+            Vous allez en suer&nbsp;!
+        </div>
     </div>
     <%Helpers.call(pageContext, "loginHeader.jsp");%>
     <div style="position:relative;">
