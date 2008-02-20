@@ -1,9 +1,10 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.isLogged" %>
+<%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -25,16 +26,7 @@
             </s:url>
             <td><s:date name="date" format="E dd/M"/></td>
             <s:if test="%{parameters.displayName}">
-                <td>
-                    <% if (isLogged()) {%>
-                    <s:url id="bibUrl" namespace="/bib" action="" includeParams="none" anchor="">
-                        <s:param name="id" value="user.id"/>
-                    </s:url>
-                    <s:a href="%{bibUrl}" title="Voir son dossard"><%=stringProperty("user.name")%>
-                    </s:a>
-                    <% } else {%>
-                    <%=stringProperty("user.name")%>
-                    <%}%>
+                <td><%=bibLink((User) property("user"))%>
                 </td>
             </s:if>
             <td><%=stringProperty("discipline")%>

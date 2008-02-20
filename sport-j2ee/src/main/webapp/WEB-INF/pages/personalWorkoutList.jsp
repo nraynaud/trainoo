@@ -41,7 +41,7 @@
                     final ConversationSummary summary = (ConversationSummary) top();
                 %>
                 <li>
-                    <%=selectableUrl("/messages", "", summary.correspondentName.toString(), "receiver",
+                    <%=selectableLink("/messages", "", summary.correspondentName.toString(), null, "receiver",
                             summary.correspondentName.nonEscaped())%>
                     <%
                         final long newCount = summary.newMessageCount;

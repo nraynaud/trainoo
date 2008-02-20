@@ -4,7 +4,6 @@
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="com.nraynaud.sport.data.GroupPageData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.web.action.groups.CreateAction.MAX_NAME_LENGTH" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -28,7 +27,8 @@
         if (isLogged()) {
             if (group.getOwner().equals(currentUser()))
                 out.append("<div style='text-align: right'>")
-                        .append(selectableUrl("/groups", "edit", "Mettre à jour", "id", String.valueOf(group.getId())))
+                        .append(selectableLink("/groups", "edit", "Mettre à jour", null, "id",
+                                String.valueOf(group.getId())))
                         .append("</div>");
             call(pageContext, "publicMessageForm.jsp", group);
         }
@@ -60,10 +60,7 @@
     <div class="content">
         <ul>
             <% for (final User user : groupPage.users) {
-                out.append("<li>")
-                        .append(selectableUrl("/bib", "", user.getName().toString(), "id",
-                                String.valueOf(user.getId())))
-                        .append("</li>\n");
+                out.append("<li>").append(bibLink(user)).append("</li>\n");
             }%>
         </ul>
     </div>
@@ -80,7 +77,8 @@
             <s:iterator value="%{allGroups}">
                 <%final GroupData groupData = (GroupData) top();%>
                 <tr>
-                    <td><%=selectableUrl("/groups", "", groupData.name.toString(), "id", String.valueOf(groupData.id))%>
+                    <td><%=selectableLink("/groups", "", groupData.name.toString(), null, "id",
+                            String.valueOf(groupData.id))%>
                     </td>
                     <%final int newCount = groupData.newMessagesCount; %>
                     <td><%=newCount > 0 ? newCount + (newCount == 1 ? " nouveau message" : " nouveaux messages") : ""%>

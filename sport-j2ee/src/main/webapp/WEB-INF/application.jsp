@@ -64,7 +64,7 @@
             canvas.width = width
             var ctx = canvas.getContext('2d');
             var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
-            lineargradient.addColorStop(0.8, 'rgba(255,255,255,0)');
+            lineargradient.addColorStop(0.5, 'rgba(255,255,255,0)');
             lineargradient.addColorStop(0, 'white');
             ctx.fillStyle = lineargradient;
             ctx.fillRect(0, 0, width, height);

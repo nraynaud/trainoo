@@ -5,7 +5,8 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="loginHeader">
-    <div class="left"><%= selectableUrl("/", "", "Tableau général")%> <%=selectableUrl("/groups", "", "Groupes")%>
+    <div class="left"><%= selectableLink("/", "", "Tableau général", null)%> <%=selectableLink("/groups", "", "Groupes",
+            null)%>
     </div>
     <div class="right">
         <% if (isLogged()) {
@@ -23,9 +24,10 @@
         </a>
         <%}%>
         <span id="loginName"><!--<%=currentUser().getId()%> --><%= currentUser().getName()%>
-            <span style="font-size:x-small;"><%= selectableUrl("/privatedata", "", "(mot de passe)")%></span>
+            <span style="font-size:x-small;"><%= selectableLink("/privatedata", "", "(mot de passe)", null)%></span>
         </span>
-        <%= selectableUrl("/", "workouts", "Mon vestiaire")%><%= selectableUrl("/bib", "", "Mon dossard", "id",
+        <%= selectableLink("/", "workouts", "Mon vestiaire", null)%><%= selectableLink("/bib", "", "Mon dossard", null,
+            "id",
             String.valueOf(currentUser().getId()))%>
         <a href="<s:url action="logout" namespace="/"/>">Déconnexion</a>
         <% } else {

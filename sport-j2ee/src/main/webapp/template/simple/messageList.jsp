@@ -29,18 +29,7 @@
     <div class="messageHeading">
         <div style="float:left;margin-top:9px;">
             <s:date name="date" format="E dd/M à HH:mm:ss"/>
-            <% final String name = message.getSender().getName().toString(); %>
-                <span class="message_from">
-                    <% if (isLogged()) {%>
-                    <s:url id="bibUrl" action="" namespace="/bib" includeParams="none">
-                        <s:param name="id" value="sender.id"/>
-                    </s:url>
-                    <a href="<%=property("bibUrl")%>" title="Voir son dossard"><%=name%>
-                    </a>
-                    <% } else {%>
-                    <%=name%>
-                    <%}%>
-                </span>
+            <span class="message_from"><%=bibLink(message.getSender())%></span>
             a écrit&nbsp;:
         </div>
         <%if (!Boolean.TRUE.equals(parameter("showTopicLink")) && message.canWrite(currentUser())) {%>
@@ -98,13 +87,13 @@
             <% if (message instanceof PublicMessage) {
                 final PublicMessage publicMessage = (PublicMessage) message;
                 if (publicMessage.getTopic() == Topic.Kind.WORKOUT) {
-                    out.append(Helpers.selectableUrl("/workout", "", "Voir la page de l'entraînement", "id",
+                    out.append(Helpers.selectableLink("/workout", "", "Voir la page de l'entraînement", null, "id",
                             String.valueOf(publicMessage.getWorkout().getId())));
                 } else {
                     final Group group = publicMessage.getGroup();
                     out.append(
-                            Helpers.selectableUrl("/groups", "",
-                                    "<span style='font-weight:normal'>Groupe </span>" + group.getName(), "id",
+                            Helpers.selectableLink("/groups", "",
+                                    "<span style='font-weight:normal'>Groupe </span>" + group.getName(), null, "id",
                                     String.valueOf(group.getId())));
                 }
             }
