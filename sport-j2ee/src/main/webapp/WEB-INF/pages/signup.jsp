@@ -17,7 +17,7 @@
 
         <s:textfield id="login" name="login" cssStyle="width:100%"/>
         <p:javascript>Field.activate('login');</p:javascript>
-        <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>);</p:javascript>
+        <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>, <%= LOGIN_MIN_LENGTH%>);</p:javascript>
         <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null); %>
         <s:checkbox id="rememberMe" name="rememberMe"/><label for="rememberMe">Se souvenir de moi <span
             class="labelComplement">(décocher si ce n'est pas votre propre ordinateur)</span></label>

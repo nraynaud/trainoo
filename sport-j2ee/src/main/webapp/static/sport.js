@@ -3,7 +3,7 @@ function feedback(field_name, val)
 {
     var feedbackElement = 'feedback';
     if (val.length != 0) {
-        if (oldValue != val) {
+        if (oldValue != val + field_name) {
             new Ajax.Updater(feedbackElement, '/feedback',
             {asynchronous:true, evalScripts:true,
                 parameters:'data=' + val + '&type=' + field_name}).updateContent();
@@ -11,15 +11,15 @@ function feedback(field_name, val)
     } else {
         Element.update(feedbackElement, '');
     }
-    oldValue = val;
+    oldValue = val + field_name;
 }
 ;
 /* MIT licence bablaba */
-function charCounter(id, maxlimit) {
+function charCounter(id, maxlimit, minLimit) {
     if (!$('counter-' + id)) {
         $(id).insert({after: '<div id="counter-' + id + '"></div>'});
     }
-    if ($F(id).length >= maxlimit) {
+    if ($F(id).length >= maxlimit || minLimit != null && minLimit > $F(id).length && $F(id).length > 0) {
         $(id).value = $F(id).substring(0, maxlimit);
         $('counter-' + id).addClassName('charcount-limit');
         $('counter-' + id).removeClassName('charcount-safe');
@@ -27,17 +27,17 @@ function charCounter(id, maxlimit) {
         $('counter-' + id).removeClassName('charcount-limit');
         $('counter-' + id).addClassName('charcount-safe');
     }
-    $('counter-' + id).update($F(id).length + '/' + maxlimit);
+    $('counter-' + id).update((minLimit != null ? minLimit + '/' : '' ) + $F(id).length + '/' + maxlimit);
 }
-function makeItCount(id, maxsize) {
+function makeItCount(id, maxsize, minsize) {
     if ($(id)) {
         Event.observe($(id), 'keyup', function() {
-            charCounter(id, maxsize);
+            charCounter(id, maxsize, minsize);
         }, false);
         Event.observe($(id), 'keydown', function() {
-            charCounter(id, maxsize);
+            charCounter(id, maxsize, minsize);
         }, false);
-        charCounter(id, maxsize);
+        charCounter(id, maxsize, minsize);
     }
 }
 /* end MIT licence blabla*/

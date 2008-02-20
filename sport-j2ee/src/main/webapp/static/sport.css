@@ -76,7 +76,6 @@ a:hover {
 table {
     border-collapse: collapse;
     font-size: 100%;
-    margin: auto;
 }
 
 table.workouts {
@@ -103,7 +102,7 @@ table.workouts tr.even td {
 }
 
 table.workouts tr.highLight td {
-    background-color: #9C9A69;
+    background-color: #E0E0D0;
 }
 
 th {
@@ -134,6 +133,7 @@ h2, h1 {
 .content {
     padding-left: 22px;
     position: relative;
+    overflow: hidden;
 }
 
 #undo, span#undo a {
@@ -366,7 +366,7 @@ textarea.messageContentArea {
 }
 
 .charcount-limit {
-    color: #57470C;
+    color: red;
     font-weight: bold;
     text-align: right;
 }

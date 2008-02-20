@@ -13,7 +13,7 @@
         <s:hidden name="id" value="%{id}"/>
         <p><label for="name">Nom du groupe&nbsp;: </label></p>
         <s:textfield id="name" name="name" cssStyle="width:100%;"/>
-        <p:javascript>makeItCount('name', <%=MAX_NAME_LENGTH%>);</p:javascript>
+        <p:javascript>makeItCount('name', <%=MAX_NAME_LENGTH%>, <%=MIN_NAME_LENGTH%>);</p:javascript>
         <p><label for="description">Description&nbsp;: </label></p>
 
         <div><s:textarea id="description" name="description" rows="5" cssStyle="width:100%;"/></div>

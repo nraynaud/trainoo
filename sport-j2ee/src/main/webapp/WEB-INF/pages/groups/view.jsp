@@ -4,7 +4,7 @@
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="com.nraynaud.sport.data.GroupPageData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="static com.nraynaud.sport.web.action.groups.CreateAction.MAX_NAME_LENGTH" %>
+<%@ page import="static com.nraynaud.sport.web.action.groups.CreateAction.*" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -118,8 +118,8 @@
             <s:fielderror/>
 
             <s:hidden name="fromAction" value="%{actionDescription}"/>
-            <s:textfield id="name" name="name" cssStyle="width:100%"/>
-            <p:javascript>makeItCount('name', <%=MAX_NAME_LENGTH%>);</p:javascript>
+            <s:textfield id="name" name="name" cssStyle="width:99%"/>
+            <p:javascript>makeItCount('name', <%=MAX_NAME_LENGTH%>, <%=MIN_NAME_LENGTH%>);</p:javascript>
             <s:submit value="Créer !"/>
         </s:form>
     </div>

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 @Public
 public class SignupAction extends PasswordAction implements ServletRequestAware, ChainBackCapable {
     public static final String LOGIN_MAX_LENGTH = "20";
-    private static final String LOGIN_MIN_LENGTH = "4";
+    public static final String LOGIN_MIN_LENGTH = "4";
     public String login;
     private HttpServletRequest request;
     public boolean rememberMe = true;

@@ -70,7 +70,7 @@
         <div><s:textarea id="editContent" name="content" rows="5" cssClass="messageContentArea"
                          cssStyle="border-width:2px" value="%{content.nonEscaped()}"/></div>
         <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
-            Field.activate('editContent');</p:javascript>
+            $('editContent').focus();</p:javascript>
         <s:submit value="Valider"/> <%=currenUrlWithoutParam("Annuler", EDIT_MESSAGE)%>
         <%
             } finally {

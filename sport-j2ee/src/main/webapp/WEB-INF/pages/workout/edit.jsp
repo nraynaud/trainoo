@@ -15,4 +15,4 @@
     </s:component>
 </div>
 
-<p:javascript>Field.activate('date');</p:javascript>
+<p:javascript>$('date').focus();</p:javascript>
