@@ -50,7 +50,7 @@
                   style="display:inline;vertical-align:top;padding:0; margin:0;">
                 <s:hidden name="id" value="%{id}"/>
                 <s:hidden name="fromAction" value="%{actionDescription}"/>
-                <s:submit value="X" title="supprimer" cssStyle="vertical-align:top; padding:0; margin:0;"/>
+                <s:submit value="X" title="supprimer"/>
             </form>
         </div>
         <%}%>
