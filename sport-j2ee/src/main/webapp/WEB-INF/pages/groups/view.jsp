@@ -111,14 +111,14 @@
     <%if (isLogged()) {%>
     <h2>Créer un groupe</h2>
 
-    <div class="content">
+    <div class="content" style="width:20em">
         <s:form action="create" namespace="/groups">
 
             <s:actionerror/>
             <s:fielderror/>
 
             <s:hidden name="fromAction" value="%{actionDescription}"/>
-            <s:textfield id="name" name="name"/>
+            <s:textfield id="name" name="name" cssStyle="width:100%"/>
             <p:javascript>makeItCount('name', <%=MAX_NAME_LENGTH%>);</p:javascript>
             <s:submit value="Créer !"/>
         </s:form>
