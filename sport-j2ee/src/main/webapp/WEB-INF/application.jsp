@@ -27,8 +27,8 @@
 <div id="center">
     <div style="overflow:hidden;width: 100%">
         <h1 id="logo">
-            <a id="logoHref" href="/">
-                Train<span style="color:#968148;">oo</span>.com</a>
+            <span style="position:relative;display:block;"><a id="logoHref" href="/">
+                Train<span id="oo">oo</span>.com</a></span>
         </h1>
     </div>
     <%Helpers.call(pageContext, "loginHeader.jsp");%>

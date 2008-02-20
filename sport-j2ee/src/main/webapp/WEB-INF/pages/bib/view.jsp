@@ -43,11 +43,15 @@
 <div id="globalRight">
     <h2>Envoyer un message à <%=user.getName()%>
     </h2>
-    <%
-        call(pageContext, "privateMessageForm.jsp", null, "receiver", literal(data.user.getName()), "hideReceiverBox",
-                "true");
-        call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'messagePageIndex'");
-    %>
+
+    <div class="content">
+        <%
+            call(pageContext, "privateMessageForm.jsp", null, "receiver", literal(data.user.getName()),
+                    "hideReceiverBox",
+                    "true");
+            call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'messagePageIndex'");
+        %>
+    </div>
 </div>
 <%}%>
 <%!

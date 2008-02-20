@@ -27,7 +27,7 @@
 %>
 <div class="message <%=cssClasses%>">
     <div class="messageHeading">
-        <div style="float:left;">
+        <div style="float:left;margin-top:9px;">
             <s:date name="date" format="E dd/M à HH:mm:ss"/>
             <% final String name = message.getSender().getName().toString(); %>
                 <span class="message_from">
@@ -44,7 +44,7 @@
             a écrit&nbsp;:
         </div>
         <%if (!Boolean.TRUE.equals(parameter("showTopicLink")) && message.canWrite(currentUser())) {%>
-        <div style="float:right;">
+        <div style="float:right;margin-top:9px;">
             <%=currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId()))%>
             <form name="delete" action="<%=deleteUrl(message)%>" method="post"
                   style="display:inline;vertical-align:top;padding:0; margin:0;">

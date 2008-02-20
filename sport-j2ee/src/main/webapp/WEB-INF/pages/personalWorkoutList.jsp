@@ -9,14 +9,19 @@
 
 <%final UserPageData data = (UserPageData) top();%>
 <h2>J'ai parcouru <%=data.getStatisticsData().globalDistance%>km</h2>
-<%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
+
+<div class="content">
+    <%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
+</div>
 <div id="globalLeft">
     <h2>Mes dernières sorties</h2>
-    <% call(pageContext, "workoutTable.jsp", data.getStatisticsData().workouts, "displayEdit", "true");%>
 
+    <div class="content">
+        <% call(pageContext, "workoutTable.jsp", data.getStatisticsData().workouts, "displayEdit", "true");%>
+    </div>
     <h2>Nouvel entraînement</h2>
 
-    <div>
+    <div class="content">
         <s:url id="createteurl" namespace="/workout" action="create" includeParams="none">
             <s:param name="id" value="id"/>
         </s:url>
@@ -49,18 +54,21 @@
         </ul>
     </fieldset>
     <h2>Les groupes dont je suis membre</h2>
-    <ul>
-        <s:iterator value="%{groupMembership}">
-            <s:url id="groupUrl" namespace="/groups" action="" includeParams="none">
-                <s:param name="id" value="%{id}"/>
-            </s:url>
-            <li><a href="<s:property value="%{groupUrl}"/>"><%=stringProperty("name")%>
-            </a>
-                <s:if test="%{top.newMessagesCount > 0}">
+
+    <div class="content">
+        <ul>
+            <s:iterator value="%{groupMembership}">
+                <s:url id="groupUrl" namespace="/groups" action="" includeParams="none">
+                    <s:param name="id" value="%{id}"/>
+                </s:url>
+                <li><a href="<s:property value="%{groupUrl}"/>"><%=stringProperty("name")%>
+                </a>
+                    <s:if test="%{top.newMessagesCount > 0}">
                         <span class="newMessages"><s:property
                                 value="%{top.newMessagesCount}"/> <s:if
                                 test="%{top.newMessagesCount > 1}">nouveaux</s:if><s:else>nouveau</s:else></span>
-                </s:if></li>
-        </s:iterator>
-    </ul>
+                    </s:if></li>
+            </s:iterator>
+        </ul>
+    </div>
 </div>

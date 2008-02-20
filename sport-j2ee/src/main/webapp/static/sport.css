@@ -1,9 +1,10 @@
 body {
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
     padding: 0;
     margin: 0;
     font-family: sans-serif;
+    color: #303030;
 }
 
 /* Neutralize styling:
@@ -53,13 +54,14 @@ form {
 }
 
 a, a:visited {
-    text-decoration: none;
-    color: #968148;
-    font-weight: bold;
+    color: #D97900;
+    text-decoration: underline;
 }
 
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    background-color: #D97900;
+    color: #FFFAF3;
 }
 
 #center {
@@ -92,11 +94,11 @@ table.workouts {
 }
 
 table.workouts tr.odd td {
-    background-color: #FFF6AA;
+    background-color: #FFF0DE;
 }
 
 table.workouts tr.even td {
-    background-color: #BBCCFF;
+    background-color: #FFFAF4;
 }
 
 table.workouts tr.highLight td {
@@ -117,13 +119,20 @@ hr {
 
 h2, h1 {
     margin-top: 1em;
-    margin-bottom: 0.5em;
-    color: #57470C;
-    font-size: larger;
+    color: #6C3C1E;
+    font-family: georgia, "times new roman", serif;
+    font-size: 22px;
+    background-image: url( '/static/db1.gif' );
+    background-repeat: no-repeat;
+    height: 60px;
+    padding-left: 22px;
+    margin-bottom: -15px;
+
 }
 
-.flashPart {
-    background-color: #FFEC00;
+.content {
+    padding-left: 22px;
+    position: relative;
 }
 
 #undo, span#undo a {
@@ -147,36 +156,35 @@ p.loginLabel {
     padding-top: 1em;
 }
 
-#logo, #logo a:hover {
-    font-family: helvetica, sans-serif;
-    text-decoration: none;
-}
-
 #logo {
+    background: none;
+    padding-left: 0;
     font-family: helvetica, sans-serif;
     margin: 0;
     padding-top: 0;
     font-size: 3em;
     padding-bottom: 0;
     float: left;
-    position: relative;
-    zoom: 1;
-    _overflow: visible;
-
 }
 
-#logoHref {
-    color: #57470C;
+#logoHref, a#logoHref:hover {
+    background-color: inherit;
+    color: #824900;
+    text-decoration: none;
+}
+
+#oo {
+    color: #D97900;
 }
 
 #loginHeader {
     margin-bottom: 0.5em;
     text-align: right;
     font-size: 100%;
-    background-color: #968148;
+    background-color: #824900;
     font-family: Tahoma, sans-serif;
     font-weight: bold;
-    color: #F2F2E8;
+    color: white;
     overflow: hidden;
     zoom: 1;
     _overflow: visible;
@@ -185,14 +193,14 @@ p.loginLabel {
 
 #loginHeader a {
     font-weight: bold;
-    color: #F2F2E8;
+    color: white;
     padding-left: 0.3em;
     padding-right: 0.3em;
 }
 
 #loginHeader * .selected {
     background-color: white;
-    color: #968148;
+    color: #824900;
 }
 
 #loginHeader #loginName {
@@ -209,21 +217,19 @@ p.loginLabel {
     float: right;
 }
 
-.smaller {
-    font-size: smaller;
-}
-
 #globalLeft {
     width: 49.5%;
     float: left;
     padding: 2px;
     padding-left: 5px;
+    position: relative;
 }
 
 #globalRight {
     width: 46%;
     float: right;
     padding: 2px;
+    position: relative;
 }
 
 #content {
@@ -270,25 +276,31 @@ div.autocomplete ul li {
 }
 
 .messageHeading {
-    font-size: small;
     color: white;
-    background-color: #99AADD;
+    background: #824900 url( /static/thbg.gif ) repeat-x scroll 0%;
     padding-left: 0.5em;
     border: none;
+    height: 29px;
     overflow: hidden;
     zoom: 1;
     _overflow: visible;
 }
 
 .messageHeading a {
-    color: #EFEDFF;
+    color: white;
 }
 
 .messageHeading form input {
     background: none;
-    color: black;
+    color: white;
     border: none;
     padding: 1px;
+}
+
+.messageHeading form input:hover {
+    background-color: gray;
+    color: white;
+    cursor: pointer;
 }
 
 .messageContent {
@@ -300,7 +312,6 @@ div.autocomplete ul li {
 }
 
 .workout {
-    font-size: smaller;
     color: #968148;
     padding-left: 0.5em;
 }
@@ -337,25 +348,16 @@ div.autocomplete ul li {
     color: gray;
 }
 
-.messageHeading form input:hover {
-    background-color: gray;
-    color: black;
-    cursor: pointer;
-}
-
 textarea.messageContentArea {
     width: 99%;
-    font-size: small;
 }
 
 .charcount-safe {
     color: gray;
-    font-size: smaller;
     text-align: right;
 }
 
 .charcount-limit {
-    font-size: smaller;
     color: #57470C;
     font-weight: bold;
     text-align: right;
@@ -387,13 +389,11 @@ table.displayFormLayoutTable tr td .label {
     white-space: nowrap;
     text-align: right;
     display: block;
-    font-size: smaller;
 }
 
 .serverDefault {
     color: gray;
     font-style: italic;
-    font-size: smaller;
 }
 
 .userSupplied {
@@ -424,7 +424,7 @@ table.displayFormLayoutTable tr td .label {
 
 .bigWorkout {
     font-size: larger;
-    border: solid thick #57470C;
+    border: solid thick #824900;
     text-align: center;
     margin: 1.5em;
 }
@@ -440,13 +440,15 @@ table.displayFormLayoutTable tr td .label {
     left: 0; /* background-color : green;*/
 }
 
-.messageLink {
+a.messageLink {
     position: relative;
+    text-decoration: none;
     display: block; /* background-color : red;*/
 }
 
 .messageLink:hover {
     text-decoration: none;
+    color: inherit;
 }
 
 .messageLink img {
@@ -482,7 +484,6 @@ table.displayFormLayoutTable tr td .label {
 
 label .labelComplement {
     font-weight: normal;
-    font-size: small;
 }
 
 a.selected {
@@ -490,7 +491,6 @@ a.selected {
 }
 
 .newMessages {
-    font-size: small;
     vertical-align: super;
     color: red;
     font-weight: normal;
@@ -502,6 +502,15 @@ div.userSupplied {
     border: gray solid thin;
 }
 
-.messageFooter a {
-    color: #996699;
+ul {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+
+li {
+    background-image: url( /static/bullet.gif );
+    background-position: 0 6px;
+    background-repeat: no-repeat;
+    padding-left: 12px;
 }

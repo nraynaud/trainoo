@@ -14,7 +14,7 @@
         <s:param value="'duration'"/>
         <s:param value="'distance'"/>
     </s:fielderror>
-    <a name="workoutMessage">&nbsp;</a>
+    <a name="workoutMessage"></a>
 
     <s:hidden name="fromAction" value="%{actionDescription}"/>
     <table>
