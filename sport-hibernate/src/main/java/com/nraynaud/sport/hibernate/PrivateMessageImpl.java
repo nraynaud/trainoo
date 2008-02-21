@@ -103,8 +103,12 @@ public class PrivateMessageImpl implements PrivateMessage {
         return workout;
     }
 
-    public boolean canWrite(final User user) {
+    public boolean canDelete(final User user) {
         return user != null && (user.equals(sender) || user.equals(receiver));
+    }
+
+    public boolean canEdit(final User user) {
+        return user != null && user.equals(sender);
     }
 
     public MessageKind getMessageKind() {

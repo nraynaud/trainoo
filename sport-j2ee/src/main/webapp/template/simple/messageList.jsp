@@ -32,15 +32,21 @@
             <span class="message_from"><%=bibLink(message.getSender())%></span>
             a écrit&nbsp;:
         </div>
-        <%if (!Boolean.TRUE.equals(parameter("showTopicLink")) && message.canWrite(currentUser())) {%>
+        <%
+            final boolean canDelete = message.canDelete(currentUser());
+            final boolean canEdit = message.canEdit(currentUser());
+            if (!Boolean.TRUE.equals(parameter("showTopicLink")) && (canDelete || canEdit)) {
+        %>
         <div style="float:right;margin-top:5px;">
-            <%=currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId()))%>
+            <%=canEdit ? currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId())) : ""%>
+            <%if (canDelete) {%>
             <form name="delete" action="<%=deleteUrl(message)%>" method="post"
                   style="display:inline;vertical-align:top;padding:0; margin:0;">
                 <s:hidden name="id" value="%{id}"/>
                 <s:hidden name="fromAction" value="%{actionDescription}"/>
                 <s:submit value="X" title="supprimer"/>
             </form>
+            <%}%>
         </div>
         <%}%>
     </div>

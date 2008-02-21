@@ -10,7 +10,9 @@ public interface Message {
 
     Workout getWorkout();
 
-    boolean canWrite(User user);
+    boolean canDelete(User user);
+
+    boolean canEdit(User user);
 
     MessageKind getMessageKind();
 }
