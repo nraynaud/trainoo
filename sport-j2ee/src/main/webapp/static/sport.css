@@ -49,6 +49,10 @@ input, select, textarea {
     vertical-align: baseline;
 }
 
+textarea {
+    border: gray inset 2px;
+}
+
 form {
     margin: 0;
     padding: 0;
