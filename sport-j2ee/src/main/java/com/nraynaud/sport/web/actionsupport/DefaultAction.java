@@ -14,6 +14,9 @@ import org.apache.struts2.config.Namespace;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.List;
 
 @ParentPackage(Constants.STRUTS_PACKAGE)
@@ -26,7 +29,22 @@ public class DefaultAction extends ActionSupport {
     private List<NewMessageData> newMessages;
 
     public DefaultAction(final Application application) {
-        this.application = application;
+        this.application = (Application) Proxy.newProxyInstance(getClass().getClassLoader(),
+                new Class[]{Application.class}, new InvocationHandler() {
+            public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+                final long time = System.currentTimeMillis();
+                try {
+                    return method.invoke(application, args);
+                } finally {
+                    System.out
+                            .println("invocation: "
+                                    + method.getName()
+                                    + " time: "
+                                    + (System.currentTimeMillis() - time)
+                                    + "ms");
+                }
+            }
+        });
     }
 
     @SuppressWarnings({"MethodMayBeStatic"})
