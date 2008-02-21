@@ -63,6 +63,7 @@
 <s:if test="%{parameters.showDelete}">
     <div style="float:right;">
         <s:form namespace="/workout" action="delete">
+            <s:hidden name="id" value="%{id}"/>
             <input type="submit" name="delete" value="Supprimer"/>
         </s:form>
     </div>
