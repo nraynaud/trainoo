@@ -316,6 +316,11 @@ public class Helpers {
     }
 
     public static String bibLink(final User user) {
-        return selectableLink("/bib", "", escaped(user.getName()), "Voir son dossard", "id", user.getId().toString());
+        final UserString fullName = user.getName();
+        final String nonEscaped = fullName.nonEscaped();
+        final String shortName = nonEscaped.length() > 10 ? Helper.escaped(nonEscaped.substring(0, 7))
+                + "…" : Helper.escaped(nonEscaped);
+        return selectableLink("/bib", "", shortName, "Voir le dossard de " + escaped(fullName), "id",
+                user.getId().toString());
     }
 }
