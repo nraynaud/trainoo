@@ -13,8 +13,8 @@
     final String errorParam = getFirstValue("error");
     if (errorParam == null || errorParam.equals(MY_ERROR_CODE)) {
         allowOverrides();%>
-<% final Object o = property("aboutWorkout");
-    final Workout answerWorkout = (Workout) (o != null ? o : parameter("aboutWorkout"));%>
+<% final Workout workout = property("aboutWorkout", Workout.class);
+    final Workout answerWorkout = workout != null ? workout : parameter("aboutWorkout", Workout.class);%>
 
 <form id="writeMessage" name="writeMessage"
       action="<s:url action="write" namespace="/messages" anchor="errorMessage" includeParams="none"/>" method="post">
@@ -31,7 +31,7 @@
         </s:fielderror>
         <a name="errorMessage"> </a>
         <%}%>
-        <% if (parameter("hideReceiverBox") == null || !boolParam("hideReceiverBox")) {%>
+        <% if (parameter("hideReceiverBox", String.class) == null || !boolParam("hideReceiverBox")) {%>
         <div id="answerReceiver">
             <div id="privateReceiver" style="display:inline;">
                 <label for="receiver">Destinataire&nbsp;:</label><br>
@@ -51,7 +51,7 @@
         <input type="hidden" name="messageKind" value="<%=PRIVATE%>"/>
         <s:hidden id="priv_fromAction" name="fromAction" value="%{actionDescription}"/>
         <input type="hidden" id="priv_onErrorAction" name="onErrorAction"
-               value="<%=((ActionDetail)property("actionDescription")).addParam("error", MY_ERROR_CODE)%>"/>
+               value="<%=((ActionDetail)property("actionDescription",Object.class)).addParam("error", MY_ERROR_CODE)%>"/>
         <s:hidden name="publicMessage" value="false"/>
         <s:hidden name="aboutWorkoutId" value="%{aboutWorkout.id}"/>
         <div id="priv_aboutWorkoutDiv" class="workout">

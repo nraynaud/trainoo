@@ -5,7 +5,7 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 
-<%final ConversationData data = (ConversationData) property("conversationData");%>
+<%final ConversationData data = property("conversationData", ConversationData.class);%>
 <p:layoutParams title="<%="Messages privés avec " + data.receiver%>"/>
 
 <div id="tinyCenter">

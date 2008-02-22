@@ -41,7 +41,7 @@
                                  name="duration"
                                  size="6"
                                  maxlength="10"
-                                 onfocus="$('info').style.visibility='visible';feedback('duration', this.value); $('tip').update('ex&nbsp;: 03h41\\'17 ou 40\\'22')"
+                                 onfocus="$('info').style.visibility='visible';feedback('duration', this.value); $('tip').update('ex&nbsp;: 03h41\'17 ou 40\'22')"
                                  onblur="$('info').style.visibility='hidden'"
                                  onkeyup="feedback('duration', this.value)"/></td>
 

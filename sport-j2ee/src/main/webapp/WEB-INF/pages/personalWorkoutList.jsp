@@ -7,7 +7,7 @@
 
 <p:layoutParams title="Mon Vestiaire"/>
 
-<%final UserPageData data = (UserPageData) top();%>
+<%final UserPageData data = top(UserPageData.class);%>
 <h2>J'ai parcouru <%=data.getStatisticsData().globalDistance%>km</h2>
 
 <div class="content">
@@ -38,7 +38,7 @@
         <ul>
             <s:iterator value="%{privateMessageReceivers}">
                 <%
-                    final ConversationSummary summary = (ConversationSummary) top();
+                    final ConversationSummary summary = top(ConversationSummary.class);
                 %>
                 <li>
                     <%=selectableLink("/messages", "", summary.correspondentName.toString(), null, "receiver",

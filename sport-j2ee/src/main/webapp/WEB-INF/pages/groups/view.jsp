@@ -10,7 +10,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<%final GroupPageData groupPage = (GroupPageData) top();%>
+<%final GroupPageData groupPage = top(GroupPageData.class);%>
 <%final Group group = groupPage.group;%>
 <p:layoutParams title="<%=group == null ? "Les groupes" : "Groupe : " + group.getName()%>"/>
 
@@ -75,7 +75,7 @@
     <div class="content">
         <table>
             <s:iterator value="%{allGroups}">
-                <%final GroupData groupData = (GroupData) top();%>
+                <%final GroupData groupData = top(GroupData.class);%>
                 <tr>
                     <td><%=selectableLink("/groups", "", groupData.name.toString(), null, "id",
                             String.valueOf(groupData.id))%>
@@ -83,7 +83,7 @@
                     <%final int newCount = groupData.newMessagesCount; %>
                     <td><%=newCount > 0 ? newCount + (newCount == 1 ? " nouveau message" : " nouveaux messages") : ""%>
                     </td>
-                    <td><%final long count = ((Long) property("memberCount")).longValue();%>
+                    <td><%final long count = property("memberCount", Long.class).longValue();%>
                         <%=count > 1 ? count + " membres" : count == 1 ? "un membre" : "aucun membre"%>
                     </td>
 
@@ -93,7 +93,7 @@
                         <s:form action="join" namespace="/groups">
                             <s:hidden name="fromAction" value="%{actionDescription}"/>
                             <s:hidden name="groupId" value="%{id}"/>
-                            <s:submit value="Rejoindre" cssStyle="wdith:100%"/>
+                            <s:submit value="Rejoindre" cssStyle="width:100%"/>
                         </s:form>
                         <%} else {%>
                         <s:form action="part" namespace="/groups">

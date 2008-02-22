@@ -10,7 +10,7 @@
     </div>
     <div class="right">
         <% if (isLogged()) {
-            final List<NewMessageData> newMessages = (List<NewMessageData>) property("newMessages");
+            final List<NewMessageData> newMessages = property("newMessages", List.class);
             if (newMessages.size() > 0) {
                 int count = 0;
                 for (final NewMessageData privateMessage : newMessages) {

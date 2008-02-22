@@ -6,7 +6,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<% final WorkoutPageData data = (WorkoutPageData) top();
+<% final WorkoutPageData data = top(WorkoutPageData.class);
     final Workout workout = data.workout;
     final User runner = workout.getUser();
     final User currentUser = currentUser();

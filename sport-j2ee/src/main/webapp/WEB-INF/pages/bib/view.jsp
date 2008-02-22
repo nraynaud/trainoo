@@ -6,7 +6,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<% final BibPageData data = (BibPageData) top();
+<% final BibPageData data = top(BibPageData.class);
     final User user = data.user;
     final boolean lookingOwnBib = user.equals(currentUser());%>
 <p:layoutParams title="<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + user.getName()%>"/>

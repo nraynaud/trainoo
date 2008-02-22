@@ -50,12 +50,16 @@ public class Helpers {
         return (UserString) stack().findValue(expression, UserString.class);
     }
 
-    public static Object property(final String expression) {
-        return stack().findValue(expression, Object.class);
+    public static <T> T cast(final Object value, final Class<?> type) {
+        return (T) value;
     }
 
-    public static Object parameter(final String expression) {
-        return property("parameters." + expression);
+    public static <T> T property(final String expression, final Class<T> type) {
+        return cast(stack().findValue(expression, type), type);
+    }
+
+    public static <T> T parameter(final String expression, final Class<T> type) {
+        return property("parameters." + expression, type);
     }
 
     /**
@@ -92,8 +96,8 @@ public class Helpers {
         return request.isLogged() ? request.getSportSession().getUser() : null;
     }
 
-    public static Object top() {
-        return stack().peek();
+    public static <T> T top(final Class<T> type) {
+        return cast(stack().peek(), type);
     }
 
     public static boolean isLogged() {

@@ -9,7 +9,7 @@
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 
 <div class="pagination">
-<% final PaginatedCollection<Message> messages = (PaginatedCollection<Message>) top();
+<% final PaginatedCollection<Message> messages = top(PaginatedCollection.class);
     for (final Message message : messages) {
         push(message);
         try {
@@ -35,7 +35,7 @@
         <%
             final boolean canDelete = message.canDelete(currentUser());
             final boolean canEdit = message.canEdit(currentUser());
-            if (!Boolean.TRUE.equals(parameter("showTopicLink")) && (canDelete || canEdit)) {
+            if (!Boolean.TRUE.equals(parameter("showTopicLink", Boolean.class)) && (canDelete || canEdit)) {
         %>
         <div style="float:right;margin-top:5px;">
             <%=canEdit ? currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId())) : ""%>
@@ -69,9 +69,9 @@
         <s:hidden name="id"/>
         <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
         <input type="hidden" name="fromAction"
-               value="<%=((ActionDetail)property("actionDescription")).removeParam(EDIT_MESSAGE).removeParam("error")%>"/>
+               value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>"/>
         <input type="hidden" name="onErrorAction"
-               value="<%=((ActionDetail)property("actionDescription")).addParam("error", "editMessage")%>"/>
+               value="<%=property("actionDescription",ActionDetail.class).addParam("error", "editMessage")%>"/>
 
         <div><s:textarea id="editContent" name="content" rows="5" cssClass="messageContentArea"
                          cssStyle="border-width:2px" value="%{content.nonEscaped()}"/></div>

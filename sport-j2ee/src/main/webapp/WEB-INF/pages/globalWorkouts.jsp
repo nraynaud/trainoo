@@ -7,7 +7,7 @@
 <p:layoutParams title="Les derniers entraînements"/>
 <div class="content">
     <%
-        final GlobalWorkoutsPageData data = (GlobalWorkoutsPageData) top();
+        final GlobalWorkoutsPageData data = top(GlobalWorkoutsPageData.class);
         call(pageContext, "distanceByDiscipline.jsp", data.statisticsData);
     %>
 </div>

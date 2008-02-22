@@ -2,8 +2,6 @@
 <%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -12,7 +10,7 @@
 
 <div class="pagination">
     <table class="workouts" style="clear:both;">
-        <% final PaginatedCollection<Workout> workouts = (PaginatedCollection<Workout>) top();%>
+        <% final PaginatedCollection<Workout> workouts = top(PaginatedCollection.class);%>
         <% if (!workouts.isEmpty()) {
             boolean parity = false;
             for (final Workout workout : workouts) {
@@ -20,13 +18,13 @@
                 try {
                     parity = !parity;
         %>
-        <tr class="<%=workout.getId().equals(parameter("highLight")) ? "highLight " : ""%><%=parity ? "odd":"even"%>">
+        <tr class="<%=workout.getId().equals(parameter("highLight", Long.class)) ? "highLight " : ""%><%=parity ? "odd":"even"%>">
             <s:url id="workoutUrl" action="" namespace="/workout" includeParams="none">
                 <s:param name="id" value="id"/>
             </s:url>
             <td><s:date name="date" format="E dd/M"/></td>
             <s:if test="%{parameters.displayName}">
-                <td><%=bibLink((User) property("user"))%>
+                <td><%=bibLink(property("user", User.class))%>
                 </td>
             </s:if>
             <td><%=stringProperty("discipline")%>
