@@ -4,6 +4,7 @@
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="" />
         <datasource-mapping>
           <factory-entry name="sport-hibernate" value="sport-app" />
           <factory-entry name="testPU" />
@@ -285,7 +286,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga-sources.jar!/" />
-          <root url="intellijad://intellijad" />
         </SOURCES>
       </library>
     </orderEntry>

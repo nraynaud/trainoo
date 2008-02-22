@@ -182,6 +182,15 @@
           </module>
         </modules>
       </facet-type>
+      <facet-type id="Struts2">
+        <modules>
+          <module name="sport-j2ee">
+            <files>
+              <file url="file://$PROJECT_DIR$/sport-j2ee/src/main/resources/struts.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
     </autodetection-disabled>
   </component>
   <component name="IdProvider" IDEtalkID="4A94ADFA5B26007DCAD568514EA01D26" />

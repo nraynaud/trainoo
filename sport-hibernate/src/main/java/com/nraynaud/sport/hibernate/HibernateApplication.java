@@ -397,6 +397,21 @@ public class HibernateApplication implements Application {
             throw new AccessDeniedException();
     }
 
+    public void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) {
+        {
+            final Query query = entityManager.createNativeQuery("delete from WORKOUT_USER where WORKOUT_ID=:workoutId");
+            query.setParameter("workoutId", workoutId);
+            query.executeUpdate();
+        }
+        final Query query = entityManager.createNativeQuery(
+                "insert WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE NAME IN (:userNames)");
+        query.setParameter("workoutId", workoutId);
+        query.setParameter("userNames", participants);
+        final int i = query.executeUpdate();
+        if (i != participants.length)
+            throw new RuntimeException(" ça a couillé : " + i + " modifiés au lieu de " + participants.length);
+    }
+
     public void updateWorkout(final Long id,
                               final User user,
                               final Date date,

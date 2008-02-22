@@ -82,6 +82,10 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/freemarker-2.3.8.jar" />
           </containerElement>
+          <containerElement type="library" name="httpunit:httpunit:1.6.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/httpunit-1.6.1.jar" />
+          </containerElement>
           <containerElement type="library" name="javax.persistence:persistence-api:1.0" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/persistence-api-1.0.jar" />
@@ -106,9 +110,17 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/joda-time-1.5.1.jar" />
           </containerElement>
+          <containerElement type="library" name="jtidy:jtidy:4aug2000r7-dev" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/jtidy-4aug2000r7-dev.jar" />
+          </containerElement>
           <containerElement type="library" name="mysql:mysql-connector-java:5.1.5" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
+          </containerElement>
+          <containerElement type="library" name="nekohtml:nekohtml:0.9.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/nekohtml-0.9.1.jar" />
           </containerElement>
           <containerElement type="library" name="net.sf.ehcache:ehcache:1.2.3" level="module">
             <attribute name="method" value="1" />
@@ -170,6 +182,18 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/spring-2.0.5.jar" />
           </containerElement>
+          <containerElement type="library" name="rhino:js:1.5R4.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/js-1.5R4.1.jar" />
+          </containerElement>
+          <containerElement type="library" name="xerces:xercesImpl:2.6.2" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/xercesImpl-2.6.2.jar" />
+          </containerElement>
+          <containerElement type="library" name="xerces:xmlParserAPIs:2.2.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/xmlParserAPIs-2.2.1.jar" />
+          </containerElement>
           <containerElement type="module" name="sport-j2ee">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/classes" />
@@ -187,7 +211,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/jsp-source" />
       <excludeFolder url="file://$MODULE_DIR$/target/sport-j2ee" />
@@ -343,6 +366,19 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
+      <library name="httpunit:httpunit:1.6.1">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/httpunit/httpunit/1.6.1/httpunit-1.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/httpunit/httpunit/1.6.1/httpunit-1.6.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/httpunit/httpunit/1.6.1/httpunit-1.6.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
       <library name="javax.persistence:persistence-api:1.0">
         <CLASSES>
           <root url="jar:///Users/nraynaud/.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar!/" />
@@ -433,6 +469,19 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="jtidy:jtidy:4aug2000r7-dev">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library name="junit:junit:4.0">
         <CLASSES>
@@ -456,6 +505,19 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/mysql/mysql-connector-java/5.1.5/mysql-connector-java-5.1.5-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="nekohtml:nekohtml:0.9.1">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/nekohtml/nekohtml/0.9.1/nekohtml-0.9.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/nekohtml/nekohtml/0.9.1/nekohtml-0.9.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/nekohtml/nekohtml/0.9.1/nekohtml-0.9.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -534,7 +596,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga-sources.jar!/" />
-          <root url="intellijad://intellijad" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -640,6 +701,45 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar:///Users/nraynaud/.m2/repository/org/springframework/spring/2.0.5/spring-2.0.5-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="rhino:js:1.5R4.1">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/rhino/js/1.5R4.1/js-1.5R4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/rhino/js/1.5R4.1/js-1.5R4.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/rhino/js/1.5R4.1/js-1.5R4.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="xerces:xercesImpl:2.6.2">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/xerces/xercesImpl/2.6.2/xercesImpl-2.6.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/xerces/xercesImpl/2.6.2/xercesImpl-2.6.2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/xerces/xercesImpl/2.6.2/xercesImpl-2.6.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="xerces:xmlParserAPIs:2.2.1">
+        <CLASSES>
+          <root url="jar:///Users/nraynaud/.m2/repository/xerces/xmlParserAPIs/2.2.1/xmlParserAPIs-2.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar:///Users/nraynaud/.m2/repository/xerces/xmlParserAPIs/2.2.1/xmlParserAPIs-2.2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar:///Users/nraynaud/.m2/repository/xerces/xmlParserAPIs/2.2.1/xmlParserAPIs-2.2.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

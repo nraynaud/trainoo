@@ -19,6 +19,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 
 @Conversion
 @Results({
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 public class EditAction extends AbstractWorkoutAction implements ServletRequestAware {
     public Long id;
     private boolean delete;
+    public Collection<String> allUsers;
 
     public EditAction(final Application application) {
         super(application);
@@ -47,6 +49,7 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
                 setDistance(workout.getDistance());
                 setDuration(workout.getDuration());
                 setDiscipline(workout.getDiscipline().nonEscaped());
+                allUsers = application.fechLoginBeginningBy("");
                 return INPUT;
             } catch (WorkoutNotFoundException e) {
                 addActionError("l'entraînement désigné n'existe pas");
