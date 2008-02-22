@@ -50,7 +50,7 @@ public class Helpers {
         return (UserString) stack().findValue(expression, UserString.class);
     }
 
-    public static <T> T cast(final Object value, final Class<?> type) {
+    public static <T> T cast(final Object value, final Class<T> type) {
         return (T) value;
     }
 
