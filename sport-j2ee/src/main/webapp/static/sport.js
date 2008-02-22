@@ -44,6 +44,7 @@ function makeItCount(id, maxsize, minsize) {
 
 /** from http://imperialcode.com/js/pngfix.js */
 function fixPNGIE() {
+    return;
     var arVersion = navigator.appVersion.split("MSIE")
     var version = parseFloat(arVersion[1])
     if ((version >= 5.5) && (document.body.filters))
