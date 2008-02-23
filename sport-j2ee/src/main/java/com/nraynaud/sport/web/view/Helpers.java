@@ -162,7 +162,7 @@ public class Helpers {
         saveAndUnplugOverrides();
         try {
             final HttpServletResponse httpServletResponse = (HttpServletResponse) context.getResponse();
-            Include.include("/template/simple/" + template, context.getOut(), context.getRequest(),
+            Include.include("/WEB-INF/components/" + template, context.getOut(), context.getRequest(),
                     httpServletResponse);
         } finally {
             unplugOverridesIfNecessary();
