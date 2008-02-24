@@ -35,10 +35,8 @@
 // enables autocompletion on multiple tokens. This is most 
 // useful when one of the tokens is \n (a newline), as it 
 // allows smart autocompletion after linebreaks.
-
 if (typeof Effect == 'undefined')
     throw("controls.js requires including script.aculo.us' effects.js library");
-
 var Autocompleter = { }
 Autocompleter.Base = Class.create({
     baseInitialize: function(element, update, options) {
@@ -51,12 +49,10 @@ Autocompleter.Base = Class.create({
         this.index = 0;
         this.entryCount = 0;
         this.oldElementValue = this.element.value;
-
         if (this.setOptions)
             this.setOptions(options);
         else
             this.options = options || { };
-
         this.options.paramName = this.options.paramName || this.element.name;
         this.options.tokens = this.options.tokens || [];
         this.options.frequency = this.options.frequency || 0.4;
@@ -76,19 +72,14 @@ Autocompleter.Base = Class.create({
                               function(element, update) {
                                   new Effect.Fade(update, {duration:0.15})
                               };
-
         if (typeof(this.options.tokens) == 'string')
             this.options.tokens = new Array(this.options.tokens);
     // Force carriage returns as token delimiters anyway
         if (!this.options.tokens.include('\n'))
             this.options.tokens.push('\n');
-
         this.observer = null;
-
         this.element.setAttribute('autocomplete', 'off');
-
         Element.hide(this.update);
-
         Event.observe(this.element, 'blur', this.onBlur.bindAsEventListener(this));
         Event.observe(this.element, 'keydown', this.onKeyPress.bindAsEventListener(this));
     },
@@ -158,10 +149,8 @@ Autocompleter.Base = Class.create({
         else
             if (event.keyCode == Event.KEY_TAB || event.keyCode == Event.KEY_RETURN ||
                 (Prototype.Browser.WebKit > 0 && event.keyCode == 0)) return;
-
         this.changed = true;
         this.hasFocus = true;
-
         if (this.observer) clearTimeout(this.observer);
         this.observer =
         setTimeout(this.onObserverEvent.bind(this), this.options.frequency * 1000);
@@ -249,7 +238,6 @@ Autocompleter.Base = Class.create({
             if (nodes.length > 0) value = Element.collectTextNodes(nodes[0], this.options.select);
         } else
             value = Element.collectTextNodesIgnoreClass(selectedElement, 'informal');
-
         var bounds = this.getTokenBounds();
         if (bounds[0] != -1) {
             var newValue = this.element.value.substr(0, bounds[0]);
@@ -262,7 +250,6 @@ Autocompleter.Base = Class.create({
         }
         this.oldElementValue = this.element.value;
         this.element.focus();
-
         if (this.options.afterUpdateElement)
             this.options.afterUpdateElement(this.element, selectedElement);
     },
@@ -272,7 +259,6 @@ Autocompleter.Base = Class.create({
             this.update.innerHTML = choices;
             Element.cleanWhitespace(this.update);
             Element.cleanWhitespace(this.update.down());
-
             if (this.update.firstChild && this.update.down().childNodes) {
                 this.entryCount =
                 this.update.down().childNodes.length;
@@ -284,10 +270,8 @@ Autocompleter.Base = Class.create({
             } else {
                 this.entryCount = 0;
             }
-
             this.stopIndicator();
             this.index = 0;
-
             if (this.entryCount == 1 && this.options.autoSelect) {
                 this.selectEntry();
                 this.hide();
@@ -336,7 +320,6 @@ Autocompleter.Base = Class.create({
         return (this.tokenBounds = [prevTokenPos + 1, nextTokenPos]);
     }
 });
-
 Autocompleter.Base.prototype.getTokenBounds.getFirstDifferencePos = function(newS, oldS) {
     var boundary = Math.min(newS.length, oldS.length);
     for (var index = 0; index < boundary; ++index)
@@ -344,7 +327,6 @@ Autocompleter.Base.prototype.getTokenBounds.getFirstDifferencePos = function(new
             return index;
     return boundary;
 };
-
 Ajax.Autocompleter = Class.create(Autocompleter.Base, {
     initialize: function(element, update, url, options) {
         this.baseInitialize(element, update, options);
@@ -356,16 +338,12 @@ Ajax.Autocompleter = Class.create(Autocompleter.Base, {
 
     getUpdatedChoices: function() {
         this.startIndicator();
-
         var entry = encodeURIComponent(this.options.paramName) + '=' +
                     encodeURIComponent(this.getToken());
-
         this.options.parameters = this.options.callback ?
                                   this.options.callback(this.element, entry) : entry;
-
         if (this.options.defaultParams)
             this.options.parameters += '&' + this.options.defaultParams;
-
         new Ajax.Request(this.url, this.options);
     },
 
@@ -408,7 +386,6 @@ Ajax.Autocompleter = Class.create(Autocompleter.Base, {
 // option, if you prefer to write your own autocompletion logic.
 // In that case, the other options above will not apply unless
 // you support them.
-
 Autocompleter.Local = Class.create(Autocompleter.Base, {
     initialize: function(element, update, array, options) {
         this.baseInitialize(element, update, options);
@@ -431,15 +408,12 @@ Autocompleter.Local = Class.create(Autocompleter.Base, {
                 var partial = []; // Inside matches
                 var entry = instance.getToken();
                 var count = 0;
-
                 for (var i = 0; i < instance.options.array.length &&
                                 ret.length < instance.options.choices; i++) {
-
                     var elem = instance.options.array[i];
                     var foundPos = instance.options.ignoreCase ?
                                    elem.toLowerCase().indexOf(entry.toLowerCase()) :
                                    elem.indexOf(entry);
-
                     while (foundPos != -1) {
                         if (foundPos == 0 && elem.length != entry.length) {
                             ret.push("<li><strong>" + elem.substr(0, entry.length) + "</strong>" +
@@ -454,11 +428,9 @@ Autocompleter.Local = Class.create(Autocompleter.Base, {
                                 break;
                             }
                         }
-
                         foundPos = instance.options.ignoreCase ?
                                    elem.toLowerCase().indexOf(entry.toLowerCase(), foundPos + 1) :
                                    elem.indexOf(entry, foundPos + 1);
-
                     }
                 }
                 if (partial.length)
@@ -480,7 +452,6 @@ Field.scrollFreeActivate = function(field) {
         Field.activate(field);
     }, 1);
 }
-
 Ajax.InPlaceEditor = Class.create({
     initialize: function(element, url, options) {
         this.url = url;
@@ -752,11 +723,9 @@ Ajax.InPlaceEditor = Class.create({
         this._boundComplete(transport, this.element);
     }
 });
-
 Object.extend(Ajax.InPlaceEditor.prototype, {
     dispose: Ajax.InPlaceEditor.prototype.destroy
 });
-
 Ajax.InPlaceCollectionEditor = Class.create(Ajax.InPlaceEditor, {
     initialize: function($super, element, url, options) {
         this._extraDefaultOptions = Ajax.InPlaceCollectionEditor.DefaultOptions;
@@ -857,7 +826,6 @@ Ajax.InPlaceCollectionEditor = Class.create(Ajax.InPlaceEditor, {
 //**** This only  exists for a while,  in order to  let ****
 //**** users adapt to  the new API.  Read up on the new ****
 //**** API and convert your code to it ASAP!            ****
-
 Ajax.InPlaceEditor.prototype.initialize.dealWithDeprecatedOptions = function(options) {
     if (!options) return;
     function fallback(name, expr) {
@@ -872,7 +840,6 @@ Ajax.InPlaceEditor.prototype.initialize.dealWithDeprecatedOptions = function(opt
     fallback('highlightColor', options.highlightcolor);
     fallback('highlightEndColor', options.highlightendcolor);
 };
-
 Object.extend(Ajax.InPlaceEditor, {
     DefaultOptions: {
         ajaxOptions: { },
@@ -939,7 +906,6 @@ Object.extend(Ajax.InPlaceEditor, {
         mouseout: 'leaveHover'
     }
 });
-
 Ajax.InPlaceCollectionEditor.DefaultOptions = {
     loadingCollectionText: 'Loading options...'
 };
@@ -947,7 +913,6 @@ Ajax.InPlaceCollectionEditor.DefaultOptions = {
 // Delayed observer, like Form.Element.Observer, 
 // but waits for delay after last key input
 // Ideal for live-search fields
-
 Form.Element.DelayedObserver = Class.create({
     initialize: function(element, delay, callback) {
         this.delay = delay || 0.5;

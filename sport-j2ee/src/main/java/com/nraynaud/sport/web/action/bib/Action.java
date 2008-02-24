@@ -7,9 +7,9 @@ import com.nraynaud.sport.data.BibPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.Public;
+import com.nraynaud.sport.web.SportRequest;
 import static com.nraynaud.sport.web.action.bib.Action.INPUT;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
-import com.nraynaud.sport.web.view.Helpers;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.config.ParentPackage;
@@ -35,7 +35,7 @@ public class Action extends DefaultAction implements ModelDriven<BibPageData> {
     public BibPageData getModel() {
         if (data == null) {
             try {
-                final User currentUser = Helpers.currentUser();
+                final User currentUser = currentUser();
                 final Long myId = id == null ? currentUser.getId() : id;
                 data = application.fetchBibPageData(currentUser, myId, workoutPage, messagePageIndex);
             } catch (UserNotFoundException e) {
@@ -43,6 +43,11 @@ public class Action extends DefaultAction implements ModelDriven<BibPageData> {
             }
         }
         return data;
+    }
+
+    private static User currentUser() {
+        final SportRequest request = SportRequest.getSportRequest();
+        return request.isLogged() ? request.getSportSession().getUser() : null;
     }
 
     public Long getId() {

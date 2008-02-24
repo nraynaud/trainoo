@@ -14,6 +14,7 @@
         <url>http://somerepository.com/view.cvs</url>
     </scm>
     <modules>
+        <module>sport-war</module>
         <module>sport-j2ee</module>
         <module>sport-hibernate</module>
         <module>sport-business</module>

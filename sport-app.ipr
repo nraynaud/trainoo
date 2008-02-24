@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project relativePaths="false" version="4">
+<project relativePaths="true" version="4">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
   </component>
@@ -171,6 +171,7 @@
       <facet-type id="web">
         <modules>
           <module name="sport-j2ee" />
+          <module name="sport-war" />
         </modules>
       </facet-type>
       <facet-type id="jpa">
@@ -187,6 +188,15 @@
           <module name="sport-j2ee">
             <files>
               <file url="file://$PROJECT_DIR$/sport-j2ee/src/main/resources/struts.xml" />
+            </files>
+          </module>
+        </modules>
+      </facet-type>
+      <facet-type id="Spring">
+        <modules>
+          <module name="sport-war">
+            <files>
+              <file url="file://$PROJECT_DIR$/sport-war/src/main/webapp/WEB-INF/applicationContext.xml" />
             </files>
           </module>
         </modules>
@@ -495,6 +505,7 @@
       <module fileurl="file://$PROJECT_DIR$/sport-business/sport-business.iml" filepath="$PROJECT_DIR$/sport-business/sport-business.iml" />
       <module fileurl="file://$PROJECT_DIR$/sport-hibernate/sport-hibernate.iml" filepath="$PROJECT_DIR$/sport-hibernate/sport-hibernate.iml" />
       <module fileurl="file://$PROJECT_DIR$/sport-j2ee/sport-j2ee.iml" filepath="$PROJECT_DIR$/sport-j2ee/sport-j2ee.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sport-war/sport-war.iml" filepath="$PROJECT_DIR$/sport-war/sport-war.iml" />
     </modules>
   </component>
   <component name="ProjectRootConfigurable.UI">

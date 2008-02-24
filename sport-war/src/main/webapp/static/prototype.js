@@ -5,7 +5,6 @@
  *  For details, see the Prototype web site: http://www.prototypejs.org/
  *
  *--------------------------------------------------------------------------*/
-
 var Prototype = {
     Version: '1.6.0',
 
@@ -35,28 +34,22 @@ var Prototype = {
         return x
     }
 };
-
 if (Prototype.Browser.MobileSafari)
     Prototype.BrowserFeatures.SpecificElementExtensions = false;
-
 if (Prototype.Browser.WebKit)
     Prototype.BrowserFeatures.XPath = false;
-
 /* Based on Alex Arnell's inheritance implementation. */
 var Class = {
     create: function() {
         var parent = null, properties = $A(arguments);
         if (Object.isFunction(properties[0]))
             parent = properties.shift();
-
         function klass() {
             this.initialize.apply(this, arguments);
         }
-
         Object.extend(klass, Class.Methods);
         klass.superclass = parent;
         klass.subclasses = [];
-
         if (parent) {
             var subclass = function() {
             };
@@ -64,27 +57,20 @@ var Class = {
             klass.prototype = new subclass;
             parent.subclasses.push(klass);
         }
-
         for (var i = 0; i < properties.length; i++)
             klass.addMethods(properties[i]);
-
         if (!klass.prototype.initialize)
             klass.prototype.initialize = Prototype.emptyFunction;
-
         klass.prototype.constructor = klass;
-
         return klass;
     }
 };
-
 Class.Methods = {
     addMethods: function(source) {
         var ancestor = this.superclass && this.superclass.prototype;
         var properties = Object.keys(source);
-
         if (!Object.keys({ toString: true }).length)
             properties.push("toString", "valueOf");
-
         for (var i = 0, length = properties.length; i < length; i++) {
             var property = properties[i], value = source[property];
             if (ancestor && Object.isFunction(value) &&
@@ -104,19 +90,15 @@ Class.Methods = {
             }
             this.prototype[property] = value;
         }
-
         return this;
     }
 };
-
 var Abstract = { };
-
 Object.extend = function(destination, source) {
     for (var property in source)
         destination[property] = source[property];
     return destination;
 };
-
 Object.extend(Object, {
     inspect: function(object) {
         try {
@@ -137,18 +119,15 @@ Object.extend(Object, {
             case 'unknown': return;
             case 'boolean': return object.toString();
         }
-
         if (object === null) return 'null';
         if (object.toJSON) return object.toJSON();
         if (Object.isElement(object)) return;
-
         var results = [];
         for (var property in object) {
             var value = Object.toJSON(object[property]);
             if (value !== undefined)
                 results.push(property.toJSON() + ': ' + value);
         }
-
         return '{' + results.join(', ') + '}';
     },
 
@@ -206,7 +185,6 @@ Object.extend(Object, {
         return typeof object == "undefined";
     }
 });
-
 Object.extend(Function.prototype, {
     argumentNames: function() {
         var names = this.toString().match(/^[\s\(]*function[^(]*\((.*?)\)/)[1].split(",").invoke("strip");
@@ -258,9 +236,7 @@ Object.extend(Function.prototype, {
         };
     }
 });
-
 Function.prototype.defer = Function.prototype.delay.curry(0.01);
-
 Date.prototype.toJSON = function() {
     return '"' + this.getUTCFullYear() + '-' +
            (this.getUTCMonth() + 1).toPaddedString(2) + '-' +
@@ -269,11 +245,9 @@ Date.prototype.toJSON = function() {
            this.getUTCMinutes().toPaddedString(2) + ':' +
            this.getUTCSeconds().toPaddedString(2) + 'Z"';
 };
-
 var Try = {
     these: function() {
         var returnValue;
-
         for (var i = 0, length = arguments.length; i < length; i++) {
             var lambda = arguments[i];
             try {
@@ -282,25 +256,19 @@ var Try = {
             } catch (e) {
             }
         }
-
         return returnValue;
     }
 };
-
 RegExp.prototype.match = RegExp.prototype.test;
-
 RegExp.escape = function(str) {
     return String(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 };
-
 /*--------------------------------------------------------------------------*/
-
 var PeriodicalExecuter = Class.create({
     initialize: function(callback, frequency) {
         this.callback = callback;
         this.frequency = frequency;
         this.currentlyExecuting = false;
-
         this.registerCallback();
     },
 
@@ -342,12 +310,10 @@ Object.extend(String, {
         '\\': '\\\\'
     }
 });
-
 Object.extend(String.prototype, {
     gsub: function(pattern, replacement) {
         var result = '', source = this, match;
         replacement = arguments.callee.prepareReplacement(replacement);
-
         while (source.length > 0) {
             if (match = source.match(pattern)) {
                 result += source.slice(0, match.index);
@@ -363,7 +329,6 @@ Object.extend(String.prototype, {
     sub: function(pattern, replacement, count) {
         replacement = this.gsub.prepareReplacement(replacement);
         count = count === undefined ? 1 : count;
-
         return this.gsub(pattern, function(match) {
             if (--count < 0) return match[0];
             return replacement(match);
@@ -427,13 +392,11 @@ Object.extend(String.prototype, {
     toQueryParams: function(separator) {
         var match = this.strip().match(/([^?#]*)(#.*)?$/);
         if (!match) return { };
-
         return match[1].split(separator || '&').inject({ }, function(hash, pair) {
             if ((pair = pair.split('='))[0]) {
                 var key = decodeURIComponent(pair.shift());
                 var value = pair.length > 1 ? pair.join('=') : pair[0];
                 if (value != undefined) value = decodeURIComponent(value);
-
                 if (key in hash) {
                     if (!Object.isArray(hash[key])) hash[key] = [hash[key]];
                     hash[key].push(value);
@@ -460,14 +423,11 @@ Object.extend(String.prototype, {
     camelize: function() {
         var parts = this.split('-'), len = parts.length;
         if (len == 1) return parts[0];
-
         var camelized = this.charAt(0) == '-'
                 ? parts[0].charAt(0).toUpperCase() + parts[0].substring(1)
                 : parts[0];
-
         for (var i = 1; i < len; i++)
             camelized += parts[i].charAt(0).toUpperCase() + parts[i].substring(1);
-
         return camelized;
     },
 
@@ -539,7 +499,6 @@ Object.extend(String.prototype, {
         return new Template(this, pattern).evaluate(object);
     }
 });
-
 if (Prototype.Browser.WebKit || Prototype.Browser.IE) Object.extend(String.prototype, {
     escapeHTML: function() {
         return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -548,7 +507,6 @@ if (Prototype.Browser.WebKit || Prototype.Browser.IE) Object.extend(String.proto
         return this.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
     }
 });
-
 String.prototype.gsub.prepareReplacement = function(replacement) {
     if (Object.isFunction(replacement)) return replacement;
     var template = new Template(replacement);
@@ -556,16 +514,12 @@ String.prototype.gsub.prepareReplacement = function(replacement) {
         return template.evaluate(match)
     };
 };
-
 String.prototype.parseQuery = String.prototype.toQueryParams;
-
 Object.extend(String.prototype.escapeHTML, {
     div:  document.createElement('div'),
     text: document.createTextNode('')
 });
-
 with (String.prototype.escapeHTML) div.appendChild(text);
-
 var Template = Class.create({
     initialize: function(template, pattern) {
         this.template = template.toString();
@@ -575,17 +529,13 @@ var Template = Class.create({
     evaluate: function(object) {
         if (Object.isFunction(object.toTemplateReplacements))
             object = object.toTemplateReplacements();
-
         return this.template.gsub(this.pattern, function(match) {
             if (object == null) return '';
-
             var before = match[1] || '';
             if (before == '\\') return match[2];
-
             var ctx = object, expr = match[3];
             var pattern = /^([^.[]+|\[((?:.*?[^\\])?)\])(\.|\[|$)/, match = pattern.exec(expr);
             if (match == null) return before;
-
             while (match != null) {
                 var comp = match[1].startsWith('[') ? match[2].gsub('\\\\]', ']') : match[1];
                 ctx = ctx[comp];
@@ -593,15 +543,12 @@ var Template = Class.create({
                 expr = expr.substring('[' == match[3] ? match[1].length : match[0].length);
                 match = pattern.exec(expr);
             }
-
             return before + String.interpret(ctx);
         }.bind(this));
     }
 });
 Template.Pattern = /(^|.|\r|\n)(#\{(.*?)\})/;
-
 var $break = { };
-
 var Enumerable = {
     each: function(iterator, context) {
         var index = 0;
@@ -678,10 +625,8 @@ var Enumerable = {
     grep: function(filter, iterator, context) {
         iterator = iterator ? iterator.bind(context) : Prototype.K;
         var results = [];
-
         if (Object.isString(filter))
             filter = new RegExp(filter);
-
         this.each(function(value, index) {
             if (filter.match(value))
                 results.push(iterator(value, index));
@@ -692,7 +637,6 @@ var Enumerable = {
     include: function(object) {
         if (Object.isFunction(this.indexOf))
             if (this.indexOf(object) != -1) return true;
-
         var found = false;
         this.each(function(value) {
             if (value == object) {
@@ -794,7 +738,6 @@ var Enumerable = {
         var iterator = Prototype.K, args = $A(arguments);
         if (Object.isFunction(args.last()))
             iterator = args.pop();
-
         var collections = [this].concat(args).map($A);
         return this.map(function(value, index) {
             return iterator(collections.pluck(index));
@@ -809,7 +752,6 @@ var Enumerable = {
         return '#<Enumerable:' + this.toArray().inspect() + '>';
     }
 };
-
 Object.extend(Enumerable, {
     map:     Enumerable.collect,
     find:    Enumerable.detect,
@@ -827,7 +769,6 @@ function $A(iterable) {
     while (length--) results[length] = iterable[length];
     return results;
 }
-
 if (Prototype.Browser.WebKit) {
     function $A(iterable) {
         if (!iterable) return [];
@@ -838,13 +779,9 @@ if (Prototype.Browser.WebKit) {
         return results;
     }
 }
-
 Array.from = $A;
-
 Object.extend(Array.prototype, Enumerable);
-
 if (!Array.prototype._reverse) Array.prototype._reverse = Array.prototype.reverse;
-
 Object.extend(Array.prototype, {
     _each: function(iterator) {
         for (var i = 0, length = this.length; i < length; i++)
@@ -933,7 +870,6 @@ Object.extend(Array.prototype, {
 // use native browser JS 1.6 implementation if available
 if (Object.isFunction(Array.prototype.forEach))
     Array.prototype._each = Array.prototype.forEach;
-
 if (!Array.prototype.indexOf) Array.prototype.indexOf = function(item, i) {
     i || (i = 0);
     var length = this.length;
@@ -942,21 +878,17 @@ if (!Array.prototype.indexOf) Array.prototype.indexOf = function(item, i) {
         if (this[i] === item) return i;
     return -1;
 };
-
 if (!Array.prototype.lastIndexOf) Array.prototype.lastIndexOf = function(item, i) {
     i = isNaN(i) ? this.length : (i < 0 ? this.length + i : i) + 1;
     var n = this.slice(0, i).reverse().indexOf(item);
     return (n < 0) ? n : i - n - 1;
 };
-
 Array.prototype.toArray = Array.prototype.clone;
-
 function $w(string) {
     if (!Object.isString(string)) return [];
     string = string.strip();
     return string ? string.split(/\s+/) : [];
 }
-
 if (Prototype.Browser.Opera) {
     Array.prototype.concat = function() {
         var array = [];
@@ -995,7 +927,6 @@ Object.extend(Number.prototype, {
         return isFinite(this) ? this.toString() : 'null';
     }
 });
-
 $w('abs round ceil floor').each(function(method) {
     Number.prototype[method] = Math[method].methodize();
 });
@@ -1003,7 +934,6 @@ function $H(object) {
     return new Hash(object);
 }
 ;
-
 var Hash = Class.create(Enumerable, (function() {
     if (function() {
         var i = 0, Test = function(value) {
@@ -1035,12 +965,10 @@ var Hash = Class.create(Enumerable, (function() {
             }
         }
     }
-
     function toQueryPair(key, value) {
         if (Object.isUndefined(value)) return key;
         return key + '=' + encodeURIComponent(String.interpret(value));
     }
-
     return {
         initialize: function(object) {
             this._object = Object.isHash(object) ? object.toObject() : Object.clone(object);
@@ -1095,7 +1023,6 @@ var Hash = Class.create(Enumerable, (function() {
         toQueryString: function() {
             return this.map(function(pair) {
                 var key = encodeURIComponent(pair.key), values = pair.value;
-
                 if (values && typeof values == 'object') {
                     if (Object.isArray(values))
                         return values.map(toQueryPair.curry(key)).join('&');
@@ -1119,7 +1046,6 @@ var Hash = Class.create(Enumerable, (function() {
         }
     }
 })());
-
 Hash.prototype.toTemplateReplacements = Hash.prototype.toObject;
 Hash.from = $H;
 var ObjectRange = Class.create(Enumerable, {
@@ -1145,11 +1071,9 @@ var ObjectRange = Class.create(Enumerable, {
         return value <= this.end;
     }
 });
-
 var $R = function(start, end, exclusive) {
     return new ObjectRange(start, end, exclusive);
 };
-
 var Ajax = {
     getTransport: function() {
         return Try.these(
@@ -1167,7 +1091,6 @@ var Ajax = {
 
     activeRequestCount: 0
 };
-
 Ajax.Responders = {
     responders: [],
 
@@ -1195,9 +1118,7 @@ Ajax.Responders = {
         });
     }
 };
-
 Object.extend(Ajax.Responders, Enumerable);
-
 Ajax.Responders.register({
     onCreate:   function() {
         Ajax.activeRequestCount++
@@ -1206,7 +1127,6 @@ Ajax.Responders.register({
         Ajax.activeRequestCount--
     }
 });
-
 Ajax.Base = Class.create({
     initialize: function(options) {
         this.options = {
@@ -1219,13 +1139,11 @@ Ajax.Base = Class.create({
             evalJS:       true
         };
         Object.extend(this.options, options || { });
-
         this.options.method = this.options.method.toLowerCase();
         if (Object.isString(this.options.parameters))
             this.options.parameters = this.options.parameters.toQueryParams();
     }
 });
-
 Ajax.Request = Class.create(Ajax.Base, {
     _complete: false,
 
@@ -1239,15 +1157,12 @@ Ajax.Request = Class.create(Ajax.Base, {
         this.url = url;
         this.method = this.options.method;
         var params = Object.clone(this.options.parameters);
-
         if (!['get', 'post'].include(this.method)) {
             // simulate other verbs over post
             params['_method'] = this.method;
             this.method = 'post';
         }
-
         this.parameters = params;
-
         if (params = Object.toQueryString(params)) {
             // when GET, append parameters to URL
             if (this.method == 'get')
@@ -1255,27 +1170,20 @@ Ajax.Request = Class.create(Ajax.Base, {
             else if (/Konqueror|Safari|KHTML/.test(navigator.userAgent))
                 params += '&_=';
         }
-
         try {
             var response = new Ajax.Response(this);
             if (this.options.onCreate) this.options.onCreate(response);
             Ajax.Responders.dispatch('onCreate', this, response);
-
             this.transport.open(this.method.toUpperCase(), this.url,
                     this.options.asynchronous);
-
             if (this.options.asynchronous) this.respondToReadyState.bind(this).defer(1);
-
             this.transport.onreadystatechange = this.onStateChange.bind(this);
             this.setRequestHeaders();
-
             this.body = this.method == 'post' ? (this.options.postBody || params) : null;
             this.transport.send(this.body);
-
             /* Force Firefox to handle ready state 4 for synchronous requests */
             if (!this.options.asynchronous && this.transport.overrideMimeType)
                 this.onStateChange();
-
         }
         catch (e) {
             this.dispatchException(e);
@@ -1294,11 +1202,9 @@ Ajax.Request = Class.create(Ajax.Base, {
             'X-Prototype-Version': Prototype.Version,
             'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
         };
-
         if (this.method == 'post') {
             headers['Content-type'] = this.options.contentType +
                                       (this.options.encoding ? '; charset=' + this.options.encoding : '');
-
             /* Force "Connection: close" for older Mozilla browsers to work
             * around a bug where XMLHttpRequest sends an incorrect
             * Content-length header. See Mozilla Bugzilla #246651.
@@ -1311,7 +1217,6 @@ Ajax.Request = Class.create(Ajax.Base, {
     // user-defined headers
         if (typeof this.options.requestHeaders == 'object') {
             var extras = this.options.requestHeaders;
-
             if (Object.isFunction(extras.push))
                 for (var i = 0, length = extras.length; i < length; i += 2)
                     headers[extras[i]] = extras[i + 1];
@@ -1320,7 +1225,6 @@ Ajax.Request = Class.create(Ajax.Base, {
                     headers[pair.key] = pair.value
                 });
         }
-
         for (var name in headers)
             this.transport.setRequestHeader(name, headers[name]);
     },
@@ -1340,7 +1244,6 @@ Ajax.Request = Class.create(Ajax.Base, {
 
     respondToReadyState: function(readyState) {
         var state = Ajax.Request.Events[readyState], response = new Ajax.Response(this);
-
         if (state == 'Complete') {
             try {
                 this._complete = true;
@@ -1350,21 +1253,18 @@ Ajax.Request = Class.create(Ajax.Base, {
             } catch (e) {
                 this.dispatchException(e);
             }
-
             var contentType = response.getHeader('Content-type');
             if (this.options.evalJS == 'force'
                     || (this.options.evalJS && contentType
                     && contentType.match(/^\s*(text|application)\/(x-)?(java|ecma)script(;.*)?\s*$/i)))
                 this.evalResponse();
         }
-
         try {
             (this.options['on' + state] || Prototype.emptyFunction)(response, response.headerJSON);
             Ajax.Responders.dispatch('on' + state, this, response, response.headerJSON);
         } catch (e) {
             this.dispatchException(e);
         }
-
         if (state == 'Complete') {
             // avoid memory leak in MSIE: clean up
             this.transport.onreadystatechange = Prototype.emptyFunction;
@@ -1392,23 +1292,19 @@ Ajax.Request = Class.create(Ajax.Base, {
         Ajax.Responders.dispatch('onException', this, exception);
     }
 });
-
 Ajax.Request.Events =
 ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete'];
-
 Ajax.Response = Class.create({
     initialize: function(request) {
         this.request = request;
         var transport = this.transport = request.transport,
                 readyState = this.readyState = transport.readyState;
-
         if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
             this.status = this.getStatus();
             this.statusText = this.getStatusText();
             this.responseText = String.interpret(transport.responseText);
             this.headerJSON = this._getHeaderJSON();
         }
-
         if (readyState == 4) {
             var xml = transport.responseXML;
             this.responseXML = xml === undefined ? null : xml;
@@ -1470,30 +1366,25 @@ Ajax.Response = Class.create({
         }
     }
 });
-
 Ajax.Updater = Class.create(Ajax.Request, {
     initialize: function($super, container, url, options) {
         this.container = {
             success: (container.success || container),
             failure: (container.failure || (container.success ? null : container))
         };
-
         options = options || { };
         var onComplete = options.onComplete;
         options.onComplete = (function(response, param) {
             this.updateContent(response.responseText);
             if (Object.isFunction(onComplete)) onComplete(response, param);
         }).bind(this);
-
         $super(url, options);
     },
 
     updateContent: function(responseText) {
         var receiver = this.container[this.success() ? 'success' : 'failure'],
                 options = this.options;
-
         if (!options.evalScripts) responseText = responseText.stripScripts();
-
         if (receiver = $(receiver)) {
             if (options.insertion) {
                 if (Object.isString(options.insertion)) {
@@ -1505,25 +1396,20 @@ Ajax.Updater = Class.create(Ajax.Request, {
             }
             else receiver.update(responseText);
         }
-
         if (this.success()) {
             if (this.onComplete) this.onComplete.bind(this).defer();
         }
     }
 });
-
 Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     initialize: function($super, container, url, options) {
         $super(options);
         this.onComplete = this.options.onComplete;
-
         this.frequency = (this.options.frequency || 2);
         this.decay = (this.options.decay || 1);
-
         this.updater = { };
         this.container = container;
         this.url = url;
-
         this.start();
     },
 
@@ -1542,7 +1428,6 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
         if (this.options.decay) {
             this.decay = (response.responseText == this.lastText ?
                           this.decay * this.options.decay : 1);
-
             this.lastText = response.responseText;
         }
         this.timer = this.onTimerEvent.bind(this).delay(this.decay * this.frequency);
@@ -1562,7 +1447,6 @@ function $(element) {
         element = document.getElementById(element);
     return Element.extend(element);
 }
-
 if (Prototype.BrowserFeatures.XPath) {
     document._getElementsByXPath = function(expression, parentElement) {
         var results = [];
@@ -1573,11 +1457,8 @@ if (Prototype.BrowserFeatures.XPath) {
         return results;
     };
 }
-
 /*--------------------------------------------------------------------------*/
-
 if (!window.Node) var Node = { };
-
 if (!Node.ELEMENT_NODE) {
     // DOM level 2 ECMAScript Language Binding
     Object.extend(Node, {
@@ -1595,7 +1476,6 @@ if (!Node.ELEMENT_NODE) {
         NOTATION_NODE: 12
     });
 }
-
 (function() {
     var element = this.Element;
     this.Element = function(tagName, attributes) {
@@ -1612,9 +1492,7 @@ if (!Node.ELEMENT_NODE) {
     };
     Object.extend(this.Element, element || { });
 }).call(window);
-
 Element.cache = { };
-
 Element.Methods = {
     visible: function(element) {
         return $(element).style.display != 'none';
@@ -1668,33 +1546,25 @@ Element.Methods = {
 
     insert: function(element, insertions) {
         element = $(element);
-
         if (Object.isString(insertions) || Object.isNumber(insertions) ||
             Object.isElement(insertions) || (insertions && (insertions.toElement || insertions.toHTML)))
             insertions = {bottom:insertions};
-
         var content, t, range;
-
         for (position in insertions) {
             content = insertions[position];
             position = position.toLowerCase();
             t = Element._insertionTranslations[position];
-
             if (content && content.toElement) content = content.toElement();
             if (Object.isElement(content)) {
                 t.insert(element, content);
                 continue;
             }
-
             content = Object.toHTML(content);
-
             range = element.ownerDocument.createRange();
             t.initializeRange(element, range);
             t.insert(element, range.createContextualFragment(content.stripScripts()));
-
             content.evalScripts.bind(content).defer();
         }
-
         return element;
     },
 
@@ -1840,10 +1710,8 @@ Element.Methods = {
     writeAttribute: function(element, name, value) {
         element = $(element);
         var attributes = { }, t = Element._attributeTranslations.write;
-
         if (typeof name == 'object') attributes = name;
         else attributes[name] = value === undefined ? true : value;
-
         for (var attr in attributes) {
             var name = t.names[attr] || attr, value = attributes[attr];
             if (t.values[attr]) name = t.values[attr](element, value);
@@ -1895,7 +1763,7 @@ Element.Methods = {
                        'removeClassName' : 'addClassName'](className);
     },
 
-// removes whitespace-only text node children
+    // removes whitespace-only text node children
     cleanWhitespace: function(element) {
         element = $(element);
         var node = element.firstChild;
@@ -1914,10 +1782,8 @@ Element.Methods = {
 
     descendantOf: function(element, ancestor) {
         element = $(element),ancestor = $(ancestor);
-
         if (element.compareDocumentPosition)
             return (element.compareDocumentPosition(ancestor) & 8) === 8;
-
         if (element.sourceIndex && !Prototype.Browser.Opera) {
             var e = element.sourceIndex, a = ancestor.sourceIndex,
                     nextAncestor = ancestor.nextSibling;
@@ -1929,7 +1795,6 @@ Element.Methods = {
             }
             if (nextAncestor) return (e > a && e < nextAncestor.sourceIndex);
         }
-
         while (element = element.parentNode)
             if (element == ancestor) return true;
         return false;
@@ -1972,7 +1837,6 @@ Element.Methods = {
                 elementStyle[(property == 'float' || property == 'cssFloat') ?
                              (elementStyle.styleFloat === undefined ? 'cssFloat' : 'styleFloat') :
                              property] = styles[property];
-
         return element;
     },
 
@@ -2081,18 +1945,15 @@ Element.Methods = {
         element = $(element);
         if (element.getStyle('position') == 'absolute') return;
     // Position.prepare(); // To be done manually by Scripty when it needs it.
-
         var offsets = element.positionedOffset();
         var top = offsets[1];
         var left = offsets[0];
         var width = element.clientWidth;
         var height = element.clientHeight;
-
         element._originalLeft = left - parseFloat(element.style.left || 0);
         element._originalTop = top - parseFloat(element.style.top || 0);
         element._originalWidth = element.style.width;
         element._originalHeight = element.style.height;
-
         element.style.position = 'absolute';
         element.style.top = top + 'px';
         element.style.left = left + 'px';
@@ -2105,11 +1966,9 @@ Element.Methods = {
         element = $(element);
         if (element.getStyle('position') == 'relative') return;
     // Position.prepare(); // To be done manually by Scripty when it needs it.
-
         element.style.position = 'relative';
         var top = parseFloat(element.style.top || 0) - (element._originalTop || 0);
         var left = parseFloat(element.style.left || 0) - (element._originalLeft || 0);
-
         element.style.top = top + 'px';
         element.style.left = left + 'px';
         element.style.height = element._originalHeight;
@@ -2130,17 +1989,14 @@ Element.Methods = {
     getOffsetParent: function(element) {
         if (element.offsetParent) return $(element.offsetParent);
         if (element == document.body) return $(element);
-
         while ((element = element.parentNode) && element != document.body)
             if (Element.getStyle(element, 'position') != 'static')
                 return $(element);
-
         return $(document.body);
     },
 
     viewportOffset: function(forElement) {
         var valueT = 0, valueL = 0;
-
         var element = forElement;
         do {
             valueT += element.offsetTop || 0;
@@ -2149,9 +2005,7 @@ Element.Methods = {
       // Safari fix
             if (element.offsetParent == document.body &&
                 Element.getStyle(element, 'position') == 'absolute') break;
-
         } while (element = element.offsetParent);
-
         element = forElement;
         do {
             if (!Prototype.Browser.Opera || element.tagName == 'BODY') {
@@ -2159,7 +2013,6 @@ Element.Methods = {
                 valueL -= element.scrollLeft || 0;
             }
         } while (element = element.parentNode);
-
         return Element._returnOffset(valueL, valueT);
     },
 
@@ -2202,14 +2055,11 @@ Element.Methods = {
         return element;
     }
 };
-
 Element.Methods.identify.counter = 1;
-
 Object.extend(Element.Methods, {
     getElementsBySelector: Element.Methods.select,
     childElements: Element.Methods.immediateDescendants
 });
-
 Element._attributeTranslations = {
     write: {
         names: {
@@ -2219,47 +2069,36 @@ Element._attributeTranslations = {
         values: { }
     }
 };
-
-
 if (!document.createRange || Prototype.Browser.Opera) {
     Element.Methods.insert = function(element, insertions) {
         element = $(element);
-
         if (Object.isString(insertions) || Object.isNumber(insertions) ||
             Object.isElement(insertions) || (insertions && (insertions.toElement || insertions.toHTML)))
             insertions = { bottom: insertions };
-
         var t = Element._insertionTranslations, content, position, pos, tagName;
-
         for (position in insertions) {
             content = insertions[position];
             position = position.toLowerCase();
             pos = t[position];
-
             if (content && content.toElement) content = content.toElement();
             if (Object.isElement(content)) {
                 pos.insert(element, content);
                 continue;
             }
-
             content = Object.toHTML(content);
             tagName = ((position == 'before' || position == 'after')
                     ? element.parentNode : element).tagName.toUpperCase();
-
             if (t.tags[tagName]) {
                 var fragments = Element._getContentFromAnonymousElement(tagName, content.stripScripts());
                 if (position == 'top' || position == 'after') fragments.reverse();
                 fragments.each(pos.insert.curry(element));
             }
             else element.insertAdjacentHTML(pos.adjacency, content.stripScripts());
-
             content.evalScripts.bind(content).defer();
         }
-
         return element;
     };
 }
-
 if (Prototype.Browser.Opera) {
     Element.Methods._getStyle = Element.Methods.getStyle;
     Element.Methods.getStyle = function(element, style) {
@@ -2278,7 +2117,6 @@ if (Prototype.Browser.Opera) {
         return Element._readAttribute(element, attribute);
     };
 }
-
 else if (Prototype.Browser.IE) {
     $w('positionedOffset getOffsetParent viewportOffset').each(function(method) {
         Element.Methods[method] = Element.Methods[method].wrap(
@@ -2293,19 +2131,16 @@ else if (Prototype.Browser.IE) {
                 }
                 );
     });
-
     Element.Methods.getStyle = function(element, style) {
         element = $(element);
         style = (style == 'float' || style == 'cssFloat') ? 'styleFloat' : style.camelize();
         var value = element.style[style];
         if (!value && element.currentStyle) value = element.currentStyle[style];
-
         if (style == 'opacity') {
             if (value = (element.getStyle('filter') || '').match(/alpha\(opacity=(.*)\)/))
                 if (value[1]) return parseFloat(value[1]) / 100;
             return 1.0;
         }
-
         if (value == 'auto') {
             if ((style == 'width' || style == 'height') && (element.getStyle('display') != 'none'))
                 return element['offset' + style.capitalize()] + 'px';
@@ -2313,7 +2148,6 @@ else if (Prototype.Browser.IE) {
         }
         return value;
     };
-
     Element.Methods.setOpacity = function(element, value) {
         function stripAlpha(filter) {
             return filter.replace(/alpha\([^\)]*\)/gi, '');
@@ -2323,7 +2157,6 @@ else if (Prototype.Browser.IE) {
         if ((currentStyle && !currentStyle.hasLayout) ||
             (!currentStyle && element.style.zoom == 'normal'))
             element.style.zoom = 1;
-
         var filter = element.getStyle('filter'), style = element.style;
         if (value == 1 || value === '') {
             (filter = stripAlpha(filter)) ?
@@ -2334,7 +2167,6 @@ else if (Prototype.Browser.IE) {
                        'alpha(opacity=' + (value * 100) + ')';
         return element;
     };
-
     Element._attributeTranslations = {
         read: {
             names: {
@@ -2365,7 +2197,6 @@ else if (Prototype.Browser.IE) {
             }
         }
     };
-
     Element._attributeTranslations.write = {
         names: Object.clone(Element._attributeTranslations.read.names),
         values: {
@@ -2378,15 +2209,12 @@ else if (Prototype.Browser.IE) {
             }
         }
     };
-
     Element._attributeTranslations.has = {};
-
     $w('colSpan rowSpan vAlign dateTime accessKey tabIndex ' +
        'encType maxLength readOnly longDesc').each(function(attr) {
         Element._attributeTranslations.write.names[attr.toLowerCase()] = attr;
         Element._attributeTranslations.has[attr.toLowerCase()] = attr;
     });
-
     (function(v) {
         Object.extend(v, {
             href:        v._getAttr,
@@ -2418,7 +2246,6 @@ else if (Prototype.Browser.IE) {
         });
     })(Element._attributeTranslations.read.values);
 }
-
 else if (Prototype.Browser.Gecko && /rv:1\.8\.0/.test(navigator.userAgent)) {
     Element.Methods.setOpacity = function(element, value) {
         element = $(element);
@@ -2427,13 +2254,11 @@ else if (Prototype.Browser.Gecko && /rv:1\.8\.0/.test(navigator.userAgent)) {
         return element;
     };
 }
-
 else if (Prototype.Browser.WebKit) {
     Element.Methods.setOpacity = function(element, value) {
         element = $(element);
         element.style.opacity = (value == 1 || value === '') ? '' :
                                 (value < 0.00001) ? 0 : value;
-
         if (value == 1)
             if (element.tagName == 'IMG' && element.width) {
                 element.width++;
@@ -2444,7 +2269,6 @@ else if (Prototype.Browser.WebKit) {
                 element.removeChild(n);
             } catch (e) {
             }
-
         return element;
     };
 
@@ -2458,25 +2282,19 @@ else if (Prototype.Browser.WebKit) {
             valueL += element.offsetLeft || 0;
             if (element.offsetParent == document.body)
                 if (Element.getStyle(element, 'position') == 'absolute') break;
-
             element = element.offsetParent;
         } while (element);
-
         return Element._returnOffset(valueL, valueT);
     };
 }
-
 if (Prototype.Browser.IE || Prototype.Browser.Opera) {
     // IE and Opera are missing .innerHTML support for TABLE-related and SELECT elements
     Element.Methods.update = function(element, content) {
         element = $(element);
-
         if (content && content.toElement) content = content.toElement();
         if (Object.isElement(content)) return element.update().insert(content);
-
         content = Object.toHTML(content);
         var tagName = element.tagName.toUpperCase();
-
         if (tagName in Element._insertionTranslations.tags) {
             $A(element.childNodes).each(function(node) {
                 element.removeChild(node)
@@ -2487,25 +2305,20 @@ if (Prototype.Browser.IE || Prototype.Browser.Opera) {
             });
         }
         else element.innerHTML = content.stripScripts();
-
         content.evalScripts.bind(content).defer();
         return element;
     };
 }
-
 if (document.createElement('div').outerHTML) {
     Element.Methods.replace = function(element, content) {
         element = $(element);
-
         if (content && content.toElement) content = content.toElement();
         if (Object.isElement(content)) {
             element.parentNode.replaceChild(content, element);
             return element;
         }
-
         content = Object.toHTML(content);
         var parent = element.parentNode, tagName = parent.tagName.toUpperCase();
-
         if (Element._insertionTranslations.tags[tagName]) {
             var nextSibling = element.next();
             var fragments = Element._getContentFromAnonymousElement(tagName, content.stripScripts());
@@ -2520,19 +2333,16 @@ if (document.createElement('div').outerHTML) {
                 });
         }
         else element.outerHTML = content.stripScripts();
-
         content.evalScripts.bind(content).defer();
         return element;
     };
 }
-
 Element._returnOffset = function(l, t) {
     var result = [l, t];
     result.left = l;
     result.top = t;
     return result;
 };
-
 Element._getContentFromAnonymousElement = function(tagName, html) {
     var div = new Element('div'), t = Element._insertionTranslations.tags[tagName];
     div.innerHTML = t[0] + html + t[1];
@@ -2541,7 +2351,6 @@ Element._getContentFromAnonymousElement = function(tagName, html) {
     });
     return $A(div.childNodes);
 };
-
 Element._insertionTranslations = {
     before: {
         adjacency: 'beforeBegin',
@@ -2585,7 +2394,6 @@ Element._insertionTranslations = {
         SELECT: ['<select>',               '</select>',                  1]
     }
 };
-
 (function() {
     this.bottom.initializeRange = this.top.initializeRange;
     Object.extend(this.tags, {
@@ -2594,7 +2402,6 @@ Element._insertionTranslations = {
         TH:    this.tags.TD
     });
 }).call(Element._insertionTranslations);
-
 Element.Methods.Simulated = {
     hasAttribute: function(element, attribute) {
         attribute = Element._attributeTranslations.has[attribute] || attribute;
@@ -2602,43 +2409,33 @@ Element.Methods.Simulated = {
         return node && node.specified;
     }
 };
-
 Element.Methods.ByTag = { };
-
 Object.extend(Element, Element.Methods);
-
 if (!Prototype.BrowserFeatures.ElementExtensions &&
     document.createElement('div').__proto__) {
     window.HTMLElement = { };
     window.HTMLElement.prototype = document.createElement('div').__proto__;
     Prototype.BrowserFeatures.ElementExtensions = true;
 }
-
 Element.extend = (function() {
     if (Prototype.BrowserFeatures.SpecificElementExtensions)
         return Prototype.K;
-
     var Methods = { }, ByTag = Element.Methods.ByTag;
-
     var extend = Object.extend(function(element) {
         if (!element || element._extendedByPrototype ||
             element.nodeType != 1 || element == window) return element;
-
         var methods = Object.clone(Methods),
                 tagName = element.tagName, property, value;
 
     // extend methods for specific tags
         if (ByTag[tagName]) Object.extend(methods, ByTag[tagName]);
-
         for (property in methods) {
             value = methods[property];
             if (Object.isFunction(value) && !(property in element))
                 element[property] = value.methodize();
         }
-
         element._extendedByPrototype = Prototype.emptyFunction;
         return element;
-
     }, {
         refresh: function() {
             // extend methods for all tags (Safari doesn't need this)
@@ -2648,19 +2445,15 @@ Element.extend = (function() {
             }
         }
     });
-
     extend.refresh();
     return extend;
 })();
-
 Element.hasAttribute = function(element, attribute) {
     if (element.hasAttribute) return element.hasAttribute(attribute);
     return Element.Methods.Simulated.hasAttribute(element, attribute);
 };
-
 Element.addMethods = function(methods) {
     var F = Prototype.BrowserFeatures, T = Element.Methods.ByTag;
-
     if (!methods) {
         Object.extend(Form, Form.Methods);
         Object.extend(Form.Element, Form.Element.Methods);
@@ -2671,25 +2464,21 @@ Element.addMethods = function(methods) {
             "TEXTAREA": Object.clone(Form.Element.Methods)
         });
     }
-
     if (arguments.length == 2) {
         var tagName = methods;
         methods = arguments[1];
     }
-
     if (!tagName) Object.extend(Element.Methods, methods || { });
     else {
         if (Object.isArray(tagName)) tagName.each(extend);
         else extend(tagName);
     }
-
     function extend(tagName) {
         tagName = tagName.toUpperCase();
         if (!Element.Methods.ByTag[tagName])
             Element.Methods.ByTag[tagName] = { };
         Object.extend(Element.Methods.ByTag[tagName], methods);
     }
-
     function copy(methods, destination, onlyIfAbsent) {
         onlyIfAbsent = onlyIfAbsent || false;
         for (var property in methods) {
@@ -2699,7 +2488,6 @@ Element.addMethods = function(methods) {
                 destination[property] = value.methodize();
         }
     }
-
     function findDOMClass(tagName) {
         var klass;
         var trans = {
@@ -2719,17 +2507,14 @@ Element.addMethods = function(methods) {
         if (window[klass]) return window[klass];
         klass = 'HTML' + tagName.capitalize() + 'Element';
         if (window[klass]) return window[klass];
-
         window[klass] = { };
         window[klass].prototype = document.createElement(tagName).__proto__;
         return window[klass];
     }
-
     if (F.ElementExtensions) {
         copy(Element.Methods, HTMLElement.prototype);
         copy(Element.Methods.Simulated, HTMLElement.prototype, true);
     }
-
     if (F.SpecificElementExtensions) {
         for (var tag in Element.Methods.ByTag) {
             var klass = findDOMClass(tag);
@@ -2737,14 +2522,11 @@ Element.addMethods = function(methods) {
             copy(T[tag], klass.prototype);
         }
     }
-
     Object.extend(Element, Element.Methods);
     delete Element.ByTag;
-
     if (Element.extend.refresh) Element.extend.refresh();
     Element.cache = { };
 };
-
 document.viewport = {
     getDimensions: function() {
         var dimensions = { };
@@ -2773,7 +2555,6 @@ document.viewport = {
 /* Portions of the Selector class are derived from Jack Slocum’s DomQuery,
  * part of YUI-Ext version 0.40, distributed under the terms of an MIT-style
  * license.  Please see http://www.yui-ext.com/ for more information. */
-
 var Selector = Class.create({
     initialize: function(expression) {
         this.expression = expression.strip();
@@ -2784,18 +2565,14 @@ var Selector = Class.create({
         // Selectors with namespaced attributes can't use the XPath version
         if (Prototype.BrowserFeatures.XPath && !(/(\[[\w-]*?:|:checked)/).test(this.expression))
             return this.compileXPathMatcher();
-
         var e = this.expression, ps = Selector.patterns, h = Selector.handlers,
                 c = Selector.criteria, le, p, m;
-
         if (Selector._cache[e]) {
             this.matcher = Selector._cache[e];
             return;
         }
-
         this.matcher = ["this.matcher = function(root) {",
-                "var r = root, h = Selector.handlers, c = false, n;"];
-
+            "var r = root, h = Selector.handlers, c = false, n;"];
         while (e && le != e && (/\S/).test(e)) {
             le = e;
             for (var i in ps) {
@@ -2808,7 +2585,6 @@ var Selector = Class.create({
                 }
             }
         }
-
         this.matcher.push("return h.unique(n);\n}");
         eval(this.matcher.join('\n'));
         Selector._cache[this.expression] = this.matcher;
@@ -2817,12 +2593,10 @@ var Selector = Class.create({
     compileXPathMatcher: function() {
         var e = this.expression, ps = Selector.patterns,
                 x = Selector.xpath, le, m;
-
         if (Selector._cache[e]) {
             this.xpath = Selector._cache[e];
             return;
         }
-
         this.matcher = ['.//*'];
         while (e && le != e && (/\S/).test(e)) {
             le = e;
@@ -2835,7 +2609,6 @@ var Selector = Class.create({
                 }
             }
         }
-
         this.xpath = this.matcher.join('');
         Selector._cache[this.expression] = this.xpath;
     },
@@ -2848,10 +2621,8 @@ var Selector = Class.create({
 
     match: function(element) {
         this.tokens = [];
-
         var e = this.expression, ps = Selector.patterns, as = Selector.assertions;
         var le, p, m;
-
         while (e && le !== e && (/\S/).test(e)) {
             le = e;
             for (var i in ps) {
@@ -2870,7 +2641,6 @@ var Selector = Class.create({
                 }
             }
         }
-
         var match = true, name, matches;
         for (var i = 0, token; token = this.tokens[i]; i++) {
             name = token[0],matches = token[1];
@@ -2879,7 +2649,6 @@ var Selector = Class.create({
                 break;
             }
         }
-
         return match;
     },
 
@@ -2891,7 +2660,6 @@ var Selector = Class.create({
         return "#<Selector:" + this.expression.inspect() + ">";
     }
 });
-
 Object.extend(Selector, {
     _cache: { },
 
@@ -2938,7 +2706,6 @@ Object.extend(Selector, {
             'not': function(m) {
                 var e = m[6], p = Selector.patterns,
                         x = Selector.xpath, le, m, v;
-
                 var exclusion = [];
                 while (e && le != e && (/\S/).test(e)) {
                     le = e;
@@ -3016,14 +2783,14 @@ Object.extend(Selector, {
     },
 
     patterns: {
-    // combinators must be listed first
-    // (and descendant needs to be last combinator)
+        // combinators must be listed first
+        // (and descendant needs to be last combinator)
         laterSibling: /^\s*~\s*/,
         child:        /^\s*>\s*/,
         adjacent:     /^\s*\+\s*/,
         descendant:   /^\s/,
 
-    // selectors follow
+        // selectors follow
         tagName:      /^\s*(\*|[\w\-]+)(\b|$)?/,
         id:           /^#([\w\-\*]+)(\b|$)/,
         className:    /^\.([\w\-\*]+)(\b|$)/,
@@ -3032,7 +2799,7 @@ Object.extend(Selector, {
         attr:         /\[((?:[\w-]*:)?[\w-]+)\s*(?:([!^$*~|]?=)\s*((['"])([^\4]*?)\4|([^'"][^\]]*?)))?\]/
     },
 
-// for Selector.match and Element#match
+    // for Selector.match and Element#match
     assertions: {
         tagName: function(element, matches) {
             return matches[1].toUpperCase() == element.tagName.toUpperCase();
@@ -3057,15 +2824,15 @@ Object.extend(Selector, {
     },
 
     handlers: {
-    // UTILITY FUNCTIONS
-    // joins two collections
+        // UTILITY FUNCTIONS
+        // joins two collections
         concat: function(a, b) {
             for (var i = 0, node; node = b[i]; i++)
                 a.push(node);
             return a;
         },
 
-    // marks an array of nodes for counting
+        // marks an array of nodes for counting
         mark: function(nodes) {
             for (var i = 0, node; node = nodes[i]; i++)
                 node._counted = true;
@@ -3078,9 +2845,9 @@ Object.extend(Selector, {
             return nodes;
         },
 
-    // mark each child node with its position (for nth calls)
-    // "ofType" flag indicates whether we're indexing for nth-of-type
-    // rather than nth-child
+        // mark each child node with its position (for nth calls)
+        // "ofType" flag indicates whether we're indexing for nth-of-type
+        // rather than nth-child
         index: function(parentNode, reverse, ofType) {
             parentNode._counted = true;
             if (reverse) {
@@ -3094,7 +2861,7 @@ Object.extend(Selector, {
             }
         },
 
-    // filters out duplicates and extends all nodes
+        // filters out duplicates and extends all nodes
         unique: function(nodes) {
             if (nodes.length == 0) return nodes;
             var results = [], n;
@@ -3106,7 +2873,7 @@ Object.extend(Selector, {
             return Selector.handlers.unmark(results);
         },
 
-    // COMBINATOR FUNCTIONS
+        // COMBINATOR FUNCTIONS
         descendant: function(nodes) {
             var h = Selector.handlers;
             for (var i = 0, results = [], node; node = nodes[i]; i++)
@@ -3150,7 +2917,7 @@ Object.extend(Selector, {
             return null;
         },
 
-    // TOKEN FUNCTIONS
+        // TOKEN FUNCTIONS
         tagName: function(nodes, root, tagName, combinator) {
             tagName = tagName.toUpperCase();
             var results = [], h = Selector.handlers;
@@ -3283,7 +3050,7 @@ Object.extend(Selector, {
             return p['last-of-type'](p['first-of-type'](nodes, formula, root), formula, root);
         },
 
-    // handles the an+b logic
+        // handles the an+b logic
         getIndices: function(a, b, total) {
             if (a == 0) return b > 0 ? [b] : [];
             return $R(1, total).inject([], function(memo, i) {
@@ -3292,7 +3059,7 @@ Object.extend(Selector, {
             });
         },
 
-    // handles nth(-last)-child, nth(-last)-of-type, and (first|last)-of-type
+        // handles nth(-last)-child, nth(-last)-of-type, and (first|last)-of-type
         nth: function(nodes, formula, root, reverse, ofType) {
             if (nodes.length == 0) return [];
             if (formula == 'even') formula = '2n+0';
@@ -3416,7 +3183,6 @@ Object.extend(Selector, {
         return (l > 1) ? h.unique(results) : results;
     }
 });
-
 function $$() {
     return Selector.findChildElements(document, $A(arguments));
 }
@@ -3430,7 +3196,6 @@ var Form = {
         if (typeof options != 'object') options = { hash: !!options };
         else if (options.hash === undefined) options.hash = true;
         var key, value, submitted = false, submit = options.submit;
-
         var data = elements.inject({ }, function(result, element) {
             if (!element.disabled && element.name) {
                 key = element.name;
@@ -3447,11 +3212,9 @@ var Form = {
             }
             return result;
         });
-
         return options.hash ? data : Object.toQueryString(data);
     }
 };
-
 Form.Methods = {
     serialize: function(form, options) {
         return Form.serializeElements(Form.getElements(form), options);
@@ -3470,16 +3233,13 @@ Form.Methods = {
     getInputs: function(form, typeName, name) {
         form = $(form);
         var inputs = form.getElementsByTagName('input');
-
         if (!typeName && !name) return $A(inputs).map(Element.extend);
-
         for (var i = 0, matchingInputs = [], length = inputs.length; i < length; i++) {
             var input = inputs[i];
             if ((typeName && input.type != typeName) || (name && input.name != name))
                 continue;
             matchingInputs.push(Element.extend(input));
         }
-
         return matchingInputs;
     },
 
@@ -3504,7 +3264,6 @@ Form.Methods = {
         }).sortBy(function(element) {
             return element.tabIndex
         }).first();
-
         return firstByIndex ? firstByIndex : elements.find(function(element) {
             return ['input', 'select', 'textarea'].include(element.tagName.toLowerCase());
         });
@@ -3518,25 +3277,19 @@ Form.Methods = {
 
     request: function(form, options) {
         form = $(form),options = Object.clone(options || { });
-
         var params = options.parameters, action = form.readAttribute('action') || '';
         if (action.blank()) action = window.location.href;
         options.parameters = form.serialize(true);
-
         if (params) {
             if (Object.isString(params)) params = params.toQueryParams();
             Object.extend(options.parameters, params);
         }
-
         if (form.hasAttribute('method') && !options.method)
             options.method = form.method;
-
         return new Ajax.Request(action, options);
     }
 };
-
 /*--------------------------------------------------------------------------*/
-
 Form.Element = {
     focus: function(element) {
         $(element).focus();
@@ -3548,7 +3301,6 @@ Form.Element = {
         return element;
     }
 };
-
 Form.Element.Methods = {
     serialize: function(element) {
         element = $(element);
@@ -3610,14 +3362,10 @@ Form.Element.Methods = {
         return element;
     }
 };
-
 /*--------------------------------------------------------------------------*/
-
 var Field = Form.Element;
 var $F = Form.Element.Methods.getValue;
-
 /*--------------------------------------------------------------------------*/
-
 Form.Element.Serializers = {
     input: function(element, value) {
         switch (element.type.toLowerCase()) {
@@ -3667,7 +3415,6 @@ Form.Element.Serializers = {
     selectMany: function(element) {
         var values, length = element.length;
         if (!length) return null;
-
         for (var i = 0, values = []; i < length; i++) {
             var opt = element.options[i];
             if (opt.selected) values.push(this.optionValue(opt));
@@ -3680,9 +3427,7 @@ Form.Element.Serializers = {
         return Element.extend(opt).hasAttribute('value') ? opt.value : opt.text;
     }
 };
-
 /*--------------------------------------------------------------------------*/
-
 Abstract.TimedObserver = Class.create(PeriodicalExecuter, {
     initialize: function($super, element, frequency, callback) {
         $super(callback, frequency);
@@ -3699,26 +3444,21 @@ Abstract.TimedObserver = Class.create(PeriodicalExecuter, {
         }
     }
 });
-
 Form.Element.Observer = Class.create(Abstract.TimedObserver, {
     getValue: function() {
         return Form.Element.getValue(this.element);
     }
 });
-
 Form.Observer = Class.create(Abstract.TimedObserver, {
     getValue: function() {
         return Form.serialize(this.element);
     }
 });
-
 /*--------------------------------------------------------------------------*/
-
 Abstract.EventObserver = Class.create({
     initialize: function(element, callback) {
         this.element = $(element);
         this.callback = callback;
-
         this.lastValue = this.getValue();
         if (this.element.tagName.toLowerCase() == 'form')
             this.registerFormCallbacks();
@@ -3752,20 +3492,17 @@ Abstract.EventObserver = Class.create({
         }
     }
 });
-
 Form.Element.EventObserver = Class.create(Abstract.EventObserver, {
     getValue: function() {
         return Form.Element.getValue(this.element);
     }
 });
-
 Form.EventObserver = Class.create(Abstract.EventObserver, {
     getValue: function() {
         return Form.serialize(this.element);
     }
 });
 if (!window.Event) var Event = { };
-
 Object.extend(Event, {
     KEY_BACKSPACE: 8,
     KEY_TAB:       9,
@@ -3794,16 +3531,13 @@ Object.extend(Event, {
         return Element.extend(element);
     }
 });
-
 Event.Methods = (function() {
     var isButton;
-
     if (Prototype.Browser.IE) {
         var buttonMap = { 0: 1, 1: 4, 2: 2 };
         isButton = function(event, code) {
             return event.button == buttonMap[code];
         };
-
     } else if (Prototype.Browser.WebKit) {
         isButton = function(event, code) {
             switch (code) {
@@ -3812,13 +3546,11 @@ Event.Methods = (function() {
                 default: return false;
             }
         };
-
     } else {
         isButton = function(event, code) {
             return event.which ? (event.which === code + 1) : (event.button === code);
         };
     }
-
     return {
         isLeftClick:   function(event) {
             return isButton(event, 0)
@@ -3864,13 +3596,11 @@ Event.Methods = (function() {
         }
     };
 })();
-
 Event.extend = (function() {
     var methods = Object.keys(Event.Methods).inject({ }, function(m, name) {
         m[name] = Event.Methods[name].methodize();
         return m;
     });
-
     if (Prototype.Browser.IE) {
         Object.extend(methods, {
             stopPropagation: function() {
@@ -3883,11 +3613,9 @@ Event.extend = (function() {
                 return "[object Event]"
             }
         });
-
         return function(event) {
             if (!event) return false;
             if (event._extendedByPrototype) return event;
-
             event._extendedByPrototype = Prototype.emptyFunction;
             var pointer = Event.pointer(event);
             Object.extend(event, {
@@ -3898,124 +3626,100 @@ Event.extend = (function() {
             });
             return Object.extend(event, methods);
         };
-
     } else {
         Event.prototype = Event.prototype || document.createEvent("HTMLEvents").__proto__;
         Object.extend(Event.prototype, methods);
         return Prototype.K;
     }
 })();
-
 Object.extend(Event, (function() {
     var cache = Event.cache;
-
     function getEventID(element) {
         if (element._eventID) return element._eventID;
         arguments.callee.id = arguments.callee.id || 1;
         return element._eventID = ++arguments.callee.id;
     }
-
     function getDOMEventName(eventName) {
         if (eventName && eventName.include(':')) return "dataavailable";
         return eventName;
     }
-
     function getCacheForID(id) {
         return cache[id] = cache[id] || { };
     }
-
     function getWrappersForEventName(id, eventName) {
         var c = getCacheForID(id);
         return c[eventName] = c[eventName] || [];
     }
-
     function createWrapper(element, eventName, handler) {
         var id = getEventID(element);
         var c = getWrappersForEventName(id, eventName);
         if (c.pluck("handler").include(handler)) return false;
-
         var wrapper = function(event) {
             if (!Event || !Event.extend ||
                 (event.eventName && event.eventName != eventName))
                 return false;
-
             Event.extend(event);
             handler.call(element, event)
         };
-
         wrapper.handler = handler;
         c.push(wrapper);
         return wrapper;
     }
-
     function findWrapper(id, eventName, handler) {
         var c = getWrappersForEventName(id, eventName);
         return c.find(function(wrapper) {
             return wrapper.handler == handler
         });
     }
-
     function destroyWrapper(id, eventName, handler) {
         var c = getCacheForID(id);
         if (!c[eventName]) return false;
         c[eventName] = c[eventName].without(findWrapper(id, eventName, handler));
     }
-
     function destroyCache() {
         for (var id in cache)
             for (var eventName in cache[id])
                 cache[id][eventName] = null;
     }
-
     if (window.attachEvent) {
         window.attachEvent("onunload", destroyCache);
     }
-
     return {
         observe: function(element, eventName, handler) {
             element = $(element);
             var name = getDOMEventName(eventName);
-
             var wrapper = createWrapper(element, eventName, handler);
             if (!wrapper) return element;
-
             if (element.addEventListener) {
                 element.addEventListener(name, wrapper, false);
             } else {
                 element.attachEvent("on" + name, wrapper);
             }
-
             return element;
         },
 
         stopObserving: function(element, eventName, handler) {
             element = $(element);
             var id = getEventID(element), name = getDOMEventName(eventName);
-
             if (!handler && eventName) {
                 getWrappersForEventName(id, eventName).each(function(wrapper) {
                     element.stopObserving(eventName, wrapper.handler);
                 });
                 return element;
-
             } else if (!eventName) {
                 Object.keys(getCacheForID(id)).each(function(eventName) {
                     element.stopObserving(eventName);
                 });
                 return element;
             }
-
             var wrapper = findWrapper(id, eventName, handler);
             if (!wrapper) return element;
-
             if (element.removeEventListener) {
                 element.removeEventListener(name, wrapper, false);
             } else {
                 element.detachEvent("on" + name, wrapper);
             }
-
             destroyWrapper(id, eventName, handler);
-
             return element;
         },
 
@@ -4023,7 +3727,6 @@ Object.extend(Event, (function() {
             element = $(element);
             if (element == document && document.createEvent && !element.dispatchEvent)
                 element = document.documentElement;
-
             if (document.createEvent) {
                 var event = document.createEvent("HTMLEvents");
                 event.initEvent("dataavailable", true, true);
@@ -4031,62 +3734,49 @@ Object.extend(Event, (function() {
                 var event = document.createEventObject();
                 event.eventType = "ondataavailable";
             }
-
             event.eventName = eventName;
             event.memo = memo || { };
-
             if (document.createEvent) {
                 element.dispatchEvent(event);
             } else {
                 element.fireEvent(event.eventType, event);
             }
-
             return event;
         }
     };
 })());
-
 Object.extend(Event, Event.Methods);
-
 Element.addMethods({
     fire:          Event.fire,
     observe:       Event.observe,
     stopObserving: Event.stopObserving
 });
-
 Object.extend(document, {
     fire:          Element.Methods.fire.methodize(),
     observe:       Element.Methods.observe.methodize(),
     stopObserving: Element.Methods.stopObserving.methodize()
 });
-
 (function() {
     /* Support for the DOMContentLoaded event is based on work by Dan Webb,
 Matthias Miller, Dean Edwards and John Resig. */
-
     var timer, fired = false;
-
     function fireContentLoadedEvent() {
         if (fired) return;
         if (timer) window.clearInterval(timer);
         document.fire("dom:loaded");
         fired = true;
     }
-
     if (document.addEventListener) {
         if (Prototype.Browser.WebKit) {
             timer = window.setInterval(function() {
                 if (/loaded|complete/.test(document.readyState))
                     fireContentLoadedEvent();
             }, 0);
-
             Event.observe(window, "load", fireContentLoadedEvent);
-
         } else {
             document.addEventListener("DOMContentLoaded",
                     fireContentLoadedEvent, false);
         }
-
     } else {
         document.write("<script id=__onDOMContentLoaded defer src=//:><\/script>");
         $("__onDOMContentLoaded").onreadystatechange = function() {
@@ -4098,13 +3788,9 @@ Matthias Miller, Dean Edwards and John Resig. */
     }
 })();
 /*------------------------------- DEPRECATED -------------------------------*/
-
 Hash.toQueryString = Object.toQueryString;
-
 var Toggle = { display: Element.toggle };
-
 Element.Methods.childOf = Element.Methods.descendantOf;
-
 var Insertion = {
     Before: function(element, content) {
         return Element.insert(element, {before:content});
@@ -4122,19 +3808,18 @@ var Insertion = {
         return Element.insert(element, {after:content});
     }
 };
-
 var $continue = new Error('"throw $continue" is deprecated, use "return" instead');
 
 // This should be moved to script.aculo.us; notice the deprecated methods
 // further below, that map to the newer Element methods.
 var Position = {
-// set to true if needed, warning: firefox performance problems
-// NOT neeeded for page scrolling, only if draggable contained in
-// scrollable elements
+    // set to true if needed, warning: firefox performance problems
+    // NOT neeeded for page scrolling, only if draggable contained in
+    // scrollable elements
     includeScrollOffsets: false,
 
-// must be called before calling withinIncludingScrolloffset, every time the
-// page is scrolled
+    // must be called before calling withinIncludingScrolloffset, every time the
+    // page is scrolled
     prepare: function() {
         this.deltaX = window.pageXOffset
                 || document.documentElement.scrollLeft
@@ -4146,14 +3831,13 @@ var Position = {
                 || 0;
     },
 
-// caches x/y coordinate pair to use with overlap
+    // caches x/y coordinate pair to use with overlap
     within: function(element, x, y) {
         if (this.includeScrollOffsets)
             return this.withinIncludingScrolloffsets(element, x, y);
         this.xcomp = x;
         this.ycomp = y;
         this.offset = Element.cumulativeOffset(element);
-
         return (y >= this.offset[1] &&
                 y < this.offset[1] + element.offsetHeight &&
                 x >= this.offset[0] &&
@@ -4162,18 +3846,16 @@ var Position = {
 
     withinIncludingScrolloffsets: function(element, x, y) {
         var offsetcache = Element.cumulativeScrollOffset(element);
-
         this.xcomp = x + offsetcache[0] - this.deltaX;
         this.ycomp = y + offsetcache[1] - this.deltaY;
         this.offset = Element.cumulativeOffset(element);
-
         return (this.ycomp >= this.offset[1] &&
                 this.ycomp < this.offset[1] + element.offsetHeight &&
                 this.xcomp >= this.offset[0] &&
                 this.xcomp < this.offset[0] + element.offsetWidth);
     },
 
-// within must be called directly before
+    // within must be called directly before
     overlap: function(mode, element) {
         if (!mode) return 0;
         if (mode == 'vertical')
@@ -4184,7 +3866,7 @@ var Position = {
                    element.offsetWidth;
     },
 
-// Deprecation layer -- use newer Element methods now (1.5.2).
+    // Deprecation layer -- use newer Element methods now (1.5.2).
 
     cumulativeOffset: Element.Methods.cumulativeOffset,
 
@@ -4211,14 +3893,11 @@ var Position = {
         return Element.clonePosition(target, source, options);
     }
 };
-
 /*--------------------------------------------------------------------------*/
-
 if (!document.getElementsByClassName) document.getElementsByClassName = function(instanceMethods) {
     function iter(name) {
         return name.blank() ? null : "[contains(concat(' ', @class, ' '), ' " + name + " ')]";
     }
-
     instanceMethods.getElementsByClassName = Prototype.BrowserFeatures.XPath ?
                                              function(element, className) {
                                                  className = className.toString().strip();
@@ -4228,10 +3907,8 @@ if (!document.getElementsByClassName) document.getElementsByClassName = function
         className = className.toString().strip();
         var elements = [], classNames = (/\s/.test(className) ? $w(className) : null);
         if (!classNames && !className) return elements;
-
         var nodes = $(element).getElementsByTagName('*');
         className = ' ' + className + ' ';
-
         for (var i = 0, child, cn; child = nodes[i]; i++) {
             if (child.className && (cn = ' ' + child.className + ' ') && (cn.include(className) ||
                                                                           (classNames && classNames.all(function(name) {
@@ -4242,14 +3919,11 @@ if (!document.getElementsByClassName) document.getElementsByClassName = function
         }
         return elements;
     };
-
     return function(className, parentElement) {
         return $(parentElement || document.body).getElementsByClassName(className);
     };
 }(Element.Methods);
-
 /*--------------------------------------------------------------------------*/
-
 Element.ClassNames = Class.create();
 Element.ClassNames.prototype = {
     initialize: function(element) {
@@ -4280,9 +3954,6 @@ Element.ClassNames.prototype = {
         return $A(this).join(' ');
     }
 };
-
 Object.extend(Element.ClassNames.prototype, Enumerable);
-
 /*--------------------------------------------------------------------------*/
-
 Element.addMethods();

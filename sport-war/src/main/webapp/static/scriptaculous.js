@@ -22,7 +22,6 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // For details, see the script.aculo.us web site: http://script.aculo.us/
-
 var Scriptaculous = {
     Version: '1.8.1',
     require: function(libraryName) {
@@ -35,7 +34,6 @@ var Scriptaculous = {
             var r = versionString.split('.');
             return parseInt(r[0]) * 100000 + parseInt(r[1]) * 1000 + parseInt(r[2]);
         }
-
         if ((typeof Prototype == 'undefined') ||
             (typeof Element == 'undefined') ||
             (typeof Element.Methods == 'undefined') ||
@@ -43,7 +41,6 @@ var Scriptaculous = {
              convertVersionString(Scriptaculous.REQUIRED_PROTOTYPE)))
             throw("script.aculo.us requires the Prototype JavaScript framework >= " +
                   Scriptaculous.REQUIRED_PROTOTYPE);
-
         $A(document.getElementsByTagName("script")).findAll(function(s) {
             return (s.src && s.src.match(/scriptaculous\.js(\?.*)?$/))
         }).each(function(s) {
@@ -56,5 +53,4 @@ var Scriptaculous = {
         });
     }
 }
-
 Scriptaculous.load();

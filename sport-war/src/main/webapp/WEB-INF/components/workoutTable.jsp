@@ -1,4 +1,3 @@
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.isLogged" %>
 <%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
