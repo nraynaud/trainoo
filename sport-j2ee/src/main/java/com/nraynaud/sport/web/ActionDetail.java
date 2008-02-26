@@ -50,7 +50,8 @@ public class ActionDetail {
             final Map.Entry entry = (Map.Entry) o;
             encoded.append(entry.getKey());
             encoded.append('=');
-            encoded.append(((String[]) entry.getValue())[0]);
+            final Object value = entry.getValue();
+            encoded.append(value instanceof String ? value : ((String[]) value)[0]);
             encoded.append('&');
         }
         encodedAction = encoded.toString();
