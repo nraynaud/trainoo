@@ -9,9 +9,9 @@
 <div><s:password id="password" name="password" cssStyle="width:100%"/></div>
 <p:javascript>makeItCount('password', <%= PASSWORD_MAX_LENGTH%>, <%=PASSWORD_MIN_LENGTH%>);</p:javascript>
 
-<p class="loginLabel"><label for="passwordConfirmation">Confirmation de votre <s:property
-        value="%{parameters.adjective}"/>
-    mot de passe<br>
-    (pour éviter les erreurs de frappe)</label></p>
+<p class="loginLabel" style="padding-top:0; margin-top:0"><label for="passwordConfirmation">Confirmation de votre
+    <s:property
+            value="%{parameters.adjective}"/>
+    mot de passe <span class="labelComplement">(pour éviter les erreurs de frappe)</span></label></p>
 
 <div><s:password id="passwordConfirmation" name="passwordConfirmation" cssStyle="width:100%"/></div>

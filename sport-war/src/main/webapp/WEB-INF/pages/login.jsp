@@ -18,9 +18,8 @@
 
         <p><s:password id="password" name="password" cssStyle="width:100%;"/></p>
 
-        <p><s:checkbox id="rememberMe" name="rememberMe"/><label for="rememberMe">Se souvenir de moi <span
-                class="labelComplement">(décocher si ce
-            n'est pas votre propre ordinateur)</span></label></p>
+        <p class="loginLabel"><s:checkbox id="rememberMe" name="rememberMe"/><label for="rememberMe">Se souvenir de moi <span
+                class="labelComplement">(décocher si ce n'est pas votre propre ordinateur)</span></label></p>
 
         <p><s:submit value="Entrez !"/></p>
     </s:form>
