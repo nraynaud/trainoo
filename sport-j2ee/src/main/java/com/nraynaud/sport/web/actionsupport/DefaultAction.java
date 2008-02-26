@@ -15,6 +15,7 @@ import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.List;
@@ -34,7 +35,11 @@ public class DefaultAction extends ActionSupport {
             public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
                 final long time = System.currentTimeMillis();
                 try {
-                    return method.invoke(application, args);
+                    try {
+                        return method.invoke(application, args);
+                    } catch (InvocationTargetException e) {
+                        throw e.getTargetException();
+                    }
                 } finally {
                     System.out
                             .println("invocation: "
