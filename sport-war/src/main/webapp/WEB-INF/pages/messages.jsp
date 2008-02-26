@@ -10,7 +10,7 @@
 
 <div id="tinyCenter">
     <%
-        call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.receiver, null),
+        call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.receiver),
                 "hideReceiverBox", true);
         call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'pageIndex'");
     %>

@@ -1,7 +1,8 @@
-<%@ page import="com.nraynaud.sport.Workout" %>
+<%@ page import="com.nraynaud.sport.UserString" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="static com.nraynaud.sport.MessageKind.PRIVATE" %>
+<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -45,8 +46,7 @@
             </div>
         </div>
         <% } else {%>
-        <s:hidden name="receiver"
-                  value="%{parameters.receiver != null ? parameters.receiver.nonEscaped() : receiver.nonEscaped()}"/>
+        <input type="hidden" name="receiver" value="<%=property("receiver", UserString.class)%>"/>
         <%}%>
         <input type="hidden" name="messageKind" value="<%=PRIVATE%>"/>
         <s:hidden id="priv_fromAction" name="fromAction" value="%{actionDescription}"/>

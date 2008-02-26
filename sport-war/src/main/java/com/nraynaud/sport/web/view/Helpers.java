@@ -205,8 +205,8 @@ public class Helpers {
         return '\'' + string.toString() + '\'';
     }
 
-    public static PrivateMessageFormConfig privateFormConfig(final Workout workout, final User runner) {
-        return new PrivateMessageFormConfig(runner.getName(), workout);
+    public static PrivateMessageFormConfig privateFormConfig(final Workout workout, final User user) {
+        return new PrivateMessageFormConfig(user.getName(), workout);
     }
 
     public static String signupUrl(final String text) {
