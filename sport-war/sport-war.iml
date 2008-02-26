@@ -94,9 +94,9 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/hibernate-tools-3.2.0.beta9a.jar" />
           </containerElement>
-          <containerElement type="library" name="freemarker:freemarker:2.3.4" level="module">
+          <containerElement type="library" name="freemarker:freemarker:2.3.8" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/freemarker-2.3.4.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/freemarker-2.3.8.jar" />
           </containerElement>
           <containerElement type="library" name="org.hibernate:jtidy:r8-20060801" level="module">
             <attribute name="method" value="1" />
@@ -193,15 +193,6 @@
         </packaging>
       </configuration>
     </facet>
-    <facet type="Spring" name="Spring">
-      <configuration>
-        <options>
-          <option name="enableValidation" value="false" />
-          <option name="reportErrorsAsWarnings" value="true" />
-        </options>
-        <customNs />
-      </configuration>
-    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -212,8 +203,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/target/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -429,15 +418,15 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="freemarker:freemarker:2.3.4">
+      <library name="freemarker:freemarker:2.3.8">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/freemarker/freemarker/2.3.4/freemarker-2.3.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/freemarker/freemarker/2.3.8/freemarker-2.3.8.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/freemarker/freemarker/2.3.4/freemarker-2.3.4-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/freemarker/freemarker/2.3.8/freemarker-2.3.8-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/freemarker/freemarker/2.3.4/freemarker-2.3.4-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/freemarker/freemarker/2.3.8/freemarker-2.3.8-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

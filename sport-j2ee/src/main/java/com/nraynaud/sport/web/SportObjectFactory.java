@@ -1,0 +1,111 @@
+package com.nraynaud.sport.web;
+
+import com.opensymphony.xwork2.Result;
+import com.opensymphony.xwork2.XWorkException;
+import com.opensymphony.xwork2.config.entities.ResultConfig;
+import com.opensymphony.xwork2.inject.Inject;
+import com.opensymphony.xwork2.spring.SpringObjectFactory;
+import com.opensymphony.xwork2.util.OgnlUtil;
+import com.opensymphony.xwork2.util.XWorkConverter;
+import ognl.Ognl;
+import ognl.OgnlException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.StrutsConstants;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import javax.servlet.ServletContext;
+import java.util.Map;
+
+public class SportObjectFactory extends SpringObjectFactory {
+    private static final Log log = LogFactory.getLog(SportObjectFactory.class);
+
+    @Inject
+    public SportObjectFactory(
+            @Inject(value = StrutsConstants.STRUTS_OBJECTFACTORY_SPRING_AUTOWIRE,
+                    required = false) final String autoWire,
+            @Inject(value = StrutsConstants.STRUTS_OBJECTFACTORY_SPRING_USE_CLASS_CACHE,
+                    required = false) final String useClassCacheStr,
+            @Inject final ServletContext servletContext) {
+        final boolean useClassCache = "true".equals(useClassCacheStr);
+        log.info("Initializing Struts-Spring integration...");
+        final ApplicationContext appContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+        if (appContext == null) {
+            // uh oh! looks like the lifecycle listener wasn't installed. Let's inform the user
+            final String message = "********** FATAL ERROR STARTING UP STRUTS-SPRING INTEGRATION **********\n" +
+                    "Looks like the Spring listener was not configured for your web app! \n" +
+                    "Nothing will work until WebApplicationContextUtils returns a valid ApplicationContext.\n" +
+                    "You might need to add the following to web.xml: \n" +
+                    "    <listener>\n" +
+                    "        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>\n" +
+                    "    </listener>";
+            log.fatal(message);
+            return;
+        }
+        setApplicationContext(appContext);
+        int type = AutowireCapableBeanFactory.AUTOWIRE_BY_NAME;   // default
+        if ("name".equals(autoWire)) {
+            type = AutowireCapableBeanFactory.AUTOWIRE_BY_NAME;
+        } else if ("type".equals(autoWire)) {
+            type = AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE;
+        } else if ("auto".equals(autoWire)) {
+            type = AutowireCapableBeanFactory.AUTOWIRE_AUTODETECT;
+        } else if ("constructor".equals(autoWire)) {
+            type = AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR;
+        }
+        setAutowireStrategy(type);
+        setUseClassCache(useClassCache);
+        log.info("... initialized Struts-Spring integration successfully");
+    }
+
+    public Result buildResult(final ResultConfig resultConfig, final Map extraContext) throws Exception {
+        final String resultClassName = resultConfig.getClassName();
+        Result result = null;
+        if (resultClassName != null) {
+            result = (Result) buildBean(resultClassName, extraContext);
+            try {
+                setProperties(resultConfig, extraContext, result);
+            } catch (XWorkException ex) {
+                final Throwable reason = ex.getCause();
+                if (reason instanceof OgnlException) {
+                    // ognl exceptions could be thrown and be ok if, for example, the result uses parameters in ways other than
+                    // as properties for the result object.  For example, the redirect result from Struts 2 allows any parameters
+                    // to be set on the result, which it appends to the redirecting url.  These parameters wouldn't have a
+                    // corresponding setter on the result object, so an OGNL exception could be thrown.  Still, this is a misuse
+                    // of exceptions, so we should look at improving it.
+                } else {
+                    throw ex;
+                }
+            }
+        }
+        return result;
+    }
+
+    private static void setProperties(final ResultConfig resultConfig, final Map extraContext, final Result result) {
+        final Map<String, Object> props = resultConfig.getParams();
+        if (props == null) {
+            return;
+        }
+        Ognl.setTypeConverter(extraContext, XWorkConverter.getInstance());
+        final Object oldRoot = Ognl.getRoot(extraContext);
+        Ognl.setRoot(extraContext, result);
+        for (final Map.Entry entry : props.entrySet()) {
+            final String expression = (String) entry.getKey();
+            try {
+                OgnlUtil.setValue(expression, extraContext, result, entry.getValue());
+            } catch (OgnlException e) {
+                final Throwable reason = e.getReason();
+                final String msg = "Caught OgnlException while setting property '"
+                        + expression
+                        + "' on type '"
+                        + result.getClass().getName()
+                        + "'.";
+                final Throwable exception = reason == null ? e : reason;
+                throw new XWorkException(msg, exception);
+            }
+            Ognl.setRoot(extraContext, oldRoot);
+        }
+    }
+}

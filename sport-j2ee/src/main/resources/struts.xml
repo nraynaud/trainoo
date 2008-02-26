@@ -3,6 +3,9 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
+    <bean type="com.opensymphony.xwork2.ObjectFactory" name="sport" class="com.nraynaud.sport.web.SportObjectFactory"/>
+    <constant name="struts.objectFactory" value="sport"/>
+
     <package name="sport-default" extends="struts-default" namespace="/">
         <result-types>
             <result-type name="layout" class="com.nraynaud.sport.web.result.LayoutResult" default="true"/>
