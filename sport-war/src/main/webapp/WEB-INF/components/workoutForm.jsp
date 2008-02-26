@@ -33,7 +33,7 @@
                                  name="date"
                                  size="10"
                                  maxlength="15"
-                                 onfocus="$('info').style.visibility='visible'; feedback('date', this.value); $('tip').update('ex&nbsp;: 03/10/2006 ou \"hier\"')"
+                                 onfocus="$('info').style.visibility='visible'; $('tip').update('ex&nbsp;: 03/10/2006 ou \"hier\"'); feedback('date', this.value);"
                                  onblur="$('info').style.visibility='hidden'"
                                  onkeyup="feedback('date', this.value)"
                                  value="%{date == null  ? 'aujourd\\'hui' : date}"/></td>
@@ -41,7 +41,7 @@
                                  name="duration"
                                  size="6"
                                  maxlength="10"
-                                 onfocus="$('info').style.visibility='visible';feedback('duration', this.value); $('tip').update('ex&nbsp;: 03h41\'17 ou 40\'22')"
+                                 onfocus="$('info').style.visibility='visible'; $('tip').update('ex&nbsp;: 03h41\\\'17 ou 40\\\'22'); feedback('duration', this.value);"
                                  onblur="$('info').style.visibility='hidden'"
                                  onkeyup="feedback('duration', this.value)"/></td>
 
@@ -49,7 +49,7 @@
                                  name="distance"
                                  size="6"
                                  maxlength="10"
-                                 onfocus="$('info').style.visibility='visible';feedback('distance', this.value); $('tip').update('En kilomètres.')"
+                                 onfocus="$('info').style.visibility='visible'; $('tip').update('En kilomètres.'); feedback('distance', this.value);"
                                  onblur="$('info').style.visibility='hidden'"
                                  onkeyup="feedback('distance', this.value)"/></td>
             </tr>
