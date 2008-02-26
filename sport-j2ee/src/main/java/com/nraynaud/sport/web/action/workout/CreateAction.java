@@ -47,10 +47,10 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
     }
 
     public ActionDetail getFromAction() {
-        return new ActionDetail(fromAction);
+        return ActionDetail.decodeActionDetail(fromAction);
     }
 
     public ActionDetail getOnErrorAction() {
-        return new ActionDetail(onErrorAction);
+        return ActionDetail.decodeActionDetail(onErrorAction);
     }
 }

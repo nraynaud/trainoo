@@ -28,7 +28,7 @@
             <tr>
                 <td><s:select id="discipline" list="{'course', 'vélo', 'VTT', 'marche', 'natation', 'roller'}"
                               name="discipline"
-                              required="true"/></td>
+                              required="true" value="discipline"/></td>
                 <td><s:textfield id="date"
                                  name="date"
                                  size="10"

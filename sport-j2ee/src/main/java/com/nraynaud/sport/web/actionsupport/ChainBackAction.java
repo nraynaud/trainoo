@@ -13,10 +13,10 @@ public class ChainBackAction extends DefaultAction implements ChainBackCapable {
     }
 
     public ActionDetail getFromAction() {
-        return new ActionDetail(fromAction);
+        return ActionDetail.decodeActionDetail(fromAction);
     }
 
     public ActionDetail getOnErrorAction() {
-        return new ActionDetail(onErrorAction);
+        return ActionDetail.decodeActionDetail(onErrorAction);
     }
 }

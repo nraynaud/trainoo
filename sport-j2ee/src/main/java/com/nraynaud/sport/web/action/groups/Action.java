@@ -20,7 +20,7 @@ import org.apache.struts2.config.Results;
 @Public
 public class Action extends DefaultAction implements ModelDriven<GroupPageData> {
     public Long id;
-    public String discipline;
+    public String disciplineFilter;
     public int messagesStartIndex = 0;
     public int workoutPage = 0;
     private GroupPageData pageData;
@@ -31,7 +31,7 @@ public class Action extends DefaultAction implements ModelDriven<GroupPageData> 
 
     public GroupPageData getModel() {
         if (pageData == null)
-            pageData = application.fetchGroupPageData(getUser(), id, messagesStartIndex, workoutPage, discipline);
+            pageData = application.fetchGroupPageData(getUser(), id, messagesStartIndex, workoutPage, disciplineFilter);
         return pageData;
     }
 }

@@ -24,7 +24,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 public class WorkoutsAction extends DefaultAction implements ModelDriven<UserPageData> {
     private UserPageData data;
     public int workoutPage;
-    public String discipline = "";
+    public String disciplineFilter = "";
 
     public WorkoutsAction(final Application application) {
         super(application);
@@ -37,7 +37,8 @@ public class WorkoutsAction extends DefaultAction implements ModelDriven<UserPag
 
     public UserPageData getModel() {
         if (data == null)
-            data = application.fetchUserPageData(getUser(), workoutPage, discipline.length() > 0 ? discipline : null);
+            data = application.fetchUserPageData(getUser(), workoutPage,
+                    disciplineFilter.length() > 0 ? disciplineFilter : null);
         return data;
     }
 }

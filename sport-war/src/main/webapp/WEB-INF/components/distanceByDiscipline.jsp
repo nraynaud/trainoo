@@ -7,14 +7,14 @@
 <s:if test="%{distanceByDisciplines.size > 0}">
     |
     <%
-        for (DisciplineDistance dd : (List<DisciplineDistance>) property("distanceByDisciplines", List.class)) { %>
-    <%=currenUrlWithParams(dd.discipline + "&nbsp;(" + (long) dd.distance.doubleValue() + "km)", true, "discipline",
-            dd.discipline.toString())%>&nbsp;|
+        for (final DisciplineDistance dd : (List<DisciplineDistance>) property("distanceByDisciplines",
+                List.class)) { %>
+    <%=currenUrlWithParams(dd.discipline + "&nbsp;(" + (long) dd.distance.doubleValue() + "km)", true,
+            "disciplineFilter", dd.discipline.nonEscaped())%>&nbsp;|
     <%}%>
 
     <%=currenUrlWithParams(
             "toutes disciplines&nbsp;(" + (long) property("globalDistance", Double.class).doubleValue() + "km)", true,
-            "discipline",
-            "")%>&nbsp;|
+            "disciplineFilter", "")%>&nbsp;|
 
 </s:if>

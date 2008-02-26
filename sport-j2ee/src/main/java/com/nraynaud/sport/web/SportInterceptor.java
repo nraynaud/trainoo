@@ -37,9 +37,8 @@ public class SportInterceptor extends AbstractInterceptor {
         final Method actionMethod = getActionMethod(actionClass, actionProxy.getMethod());
         filterPostMethod(actionMethod, request);
         setMetadata(action, actionProxy, invocationContext);
-        final Method requestMethod;
         try {
-            requestMethod = actionClass.getMethod("setRequest", SportRequest.class);
+            final Method requestMethod = actionClass.getMethod("setRequest", SportRequest.class);
             requestMethod.invoke(action, request);
         } catch (NoSuchMethodException e) {
             //ok, no problem, sorry for the inconvenience

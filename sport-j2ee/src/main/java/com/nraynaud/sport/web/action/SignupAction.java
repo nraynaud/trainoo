@@ -72,10 +72,10 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
     }
 
     public ActionDetail getFromAction() {
-        return new ActionDetail(fromAction);
+        return ActionDetail.decodeActionDetail(fromAction);
     }
 
     public ActionDetail getOnErrorAction() {
-        return new ActionDetail(onErrorAction);
+        return ActionDetail.decodeActionDetail(onErrorAction);
     }
 }

@@ -18,7 +18,7 @@ public class ActionDetail {
     public final Map<String, String[]> parameters;
     public final String encodedAction;
 
-    public ActionDetail(final String encodedAction) {
+    private ActionDetail(final String encodedAction) {
         this.encodedAction = encodedAction;
         final Matcher matcher = FROM_ACTION_PATTERN.matcher(encodedAction);
         if (!matcher.matches())
@@ -77,5 +77,9 @@ public class ActionDetail {
         final Map<String, String[]> clone = new HashMap<String, String[]>(parameters);
         clone.put(key, new String[]{value});
         return new ActionDetail(namespace, name, clone);
+    }
+
+    public static ActionDetail decodeActionDetail(final String encodedAction) {
+        return encodedAction == null ? null : new ActionDetail(encodedAction);
     }
 }
