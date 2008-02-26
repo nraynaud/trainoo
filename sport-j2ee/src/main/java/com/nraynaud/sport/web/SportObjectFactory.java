@@ -1,7 +1,6 @@
 package com.nraynaud.sport.web;
 
 import com.opensymphony.xwork2.Result;
-import com.opensymphony.xwork2.XWorkException;
 import com.opensymphony.xwork2.config.entities.ResultConfig;
 import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.spring.SpringObjectFactory;
@@ -65,20 +64,7 @@ public class SportObjectFactory extends SpringObjectFactory {
         Result result = null;
         if (resultClassName != null) {
             result = (Result) buildBean(resultClassName, extraContext);
-            try {
-                setProperties(resultConfig, extraContext, result);
-            } catch (XWorkException ex) {
-                final Throwable reason = ex.getCause();
-                if (reason instanceof OgnlException) {
-                    // ognl exceptions could be thrown and be ok if, for example, the result uses parameters in ways other than
-                    // as properties for the result object.  For example, the redirect result from Struts 2 allows any parameters
-                    // to be set on the result, which it appends to the redirecting url.  These parameters wouldn't have a
-                    // corresponding setter on the result object, so an OGNL exception could be thrown.  Still, this is a misuse
-                    // of exceptions, so we should look at improving it.
-                } else {
-                    throw ex;
-                }
-            }
+            setProperties(resultConfig, extraContext, result);
         }
         return result;
     }
@@ -96,14 +82,7 @@ public class SportObjectFactory extends SpringObjectFactory {
             try {
                 OgnlUtil.setValue(expression, extraContext, result, entry.getValue());
             } catch (OgnlException e) {
-                final Throwable reason = e.getReason();
-                final String msg = "Caught OgnlException while setting property '"
-                        + expression
-                        + "' on type '"
-                        + result.getClass().getName()
-                        + "'.";
-                final Throwable exception = reason == null ? e : reason;
-                throw new XWorkException(msg, exception);
+                //swallow
             }
             Ognl.setRoot(extraContext, oldRoot);
         }
