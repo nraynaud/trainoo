@@ -14,9 +14,11 @@ import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
+import java.util.Collection;
+
 @Conversion
 @Results({
-@Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
+@Result(name = INPUT, value = "/WEB-INF/pages/workout/editParticipants.jsp"),
 @Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = ""),
 @Result(name = "delete", type = ActionChainResult.class, value = "delete",
         params = {"namespace", "/workout", "method", "create"})
@@ -27,8 +29,15 @@ public class ParticipantsAction extends DefaultAction {
     public Long id;
     public String[] participants;
 
+    public Collection<String> allUsers;
+
     public ParticipantsAction(final Application application) {
         super(application);
+    }
+
+    public String index() {
+        allUsers = application.fechLoginBeginningBy("");
+        return INPUT;
     }
 
     @PostOnly

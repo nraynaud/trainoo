@@ -403,10 +403,21 @@ public class HibernateApplication implements Application {
             query.setParameter("workoutId", workoutId);
             query.executeUpdate();
         }
+        final StringBuilder clause = new StringBuilder(20);
+        for (int i = 0; i < participants.length; i++) {
+            final String participantVariable = "participant" + i;
+            clause.append(i > 0 ? ", :" : ":").append(participantVariable);
+        }
         final Query query = entityManager.createNativeQuery(
-                "insert WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE NAME IN (:userNames)");
+                "insert WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE NAME IN ("
+                        + clause
+                        + ")");
         query.setParameter("workoutId", workoutId);
-        query.setParameter("userNames", participants);
+        for (int i = 0; i < participants.length; i++) {
+            final String participant = participants[i];
+            final String participantVariable = "participant" + i;
+            query.setParameter(participantVariable, participant);
+        }
         final int i = query.executeUpdate();
         if (i != participants.length)
             throw new RuntimeException(" ça a couillé : " + i + " modifiés au lieu de " + participants.length);

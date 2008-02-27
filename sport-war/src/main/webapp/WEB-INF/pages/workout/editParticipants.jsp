@@ -18,6 +18,7 @@
 
     <div class="content">
         <s:form namespace="/workout" action="participants">
+            <s:hidden name="id" value="%{id}"/>
             <label for="participants">Les autres participants étaient&nbsp;:</label><br/>
             <s:select id="participants" list="%{allUsers}" name="participants" multiple="true"/>
             <s:submit value="Envoyer la liste !"/>
