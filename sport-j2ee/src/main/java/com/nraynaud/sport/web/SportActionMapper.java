@@ -17,7 +17,8 @@ import java.util.regex.Pattern;
 public class SportActionMapper implements ActionMapper {
     private static final Comparator<NamespaceData> NAMESPACE_COMPARATOR = new Comparator<NamespaceData>() {
         public int compare(final NamespaceData o1, final NamespaceData o2) {
-            return o2.getPrefix().length() - o1.getPrefix().length();
+            final int diff = o2.getPrefix().length() - o1.getPrefix().length();
+            return diff == 0 ? o1.getPrefix().compareTo(o2.getPrefix()) : diff;
         }
     };
     private static final Pattern SLASH_PATTERN = Pattern.compile("/");
@@ -92,7 +93,8 @@ public class SportActionMapper implements ActionMapper {
         if (namespaces == null) {
             namespaces = new TreeSet<NamespaceData>(NAMESPACE_COMPARATOR);
             for (final PackageConfig config : configs.values()) {
-                namespaces.add(new NamespaceData(config.getNamespace()));
+                final String namespace = config.getNamespace();
+                namespaces.add(new NamespaceData(namespace));
             }
             if (CONFIG_CACHE.putIfAbsent(configs, namespaces) != namespaces) {
                 System.out.println("config cache update ! new size: " + CONFIG_CACHE.size() + " added:" + namespaces);
