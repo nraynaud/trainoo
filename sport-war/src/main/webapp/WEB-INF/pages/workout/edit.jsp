@@ -13,6 +13,8 @@
         call(pageContext, "workoutForm.jsp", null, "action", "updateurl", "showDelete", "true", "submit",
                 literal("Modifier"));
     %>
+    <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
+            property("id", String.class))%>
 </div>
 
 <p:javascript>$('date').focus();</p:javascript>

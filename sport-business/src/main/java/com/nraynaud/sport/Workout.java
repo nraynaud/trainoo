@@ -1,5 +1,6 @@
 package com.nraynaud.sport;
 
+import java.util.Collection;
 import java.util.Date;
 
 public interface Workout extends Topic {
@@ -22,4 +23,6 @@ public interface Workout extends Topic {
     UserString getDiscipline();
 
     Long getMessageNumber();
+
+    Collection<User> getParticipants();
 }

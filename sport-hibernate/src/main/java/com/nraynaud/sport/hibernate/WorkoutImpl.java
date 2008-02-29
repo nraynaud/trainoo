@@ -34,7 +34,7 @@ public class WorkoutImpl implements Workout {
     @OneToMany(targetEntity = PublicMessageImpl.class, mappedBy = "workout")
     private Collection<PublicMessage> publicMessages;
 
-    @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.EAGER)
     @JoinTable(name = "WORKOUT_USER",
             joinColumns = @JoinColumn(name = "WORKOUT_ID", nullable = false, updatable = false),
             inverseJoinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false))

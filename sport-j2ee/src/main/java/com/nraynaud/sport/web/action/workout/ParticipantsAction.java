@@ -1,6 +1,9 @@
 package com.nraynaud.sport.web.action.workout;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.User;
+import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
@@ -14,6 +17,7 @@ import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Conversion
@@ -28,8 +32,8 @@ import java.util.Collection;
 public class ParticipantsAction extends DefaultAction {
     public Long id;
     public String[] participants;
-
     public Collection<String> allUsers;
+    public Workout workout;
 
     public ParticipantsAction(final Application application) {
         super(application);
@@ -37,6 +41,16 @@ public class ParticipantsAction extends DefaultAction {
 
     public String index() {
         allUsers = application.fechLoginBeginningBy("");
+        try {
+            workout = application.fetchWorkout(id);
+            final ArrayList<String> names = new ArrayList<String>(workout.getParticipants().size());
+            for (final User participant : workout.getParticipants()) {
+                names.add(participant.getName().nonEscaped());
+            }
+            participants = names.toArray(new String[names.size()]);
+        } catch (WorkoutNotFoundException e) {
+            addActionError("L'entrainent " + id + " n'existe pas.");
+        }
         return INPUT;
     }
 
