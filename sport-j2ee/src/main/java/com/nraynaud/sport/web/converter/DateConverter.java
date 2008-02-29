@@ -4,12 +4,11 @@ import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
+import org.joda.time.MutableDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class DateConverter extends StrutsTypeConverter {
@@ -22,36 +21,23 @@ public class DateConverter extends StrutsTypeConverter {
 
     private static final Parser DAY_MOUTH_PARSER = new Parser() {
         public DateTime parse(final String source) throws IllegalArgumentException {
-            return parseAndComplete(source, "dd/MM", DateTimeFieldType.monthOfYear());
+            return parseAndComplete(source, "dd/MM");
         }
     };
 
     private static final Parser DAY_PARSER = new Parser() {
         public DateTime parse(final String source) throws IllegalArgumentException {
-            return parseAndComplete(source, "dd", DateTimeFieldType.dayOfMonth());
+            return parseAndComplete(source, "dd");
         }
     };
 
-    private static DateTime parseAndComplete(final String source, final String pattern,
-                                             final DateTimeFieldType fieldType) {
-        return withPastField(DateTimeFormat.forPattern(pattern).parseDateTime(source), now(), fieldType);
+    private static DateTime parseAndComplete(final String source, final String pattern) {
+        final MutableDateTime date = new MutableDateTime(now());
+        final int result = DateTimeFormat.forPattern(pattern).parseInto(date, source, 0);
+        if (result != source.length())
+            throw new IllegalArgumentException();
+        return new DateTime(date);
     }
-
-    private static DateTime withPastField(final DateTime dateTime, final DateTime now, final DateTimeFieldType field) {
-        final DateTimeFieldType next = NEXT.get(field);
-        if (next == null)
-            return dateTime;
-        final int thisField = now.get(next);
-        final int fieldValue = dateTime.get(field) > now.get(field) ? thisField - 1 : thisField;
-        return withPastField(dateTime.withField(next, fieldValue), now, next);
-    }
-
-    private static final Map<DateTimeFieldType, DateTimeFieldType> NEXT = new HashMap<DateTimeFieldType, DateTimeFieldType>() {
-        {
-            put(DateTimeFieldType.monthOfYear(), DateTimeFieldType.year());
-            put(DateTimeFieldType.dayOfMonth(), DateTimeFieldType.monthOfYear());
-        }
-    };
 
     public static final Parser WORD_PARSER = new Parser() {
         public DateTime parse(final String source) throws IllegalArgumentException {
