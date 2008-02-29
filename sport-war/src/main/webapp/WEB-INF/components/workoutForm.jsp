@@ -72,8 +72,3 @@
     <span class="feedback" id="feedback">&nbsp;</span><br/>
     <span id="tip">&nbsp;</span>
 </div>
-<s:if test="%{parameters.showDelete}">
-    <div style="text-align:center;margin-top:2em; clear:both;"><a
-            href="<s:url action="workouts" namespace="/" includeParams="none"/>">Annuler et
-        revenir à mon vestiaire</a></div>
-</s:if>
