@@ -1,3 +1,4 @@
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.signupUrl" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -24,5 +25,5 @@
         <p><s:submit value="Entrez !"/></p>
     </s:form>
 </div>
-Pas encore de compte&nbsp;? <a href="<s:url action='signup'/>">Inscrivez-vous&nbsp;!</a>
+Pas encore de compte&nbsp;? <%=signupUrl("Inscrivez-vous&nbsp;!")%>
 <p:javascript>Field.activate('login');</p:javascript>

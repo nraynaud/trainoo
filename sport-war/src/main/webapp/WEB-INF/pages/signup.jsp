@@ -25,4 +25,4 @@
         <p><s:submit value="Inscription !"/></p>
     </s:form>
 </div>
-Déjà un compte&nbsp;? <a href="<s:url action='login'/>">Connectez-vous&nbsp;!</a>
+Déjà un compte&nbsp;? <%=Helpers.loginUrl("Connectez-vous&nbsp;!")%>

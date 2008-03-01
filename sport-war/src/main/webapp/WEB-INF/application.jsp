@@ -44,7 +44,7 @@
             </h1>
 
             <div class="content" style="font-size:200%; text-align:right;">Note aux cobayes&nbsp;: ça serait top cool de
-                nettoyers après vos tests.
+                nettoyer après vos tests.
             </div>
             <s:actionmessage/>
             <% /* the page content*/
