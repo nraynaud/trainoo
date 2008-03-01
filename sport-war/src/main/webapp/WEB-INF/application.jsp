@@ -43,8 +43,8 @@
             <h1><%=pageDetail.getTitle()%>
             </h1>
 
-            <div class="content" style="font-size:200%; text-align:right;">Merci aux testeurs de nettoyer après leurs
-                manipulations.
+            <div class="content" style="font-size:200%; text-align:right;">Note aux cobayes&nbsp;: ça serait top cool de
+                nettoyers après vos tests.
             </div>
             <s:actionmessage/>
             <% /* the page content*/
