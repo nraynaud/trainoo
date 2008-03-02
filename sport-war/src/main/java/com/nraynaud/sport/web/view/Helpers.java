@@ -43,11 +43,11 @@ public class Helpers {
     }
 
     public static String stringProperty(final String expression) {
-        return (String) stack().findValue(expression, String.class);
+        return property(expression, String.class);
     }
 
     public static UserString userStringProperty(final String expression) {
-        return (UserString) stack().findValue(expression, UserString.class);
+        return property(expression, UserString.class);
     }
 
     public static <T> T cast(final Object value, final Class<T> type) {

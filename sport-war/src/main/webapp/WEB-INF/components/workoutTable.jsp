@@ -1,6 +1,6 @@
 <%@ page import="com.nraynaud.sport.User" %>
-<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -23,10 +23,19 @@
             </s:url>
             <td><s:date name="date" format="E dd/M"/></td>
             <s:if test="%{parameters.displayName}">
-                <td><%=bibLink(property("user", User.class))%>
+                <td><%
+                    if (workout.getParticipants().size() > 1) {
+                        final StringBuilder participants = new StringBuilder();
+                        for (final User user : workout.getParticipants())
+                            participants.append(", ").append(escaped(user.getName()));
+                %>
+                    <span title="<%=participants.substring(2)%>" style="cursor:help">collectif</span>
+                    <% } else
+                        out.append(bibLink(workout.getUser()));
+                    %>
                 </td>
             </s:if>
-            <td><%=stringProperty("discipline")%>
+            <td><%=workout.getDiscipline()%>
             </td>
             <td><p:duration name="duration"/></td>
             <td><p:distance name="distance"/></td>
