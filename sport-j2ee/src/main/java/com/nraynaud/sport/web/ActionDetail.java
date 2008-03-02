@@ -1,5 +1,7 @@
 package com.nraynaud.sport.web;
 
+import com.nraynaud.sport.Helper;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -58,7 +60,7 @@ public class ActionDetail {
     }
 
     public String toString() {
-        return encodedAction;
+        return Helper.escaped(encodedAction);
     }
 
     /**
