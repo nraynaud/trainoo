@@ -174,7 +174,7 @@ p.loginLabel {
 }
 
 #logoHref, a#logoHref:hover {
-    background-color: inherit;
+    background-color: white;
     color: #824900;
     text-decoration: none;
 }
@@ -450,13 +450,17 @@ table.displayFormLayoutTable tr td .label {
     text-decoration: none;
     text-align: center;
     width: 100%;
-    left: 0; /* background-color : green;*/
+    left: 0;
 }
 
 a.messageLink {
     position: relative;
     text-decoration: none;
-    display: block; /* background-color : red;*/
+    display: block;
+}
+
+a.messageLink:hover {
+    color: black;
 }
 
 .messageLink:hover {
