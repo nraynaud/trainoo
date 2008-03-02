@@ -415,7 +415,7 @@ public class HibernateApplication implements Application {
         for (int i = 0; i < participants.size(); i++)
             (i > 0 ? clause.append(", ") : clause).append(':').append("participant").append(i);
         final Query query = entityManager.createNativeQuery(
-                "insert WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE NAME IN ("
+                "insert INTO WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE NAME IN ("
                         + clause
                         + ")");
         query.setParameter("workoutId", workoutId);
