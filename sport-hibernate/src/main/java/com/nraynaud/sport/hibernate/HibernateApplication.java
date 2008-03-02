@@ -21,6 +21,7 @@ public class HibernateApplication implements Application {
                                  final String discipline) {
         final Workout workout = new WorkoutImpl(user, date, duration, distance, discipline);
         entityManager.persist(workout);
+        setWorkoutParticipants(user, workout.getId(), new String[0]);
         return workout;
     }
 
@@ -404,7 +405,7 @@ public class HibernateApplication implements Application {
         participantWithSelf.add(user.getName().nonEscaped());
         final Query query = createParticipantsInsertQuery(workoutId, participantWithSelf);
         final int count = query.executeUpdate();
-        if (count != participants.length)
+        if (count != participants.length + 1)
             throw new RuntimeException(
                     " ça a couillé : " + count + " lignes insérées au lieu de " + participants.length);
     }
