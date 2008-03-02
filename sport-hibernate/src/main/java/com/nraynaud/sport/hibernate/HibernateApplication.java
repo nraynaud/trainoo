@@ -405,7 +405,7 @@ public class HibernateApplication implements Application {
         participantWithSelf.add(user.getName().nonEscaped());
         final Query query = createParticipantsInsertQuery(workoutId, participantWithSelf);
         final int count = query.executeUpdate();
-        if (count != participants.length + 1)
+        if (count != participantWithSelf.size())
             throw new RuntimeException(
                     " ça a couillé : " + count + " lignes insérées au lieu de " + participants.length);
     }
