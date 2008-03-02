@@ -29,6 +29,10 @@
         %>
     </div>
     <%}%>
+    <%if (isCurrentUser) {%>
+    <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
+            workout.getId().toString())%>
+    <%}%>
 </div>
 <div id="globalLeft">
     <h2><%=!data.messages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>

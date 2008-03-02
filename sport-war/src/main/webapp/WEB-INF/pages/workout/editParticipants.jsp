@@ -4,10 +4,13 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<p:layoutParams title="Modification d'un entraînement"/>
+<p:layoutParams title="Mes partenaires lors de cette sortie"/>
 
-<div id="tinyCenter">
+<div class="content bigWorkout">
     <%call(pageContext, "workoutComponent.jsp", property("workout", Workout.class));%>
+</div>
+<div id="tinyCenter">
+
     <h2>Je n'étais pas tout seul !</h2>
 
     <div class="content">
