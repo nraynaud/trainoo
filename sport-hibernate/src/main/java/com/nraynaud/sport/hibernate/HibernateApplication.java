@@ -399,18 +399,17 @@ public class HibernateApplication implements Application {
 
     public void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) {
         deleteParticipation(workoutId);
-        final StringBuilder clause = new StringBuilder(20);
         final Set<String> participantWithSelf = new HashSet<String>(Arrays.asList(participants));
         participantWithSelf.add(user.getName().nonEscaped());
-        final Query query = createParticipantsInsertQuery(workoutId, clause, participantWithSelf);
+        final Query query = createParticipantsInsertQuery(workoutId, participantWithSelf);
         final int count = query.executeUpdate();
         if (count != participants.length)
             throw new RuntimeException(
                     " ça a couillé : " + count + " lignes insérées au lieu de " + participants.length);
     }
 
-    private Query createParticipantsInsertQuery(final Long workoutId, final StringBuilder clause,
-                                                final Set<String> participants) {
+    private Query createParticipantsInsertQuery(final Long workoutId, final Set<String> participants) {
+        final StringBuilder clause = new StringBuilder(20);
         for (int i = 0; i < participants.size(); i++)
             (i > 0 ? clause.append(", ") : clause).append(':').append("participant").append(i);
         final Query query = entityManager.createNativeQuery(
