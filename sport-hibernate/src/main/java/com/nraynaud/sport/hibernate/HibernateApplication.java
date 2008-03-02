@@ -33,10 +33,11 @@ public class HibernateApplication implements Application {
     private PaginatedCollection<Workout> fetchWorkouts(final User user, final String discipline, final int startIndex,
                                                        final int pageSize,
                                                        final boolean lastpage) {
-        final Query query = query("select w, count(m) from WorkoutImpl w left join w.publicMessages m where 1=1"
-                + (user != null ? " and w.user =:user" : "")
-                + (discipline != null ? " and w.discipline =:discipline" : "")
-                + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by w.date desc, w.id desc");
+        final Query query = query(
+                "select w, count(m) from WorkoutImpl w left join w.publicMessages m  where 1=1"
+                        + (user != null ? " and :user MEMBER OF w.participants" : "")
+                        + (discipline != null ? " and w.discipline =:discipline" : "")
+                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by w.date desc, w.id desc");
         if (user != null)
             query.setParameter("user", user);
         if (discipline != null)
@@ -462,7 +463,7 @@ public class HibernateApplication implements Application {
         final String string =
                 "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, sum(w.distance))"
                         + " from WorkoutImpl w where w.distance is not null"
-                        + (user != null ? " and w.user = :user" : "")
+                        + (user != null ? " and  :user MEMBER OF w.participants" : "")
                         + " group by w.discipline";
         final Query nativeQuery = query(string);
         if (user != null)
@@ -490,7 +491,7 @@ public class HibernateApplication implements Application {
 
     private Double fetchGlobalDistance(final User user) {
         final Query query = query("select sum(w.distance) from WorkoutImpl w where 1=1"
-                + (user != null ? " and w.user=:user" : ""));
+                + (user != null ? " and :user MEMBER OF w.participants" : ""));
         if (user != null)
             query.setParameter("user", user);
         final Double result = (Double) query.getSingleResult();

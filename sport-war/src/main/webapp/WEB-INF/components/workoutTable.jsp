@@ -39,15 +39,17 @@
             </td>
             <td><p:duration name="duration"/></td>
             <td><p:distance name="distance"/></td>
-            <s:if test="%{parameters.displayEdit}">
-                <td class="img">
-                    <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
-                        <s:param name="id" value="id"/>
-                    </s:url>
-                    <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="/static/pen.png"
-                                                                                             alt=""></s:a>
-                </td>
-            </s:if>
+            <% if (Boolean.TRUE.equals(parameter("displayEdit", Boolean.class))) {%>
+            <td class="img">
+                <% if (workout.getUser().equals(currentUser())) {%>
+                <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
+                    <s:param name="id" value="id"/>
+                </s:url>
+                <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="/static/pen.png"
+                                                                                         alt=""></s:a>
+                <%}%>
+            </td>
+            <%}%>
             <td class="img">
                 <div class="messageLink">
                     <s:a cssClass="messageLink" href="%{workoutUrl}"
@@ -69,13 +71,31 @@
         </tr>
         <% } %>
     </table>
-    <%if (workouts.hasPrevious()) { %>
+    <%
+        if
+                (
+                workouts
+                        .
+                                hasPrevious
+                                        (
+                                        )
+                ) {
+    %>
     <s:url id="previousPageUrl" includeParams="get">
         <s:param name="workoutPage" value="previousIndex"/>
     </s:url>
     <div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
     <%}%>
-    <%if (workouts.hasNext()) { %>
+    <%
+        if
+                (
+                workouts
+                        .
+                                hasNext
+                                        (
+                                        )
+                ) {
+    %>
     <s:url id="nextPageUrl" includeParams="get">
         <s:param name="workoutPage" value="nextIndex"/>
     </s:url>
