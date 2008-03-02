@@ -398,29 +398,38 @@ public class HibernateApplication implements Application {
     }
 
     public void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) {
-        {
-            final Query query = entityManager.createNativeQuery("delete from WORKOUT_USER where WORKOUT_ID=:workoutId");
-            query.setParameter("workoutId", workoutId);
-            query.executeUpdate();
-        }
+        deleteParticipation(workoutId);
         final StringBuilder clause = new StringBuilder(20);
-        for (int i = 0; i < participants.length; i++) {
-            final String participantVariable = "participant" + i;
-            clause.append(i > 0 ? ", :" : ":").append(participantVariable);
-        }
+        final Set<String> participantWithSelf = new HashSet<String>(Arrays.asList(participants));
+        participantWithSelf.add(user.getName().nonEscaped());
+        final Query query = createParticipantsInsertQuery(workoutId, clause, participantWithSelf);
+        final int count = query.executeUpdate();
+        if (count != participants.length)
+            throw new RuntimeException(
+                    " ça a couillé : " + count + " lignes insérées au lieu de " + participants.length);
+    }
+
+    private Query createParticipantsInsertQuery(final Long workoutId, final StringBuilder clause,
+                                                final Set<String> participants) {
+        for (int i = 0; i < participants.size(); i++)
+            (i > 0 ? clause.append(", ") : clause).append(':').append("participant").append(i);
         final Query query = entityManager.createNativeQuery(
                 "insert WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE NAME IN ("
                         + clause
                         + ")");
         query.setParameter("workoutId", workoutId);
-        for (int i = 0; i < participants.length; i++) {
-            final String participant = participants[i];
-            final String participantVariable = "participant" + i;
-            query.setParameter(participantVariable, participant);
+        int i = 0;
+        for (final String participant : participants) {
+            query.setParameter("participant" + i, participant);
+            i++;
         }
-        final int i = query.executeUpdate();
-        if (i != participants.length)
-            throw new RuntimeException(" ça a couillé : " + i + " modifiés au lieu de " + participants.length);
+        return query;
+    }
+
+    private void deleteParticipation(final Long workoutId) {
+        final Query query = entityManager.createNativeQuery("delete from WORKOUT_USER where WORKOUT_ID=:workoutId");
+        query.setParameter("workoutId", workoutId);
+        query.executeUpdate();
     }
 
     public void updateWorkout(final Long id,
