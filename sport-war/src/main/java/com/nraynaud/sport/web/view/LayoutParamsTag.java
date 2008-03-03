@@ -6,7 +6,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 public class LayoutParamsTag extends TagSupport {
     private String title;
-    private boolean showTitleInPage;
+    private boolean showTitleInPage = true;
 
     public int doEndTag() throws JspException {
         final ServletRequest request = pageContext.getRequest();

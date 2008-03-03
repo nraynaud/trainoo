@@ -5,18 +5,14 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 
-<p:layoutParams title="Mon Vestiaire"/>
+<p:layoutParams title="Mon Vestiaire" showTitleInPage="false"/>
 
 <%final UserPageData data = top(UserPageData.class);%>
-<h2>J'ai parcouru <%=data.getStatisticsData().globalDistance%>km</h2>
-
-<div class="content">
-    <%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
-</div>
 <div id="globalLeft">
     <h2>Mes dernières sorties</h2>
 
     <div class="content">
+        <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
         <% call(pageContext, "workoutTable.jsp", data.getStatisticsData().workouts, "displayEdit", "true");%>
     </div>
     <h2>Nouvel entraînement</h2>
