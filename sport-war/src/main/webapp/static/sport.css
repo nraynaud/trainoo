@@ -460,6 +460,7 @@ a.messageLink {
     position: relative;
     text-decoration: none;
     display: block;
+    zoom: 1;
 }
 
 a.messageLink:hover {
