@@ -44,10 +44,6 @@
             <h1><%=pageDetail.getTitle()%>
             </h1>
             <%}%>
-
-            <div class="content" style="font-size:200%; text-align:right;">Note aux cobayes&nbsp;: ça serait top cool de
-                nettoyer après vos tests.
-            </div>
             <s:actionmessage/>
             <% /* the page content*/
                 final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
