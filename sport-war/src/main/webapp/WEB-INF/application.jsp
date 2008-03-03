@@ -40,8 +40,10 @@
         <div id="adPlaceHolder">
         </div>
         <div id="content">
+            <%if (pageDetail.isShowTitle()) {%>
             <h1><%=pageDetail.getTitle()%>
             </h1>
+            <%}%>
 
             <div class="content" style="font-size:200%; text-align:right;">Note aux cobayes&nbsp;: ça serait top cool de
                 nettoyer après vos tests.

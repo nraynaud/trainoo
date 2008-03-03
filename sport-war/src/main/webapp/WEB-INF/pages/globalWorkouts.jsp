@@ -4,17 +4,17 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<p:layoutParams title="Les derniers entraînements"/>
-<div class="content">
-    <%
-        final GlobalWorkoutsPageData data = top(GlobalWorkoutsPageData.class);
-        call(pageContext, "distanceByDiscipline.jsp", data.statisticsData);
-    %>
-</div>
+<p:layoutParams title="Trainoo.com, pour les sportifs du dimanche." showTitleInPage="false"/>
 <div id="globalLeft">
     <h2>Les dernières sorties</h2>
 
     <div class="content">
+        <p>
+            <%
+                final GlobalWorkoutsPageData data = top(GlobalWorkoutsPageData.class);
+                call(pageContext, "distanceByDiscipline.jsp", data.statisticsData);
+            %>
+        </p>
         <% call(pageContext, "workoutTable.jsp", data.statisticsData.workouts, "displayEdit", "false", "displayName",
                 "true");%>
     </div>

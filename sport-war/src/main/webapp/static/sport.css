@@ -436,10 +436,13 @@ table.displayFormLayoutTable tr td .label {
 }
 
 .bigWorkout {
-    font-size: larger;
     border: solid thick #824900;
     text-align: center;
     margin: 1.5em;
+}
+
+.bigWorkout .workout {
+    font-size: 20px;
 }
 
 .messageNumber {

@@ -448,9 +448,10 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    public GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final String discipline) {
+    public GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final int pageSize,
+                                                     final String discipline) {
         return new GlobalWorkoutsPageData(fetchRecentMessages(),
-                fetchStatisticsData((User) null, firstIndex, discipline));
+                fetchStatisticsData((User) null, firstIndex, discipline, pageSize));
     }
 
     private PaginatedCollection<PublicMessage> fetchRecentMessages() {
@@ -501,14 +502,15 @@ public class HibernateApplication implements Application {
 
     public UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline) {
         final Collection<ConversationSummary> correspondants = fetchCorrespondents(user);
-        return new UserPageData(correspondants, fetchStatisticsData(user, firstIndex, discipline),
+        return new UserPageData(correspondants, fetchStatisticsData(user, firstIndex, discipline, 10),
                 fetchGroupDataForUser(user, true));
     }
 
-    private StatisticsData fetchStatisticsData(final User user, final int firstIndex, String discipline) {
+    private StatisticsData fetchStatisticsData(final User user, final int firstIndex, String discipline,
+                                               final int pageSize) {
         if (discipline != null && discipline.length() == 0)
             discipline = null;
-        final PaginatedCollection<Workout> workouts = getWorkouts(user, discipline, firstIndex, 10);
+        final PaginatedCollection<Workout> workouts = getWorkouts(user, discipline, firstIndex, pageSize);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
         return new StatisticsData(workouts, globalDistance, distanceByDiscpline);

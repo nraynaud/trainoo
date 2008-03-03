@@ -14,7 +14,7 @@
 <p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"/>
 
 <div class="content bigWorkout">
-    <% call(pageContext, "workoutComponent.jsp", workout, "extended", Boolean.TRUE); %>
+    <span class="workout"><% call(pageContext, "workoutComponent.jsp", workout, "extended", Boolean.TRUE); %></span>
     <%if (isCurrentUser) {%>
     <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
         <s:param name="id" value="id"/>

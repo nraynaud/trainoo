@@ -8,7 +8,7 @@ public class PageDetail {
     private String content = "";
     private String title = "";
     private final List<String> javascript = new ArrayList<String>(1);
-    private boolean showAdvert = true;
+    private boolean showTitle = true;
 
     public static PageDetail detailFor(final ServletRequest request) {
         PageDetail detail = (PageDetail) request.getAttribute("detail");
@@ -46,11 +46,11 @@ public class PageDetail {
         return javascript;
     }
 
-    public boolean isShowAdvert() {
-        return showAdvert;
+    public boolean isShowTitle() {
+        return showTitle;
     }
 
-    public void setShowAdvert(final boolean showAdvert) {
-        this.showAdvert = showAdvert;
+    public void setShowTitle(final boolean showTitle) {
+        this.showTitle = showTitle;
     }
 }

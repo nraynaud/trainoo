@@ -24,7 +24,7 @@ public class GlobalWorkoutsAction extends DefaultAction implements ModelDriven<G
 
     public GlobalWorkoutsPageData getModel() {
         if (statisticsData == null)
-            statisticsData = application.fetchFrontPageData(workoutPage, disciplineFilter);
+            statisticsData = application.fetchFrontPageData(workoutPage, 20, disciplineFilter);
         return statisticsData;
     }
 }

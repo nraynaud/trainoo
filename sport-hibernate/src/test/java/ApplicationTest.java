@@ -54,7 +54,7 @@ public class ApplicationTest {
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
                 "lol");
         assertEquals(Arrays.asList(workout).iterator().next(),
-                application.fetchFrontPageData(10, null).statisticsData.workouts.iterator().next());
+                application.fetchFrontPageData(10, 20, null).statisticsData.workouts.iterator().next());
     }
 
     @Test
