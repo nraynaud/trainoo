@@ -48,7 +48,7 @@
     <div class="content">
         <%
             call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.user.getName()),
-                    "hideReceiverBox", "true");
+                    "hideReceiverBox", true);
             call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'messagePageIndex'");
         %>
     </div>

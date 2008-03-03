@@ -32,7 +32,7 @@
         </s:fielderror>
         <a name="errorMessage"> </a>
         <%}%>
-        <% if (parameter("hideReceiverBox", String.class) == null || !boolParam("hideReceiverBox")) {%>
+        <% if (!boolParam("hideReceiverBox")) {%>
         <div id="answerReceiver">
             <div id="privateReceiver" style="display:inline;">
                 <label for="receiver">Destinataire&nbsp;:</label><br>

@@ -39,7 +39,7 @@
             </td>
             <td><p:duration name="duration"/></td>
             <td><p:distance name="distance"/></td>
-            <% if (Boolean.TRUE.equals(parameter("displayEdit", Boolean.class))) {%>
+            <% if (boolParam("displayEdit")) {%>
             <td class="img">
                 <% if (workout.getUser().equals(currentUser())) {%>
                 <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">

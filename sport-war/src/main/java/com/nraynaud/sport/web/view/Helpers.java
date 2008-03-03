@@ -66,7 +66,7 @@ public class Helpers {
      * null is false
      */
     public static boolean boolParam(final String expression) {
-        final Boolean param = (Boolean) stack().findValue("parameters." + expression, Boolean.class);
+        final Boolean param = parameter(expression, Boolean.class);
         return param != null && param.booleanValue();
     }
 

@@ -35,7 +35,7 @@
         <%
             final boolean canDelete = message.canDelete(currentUser());
             final boolean canEdit = message.canEdit(currentUser());
-            if (!Boolean.TRUE.equals(parameter("showTopicLink", Boolean.class)) && (canDelete || canEdit)) {
+            if (!boolParam("showTopicLink") && (canDelete || canEdit)) {
         %>
         <div style="float:right;margin-top:5px;">
             <%=canEdit ? currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId())) : ""%>
