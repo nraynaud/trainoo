@@ -22,4 +22,3 @@
         </s:form>
     </div>
 </div>
-<p:javascript>$('date').focus();</p:javascript>
