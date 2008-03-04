@@ -1,6 +1,7 @@
 package com.nraynaud.sport;
 
 import com.nraynaud.sport.data.*;
+import com.nraynaud.sport.mail.MailException;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,7 @@ public interface Application extends UserStore {
                           final Double distance,
                           final String discipline);
 
-    User createUser(String login, String password) throws NameClashException;
+    User createUser(String login, String password, final String email) throws NameClashException, MailException;
 
     User authenticate(String login, String password, final boolean rememberMe);
 
@@ -90,4 +91,6 @@ public interface Application extends UserStore {
             AccessDeniedException;
 
     void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants);
+
+    User createUser(String login, String password) throws NameClashException;
 }

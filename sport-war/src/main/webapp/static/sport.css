@@ -157,9 +157,18 @@ h2, h1 {
     color: red;
 }
 
+p.tinyLabel {
+    font-size: 11px;
+}
+
 p.loginLabel {
     padding-top: 1em;
     margin-bottom: 0.5em;
+}
+
+label .labelComplement {
+    font-weight: normal;
+    font-size: 11px;
 }
 
 #logo {
@@ -501,10 +510,6 @@ a.messageLink:hover {
     font-size: x-large;
     margin-right: 20%;
     margin-left: 20%;
-}
-
-label .labelComplement {
-    font-weight: normal;
 }
 
 a.selected {

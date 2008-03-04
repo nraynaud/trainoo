@@ -19,10 +19,12 @@
 
         <p><s:password id="password" name="password" cssStyle="width:100%;"/></p>
 
-        <p class="loginLabel"><s:checkbox id="rememberMe" name="rememberMe"/><label for="rememberMe">Se souvenir de moi <span
+        <p style="text-align:right;"><s:submit value="Entrez !"/></p>
+
+        <p class="loginLabel tinyLabel" style="margin-top:1em"><s:checkbox id="rememberMe" name="rememberMe"/><label
+                for="rememberMe">Se souvenir de moi <span
                 class="labelComplement">(décocher si ce n'est pas votre propre ordinateur)</span></label></p>
 
-        <p><s:submit value="Entrez !"/></p>
     </s:form>
 </div>
 Pas encore de compte&nbsp;? <%=signupUrl("Inscrivez-vous&nbsp;!")%>

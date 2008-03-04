@@ -2,6 +2,8 @@ package com.nraynaud.sport.hibernate;
 
 import com.nraynaud.sport.*;
 import com.nraynaud.sport.data.*;
+import com.nraynaud.sport.mail.MailException;
+import com.nraynaud.sport.mail.MailSender;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -112,11 +114,14 @@ public class HibernateApplication implements Application {
         };
     }
 
-    @Transactional(rollbackFor = NameClashException.class)
-    public User createUser(final String login, final String password) throws NameClashException {
+    @Transactional(rollbackFor = {NameClashException.class, MailException.class})
+    public User createUser(final String login, final String password, final String email) throws
+            NameClashException, MailException {
         try {
             final User user = new UserImpl(login, password);
             entityManager.persist(user);
+            if (email != null)
+                MailSender.sendSignupMail(login, password, email);
             return user;
         } catch (EntityExistsException e) {
             throw new NameClashException();
@@ -451,7 +456,7 @@ public class HibernateApplication implements Application {
     public GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final int pageSize,
                                                      final String discipline) {
         return new GlobalWorkoutsPageData(fetchRecentMessages(),
-                fetchStatisticsData((User) null, firstIndex, discipline, pageSize));
+                fetchStatisticsData(null, discipline, firstIndex, pageSize));
     }
 
     private PaginatedCollection<PublicMessage> fetchRecentMessages() {
@@ -502,11 +507,11 @@ public class HibernateApplication implements Application {
 
     public UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline) {
         final Collection<ConversationSummary> correspondants = fetchCorrespondents(user);
-        return new UserPageData(correspondants, fetchStatisticsData(user, firstIndex, discipline, 10),
+        return new UserPageData(correspondants, fetchStatisticsData(user, discipline, firstIndex, 10),
                 fetchGroupDataForUser(user, true));
     }
 
-    private StatisticsData fetchStatisticsData(final User user, final int firstIndex, String discipline,
+    private StatisticsData fetchStatisticsData(final User user, String discipline, final int firstIndex,
                                                final int pageSize) {
         if (discipline != null && discipline.length() == 0)
             discipline = null;
@@ -696,5 +701,14 @@ public class HibernateApplication implements Application {
         query.setFirstResult(startIndex);
         final List list = query.getResultList();
         return paginateList(startIndex, pageSize, false, list);
+    }
+
+    public User createUser(final String login, final String password) throws NameClashException {
+        try {
+            return createUser(login, password, null);
+        } catch (MailException e) {
+            //unexcpected
+            throw new RuntimeException(e);
+        }
     }
 }
