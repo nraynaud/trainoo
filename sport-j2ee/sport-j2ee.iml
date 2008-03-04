@@ -9,6 +9,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
+      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -143,7 +146,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library name="httpunit:httpunit:1.6.1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../.m2/repository/httpunit/httpunit/1.6.1/httpunit-1.6.1.jar!/" />
@@ -156,7 +159,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library name="xerces:xmlParserAPIs:2.2.1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../.m2/repository/xerces/xmlParserAPIs/2.2.1/xmlParserAPIs-2.2.1.jar!/" />
@@ -169,7 +172,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library name="xerces:xercesImpl:2.6.2">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../.m2/repository/xerces/xercesImpl/2.6.2/xercesImpl-2.6.2.jar!/" />
@@ -182,7 +185,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library name="nekohtml:nekohtml:0.9.1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../.m2/repository/nekohtml/nekohtml/0.9.1/nekohtml-0.9.1.jar!/" />
@@ -195,7 +198,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library name="rhino:js:1.5R4.1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../.m2/repository/rhino/js/1.5R4.1/js-1.5R4.1.jar!/" />
@@ -208,7 +211,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library name="jtidy:jtidy:4aug2000r7-dev">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../.m2/repository/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev.jar!/" />
