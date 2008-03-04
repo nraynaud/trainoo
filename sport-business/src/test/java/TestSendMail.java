@@ -2,7 +2,6 @@ import org.junit.Test;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -19,6 +18,6 @@ public class TestSendMail {
         msg.setRecipients(javax.mail.Message.RecipientType.TO, "nico@nraynaud.com");
         msg.setSubject("Lol");
         msg.setContent("lolilol", "text/plain");
-        Transport.send(msg);
+//        Transport.send(msg);
     }
 }
