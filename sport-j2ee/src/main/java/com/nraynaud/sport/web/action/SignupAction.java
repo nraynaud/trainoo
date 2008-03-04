@@ -43,7 +43,7 @@ public class SignupAction extends PasswordAction implements ServletRequestAware,
     public String create() {
         if (request.getMethod().equals("POST")) {
             try {
-                application.createUser(login, password, email);
+                application.createUser(login, password, email.length() > 0 ? email : null);
             } catch (NameClashException e) {
                 addFieldError(Constants.LOGIN_RESULT, "Désolé, ce surnom est déjà pris !");
                 return Action.INPUT;
