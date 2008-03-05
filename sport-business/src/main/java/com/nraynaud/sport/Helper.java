@@ -3,15 +3,14 @@ package com.nraynaud.sport;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class Helper {
     public static final String HEX_CHARS = "0123456789ABCDEF";
@@ -119,5 +118,13 @@ public class Helper {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void generateKey() throws NoSuchAlgorithmException {
+        final KeyGenerator generator = KeyGenerator.getInstance("AES");
+        generator.init(128);
+        final Key encryptionKey = generator.generateKey();
+        System.out.println("Acskey: " + new BASE64Encoder().encode(encryptionKey.getEncoded()));
+        System.out.println("Hexkey: " + Arrays.toString(encryptionKey.getEncoded()));
     }
 }
