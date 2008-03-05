@@ -128,10 +128,10 @@ public class UserImpl implements User {
     }
 
     public String getEmail() {
-        return CipherHelper.decipher(email);
+        return email != null ? CipherHelper.decipher(email) : null;
     }
 
     public void setEmail(final String email) {
-        this.email = CipherHelper.cipher(email);
+        this.email = email != null ? CipherHelper.cipher(email) : null;
     }
 }

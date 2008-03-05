@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @SuppressWarnings({"unchecked"})
-@Transactional(rollbackFor = NameClashException.class)
+@Transactional(rollbackFor = {NameClashException.class, MailException.class})
 public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
@@ -114,7 +114,6 @@ public class HibernateApplication implements Application {
         };
     }
 
-    @Transactional(rollbackFor = {NameClashException.class, MailException.class})
     public User createUser(final String login, final String password, final String email) throws
             NameClashException, MailException {
         try {
@@ -221,10 +220,14 @@ public class HibernateApplication implements Application {
         return paginateQuery(pageSize, pageIndex, query);
     }
 
-    public boolean checkAndChangePassword(final User user, final String oldPassword, final String password) {
+    public boolean checkAndChangePassword(final User user, final String oldPassword, final String password) throws
+            MailException {
         if (user.checkPassword(oldPassword)) {
             ((UserImpl) user).setPassword(password);
             entityManager.merge(user);
+            final String email = user.getEmail();
+            if (email != null)
+                MailSender.sendPasswordChangeMail(user.getName().toString(), password, email);
             return true;
         }
         return false;

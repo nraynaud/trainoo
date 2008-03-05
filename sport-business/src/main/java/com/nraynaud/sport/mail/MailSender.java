@@ -14,6 +14,12 @@ public class MailSender {
     }
 
     public static void sendSignupMail(final String login, final String password, final String to) throws MailException {
+        final String content = new Formatter().format(WELCOME_TEMPLATE, login, password).toString();
+        final String subject = "Bienvenue sur trainoo.com - vos identifiants de connection";
+        sendMessage(to, subject, content);
+    }
+
+    private static void sendMessage(final String to, final String subject, final String content) throws MailException {
         try {
             final Properties props = new Properties();
             props.put("mail.smtp.host", "127.0.0.1");
@@ -22,8 +28,7 @@ public class MailSender {
             final InternetAddress addressFrom = new InternetAddress("trainoo@trainoo.com");
             msg.setFrom(addressFrom);
             msg.setRecipients(javax.mail.Message.RecipientType.TO, new Address[]{new InternetAddress(to)});
-            msg.setSubject("Bienvenue sur trainoo.com - vos identifiants de connection");
-            final String content = new Formatter().format(TEMPLATE, login, password).toString();
+            msg.setSubject(subject);
             msg.setContent(content, "text/plain");
             Transport.send(msg);
         } catch (MessagingException e) {
@@ -31,13 +36,28 @@ public class MailSender {
         }
     }
 
-    private static final String TEMPLATE = "Bonjour et bienvenue sur Trainoo.com,\n"
-            + "\n"
-            + "voici un rappel de vos identifiants :\n"
-            + "surnom : %1$s\n"
+    private static final String AUTH_TEMPLATE = "Voici un rappel de vos identifiants\n"
+            + "surnom : %1$s,\n"
             + "mot de passe : %2$s\n"
             + "\n"
             + "Sportivement,\n"
             + "\n"
             + "Nicolas.";
+
+    private static final String WELCOME_TEMPLATE = "Bonjour et bienvenue sur Trainoo.com,\n"
+            + "\n"
+            + AUTH_TEMPLATE;
+
+    private static final String PASSWORD_CHANGE_TEMPLATE = "Bonjour,\n"
+            + "\n"
+            + "votre mot de passe a été modifé."
+            + "\n"
+            + AUTH_TEMPLATE;
+
+    public static void sendPasswordChangeMail(final String login, final String password, final String email) throws
+            MailException {
+        final String content = new Formatter().format(PASSWORD_CHANGE_TEMPLATE, login, password).toString();
+        final String subject = "trainoo.com - vos identifiants de connection ont été changés";
+        sendMessage(email, subject, content);
+    }
 }

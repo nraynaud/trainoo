@@ -63,7 +63,8 @@ public interface Application extends UserStore {
                                          final int messagesStartIndex, final int privateMessagesPageIndex) throws
             WorkoutNotFoundException;
 
-    boolean checkAndChangePassword(final User user, final String oldPassword, final String password);
+    boolean checkAndChangePassword(final User user, final String oldPassword, final String password) throws
+            MailException;
 
     void forgetMe(final User user);
 
