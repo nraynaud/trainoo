@@ -118,7 +118,9 @@ public class HibernateApplication implements Application {
     public User createUser(final String login, final String password, final String email) throws
             NameClashException, MailException {
         try {
-            final User user = new UserImpl(login, password);
+            final UserImpl user = new UserImpl(login, password);
+            if (email != null)
+                user.setEmail(email);
             entityManager.persist(user);
             if (email != null)
                 MailSender.sendSignupMail(login, password, email);

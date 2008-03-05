@@ -1,9 +1,6 @@
 package com.nraynaud.sport.hibernate;
 
-import com.nraynaud.sport.User;
-import com.nraynaud.sport.UserString;
-import com.nraynaud.sport.UserStringImpl;
-import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.*;
 import org.mindrot.bcrypt.BCrypt;
 
 import javax.persistence.*;
@@ -38,6 +35,9 @@ public class UserImpl implements User {
 
     @Column(name = "REMEMBER_ME")
     private String rememberToken;
+
+    @Column(name = "EMAIL")
+    private String email;
 
     @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
     @JoinTable(name = "GROUP_USER", joinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false),
@@ -125,5 +125,13 @@ public class UserImpl implements User {
 
     public String getBareName() {
         return name;
+    }
+
+    public String getEmail() {
+        return Helper.decipher(email);
+    }
+
+    public void setEmail(final String email) {
+        this.email = Helper.cipher(email);
     }
 }
