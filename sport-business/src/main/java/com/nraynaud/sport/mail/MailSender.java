@@ -19,6 +19,13 @@ public class MailSender {
         sendMessage(to, subject, content);
     }
 
+    public static void sendPasswordChangeMail(final String login, final String password, final String email) throws
+            MailException {
+        final String content = new Formatter().format(PASSWORD_CHANGE_TEMPLATE, login, password).toString();
+        final String subject = "trainoo.com - vos identifiants de connection ont été mis à jour";
+        sendMessage(email, subject, content);
+    }
+
     private static void sendMessage(final String to, final String subject, final String content) throws MailException {
         try {
             final Properties props = new Properties();
@@ -53,11 +60,4 @@ public class MailSender {
             + "votre mot de passe a été modifé."
             + "\n"
             + AUTH_TEMPLATE;
-
-    public static void sendPasswordChangeMail(final String login, final String password, final String email) throws
-            MailException {
-        final String content = new Formatter().format(PASSWORD_CHANGE_TEMPLATE, login, password).toString();
-        final String subject = "trainoo.com - vos identifiants de connection ont été changés";
-        sendMessage(email, subject, content);
-    }
 }
