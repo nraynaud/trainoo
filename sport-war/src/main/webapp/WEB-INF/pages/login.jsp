@@ -6,7 +6,7 @@
 <p:layoutParams title="Connectez-vous !"/>
 
 <div id="tinyCenter">
-    <s:form id="login_form" action="login">
+    <s:form id="login_form" action="login" name="lol">
 
         <s:actionerror/>
         <s:fielderror/>
@@ -14,6 +14,8 @@
         <p class="loginLabel"><label for="login">Votre surnom</label></p>
 
         <s:textfield id="login" name="login" cssStyle="width:100%;"/>
+
+        <p:javascript>$('login').focus();</p:javascript>
 
         <p class="loginLabel"><label for="password">Votre mot de passe</label></p>
 
@@ -28,4 +30,3 @@
     </s:form>
 </div>
 Pas encore de compte&nbsp;? <%=signupUrl("Inscrivez-vous&nbsp;!")%>
-<p:javascript>Field.activate('login');</p:javascript>

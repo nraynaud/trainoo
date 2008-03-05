@@ -20,7 +20,7 @@ import java.util.Date;
 
 @Conversion
 @Results({
-@Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/workout/create.jsp"),
+@Result(name = INPUT, type = ChainBack.class, value = ""),
 @Result(name = SUCCESS, type = RedirectBack.class, params = {"namespace", "/"}, value = "workouts")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)

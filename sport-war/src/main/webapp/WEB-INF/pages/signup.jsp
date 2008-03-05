@@ -18,7 +18,7 @@
             </p>
 
             <s:textfield id="login" name="login" cssStyle="width:100%"/>
-            <p:javascript>Field.activate('login');</p:javascript>
+            <p:javascript>$('login').focus();</p:javascript>
             <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>, <%= LOGIN_MIN_LENGTH%>);</p:javascript>
             <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null); %>
 
