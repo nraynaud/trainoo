@@ -6,6 +6,8 @@ import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
+import com.nraynaud.sport.web.converter.DistanceConverter;
+import com.nraynaud.sport.web.converter.DurationConverter;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.CreateIfNull;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -50,6 +52,7 @@ public class Helpers {
         return property(expression, UserString.class);
     }
 
+    @SuppressWarnings({"UnusedDeclaration", "unchecked"})
     public static <T> T cast(final Object value, final Class<T> type) {
         return (T) value;
     }
@@ -185,6 +188,7 @@ public class Helpers {
             exprOverrides.clear();
     }
 
+    @SuppressWarnings({"unchecked"})
     private static void saveAndUnplugOverrides() {
         final ActionContext context = ActionContext.getContext();
         final ValueStack stack = context.getValueStack();
@@ -269,6 +273,7 @@ public class Helpers {
         return currenUrlWithAndWithoutParams(content, selectable, null, params);
     }
 
+    @SuppressWarnings({"unchecked"})
     public static String currenUrlWithAndWithoutParams(final String content, final boolean selectable,
                                                        final String excludedKey,
                                                        final String... params) {
@@ -326,5 +331,13 @@ public class Helpers {
                 + "…" : Helper.escaped(nonEscaped);
         return selectableLink("/bib", "", shortName, "Voir le dossard de " + escaped(fullName), "id",
                 user.getId().toString());
+    }
+
+    public static String formatDistance(final Double distance) {
+        return distance != null ? DistanceConverter.formatDistance(distance) + "km" : "";
+    }
+
+    public static String formatDuration(final Long duration) {
+        return duration != null ? DurationConverter.formatDuration(duration, "h", "\'", "''") : "";
     }
 }

@@ -52,7 +52,7 @@ public class FeedbackAction {
     private String convertDistance() {
         try {
             final Double distance = DistanceConverter.parseDistance(data);
-            return DistanceConverter.formatNumber(distance) + " kilomètre(s)";
+            return DistanceConverter.formatDistance(distance) + " kilomètre(s)";
         } catch (Exception e) {
             return "La distance n'a pas été comprise.";
         }

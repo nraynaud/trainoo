@@ -2,6 +2,8 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -14,7 +16,13 @@
 <p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"/>
 
 <div class="content bigWorkout">
-    <span class="workout"><% call(pageContext, "workoutComponent.jsp", workout, "extended", Boolean.TRUE); %></span>
+    <span class="workout">
+        <span class="userName"><%=bibLink(workout.getUser())%></span>
+        <span class="date"><%=new SimpleDateFormat("EEEE dd/M/yyyy").format(workout.getDate())%></span>
+        <span class="discipline"><%=escaped(workout.getDiscipline())%></span>
+        <span class="duration"><%=formatDuration(workout.getDuration())%></span>
+        <span class="distance"><%= formatDistance(workout.getDistance())%></span>
+    </span>
     <%if (isCurrentUser) {%>
     <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
         <s:param name="id" value="id"/>

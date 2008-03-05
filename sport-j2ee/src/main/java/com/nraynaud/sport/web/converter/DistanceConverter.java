@@ -22,7 +22,7 @@ public class DistanceConverter extends StrutsTypeConverter {
     public String convertToString(final Map context, final Object o) {
         if (o == null)
             return "";
-        return formatNumber((Double) o);
+        return formatDistance((Double) o);
     }
 
     public static Double parseDistance(final String input) {
@@ -53,7 +53,7 @@ public class DistanceConverter extends StrutsTypeConverter {
         }
     }
 
-    public static String formatNumber(final Double o) {
+    public static String formatDistance(final Double o) {
         return getFormat().format(o);
     }
 
