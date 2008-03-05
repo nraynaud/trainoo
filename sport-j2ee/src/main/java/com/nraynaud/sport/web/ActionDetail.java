@@ -48,13 +48,17 @@ public class ActionDetail {
         encoded.append("|");
         encoded.append(name);
         encoded.append('?');
+        boolean first = true;
         for (final Object o : parameters.entrySet()) {
             final Map.Entry entry = (Map.Entry) o;
+            if (first)
+                first = false;
+            else
+                encoded.append('&');
             encoded.append(entry.getKey());
             encoded.append('=');
             final Object value = entry.getValue();
             encoded.append(value instanceof String ? value : ((String[]) value)[0]);
-            encoded.append('&');
         }
         encodedAction = encoded.toString();
     }
