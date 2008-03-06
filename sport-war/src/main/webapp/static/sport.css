@@ -448,6 +448,7 @@ table.displayFormLayoutTable tr td .label {
     border: solid thick #824900;
     text-align: center;
     margin: 1.5em;
+    padding: 3px;
 }
 
 .bigWorkout .workout {

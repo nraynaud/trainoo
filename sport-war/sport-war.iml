@@ -107,8 +107,8 @@
             <attribute name="URI" value="/WEB-INF/lib/persistence-api-1.0.jar" />
           </containerElement>
           <containerElement type="library" name="javax.servlet:jsp-api:2.0" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/jsp-api-2.0.jar" />
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="&lt;N/A&gt;" />
           </containerElement>
           <containerElement type="library" name="javax.servlet:servlet-api:2.3" level="module">
             <attribute name="method" value="0" />
