@@ -13,6 +13,7 @@
         <p class="loginLabel"><label for="oldPassword">Votre mot de passe actuel</label></p>
 
         <p><s:password id="oldPassword" name="oldPassword" cssStyle="width:100%"/></p>
+        <p:javascript>$('oldPassword').focus();</p:javascript>
         <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null, "adjective", "'nouveau'"); %>
         <p><s:submit id="submit" value="Valider !"/></p>
     </s:form>
