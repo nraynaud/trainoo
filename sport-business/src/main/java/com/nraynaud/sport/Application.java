@@ -91,7 +91,8 @@ public interface Application extends UserStore {
     void updateMessage(final User user, final Long messageId, final String content, final MessageKind kind) throws
             AccessDeniedException;
 
-    void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants);
+    void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
+            AccessDeniedException;
 
     User createUser(String login, String password) throws NameClashException;
 }

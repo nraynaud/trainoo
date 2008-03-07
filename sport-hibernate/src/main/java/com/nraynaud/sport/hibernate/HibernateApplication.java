@@ -23,7 +23,11 @@ public class HibernateApplication implements Application {
                                  final String discipline) {
         final Workout workout = new WorkoutImpl(user, date, duration, distance, discipline);
         entityManager.persist(workout);
-        setWorkoutParticipants(user, workout.getId(), new String[0]);
+        try {
+            setWorkoutParticipants(user, workout.getId(), new String[0]);
+        } catch (AccessDeniedException e) {
+            throw new RuntimeException(e);
+        }
         return workout;
     }
 
@@ -409,7 +413,11 @@ public class HibernateApplication implements Application {
             throw new AccessDeniedException();
     }
 
-    public void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) {
+    public void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
+            AccessDeniedException {
+        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, workoutId);
+        if (!workout.getUser().equals(user))
+            throw new AccessDeniedException();
         deleteParticipation(workoutId);
         final Set<String> participantWithSelf = new HashSet<String>(Arrays.asList(participants));
         participantWithSelf.add(user.getName().nonEscaped());

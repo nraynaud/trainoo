@@ -1,9 +1,6 @@
 package com.nraynaud.sport.web.action.workout;
 
-import com.nraynaud.sport.Application;
-import com.nraynaud.sport.User;
-import com.nraynaud.sport.Workout;
-import com.nraynaud.sport.WorkoutNotFoundException;
+import com.nraynaud.sport.*;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
@@ -40,6 +37,23 @@ public class ParticipantsAction extends DefaultAction {
     }
 
     public String index() {
+        initData();
+        return INPUT;
+    }
+
+    @PostOnly
+    public String create() {
+        initData();
+        try {
+            application.setWorkoutParticipants(getUser(), id, participants);
+            return SUCCESS;
+        } catch (AccessDeniedException e) {
+            addActionError("Seul le propriétaire de l'entraînement peut en modifer les participants.");
+            return INPUT;
+        }
+    }
+
+    private void initData() {
         allUsers = application.fechLoginBeginningBy("");
         try {
             workout = application.fetchWorkout(id);
@@ -49,14 +63,7 @@ public class ParticipantsAction extends DefaultAction {
             }
             participants = names.toArray(new String[names.size()]);
         } catch (WorkoutNotFoundException e) {
-            addActionError("L'entrainent " + id + " n'existe pas.");
+            addActionError("L'entraînement " + id + " n'existe pas.");
         }
-        return INPUT;
-    }
-
-    @PostOnly
-    public String create() {
-        application.setWorkoutParticipants(getUser(), id, participants);
-        return SUCCESS;
     }
 }
