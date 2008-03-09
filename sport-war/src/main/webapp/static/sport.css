@@ -541,9 +541,3 @@ li {
     background-repeat: no-repeat;
     padding-left: 12px;
 }
-
-ul.interactiveList li {
-    background: none;
-    padding: 0;
-    margin: 0;
-}
