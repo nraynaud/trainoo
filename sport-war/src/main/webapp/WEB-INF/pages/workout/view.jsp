@@ -4,6 +4,7 @@
 <%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="java.util.Locale" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -18,7 +19,7 @@
 <div class="content bigWorkout">
     <span class="workout">
         <span class="userName"><%=bibLink(workout.getUser())%></span>
-        <span class="date"><%=new SimpleDateFormat("EEEE dd/M/yyyy").format(workout.getDate())%></span>
+        <span class="date"><%=new SimpleDateFormat("EEEE dd/M/yyyy", Locale.FRANCE).format(workout.getDate())%></span>
         <span class="discipline"><%=escaped(workout.getDiscipline())%></span>
         <span class="duration"><%=formatDuration(workout.getDuration())%></span>
         <span class="distance"><%= formatDistance(workout.getDistance())%></span>
