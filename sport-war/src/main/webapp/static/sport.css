@@ -242,8 +242,6 @@ label .labelComplement {
 #globalLeft {
     width: 49.5%;
     float: left;
-    padding: 2px;
-    padding-left: 5px;
     position: relative;
 }
 

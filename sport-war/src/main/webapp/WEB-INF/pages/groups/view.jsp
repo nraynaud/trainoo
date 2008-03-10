@@ -15,7 +15,7 @@
 <p:layoutParams title="<%=group == null ? "Les groupes" : "Groupe : " + group.getName()%>"/>
 
 <% if (group != null) {%>
-<div id="globalLeft">
+<div id="globalLeft" class="content">
     <span class="label">Créé le&nbsp;: </span><span class="userSupplied"><%=new SimpleDateFormat("dd/MM/yyyy").format(
         group.getCreationDate())%></span> <span class="label">par&nbsp;:</span> <span
         class="userSupplied"><%=group.getOwner().getName()%></span>
@@ -25,6 +25,23 @@
     </div>
     <%
         if (isLogged()) {
+            if (!groupPage.isMember) {
+    %>
+    <s:form action="join" namespace="/groups" cssStyle="text-align: right;display:block;">
+        <s:hidden name="fromAction" value="%{actionDescription}"/>
+        <s:hidden name="groupId" value="%{id}"/>
+        <s:submit value="Rejoindre le groupe" cssStyle="width:150px"/>
+    </s:form>
+    <%
+    } else {
+    %>
+    <s:form action="part" namespace="/groups" cssStyle="text-align: right;display:block;">
+        <s:hidden name="fromAction" value="%{actionDescription}"/>
+        <s:hidden name="groupId" value="%{id}"/>
+        <s:submit value="Quitter le groupe" cssStyle="width:150px"/>
+    </s:form>
+    <%
+            }
             if (group.getOwner().equals(currentUser()))
                 out.append("<div style='text-align: right'>")
                         .append(selectableLink("/groups", "edit", "Mettre à jour", null, "id",
@@ -86,24 +103,6 @@
                     <td><%final long count = property("memberCount", Long.class).longValue();%>
                         <%=count > 1 ? count + " membres" : count == 1 ? "un membre" : "aucun membre"%>
                     </td>
-
-                    <% if (isLogged()) {%>
-                    <td>
-                        <% if (!groupData.isMember) { %>
-                        <s:form action="join" namespace="/groups">
-                            <s:hidden name="fromAction" value="%{actionDescription}"/>
-                            <s:hidden name="groupId" value="%{id}"/>
-                            <s:submit value="Rejoindre" cssStyle="width:100%"/>
-                        </s:form>
-                        <%} else {%>
-                        <s:form action="part" namespace="/groups">
-                            <s:hidden name="fromAction" value="%{actionDescription}"/>
-                            <s:hidden name="groupId" value="%{id}"/>
-                            <s:submit value="Quitter" cssStyle="width:100%"/>
-                        </s:form>
-                        <% }%>
-                    </td>
-                    <% } %>
                 </tr>
             </s:iterator>
         </table>

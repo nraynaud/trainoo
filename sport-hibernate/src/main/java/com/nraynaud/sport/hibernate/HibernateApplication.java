@@ -278,21 +278,33 @@ public class HibernateApplication implements Application {
         final GroupImpl group;
         final StatisticsData statisticsData;
         final PaginatedCollection<User> users;
+        final boolean member;
         if (groupId != null) {
             group = entityManager.find(GroupImpl.class, groupId);
             statisticsData = fetchStatisticsData(group, workoutStartIndex, discipline);
             users = fetchGroupMembers(group);
+            member = isGroupMember(user, group);
         } else {
             statisticsData = null;
             group = null;
             users = emptyPage();
+            member = false;
         }
         final PaginatedCollection<PublicMessage> messagePaginatedCollection = fetchPublicMessages(Topic.Kind.GROUP,
                 groupId, 10, messageStartIndex);
-        if (user != null && group != null)
+        if (user != null && group != null) {
             updateLastGroupVisit(user, group);
-        return new GroupPageData(group, result, messagePaginatedCollection,
+        }
+        return new GroupPageData(group, member, result, messagePaginatedCollection,
                 statisticsData, users);
+    }
+
+    private boolean isGroupMember(final User user, final GroupImpl group) {
+        final Query query = entityManager.createNativeQuery(
+                "select 1 from GROUP_USER where USER_ID=:userId AND GROUP_ID=:groupId");
+        query.setParameter("userId", user.getId());
+        query.setParameter("groupId", group.getId());
+        return query.getResultList().size() > 0;
     }
 
     private Collection<GroupData> fetchGroupDataForUser(final User user, final boolean restrictToSuscribed) {
