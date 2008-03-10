@@ -30,7 +30,8 @@
     <s:form action="join" namespace="/groups" cssStyle="text-align: right;display:block;">
         <s:hidden name="fromAction" value="%{actionDescription}"/>
         <s:hidden name="groupId" value="%{id}"/>
-        <s:submit value="Rejoindre le groupe" cssStyle="width:150px"/>
+        <s:submit value="Rejoindre le groupe" cssStyle="width:150px"
+                  title="Rejoindre le groupe vous permettra de suivre les nouveaux messages depuis votre vestiaire."/>
     </s:form>
     <%
     } else {
