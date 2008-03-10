@@ -24,7 +24,7 @@
         </a>
         <%}%>
         <span id="loginName"><!--<%=currentUser().getId()%> --><%= currentUser().getName()%>
-            <span style="font-size:x-small;"><%= selectableLink("/privatedata", "", "(mot de passe)", null)%></span>
+            <span style="font-size:x-small;"><%= selectableLink("/privatedata", "", "(mon compte)", null)%></span>
         </span>
         <%= selectableLink("/", "workouts", "Mon vestiaire", null)%><%= selectableLink("/bib", "", "Mon dossard", null,
             "id",

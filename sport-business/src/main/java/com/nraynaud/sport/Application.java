@@ -95,4 +95,6 @@ public interface Application extends UserStore {
             AccessDeniedException;
 
     User createUser(String login, String password) throws NameClashException;
+
+    void updateEmail(final User user, final String email);
 }

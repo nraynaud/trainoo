@@ -736,4 +736,9 @@ public class HibernateApplication implements Application {
             throw new RuntimeException(e);
         }
     }
+
+    public void updateEmail(final User user, final String email) {
+        ((UserImpl) user).setEmail(email.length() > 0 ? email : null);
+        entityManager.merge(user);
+    }
 }

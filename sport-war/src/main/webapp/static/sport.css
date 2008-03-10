@@ -28,11 +28,9 @@ form label {
 }
 
 fieldset {
-    border: none;
-    border-top: thin #C9C9B1 solid;
-    border-bottom: thin #C9C9B1 solid;
+    border: 2px black solid;
     margin: 10px 0 10px 0;
-    padding: 10px 0 10px 0;
+    padding: 10px 5px 10px 3px;
 }
 
 img {
