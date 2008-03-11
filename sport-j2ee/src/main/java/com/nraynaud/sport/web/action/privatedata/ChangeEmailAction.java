@@ -25,6 +25,7 @@ public class ChangeEmailAction extends DefaultAction {
     @PostOnly
     public String create() {
         application.updateEmail(getUser(), email);
+        addActionMessage("Votre adresse email a bien été prise en compte.");
         return SUCCESS;
     }
 }

@@ -9,7 +9,9 @@
     <fieldset>
         <legend>Changer votre e-mail de contact</legend>
         <s:form action="changeEmail" namespace="/privatedata">
-            <p><label for="email">Votre nouvelle adresse</label></p>
+            <p><label for="email">Votre nouvelle adresse <span class="labelComplement">(videz la case pour le
+                supprimer du site)</span></label>
+            </p>
 
             <p><s:textfield id="email" name="email" cssStyle="width:100%"/></p>
 
