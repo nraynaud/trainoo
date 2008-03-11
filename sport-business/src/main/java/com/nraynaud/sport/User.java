@@ -17,5 +17,5 @@ public interface User extends Serializable {
 
     String getRememberToken();
 
-    String getEmail();
+    UserString getEmail();
 }

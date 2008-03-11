@@ -97,4 +97,6 @@ public interface Application extends UserStore {
     User createUser(String login, String password) throws NameClashException;
 
     void updateEmail(final User user, final String email);
+
+    void updateNikePlusData(final User user, final String nikePlusEmail, final String nikePlusPassword);
 }

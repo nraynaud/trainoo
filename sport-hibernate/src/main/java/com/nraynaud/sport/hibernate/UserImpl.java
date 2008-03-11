@@ -39,6 +39,12 @@ public class UserImpl implements User {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "NIKEPLUSEMAIL")
+    private String nikePluEmail;
+
+    @Column(name = "NIKEPLUSPASSWORD")
+    private String nikePlusPassword;
+
     @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
     @JoinTable(name = "GROUP_USER", joinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false),
             inverseJoinColumns = @JoinColumn(name = "GROUP_ID", nullable = false, updatable = false))
@@ -127,11 +133,35 @@ public class UserImpl implements User {
         return name;
     }
 
-    public String getEmail() {
-        return email != null ? CipherHelper.decipher(email) : null;
+    public UserString getEmail() {
+        return decipher(email);
     }
 
     public void setEmail(final String email) {
-        this.email = email != null ? CipherHelper.cipher(email) : null;
+        this.email = cipher(email);
+    }
+
+    public UserString getNikePluEmail() {
+        return decipher(nikePluEmail);
+    }
+
+    public void setNikePluEmail(final String nikePluEmail) {
+        this.nikePluEmail = cipher(nikePluEmail);
+    }
+
+    public UserString getNikePlusPassword() {
+        return decipher(nikePlusPassword);
+    }
+
+    public void setNikePlusPassword(final String nikePlusPassword) {
+        this.nikePlusPassword = cipher(nikePlusPassword);
+    }
+
+    private static UserString decipher(final String cleartext) {
+        return cleartext != null ? UserStringImpl.valueOf(CipherHelper.decipher(cleartext)) : null;
+    }
+
+    private static String cipher(final String email) {
+        return email != null ? CipherHelper.cipher(email) : null;
     }
 }

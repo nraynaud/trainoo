@@ -18,7 +18,7 @@
             </p>
 
             <p><s:textfield id="email" name="email" cssStyle="width:100%"/></p>
-
+            <p:javascript>$('email').focus();</p:javascript>
             <p><s:submit id="submit" value="Valider !"/></p>
         </s:form>
     </fieldset>
@@ -33,8 +33,26 @@
             <p><label for="oldPassword">Votre mot de passe actuel</label></p>
 
             <p><s:password id="oldPassword" name="oldPassword" cssStyle="width:100%"/></p>
-            <p:javascript>$('oldPassword').focus();</p:javascript>
             <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null, "adjective", "'nouveau'"); %>
+            <p><s:submit id="submit" value="Valider !"/></p>
+        </s:form>
+    </fieldset>
+    <fieldset>
+        <legend>Mon compte Nike+</legend>
+        <s:form action="changeNikePlus" namespace="/privatedata">
+            <s:fielderror>
+                <s:param value="'nikePlusEmail'"/>
+                <s:param value="'nikePlusPassword'"/>
+            </s:fielderror>
+            <s:hidden id="fromAction" name="fromAction" value="%{actionDescription}"/>
+            <p><label for="nikePlusEmail">Votre email Nike+</label></p>
+
+            <p><s:textfield id="nikePlusEmail" name="nikePlusEmail" cssStyle="width:100%"/></p>
+
+            <p><label for="nikePlusPassword">Votre mot de passe Nike+</label></p>
+
+            <p><s:password id="nikePlusPassword" name="nikePlusPassword" cssStyle="width:100%"/></p>
+
             <p><s:submit id="submit" value="Valider !"/></p>
         </s:form>
     </fieldset>

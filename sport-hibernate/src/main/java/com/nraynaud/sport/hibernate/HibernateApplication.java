@@ -229,9 +229,9 @@ public class HibernateApplication implements Application {
         if (user.checkPassword(oldPassword)) {
             ((UserImpl) user).setPassword(password);
             entityManager.merge(user);
-            final String email = user.getEmail();
+            final UserString email = user.getEmail();
             if (email != null)
-                MailSender.sendPasswordChangeMail(user.getName().toString(), password, email);
+                MailSender.sendPasswordChangeMail(user.getName().toString(), password, email.nonEscaped());
             return true;
         }
         return false;
@@ -740,5 +740,12 @@ public class HibernateApplication implements Application {
     public void updateEmail(final User user, final String email) {
         ((UserImpl) user).setEmail(email.length() > 0 ? email : null);
         entityManager.merge(user);
+    }
+
+    public void updateNikePlusData(final User user, final String nikePlusEmail, final String nikePlusPassword) {
+        final UserImpl userImpl = (UserImpl) user;
+        userImpl.setNikePluEmail(nikePlusEmail);
+        userImpl.setNikePlusPassword(nikePlusPassword);
+        entityManager.merge(userImpl);
     }
 }
