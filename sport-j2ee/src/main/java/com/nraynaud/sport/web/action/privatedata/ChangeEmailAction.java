@@ -6,6 +6,7 @@ import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -27,5 +28,10 @@ public class ChangeEmailAction extends DefaultAction {
         application.updateEmail(getUser(), email);
         addActionMessage("Votre adresse email a bien été prise en compte.");
         return SUCCESS;
+    }
+
+    @EmailValidator(message = "Votre email est invalide.")
+    public String getEmail() {
+        return email;
     }
 }

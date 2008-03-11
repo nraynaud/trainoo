@@ -6,9 +6,13 @@
 <p:layoutParams title="Modification des données personnelles"/>
 
 <div id="tinyCenter">
+    <s:actionerror/>
     <fieldset>
         <legend>Changer votre e-mail de contact</legend>
         <s:form action="changeEmail" namespace="/privatedata">
+            <s:fielderror>
+                <s:param value="'email'"/>
+            </s:fielderror>
             <p><label for="email">Votre nouvelle adresse <span class="labelComplement">(videz la case pour le
                 supprimer du site)</span></label>
             </p>
@@ -21,8 +25,10 @@
     <fieldset>
         <legend>Changer de mot de passe</legend>
         <s:form name="privatedata_form" id="privatedata_form" action="changePassword" namespace="/privatedata">
-            <s:actionerror/>
-            <s:fielderror/>
+            <s:fielderror>
+                <s:param value="'oldPassword'"/>
+                <s:param value="'password'"/>
+            </s:fielderror>
             <s:hidden id="fromAction" name="fromAction" value="%{actionDescription}"/>
             <p><label for="oldPassword">Votre mot de passe actuel</label></p>
 
