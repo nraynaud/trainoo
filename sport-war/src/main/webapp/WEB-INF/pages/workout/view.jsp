@@ -31,7 +31,7 @@
     <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="/static/pen.png" alt=""></s:a>
     <%}%>
     <%if (workout.getParticipants().size() > 1) {%>
-    <div>Ils ont transpiré&nbsp;:
+    <div>Les équipiers étaient&nbsp;:
         <%
             for (final User participant : workout.getParticipants())
                 out.append(' ').append(bibLink(participant));
