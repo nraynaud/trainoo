@@ -194,11 +194,7 @@
       </facet-type>
       <facet-type id="Spring">
         <modules>
-          <module name="sport-war">
-            <files>
-              <file url="file://$PROJECT_DIR$/sport-war/src/main/webapp/WEB-INF/applicationContext.xml" />
-            </files>
-          </module>
+          <module name="sport-war" />
         </modules>
       </facet-type>
     </autodetection-disabled>
