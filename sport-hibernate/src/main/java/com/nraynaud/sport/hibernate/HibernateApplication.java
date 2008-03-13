@@ -305,7 +305,7 @@ public class HibernateApplication implements Application {
             group = entityManager.find(GroupImpl.class, groupId);
             statisticsData = fetchStatisticsData(group, workoutStartIndex, discipline);
             users = fetchGroupMembers(group);
-            member = isGroupMember(user, group);
+            member = user != null && isGroupMember(user, group);
         } else {
             statisticsData = null;
             group = null;

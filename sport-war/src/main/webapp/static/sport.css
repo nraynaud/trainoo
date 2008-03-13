@@ -138,15 +138,6 @@ h2, h1 {
     overflow: hidden;
 }
 
-#undo, span#undo a {
-    color: black;
-    background-color: #F9630D;
-}
-
-.time_col, .distance_col {
-    text-align: right;
-}
-
 .feedback {
     font-weight: bold;
 }
