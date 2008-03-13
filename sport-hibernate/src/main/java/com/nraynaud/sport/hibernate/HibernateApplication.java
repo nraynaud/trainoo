@@ -21,7 +21,25 @@ public class HibernateApplication implements Application {
                                  final Long duration,
                                  final Double distance,
                                  final String discipline) {
-        final Workout workout = new WorkoutImpl(user, date, duration, distance, discipline);
+        return createWorkout(date, user, duration, distance, discipline, null);
+    }
+
+    public Workout createWorkout(final Date date,
+                                 final User user,
+                                 final Long duration,
+                                 final Double distance,
+                                 final String discipline,
+                                 final String nikePlusId) {
+        if (nikePlusId != null) {
+            final Query query = entityManager.createNativeQuery("select ID from WORKOUTS where NIKEPLUSID=:nikeId");
+            query.setParameter("nikeId", nikePlusId);
+            final List list = query.getResultList();
+            if (!list.isEmpty()) {
+                final Long workoutId = ((Number) list.get(0)).longValue();
+                return entityManager.find(WorkoutImpl.class, workoutId);
+            }
+        }
+        final Workout workout = new WorkoutImpl(user, date, duration, distance, discipline, nikePlusId);
         entityManager.persist(workout);
         try {
             setWorkoutParticipants(user, workout.getId(), new String[0]);
@@ -29,6 +47,10 @@ public class HibernateApplication implements Application {
             throw new RuntimeException(e);
         }
         return workout;
+    }
+
+    public void execute(final Runnable runnable) {
+        runnable.run();
     }
 
     @SuppressWarnings({"unchecked"})

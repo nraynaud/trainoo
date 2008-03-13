@@ -18,4 +18,8 @@ public interface User extends Serializable {
     String getRememberToken();
 
     UserString getEmail();
+
+    UserString getNikePluEmail();
+
+    UserString getNikePlusPassword();
 }

@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.action.privatedata;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.importer.Importer;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
@@ -18,15 +19,20 @@ import org.apache.struts2.config.Results;
 public class ChangeNikePlusAction extends DefaultAction {
     public String nikePlusEmail;
     public String nikePlusPassword;
+    private final Importer importer;
 
-    public ChangeNikePlusAction(final Application application) {
+    public ChangeNikePlusAction(final Application application, final Importer importer) {
         super(application);
+        this.importer = importer;
     }
 
     @PostOnly
     public String create() {
         application.updateNikePlusData(getUser(), nikePlusEmail, nikePlusPassword);
-        addActionMessage("vos paramètres Nike+ ont bien été mis à jour.");
-        return SUCCESS;
+        final String result = RefreshNikePlusAction.refresh(this, application, importer, nikePlusEmail,
+                nikePlusPassword);
+        if (SUCCESS.equals(result))
+            addActionMessage("vos paramètres Nike+ ont bien été mis à jour et vos entraînements importés.");
+        return result;
     }
 }

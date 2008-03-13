@@ -45,5 +45,6 @@
 
     <bean id="application" class="com.nraynaud.sport.hibernate.HibernateApplication" scope="singleton"
           lazy-init="true"/>
+    <bean id="nikeplus" class="com.nraynaud.sport.nikeplus.NikePlusExtractor" scope="singleton" lazy-init="true"/>
 </beans>
 

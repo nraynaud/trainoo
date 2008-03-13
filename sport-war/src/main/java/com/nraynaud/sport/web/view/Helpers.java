@@ -214,15 +214,18 @@ public class Helpers {
     }
 
     public static String signupUrl(final String text) {
-        final String from = stringProperty("fromAction") == null ? stringProperty(
-                "actionDescription") : stringProperty("fromAction");
+        final String from = findFromAction();
         return selectableLink("/", "signup", text, null, "fromAction", from);
     }
 
     public static String loginUrl(final String text) {
-        final String from = stringProperty("fromAction") == null ? stringProperty(
-                "actionDescription") : stringProperty("fromAction");
+        final String from = findFromAction();
         return selectableLink("/", "login", text, null, "fromAction", from);
+    }
+
+    public static String findFromAction() {
+        return stringProperty("fromAction") == null ? stringProperty("actionDescription") : stringProperty(
+                "fromAction");
     }
 
     public static String getFirstValue(final String key) {

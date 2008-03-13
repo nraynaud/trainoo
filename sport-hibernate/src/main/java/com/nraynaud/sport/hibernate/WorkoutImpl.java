@@ -27,6 +27,9 @@ public class WorkoutImpl implements Workout {
     @Column(name = "DISCIPLINE", nullable = false)
     private String discipline;
 
+    @Column(name = "NIKEPLUSID")
+    private String nikePlusId;
+
     @ManyToOne(targetEntity = UserImpl.class)
     @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
     private User user;
@@ -55,6 +58,20 @@ public class WorkoutImpl implements Workout {
         this.duration = duration;
         this.distance = distance;
         this.discipline = discipline;
+    }
+
+    public WorkoutImpl(final User user,
+                       final Date date,
+                       final Long duration,
+                       final Double distance,
+                       final String discipline,
+                       final String nikePlusId) {
+        this.date = date;
+        this.user = user;
+        this.duration = duration;
+        this.distance = distance;
+        this.discipline = discipline;
+        this.nikePlusId = nikePlusId;
     }
 
     public Long getId() {

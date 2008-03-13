@@ -18,6 +18,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class Action extends DefaultAction {
     public UserString email;
+    public UserString nikePlusEmail;
 
     public Action(final Application application) {
         super(application);
@@ -27,6 +28,7 @@ public class Action extends DefaultAction {
     @SkipValidation
     public String index() {
         email = getUser().getEmail();
+        nikePlusEmail = getUser().getNikePluEmail();
         return SUCCESS;
     }
 }

@@ -19,6 +19,7 @@
         <module>sport-hibernate</module>
         <module>sport-business</module>
         <module>bcrypt</module>
+        <module>nikeplus</module>
     </modules>
     <build>
         <plugins>

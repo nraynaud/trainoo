@@ -157,11 +157,11 @@ public class UserImpl implements User {
         this.nikePlusPassword = cipher(nikePlusPassword);
     }
 
-    private static UserString decipher(final String cleartext) {
-        return cleartext != null ? UserStringImpl.valueOf(CipherHelper.decipher(cleartext)) : null;
+    private static UserString decipher(final String cipher) {
+        return cipher != null ? UserStringImpl.valueOf(CipherHelper.decipher(cipher)) : null;
     }
 
-    private static String cipher(final String email) {
-        return email != null ? CipherHelper.cipher(email) : null;
+    private static String cipher(final String plainText) {
+        return plainText != null && plainText.length() > 0 ? CipherHelper.cipher(plainText) : null;
     }
 }

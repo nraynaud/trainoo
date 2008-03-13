@@ -99,4 +99,13 @@ public interface Application extends UserStore {
     void updateEmail(final User user, final String email);
 
     void updateNikePlusData(final User user, final String nikePlusEmail, final String nikePlusPassword);
+
+    Workout createWorkout(Date date,
+                          User user,
+                          Long duration,
+                          Double distance,
+                          String discipline,
+                          String nikePlusId);
+
+    void execute(final Runnable runnable);
 }

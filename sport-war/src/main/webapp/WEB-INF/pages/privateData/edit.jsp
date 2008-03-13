@@ -45,7 +45,9 @@
                 <s:param value="'nikePlusPassword'"/>
             </s:fielderror>
             <s:hidden id="fromAction" name="fromAction" value="%{actionDescription}"/>
-            <p><label for="nikePlusEmail">Votre email Nike+</label></p>
+            <p><label for="nikePlusEmail">Votre email Nike+ <span class="labelComplement">(videz la case pour supprimer
+                votre compte Nike+ du site mais pas vos entraînements)</span></label>
+            </p>
 
             <p><s:textfield id="nikePlusEmail" name="nikePlusEmail" cssStyle="width:100%"/></p>
 
