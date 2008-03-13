@@ -10,18 +10,31 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import javax.xml.namespace.QName;
 import javax.xml.xpath.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
 public class NikePlusExtractor implements Importer {
-    public static final XPathExpression STATUS_EXPRESSION;
+    private static final XPathExpression STATUS_EXPRESSION;
+    private static final XPathExpression RUN_LIST;
+    private final static XPathExpression DISTANCE;
+    private final static XPathExpression DURATION;
+    private final static XPathExpression START_TIME;
+    private final static XPathExpression USER_ID;
 
     static {
         try {
-            STATUS_EXPRESSION = XPathFactory.newInstance().newXPath().compile("/*/status");
+            final XPath xPath = XPathFactory.newInstance().newXPath();
+            STATUS_EXPRESSION = xPath.compile("/*/status");
+            RUN_LIST = xPath.compile("/plusService/runList/*");
+            DISTANCE = xPath.compile("distance");
+            DURATION = xPath.compile("duration");
+            START_TIME = xPath.compile("startTime");
+            USER_ID = xPath.compile("/plusService/user/@id");
         } catch (XPathExpressionException e) {
             throw new RuntimeException(e);
         }
@@ -29,7 +42,7 @@ public class NikePlusExtractor implements Importer {
 
     public static void checkStatus(final byte[] body) throws FailureException {
         try {
-            final String status = STATUS_EXPRESSION.evaluate(new InputSource(new ByteArrayInputStream(body)));
+            final String status = (String) evaluate(body, STATUS_EXPRESSION, XPathConstants.STRING);
             if (!"success".equals(status))
                 throw new FailureException();
         } catch (XPathExpressionException e) {
@@ -42,9 +55,38 @@ public class NikePlusExtractor implements Importer {
             IOException,
             FailureException,
             ParseException {
+        final HttpClient client = connectedClient(login, password);
+        final byte[] responseBody = get(client, "http://nikeplus.nike.com/nikeplus/v1/services/app/run_list.jsp");
+        extractWorkouts(responseBody, workoutCollector);
+    }
+
+    public static String getNikePlusId(final String login, final String password) throws
+            IOException,
+            FailureException {
+        final HttpClient client = connectedClient(login, password);
+        final byte[] responseBody = get(client,
+                "http://secure-nikeplus.nike.com/nikeplus/v1/services/app/get_user_data.jhtml");
+        return extractUserId(responseBody);
+    }
+
+    public static String extractUserId(final byte[] responseBody) {
+        try {
+            return (String) evaluate(responseBody, USER_ID, XPathConstants.STRING);
+        } catch (XPathExpressionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static HttpClient connectedClient(final String login, final String password) throws
+            IOException,
+            FailureException {
         final HttpClient client = new HttpClient();
         connect(client, login, password);
-        final GetMethod getMethod = new GetMethod("http://nikeplus.nike.com/nikeplus/v1/services/app/run_list.jsp");
+        return client;
+    }
+
+    private static byte[] get(final HttpClient client, final String uri) throws IOException {
+        final GetMethod getMethod = new GetMethod(uri);
         final byte[] responseBody;
         try {
             client.executeMethod(getMethod);
@@ -52,24 +94,22 @@ public class NikePlusExtractor implements Importer {
         } finally {
             getMethod.releaseConnection();
         }
-        extractWorkouts(responseBody, workoutCollector);
-        System.out.println(getMethod.getResponseBodyAsString());
+        System.out.println(new String(responseBody, "UTF-8"));
+        return responseBody;
     }
 
     public static void extractWorkouts(final byte[] responseBody, final WorkoutCollector workoutCollector) throws
             FailureException,
             ParseException {
         checkStatus(responseBody);
-        final XPath xpa = XPathFactory.newInstance().newXPath();
         try {
-            final NodeList result = (NodeList) xpa.evaluate("/plusService/runList/*",
-                    new InputSource(new ByteArrayInputStream(responseBody)), XPathConstants.NODESET);
+            final NodeList result = (NodeList) evaluate(responseBody, RUN_LIST, XPathConstants.NODESET);
             for (int i = 0; i < result.getLength(); i++) {
                 final Node node = result.item(i);
                 final String nikeId = node.getAttributes().getNamedItem("id").getTextContent();
-                final String distance = (String) xpa.evaluate("distance", node, XPathConstants.STRING);
-                final String duration = (String) xpa.evaluate("duration", node, XPathConstants.STRING);
-                final String date = (String) xpa.evaluate("startTime", node, XPathConstants.STRING);
+                final String distance = DISTANCE.evaluate(node);
+                final String duration = DURATION.evaluate(node);
+                final String date = START_TIME.evaluate(node);
                 workoutCollector.collectWorkout(nikeId, "course", new SimpleDateFormat("yyyy-MM-dd").parse(date),
                         Double.valueOf(distance), Long.parseLong(duration) / 1000);
             }
@@ -77,6 +117,11 @@ public class NikePlusExtractor implements Importer {
         } catch (XPathExpressionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Object evaluate(final byte[] responseBody, final XPathExpression runList,
+                                   final QName returnType) throws XPathExpressionException {
+        return runList.evaluate(new InputSource(new ByteArrayInputStream(responseBody)), returnType);
     }
 
     public static void connect(final HttpClient client, final String login, final String password) throws
@@ -89,6 +134,8 @@ public class NikePlusExtractor implements Importer {
         method.addParameter("locale", "fr_FR");
         try {
             client.executeMethod(method);
+            System.out.println(method.getResponseBodyAsString());
+            System.out.println(Arrays.toString(client.getState().getCookies()));
             checkStatus(method.getResponseBody());
         } finally {
             method.releaseConnection();
@@ -101,9 +148,15 @@ public class NikePlusExtractor implements Importer {
             collectNikePlusWorkouts(login, password, collector);
         } catch (IOException e) {
             throw new FailureException(e);
-        } catch (FailureException e) {
-            throw new FailureException(e);
         } catch (ParseException e) {
+            throw new FailureException(e);
+        }
+    }
+
+    public String getId(final String login, final String password) throws FailureException {
+        try {
+            return getNikePlusId(login, password);
+        } catch (IOException e) {
             throw new FailureException(e);
         }
     }

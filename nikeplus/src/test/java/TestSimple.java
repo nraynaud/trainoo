@@ -4,7 +4,7 @@ import com.nraynaud.sport.nikeplus.NikePlusExtractor;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,7 +12,44 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TestSimple {
 
     @Test
-    public void testSimple() throws IOException, FailureException, ParseException {
+    public void testUserIdExtraction() throws UnsupportedEncodingException {
+        final String testValue1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<plusService>\n"
+                + "    <status>success</status>\n"
+                + "    <user id=\"613535372\">\n"
+                + "        <status>confirmed</status>\n"
+                + "        <gender>male</gender>\n"
+                + "        <email>nike@nraynaud.com</email>\n"
+                + "        <city>Besançon</city>\n"
+                + "        <country>FR</country>\n"
+                + "    </user>\n"
+                + "    <userTotals>\n"
+                + "        <totalDistance>703.6283</totalDistance>\n"
+                + "        <totalDuration>193861886</totalDuration>\n"
+                + "        <totalRuns>62</totalRuns>\n"
+                + "        <totalCalories>56467</totalCalories>\n"
+                + "    </userTotals>\n"
+                + "    <userOptions>\n"
+                + "        <screenName><![CDATA[nraynaud]]></screenName>\n"
+                + "        <distanceUnit>km</distanceUnit>\n"
+                + "        <dateFormat>DD/MM/YY</dateFormat>\n"
+                + "        <startWeek>Mo</startWeek>\n"
+                + "        <avatar>2</avatar>\n"
+                + "        <uploadedAvatar/>\n"
+                + "        <isPublic>true</isPublic>\n"
+                + "    </userOptions>\n"
+                + "    <mostRecentRun id=\"1088533240\">\n"
+                + "        <startTime>2008-03-12T17:43:16+01:00</startTime>\n"
+                + "        <distance>10.0221</distance>\n"
+                + "        <duration>2763874</duration>\n"
+                + "    </mostRecentRun>\n"
+                + "</plusService>";
+        final String id = NikePlusExtractor.extractUserId(testValue1.getBytes("UTF-8"));
+        Assert.assertEquals("613535372", id);
+    }
+
+    @Test
+    public void testWorkoutsExtraction() throws FailureException, ParseException, UnsupportedEncodingException {
         final String testValue = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<plusService>\n"
                 + "    <status>success</status>\n"
