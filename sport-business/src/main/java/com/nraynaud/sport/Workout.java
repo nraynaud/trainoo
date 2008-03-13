@@ -25,4 +25,6 @@ public interface Workout extends Topic {
     Long getMessageNumber();
 
     Collection<User> getParticipants();
+
+    boolean isNikePlus();
 }

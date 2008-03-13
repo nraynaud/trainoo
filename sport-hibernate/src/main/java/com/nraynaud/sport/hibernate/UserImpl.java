@@ -5,6 +5,7 @@ import org.mindrot.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 @SuppressWarnings({"UnusedDeclaration", "NonFinalFieldReferenceInEquals", "NonFinalFieldReferencedInHashCode"})
 @Entity
@@ -44,6 +45,9 @@ public class UserImpl implements User {
 
     @Column(name = "NIKEPLUSPASSWORD")
     private String nikePlusPassword;
+
+    @Column(name = "SIGNUPDATE")
+    private Date sinupDate = new Date();
 
     @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
     @JoinTable(name = "GROUP_USER", joinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false),

@@ -27,7 +27,7 @@ public class WorkoutImpl implements Workout {
     @Column(name = "DISCIPLINE", nullable = false)
     private String discipline;
 
-    @Column(name = "NIKEPLUSID")
+    @Column(name = "NIKEPLUSID", unique = true)
     private String nikePlusId;
 
     @ManyToOne(targetEntity = UserImpl.class)
@@ -136,5 +136,9 @@ public class WorkoutImpl implements Workout {
 
     public Collection<User> getParticipants() {
         return participants;
+    }
+
+    public boolean isNikePlus() {
+        return nikePlusId != null;
     }
 }

@@ -30,18 +30,20 @@
     </s:url>
     <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="/static/pen.png" alt=""></s:a>
     <%}%>
-    <%if (workout.getParticipants().size() > 1) {%>
-    <div>Les équipiers étaient&nbsp;:
+    <div>
+        <%=workout.isNikePlus() ? "Entraînement Nike+<br>" : ""%>
+        <%if (workout.getParticipants().size() > 1) {%>
+        Les équipiers étaient&nbsp;:
         <%
             for (final User participant : workout.getParticipants())
                 out.append(' ').append(bibLink(participant));
         %>
+        <%}%>
+        <%if (isCurrentUser) {%>
+        <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
+                workout.getId().toString())%>
+        <%}%>
     </div>
-    <%}%>
-    <%if (isCurrentUser) {%>
-    <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
-            workout.getId().toString())%>
-    <%}%>
 </div>
 <div id="globalLeft">
     <h2><%=!data.messages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>

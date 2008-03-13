@@ -14,7 +14,7 @@ public class TestSimple {
     @Test
     public void testSimple() throws IOException, FailureException, ParseException {
         final String login = "nike@nraynaud.com";
-        final String password = "maud81p";
+        final String password = "lol";
         final WorkoutCollector collector = new WorkoutCollector() {
 
             public void collectWorkout(final String nikePlusId, final String discipline, final Date date,
