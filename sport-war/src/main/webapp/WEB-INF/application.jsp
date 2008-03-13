@@ -1,6 +1,8 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
 
@@ -31,7 +33,8 @@
                 Train<span id="oo">oo</span>.com</a></span>
         </h1>
 
-        <div id="catchPhrase">
+        <div id="catchPhrase" style="text-align:right;">
+            <span style="font-size:10px"><%=new SimpleDateFormat().format(new Date())%></span><br/>
             Vous allez en suer&nbsp;!
         </div>
     </div>
