@@ -13,22 +13,6 @@ public class TestSimple {
 
     @Test
     public void testSimple() throws IOException, FailureException, ParseException {
-        final String login = "nike@nraynaud.com";
-        final String password = "lol";
-        final WorkoutCollector collector = new WorkoutCollector() {
-
-            public void collectWorkout(final String nikePlusId, final String discipline, final Date date,
-                                       final Double distance,
-                                       final Long duration) {
-                System.out.println("distance: " + distance);
-                System.out.println("duration: " + duration);
-                System.out.println("date: " + date);
-            }
-
-            public void endCollection() {
-            }
-        };
-        NikePlusExtractor.collectNikePlusWorkouts(login, password, collector);
         final String testValue = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<plusService>\n"
                 + "    <status>success</status>\n"
