@@ -1,9 +1,9 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
-<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
 
@@ -39,7 +39,7 @@
             Vous allez en suer&nbsp;!
         </div>
     </div>
-    <%Helpers.call(pageContext, "loginHeader.jsp");%>
+    <%call(pageContext, "loginHeader.jsp");%>
     <div style="position:relative;">
         <div id="adPlaceHolder">
         </div>
@@ -83,8 +83,9 @@
         </script>
         <![endif]-->
         <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
-        <r:writeJavascript/><% final ActionDetail actionDetail = Helpers.property("actionDescription",
-            ActionDetail.class); %>
+        <r:writeJavascript/>
+        <% final ActionDetail actionDetail = property("actionDescription",
+                ActionDetail.class); %>
 
         <!--[if lt IE 7]>
         <script type="text/javascript">
@@ -104,7 +105,7 @@
         <noscript><a href="http://www.labsmedia.com/index.html">Open source tools</a></noscript>
         <script type="text/javascript"><!--
         clickHeatSite = 'trainoo.com';
-        clickHeatGroup = '<%=actionDetail.namespace.replaceAll("/", "-") +'-' + actionDetail.name%>';
+        clickHeatGroup = '<%=actionDetail.namespace.replaceAll("/", "-") +'-' + actionDetail.name + (isLogged() ? "-logged" : "")%>';
         clickHeatServer = 'http://nraynaud.fr/clickheat/click.php';
         initClickHeat();
         //-->
