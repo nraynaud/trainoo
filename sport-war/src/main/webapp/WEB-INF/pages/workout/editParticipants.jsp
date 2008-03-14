@@ -20,7 +20,8 @@
             <s:fielderror/>
             <s:hidden name="id" value="%{id}"/>
             <label for="participants">Les autres participants étaient&nbsp;:</label><br/>
-            <s:select id="participants" list="%{allUsers}" name="participants" multiple="true" value="%{participants}"/>
+            <s:select id="participants" list="%{allUsers}" name="participants" multiple="true" value="%{participants}"
+                      size="10"/>
             <s:submit value="Envoyer la liste !"/>
         </s:form>
     </div>
