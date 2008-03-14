@@ -1,4 +1,5 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
+<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -82,7 +83,8 @@
         </script>
         <![endif]-->
         <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
-        <r:writeJavascript/>
+        <r:writeJavascript/><% final ActionDetail actionDetail = Helpers.property("actionDescription",
+            ActionDetail.class); %>
 
         <!--[if lt IE 7]>
         <script type="text/javascript">
@@ -97,6 +99,15 @@
             var pageTracker = _gat._getTracker("UA-3412937-1");
             pageTracker._initData();
             pageTracker._trackPageview();
+        </script>
+        <script type="text/javascript" src="http://nraynaud.fr/clickheat/js/clickheat.js"></script>
+        <noscript><a href="http://www.labsmedia.com/index.html">Open source tools</a></noscript>
+        <script type="text/javascript"><!--
+        clickHeatSite = 'trainoo.com';
+        clickHeatGroup = '<%=actionDetail.namespace +'/' + actionDetail.name%>';
+        clickHeatServer = 'http://nraynaud.fr/clickheat/click.php';
+        initClickHeat();
+        //-->
         </script>
 
         <div id="ad">
