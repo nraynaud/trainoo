@@ -104,7 +104,7 @@
         <noscript><a href="http://www.labsmedia.com/index.html">Open source tools</a></noscript>
         <script type="text/javascript"><!--
         clickHeatSite = 'trainoo.com';
-        clickHeatGroup = '<%=actionDetail.namespace +'/' + actionDetail.name%>';
+        clickHeatGroup = '<%=actionDetail.namespace.replaceAll("/", "-") +'-' + actionDetail.name%>';
         clickHeatServer = 'http://nraynaud.fr/clickheat/click.php';
         initClickHeat();
         //-->
