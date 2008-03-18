@@ -13,7 +13,7 @@ import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import java.util.List;
 
 @Results({
-        //the type avoid having the page decorated by application.jsp
+        //the type avoids having the page decorated by application.jsp
 @Result(name = Constants.FEEDBACK, type = ServletDispatcherResult.class, value = "/WEB-INF/pages/feedback.jsp"),
 @Result(name = "logins", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/logins.jsp")
         })

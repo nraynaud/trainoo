@@ -1,8 +1,6 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
@@ -35,7 +33,6 @@
         </h1>
 
         <div id="catchPhrase" style="text-align:right;">
-            <span style="font-size:10px"><%=new SimpleDateFormat().format(new Date())%></span><br/>
             Vous allez en suer&nbsp;!
         </div>
     </div>
@@ -55,7 +52,8 @@
             %>
         </div>
         <hr id="bottom">
-        <div><p class="smaller" style="text-align:center;">Copyright Nicolas Raynaud 2008.
+        <div><p class="smaller" style="text-align:center;"><%=selectableLink("/", "about", "À propos de trainoo.com",
+                null)%> -
             <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
 
         <script type="text/javascript" src="<s:url value="/static/prototype.js"/>"></script>
@@ -84,8 +82,6 @@
         <![endif]-->
         <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
         <r:writeJavascript/>
-        <% final ActionDetail actionDetail = property("actionDescription",
-                ActionDetail.class); %>
 
         <!--[if lt IE 7]>
         <script type="text/javascript">
@@ -103,6 +99,7 @@
         </script>
         <script type="text/javascript" src="http://nraynaud.fr/clickheat/js/clickheat.js"></script>
         <noscript><a href="http://www.labsmedia.com/index.html">Open source tools</a></noscript>
+        <% final ActionDetail actionDetail = property("actionDescription", ActionDetail.class); %>
         <script type="text/javascript"><!--
         clickHeatSite = 'trainoo.com';
         clickHeatGroup = '<%=actionDetail.namespace.replaceAll("/", "-") +'-' + actionDetail.name + (isLogged() ? "-logged" : "")%>';
