@@ -22,7 +22,17 @@
                 frauduleux à vos données).
             </li>
         </ol>
+    </div>
 
+    <h2>Quelques mentions amicales</h2>
+
+    <div class="content"><p>
+        Les musiciens d'entre vous sont invités cordialement à se rendre sur <a href="http://www.le-musicien.com/">Le
+        Musicien</a>, l'excellent site de mon ami Vincent.</p>
+
+        <p>Je tiens à saluer Cathy et René du <a href="http://www.bardeshalles-lessablesdolonne.net/">Bar des Halles</a>
+            chez qui j'ai pu travailler lorsque ma connexion internet
+            était en panne.</p>
     </div>
 
     <h2>Un peu de nourriture pour les légalistes</h2>
