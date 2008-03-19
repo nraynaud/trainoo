@@ -30,9 +30,8 @@
         Les musiciens d'entre vous sont invités cordialement à se rendre sur <a href="http://www.le-musicien.com/">Le
         Musicien</a>, l'excellent site de mon ami Vincent.</p>
 
-        <p>Je tiens à saluer Cathy et René du <a href="http://www.bardeshalles-lessablesdolonne.net/">Bar des Halles</a>
-            chez qui j'ai pu travailler lorsque ma connexion internet
-            était en panne.</p>
+        <p>On donne un gros clin d'oeil à <a href="http://www.bardeshalles-lessablesdolonne.net/">Cathy et René</a>, qui
+            a toujours une connection wifi au chaud quand celle du bureau tombe.</p>
     </div>
 
     <h2>Un peu de nourriture pour les légalistes</h2>
