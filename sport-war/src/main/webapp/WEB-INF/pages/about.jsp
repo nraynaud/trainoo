@@ -13,13 +13,12 @@
         visibles par vous-même directement sur le site. Elles ne feront pas l'objet d'un transfert à des
         tiers. Si vous souhaitez obtenir des précisions ou un récapitulatif, envoyez un e-mail à <a
             href="mailto:cnil@trainoo.com">cnil@trainoo.com</a>.<br>
-        Conscient de l'importance de vos données, un certain nombre de précaution ont été prise pour les préserver en
+        Conscient de l'importance de vos données, un certain nombre de précautions ont été prises pour les conserver en
         sécurité.
         <ol>
             <li>Seule les données nécessaires au fonctionnement du site sont collectées.</li>
             <li>Votre mot de passe d'accès n'est pas lisible une fois stocké (personne ne peut le retrouver).</li>
-            <li>votre mot de passe Nike+ et vos adresses e-mail sont cryptés (ceci limite la dispersion en cas d'accès
-                frauduleux à vos données).
+            <li>votre mot de passe Nike+ et vos adresses e-mail sont cryptés.
             </li>
         </ol>
     </div>
@@ -27,7 +26,7 @@
     <h2>Quelques mentions amicales</h2>
 
     <div class="content"><p>
-        Les musiciens d'entre vous sont invités cordialement à se rendre sur <a href="http://www.le-musicien.com/">Le
+        Les musiciens sont invités cordialement à se rendre sur <a href="http://www.le-musicien.com/">Le
         Musicien</a>, l'excellent site de mon ami Vincent.</p>
 
         <p>On donne un gros clin d'oeil à <a href="http://www.bardeshalles-lessablesdolonne.net/">Cathy et René</a>, qui
