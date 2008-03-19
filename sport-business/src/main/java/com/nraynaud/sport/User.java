@@ -22,4 +22,6 @@ public interface User extends Serializable {
     UserString getNikePluEmail();
 
     UserString getNikePlusPassword();
+
+    String getNikePlusId();
 }

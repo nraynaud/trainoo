@@ -764,10 +764,12 @@ public class HibernateApplication implements Application {
         entityManager.merge(user);
     }
 
-    public void updateNikePlusData(final User user, final String nikePlusEmail, final String nikePlusPassword) {
+    public void updateNikePlusData(final User user, final String nikePlusEmail, final String nikePlusPassword,
+                                   final String nikePlusId) {
         final UserImpl userImpl = (UserImpl) user;
         userImpl.setNikePluEmail(nikePlusEmail);
         userImpl.setNikePlusPassword(nikePlusPassword);
+        userImpl.setNikePlusId(nikePlusId);
         entityManager.merge(userImpl);
     }
 }

@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.action.privatedata;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.importer.FailureException;
 import com.nraynaud.sport.importer.Importer;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
@@ -28,11 +29,17 @@ public class ChangeNikePlusAction extends DefaultAction {
 
     @PostOnly
     public String create() {
-        application.updateNikePlusData(getUser(), nikePlusEmail, nikePlusPassword);
-        final String result = RefreshNikePlusAction.refresh(this, application, importer, nikePlusEmail,
-                nikePlusPassword);
-        if (SUCCESS.equals(result))
-            addActionMessage("vos paramètres Nike+ ont bien été mis à jour et vos entraînements importés.");
-        return result;
+        try {
+            final String nikePlusId = importer.getId(nikePlusEmail, nikePlusPassword);
+            application.updateNikePlusData(getUser(), nikePlusEmail, nikePlusPassword, nikePlusId);
+            final String result = RefreshNikePlusAction.refresh(this, application, importer, nikePlusEmail,
+                    nikePlusPassword);
+            if (SUCCESS.equals(result))
+                addActionMessage("vos paramètres Nike+ ont bien été mis à jour et vos entraînements importés.");
+            return result;
+        } catch (FailureException e) {
+            addActionError("Votre adresse Nike+ ou votre mot de passe Nike+ sont incorrects.");
+            return INPUT;
+        }
     }
 }

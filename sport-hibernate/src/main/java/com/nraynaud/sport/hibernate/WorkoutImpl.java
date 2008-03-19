@@ -141,4 +141,8 @@ public class WorkoutImpl implements Workout {
     public boolean isNikePlus() {
         return nikePlusId != null;
     }
+
+    public String getNikePlusId() {
+        return nikePlusId;
+    }
 }

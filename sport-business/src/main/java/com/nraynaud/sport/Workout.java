@@ -27,4 +27,6 @@ public interface Workout extends Topic {
     Collection<User> getParticipants();
 
     boolean isNikePlus();
+
+    String getNikePlusId();
 }

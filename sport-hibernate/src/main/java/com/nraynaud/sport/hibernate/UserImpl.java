@@ -46,6 +46,9 @@ public class UserImpl implements User {
     @Column(name = "NIKEPLUSPASSWORD")
     private String nikePlusPassword;
 
+    @Column(name = "NIKEPLUSID")
+    private String nikePlusId;
+
     @Column(name = "SIGNUPDATE")
     private Date sinupDate = new Date();
 
@@ -167,5 +170,13 @@ public class UserImpl implements User {
 
     private static String cipher(final String plainText) {
         return plainText != null && plainText.length() > 0 ? CipherHelper.cipher(plainText) : null;
+    }
+
+    public String getNikePlusId() {
+        return nikePlusId;
+    }
+
+    public void setNikePlusId(final String nikePlusId) {
+        this.nikePlusId = nikePlusId;
     }
 }

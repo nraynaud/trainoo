@@ -31,7 +31,19 @@
     <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="/static/pen.png" alt=""></s:a>
     <%}%>
     <div>
-        <%=workout.isNikePlus() ? "Entraînement Nike+<br>" : ""%>
+        <%
+            if (workout.isNikePlus()) {
+                if (workout.getUser().getNikePlusId() != null) {
+        %> <a style="font-size:18px"
+              href="http://nikeplus.nike.com/nikeplus/?l=runners,runs,<%=workout.getUser().getNikePlusId()%>,runID,<%=workout.getNikePlusId()%>">Voir
+        la course sur nike.com</a> <%
+    } else {
+    %>
+        Entraînement Nike+
+        <%
+                }
+            }
+        %><br>
         <%if (workout.getParticipants().size() > 1) {%>
         Les équipiers étaient&nbsp;:
         <%
