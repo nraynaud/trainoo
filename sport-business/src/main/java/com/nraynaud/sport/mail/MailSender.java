@@ -24,14 +24,14 @@ public class MailSender {
     public static void sendPasswordChangeMail(final String login, final String password, final String email) throws
             MailException {
         final String content = new Formatter().format(PASSWORD_CHANGE_TEMPLATE, login, password).toString();
-        final String subject = "trainoo.com - vos identifiants de connection ont été mis à jour";
+        final String subject = "trainoo.com - vos identifiants de connexion ont été mis à jour";
         sendMessage(email, subject, content);
     }
 
     public static void forgotPasswordMail(final UserString name, final String password, final String email) throws
             MailException {
         final String content = new Formatter().format(FORGOT_PASSWORD_TEMPLATE, name, password).toString();
-        final String subject = "trainoo.com - vos identifiants de connection ont été mis à jour";
+        final String subject = "trainoo.com - vos identifiants de connexion ont été mis à jour";
         sendMessage(email, subject, content);
     }
 
