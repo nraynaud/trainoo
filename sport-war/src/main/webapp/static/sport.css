@@ -513,7 +513,8 @@ a.selected {
 div.userSupplied {
     padding: 0.2em;
     margin: 1em 0;
-    border: gray solid thin;
+    background-color: rgb( 230, 230, 230 );
+    border: rgb( 200, 200, 200 ) solid 2px;
 }
 
 ul {
