@@ -66,7 +66,7 @@ public class Helper {
         final int n = rand(minCharacters, maxCharacters);
         final StringBuilder characters = new StringBuilder(n);
         for (int i = 0; i < n; i++)
-            characters.append(rand('a', 'z'));
+            characters.append((char) rand('a', 'z'));
         return characters.toString();
     }
 
