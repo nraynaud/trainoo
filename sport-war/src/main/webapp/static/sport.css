@@ -28,7 +28,7 @@ form label {
 }
 
 fieldset {
-    border: 2px gray solid;
+    border: 2px #6C3C1E solid;
     margin: 10px 0 10px 0;
     padding: 10px 5px 10px 3px;
 }
@@ -48,7 +48,7 @@ input, select, textarea {
 }
 
 textarea {
-    border: gray inset 2px;
+    border: gray inset 1px;
 }
 
 form {
@@ -527,4 +527,9 @@ li {
     background-position: 0 6px;
     background-repeat: no-repeat;
     padding-left: 12px;
+}
+
+p.submit {
+    text-align: right;
+    margin-bottom: 0;
 }

@@ -32,6 +32,6 @@
         <s:textfield id="webSite" name="webSite" cssStyle="width:100%;"/>
 
         <p:javascript>makeItCount('webSite', <%=WEBSITE_MAX_LENGTH%>);</p:javascript>
-        <p><s:submit value="Valider !"/></p>
+        <s:submit value="Valider !"/>
     </div>
 </s:form>

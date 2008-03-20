@@ -4,14 +4,16 @@ import com.nraynaud.sport.Application;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
+import com.opensymphony.xwork2.Action;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 
-@Result(value = "/WEB-INF/pages/about.jsp")
+@Result(name = Action.SUCCESS, value = "/WEB-INF/pages/forgotPassword.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
-public class AboutAction extends DefaultAction {
-    public AboutAction(final Application application) {
+public class ForgotPasswordAction extends DefaultAction {
+
+    public ForgotPasswordAction(final Application application) {
         super(application);
     }
 }

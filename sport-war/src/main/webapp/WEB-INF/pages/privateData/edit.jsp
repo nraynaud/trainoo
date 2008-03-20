@@ -19,7 +19,7 @@
 
             <p><s:textfield id="email" name="email" cssStyle="width:100%"/></p>
             <p:javascript>$('email').focus();</p:javascript>
-            <p><s:submit id="submit" value="Valider !"/></p>
+            <s:submit id="submit" value="Valider !"/>
         </s:form>
     </fieldset>
     <fieldset>
@@ -34,7 +34,7 @@
 
             <p><s:password id="oldPassword" name="oldPassword" cssStyle="width:100%"/></p>
             <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null, "adjective", "'nouveau'"); %>
-            <p><s:submit id="submit" value="Valider !"/></p>
+            <s:submit id="submit" value="Valider !"/>
         </s:form>
     </fieldset>
     <fieldset>
@@ -55,7 +55,7 @@
 
             <p><s:password id="nikePlusPassword" name="nikePlusPassword" cssStyle="width:100%"/></p>
 
-            <p><s:submit id="submit" value="Valider !"/></p>
+            <s:submit id="submit" value="Valider !"/>
         </s:form>
     </fieldset>
 

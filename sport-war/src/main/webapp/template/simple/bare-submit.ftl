@@ -20,7 +20,6 @@
  * under the License.
  */
 -->
-<p class="submit">
 <#if parameters.type?exists && parameters.type=="button">
 <button type="submit"<#rt/>
 <#if parameters.id?exists>
@@ -88,4 +87,3 @@
 <#include "/${parameters.templateDir}/simple/common-attributes.ftl" />
 />
 </#if>
-</p>

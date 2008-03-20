@@ -44,7 +44,7 @@
                   style="display:inline;vertical-align:top;padding:0; margin:0;">
                 <s:hidden name="id" value="%{id}"/>
                 <s:hidden name="fromAction" value="%{actionDescription}"/>
-                <s:submit value="X" title="supprimer"/>
+                <s:submit value="X" title="supprimer" template="bare-submit"/>
             </form>
             <%}%>
         </div>
@@ -77,7 +77,8 @@
                          cssStyle="border-width:2px" value="%{content.nonEscaped()}"/></div>
         <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
             $('editContent').focus();</p:javascript>
-        <s:submit value="Valider"/> <%=currenUrlWithoutParam("Annuler", EDIT_MESSAGE)%>
+        <p class="submit"><%=currenUrlWithoutParam("Annuler", EDIT_MESSAGE)%> <s:submit value="Valider"
+                                                                                        template="bare-submit"/></p>
         <%
             } finally {
                 disAllowOverrides();

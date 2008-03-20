@@ -22,7 +22,7 @@
             <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>, <%= LOGIN_MIN_LENGTH%>);</p:javascript>
             <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null); %>
 
-            <p style="text-align:right;"><s:submit value="Inscription !"/></p>
+            <s:submit value="Inscription !"/>
             <fieldset style="width:80%; font-size:11px; margin:auto;">
                 <legend>Optionnel</legend>
                 <p class="loginLabel  tinyLabel" style="padding-top:0"><label for="email">Votre e-mail <span
