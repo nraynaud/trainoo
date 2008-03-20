@@ -15,12 +15,12 @@
             href="mailto:cnil@trainoo.com">cnil@trainoo.com</a>.<br>
         Conscient de l'importance de vos données, un certain nombre de précautions ont été prises pour les conserver en
         sécurité.
-        <ol>
+        <ul>
             <li>Seule les données nécessaires au fonctionnement du site sont collectées.</li>
             <li>Votre mot de passe d'accès n'est pas lisible une fois stocké (personne ne peut le retrouver).</li>
             <li>votre mot de passe Nike+ et vos adresses e-mail sont cryptés.
             </li>
-        </ol>
+        </ul>
     </div>
 
     <h2>Quelques mentions amicales</h2>
