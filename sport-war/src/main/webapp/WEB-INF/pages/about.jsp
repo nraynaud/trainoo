@@ -25,12 +25,12 @@
 
     <h2>Quelques mentions amicales</h2>
 
-    <div class="content"><p>
-        Les musiciens sont invités cordialement à se rendre sur <a href="http://www.le-musicien.com/">Le
-        Musicien</a>, l'excellent site de mon ami Vincent.</p>
+    <div class="content">
+        <p>Les musiciens sont invités cordialement à se rendre sur <a href="http://www.le-musicien.com/">Le
+            Musicien</a>, l'excellent site de mon ami Vincent.</p>
 
         <p>On donne un gros clin d'oeil à <a href="http://www.bardeshalles-lessablesdolonne.net/">Cathy et René</a>, qui
-            a toujours une connection wifi au chaud quand celle du bureau tombe.</p>
+            ont toujours une connection wifi au chaud quand celle du bureau tombe.</p>
     </div>
 
     <h2>Un peu de nourriture pour les légalistes</h2>
