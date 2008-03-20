@@ -13,6 +13,7 @@
             <p><label for="email">Adresse e-mail&nbsp;:</label></p>
 
             <p><s:textfield id="email" name="email" cssStyle="width:100%"/></p>
+            <p:javascript>$('email').focus();</p:javascript>
 
             <s:submit value="envoyer !"/>
         </fieldset>

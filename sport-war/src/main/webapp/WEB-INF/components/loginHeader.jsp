@@ -37,7 +37,10 @@
             "id", String.valueOf(user.getId()))%>
         <a href="<s:url action="logout" namespace="/"/>">Déconnexion</a>
         <% } else {
-            out.append(loginUrl("Connexion")).append(' ').append(signupUrl("Inscription"));
+            out.append(selectableLink("/", "forgotPassword", "Mot de passe oublié ?", null))
+                    .append(loginUrl("Connexion"))
+                    .append(' ')
+                    .append(signupUrl("Inscription"));
         } %>
     </div>
 </div>
