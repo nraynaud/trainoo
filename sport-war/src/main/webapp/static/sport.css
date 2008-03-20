@@ -47,7 +47,7 @@ input, select, textarea {
     vertical-align: baseline;
 }
 
-textarea {
+textarea, input[type=text] {
     border: gray inset 1px;
 }
 
