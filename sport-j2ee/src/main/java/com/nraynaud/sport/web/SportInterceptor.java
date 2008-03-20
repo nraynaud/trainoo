@@ -82,7 +82,6 @@ public class SportInterceptor extends AbstractInterceptor {
             throw new RuntimeException("méthode d'appel interdite");
     }
 
-    @SuppressWarnings({"CaughtExceptionImmediatelyRethrown"})
     protected static Method getActionMethod(final Class<?> actionClass, final String methodName) throws
             NoSuchMethodException {
         Method method;

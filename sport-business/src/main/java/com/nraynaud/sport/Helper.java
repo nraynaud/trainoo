@@ -1,7 +1,10 @@
 package com.nraynaud.sport;
 
+import java.util.Random;
+
 public class Helper {
     public static final String HEX_CHARS = "0123456789ABCDEF";
+    private static final Random RANDOM = new Random();
 
     private Helper() {
     }
@@ -57,5 +60,23 @@ public class Helper {
 
     public static String escaped(final UserString string) {
         return escaped(string.nonEscaped());
+    }
+
+    private static String randomstring(final int minCharacters, final int maxCharacters) {
+        final int n = rand(minCharacters, maxCharacters);
+        final StringBuilder characters = new StringBuilder(n);
+        for (int i = 0; i < n; i++)
+            characters.append(rand('a', 'z'));
+        return characters.toString();
+    }
+
+    private static int rand(final int min, final int max) {
+        final int range = max - min + 1;
+        final int i = Math.abs(RANDOM.nextInt() % range);
+        return min + i;
+    }
+
+    public static String randomstring() {
+        return randomstring(6, 9);
     }
 }

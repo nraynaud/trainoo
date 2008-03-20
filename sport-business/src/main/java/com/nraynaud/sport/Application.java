@@ -109,4 +109,6 @@ public interface Application extends UserStore {
                           String nikePlusId);
 
     void execute(final Runnable runnable);
+
+    void forgotPassword(final String email) throws UserNotFoundException, MailException;
 }

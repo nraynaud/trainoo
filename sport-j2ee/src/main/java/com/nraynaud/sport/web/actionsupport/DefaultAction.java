@@ -3,10 +3,7 @@ package com.nraynaud.sport.web.actionsupport;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.data.NewMessageData;
-import com.nraynaud.sport.web.ActionDetail;
-import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.Public;
-import com.nraynaud.sport.web.SportRequest;
+import com.nraynaud.sport.web.*;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -56,6 +53,11 @@ public class DefaultAction extends ActionSupport {
     @SkipValidation
     public String index() {
         return Action.SUCCESS;
+    }
+
+    @PostOnly
+    public String create() {
+        throw new RuntimeException("méthode d'appel interdite");
     }
 
     protected static void pushValue(final Object data) {

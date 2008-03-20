@@ -53,6 +53,21 @@ public class HibernateApplication implements Application {
         runnable.run();
     }
 
+    public void forgotPassword(final String email) throws UserNotFoundException, MailException {
+        final Query query = entityManager.createQuery("select u from UserImpl u where u.email=:cryptedMail");
+        query.setParameter("cryptedMail", CipherHelper.cipher(email));
+        try {
+            final UserImpl user;
+            user = (UserImpl) query.getSingleResult();
+            final String password = Helper.randomstring();
+            user.setPassword(password);
+            MailSender.forgotPasswordMail(user.getName(), password, email);
+            entityManager.merge(user);
+        } catch (NoResultException e) {
+            throw new UserNotFoundException();
+        }
+    }
+
     @SuppressWarnings({"unchecked"})
     private PaginatedCollection<Workout> getWorkouts(final User user, final String discipline, final int startIndex,
                                                      final int pageSize) {
