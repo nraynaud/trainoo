@@ -30,7 +30,7 @@
             Musicien</a>, l'excellent site de mon ami Vincent.</p>
 
         <p>On donne un gros clin d'oeil à <a href="http://www.bardeshalles-lessablesdolonne.net/">Cathy et René</a>, qui
-            ont toujours une connection wifi au chaud quand celle du bureau tombe.</p>
+            ont toujours une connexion wifi au chaud quand celle du bureau tombe.</p>
     </div>
 
     <h2>Un peu de nourriture pour les légalistes</h2>
