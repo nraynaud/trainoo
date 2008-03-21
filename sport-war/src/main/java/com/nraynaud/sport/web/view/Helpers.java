@@ -27,6 +27,13 @@ public class Helpers {
     private static final String OVERRIDES_KEY = "overrides";
     public static final SportActionMapper MAPPER = new SportActionMapper();
 
+    private static final String STATIC_CONTENT_PREFIX;
+
+    static {
+        final String envVar = System.getenv("SPORT_CONTENT_PREFIX");
+        STATIC_CONTENT_PREFIX = envVar != null ? envVar : "";
+    }
+
     private Helpers() {
     }
 
@@ -342,5 +349,12 @@ public class Helpers {
 
     public static String formatDuration(final Long duration) {
         return duration != null ? DurationConverter.formatDuration(duration, "h", "\'", "''") : "";
+    }
+
+    /**
+     * rewriting for static resources
+     */
+    public static String stat(final String path) {
+        return STATIC_CONTENT_PREFIX + path;
     }
 }

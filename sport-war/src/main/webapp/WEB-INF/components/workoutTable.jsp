@@ -45,8 +45,8 @@
                 <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
                     <s:param name="id" value="id"/>
                 </s:url>
-                <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="/static/pen.png"
-                                                                                         alt=""></s:a>
+                <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img
+                        src="<%=stat("/static/pen.png")%>" alt=""></s:a>
                 <%}%>
             </td>
             <%}%>
@@ -54,7 +54,7 @@
                 <div class="messageLink">
                     <s:a cssClass="messageLink" href="%{workoutUrl}"
                          title="Discussions à propos de cet entraînement"><img
-                            src="/static/bulle.png" alt="commenter"><s:if test="%{messageNumber > 0}">
+                            src="<%=stat("/static/bulle.png")%>" alt="commenter"><s:if test="%{messageNumber > 0}">
                         <span class="messageNumber"><s:property value="messageNumber"/></span>
                     </s:if></s:a>
                 </div>

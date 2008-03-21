@@ -29,7 +29,8 @@
         %>
         <span id="loginName"><!--<%=user.getId()%> --><%= user.getName()%><%= user.getNikePluEmail()
                 != null ? selectableLink(
-                "/privatedata", "refreshNikePlus", "<img src='/static/silk/arrow_refresh.png' alt='Rafraîchir nike+'/>",
+                "/privatedata", "refreshNikePlus",
+                "<img src='" + stat("/static/silk/arrow_refresh.png") + "' alt='Rafraîchir nike+'/>",
                 "Rafraîchir les données Nike+", "fromAction", findFromAction()) : ""%>
             <span style="font-size:x-small;"><%= selectableLink("/privatedata", "", "mon compte", null)%></span>
         </span>

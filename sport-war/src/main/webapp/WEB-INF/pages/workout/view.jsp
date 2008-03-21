@@ -28,7 +28,7 @@
     <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
         <s:param name="id" value="id"/>
     </s:url>
-    <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="/static/pen.png" alt=""></s:a>
+    <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="<%=stat("/static/pen.png")%>" alt=""></s:a>
     <%}%>
     <div>
         <%

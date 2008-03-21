@@ -17,12 +17,12 @@
     <style>
     #gradient {
       background: none;
-      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/gradient.png', sizingMethod='scale');
+      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<%=stat("/static/gradient.png")%>', sizingMethod='scale');
     }
     </style>
     <![endif]-->
 
-    <link href="<s:url value="/static/sport.css"/>" rel="stylesheet" type="text/css">
+    <link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="center">
@@ -56,8 +56,8 @@
                 null)%> -
             <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
 
-        <script type="text/javascript" src="<s:url value="/static/prototype.js"/>"></script>
-        <script type="text/javascript" src="<s:url value="/static/scriptaculous.js"/>"></script>
+        <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
+        <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
 
         <!--[if !IE]>-->
         <script type="text/javascript">
@@ -80,7 +80,7 @@
               $('logoHref').insert("<div id='gradient'><"+"/div>");
         </script>
         <![endif]-->
-        <script type="text/javascript" src="<s:url value="/static/sport.js"/>"></script>
+        <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
         <r:writeJavascript/>
 
         <!--[if lt IE 7]>
