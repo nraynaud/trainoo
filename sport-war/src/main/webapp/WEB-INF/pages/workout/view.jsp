@@ -71,7 +71,6 @@
             call(pageContext, "messageList.jsp", data.messages, "pageVariable", "'publicMessagesPageIndex'");
         %>
     </div>
-    <%call(pageContext, "oxadoBanner.jsp");%>
 </div>
 
 <div id="globalRight">

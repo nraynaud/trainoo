@@ -17,7 +17,6 @@
         </p>
         <% call(pageContext, "workoutTable.jsp", data.statisticsData.workouts, "displayEdit", "false", "displayName",
                 "true");%>
-        <%call(pageContext, "oxadoBanner.jsp");%>
     </div>
 
 </div>

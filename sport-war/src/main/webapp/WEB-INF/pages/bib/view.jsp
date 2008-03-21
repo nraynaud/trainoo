@@ -39,7 +39,6 @@
     <h2>Ses dernières sorties</h2>
     <% call(pageContext, "workoutTable.jsp", data.workouts);%>
     <%}%>
-    <%call(pageContext, "oxadoBanner.jsp");%>
 </div>
 <%if (!lookingOwnBib && isLogged()) {%>
 <div id="globalRight">
