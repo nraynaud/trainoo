@@ -5,7 +5,7 @@ body {
     margin: 0;
     font-family: sans-serif;
     color: #303030;
-    background: #fff url( '/static/bg.gif' );
+    background: #fff url( 'bg.gif' );
 }
 
 /* Neutralize styling:
@@ -124,7 +124,7 @@ h2, h1 {
     color: #6C3C1E;
     font-family: georgia, "times new roman", serif;
     font-size: 22px;
-    background-image: url( '/static/db1.gif' );
+    background-image: url( 'db1.gif' );
     background-repeat: no-repeat;
     height: 60px;
     padding-left: 22px;
@@ -286,7 +286,7 @@ div.autocomplete ul li {
 
 .messageHeading {
     color: white;
-    background: #824900 url( /static/thbg.gif ) repeat-x scroll 0;
+    background: #824900 url( thbg.gif ) repeat-x scroll 0;
     padding-left: 0.5em;
     border: none;
     height: 1.9em;
@@ -524,7 +524,7 @@ ul {
 }
 
 li {
-    background-image: url( /static/bullet.gif );
+    background-image: url( bullet.gif );
     background-position: 0 6px;
     background-repeat: no-repeat;
     padding-left: 12px;
