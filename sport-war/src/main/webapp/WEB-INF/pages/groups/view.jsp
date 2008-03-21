@@ -56,6 +56,7 @@
         }
         call(pageContext, "messageList.jsp", groupPage.messages, "pageVariable", "'messagesStartIndex'");
     %>
+    <%call(pageContext, "oxadoBanner.jsp");%>
 </div>
 <%}%>
 <div id="<%=group == null ? "tinyCenter" : "globalRight"%>">

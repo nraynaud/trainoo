@@ -23,6 +23,7 @@
         </s:url>
         <%call(pageContext, "workoutForm.jsp", null, "action", "createteurl", "submit", literal("Ajouter"));%>
     </div>
+    <%call(pageContext, "oxadoBanner.jsp");%>
 </div>
 
 <div id="globalRight">
