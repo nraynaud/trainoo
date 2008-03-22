@@ -12,6 +12,7 @@ function feedback(field_name, val)
         Element.update(feedbackElement, '');
     }
     oldValue = val + field_name;
+    return true;
 }
 ;
 /* MIT licence bablaba */
@@ -119,10 +120,11 @@ function showToolTip(e, content) {
     var leftPos = absoluteX - tooltip.offsetWidth / 2;
     if (leftPos < 0)leftPos = 0;
     tooltip.style.left = leftPos + 'px';
-    tooltip.style.top = absoluteY - tooltip.offsetHeight + 10 + 'px';
+    tooltip.style.top = absoluteY - tooltip.offsetHeight + 'px';
 }
 function hideToolTip()
 {
     document.getElementById('bubble_tooltip').style.display = 'none';
+    return true;
 }
 /***** END LGPL ****/
