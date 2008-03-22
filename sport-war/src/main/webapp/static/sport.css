@@ -109,12 +109,12 @@ table.workouts tr.highLight td {
 
 th {
     text-align: left;
-    color: #57470C;
+    color: #6C3C1E;
 }
 
 hr {
-    color: #57470C;
-    background-color: #57470C;
+    color: #6C3C1E;
+    background-color: #6C3C1E;
     height: 2px;
     border: none;
 }
@@ -534,3 +534,39 @@ p.submit {
     text-align: right;
     margin-bottom: 0;
 }
+
+/************* tooltip stuff ***************/
+#bubble_tooltip {
+    width: 182px;
+    position: absolute;
+    display: none;
+}
+
+#bubble_tooltip .bubble_top {
+    background-image: url( 'tooltip/bubble_top.png' );
+    background-repeat: no-repeat;
+    height: 16px;
+}
+
+#bubble_tooltip .bubble_middle {
+    background-image: url( 'tooltip/bubble_middle.png' );
+    background-repeat: repeat-y;
+    background-position: bottom left;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+#bubble_tooltip .bubble_middle div {
+    position: relative;
+    font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+    font-size: 11px;
+}
+
+#bubble_tooltip .bubble_bottom {
+    background-image: url( 'tooltip/bubble_bottom.png' );
+    background-repeat: no-repeat;
+    height: 46px;
+    position: relative;
+}
+
+/****************** END TOOLTIP ******************/

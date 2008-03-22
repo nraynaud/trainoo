@@ -29,28 +29,40 @@
                 <td><s:select id="discipline" list="{'course', 'vélo', 'VTT', 'marche', 'natation', 'roller'}"
                               name="discipline"
                               required="true" value="discipline"/></td>
+                <p:javascript>
+                    function showWorkoutToolTip(event, tip, fieldName, val) {
+                    var info = $('info');
+                    $('info').style .visibility='visible';
+                    $('tip').update(tip);
+                    showToolTip(event, info);
+                    feedback(fieldName, val);
+                    }
+                </p:javascript>
                 <td><s:textfield id="date"
                                  name="date"
                                  size="10"
                                  maxlength="15"
-                                 onfocus="$('info').style.visibility='visible'; $('tip').update('ex&nbsp;: 03/10/2006 ou \"hier\"'); feedback('date', this.value);"
-                                 onblur="$('info').style.visibility='hidden'"
+                                 onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03/10/2006 ou \"hier\"' , 'date', this.value);"
+                                 onblur="hideToolTip();"
                                  onkeyup="feedback('date', this.value)"
-                                 value="%{date == null  ? 'aujourd\\'hui' : date}"/></td>
+                                 onmouseover=""
+                                 onmouseout=""
+                                 value="%{date == null  ? 'aujourd\\'hui' : date}"/>
+                </td>
                 <td><s:textfield id="duration"
                                  name="duration"
                                  size="6"
                                  maxlength="10"
-                                 onfocus="$('info').style.visibility='visible'; $('tip').update('ex&nbsp;: 03h41\\\'17 ou 40\\\'22'); feedback('duration', this.value);"
-                                 onblur="$('info').style.visibility='hidden'"
+                                 onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03h41\\\'17 ou 40\\\'22' , 'duration', this.value);"
+                                 onblur="hideToolTip();"
                                  onkeyup="feedback('duration', this.value)"/></td>
 
                 <td><s:textfield id="distance"
                                  name="distance"
                                  size="6"
                                  maxlength="10"
-                                 onfocus="$('info').style.visibility='visible'; $('tip').update('En kilomètres.'); feedback('distance', this.value);"
-                                 onblur="$('info').style.visibility='hidden'"
+                                 onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
+                                 onblur="hideToolTip();"
                                  onkeyup="feedback('distance', this.value)"/></td>
             </tr>
         </table>
@@ -69,6 +81,6 @@
     </div>
 </s:if>
 <div id="info" style="visibility:hidden;clear:left;">
-    <span class="feedback" id="feedback">&nbsp;</span><br/>
-    <span id="tip">&nbsp;</span>
+    <span id="tip">&nbsp;</span><br>
+    &nbsp;<span class="feedback" id="feedback">&nbsp;</span>
 </div>

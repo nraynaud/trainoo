@@ -24,7 +24,7 @@
 
     <link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body id="body">
 <div id="center">
     <div style="overflow:hidden;width: 100%">
         <h1 id="logo">

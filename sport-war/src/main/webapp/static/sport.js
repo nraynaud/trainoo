@@ -71,3 +71,58 @@ function fixPNGIE() {
     }
 }
 /* end from */
+
+
+/************************************************************************************************************
+ Ajax dynamic list
+ Copyright (C) September 2005  DTHMLGoodies.com, Alf Magne Kalleland
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+ Dhtmlgoodies.com., hereby disclaims all copyright interest in this script
+ written by Alf Magne Kalleland.
+
+ Alf Magne Kalleland, 2006
+ Owner of DHTMLgoodies.com
+
+ ************************************************************************************************************/
+function showToolTip(e, content) {
+    if ($('bubble_tooltip') == null) {
+        var string = '<div id="bubble_tooltip"><div class="bubble_top">&nbsp;</div><div class="bubble_middle"><div id="bubble_tooltip_content"></div></div><div class="bubble_bottom"></div></div>';
+        $('body').insert(string);
+    }
+    if (document.all)
+        e = event;
+    $('bubble_tooltip_content').insert(content);
+    var tooltip = $('bubble_tooltip');
+    tooltip.style.display = 'block';
+    var element = Event.element(e);
+    var absoluteY = 0;
+    var absoluteX = element.offsetWidth * 0.75;
+    while (element != null) {
+        absoluteY += element.offsetTop;
+        absoluteX += element.offsetLeft;
+        element = element.offsetParent;
+    }
+    var leftPos = absoluteX - tooltip.offsetWidth / 2;
+    if (leftPos < 0)leftPos = 0;
+    tooltip.style.left = leftPos + 'px';
+    tooltip.style.top = absoluteY - tooltip.offsetHeight + 10 + 'px';
+}
+function hideToolTip()
+{
+    document.getElementById('bubble_tooltip').style.display = 'none';
+}
+/***** END LGPL ****/
