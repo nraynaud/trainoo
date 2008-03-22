@@ -72,14 +72,7 @@
         <% } %>
     </table>
     <%
-        if
-                (
-                workouts
-                        .
-                                hasPrevious
-                                        (
-                                        )
-                ) {
+        if (workouts.hasPrevious()) {
     %>
     <s:url id="previousPageUrl" includeParams="get">
         <s:param name="workoutPage" value="previousIndex"/>
@@ -87,14 +80,7 @@
     <div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
     <%}%>
     <%
-        if
-                (
-                workouts
-                        .
-                                hasNext
-                                        (
-                                        )
-                ) {
+        if (workouts.hasNext()) {
     %>
     <s:url id="nextPageUrl" includeParams="get">
         <s:param name="workoutPage" value="nextIndex"/>
