@@ -23,6 +23,9 @@
     <![endif]-->
 
     <link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
+    <!--[if lt IE 7]>
+        <link href="<%=stat("/static/sport_ie6.iecss")%>" rel="stylesheet" type="text/css">
+    <![endif]-->
 </head>
 <body id="body">
 <div id="center">
