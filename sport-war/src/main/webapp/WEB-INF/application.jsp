@@ -29,100 +29,109 @@
 </head>
 <body id="body">
 <div id="center">
-    <div style="overflow:hidden;width: 100%">
-        <h1 id="logo">
+<div style="overflow:hidden;width: 100%">
+    <h1 id="logo">
             <span style="position:relative;display:block;"><a id="logoHref" href="/">
                 Train<span id="oo">oo</span>.com</a></span>
-        </h1>
+    </h1>
 
-        <div id="catchPhrase" style="text-align:right;">
-            Vous allez en suer&nbsp;!
-        </div>
+    <div id="catchPhrase" style="text-align:right;">
+        Vous allez en suer&nbsp;!
     </div>
-    <%call(pageContext, "loginHeader.jsp");%>
-    <div style="position:relative;">
-        <div id="adPlaceHolder">
-        </div>
-        <div id="content">
-            <%if (pageDetail.isShowTitle()) {%>
-            <h1><%=pageDetail.getTitle()%>
-            </h1>
-            <%}%>
-            <s:actionmessage/>
-            <% /* the page content*/
-                final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
-                out.append(detail.getContent());
-            %>
-        </div>
-        <hr id="bottom">
-        <div><p class="smaller" style="text-align:center;"><%=selectableLink("/", "about", "À propos de trainoo.com",
-                null)%> -
-            <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
+</div>
+<%call(pageContext, "loginHeader.jsp");%>
+<div style="position:relative;">
+    <div id="adPlaceHolder">
+    </div>
+    <div id="content">
+        <%if (pageDetail.isShowTitle()) {%>
+        <h1><%=pageDetail.getTitle()%>
+        </h1>
+        <%}%>
+        <s:actionmessage/>
+        <% /* the page content*/
+            final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
+            out.append(detail.getContent());
+        %>
+    </div>
+    <hr id="bottom">
+    <div><p class="smaller" style="text-align:center;"><%=selectableLink("/", "about", "À propos de trainoo.com",
+            null)%> -
+        <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
 
-        <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
-        <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
+    <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
+    <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
 
-        <!--[if !IE]>-->
-        <script type="text/javascript">
-            var canvas = new Element('canvas', {'id': 'gradient'});
-            $('logoHref').insert(canvas);
-            var height = $('logoHref').getHeight();
-            var width = $('logoHref').getWidth();
-            canvas.height = height
-            canvas.width = width
-            var ctx = canvas.getContext('2d');
-            var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
-            lineargradient.addColorStop(0.5, 'rgba(255,255,255,0)');
-            lineargradient.addColorStop(0, 'white');
-            ctx.fillStyle = lineargradient;
-            ctx.fillRect(0, 0, width, height);
-        </script>
-        <!--<![endif]-->
-        <!--[if IE]>
-        <script type="text/javascript">
-              $('logoHref').insert("<div id='gradient'><"+"/div>");
-        </script>
-        <![endif]-->
-        <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
-        <r:writeJavascript/>
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+        var canvas = new Element('canvas', {'id': 'gradient'});
+        $('logoHref').insert(canvas);
+        var height = $('logoHref').getHeight();
+        var width = $('logoHref').getWidth();
+        canvas.height = height
+        canvas.width = width
+        var ctx = canvas.getContext('2d');
+        var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
+        lineargradient.addColorStop(0.5, 'rgba(255,255,255,0)');
+        lineargradient.addColorStop(0, 'white');
+        ctx.fillStyle = lineargradient;
+        ctx.fillRect(0, 0, width, height);
+    </script>
+    <!--<![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+          $('logoHref').insert("<div id='gradient'><"+"/div>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
+    <r:writeJavascript/>
 
-        <!--[if lt IE 7]>
-        <script type="text/javascript">
-            fixPNGIE();
-        </script>
-        <![endif]-->
-        <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-        </script>
-        <script type="text/javascript">
-            var pageTracker = _gat._getTracker("UA-3412937-1");
-            pageTracker._initData();
-            pageTracker._trackPageview();
-        </script>
-        <script type="text/javascript" src="http://nraynaud.fr/clickheat/js/clickheat.js"></script>
-        <noscript><a href="http://www.labsmedia.com/index.html">Open source tools</a></noscript>
-        <% final ActionDetail actionDetail = property("actionDescription", ActionDetail.class); %>
+    <!--[if lt IE 7]>
+    <script type="text/javascript">
+        fixPNGIE();
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-3412937-1");
+        pageTracker._initData();
+        pageTracker._trackPageview();
+    </script>
+    <script type="text/javascript" src="http://nraynaud.fr/clickheat/js/clickheat.js"></script>
+    <noscript><a href="http://www.labsmedia.com/index.html">Open source tools</a></noscript>
+    <% final ActionDetail actionDetail = property("actionDescription", ActionDetail.class); %>
+    <script type="text/javascript"><!--
+    clickHeatSite = 'trainoo.com';
+    clickHeatGroup = '<%=actionDetail.namespace.replaceAll("/", "-") +'-' + actionDetail.name + (isLogged() ? "-logged" : "")%>';
+    clickHeatServer = 'http://nraynaud.fr/clickheat/click.php';
+    initClickHeat();
+    //-->
+    </script>
+
+    <div id="ad">
         <script type="text/javascript"><!--
-        clickHeatSite = 'trainoo.com';
-        clickHeatGroup = '<%=actionDetail.namespace.replaceAll("/", "-") +'-' + actionDetail.name + (isLogged() ? "-logged" : "")%>';
-        clickHeatServer = 'http://nraynaud.fr/clickheat/click.php';
-        initClickHeat();
+        google_ad_client = "pub-1788371406648361";
+        /* trainoo */
+        google_ad_slot = "2814569948";
+        google_ad_width = 468;
+        google_ad_height = 60;
         //-->
         </script>
-
-        <div id="ad">
-            <script type="text/javascript"><!--
-            google_ad_client = "pub-1788371406648361";
-            /* trainoo */
-            google_ad_slot = "2814569948";
-            google_ad_width = 468;
-            google_ad_height = 60;
-            //-->
-            </script>
-            <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-        </div>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     </div>
+</div>
+<%if (pageContext.getRequest().getParameter("lol") != null) {%>
+<div id="lol">LOL</div>
+<s:textfield id="lolilol"
+             name="duration"
+             size="6"
+             maxlength="10"
+             onfocus="showToolTip(event, $('lol'));"
+             onblur="hideToolTip();"/>
+<%}%>
 </div>
 </body>
 </html>

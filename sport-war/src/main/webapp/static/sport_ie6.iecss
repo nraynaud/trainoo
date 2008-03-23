@@ -4,10 +4,8 @@
 }
 
 #bubble_tooltip .bubble_middle {
-/*
     background: none;
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/tooltip/bubble_middle.png', sizingMethod='scale');
-*/
 }
 
 #bubble_tooltip .bubble_bottom {
