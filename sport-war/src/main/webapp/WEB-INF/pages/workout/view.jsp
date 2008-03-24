@@ -74,8 +74,8 @@
         </div>
         <%}%>
     </div>
-    <h3><%=!data.messages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>
-    </h3>
+    <h2><%=!data.messages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>
+    </h2>
 
     <div class="content">
         <%if (!isLogged()) {%>
