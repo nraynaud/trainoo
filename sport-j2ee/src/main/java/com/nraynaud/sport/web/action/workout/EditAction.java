@@ -1,5 +1,6 @@
 package com.nraynaud.sport.web.action.workout;
 
+import com.nraynaud.sport.AccessDeniedException;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.WorkoutNotFoundException;
@@ -49,7 +50,10 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
                 setDiscipline(workout.getDiscipline().nonEscaped());
                 return INPUT;
             } catch (WorkoutNotFoundException e) {
-                addActionError("l'entraînement désigné n'existe pas");
+                addActionError("L'entraînement désigné n'existe pas");
+                return INPUT;
+            } catch (AccessDeniedException e) {
+                addActionError("Vous n'avez pas le droit de modifier cet entraînement.");
                 return INPUT;
             }
         } else
@@ -66,6 +70,9 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
                 return SUCCESS;
             } catch (WorkoutNotFoundException e) {
                 addActionError("l'entraînement désigné n'existe pas pour cet utilisateur");
+                return INPUT;
+            } catch (AccessDeniedException e) {
+                addActionError("Vous n'avez pas le droit de modifier cet entraînement");
                 return INPUT;
             }
         } else

@@ -229,16 +229,19 @@ public class HibernateApplication implements Application {
     }
 
     public Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) throws
-            WorkoutNotFoundException {
+            WorkoutNotFoundException, AccessDeniedException {
         final Workout workout = fetchWorkout(id);
-        if (workout == null || !willWrite || workout.getUser().equals(user))
+        if (!willWrite || workout.getUser().equals(user))
             return workout;
         else
-            return null;
+            throw new AccessDeniedException();
     }
 
     public Workout fetchWorkout(final Long id) throws WorkoutNotFoundException {
-        return entityManager.find(WorkoutImpl.class, id);
+        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
+        if (workout == null)
+            throw new WorkoutNotFoundException();
+        return workout;
     }
 
     public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId,
@@ -506,7 +509,7 @@ public class HibernateApplication implements Application {
                               final Date date,
                               final Long duration,
                               final Double distance,
-                              final String discipline) throws WorkoutNotFoundException {
+                              final String discipline) throws WorkoutNotFoundException, AccessDeniedException {
         final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutAndCheckUser(id, user, true);
         workoutImpl.setDate(date);
         workoutImpl.setDuration(duration);
@@ -621,7 +624,7 @@ public class HibernateApplication implements Application {
         return new TreeSet<ConversationSummary>(correspondants.values());
     }
 
-    public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException {
+    public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException, AccessDeniedException {
         final Workout workout = fetchWorkoutAndCheckUser(id, user, true);
         separatePrivateMessagesFromWorkout(id);
         deletePublicMessageAboutWorkout(id);

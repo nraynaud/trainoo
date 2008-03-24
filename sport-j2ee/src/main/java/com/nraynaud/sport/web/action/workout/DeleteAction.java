@@ -1,5 +1,6 @@
 package com.nraynaud.sport.web.action.workout;
 
+import com.nraynaud.sport.AccessDeniedException;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.Constants;
@@ -29,7 +30,8 @@ public class DeleteAction extends DefaultAction {
                 application.deleteWorkout(id, getUser());
             } catch (WorkoutNotFoundException e) {
                 addActionError("l'entraînement désigné n'existe pas");
-                return SUCCESS;
+            } catch (AccessDeniedException e) {
+                addActionError("Vous n'avez pas le droit de détruire cet entraînement");
             }
         }
         return SUCCESS;

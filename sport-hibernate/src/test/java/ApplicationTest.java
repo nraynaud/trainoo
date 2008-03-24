@@ -78,7 +78,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void testWorkoutFetching() throws NameClashException, WorkoutNotFoundException {
+    public void testWorkoutFetching() throws NameClashException, WorkoutNotFoundException, AccessDeniedException {
         final User user = application.createUser("user", "lol");
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
                 "lol");
@@ -87,13 +87,21 @@ public class ApplicationTest {
             assertEquals(workout, workout1);
         }
         {
-            final Workout workout2 = application.fetchWorkoutAndCheckUser(Long.valueOf(1043345), user, true);
-            assertNull(workout2);
+            try {
+                application.fetchWorkoutAndCheckUser(Long.valueOf(1043345), user, true);
+                fail();
+            } catch (WorkoutNotFoundException e) {
+                //ok
+            }
         }
         {
             final User user1 = application.createUser("user1", "lol");
-            final Workout workout3 = application.fetchWorkoutAndCheckUser(workout.getId(), user1, true);
-            assertNull(workout3);
+            try {
+                application.fetchWorkoutAndCheckUser(workout.getId(), user1, true);
+                fail();
+            } catch (AccessDeniedException e) {
+                //ok
+            }
         }
     }
 

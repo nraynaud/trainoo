@@ -18,16 +18,16 @@ public interface Application extends UserStore {
     User authenticate(String login, String password, final boolean rememberMe);
 
     Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) throws
-            WorkoutNotFoundException;
+            WorkoutNotFoundException, AccessDeniedException;
 
-    void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException;
+    void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException, AccessDeniedException;
 
     void updateWorkout(final Long id,
                        final User user,
                        final Date date,
                        final Long duration,
                        final Double distance,
-                       final String discipline) throws WorkoutNotFoundException;
+                       final String discipline) throws WorkoutNotFoundException, AccessDeniedException;
 
     GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final int pageSize, final String discipline);
 
