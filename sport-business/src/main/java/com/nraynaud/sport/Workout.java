@@ -14,7 +14,7 @@ public interface Workout extends Topic {
     Double getDistance();
 
     /**
-     * @return workout duration in milleconds
+     * @return workout duration in seconds
      */
     Long getDuration();
 

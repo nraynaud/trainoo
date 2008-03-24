@@ -327,7 +327,7 @@ public class Helpers {
     }
 
     public static String defaultOrUserClass(final UserString string) {
-        return string == null ? "serverDefault" : "userSupplied";
+        return string == null ? "serverDefault" : "userInteresting";
     }
 
     public static String escaped(final UserString string) {

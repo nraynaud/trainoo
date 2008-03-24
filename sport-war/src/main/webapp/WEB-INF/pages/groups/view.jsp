@@ -16,9 +16,10 @@
 
 <% if (group != null) {%>
 <div id="globalLeft" class="content">
-    <span class="label">Créé le&nbsp;: </span><span class="userSupplied"><%=new SimpleDateFormat("dd/MM/yyyy").format(
+    <span class="label">Créé le&nbsp;: </span><span class="userInteresting"><%=new SimpleDateFormat(
+        "dd/MM/yyyy").format(
         group.getCreationDate())%></span> <span class="label">par&nbsp;:</span> <span
-        class="userSupplied"><%=group.getOwner().getName()%></span>
+        class="userInteresting"><%=group.getOwner().getName()%></span>
 
     <div class="<%=defaultOrUserClass(group.getDescription())%>"><%=escapedOrNullmultilines(group.getDescription(),
             "Aucune description")%>
