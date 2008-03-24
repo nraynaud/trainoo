@@ -3,7 +3,6 @@
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="static com.nraynaud.sport.web.converter.DistanceConverter.formatDistance" %>
 <%@ page import="java.util.Locale" %>
@@ -35,9 +34,15 @@
 </div>
 <div id="globalLeft">
     <div class="content">
+        <%
+            final boolean hasAverageSpeed = workout.getDistance() != null && workout.getDuration() != null;
+            final boolean isNikePlus = workout.isNikePlus();
+            final boolean hasPartners = workout.getParticipants().size() > 1;
+            if (hasAverageSpeed || isNikePlus || hasPartners || isCurrentUser) {
+        %>
         <div style="border:#824900 thick solid; padding:6px;">
             <%
-                if (workout.getDistance() != null && workout.getDuration() != null) {
+                if (hasAverageSpeed) {
                     final double distance = workout.getDistance().doubleValue();
                     final long duration = workout.getDuration().longValue();
                     final String averageSpeed = formatDistance(distance / (duration / 60.0 / 60));
@@ -49,11 +54,13 @@
                     averageTimeByKM % 60)%>''/km)</span>
             <br>
             <%}%>
-            <% if (workout.isNikePlus()) {
-                call(pageContext, "nikePlusDetail.jsp", workout);
-                out.append("<br>");
-            } %>
-            <%if (workout.getParticipants().size() > 1) {%>
+            <%
+                if (isNikePlus) {
+                    call(pageContext, "nikePlusDetail.jsp", workout);
+                    out.append("<br>");
+                } %>
+            <%
+                if (hasPartners) {%>
             Les équipiers étaient&nbsp;:
             <%
                 for (final User participant : workout.getParticipants())
@@ -63,7 +70,9 @@
             <%if (isCurrentUser) {%>
             <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
                     workout.getId().toString())%>
-            <%}%></div>
+            <%}%>
+        </div>
+        <%}%>
     </div>
     <h3><%=!data.messages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>
     </h3>
