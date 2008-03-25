@@ -7,12 +7,14 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class LayoutParamsTag extends TagSupport {
     private String title;
     private boolean showTitleInPage = true;
+    private boolean showFooter = true;
 
     public int doEndTag() throws JspException {
         final ServletRequest request = pageContext.getRequest();
         final PageDetail pageDetail = PageDetail.detailFor(request);
         pageDetail.setTitle(title);
         pageDetail.setShowTitle(showTitleInPage);
+        pageDetail.setShowFooter(showFooter);
         return EVAL_PAGE;
     }
 
@@ -20,7 +22,11 @@ public class LayoutParamsTag extends TagSupport {
         this.title = title;
     }
 
-    public void setShowTitleInPage(boolean showTitleInPage) {
+    public void setShowTitleInPage(final boolean showTitleInPage) {
         this.showTitleInPage = showTitleInPage;
+    }
+
+    public void setShowFooter(final boolean showFooter) {
+        this.showFooter = showFooter;
     }
 }

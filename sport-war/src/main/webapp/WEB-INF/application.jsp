@@ -54,10 +54,12 @@
             out.append(detail.getContent());
         %>
     </div>
+    <%if (pageDetail.isShowFooter()) {%>
     <hr id="bottom">
     <div><p class="smaller" style="text-align:center;"><%=selectableLink("/", "about", "À propos de trainoo.com",
             null)%> -
         <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
+    <%}%>
 
     <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
     <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>

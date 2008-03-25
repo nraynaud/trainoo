@@ -9,6 +9,7 @@ public class PageDetail {
     private String title = "";
     private final List<String> javascript = new ArrayList<String>(1);
     private boolean showTitle = true;
+    private boolean showFooter = true;
 
     public static PageDetail detailFor(final ServletRequest request) {
         PageDetail detail = (PageDetail) request.getAttribute("detail");
@@ -52,5 +53,13 @@ public class PageDetail {
 
     public void setShowTitle(final boolean showTitle) {
         this.showTitle = showTitle;
+    }
+
+    public boolean isShowFooter() {
+        return showFooter;
+    }
+
+    public void setShowFooter(final boolean showFooter) {
+        this.showFooter = showFooter;
     }
 }

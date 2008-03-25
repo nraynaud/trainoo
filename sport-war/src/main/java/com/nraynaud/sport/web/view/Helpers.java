@@ -31,7 +31,8 @@ public class Helpers {
 
     static {
         final String envVar = System.getenv("SPORT_CONTENT_PREFIX");
-        STATIC_CONTENT_PREFIX = envVar != null ? envVar : "";
+        final String property = System.getProperty("com.nraynaud.sport.staticprefix");
+        STATIC_CONTENT_PREFIX = envVar != null ? envVar : property != null ? property : "";
     }
 
     private Helpers() {
