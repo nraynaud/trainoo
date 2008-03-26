@@ -246,7 +246,7 @@ public class Helpers {
     public static String selectableLink(final String namespace, final String action, final String content,
                                         final String title, final String... params) {
         final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
-        final String url = MAPPER.getUriFromActionMapping(new ActionMapping(action, namespace, null, null));
+        final String url = actionUrl(namespace, action);
         boolean selected = namespace.equals(mapping.getNamespace()) && action.equals(
                 mapping.getName());
         final String query;
@@ -262,6 +262,10 @@ public class Helpers {
             query = "";
         final String finalUrl = url + query;
         return selectableAnchorTag(content, selected, finalUrl, title);
+    }
+
+    public static String actionUrl(final String namespace, final String action) {
+        return MAPPER.getUriFromActionMapping(new ActionMapping(action, namespace, null, null));
     }
 
     private static String selectableAnchorTag(final String content, final boolean selected, final String finalUrl,
@@ -289,8 +293,7 @@ public class Helpers {
                                                        final String excludedKey,
                                                        final String... params) {
         final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
-        final String base = MAPPER.getUriFromActionMapping(
-                new ActionMapping(mapping.getName(), mapping.getNamespace(), null, null));
+        final String base = actionUrl(mapping.getNamespace(), mapping.getName());
         final Map<String, String[]> queryString = ServletActionContext.getRequest().getParameterMap();
         boolean selected = false;
         final StringBuilder url = new StringBuilder(20);

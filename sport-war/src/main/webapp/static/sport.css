@@ -537,6 +537,12 @@ p.submit {
     margin-bottom: 0;
 }
 
+.labelstyle {
+    background-color: #ffffff;
+    font-weight: bold;
+    border: 2px #006699 solid;
+}
+
 /************* tooltip stuff ***************/
 #bubble_tooltip {
     width: 182px;

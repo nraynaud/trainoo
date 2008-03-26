@@ -111,4 +111,8 @@ public interface Application extends UserStore {
     void execute(final Runnable runnable);
 
     void forgotPassword(final String email) throws UserNotFoundException, MailException;
+
+    void createTrack(final User user, final String track, final double length);
+
+    List<String> fetchTracks(final User user);
 }

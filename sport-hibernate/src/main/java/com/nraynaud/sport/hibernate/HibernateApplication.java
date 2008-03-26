@@ -69,6 +69,21 @@ public class HibernateApplication implements Application {
         }
     }
 
+    public void createTrack(final User user, final String track, final double length) {
+        final Query query = entityManager.createNativeQuery(
+                "INSERT INTO TRACKS SET OWNER_ID=:userId, POINTS=:points, LENGTH=:length");
+        query.setParameter("userId", user.getId());
+        query.setParameter("points", track);
+        query.setParameter("length", length);
+        query.executeUpdate();
+    }
+
+    public List<String> fetchTracks(final User user) {
+        final Query query = entityManager.createNativeQuery("SELECT POINTS FROM TRACKS WHERE OWNER_ID=:userId ");
+        query.setParameter("userId", user.getId());
+        return query.getResultList();
+    }
+
     @SuppressWarnings({"unchecked"})
     private PaginatedCollection<Workout> getWorkouts(final User user, final String discipline, final int startIndex,
                                                      final int pageSize) {
