@@ -29,20 +29,20 @@
 </head>
 <body id="body">
 <div id="center">
-<div style="overflow:hidden;width: 100%">
-    <h1 id="logo">
+    <div style="width: 100%;height:60px;text-align:right;position:relative;overflow:hidden;padding-bottom:5px;padding-top:3px">
+        <div style="float:left;">
+            <h1 id="logo">
             <span style="position:relative;display:block;"><a id="logoHref" href="/">
                 Train<span id="oo">oo</span>.com</a></span>
-    </h1>
+            </h1>
 
-    <div id="catchPhrase" style="text-align:right;">
-        Vous allez en suer&nbsp;!
+            <div id="catchPhrase">
+                Vous allez en suer&nbsp;!
+            </div>
+        </div>
+        <div id="adPlaceholder">publicité google</div>
     </div>
-</div>
-<%call(pageContext, "loginHeader.jsp");%>
-<div style="position:relative;">
-    <div id="adPlaceHolder">
-    </div>
+    <%call(pageContext, "loginHeader.jsp");%>
     <div id="content">
         <%if (pageDetail.isShowTitle()) {%>
         <h1><%=pageDetail.getTitle()%>
@@ -124,16 +124,9 @@
         </script>
         <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
     </div>
-</div>
-<%if (pageContext.getRequest().getParameter("lol") != null) {%>
-<div id="lol">LOL</div>
-<s:textfield id="lolilol"
-             name="duration"
-             size="6"
-             maxlength="10"
-             onfocus="showToolTip(event, $('lol'));"
-             onblur="hideToolTip();"/>
-<%}%>
+    <script type="text/javascript">
+        $('adPlaceholder').update($('ad'));
+    </script>
 </div>
 </body>
 </html>

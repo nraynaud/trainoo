@@ -162,13 +162,11 @@ label .labelComplement {
 
 #logo {
     background: none;
-    padding-left: 0;
-    font-family: helvetica, sans-serif;
+    padding: 0;
     margin: 0;
-    padding-top: 0;
+    font-family: helvetica, sans-serif;
     font-size: 3em;
-    padding-bottom: 0;
-    float: left;
+    height: auto;
 }
 
 #logoHref, a#logoHref:hover {
@@ -182,10 +180,10 @@ label .labelComplement {
 }
 
 #catchPhrase {
-    margin-top: 30px;
-    float: right;
     font-size: 20px;
     color: #824900;
+    width: 120%;
+    text-align: right;
 }
 
 #loginHeader {
@@ -250,11 +248,6 @@ label .labelComplement {
 
 #bottom {
     margin-top: 3em;
-}
-
-#ad {
-    text-align: center;
-    margin: 4px 0 0 4px
 }
 
 div.autocomplete {
@@ -411,16 +404,6 @@ table.displayFormLayoutTable tr td .label {
     font-weight: bold;
 }
 
-#ad {
-    height: 60px;
-    width: 100%;
-    position: absolute;
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
-    top: 0;
-}
-
 #gradient {
     position: absolute;
     height: 100%;
@@ -429,8 +412,10 @@ table.displayFormLayoutTable tr td .label {
     top: 0;
 }
 
-#adPlaceHolder {
+#adPlaceholder {
     height: 60px;
+    width: 468px;
+    float: right;
 }
 
 .bigWorkout {
