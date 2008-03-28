@@ -12,6 +12,7 @@
     <!-- rev <%= PageDetail.class.getPackage().getImplementationVersion()%> -->
     <title><%= pageDetail.getTitle()%>
     </title>
+    <meta name="verify-v1" content="yZTq8PJgPZNW+ohX4rJs4so6GlFfVS3hawur2jTQEIA=">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!--[if IE ]>
     <style>
@@ -26,15 +27,18 @@
     <!--[if lt IE 7]>
         <link href="<%=stat("/static/sport_ie6.iecss")%>" rel="stylesheet" type="text/css">
     <![endif]-->
+    <%
+        for (final String header : pageDetail.getHeaders()) {
+            out.append(header);
+        }
+    %>
 </head>
-<body id="body">
+<body id="body" onload="loaded()">
 <div id="center">
-    <div style="width: 100%;height:60px;text-align:right;position:relative;overflow:hidden;padding-bottom:5px;padding-top:3px">
+    <div id="heading"
+         style="width: 100%;height:60px;text-align:right;position:relative;overflow:hidden;padding-bottom:5px;padding-top:3px">
         <div style="float:left;">
-            <h1 id="logo">
-            <span style="position:relative;display:block;"><a id="logoHref" href="/">
-                Train<span id="oo">oo</span>.com</a></span>
-            </h1>
+            <%call(pageContext, "logo.jsp");%>
 
             <div id="catchPhrase">
                 Vous allez en suer&nbsp;!

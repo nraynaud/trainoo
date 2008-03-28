@@ -1,0 +1,31 @@
+html, body, #center {
+    min-height: 100%;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    background-color: red;
+}
+
+#content, #loginHeader {
+    margin: 0;
+}
+
+#heading {
+    display: none;
+}
+
+#controlPanel {
+    width: 150px;
+    height: 200px;
+    top: 30px;
+    left: 80px;
+    position: absolute;
+    z-index: 10;
+    background-color: white;
+    border: gray medium solid;
+}

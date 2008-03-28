@@ -8,6 +8,7 @@ public class PageDetail {
     private String content = "";
     private String title = "";
     private final List<String> javascript = new ArrayList<String>(1);
+    private final List<String> headers = new ArrayList<String>(1);
     private boolean showTitle = true;
     private boolean showFooter = true;
 
@@ -45,6 +46,14 @@ public class PageDetail {
 
     public List<String> getJavascript() {
         return javascript;
+    }
+
+    public void addHeader(final String header) {
+        headers.add(header);
+    }
+
+    public List<String> getHeaders() {
+        return headers;
     }
 
     public boolean isShowTitle() {
