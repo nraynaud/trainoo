@@ -163,7 +163,7 @@ label .labelComplement {
 #logo {
     background: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 -6px 0;
     font-family: helvetica, sans-serif;
     font-size: 3em;
     height: auto;
@@ -243,7 +243,7 @@ label .labelComplement {
     overflow: hidden;
     zoom: 1;
     _overflow: visible;
-    padding-top: 1em;
+    margin-top: 1em;
 }
 
 #bottom {
