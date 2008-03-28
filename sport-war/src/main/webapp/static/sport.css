@@ -207,6 +207,7 @@ label .labelComplement {
     color: white;
     padding-left: 0.3em;
     padding-right: 0.3em;
+    text-decoration: none;
 }
 
 #loginHeader * .selected {
@@ -215,7 +216,7 @@ label .labelComplement {
 }
 
 #loginHeader #loginName {
-    color: white;
+    color: #D97900;
 }
 
 #loginHeader .left {
