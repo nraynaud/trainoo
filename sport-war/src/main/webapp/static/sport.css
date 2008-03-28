@@ -163,10 +163,11 @@ label .labelComplement {
 #logo {
     background: none;
     padding: 0;
-    margin: 0 0 -6px 0;
+    margin: 0;
     font-family: helvetica, sans-serif;
     font-size: 3em;
     height: auto;
+    line-height: 1;
 }
 
 #logoHref, a#logoHref:hover {
@@ -184,6 +185,7 @@ label .labelComplement {
     color: #824900;
     width: 120%;
     text-align: right;
+    line-height: 1;
 }
 
 #loginHeader {
