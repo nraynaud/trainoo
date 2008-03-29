@@ -24,12 +24,14 @@
     <%
         }
     %>
-    <div id="distance"></div>
+    longueur&nbsp;:<span id="distance"></span>(<span id="pointsCount"></span>)
+
     <s:form id="createForm" namespace="/track" action="create">
         <s:hidden id="trackVar" name="track"/>
         <s:hidden id="lengthVar" name="length"/>
         <s:submit id="submit" value="Enregistrer le circuit !" onclick="" tabindex="1"/>
     </s:form>
+    <a href="#" onclick="newTrack(); return false;">Nouveau parcours</a>
 </div>
 
 <script type="text/javascript"
