@@ -12,24 +12,13 @@ var icon;
 var markers = [];
 var poly = [];
 var line;
+var distance = 0;
+var encodedTrack = "";
 function draw() {
-    poly.length = 0;
-    var distance = 0;
-    var encodedTrack = "";
-    for (var i = 0; i < markers.length; i++) {
-        var marker = markers[i];
-        var pt = marker.getPoint();
-        poly.push(pt);
-        if (i > 0)
-            distance += markers[i - 1].getPoint().distanceFrom(pt);
-        encodedTrack += '[' + pt.lat() + ',' + pt.lng() + '],'
-    }
-    $('trackVar').setValue(encodedTrack);
     if (line) {
         map.removeOverlay(line)
     }
-    ;
-    line = new GPolyline(poly, '#FF0000', 3, 1, {geodesic:true});
+    line = new GPolyline(poly, '#FF0000', 3, 1);
     map.addOverlay(line);
     $('distance').update((distance / 1000).toFixed(2) + "km");
     $('lengthVar').setValue(distance / 1000);
@@ -38,6 +27,11 @@ function addMarker(pnt) {
     map.panTo(pnt);
     var marker = new GMarker(pnt, {icon:icon, draggable: true});
     markers.push(marker);
+    if (poly.length > 0)
+        distance += poly[poly.length - 1].distanceFrom(pnt);
+    poly.push(pnt);
+    encodedTrack += '[' + pnt.lat() + ',' + pnt.lng() + '],';
+    $('trackVar').setValue(encodedTrack);
     map.addOverlay(marker);
     marker.enableDragging();
     GEvent.addListener(marker, "drag", function() {
