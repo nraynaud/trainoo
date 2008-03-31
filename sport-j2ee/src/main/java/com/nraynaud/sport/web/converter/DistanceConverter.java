@@ -27,7 +27,7 @@ public class DistanceConverter extends StrutsTypeConverter {
 
     public static Double parseDistance(final String input) {
         final double result = parseNumber(removeKmSuffix(input)).doubleValue();
-        if (result <= 0)
+        if (result < 0.1)
             throw new TypeConversionException("Negative or null number");
         return Double.valueOf(result);
     }

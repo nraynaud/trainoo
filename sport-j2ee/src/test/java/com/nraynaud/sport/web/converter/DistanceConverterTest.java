@@ -25,6 +25,8 @@ public class DistanceConverterTest {
         checkError("-10");
         checkError("-10,3");
         checkError("-10.3");
+        checkError("0");
+        checkError("0,01");
     }
 
     private static void checkError(final String input) {
