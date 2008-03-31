@@ -33,7 +33,7 @@
         }
     %>
 </head>
-<body id="body" onload="loaded()">
+<body id="body" onload="if (typeof(loaded)!='undefined ') loaded();">
 <div id="center">
     <div id="heading"
          style="width: 100%;height:60px;text-align:right;position:relative;overflow:hidden;padding-bottom:5px;padding-top:3px">
