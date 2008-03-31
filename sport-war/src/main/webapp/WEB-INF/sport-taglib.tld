@@ -43,6 +43,11 @@
         <name>javascript</name>
         <tag-class>com.nraynaud.sport.web.view.JavascriptTag</tag-class>
         <description>For the individual pages : defines a new javascript to append to the page.</description>
+        <attribute>
+            <name>src</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
     <tag>
         <name>header</name>

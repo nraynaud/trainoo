@@ -7,7 +7,7 @@ import java.util.List;
 public class PageDetail {
     private String content = "";
     private String title = "";
-    private final List<String> javascript = new ArrayList<String>(1);
+    private final List<Javascript> javascript = new ArrayList<Javascript>(1);
     private final List<String> headers = new ArrayList<String>(1);
     private boolean showTitle = true;
     private boolean showFooter = true;
@@ -40,11 +40,11 @@ public class PageDetail {
         return title;
     }
 
-    public void addJavascript(final String script) {
-        javascript.add(script);
+    public void addJavascript(final String script, final String src) {
+        javascript.add(new Javascript(script, src));
     }
 
-    public List<String> getJavascript() {
+    public List<Javascript> getJavascript() {
         return javascript;
     }
 
@@ -70,5 +70,15 @@ public class PageDetail {
 
     public void setShowFooter(final boolean showFooter) {
         this.showFooter = showFooter;
+    }
+
+    public static class Javascript {
+        public final String src;
+        public final String content;
+
+        public Javascript(final String content, final String src) {
+            this.content = content;
+            this.src = src;
+        }
     }
 }
