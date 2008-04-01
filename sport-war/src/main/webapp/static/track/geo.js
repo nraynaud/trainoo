@@ -180,8 +180,10 @@ function ensureCookies() {
             //style='visibility:hidden'
             $('body').insert("<img id='lolToken' src='' alt=''>");
             return $('lolToken');
-        } else
+        } else {
+            img.style.visibility = 'hidden';
             return img;
+        }
     }
     var now = new Date().getTime() / 1000;
     if (lastTimeCookieChecked == null || now - lastTimeCookieChecked > 60) {
