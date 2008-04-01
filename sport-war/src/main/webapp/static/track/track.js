@@ -43,7 +43,7 @@ function fit() {
 }
 function startMap() {
     window.addEventListener("resize", updateHeight, false);
-    map = new GMap2(document.getElementById("map"));
+    map = new GMap2($("map"));
     var start = new GLatLng(46.980252, 2.548828);
     map.setCenter(start, 5);
     map.setMapType(G_HYBRID_MAP);
