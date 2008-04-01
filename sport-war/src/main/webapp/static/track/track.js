@@ -47,7 +47,7 @@ function startMap() {
     var start = new GLatLng(46.980252, 2.548828);
     map.setCenter(start, 5);
     map.setMapType(G_HYBRID_MAP);
-    map.enableScrollWheelZoom();
+    //map.enableScrollWheelZoom();
     map.addControl(new GMapTypeControl(1));
     map.addControl(new GLargeMapControl());
     map.enableContinuousZoom();
