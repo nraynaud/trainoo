@@ -1,11 +1,11 @@
 _mPreferMetric = true;
+function loaded(evt) {
+    updateHeight();
+    startMap();
+}
+document.observe('dom:loaded', loaded);
 function updateHeight() {
     $('content').style.height = $('center').clientHeight - $('content').offsetTop - 10 + "px";
-}
-function loaded() {
-    updateHeight();
-    $('heading').remove();
-    startMap();
 }
 var map;
 var icon;
@@ -60,12 +60,22 @@ function startMap() {
     icon.shadowSize = new GSize(22, 20);
     icon.iconAnchor = new GPoint(6, 20);
     draw();
-    GEvent.addListener(map, 'click', function(overlay, pnt) {
-        if (pnt) {
-            addMarker(pnt);
+    GEvent.addListener(map, 'click', function(overlay, latLng) {
+        if (latLng) {
+            console.log("click:" + latLng + map.getCurrentMapType().getProjection().fromLatLngToPixel(latLng, map.getZoom()));
+            $('position').update(latLng.toString());
+            addMarker(latLng);
+        }
+    });
+    GEvent.addListener(map, 'mousemove', function(latLng) {
+        if (latLng) {
+            $('position').update(latLng.toString());
         }
     });
     new GDraggableObject($('controlPanel'));
+    var type = createGeoMapType();
+    map.addMapType(type);
+    map.setMapType(type);
 }
 function addMarker(pnt) {
     map.panTo(pnt);
