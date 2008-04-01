@@ -28,6 +28,11 @@ var ratios = [undefined,
     [1.95004214034262e-007,-1.95004214034262e-007],
     [1.95003191791175e-007,-1.95003191791175e-007],
     [1.95002186306171e-007,-1.95002186306171e-007]];
+function log(txt) {
+    if ((typeof(console) != "undefined") && console.log) {
+        console.log(txt);
+    }
+}
 var geoEncode = function(nombre) {
     var base = 62;
     if (!isNaN(nombre)) {
@@ -71,8 +76,8 @@ var encodeTile = function(prefix, scale, tileX, tileY) {
     var encodedTileY = geoEncode(Math.abs(tileY));
     encoded_string += len_enc_table[encodedTileX.length];
     encoded_string += encodedTileX + encodedTileY;
-    /*console.log("X:" + tileX + " Y:" + tileY + " scale:" + scale + " encoded:" + encoded_string + " Xlen:" + len_enc_table[encodedTileX.length]
-            + " eX:" + encodedTileX + " eY:" + encodedTileY);*/
+    log("X:" + tileX + " Y:" + tileY + " scale:" + scale + " encoded:" + encoded_string + " Xlen:" + len_enc_table[encodedTileX.length]
+            + " eX:" + encodedTileX + " eY:" + encodedTileY);
     return encoded_string;
 };
 function testEncodeTile() {
@@ -82,8 +87,8 @@ function testEncodeTile() {
     ];
     for (var i = 0; i < tests.length; i++) {
         var testSegment = tests[i]
-        console.log("expected:" + testSegment[0] +
-                    " actual:" + encodeTile("/FXX-GFD-CARTE__CARTE_jpg/256_256_",
+        log("expected:" + testSegment[0] +
+            " actual:" + encodeTile("/FXX-GFD-CARTE__CARTE_jpg/256_256_",
                 testSegment[3], testSegment[1], testSegment[2]));
     }
 }
@@ -108,16 +113,16 @@ function EquirectangularProjection() {
 var global_precision = 0.01;
 EquirectangularProjection.prototype = new GProjection();
 EquirectangularProjection.prototype.fromLatLngToPixel = function(latlong, _zoom) {
-    //console.log("{fromLatLngToPixel " + latlong + ' zoom:' + zoom);
+    log("{fromLatLngToPixel " + latlong + ' zoom:' + zoom);
     var zoom = googleToGeoZoom(_zoom);
     var x = this.R * decimalDegreeToRad(latlong.lng()) * Math.cos(this.phi0);
     var y = this.R * decimalDegreeToRad(latlong.lat());
-    //console.log("fromLatLngToPixel realX:" + x + " realY:" + y);
+    log("fromLatLngToPixel realX:" + x + " realY:" + y);
     var pixX = x * ratios[zoom][0] / global_precision;
     var pixY = -(this.R - y) * ratios[zoom][1] / global_precision;
     var result = new GPoint(Math.round(pixX), Math.round(pixY));
-    //console.log("fromLatLngToPixel scalex:" + ratios[zoom][0] + ' scaley:' + ratios[zoom][1] + " -> " + result);
-    //console.log("}fromLatLngToPixel -> " + result);
+    log("fromLatLngToPixel scalex:" + ratios[zoom][0] + ' scaley:' + ratios[zoom][1] + " -> " + result);
+    log("}fromLatLngToPixel -> " + result);
     return result;
 };
 EquirectangularProjection.prototype.fromPixelToLatLng = function(pix, _zoom, bounded) {
@@ -126,27 +131,28 @@ EquirectangularProjection.prototype.fromPixelToLatLng = function(pix, _zoom, bou
     var correctedY = this.R + (pix.y / ratios[zoom][1] * global_precision);
     var lat = radianToDecimalDegree(correctedY / this.R);
     var result = new GLatLng(lat, lng, bounded);
-    //console.log("fromPixelToLatLng: " + pix + " zoom:" + _zoom + " -> " + result);
+    log("fromPixelToLatLng: " + pix + " zoom:" + _zoom + " -> " + result);
     return result;
 };
 EquirectangularProjection.prototype.tileCheckRange = function(tile, zoom, tileSize) {
-    //console.log("tileCheckRange " + tile + ' zoom:' + zoom + ' tileSize:' + tileSize);
+    log("tileCheckRange " + tile + ' zoom:' + zoom + ' tileSize:' + tileSize);
     if (!isNaN(tile.x) && !isNaN(tile.y))
         return true;
     else
-        console.log("nan :fou:");
+        log("nan :fou:");
 }
 function testProjection() {
     var projection = new EquirectangularProjection();
     var input = new GLatLng(46.980252, 2.548828);
     var pix = projection.fromLatLngToPixel(input, 11);
-    console.log("test result:" + projection.fromPixelToLatLng(pix, 11) + " expected:" + input);
+    log("test result:" + projection.fromPixelToLatLng(pix, 11) + " expected:" + input);
 }
 function googleToGeoZoom(googleZoom) {
     var z = 17 - googleZoom;
     return z > 0 ? z < ratios.length ? z : ratios.length - 1 : 1;
 }
 function createGeoMapType() {
+    ensureCookies();
     testProjection();
     var copyCollection = new GCopyrightCollection('Geo');
     var copyright = new GCopyright(1, new GLatLngBounds(new GLatLng(-90, -180), new GLatLng(90, 180)), 0, "© IGN");

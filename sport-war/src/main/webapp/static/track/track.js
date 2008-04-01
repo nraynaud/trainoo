@@ -1,5 +1,5 @@
 _mPreferMetric = true;
-function loaded(evt) {
+function loaded() {
     updateHeight();
     startMap();
 }
@@ -62,7 +62,6 @@ function startMap() {
     draw();
     GEvent.addListener(map, 'click', function(overlay, latLng) {
         if (latLng) {
-            console.log("click:" + latLng + map.getCurrentMapType().getProjection().fromLatLngToPixel(latLng, map.getZoom()));
             $('position').update(latLng.toString());
             addMarker(latLng);
         }
