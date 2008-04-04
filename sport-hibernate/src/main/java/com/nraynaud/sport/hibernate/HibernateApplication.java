@@ -97,7 +97,7 @@ public class HibernateApplication implements Application {
                 "select w, count(m) from WorkoutImpl w left join w.publicMessages m  where 1=1"
                         + (user != null ? " and :user MEMBER OF w.participants" : "")
                         + (discipline != null ? " and w.discipline =:discipline" : "")
-                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline, w.nikePlusId order by w.date desc, w.id desc");
+                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline, w.nikePlusId order by w.date desc, w.id asc");
         if (user != null)
             query.setParameter("user", user);
         if (discipline != null)
