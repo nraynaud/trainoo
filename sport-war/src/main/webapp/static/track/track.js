@@ -45,10 +45,11 @@ function startMap() {
     if (GBrowserIsCompatible()) {
         window.onresize = updateHeight;
         map = new GMap2(document.getElementById("map"));
+        var type = createGeoMapType();
+        map.addMapType(type);
         var start = new GLatLng(47.081850, 2.3995035);
         map.setCenter(start, 10);
-        map.setMapType(G_HYBRID_MAP);
-    //map.enableScrollWheelZoom();
+        //map.enableScrollWheelZoom();
         map.addControl(new GMapTypeControl(1));
         map.addControl(new GLargeMapControl());
         map.enableContinuousZoom();
@@ -73,8 +74,6 @@ function startMap() {
             }
         });
         new GDraggableObject($('controlPanel'));
-        var type = createGeoMapType();
-        map.addMapType(type);
         map.setMapType(type);
     }
 }

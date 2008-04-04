@@ -123,7 +123,7 @@ public class HibernateApplication implements Application {
                 + "from GroupImpl g inner join g.members u inner join u.workouts w left join w.publicMessages m "
                 + "where g =:group"
                 + (discipline != null ? " and w.discipline =:discipline" : "")
-                + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc");
+                + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc, w.id desc");
         query.setParameter("group", group);
         if (discipline != null)
             query.setParameter("discipline", discipline);
