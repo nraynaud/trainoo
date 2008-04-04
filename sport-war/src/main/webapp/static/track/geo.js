@@ -1,7 +1,7 @@
 var map_scale_enc_table = [undefined, "8u6G", "8u63", "8u6r", "8u68", "8u6k", "8u6T", "8u6Q", "8u6m", "8u6Y", "8u6I", "8u6c", "8u6j", "8u6K", "8u6M", "8u67", "8u6W", "8u6b", "8u62", "8u6q", "8u6t", "8u6L"];
 var photo_scale_enc_table = [undefined, "UxGG", "UxG3", "UxGr", "UxG8", "UxGk", "UxGT", "UxGQ", "UxGm", "UxGY", "UxGI", "UxGc", "UxGj", "UxGK", "UxGM", "UxG7", "UxGW", "UxGb", "UxG2", "UxGq", "UxGt", "UxGL"];
 var len_enc_table = ["x", "G", "3", "r", "8", "k", "T", "Q", "m", "Y", "I", "c", "j", "K", "M", "7", "W", "b", "2", "q", "t", "L", "H", "9", "f"];
-var enc_table = ["X", "u", "P", "4", "N", "G", "Z", "8", "n", "g", "I", "c", "j", "K", "M", "7", "W", "Q", "T", "b", "2", "q", "C", "1", "e", "h", "O", "o", "t", "L", "H", "9", "z", "s", "m", "a", "w", "J", "S", "Y", "l", "A", "i", "f", "U", "v", "y", "r", "k", "E", "D", "x", "3", "6", "5", "F", "p", "0", "V", "R", "d", "B"];
+var enc_table = ["X", "u", "P", "4", "N", "G", "Z", "8", "n", "g", "I", "c", "j", "K", "M", "7", "W", "Q", "T", "b", "2", "q", "map", "1", "e", "h", "O", "o", "t", "L", "H", "9", "z", "s", "m", "a", "w", "J", "S", "Y", "l", "A", "i", "f", "U", "v", "y", "r", "k", "E", "D", "x", "3", "6", "5", "F", "p", "0", "V", "R", "d", "B"];
 var sign_enc_table = ["2", "A", "9", "r"];
 var ratios = [undefined,
     [0.199660570975744,-0.199660570975744],
@@ -28,10 +28,15 @@ var ratios = [undefined,
     [1.95004214034262e-007,-1.95004214034262e-007],
     [1.95003191791175e-007,-1.95003191791175e-007],
     [1.95002186306171e-007,-1.95002186306171e-007]];
+if (! ("console" in window) || !("firebug" in console)) {
+    var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group"
+        , "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+    window.console = {};
+    for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {
+    };
+}
 function log(txt) {
-    if ((typeof(console) != "undefined") && console.log) {
-        console.log(txt);
-    }
+    console.log(txt);
 }
 var geoEncode = function(nombre) {
     var base = 62;
@@ -87,8 +92,7 @@ function testEncodeTile() {
     ];
     for (var i = 0; i < tests.length; i++) {
         var testSegment = tests[i]
-        log("expected:" + testSegment[0] +
-            " actual:" + encodeTile("/FXX-GFD-CARTE__CARTE_jpg/256_256_",
+        log("expected:" + testSegment[0] + " actual:" + encodeTile("/FXX-GFD-CARTE__CARTE_jpg/256_256_",
                 testSegment[3], testSegment[1], testSegment[2]));
     }
 }
@@ -98,48 +102,77 @@ function decimalDegreeToRad(angle) {
 function radianToDecimalDegree(angle) {
     return angle * 180 / Math.PI;
 }
-var earth_radius_milimeters = 6378137;
+var earth_radius_meters = 6378137;
 function googleToGeoTileY(googleY, _zoom) {
     var zoom = googleToGeoZoom(_zoom);
-    var geoYTile = -earth_radius_milimeters * ratios[zoom][1] / 256 / global_precision - googleY;
+    var geoYTile = Math.ceil(-earth_radius_meters * ratios[zoom][1] / 256 / global_precision) - googleY;
     return Math.floor(geoYTile);
 }
 function EquirectangularProjection() {
-    this.R = earth_radius_milimeters;
+    this.R = earth_radius_meters;
     this.phi0 = decimalDegreeToRad(46.5);
     this.lam0 = decimalDegreeToRad(3);
-    this.projectionFactor = (this.R * Math.cos(this.phi0));
+    this.lngProjectionFactor = (this.R * Math.cos(this.phi0));
 }
 var global_precision = 0.01;
 EquirectangularProjection.prototype = new GProjection();
+function convertYPixel(y, zoom) {
+    var northPolePixel = -earth_radius_meters * ratios[zoom][1] / global_precision;
+    var northPoleRoundedTile = (Math.ceil(northPolePixel / 256) + 1) * 256;
+    return northPoleRoundedTile - y;
+}
 EquirectangularProjection.prototype.fromLatLngToPixel = function(latlong, _zoom) {
-    log("{fromLatLngToPixel " + latlong + ' zoom:' + zoom);
     var zoom = googleToGeoZoom(_zoom);
-    var x = this.R * decimalDegreeToRad(latlong.lng()) * Math.cos(this.phi0);
-    var y = this.R * decimalDegreeToRad(latlong.lat());
-    log("fromLatLngToPixel realX:" + x + " realY:" + y);
-    var pixX = x * ratios[zoom][0] / global_precision;
-    var pixY = -(this.R - y) * ratios[zoom][1] / global_precision;
-    var result = new GPoint(Math.round(pixX), Math.round(pixY));
-    log("fromLatLngToPixel scalex:" + ratios[zoom][0] + ' scaley:' + ratios[zoom][1] + " -> " + result);
-    log("}fromLatLngToPixel -> " + result);
+    var pixX = decimalDegreeToRad(latlong.lng()) * this.lngProjectionFactor * ratios[zoom][0] / global_precision;
+    var pixY = -this.R * decimalDegreeToRad(latlong.lat()) * ratios[zoom][1] / global_precision;
+    var result = new GPoint(pixX, convertYPixel(pixY, zoom));
+    //log("fromLatLngToPixel:" + latlong + " -> " + result + " tile:(" + pixX / 256 + ", " + pixY / 256 + ")");
     return result;
 };
 EquirectangularProjection.prototype.fromPixelToLatLng = function(pix, _zoom, bounded) {
     var zoom = googleToGeoZoom(_zoom);
-    var lng = radianToDecimalDegree((pix.x / ratios[zoom][0] * global_precision) / this.projectionFactor);
-    var correctedY = this.R + (pix.y / ratios[zoom][1] * global_precision);
-    var lat = radianToDecimalDegree(correctedY / this.R);
+    var lng = radianToDecimalDegree((pix.x / ratios[zoom][0] * global_precision) / this.lngProjectionFactor);
+    var lat = -radianToDecimalDegree(convertYPixel(pix.y, zoom) / ratios[zoom][1] * global_precision / this.R);
     var result = new GLatLng(lat, lng, bounded);
-    log("fromPixelToLatLng: " + pix + " zoom:" + _zoom + " -> " + result);
+    //log("fromPixelToLatLng: " + pix + " zoom:" + zoom + " -> " + result);
     return result;
 };
 EquirectangularProjection.prototype.tileCheckRange = function(tile, zoom, tileSize) {
-    log("tileCheckRange " + tile + ' zoom:' + zoom + ' tileSize:' + tileSize);
+    log("tileCheckRange " + tile + ' zoom:' + zoom);
     if (!isNaN(tile.x) && !isNaN(tile.y))
         return true;
     else
         log("nan :fou:");
+}
+function GeoMapType() {
+    var copyCollection = new GCopyrightCollection('Geo');
+    var copyright = new GCopyright(1, new GLatLngBounds(new GLatLng(-90, -180), new GLatLng(90, 180)), 0, "© IGN");
+    copyCollection.addCopyright(copyright);
+    var tilelayers = [new GTileLayer(copyCollection, 5, 16)];
+    tilelayers[0].getTileUrl = function (pt, zoom) {
+        ensureCookies();
+        return "http://visu-2d.geoportail.fr/geoweb/maps"
+                + encodeTile("/FXX-GFD-CARTE__CARTE_jpg/256_256_", googleToGeoZoom(zoom), pt.x, googleToGeoTileY(pt.y, zoom))
+                + ".jpg";
+    }
+    var projection = new EquirectangularProjection();
+    GMapType.call(this, tilelayers, projection, "Geo", {errorMessage:"No geo data available", textColor:"black"});
+}
+GeoMapType.prototype = new GMapType();
+GeoMapType.prototype.getSpanZoomLevel = function(center, span, viewSize) {
+    var result = GMapType.prototype.getSpanZoomLevel.call(this, center, span, viewSize);
+    log("getSpanZoomLevel: " + result);
+    return result;
+}
+GeoMapType.prototype.getTileSize = function() {
+    var result = GMapType.prototype.getTileSize.call(this);
+    log("getTileSize: " + result);
+    return result;
+}
+GeoMapType.prototype.getBoundsZoomLevel = function(bounds, viewSize) {
+    var result = GMapType.prototype.getBoundsZoomLevel.call(this, bounds, viewSize);
+    log("getBoundsZoomLevel: " + result);
+    return result;
 }
 function testProjection() {
     var projection = new EquirectangularProjection();
@@ -148,25 +181,14 @@ function testProjection() {
     log("test result:" + projection.fromPixelToLatLng(pix, 11) + " expected:" + input);
 }
 function googleToGeoZoom(googleZoom) {
-    var z = 17 - googleZoom;
+    var z = 22 - googleZoom;
     return z > 0 ? z < ratios.length ? z : ratios.length - 1 : 1;
 }
 function createGeoMapType() {
     ensureCookies();
     testProjection();
-    var copyCollection = new GCopyrightCollection('Geo');
-    var copyright = new GCopyright(1, new GLatLngBounds(new GLatLng(-90, -180), new GLatLng(90, 180)), 0, "© IGN");
-    copyCollection.addCopyright(copyright);
-    var tilelayers = [new GTileLayer(copyCollection, 0, 16)];
-    tilelayers[0].getTileUrl = CustomGetTileUrl;
-    function CustomGetTileUrl(pt, zoom) {
-        ensureCookies();
-        return "http://visu-2d.geoportail.fr/geoweb/maps"
-                + encodeTile("/FXX-GFD-CARTE__CARTE_jpg/256_256_", googleToGeoZoom(zoom), pt.x, googleToGeoTileY(pt.y, zoom))
-                + ".jpg";
-    }
-    var projection = new EquirectangularProjection();
-    return new GMapType(tilelayers, projection, "Geo", {errorMessage:"No geo data available", textColor:"black"});
+    testEncodeTile();
+    return new GeoMapType();
 }
 var lastTimeCookieChecked;
 /**
@@ -176,14 +198,8 @@ var lastTimeCookieChecked;
 function ensureCookies() {
     function fetchFakeImage() {
         var img = $('lolToken');
-        if (img == null) {
-            //style='visibility:hidden'
-            $('body').insert("<img id='lolToken' src='' alt=''>");
-            return $('lolToken');
-        } else {
-            img.style.visibility = 'hidden';
-            return img;
-        }
+        //img.style.visibility = 'hidden';
+        return img;
     }
     var now = new Date().getTime() / 1000;
     if (lastTimeCookieChecked == null || now - lastTimeCookieChecked > 60) {

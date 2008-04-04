@@ -31,3 +31,8 @@ html, body, #center {
     background-color: white;
     border: #824900 medium solid;
 }
+
+#lolToken {
+    position: absolute;
+    right: 0;
+}

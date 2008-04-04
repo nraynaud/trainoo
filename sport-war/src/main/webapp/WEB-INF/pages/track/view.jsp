@@ -10,7 +10,6 @@
     <link href="<%=stat("/static/track/trackstyle.css")%>" rel="stylesheet" type="text/css">
 </p:header>
 
-
 <div id="map"></div>
 <div id="controlPanel">
     <img id='lolToken' src="http://www.geoportail.fr/imgs/visu/empty.gif" alt="">
@@ -43,6 +42,5 @@
 <script type="text/javascript"
         src="http://www.google.com/maps?file=api&v=2&key=<%=key%>&hl=fr"></script>
 
-<p:javascript src="<%=stat("/static/track/elabel.js")%>"/>
 <p:javascript src="<%=stat("/static/track/geo.js")%>"/>
 <p:javascript src="<%=stat("/static/track/track.js")%>"/>

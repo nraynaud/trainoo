@@ -1,12 +1,12 @@
 _mPreferMetric = true;
+function updateHeight() {
+    $('content').style.height = $('center').clientHeight - $('content').offsetTop - 10 + "px";
+}
 function loaded() {
     updateHeight();
     startMap();
 }
-document.observe('dom:loaded', loaded);
-function updateHeight() {
-    $('content').style.height = $('center').clientHeight - $('content').offsetTop - 10 + "px";
-}
+window.onload = loaded;
 var map;
 var icon;
 var markers = [];
@@ -42,41 +42,44 @@ function fit() {
     map.setCenter(center, map.getBoundsZoomLevel(bounds));
 }
 function startMap() {
-    window.addEventListener("resize", updateHeight, false);
-    map = new GMap2($("map"));
-    var start = new GLatLng(46.980252, 2.548828);
-    map.setCenter(start, 5);
-    map.setMapType(G_HYBRID_MAP);
+    if (GBrowserIsCompatible()) {
+        window.onresize = updateHeight;
+        map = new GMap2(document.getElementById("map"));
+        var start = new GLatLng(47.081850, 2.3995035);
+        map.setCenter(start, 10);
+        map.setMapType(G_HYBRID_MAP);
     //map.enableScrollWheelZoom();
-    map.addControl(new GMapTypeControl(1));
-    map.addControl(new GLargeMapControl());
-    map.enableContinuousZoom();
-    map.addControl(new GScaleControl(250));
+        map.addControl(new GMapTypeControl(1));
+        map.addControl(new GLargeMapControl());
+        map.enableContinuousZoom();
+        map.addControl(new GScaleControl(250));
     // red marker icon
-    icon = new GIcon();
-    icon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
-    icon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
-    icon.iconSize = new GSize(12, 20);
-    icon.shadowSize = new GSize(22, 20);
-    icon.iconAnchor = new GPoint(6, 20);
-    draw();
-    GEvent.addListener(map, 'click', function(overlay, latLng) {
-        if (latLng) {
-            $('position').update(latLng.toString());
-            addMarker(latLng);
-        }
-    });
-    GEvent.addListener(map, 'mousemove', function(latLng) {
-        if (latLng) {
-            $('position').update(latLng.toString());
-        }
-    });
-    new GDraggableObject($('controlPanel'));
-    var type = createGeoMapType();
-    map.addMapType(type);
-    map.setMapType(type);
+        icon = new GIcon();
+        icon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
+        icon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+        icon.iconSize = new GSize(12, 20);
+        icon.shadowSize = new GSize(22, 20);
+        icon.iconAnchor = new GPoint(6, 20);
+        draw();
+        GEvent.addListener(map, 'click', function(overlay, latLng) {
+            if (latLng) {
+                addMarker(latLng);
+                draw();
+            }
+        });
+        GEvent.addListener(map, 'mousemove', function(latLng) {
+            if (latLng) {
+                $('position').update(latLng.toString());
+            }
+        });
+        new GDraggableObject($('controlPanel'));
+        var type = createGeoMapType();
+        map.addMapType(type);
+        map.setMapType(type);
+    }
 }
 function addMarker(pnt) {
+    console.log("new marker: " + pnt)
     map.panTo(pnt);
     var marker = new GMarker(pnt, {icon:icon, draggable: true});
     markers.push(marker);
@@ -90,7 +93,6 @@ function addMarker(pnt) {
     GEvent.addListener(marker, "drag", function() {
         draw();
     });
-    draw();
 }
 function clearMap() {
     while (markers.length > 0) {
