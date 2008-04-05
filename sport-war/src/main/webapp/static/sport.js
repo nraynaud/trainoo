@@ -17,18 +17,25 @@ function feedback(field_name, val)
 ;
 /* MIT licence bablaba */
 function charCounter(id, maxlimit, minLimit) {
-    if (!$('counter-' + id)) {
-        $(id).insert({after: '<div id="counter-' + id + '"></div>'});
+    var counterId = 'counter-' + id;
+    if (!$(counterId)) {
+        $(id).insert({after: '<div class="charcount"><span id="' + counterId + '"></span><a id="a-' + counterId + '" class="tooltipRaiser">?</a></div>'});
+        $('a-' + counterId).observe("mouseover", function(event) {
+            $('a-' + counterId).observe("mouseout", function() {
+                hideToolTip();
+            });
+            showToolTip(event, "Limites du nombre de caractères&nbsp;:<br><b>minimum / actuel / maximum</b>");
+        });
     }
     if ($F(id).length >= maxlimit || minLimit != null && minLimit > $F(id).length && $F(id).length > 0) {
         $(id).value = $F(id).substring(0, maxlimit);
-        $('counter-' + id).addClassName('charcount-limit');
-        $('counter-' + id).removeClassName('charcount-safe');
+        $(counterId).addClassName('charcount-limit');
+        $(counterId).removeClassName('charcount-safe');
     } else {
-        $('counter-' + id).removeClassName('charcount-limit');
-        $('counter-' + id).addClassName('charcount-safe');
+        $(counterId).removeClassName('charcount-limit');
+        $(counterId).addClassName('charcount-safe');
     }
-    $('counter-' + id).update((minLimit != null ? minLimit + '/' : '' ) + $F(id).length + '/' + maxlimit);
+    $(counterId).update((minLimit != null ? minLimit + '/' : '' ) + $F(id).length + '/' + maxlimit);
 }
 function makeItCount(id, maxsize, minsize) {
     if ($(id)) {
@@ -106,7 +113,7 @@ function showToolTip(e, content) {
     }
     if (document.all)
         e = event;
-    $('bubble_tooltip_content').insert(content);
+    $('bubble_tooltip_content').update(content);
     var tooltip = $('bubble_tooltip');
     tooltip.style.display = 'block';
     var element = Event.element(e);

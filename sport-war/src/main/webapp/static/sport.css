@@ -357,15 +357,17 @@ textarea.messageContentArea {
     width: 99%;
 }
 
+.charcount {
+    text-align: right;
+}
+
 .charcount-safe {
     color: gray;
-    text-align: right;
 }
 
 .charcount-limit {
     color: red;
     font-weight: bold;
-    text-align: right;
 }
 
 #tinyCenter {
@@ -531,6 +533,10 @@ p.submit {
     border: 2px #006699 solid;
 }
 
+.tooltipRaiser {
+    cursor: help;
+}
+
 /************* tooltip stuff ***************/
 #bubble_tooltip {
     width: 182px;
@@ -548,8 +554,8 @@ p.submit {
     background-image: url( 'tooltip/bubble_middle.png' );
     background-repeat: repeat-y;
     background-position: bottom left;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 #bubble_tooltip .bubble_middle div {
