@@ -28,6 +28,10 @@ var ratios = [undefined,
     [1.95004214034262e-007,-1.95004214034262e-007],
     [1.95003191791175e-007,-1.95003191791175e-007],
     [1.95002186306171e-007,-1.95002186306171e-007]];
+var IGN_PHOTO_PREFIX = "/FXX-GFD-PHOTO__PHOTO_jpg/256_256_";
+var IGN_MAP_PREFIX = "/FXX-GFD-CARTE__CARTE_jpg/256_256_";
+var EARTH_RADIUS_METERS = 6378137;
+var GLOBAL_PRECISION = 0.01;
 if (! ("console" in window) || !("firebug" in console)) {
     var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group"
         , "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
@@ -36,7 +40,7 @@ if (! ("console" in window) || !("firebug" in console)) {
     };
 }
 function log(txt) {
-    console.log(txt);
+    //console.log(txt);
 }
 var geoEncode = function(nombre) {
     var base = 62;
@@ -52,29 +56,14 @@ var geoEncode = function(nombre) {
         return 0;
     return encoded;
 };
-/**
- *
- * scale 6(max de détails)->16(on voit rien)
- * google 11 ~ geoportail 16
- */
 var encodeTile = function(prefix, scale, tileX, tileY) {
     var encoded_string;
     var table;
-    table = prefix == "/FXX-GFD-PHOTO__PHOTO_jpg/256_256_" ? photo_scale_enc_table : map_scale_enc_table;
+    table = prefix == IGN_PHOTO_PREFIX ? photo_scale_enc_table : map_scale_enc_table;
     encoded_string = table[scale];
-    if (tileX * tileY >= 0) {
-        if (tileX < 0) {
-            encoded_string += sign_enc_table[3];
-        } else {
-            encoded_string += sign_enc_table[0];
-        }
-    } else {
-        if (tileX < 0) {
-            encoded_string += sign_enc_table[2];
-        } else {
-            encoded_string += sign_enc_table[1];
-        }
-    }
+    var signIndex;
+    signIndex = tileX * tileY >= 0 ? tileX < 0 ? 3 : 0 : tileX < 0 ? 2 : 1;
+    encoded_string += sign_enc_table[signIndex];
     tileX = Number(tileX);
     tileY = Number(tileY);
     var encodedTileX = geoEncode(Math.abs(tileX));
@@ -85,6 +74,95 @@ var encodeTile = function(prefix, scale, tileX, tileY) {
             + " eX:" + encodedTileX + " eY:" + encodedTileY);
     return encoded_string;
 };
+function degreeToRad(angle) {
+    return Math.PI * angle / 180;
+}
+function radianToDegree(angle) {
+    return angle * 180 / Math.PI;
+}
+/*
+this is an involution function, if you stay in north hemisphere. DON'T TRY THIS UNDER THE EQUATOR 8
+ */
+function googleToGeoTileY(googleY, zoom) {
+    var northPoleTile = -EARTH_RADIUS_METERS * ratios[googleToGeoZoom(zoom)][1] / 256 / GLOBAL_PRECISION;
+    return Math.floor(Math.ceil(northPoleTile) - googleY);
+}
+function EquirectangularProjection() {
+    this.phi0 = degreeToRad(46.5);
+    this.lngProjectionFactor = (EARTH_RADIUS_METERS * Math.cos(this.phi0));
+}
+EquirectangularProjection.prototype = new GProjection();
+function convertYPixel(y, zoom) {
+    var northPolePixel = -EARTH_RADIUS_METERS * ratios[zoom][1] / GLOBAL_PRECISION;
+    var northPoleRoundedTile = (Math.ceil(northPolePixel / 256) + 1) * 256;
+    return northPoleRoundedTile - y;
+}
+EquirectangularProjection.prototype.fromLatLngToPixel = function(latlong, _zoom) {
+    var zoom = googleToGeoZoom(_zoom);
+    var pixX = degreeToRad(latlong.lng()) * this.lngProjectionFactor * ratios[zoom][0] / GLOBAL_PRECISION;
+    var pixY = -EARTH_RADIUS_METERS * degreeToRad(latlong.lat()) * ratios[zoom][1] / GLOBAL_PRECISION;
+    var result = new GPoint(pixX, convertYPixel(pixY, zoom));
+    log("fromLatLngToPixel:" + latlong + " -> " + result + " tile:(" + pixX / 256 + ", " + pixY / 256 + ")");
+    return result;
+};
+EquirectangularProjection.prototype.fromPixelToLatLng = function(pix, _zoom, bounded) {
+    var zoom = googleToGeoZoom(_zoom);
+    var lng = radianToDegree((pix.x / ratios[zoom][0] * GLOBAL_PRECISION) / this.lngProjectionFactor);
+    var lat = -radianToDegree(convertYPixel(pix.y, zoom) / ratios[zoom][1] * GLOBAL_PRECISION / EARTH_RADIUS_METERS);
+    var result = new GLatLng(lat, lng, bounded);
+    log("fromPixelToLatLng: " + pix + " zoom:" + zoom + " -> " + result);
+    return result;
+};
+/**
+ * avoids using Infinity because it creates a bug in overlays !
+ */
+EquirectangularProjection.prototype.getWrapWidth = function() {
+    return 99999999999999;
+}
+function createMapType(prefix, textColor, maxZoom) {
+    var copyCollection = new GCopyrightCollection('Geo');
+    var copyright = new GCopyright(1, new GLatLngBounds(new GLatLng(-90, -180), new GLatLng(90, 180)), 0, "© IGN");
+    copyCollection.addCopyright(copyright);
+    function createLayer(prefix) {
+        var layer = new GTileLayer(copyCollection, 5, maxZoom);
+        layer.getTileUrl = function (pt, zoom) {
+            ensureCookies();
+            return "http://visu-2d.geoportail.fr/geoweb/maps"
+                    + encodeTile(prefix, googleToGeoZoom(zoom), pt.x, googleToGeoTileY(pt.y, zoom)) + ".jpg";
+        }
+        return layer;
+    }
+    var projection = new EquirectangularProjection();
+    return new GMapType([createLayer(prefix)], projection, "IGN", {errorMessage:"Aucune donnée disponible", textColor:textColor});
+}
+function googleToGeoZoom(googleZoom) {
+    var z = 22 - googleZoom;
+    return z > 0 ? z < ratios.length ? z : ratios.length - 1 : 1;
+}
+function createGeoMapType(prefix, textColor, maxZoom) {
+    ensureCookies();
+    testProjection();
+    testEncodeTile();
+    return new createMapType(prefix, textColor, maxZoom);
+}
+var lastTimeCookieChecked;
+/**
+ * the portal seems to mandate to have a cookie to get the tiles. the cookie is set after a strange redirection when querying http://www.geoportail.fr/imgs/visu/empty.gif.
+ * it expires quick, so we re-query the url every minute or so.
+ */
+function ensureCookies() {
+    function fetchFakeImage() {
+        var img = $('lolToken');
+        img.style.visibility = 'hidden';
+        return img;
+    }
+    var now = new Date().getTime() / 1000;
+    if (lastTimeCookieChecked == null || now - lastTimeCookieChecked > 60) {
+        fetchFakeImage().src = "http://www.geoportail.fr/imgs/visu/empty.gif?random=" + Math.random();
+        lastTimeCookieChecked = now;
+    }
+}
+/******some tests ******/
 function testEncodeTile() {
     var tests = [
         ["8u6M9GPp", -2, 56, 14],
@@ -96,114 +174,9 @@ function testEncodeTile() {
                 testSegment[3], testSegment[1], testSegment[2]));
     }
 }
-function decimalDegreeToRad(angle) {
-    return Math.PI * angle / 180;
-}
-function radianToDecimalDegree(angle) {
-    return angle * 180 / Math.PI;
-}
-var earth_radius_meters = 6378137;
-function googleToGeoTileY(googleY, _zoom) {
-    var zoom = googleToGeoZoom(_zoom);
-    var geoYTile = Math.ceil(-earth_radius_meters * ratios[zoom][1] / 256 / global_precision) - googleY;
-    return Math.floor(geoYTile);
-}
-function EquirectangularProjection() {
-    this.R = earth_radius_meters;
-    this.phi0 = decimalDegreeToRad(46.5);
-    this.lam0 = decimalDegreeToRad(3);
-    this.lngProjectionFactor = (this.R * Math.cos(this.phi0));
-}
-var global_precision = 0.01;
-EquirectangularProjection.prototype = new GProjection();
-function convertYPixel(y, zoom) {
-    var northPolePixel = -earth_radius_meters * ratios[zoom][1] / global_precision;
-    var northPoleRoundedTile = (Math.ceil(northPolePixel / 256) + 1) * 256;
-    return northPoleRoundedTile - y;
-}
-EquirectangularProjection.prototype.fromLatLngToPixel = function(latlong, _zoom) {
-    var zoom = googleToGeoZoom(_zoom);
-    var pixX = decimalDegreeToRad(latlong.lng()) * this.lngProjectionFactor * ratios[zoom][0] / global_precision;
-    var pixY = -this.R * decimalDegreeToRad(latlong.lat()) * ratios[zoom][1] / global_precision;
-    var result = new GPoint(pixX, convertYPixel(pixY, zoom));
-    //log("fromLatLngToPixel:" + latlong + " -> " + result + " tile:(" + pixX / 256 + ", " + pixY / 256 + ")");
-    return result;
-};
-EquirectangularProjection.prototype.fromPixelToLatLng = function(pix, _zoom, bounded) {
-    var zoom = googleToGeoZoom(_zoom);
-    var lng = radianToDecimalDegree((pix.x / ratios[zoom][0] * global_precision) / this.lngProjectionFactor);
-    var lat = -radianToDecimalDegree(convertYPixel(pix.y, zoom) / ratios[zoom][1] * global_precision / this.R);
-    var result = new GLatLng(lat, lng, bounded);
-    //log("fromPixelToLatLng: " + pix + " zoom:" + zoom + " -> " + result);
-    return result;
-};
-EquirectangularProjection.prototype.tileCheckRange = function(tile, zoom, tileSize) {
-    log("tileCheckRange " + tile + ' zoom:' + zoom);
-    if (!isNaN(tile.x) && !isNaN(tile.y))
-        return true;
-    else
-        log("nan :fou:");
-}
-function GeoMapType() {
-    var copyCollection = new GCopyrightCollection('Geo');
-    var copyright = new GCopyright(1, new GLatLngBounds(new GLatLng(-90, -180), new GLatLng(90, 180)), 0, "© IGN");
-    copyCollection.addCopyright(copyright);
-    var tilelayers = [new GTileLayer(copyCollection, 5, 16)];
-    tilelayers[0].getTileUrl = function (pt, zoom) {
-        ensureCookies();
-        return "http://visu-2d.geoportail.fr/geoweb/maps"
-                + encodeTile("/FXX-GFD-CARTE__CARTE_jpg/256_256_", googleToGeoZoom(zoom), pt.x, googleToGeoTileY(pt.y, zoom))
-                + ".jpg";
-    }
-    var projection = new EquirectangularProjection();
-    GMapType.call(this, tilelayers, projection, "Geo", {errorMessage:"No geo data available", textColor:"black"});
-}
-GeoMapType.prototype = new GMapType();
-GeoMapType.prototype.getSpanZoomLevel = function(center, span, viewSize) {
-    var result = GMapType.prototype.getSpanZoomLevel.call(this, center, span, viewSize);
-    log("getSpanZoomLevel: " + result);
-    return result;
-}
-GeoMapType.prototype.getTileSize = function() {
-    var result = GMapType.prototype.getTileSize.call(this);
-    log("getTileSize: " + result);
-    return result;
-}
-GeoMapType.prototype.getBoundsZoomLevel = function(bounds, viewSize) {
-    var result = GMapType.prototype.getBoundsZoomLevel.call(this, bounds, viewSize);
-    log("getBoundsZoomLevel: " + result);
-    return result;
-}
 function testProjection() {
     var projection = new EquirectangularProjection();
     var input = new GLatLng(46.980252, 2.548828);
     var pix = projection.fromLatLngToPixel(input, 11);
     log("test result:" + projection.fromPixelToLatLng(pix, 11) + " expected:" + input);
-}
-function googleToGeoZoom(googleZoom) {
-    var z = 22 - googleZoom;
-    return z > 0 ? z < ratios.length ? z : ratios.length - 1 : 1;
-}
-function createGeoMapType() {
-    ensureCookies();
-    testProjection();
-    testEncodeTile();
-    return new GeoMapType();
-}
-var lastTimeCookieChecked;
-/**
- * the portal seems to mandate to have a cookie to get the tiles. the cookie is set after a strange redirection when querying http://www.geoportail.fr/imgs/visu/empty.gif.
- * it expires quick, so we re-query the url every minute or so.
- */
-function ensureCookies() {
-    function fetchFakeImage() {
-        var img = $('lolToken');
-        //img.style.visibility = 'hidden';
-        return img;
-    }
-    var now = new Date().getTime() / 1000;
-    if (lastTimeCookieChecked == null || now - lastTimeCookieChecked > 60) {
-        fetchFakeImage().src = "http://www.geoportail.fr/imgs/visu/empty.gif?random=" + Math.random();
-        lastTimeCookieChecked = now;
-    }
 }

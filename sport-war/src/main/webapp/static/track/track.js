@@ -10,16 +10,25 @@ window.onload = loaded;
 var map;
 var icon;
 var markers = [];
-var poly = [];
 var line;
-var distance = 0;
-var encodedTrack = "";
 function draw() {
     if (line) {
         map.removeOverlay(line)
     }
+    var poly = [];
+    var encodedTrack = "";
+    var distance = 0
+    for (var i = 0; i < markers.length; ++i) {
+        var pnt = markers[i].getPoint();
+        if (poly.length > 0)
+            distance += poly[poly.length - 1].distanceFrom(pnt);
+        poly.push(pnt);
+        encodedTrack += '[' + pnt.lat() + ',' + pnt.lng() + '],';
+    }
+    console.log('lol')
     line = new GPolyline(poly, '#FF0000', 3, 1);
     map.addOverlay(line);
+    $('trackVar').setValue(encodedTrack);
     $('distance').update((distance / 1000).toFixed(2) + "km");
     $('lengthVar').setValue(distance / 1000);
     $('pointsCount').update(markers.length);
@@ -41,66 +50,59 @@ function fit() {
     var center = bounds.getCenter();
     map.setCenter(center, map.getBoundsZoomLevel(bounds));
 }
+function createIcon() {
+    var icon = new GIcon();
+    icon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
+    icon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+    icon.iconSize = new GSize(12, 20);
+    icon.shadowSize = new GSize(22, 20);
+    icon.iconAnchor = new GPoint(6, 20);
+    return icon;
+}
 function startMap() {
     if (GBrowserIsCompatible()) {
+        var IGN_PHOTO_TYPE = createGeoMapType(IGN_PHOTO_PREFIX, 'white', 18);
+        var IGN_MAP_TYPE = createGeoMapType(IGN_MAP_PREFIX, 'black', 16);
+        function prepareMap(map) {
+            map.addMapType(IGN_MAP_TYPE);
+            map.addMapType(IGN_PHOTO_TYPE);
+            map.removeMapType(G_NORMAL_MAP);
+            var start = new GLatLng(47.081850, 2.3995035);
+            map.setCenter(start, 10);
+        }
         window.onresize = updateHeight;
-        map = new GMap2(document.getElementById("map"));
-        var type = createGeoMapType();
-        map.addMapType(type);
-        var start = new GLatLng(47.081850, 2.3995035);
-        map.setCenter(start, 10);
-        //map.enableScrollWheelZoom();
-        map.addControl(new GMapTypeControl(1));
+        map = new GMap2($("map"));
+        prepareMap(map);
+        map.enableScrollWheelZoom();
+        var mapTypeControl = new GHierarchicalMapTypeControl();
+        mapTypeControl.addRelationship(IGN_PHOTO_TYPE, IGN_MAP_TYPE, "carte");
+        map.addControl(mapTypeControl);
         map.addControl(new GLargeMapControl());
         map.enableContinuousZoom();
         map.addControl(new GScaleControl(250));
-    // red marker icon
-        icon = new GIcon();
-        icon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
-        icon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
-        icon.iconSize = new GSize(12, 20);
-        icon.shadowSize = new GSize(22, 20);
-        icon.iconAnchor = new GPoint(6, 20);
+        icon = createIcon();
         draw();
         GEvent.addListener(map, 'click', function(overlay, latLng) {
-            if (latLng) {
-                addMarker(latLng);
-                draw();
-            }
-        });
-        GEvent.addListener(map, 'mousemove', function(latLng) {
-            if (latLng) {
-                $('position').update(latLng.toString());
-            }
+            addMarker(latLng);
+            draw();
         });
         new GDraggableObject($('controlPanel'));
-        map.setMapType(type);
+        map.setMapType(IGN_PHOTO_TYPE);
     }
 }
 function addMarker(pnt) {
-    console.log("new marker: " + pnt)
     map.panTo(pnt);
     var marker = new GMarker(pnt, {icon:icon, draggable: true});
     markers.push(marker);
-    if (poly.length > 0)
-        distance += poly[poly.length - 1].distanceFrom(pnt);
-    poly.push(pnt);
-    encodedTrack += '[' + pnt.lat() + ',' + pnt.lng() + '],';
-    $('trackVar').setValue(encodedTrack);
     map.addOverlay(marker);
     marker.enableDragging();
-    GEvent.addListener(marker, "drag", function() {
-        draw();
-    });
+    GEvent.addListener(marker, "drag", draw);
 }
 function clearMap() {
     while (markers.length > 0) {
         map.removeOverlay(markers.pop());
     }
     markers = [];
-    poly = [];
-    distance = 0;
-    encodedTrack = "";
     draw()
 }
 function newTrack() {
