@@ -6,6 +6,7 @@ function loaded() {
     updateHeight();
     startMap();
 }
+window.onresize = updateHeight;
 window.onload = loaded;
 var map;
 var icon;
@@ -25,7 +26,6 @@ function draw() {
         poly.push(pnt);
         encodedTrack += '[' + pnt.lat() + ',' + pnt.lng() + '],';
     }
-    console.log('lol')
     line = new GPolyline(poly, '#FF0000', 3, 1);
     map.addOverlay(line);
     $('trackVar').setValue(encodedTrack);
@@ -63,23 +63,19 @@ function startMap() {
     if (GBrowserIsCompatible()) {
         var IGN_PHOTO_TYPE = createGeoMapType(IGN_PHOTO_PREFIX, 'white', 18);
         var IGN_MAP_TYPE = createGeoMapType(IGN_MAP_PREFIX, 'black', 16);
-        function prepareMap(map) {
-            map.addMapType(IGN_MAP_TYPE);
-            map.addMapType(IGN_PHOTO_TYPE);
-            map.removeMapType(G_NORMAL_MAP);
-            var start = new GLatLng(47.081850, 2.3995035);
-            map.setCenter(start, 10);
-        }
-        window.onresize = updateHeight;
-        map = new GMap2($("map"));
-        prepareMap(map);
+        map = new GMap2($("map"), {googleBarOptions:{showOnLoad:true}});
+        map.addMapType(IGN_MAP_TYPE);
+        map.addMapType(IGN_PHOTO_TYPE);
+        map.removeMapType(G_NORMAL_MAP);
+        map.setCenter(new GLatLng(47.081850, 2.3995035), 10);
         map.enableScrollWheelZoom();
         var mapTypeControl = new GHierarchicalMapTypeControl();
         mapTypeControl.addRelationship(IGN_PHOTO_TYPE, IGN_MAP_TYPE, "carte");
         map.addControl(mapTypeControl);
-        map.addControl(new GLargeMapControl());
         map.enableContinuousZoom();
-        map.addControl(new GScaleControl(250));
+        map.enableGoogleBar();
+        map.addControl(new GLargeMapControl());
+        map.addControl(new GScaleControl(), new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(10, 15)));
         icon = createIcon();
         draw();
         GEvent.addListener(map, 'click', function(overlay, latLng) {
