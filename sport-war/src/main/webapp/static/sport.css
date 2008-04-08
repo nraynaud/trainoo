@@ -541,7 +541,7 @@ p.submit {
 #bubble_tooltip {
     width: 182px;
     position: absolute;
-    display: none;
+    display: block;
 }
 
 #bubble_tooltip .bubble_top {

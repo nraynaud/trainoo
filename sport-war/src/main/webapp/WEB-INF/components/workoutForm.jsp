@@ -32,7 +32,7 @@
                 <p:javascript>
                     function showWorkoutToolTip(event, tip, fieldName, val) {
                     var info = $('info');
-                    $('info').style .visibility='visible';
+                    info.setStyle({visibility: 'inherit'});
                     $('tip').update(tip);
                     showToolTip(event, info);
                     feedback(fieldName, val);

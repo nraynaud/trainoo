@@ -115,7 +115,7 @@ function showToolTip(e, content) {
         e = event;
     $('bubble_tooltip_content').update(content);
     var tooltip = $('bubble_tooltip');
-    tooltip.style.display = 'block';
+    tooltip.setStyle({visibility: 'visible'});
     var element = Event.element(e);
     var absoluteY = 0;
     var absoluteX = element.offsetWidth * 0.75;
@@ -126,12 +126,12 @@ function showToolTip(e, content) {
     }
     var leftPos = absoluteX - tooltip.offsetWidth / 2;
     if (leftPos < 0)leftPos = 0;
-    tooltip.style.left = leftPos + 'px';
-    tooltip.style.top = absoluteY - tooltip.offsetHeight + 'px';
+    tooltip.setStyle({left: leftPos + 'px'});
+    tooltip.setStyle({top: absoluteY - tooltip.offsetHeight + 'px'});
 }
 function hideToolTip()
 {
-    document.getElementById('bubble_tooltip').style.display = 'none';
+    document.getElementById('bubble_tooltip').setStyle({visibility: 'hidden'});
     return true;
 }
 /***** END LGPL ****/
