@@ -10,12 +10,6 @@ function log(txt) {
     if ("console" in window && "firebug" in console)
         console.log(txt);
 }
-function degreeToRad(angle) {
-    return Math.PI * angle / 180;
-}
-function radianToDegree(angle) {
-    return angle * 180 / Math.PI;
-}
 function northPoleTile(geoZoom) {
     return Math.ceil(ratios[geoZoom] / 256);
 }
@@ -28,16 +22,22 @@ function convertYPixel(y, zoom) {
     return (northPoleTile(zoom) + 1) * 256 - y;
 }
 function GeoProjection() {
+    function degreeToRad(angle) {
+        return Math.PI * angle / 180;
+    }
     this.lngProjectionFactor = (Math.cos(degreeToRad(46.5)));
 }
 GeoProjection.prototype = new GProjection();
 GeoProjection.prototype.fromLatLngToPixel = function(latlong, _zoom) {
     var geoZoom = googleToGeoZoom(_zoom);
-    var pixX = degreeToRad(latlong.lng()) * this.lngProjectionFactor * ratios[geoZoom] ;
-    var pixY = degreeToRad(latlong.lat()) * ratios[geoZoom] ;
+    var pixX = latlong.lngRadians() * this.lngProjectionFactor * ratios[geoZoom] ;
+    var pixY = latlong.latRadians() * ratios[geoZoom] ;
     return new GPoint(pixX, convertYPixel(pixY, geoZoom));
 };
 GeoProjection.prototype.fromPixelToLatLng = function(pix, _zoom, bounded) {
+    function radianToDegree(angle) {
+        return angle * 180 / Math.PI;
+    }
     var geoZoom = googleToGeoZoom(_zoom);
     var lng = radianToDegree((pix.x / ratios[geoZoom] ) / this.lngProjectionFactor);
     var lat = radianToDegree(convertYPixel(pix.y, geoZoom) / ratios[geoZoom]);
