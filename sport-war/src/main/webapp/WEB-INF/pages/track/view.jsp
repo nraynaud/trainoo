@@ -31,6 +31,11 @@
         <s:submit id="submit" value="Enregistrer le circuit !" onclick="" tabindex="1"/>
     </s:form>
     <a href="#" onclick="newTrack(); return false;">Nouveau parcours</a>
+
+    <div style="visibility:hidden">
+        <img id="map_handle" src="<%=stat("/static/track/map_handle.png")%>" alt="">
+        <img id="map_handle_active" src="<%=stat("/static/track/map_handle_active.png")%>" alt="">
+    </div>
 </div>
 <%
     final String localKey = "ABQIAAAAB_pY09DNgzbhAapu-Taq3BQ2JGlzsnS7jQe2K3BOHN-eIIg7qxTdWxIGQzbXObDxDX77K7MZDK5a1Q";
