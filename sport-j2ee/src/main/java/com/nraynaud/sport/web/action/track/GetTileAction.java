@@ -11,13 +11,10 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
-import java.util.Locale;
 
 @Results({
 @Result(type = StreamResult.class, value = "inputStream",
@@ -31,8 +28,6 @@ public class GetTileAction extends DefaultAction implements ServletResponseAware
     public ByteArrayInputStream inputStream;
     private HttpServletResponse response;
     private HttpServletRequest request;
-    private static final DateTimeFormatter HTTP_DATE_TIME_FORMATTER = DateTimeFormat.forPattern(
-            "E',' dd MMM yyyy kk:mm:ss 'GMT'").withLocale(Locale.US);
 
     public GetTileAction(final Application application, final TileFetcher tileFetcher) {
         super(application);
@@ -48,7 +43,7 @@ public class GetTileAction extends DefaultAction implements ServletResponseAware
             throw new RuntimeException("strange tilename: " + tileName);
         data = tileFetcher.fetchTile(tileName);
         inputStream = new ByteArrayInputStream(data);
-        response.setHeader("Expires", HTTP_DATE_TIME_FORMATTER.print(new DateTime().plusYears(1)));
+        response.setDateHeader("Expires", new DateTime().plusYears(1).getMillis());
         response.setHeader("Etag", "\"" + tileName + "-" + data.length + "\"");
         response.setHeader("Cache-control", "max-age=31536000");
         return SUCCESS;
