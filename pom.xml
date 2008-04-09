@@ -20,6 +20,7 @@
         <module>sport-business</module>
         <module>bcrypt</module>
         <module>nikeplus</module>
+        <module>geoportail</module>
     </modules>
     <build>
         <plugins>

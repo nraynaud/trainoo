@@ -16,7 +16,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 
 public class NikePlusExtractor implements Importer {
     private static final XPathExpression STATUS_EXPRESSION;
@@ -94,7 +93,6 @@ public class NikePlusExtractor implements Importer {
         } finally {
             getMethod.releaseConnection();
         }
-        System.out.println(new String(responseBody, "UTF-8"));
         return responseBody;
     }
 
@@ -134,8 +132,6 @@ public class NikePlusExtractor implements Importer {
         method.addParameter("locale", "fr_FR");
         try {
             client.executeMethod(method);
-            System.out.println(method.getResponseBodyAsString());
-            System.out.println(Arrays.toString(client.getState().getCookies()));
             checkStatus(method.getResponseBody());
         } finally {
             method.releaseConnection();

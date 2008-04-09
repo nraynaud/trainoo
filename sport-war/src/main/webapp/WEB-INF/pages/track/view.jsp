@@ -12,7 +12,6 @@
 
 <div id="map"></div>
 <div id="controlPanel">
-    <img id='lolToken' src="http://www.geoportail.fr/imgs/visu/empty.gif" alt="">
     <%
         int i = 0;
         final List<String> strings = (List<String>) property("tracks", List.class);

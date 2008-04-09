@@ -1,5 +1,3 @@
-var map_scale_enc_table = [undefined, "8u6G", "8u63", "8u6r", "8u68", "8u6k", "8u6T", "8u6Q", "8u6m", "8u6Y", "8u6I", "8u6c", "8u6j", "8u6K", "8u6M", "8u67", "8u6W", "8u6b", "8u62", "8u6q", "8u6t", "8u6L"];
-var photo_scale_enc_table = [undefined, "UxGG", "UxG3", "UxGr", "UxG8", "UxGk", "UxGT", "UxGQ", "UxGm", "UxGY", "UxGI", "UxGc", "UxGj", "UxGK", "UxGM", "UxG7", "UxGW", "UxGb", "UxG2", "UxGq", "UxGt", "UxGL"];
 var len_enc_table = ["x", "G", "3", "r", "8", "k", "T", "Q", "m", "Y", "I", "c", "j", "K", "M", "7", "W", "b", "2", "q", "t", "L", "H", "9", "f"];
 var enc_table = ["X", "u", "P", "4", "N", "G", "Z", "8", "n", "g", "I", "c", "j", "K", "M", "7", "W", "Q", "T", "b", "2", "q", "C", "1", "e", "h", "O", "o", "t", "L", "H", "9", "z", "s", "m", "a", "w", "J", "S", "Y", "l", "A", "i", "f", "U", "v", "y", "r", "k", "E", "D", "x", "3", "6", "5", "F", "p", "0", "V", "R", "d", "B"];
 var sign_enc_table = ["2", "A", "9", "r"];
@@ -29,7 +27,9 @@ var ratios = [undefined,
     [1.95003191791175e-007,-1.95003191791175e-007],
     [1.95002186306171e-007,-1.95002186306171e-007]];
 var IGN_PHOTO_PREFIX = "/FXX-GFD-PHOTO__PHOTO_jpg/256_256_";
+var IGN_PHOTO_KEY = "UxG";
 var IGN_MAP_PREFIX = "/FXX-GFD-CARTE__CARTE_jpg/256_256_";
+var IGN_MAP_KEY = "8u6";
 var EARTH_RADIUS_METERS = 6378137;
 var GLOBAL_PRECISION = 0.01;
 function log(txt) {
@@ -43,9 +43,8 @@ function geoEncode(_number) {
     return (number - r == 0 ? "" : geoEncode(Math.floor((number - r) / base))) + enc_table[r];
 }
 function encodeTile(prefix, scale, tileX, tileY) {
-    var table;
-    table = prefix == IGN_PHOTO_PREFIX ? photo_scale_enc_table : map_scale_enc_table;
-    var encoded_string = table[scale];
+    var encoded_string = prefix == IGN_PHOTO_PREFIX ? IGN_PHOTO_KEY : IGN_MAP_KEY;
+    encoded_string += len_enc_table[scale];
     var signIndex = tileX * tileY >= 0 ? tileX < 0 ? 3 : 0 : tileX < 0 ? 2 : 1;
     encoded_string += sign_enc_table[signIndex];
     var encodedTileX = geoEncode(tileX);
@@ -100,8 +99,7 @@ function createMapType(prefix, textColor, maxZoom) {
     function createLayer(prefix) {
         var layer = new GTileLayer(copyCollection, 5, maxZoom);
         layer.getTileUrl = function (pt, zoom) {
-            ensureCookies();
-            return "http://visu-2d.geoportail.fr/geoweb/maps"
+            return "/track/getTile?tileName=maps"
                     + encodeTile(prefix, googleToGeoZoom(zoom), pt.x, googleToGeoTileY(pt.y, zoom)) + ".jpg";
         }
         return layer;
@@ -114,25 +112,11 @@ function googleToGeoZoom(googleZoom) {
     return z > 0 ? z < ratios.length ? z : ratios.length - 1 : 1;
 }
 function createGeoMapType(prefix, textColor, maxZoom) {
-    ensureCookies();
     testProjection();
     testEncodeTile();
     return new createMapType(prefix, textColor, maxZoom);
 }
 var lastTimeCookieChecked;
-/**
- * the portal seems to mandate to have a cookie to get the tiles. the cookie is set after a strange redirection when querying http://www.geoportail.fr/imgs/visu/empty.gif.
- * it expires quick, so we re-query the url every minute or so.
- */
-function ensureCookies() {
-    var now = new Date().getTime() / 1000;
-    if (lastTimeCookieChecked == null || now - lastTimeCookieChecked > 60) {
-        var img = $('lolToken');
-        img.style.visibility = 'hidden';
-        img.src = "http://www.geoportail.fr/imgs/visu/empty.gif?random=" + Math.random();
-        lastTimeCookieChecked = now;
-    }
-}
 /******some tests ******/
 function testEncodeTile() {
     var tests = [ ["8u6M9GPp", -2, 56, 14],  ["8u6I2GgKl", 9, 846, 10] ];

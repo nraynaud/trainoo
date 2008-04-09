@@ -26,8 +26,9 @@ public class SportInterceptor extends AbstractInterceptor {
 
     public String intercept(final ActionInvocation invocation) throws Exception {
         final HttpServletRequest servletRequest = ServletActionContext.getRequest();
-        handleRememberMe(servletRequest, ServletActionContext.getResponse());
         final SportRequest request = new SportRequest(userStore, servletRequest);
+        if (!request.isLogged())
+            handleRememberMe(servletRequest, ServletActionContext.getResponse());
         final ActionContext invocationContext = invocation.getInvocationContext();
         invocationContext.put(SportRequest.SPORT_REQUEST, request);
         invocationContext.getValueStack().push(request);

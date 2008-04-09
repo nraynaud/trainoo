@@ -1,3 +1,5 @@
+package com.nraynaud.sport;
+
 import com.nraynaud.sport.importer.FailureException;
 import com.nraynaud.sport.importer.WorkoutCollector;
 import com.nraynaud.sport.nikeplus.NikePlusExtractor;
