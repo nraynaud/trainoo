@@ -14,18 +14,20 @@ import org.joda.time.DateTime;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 
 @Results({
-@Result(type = StreamResult.class, value = "inputStream",
-        params = {"contentType", "image/jpeg", "contentLength", "${data.length}"}),
+@Result(type = StreamResult.class, value = "tileData.inputStream",
+        params = {"contentType", "${tileData.mimeType}", "contentLength", "${tileData.length}"}),
 @Result(name = "fromCache", value = "304", type = HttpHeaderResult.class)
         })
 public class GetTileAction extends DefaultAction implements ServletResponseAware, ServletRequestAware {
-    public String tileName;
+    public int x;
+    public int y;
+    public int z;
+    public String p;
+    public String s;
+    public TileFetcher.TileData tileData;
     private final TileFetcher tileFetcher;
-    public byte[] data;
-    public ByteArrayInputStream inputStream;
     private HttpServletResponse response;
     private HttpServletRequest request;
 
@@ -39,12 +41,9 @@ public class GetTileAction extends DefaultAction implements ServletResponseAware
     public String index() {
         if (request.getHeader("If-None-Match") != null || request.getHeader("If-Modified-Since") != null)
             return "fromCache";
-        if (!tileName.matches("[a-zA-Z0-9.]+"))
-            throw new RuntimeException("strange tilename: " + tileName);
-        data = tileFetcher.fetchTile(tileName);
-        inputStream = new ByteArrayInputStream(data);
+        tileData = tileFetcher.fetchTile(p, z, x, y, s);
         response.setDateHeader("Expires", new DateTime().plusYears(1).getMillis());
-        response.setHeader("Etag", "\"" + tileName + "-" + data.length + "\"");
+        response.setHeader("Etag", "\"" + p + '-' + z + '-' + x + '-' + y + '-' + s + "-" + tileData.length + "\"");
         response.setHeader("Cache-control", "max-age=31536000");
         return SUCCESS;
     }

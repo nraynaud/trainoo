@@ -61,8 +61,8 @@ function createIcon() {
 }
 function startMap() {
     if (GBrowserIsCompatible()) {
-        var IGN_PHOTO_TYPE = createGeoMapType(IGN_PHOTO_PREFIX, 'white', 18);
-        var IGN_MAP_TYPE = createGeoMapType(IGN_MAP_PREFIX, 'black', 16);
+        var IGN_PHOTO_TYPE = createGeoMapType(IGN_PHOTO_KEY, 'white', 18);
+        var IGN_MAP_TYPE = createGeoMapType(IGN_MAP_KEY, 'black', 16);
         map = new GMap2($("map"), {googleBarOptions:{showOnLoad:true}});
         map.addMapType(IGN_MAP_TYPE);
         map.addMapType(IGN_PHOTO_TYPE);
