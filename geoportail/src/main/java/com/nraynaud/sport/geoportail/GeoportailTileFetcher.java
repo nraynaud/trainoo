@@ -10,8 +10,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class GeoportailTileFetcher implements TileFetcher {
-
-    public static volatile String[][] cookies = {};
     private static final String UA_STRING = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; rv:1.8.1.13)";
     private static final char[] LONG_TABLE = new char[]{'X', 'u', 'P', '4', 'N', 'G', 'Z', '8', 'n', 'g', 'I', 'c', 'j',
             'K', 'M', '7', 'W', 'Q', 'T', 'b', '2', 'q', 'C', '1', 'e', 'h', 'O', 'o', 't', 'L', 'H', '9', 'z', 's',
@@ -20,6 +18,7 @@ public class GeoportailTileFetcher implements TileFetcher {
     private static final char[] SHORT_TABLE = new char[]{'x', 'G', '3', 'r', '8', 'k', 'T', 'Q', 'm', 'Y', 'I', 'c',
             'j', 'K', 'M', '7', 'W', 'b', '2', 'q', 't', 'L', 'H', '9', 'f'};
     private static final char[] SIGN_TABLE = new char[]{'2', 'A', '9', 'r'};
+    private static volatile String[][] cookies = {};
 
     static TileData getTile(final String uri) {
         final HttpClient client = new HttpClient();
@@ -101,7 +100,6 @@ public class GeoportailTileFetcher implements TileFetcher {
 
     public TileData fetchTile(final String prefix, int zoom, int x, int y, String suffix) {
         final String s = "maps" + encodeTile(prefix, x, y, zoom) + suffix;
-        System.out.println("encoded: " + s);
         return fetchTile(s);
     }
 }

@@ -57,10 +57,10 @@ function createMapType(key, textColor, maxZoom) {
         var copyright = new GCopyright(copyIndex++, earth, 0, text);
         copyCollection.addCopyright(copyright);
     }
-    addCopyright("IGN");
-    addCopyright("SpotImage");
-    addCopyright("CNES");
-    addCopyright("PlanetObserver");
+    addCopyright("<a class='copyright' href='http://www.ign.fr'>IGN</a>");
+    addCopyright("<a class='copyright' href='http://www.spotimage.fr'>SpotImage</a>");
+    addCopyright("<a class='copyright' href='http://www.cnes.fr'>CNES</a>");
+    addCopyright("<a class='copyright' href='http://www.planetobserver.com'>PlanetObserver</a>");
     function createLayer(key) {
         var layer = new GTileLayer(copyCollection, 5, maxZoom);
         layer.getTileUrl = function (pt, zoom) {
