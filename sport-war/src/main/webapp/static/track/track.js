@@ -14,18 +14,8 @@ window.onresize = updateHeight;
 window.onload = loaded;
 var map;
 var editor;
-var icon;
 function loadTrack(track) {
     editor.loadTrack(eval('[' + track + ']'));
-}
-function createIcon() {
-    var icon = new GIcon();
-    icon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
-    icon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
-    icon.iconSize = new GSize(12, 20);
-    icon.shadowSize = new GSize(22, 20);
-    icon.iconAnchor = new GPoint(6, 20);
-    return icon;
 }
 function createHandleIcon() {
     var icon = new GIcon();
@@ -51,7 +41,6 @@ function startMap() {
         map.enableGoogleBar();
         map.addControl(new GLargeMapControl());
         map.addControl(new GScaleControl(), new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(10, 15)));
-        icon = createIcon();
         editor = new Editor(map);
         editor.canAppendPoint(true);
         editor.draw();
@@ -67,6 +56,7 @@ function Editor(map) {
     var editor = this
     this.addPointCallback = function(overlay, latLng) {
         editor.addMarker(latLng);
+        map.panTo(latLng);
         editor.draw();
     };
     this.insertionEditor = new PointInsertionEditor(map, this);
@@ -141,8 +131,6 @@ function registerEvents(marker, editor) {
     registerMouseEvents(marker, editor);
 }
 Editor.prototype.addMarker = function(point, index) {
-    log('lol le point ' + point);
-    map.panTo(point);
     var marker = new GMarker(point, {draggable: true});
     if (index == null)
         this.markers.push(marker);
