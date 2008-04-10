@@ -56,16 +56,14 @@ public class HibernateApplication implements Application {
     public void forgotPassword(final String email) throws UserNotFoundException, MailException {
         final Query query = entityManager.createQuery("select u from UserImpl u where u.email=:cryptedMail");
         query.setParameter("cryptedMail", CipherHelper.cipher(email));
-        try {
-            final List<UserImpl> list = query.getResultList();
-            for (final UserImpl user : list) {
-                final String password = Helper.randomstring();
-                user.setPassword(password);
-                MailSender.forgotPasswordMail(user.getName(), password, email);
-                entityManager.merge(user);
-            }
-        } catch (NoResultException e) {
+        final List<UserImpl> list = query.getResultList();
+        if (list.isEmpty())
             throw new UserNotFoundException();
+        for (final UserImpl user : list) {
+            final String password = Helper.randomstring();
+            user.setPassword(password);
+            MailSender.forgotPasswordMail(user.getName(), password, email);
+            entityManager.merge(user);
         }
     }
 
