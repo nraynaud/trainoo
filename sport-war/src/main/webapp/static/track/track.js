@@ -170,7 +170,7 @@ function registerEvents(marker, editor) {
     registerMouseEvents(marker, editor);
 }
 Editor.prototype.addMarker = function(point, index) {
-    var marker = new GMarker(point, {draggable: true, icon: MARKER_ICON});
+    var marker = new GMarker(point, {draggable: true, icon: MARKER_ICON, title: "tirez sur le point pour le déplacer"});
     if (index == null)
         this.markers.push(marker);
     else
