@@ -16,11 +16,15 @@
                 push(workout);
                 try {
                     parity = !parity;
-        %>
-        <tr class="<%=workout.getId().equals(parameter("highLight", Long.class)) ? "highLight " : ""%><%=parity ? "odd":"even"%>">
-            <s:url id="workoutUrl" action="" namespace="/workout" includeParams="none">
-                <s:param name="id" value="id"/>
-            </s:url>
+                    final String trId = "tr_" + workout.getId();%>
+        <s:url id="workoutUrl" action="" namespace="/workout" includeParams="none">
+            <s:param name="id" value="id"/>
+        </s:url>
+        <tr id="<%=trId%>" title="Voir le détail"
+            class="<%=workout.getId().equals(parameter("highLight", Long.class)) ? "highLight " : ""%><%=parity ? "odd":"even"%>">
+            <p:javascript>
+                clickableRow($('<%=trId%>'));
+            </p:javascript>
             <td><s:date name="date" format="E dd/M"/></td>
             <s:if test="%{parameters.displayName}">
                 <td><%
@@ -52,7 +56,7 @@
             <%}%>
             <td class="img">
                 <div class="messageLink">
-                    <s:a cssClass="messageLink" href="%{workoutUrl}"
+                    <s:a id="%{'a_' + id}" cssClass="messageLink" href="%{workoutUrl}"
                          title="Discussions à propos de cet entraînement"><img
                             src="<%=stat("/static/bulle.png")%>" alt="commenter"><s:if test="%{messageNumber > 0}">
                         <span class="messageNumber"><s:property value="messageNumber"/></span>

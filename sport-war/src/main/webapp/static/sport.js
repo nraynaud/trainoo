@@ -14,7 +14,20 @@ function feedback(field_name, val)
     oldValue = val + field_name;
     return true;
 }
-;
+function clickableRow(row) {
+    var href = $('a_' + row.id.substring(3)).href;
+    row.observe('mouseover', function() {
+        row.addClassName('current');
+        window.status = href;
+    });
+    row.observe('mouseout', function() {
+        window.status = "";
+        row.removeClassName('current');
+    });
+    row.observe('click', function() {
+        window.location = href;
+    });
+}
 /* MIT licence bablaba */
 function charCounter(id, maxlimit, minLimit) {
     var counterId = 'counter-' + id;

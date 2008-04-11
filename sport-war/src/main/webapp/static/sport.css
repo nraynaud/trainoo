@@ -95,16 +95,25 @@ table.workouts {
     padding-right: 0;
 }
 
-table.workouts tr.odd td {
+table.workouts tr.odd {
     background-color: #FFF0DE;
 }
 
-table.workouts tr.even td {
+table.workouts tr.even {
     background-color: #FFFAF4;
 }
 
-table.workouts tr.highLight td {
+table.workouts tr.highLight {
     background-color: #E0E0D0;
+}
+
+table.workouts tr.current {
+    background-color: #D97900;
+    cursor: pointer;
+}
+
+table.workouts tr.current a {
+    color: white;
 }
 
 th {
@@ -435,6 +444,7 @@ table.displayFormLayoutTable tr td .label {
 }
 
 .messageNumber {
+    color: #D97900;
     position: absolute;
     bottom: 0;
     font-size: 11px;
