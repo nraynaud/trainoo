@@ -275,10 +275,18 @@ function PointInsertionEditor(map, editor) {
             if (pointMin != null) {
                 var currentPix = map.fromLatLngToDivPixel(latLng);
                 var handlePix = map.fromLatLngToDivPixel(pointMin);
-                if (square(currentPix.x - handlePix.x) + square(currentPix.y - handlePix.y) < square(30)) {
-                    insertionEditor.myMarker.setPoint(pointMin);
-                    insertionEditor.myMarker.show();
-                    return;
+                function distanceLessThan(p1, p2, threshold) {
+                    return square(p1.x - p2.x) + square(p1.y - p2.y) < square(threshold);
+                }
+                if (distanceLessThan(currentPix, handlePix, 30)) {
+                    var previousPix = map.fromLatLngToDivPixel(editor.markers[markerIndex].getPoint());
+                    var nextPix = map.fromLatLngToDivPixel(editor.markers[markerIndex + 1].getPoint());
+                    if (!distanceLessThan(handlePix, previousPix, 15) && !distanceLessThan(handlePix, nextPix, 15))
+                    {
+                        insertionEditor.myMarker.setPoint(pointMin);
+                        insertionEditor.myMarker.show();
+                        return;
+                    }
                 }
             }
             insertionEditor.myMarker.hide();
