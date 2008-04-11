@@ -28,7 +28,7 @@ function createHandleIcon() {
 }
 function createMarkerIcon() {
     var icon = new GIcon();
-    //icon.image = $('map_marker').src;
+    icon.image = $('map_marker').src;
     icon.iconSize = new GSize(15, 15);
     icon.iconAnchor = new GPoint(8, 8);
     return icon;
@@ -128,10 +128,18 @@ function registerMouseEvents(marker, editor) {
             var hideHandle = function() {
                 del.hide();
             };
-            GEvent.addListener(editor.map, "moveend", hideHandle);
+            GEvent.addListener(editor.map, "move", hideHandle);
             GEvent.addListener(editor.map, "zoomend", hideHandle);
+            GEvent.addDomListener(del, 'mouseover', function() {
+                editor.insertionEditor.canInsertPoint(false);
+            });
+            GEvent.addDomListener(del, 'mouseout', function() {
+                editor.insertionEditor.canInsertPoint(true);
+            });
         }
-        del.observe('click', function() {
+        if (editor.deleteHandler != null)
+            GEvent.removeListener(editor.deleteHandler);
+        editor.deleteHandler = GEvent.addDomListener(del, 'click', function() {
             editor.deleteMarker(marker);
             del.hide();
         });
@@ -147,7 +155,6 @@ function registerMouseEvents(marker, editor) {
     marker.mouseOutHandler = GEvent.addListener(marker, "mouseout", function() {
         editor.insertionEditor.canInsertPoint(true);
         marker.setImage($('map_marker').src);
-        marker.setImage(null);
     });
 }
 function registerEvents(marker, editor) {
@@ -174,11 +181,11 @@ Editor.prototype.addMarker = function(point, index) {
 }
 Editor.prototype.deleteMarker = function (marker) {
     for (var i = 0; i < this.markers.length; i++) {
-        if (this.markers[i] == marker) {
+        if (this.markers[i] == (marker)) {
             this.markers.splice(i, 1);
             this.map.removeOverlay(marker);
             this.draw();
-            return;
+            break;
         }
     }
 }
