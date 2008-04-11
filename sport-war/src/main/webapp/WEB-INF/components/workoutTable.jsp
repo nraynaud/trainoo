@@ -43,17 +43,6 @@
             </td>
             <td><p:duration name="duration"/></td>
             <td><p:distance name="distance"/></td>
-            <% if (boolParam("displayEdit")) {%>
-            <td class="img">
-                <% if (workout.getUser().equals(currentUser())) {%>
-                <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
-                    <s:param name="id" value="id"/>
-                </s:url>
-                <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img
-                        src="<%=stat("/static/pen.png")%>" alt=""></s:a>
-                <%}%>
-            </td>
-            <%}%>
             <td class="img">
                 <div class="messageLink">
                     <s:a id="%{'a_' + id}" cssClass="messageLink" href="%{workoutUrl}"
