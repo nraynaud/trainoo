@@ -1,10 +1,11 @@
 _mPreferMetric = true;
+var DELETE_BUTTON = "<div id='deleteButton' title='effacer le point'>X</div>"
 function log(txt) {
     if ("console" in window && "firebug" in console)
         console.log(txt);
 }
 function updateHeight() {
-    $('content').style.height = $('center').clientHeight - $('content').offsetTop - 10 + "px";
+    $('content').style.height = $('center').clientHeight - $('content').offsetTop + "px";
 }
 function loaded() {
     updateHeight();
@@ -14,6 +15,7 @@ window.onresize = updateHeight;
 window.onload = loaded;
 var map;
 var editor;
+var MARKER_ICON = createMarkerIcon();
 function loadTrack(track) {
     editor.loadTrack(eval('[' + track + ']'));
 }
@@ -24,11 +26,18 @@ function createHandleIcon() {
     icon.iconAnchor = new GPoint(8, 8);
     return icon;
 }
+function createMarkerIcon() {
+    var icon = new GIcon();
+    //icon.image = $('map_marker').src;
+    icon.iconSize = new GSize(15, 15);
+    icon.iconAnchor = new GPoint(8, 8);
+    return icon;
+}
 function startMap() {
     if (GBrowserIsCompatible()) {
         var IGN_PHOTO_TYPE = createGeoMapType(IGN_PHOTO_KEY, 'white', 18);
         var IGN_MAP_TYPE = createGeoMapType(IGN_MAP_KEY, 'black', 16);
-        map = new GMap2($("map"), {googleBarOptions:{showOnLoad:true}});
+        map = new GMap2($("map"), {googleBarOptions:{showOnLoad:true, draggableCursor:'pointer, crosshair, default'}});
         map.addMapType(IGN_MAP_TYPE);
         map.addMapType(IGN_PHOTO_TYPE);
         map.removeMapType(G_NORMAL_MAP);
@@ -112,10 +121,33 @@ function vocalMouse(markers, editor) {
 }
 function registerMouseEvents(marker, editor) {
     marker.mouseOverHandler = GEvent.addListener(marker, "mouseover", function() {
+        var del = $('deleteButton');
+        if (del == null) {
+            $("map").insert(DELETE_BUTTON);
+            del = $('deleteButton');
+            var hideHandle = function() {
+                del.hide();
+            };
+            GEvent.addListener(editor.map, "moveend", hideHandle);
+            GEvent.addListener(editor.map, "zoomend", hideHandle);
+        }
+        del.observe('click', function() {
+            editor.deleteMarker(marker);
+            del.hide();
+        });
+        var pixelPoint = editor.map.fromLatLngToContainerPixel(marker.getPoint());
+        var icon = marker.getIcon();
+        var xOffset = -icon.iconAnchor.x;
+        var yOffset = -icon.iconAnchor.y - del.getDimensions().height;
+        del.setStyle({left:pixelPoint.x + xOffset + 'px', top: pixelPoint.y + yOffset + 'px'});
+        del.show();
+        marker.setImage($('map_marker_active').src);
         editor.insertionEditor.canInsertPoint(false);
     });
     marker.mouseOutHandler = GEvent.addListener(marker, "mouseout", function() {
         editor.insertionEditor.canInsertPoint(true);
+        marker.setImage($('map_marker').src);
+        marker.setImage(null);
     });
 }
 function registerEvents(marker, editor) {
@@ -131,7 +163,7 @@ function registerEvents(marker, editor) {
     registerMouseEvents(marker, editor);
 }
 Editor.prototype.addMarker = function(point, index) {
-    var marker = new GMarker(point, {draggable: true});
+    var marker = new GMarker(point, {draggable: true, icon: MARKER_ICON});
     if (index == null)
         this.markers.push(marker);
     else
@@ -139,6 +171,16 @@ Editor.prototype.addMarker = function(point, index) {
     map.addOverlay(marker);
     marker.enableDragging();
     registerEvents(marker, this);
+}
+Editor.prototype.deleteMarker = function (marker) {
+    for (var i = 0; i < this.markers.length; i++) {
+        if (this.markers[i] == marker) {
+            this.markers.splice(i, 1);
+            this.map.removeOverlay(marker);
+            this.draw();
+            return;
+        }
+    }
 }
 Editor.prototype.draw = function() {
     if (this.line) {

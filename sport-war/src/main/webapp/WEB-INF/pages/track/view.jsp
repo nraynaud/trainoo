@@ -35,6 +35,8 @@
     <div style="visibility:hidden">
         <img id="map_handle" src="<%=stat("/static/track/map_handle.png")%>" alt="">
         <img id="map_handle_active" src="<%=stat("/static/track/map_handle_active.png")%>" alt="">
+        <img id="map_marker" src="<%=stat("/static/track/map_marker.png")%>" alt="">
+        <img id="map_marker_active" src="<%=stat("/static/track/map_marker_active.png")%>" alt="">
     </div>
 </div>
 <%

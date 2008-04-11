@@ -11,6 +11,7 @@ html, body, #center {
     height: 100%;
     width: 100%;
     background-color: red;
+    cursor: crosshair;
 }
 
 #content, #loginHeader {
@@ -36,3 +37,14 @@ a.copyright {
     color: white;
 }
 
+#deleteButton {
+    position: absolute;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#deleteButton:hover {
+    background-color: black;
+}
