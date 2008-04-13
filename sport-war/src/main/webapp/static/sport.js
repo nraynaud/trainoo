@@ -15,7 +15,8 @@ function feedback(field_name, val)
     return true;
 }
 function clickableRow(row) {
-    var href = $('a_' + row.id.substring(3)).href;
+    var disciplineLink = $('a_' + row.id.substring(3));
+    var href = disciplineLink.href;
     row.observe('mouseover', function() {
         row.addClassName('current');
         window.status = href;
