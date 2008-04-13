@@ -26,6 +26,7 @@
 </div>
 
 <div id="globalRight">
+    <%if (property("groupMembership", Iterable.class).iterator().hasNext()) {%>
     <h2>Les groupes dont je suis membre</h2>
 
     <div class="content">
@@ -44,6 +45,7 @@
             </s:iterator>
         </ul>
     </div>
+    <%}%>
     <h2>Mes correspondances</h2>
 
     <div class="content">
