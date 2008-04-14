@@ -17,7 +17,8 @@ function feedback(field_name, val)
 function clickableRow(row) {
     var disciplineLink = $('a_' + row.id.substring(3));
     var href = disciplineLink.href;
-    disciplineLink.parentNode.update(disciplineLink.firstChild.nodeValue)
+    var childValue = disciplineLink.firstChild.nodeValue;
+    Element.update(disciplineLink.parentNode, childValue);
     row.observe('mouseover', function() {
         row.addClassName('current');
         window.status = href;
