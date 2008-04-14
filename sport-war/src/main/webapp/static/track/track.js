@@ -112,7 +112,7 @@ function muteMouse(markers) {
 }
 function vocalMarkers(markers, editor) {
     markers.each(function (m) {
-        registerEvents(m, editor);
+        registerEvents(markers, m, editor);
     });
 }
 function vocalMouse(markers, editor) {
@@ -120,17 +120,18 @@ function vocalMouse(markers, editor) {
         registerMouseEvents(m, editor);
     });
 }
+function hideDeleteMarkerButton() {
+    var del = $('deleteButton');
+    del.hide();
+}
 function registerMouseEvents(marker, editor) {
     marker.mouseOverHandler = GEvent.addListener(marker, "mouseover", function() {
         var del = $('deleteButton');
         if (del == null) {
             $("map").insert(DELETE_BUTTON);
             del = $('deleteButton');
-            var hideHandle = function() {
-                del.hide();
-            };
-            GEvent.addListener(editor.map, "move", hideHandle);
-            GEvent.addListener(editor.map, "zoomend", hideHandle);
+            GEvent.addListener(editor.map, "move", hideDeleteMarkerButton);
+            GEvent.addListener(editor.map, "zoomend", hideDeleteMarkerButton);
             GEvent.addDomListener(del, 'mouseover', function() {
                 editor.insertionEditor.canInsertPoint(false);
             });
@@ -158,14 +159,24 @@ function registerMouseEvents(marker, editor) {
         marker.setImage($('map_marker').src);
     });
 }
-function registerEvents(marker, editor) {
+function registerEvents(markers, marker, editor) {
     marker.dragHandler = GEvent.addListener(marker, "drag", function() {
-        editor.draw();
+        var index = marker.index;
+        var poly = [marker.getPoint()];
+        if (index > 0) {
+            poly.unshift(markers[index - 1].getPoint())
+        }
+        if (index < markers.length - 1) {
+            poly.push(markers[index + 1].getPoint())
+        }
+        editor.setTransientPath(poly);
     });
     marker.dragStartHandler = GEvent.addListener(marker, "dragstart", function() {
+        hideDeleteMarkerButton();
         editor.startMovingMarker();
     });
     marker.dragEndHandler = GEvent.addListener(marker, "dragend", function() {
+        editor.hideTransientPath();
         editor.draw();
         editor.endMovingMarker();
     });
@@ -188,7 +199,7 @@ Editor.prototype.addMarker = function(point, index) {
     }
     map.addOverlay(marker);
     marker.enableDragging();
-    registerEvents(marker, this);
+    registerEvents(this.markers, marker, this);
 }
 Editor.prototype.deleteMarker = function (marker) {
     this.markers.splice(marker.index, 1);
