@@ -166,29 +166,35 @@ function registerEvents(marker, editor) {
         editor.startMovingMarker();
     });
     marker.dragEndHandler = GEvent.addListener(marker, "dragend", function() {
+        editor.draw();
         editor.endMovingMarker();
     });
     registerMouseEvents(marker, editor);
 }
+function renumberMarkers(markers) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].index = i;
+    }
+}
 Editor.prototype.addMarker = function(point, index) {
     var marker = new GMarker(point, {draggable: true, icon: MARKER_ICON, title: "tirez sur le point pour le déplacer"});
-    if (index == null)
+    if (index == null) {
         this.markers.push(marker);
-    else
-        this.markers.splice(index, 0, marker)
+        marker.index = this.markers.length - 1;
+    }
+    else {
+        this.markers.splice(index, 0, marker);
+        renumberMarkers(this.markers);
+    }
     map.addOverlay(marker);
     marker.enableDragging();
     registerEvents(marker, this);
 }
 Editor.prototype.deleteMarker = function (marker) {
-    for (var i = 0; i < this.markers.length; i++) {
-        if (this.markers[i] == (marker)) {
-            this.markers.splice(i, 1);
-            this.map.removeOverlay(marker);
-            this.draw();
-            break;
-        }
-    }
+    this.markers.splice(marker.index, 1);
+    this.map.removeOverlay(marker);
+    this.draw();
+    renumberMarkers(this.markers);
 }
 Editor.prototype.draw = function() {
     if (this.line) {
