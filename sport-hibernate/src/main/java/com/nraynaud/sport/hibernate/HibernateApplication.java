@@ -126,7 +126,7 @@ public class HibernateApplication implements Application {
         if (discipline != null)
             query.setParameter("discipline", discipline);
         query.setFirstResult(firstIndex);
-        query.setMaxResults(pageSize);
+        query.setMaxResults(pageSize + 1);
         final List<Object[]> result = query.getResultList();
         // we went too far, get back one page.
         if (result.isEmpty() && firstIndex != 0)
@@ -144,7 +144,7 @@ public class HibernateApplication implements Application {
                                                            final boolean lastpage, final List<T> list) {
         return new PaginatedCollection<T>() {
             public boolean hasPrevious() {
-                return !lastpage && list.size() >= pageSize;
+                return !lastpage && list.size() > pageSize;
             }
 
             public boolean hasNext() {
@@ -164,7 +164,7 @@ public class HibernateApplication implements Application {
             }
 
             public Iterator<T> iterator() {
-                return list.iterator();
+                return list.subList(0, list.size() > pageSize ? pageSize : list.size()).iterator();
             }
         };
     }
@@ -540,8 +540,9 @@ public class HibernateApplication implements Application {
 
     private PaginatedCollection<PublicMessage> fetchRecentMessages() {
         final Query query = query("select m from PublicMessageImpl m order by m.date desc");
-        query.setMaxResults(5);
-        return paginateList(0, 5, true, query.getResultList());
+        final int pageSize = 5;
+        query.setMaxResults(pageSize + 1);
+        return paginateList(0, pageSize, true, query.getResultList());
     }
 
     @SuppressWarnings({"unchecked"})
@@ -776,7 +777,7 @@ public class HibernateApplication implements Application {
 
     private static <T> PaginatedCollection<T> paginateQuery(final int pageSize, final int startIndex,
                                                             final Query query) {
-        query.setMaxResults(pageSize);
+        query.setMaxResults(pageSize + 1);
         query.setFirstResult(startIndex);
         final List list = query.getResultList();
         return paginateList(startIndex, pageSize, false, list);
