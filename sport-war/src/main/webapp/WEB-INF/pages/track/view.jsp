@@ -12,18 +12,19 @@
 
 <div id="map"></div>
 <div id="controlPanel">
-    <%
-        int i = 0;
-        final List<String> strings = (List<String>) property("tracks", List.class);
-        for (final String track : strings) {
-            i++;
-    %>
-    <a href="#" onclick="loadTrack('<%=track%>');return false;">circuit<%=i%>&nbsp;</a>
-    <br>
-    <%
-        }
-    %>
-    longueur&nbsp;:<span id="distance"></span>(<span id="pointsCount"></span>)
+    <ul style="width:100%; height:100px; overflow:auto;border-bottom:gray thin solid; display:block; margin:0;">
+        <%
+            int i = 0;
+            final List<String> strings = (List<String>) property("tracks", List.class);
+            for (final String track : strings) {
+                i++;
+        %>
+        <li><a href="#" onclick="loadTrack('<%=track%>');return false;">circuit<%=i%>&nbsp;</a></li>
+        <%
+            }
+        %>
+    </ul>
+    <span id="distance"></span>(<span id="pointsCount"></span> points)
 
     <s:form id="createForm" namespace="/track" action="create">
         <s:hidden id="trackVar" name="track"/>

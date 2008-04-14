@@ -72,6 +72,7 @@ function Editor(map) {
     this.insertionEditor.canInsertPoint(true);
     this.markers = [];
     this.line = null;
+    this.transientPath = null;
 }
 Editor.prototype.canAppendPoint = function(can) {
     if (can)
@@ -233,13 +234,23 @@ Editor.prototype.loadTrack = function (track) {
     this.draw();
     this.fit();
 };
+Editor.prototype.hideTransientPath = function () {
+    if (this.transientPath != null) {
+        map.removeOverlay(this.transientPath);
+        this.transientPath = null;
+    }
+};
+Editor.prototype.setTransientPath = function (path) {
+    this.hideTransientPath();
+    this.transientPath = new GPolyline(path, '#D97900', 8, 0.8);
+    map.addOverlay(this.transientPath);
+};
 function PointInsertionEditor(map, editor) {
     this.myMarker = new GMarker(new GLatLng(47.081850, 2.3995035), {
         icon: createHandleIcon(), title:"insérer un point", draggable: true});
     map.addOverlay(this.myMarker);
     this.myMarker.hide();
     var markerIndex = null;
-    this.transientPath = null;
     var insertionEditor = this;
     this.insertLinePointHandleCallback = function(latLng) {
         if (editor.markers.length > 1) {
@@ -308,10 +319,7 @@ function PointInsertionEditor(map, editor) {
         insertionEditor.myMarker.setImage($('map_handle').src);
     });
     GEvent.bind(this.myMarker, 'dragend', this, function() {
-        if (insertionEditor.transientPath != null) {
-            map.removeOverlay(insertionEditor.transientPath);
-            insertionEditor.transientPath = null;
-        }
+        editor.hideTransientPath();
         editor.addMarker(insertionEditor.myMarker.getPoint(), markerIndex + 1);
         editor.draw();
         editor.endInsertion();
@@ -319,14 +327,10 @@ function PointInsertionEditor(map, editor) {
         editor.canAppendPoint(true);
     });
     GEvent.addListener(this.myMarker, 'drag', function() {
-        if (insertionEditor.transientPath != null) {
-            map.removeOverlay(insertionEditor.transientPath)
-        }
         var poly = [editor.markers[markerIndex].getPoint(),
             insertionEditor.myMarker.getPoint(),
             editor.markers[markerIndex + 1].getPoint()];
-        insertionEditor.transientPath = new GPolyline(poly, 'red', 8, 0.8);
-        map.addOverlay(insertionEditor.transientPath);
+        editor.setTransientPath(poly);
     });
     this.insertLinePointHandleHandler = null;
 }
