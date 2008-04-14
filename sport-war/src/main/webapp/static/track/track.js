@@ -17,7 +17,7 @@ var map;
 var editor;
 var MARKER_ICON = createMarkerIcon();
 function loadTrack(track) {
-    editor.loadTrack(eval('[' + track + ']'));
+    editor.loadTrack(eval('[' + track.replace(/(.*),$/, "$1") + ']'));
 }
 function createHandleIcon() {
     var icon = new GIcon();
