@@ -179,6 +179,7 @@ function registerEvents(markers, marker, editor) {
         editor.hideTransientPath();
         editor.draw();
         editor.endMovingMarker();
+        marker.setImage($('map_marker').src);
     });
     registerMouseEvents(marker, editor);
 }
