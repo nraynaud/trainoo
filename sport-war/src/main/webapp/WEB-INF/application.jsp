@@ -35,9 +35,8 @@
 </head>
 <body id="body">
 <div id="center">
-    <div id="heading"
-         style="width: 100%;height:60px;text-align:right;position:relative;overflow:hidden;padding-bottom:5px;padding-top:3px">
-        <div style="float:left;">
+    <div id="heading">
+        <div id="leftHeading">
             <%call(pageContext, "logo.jsp");%>
 
             <div id="catchPhrase">

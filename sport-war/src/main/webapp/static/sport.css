@@ -169,6 +169,27 @@ label .labelComplement {
     font-size: 11px;
 }
 
+#heading {
+    width: 100%;
+    height: 60px;
+    text-align: right;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 5px;
+    padding-top: 3px;
+    zoom: 1;
+    _overflow: visible;
+
+}
+
+#leftHeading {
+    width: 20em;
+    text-align: left;
+    float: left;
+    zoom: 1;
+    _overflow: visible;
+}
+
 #logo {
     background: none;
     padding: 0;
