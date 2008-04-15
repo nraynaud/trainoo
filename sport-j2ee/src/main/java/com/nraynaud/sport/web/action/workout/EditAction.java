@@ -1,9 +1,6 @@
 package com.nraynaud.sport.web.action.workout;
 
-import com.nraynaud.sport.AccessDeniedException;
-import com.nraynaud.sport.Application;
-import com.nraynaud.sport.Workout;
-import com.nraynaud.sport.WorkoutNotFoundException;
+import com.nraynaud.sport.*;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction;
@@ -23,10 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @Conversion
 @Results({
-@Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
-@Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = ""),
-@Result(name = "delete", type = ActionChainResult.class, value = "delete",
-        params = {"namespace", "/workout", "method", "create"})
+    @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
+    @Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = ""),
+    @Result(name = "delete", type = ActionChainResult.class, value = "delete",
+            params = {"namespace", "/workout", "method", "create"})
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
@@ -48,6 +45,8 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
                 setDistance(workout.getDistance());
                 setDuration(workout.getDuration());
                 setDiscipline(workout.getDiscipline().nonEscaped());
+                final UserString comment = workout.getComment();
+                setComment(comment != null ? comment.nonEscaped() : null);
                 return INPUT;
             } catch (WorkoutNotFoundException e) {
                 addActionError("L'entraînement désigné n'existe pas");
@@ -66,7 +65,8 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
             try {
                 if (delete) return "delete";
                 else
-                    application.updateWorkout(id, getUser(), getDate(), getDuration(), getDistance(), getDiscipline());
+                    application.updateWorkout(id, getUser(), getDate(), getDuration(), getDistance(), getDiscipline(),
+                            getComment());
                 return SUCCESS;
             } catch (WorkoutNotFoundException e) {
                 addActionError("l'entraînement désigné n'existe pas pour cet utilisateur");

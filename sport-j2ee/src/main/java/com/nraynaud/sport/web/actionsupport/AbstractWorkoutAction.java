@@ -4,6 +4,7 @@ import com.nraynaud.sport.Application;
 import com.nraynaud.sport.web.SportRequest;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 import java.util.Date;
 
@@ -12,6 +13,9 @@ public class AbstractWorkoutAction extends DefaultAction {
     private Long duration;
     private Double distance;
     private String discipline;
+    private String comment;
+
+    public static final String MAX_COMMENT_LENGTH = "4000";
 
     public AbstractWorkoutAction(final Application application) {
         super(application);
@@ -37,6 +41,12 @@ public class AbstractWorkoutAction extends DefaultAction {
         this.discipline = discipline;
     }
 
+    @StringLengthFieldValidator(message = "Le commentaire doit faire moins de ${maxLength} caratères.",
+            maxLength = MAX_COMMENT_LENGTH)
+    public void setComment(final String comment) {
+        this.comment = comment != null && comment.length() > 0 ? comment : null;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -55,5 +65,9 @@ public class AbstractWorkoutAction extends DefaultAction {
 
     public SportRequest getRequest() {
         return request;
+    }
+
+    public String getComment() {
+        return comment;
     }
 }

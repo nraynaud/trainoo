@@ -11,7 +11,7 @@ public interface Application extends UserStore {
                           final User user,
                           final Long duration,
                           final Double distance,
-                          final String discipline);
+                          final String discipline, String comment);
 
     User createUser(String login, String password, final String email) throws NameClashException, MailException;
 
@@ -27,7 +27,9 @@ public interface Application extends UserStore {
                        final Date date,
                        final Long duration,
                        final Double distance,
-                       final String discipline) throws WorkoutNotFoundException, AccessDeniedException;
+                       final String discipline, final String comment) throws
+            WorkoutNotFoundException,
+            AccessDeniedException;
 
     GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final int pageSize, final String discipline);
 
@@ -106,6 +108,7 @@ public interface Application extends UserStore {
                           Long duration,
                           Double distance,
                           String discipline,
+                          String comment,
                           String nikePlusId);
 
     void execute(final Runnable runnable);

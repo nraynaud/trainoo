@@ -20,8 +20,8 @@ import java.util.Date;
 
 @Conversion
 @Results({
-@Result(name = INPUT, type = ChainBack.class, value = ""),
-@Result(name = SUCCESS, type = RedirectBack.class, params = {"namespace", "/"}, value = "workouts")
+    @Result(name = INPUT, type = ChainBack.class, value = ""),
+    @Result(name = SUCCESS, type = RedirectBack.class, params = {"namespace", "/"}, value = "workouts")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
@@ -36,7 +36,7 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
 
     @PostOnly
     public String create() {
-        application.createWorkout(getDate(), getUser(), getDuration(), getDistance(), getDiscipline());
+        application.createWorkout(getDate(), getUser(), getDuration(), getDistance(), getDiscipline(), getComment());
         return SUCCESS;
     }
 

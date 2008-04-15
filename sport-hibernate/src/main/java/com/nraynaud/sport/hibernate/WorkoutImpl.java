@@ -30,6 +30,9 @@ public class WorkoutImpl implements Workout {
     @Column(name = "NIKEPLUSID", unique = true)
     private String nikePlusId;
 
+    @Column(name = "COMMENT")
+    private String comment;
+
     @ManyToOne(targetEntity = UserImpl.class)
     @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
     private User user;
@@ -52,12 +55,14 @@ public class WorkoutImpl implements Workout {
                        final Date date,
                        final Long duration,
                        final Double distance,
-                       final String discipline) {
+                       final String discipline,
+                       final String comment) {
         this.date = date;
         this.user = user;
         this.duration = duration;
         this.distance = distance;
         this.discipline = discipline;
+        this.comment = comment;
     }
 
     public WorkoutImpl(final User user,
@@ -65,12 +70,14 @@ public class WorkoutImpl implements Workout {
                        final Long duration,
                        final Double distance,
                        final String discipline,
+                       final String comment,
                        final String nikePlusId) {
         this.date = date;
         this.user = user;
         this.duration = duration;
         this.distance = distance;
         this.discipline = discipline;
+        this.comment = comment;
         this.nikePlusId = nikePlusId;
     }
 
@@ -144,5 +151,13 @@ public class WorkoutImpl implements Workout {
 
     public String getNikePlusId() {
         return nikePlusId;
+    }
+
+    public UserString getComment() {
+        return UserStringImpl.valueOf(comment);
+    }
+
+    public void setComment(final String comment) {
+        this.comment = comment;
     }
 }

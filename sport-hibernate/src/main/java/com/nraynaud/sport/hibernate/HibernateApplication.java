@@ -20,8 +20,9 @@ public class HibernateApplication implements Application {
                                  final User user,
                                  final Long duration,
                                  final Double distance,
-                                 final String discipline) {
-        return createWorkout(date, user, duration, distance, discipline, null);
+                                 final String discipline,
+                                 final String comment) {
+        return createWorkout(date, user, duration, distance, discipline, comment, null);
     }
 
     public Workout createWorkout(final Date date,
@@ -29,6 +30,7 @@ public class HibernateApplication implements Application {
                                  final Long duration,
                                  final Double distance,
                                  final String discipline,
+                                 final String comment,
                                  final String nikePlusId) {
         if (nikePlusId != null) {
             final Query query = entityManager.createNativeQuery("select ID from WORKOUTS where NIKEPLUSID=:nikeId");
@@ -39,7 +41,7 @@ public class HibernateApplication implements Application {
                 return entityManager.find(WorkoutImpl.class, workoutId);
             }
         }
-        final Workout workout = new WorkoutImpl(user, date, duration, distance, discipline, nikePlusId);
+        final Workout workout = new WorkoutImpl(user, date, duration, distance, discipline, comment, nikePlusId);
         entityManager.persist(workout);
         try {
             setWorkoutParticipants(user, workout.getId(), new String[0]);
@@ -522,12 +524,15 @@ public class HibernateApplication implements Application {
                               final Date date,
                               final Long duration,
                               final Double distance,
-                              final String discipline) throws WorkoutNotFoundException, AccessDeniedException {
+                              final String discipline, final String comment) throws
+            WorkoutNotFoundException,
+            AccessDeniedException {
         final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutAndCheckUser(id, user, true);
         workoutImpl.setDate(date);
         workoutImpl.setDuration(duration);
         workoutImpl.setDistance(distance);
         workoutImpl.setDiscipline(discipline);
+        workoutImpl.setComment(comment);
         entityManager.merge(workoutImpl);
     }
 

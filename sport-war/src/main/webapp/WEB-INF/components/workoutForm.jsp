@@ -1,4 +1,5 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.allowOverrides" %>
+<%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -55,6 +56,11 @@
                                  onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
                                  onblur="hideToolTip();"
                                  onkeyup="feedback('distance', this.value)"/></td>
+            </tr>
+            <tr>
+                <th><label for="comment" style="vertical-align:text-top;">Commentaire&nbsp;:</label></th>
+                <td colspan="3"><s:textarea id="comment" cssStyle="width:99%" name="comment"></s:textarea></td>
+                <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
             </tr>
         </table>
     </div>

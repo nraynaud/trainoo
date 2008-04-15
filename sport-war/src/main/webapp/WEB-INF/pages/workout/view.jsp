@@ -38,7 +38,6 @@
             final boolean hasAverageSpeed = workout.getDistance() != null && workout.getDuration() != null;
             final boolean isNikePlus = workout.isNikePlus();
             final boolean hasPartners = workout.getParticipants().size() > 1;
-            if (hasAverageSpeed || isNikePlus || hasPartners || isCurrentUser) {
         %>
         <div style="border:#824900 thick solid; padding:6px;">
             <%
@@ -71,8 +70,10 @@
             <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
                     workout.getId().toString())%>
             <%}%>
+            <div class="<%=defaultOrUserClass(workout.getComment())%>"><%=escapedOrNullmultilines(workout.getComment(),
+                    "Pas de commentaire")%>
+            </div>
         </div>
-        <%}%>
     </div>
     <h2><%=!data.messages.isEmpty() ? "Les réactions à cette sortie" : "Aucune réaction pour l'instant."%>
     </h2>

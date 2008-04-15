@@ -29,4 +29,6 @@ public interface Workout extends Topic {
     boolean isNikePlus();
 
     String getNikePlusId();
+
+    UserString getComment();
 }
