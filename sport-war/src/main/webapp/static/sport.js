@@ -14,6 +14,12 @@ function feedback(field_name, val)
     oldValue = val + field_name;
     return true;
 }
+function showWorkoutToolTip(event, tip, fieldName, val) {
+    var info = '<div id="info" style="clear:left;"><span id="tip" style="height:1em;">&nbsp;</span><br><span class="feedback" id="feedback">&nbsp;</span></div>';
+    showToolTip(event, info);
+    $('tip').update(tip);
+    feedback(fieldName, val);
+}
 function clickableRow(row) {
     var disciplineLink = $('a_' + row.id.substring(3));
     var href = disciplineLink.href;

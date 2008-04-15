@@ -29,15 +29,6 @@
                 <td><s:select id="discipline" list="{'course', 'vélo', 'VTT', 'marche', 'natation', 'roller'}"
                               name="discipline"
                               required="true" value="discipline"/></td>
-                <p:javascript>
-                    function showWorkoutToolTip(event, tip, fieldName, val) {
-                    var info = $('info');
-                    info.setStyle({visibility: 'inherit'});
-                    $('tip').update(tip);
-                    showToolTip(event, info);
-                    feedback(fieldName, val);
-                    }
-                </p:javascript>
                 <td><s:textfield id="date"
                                  name="date"
                                  size="10"
@@ -80,7 +71,3 @@
         </s:form>
     </div>
 </s:if>
-<div id="info" style="visibility:hidden;clear:left;">
-    <span id="tip">&nbsp;</span><br>
-    &nbsp;<span class="feedback" id="feedback">&nbsp;</span>
-</div>
