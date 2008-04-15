@@ -103,7 +103,7 @@ public class HibernateApplication implements Application {
         if (discipline != null)
             query.setParameter("discipline", discipline);
         query.setFirstResult(startIndex);
-        query.setMaxResults(pageSize);
+        query.setMaxResults(pageSize + 1);
         final List<Object[]> result = query.getResultList();
         // we went too far, get back one page.
         if (result.isEmpty() && startIndex != 0)
