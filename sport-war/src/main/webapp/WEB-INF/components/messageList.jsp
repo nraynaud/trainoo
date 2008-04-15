@@ -50,7 +50,7 @@
         </div>
         <%}%>
     </div>
-    <% if (message.getWorkout() != null) {%>
+    <% if (message.getWorkout() != null && !boolParam("hideWorkoutSubject")) {%>
     <div class="workout">à propos de la sortie&nbsp;:
         <span class="tinyWorkout"><% call(pageContext, "workoutComponent.jsp", message.getWorkout());%></span>
     </div>

@@ -84,7 +84,8 @@
         <%
             } else
                 call(pageContext, "publicMessageForm.jsp", workout);
-            call(pageContext, "messageList.jsp", data.messages, "pageVariable", "'publicMessagesPageIndex'");
+            call(pageContext, "messageList.jsp", data.messages, "pageVariable", "'publicMessagesPageIndex'",
+                    "hideWorkoutSubject", true);
         %>
     </div>
 </div>
