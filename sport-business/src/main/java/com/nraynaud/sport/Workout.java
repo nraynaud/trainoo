@@ -22,7 +22,7 @@ public interface Workout extends Topic {
 
     UserString getDiscipline();
 
-    Long getMessageNumber();
+    Long getMessageCount();
 
     Collection<User> getParticipants();
 

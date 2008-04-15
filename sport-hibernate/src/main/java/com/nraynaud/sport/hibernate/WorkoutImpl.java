@@ -46,7 +46,7 @@ public class WorkoutImpl implements Workout {
             inverseJoinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false))
     private Collection<User> participants;
 
-    transient Long messageNumber;
+    transient Long messageCount;
 
     public WorkoutImpl() {
     }
@@ -129,12 +129,12 @@ public class WorkoutImpl implements Workout {
         this.discipline = discipline;
     }
 
-    public Long getMessageNumber() {
-        return messageNumber;
+    public Long getMessageCount() {
+        return messageCount;
     }
 
-    public void setMessageNumber(final Long messageNumber) {
-        this.messageNumber = messageNumber;
+    public void setMessageCount(final Long messageCount) {
+        this.messageCount = messageCount;
     }
 
     public Collection<PublicMessage> getMessages() {

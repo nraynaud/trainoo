@@ -87,12 +87,11 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     private PaginatedCollection<Workout> getWorkouts(final User user, final String discipline, final int startIndex,
                                                      final int pageSize) {
-        return fetchWorkouts(user, discipline, startIndex, pageSize, false);
+        return fetchWorkouts(user, discipline, startIndex, pageSize);
     }
 
     private PaginatedCollection<Workout> fetchWorkouts(final User user, final String discipline, final int startIndex,
-                                                       final int pageSize,
-                                                       final boolean lastpage) {
+                                                       final int pageSize) {
         final Query query = query(
                 "select w, count(m) from WorkoutImpl w left join w.publicMessages m  where 1=1"
                         + (user != null ? " and :user MEMBER OF w.participants" : "")
@@ -100,53 +99,39 @@ public class HibernateApplication implements Application {
                         + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline, w.nikePlusId, w.comment order by w.date desc, w.id asc");
         if (user != null)
             query.setParameter("user", user);
-        if (discipline != null)
-            query.setParameter("discipline", discipline);
-        query.setFirstResult(startIndex);
-        query.setMaxResults(pageSize + 1);
-        final List<Object[]> result = query.getResultList();
-        // we went too far, get back one page.
-        if (result.isEmpty() && startIndex != 0)
-            return fetchWorkouts(user, discipline, startIndex - pageSize, pageSize, true);
-        final List<Workout> list = new ArrayList(result.size());
-        for (final Object[] row : result) {
-            final WorkoutImpl workout = (WorkoutImpl) row[0];
-            workout.setMessageNumber(((Number) row[1]).longValue());
-            list.add(workout);
-        }
-        return paginateList(startIndex, pageSize, lastpage, list);
+        return paginateWorkoutQuery(discipline, startIndex, pageSize, query);
     }
 
     private PaginatedCollection<Workout> getWorkouts(final Group group, final String discipline, final int firstIndex,
-                                                     final int pageSize, final boolean lastpage) {
+                                                     final int pageSize) {
         final Query query = query("select w, count(m) "
                 + "from GroupImpl g inner join g.members u inner join u.workouts w left join w.publicMessages m "
                 + "where g =:group"
                 + (discipline != null ? " and w.discipline =:discipline" : "")
                 + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc, w.id desc");
         query.setParameter("group", group);
+        return paginateWorkoutQuery(discipline, firstIndex, pageSize, query);
+    }
+
+    private static PaginatedCollection<Workout> paginateWorkoutQuery(final String discipline, final int firstIndex,
+                                                                     final int pageSize, final Query query) {
         if (discipline != null)
             query.setParameter("discipline", discipline);
-        query.setFirstResult(firstIndex);
-        query.setMaxResults(pageSize + 1);
-        final List<Object[]> result = query.getResultList();
-        // we went too far, get back one page.
-        if (result.isEmpty() && firstIndex != 0)
-            return getWorkouts(group, discipline, firstIndex - pageSize, pageSize, true);
+        final List<Object[]> result = paginatedQuery(pageSize, firstIndex, query);
         final List<Workout> list = new ArrayList(result.size());
         for (final Object[] row : result) {
             final WorkoutImpl workout = (WorkoutImpl) row[0];
-            workout.setMessageNumber(((Number) row[1]).longValue());
+            workout.setMessageCount(((Number) row[1]).longValue());
             list.add(workout);
         }
-        return paginateList(firstIndex, pageSize, lastpage, list);
+        return paginateList(firstIndex, pageSize, list);
     }
 
     private static <T> PaginatedCollection<T> paginateList(final int startIndex, final int pageSize,
-                                                           final boolean lastpage, final List<T> list) {
+                                                           final List<T> list) {
         return new PaginatedCollection<T>() {
             public boolean hasPrevious() {
-                return !lastpage && list.size() > pageSize;
+                return list.size() > pageSize;
             }
 
             public boolean hasNext() {
@@ -394,14 +379,14 @@ public class HibernateApplication implements Application {
     }
 
     private static <T> PaginatedCollection<T> emptyPage() {
-        return paginateList(0, 1, true, Collections.<T>emptyList());
+        return paginateList(0, 1, Collections.<T>emptyList());
     }
 
     private PaginatedCollection<User> fetchGroupMembers(final Group group) {
         final String queryString = "select u from GroupImpl g inner join g.members u where g=:group";
         final Query query = query(queryString);
         query.setParameter("group", group);
-        return paginateList(0, 100, true, query.getResultList());
+        return paginateList(0, 100, query.getResultList());
     }
 
     private Query query(final String queryString) {
@@ -546,8 +531,9 @@ public class HibernateApplication implements Application {
     private PaginatedCollection<PublicMessage> fetchRecentMessages() {
         final Query query = query("select m from PublicMessageImpl m order by m.date desc");
         final int pageSize = 5;
-        query.setMaxResults(pageSize + 1);
-        return paginateList(0, pageSize, true, query.getResultList());
+        final int startIndex = 0;
+        final List<PublicMessage> list = paginatedQuery(pageSize, startIndex, query);
+        return paginateList(startIndex, pageSize, list);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -609,7 +595,7 @@ public class HibernateApplication implements Application {
     private StatisticsData fetchStatisticsData(final Group group, final int firstIndex, String discipline) {
         if (discipline != null && discipline.length() == 0)
             discipline = null;
-        final PaginatedCollection<Workout> workouts = getWorkouts(group, discipline, firstIndex, 10, false);
+        final PaginatedCollection<Workout> workouts = getWorkouts(group, discipline, firstIndex, 10);
         final Double globalDistance = fetchGlobalDistance(group);
         final List<DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(group);
         return new StatisticsData(workouts, globalDistance, distanceByDiscpline);
@@ -782,10 +768,14 @@ public class HibernateApplication implements Application {
 
     private static <T> PaginatedCollection<T> paginateQuery(final int pageSize, final int startIndex,
                                                             final Query query) {
+        final List list = paginatedQuery(pageSize, startIndex, query);
+        return paginateList(startIndex, pageSize, list);
+    }
+
+    private static <T> List<T> paginatedQuery(final int pageSize, final int startIndex, final Query query) {
         query.setMaxResults(pageSize + 1);
         query.setFirstResult(startIndex);
-        final List list = query.getResultList();
-        return paginateList(startIndex, pageSize, false, list);
+        return query.getResultList();
     }
 
     public User createUser(final String login, final String password) throws NameClashException {

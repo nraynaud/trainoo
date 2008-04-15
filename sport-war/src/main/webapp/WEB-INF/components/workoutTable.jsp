@@ -46,7 +46,7 @@
             <td><p:duration name="duration"/></td>
             <td><p:distance name="distance"/></td>
             <td class="img">
-                <%if (workout.getMessageNumber() > 0) {%>
+                <%if (workout.getMessageCount() > 0) {%>
                 <div class="messageLink">
                     <s:a cssClass="messageLink" href="%{workoutUrl}"
                          title="Discussions à propos de cet entraînement"><img
@@ -70,7 +70,7 @@
         <% } %>
     </table>
     <%
-        if (!!workouts.hasPrevious()) {
+        if (workouts.hasPrevious()) {
     %>
     <s:url id="previousPageUrl" includeParams="get">
         <s:param name="workoutPage" value="previousIndex"/>
@@ -78,7 +78,7 @@
     <div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
     <%}%>
     <%
-        if (!!workouts.hasNext()) {
+        if (workouts.hasNext()) {
     %>
     <s:url id="nextPageUrl" includeParams="get">
         <s:param name="workoutPage" value="nextIndex"/>
