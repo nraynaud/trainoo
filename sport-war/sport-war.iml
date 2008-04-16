@@ -18,77 +18,125 @@
           <setting name="BUILD_ONLY_WEB_RESOURCES" value="false" />
         </building>
         <packaging>
-          <containerElement type="module" name="sport-business">
+          <containerElement type="module" name="geoportail">
             <attribute name="method" value="5" />
-            <attribute name="URI" value="/WEB-INF/lib/sport-business-1.0-SNAPSHOT.jar" />
-          </containerElement>
-          <containerElement type="library" name="javax.mail:mail:1.4" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/mail-1.4.jar" />
-          </containerElement>
-          <containerElement type="library" name="javax.activation:activation:1.1" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/activation-1.1.jar" />
-          </containerElement>
-          <containerElement type="module" name="sport-hibernate">
-            <attribute name="method" value="5" />
-            <attribute name="URI" value="/WEB-INF/lib/sport-hibernate-1.0-SNAPSHOT.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/geoportail-1.0-SNAPSHOT.jar" />
           </containerElement>
           <containerElement type="module" name="jbcrypt">
             <attribute name="method" value="5" />
             <attribute name="URI" value="/WEB-INF/lib/jbcrypt-0.1.jar" />
           </containerElement>
-          <containerElement type="library" name="org.hibernate:hibernate:3.2.4.sp1" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/hibernate-3.2.4.sp1.jar" />
+          <containerElement type="module" name="nikeplus">
+            <attribute name="method" value="5" />
+            <attribute name="URI" value="/WEB-INF/lib/nikeplus-1.0-SNAPSHOT.jar" />
           </containerElement>
-          <containerElement type="library" name="net.sf.ehcache:ehcache:1.2.3" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/ehcache-1.2.3.jar" />
+          <containerElement type="module" name="sport-business">
+            <attribute name="method" value="5" />
+            <attribute name="URI" value="/WEB-INF/lib/sport-business-1.0-SNAPSHOT.jar" />
           </containerElement>
-          <containerElement type="library" name="commons-logging:commons-logging:1.0.4" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/commons-logging-1.0.4.jar" />
+          <containerElement type="module" name="sport-hibernate">
+            <attribute name="method" value="5" />
+            <attribute name="URI" value="/WEB-INF/lib/sport-hibernate-1.0-SNAPSHOT.jar" />
           </containerElement>
-          <containerElement type="library" name="commons-collections:commons-collections:2.1.1" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/commons-collections-2.1.1.jar" />
+          <containerElement type="module" name="sport-j2ee">
+            <attribute name="method" value="5" />
+            <attribute name="URI" value="/WEB-INF/lib/sport-j2ee-1.0-SNAPSHOT.jar" />
           </containerElement>
-          <containerElement type="library" name="javax.transaction:jta:1.0.1B" level="module">
+          <containerElement type="module" name="sport-war">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/jta-1.0.1B.jar" />
-          </containerElement>
-          <containerElement type="library" name="asm:asm-attrs:1.5.3" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/asm-attrs-1.5.3.jar" />
-          </containerElement>
-          <containerElement type="library" name="dom4j:dom4j:1.6.1" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/dom4j-1.6.1.jar" />
+            <attribute name="URI" value="/WEB-INF/classes" />
           </containerElement>
           <containerElement type="library" name="antlr:antlr:2.7.6" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/antlr-2.7.6.jar" />
           </containerElement>
-          <containerElement type="library" name="cglib:cglib:2.1_3" level="module">
+          <containerElement type="library" name="asm:asm-attrs:1.5.3" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/cglib-2.1_3.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/asm-attrs-1.5.3.jar" />
           </containerElement>
           <containerElement type="library" name="asm:asm:1.5.3" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/asm-1.5.3.jar" />
           </containerElement>
-          <containerElement type="library" name="org.hibernate:hibernate-annotations:3.2.1.ga" level="module">
+          <containerElement type="library" name="c3p0:c3p0:0.9.0.2" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/hibernate-annotations-3.2.1.ga.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/c3p0-0.9.0.2.jar" />
+          </containerElement>
+          <containerElement type="library" name="cglib:cglib:2.1_3" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/cglib-2.1_3.jar" />
+          </containerElement>
+          <containerElement type="library" name="com.opensymphony:xwork:2.0.4" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/xwork-2.0.4.jar" />
+          </containerElement>
+          <containerElement type="library" name="commons-codec:commons-codec:1.2" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/commons-codec-1.2.jar" />
+          </containerElement>
+          <containerElement type="library" name="commons-collections:commons-collections:2.1.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/commons-collections-2.1.1.jar" />
+          </containerElement>
+          <containerElement type="library" name="commons-httpclient:commons-httpclient:3.0.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/commons-httpclient-3.0.1.jar" />
+          </containerElement>
+          <containerElement type="library" name="commons-logging:commons-logging:1.0.3" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="commons-logging:commons-logging:1.0.4" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/commons-logging-1.0.4.jar" />
+          </containerElement>
+          <containerElement type="library" name="dom4j:dom4j:1.6.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/dom4j-1.6.1.jar" />
+          </containerElement>
+          <containerElement type="library" name="freemarker:freemarker:2.3.4" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="freemarker:freemarker:2.3.8" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/freemarker-2.3.8.jar" />
+          </containerElement>
+          <containerElement type="library" name="hsqldb:hsqldb:1.8.0.7" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="httpunit:httpunit:1.6.1" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="javax.activation:activation:1.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/activation-1.1.jar" />
+          </containerElement>
+          <containerElement type="library" name="javax.mail:mail:1.4" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/mail-1.4.jar" />
           </containerElement>
           <containerElement type="library" name="javax.persistence:persistence-api:1.0" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/persistence-api-1.0.jar" />
           </containerElement>
-          <containerElement type="library" name="org.hibernate:hibernate-entitymanager:3.2.1.ga" level="module">
+          <containerElement type="library" name="javax.servlet:jsp-api:2.0" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="&lt;N/A&gt;" />
+          </containerElement>
+          <containerElement type="library" name="javax.servlet:servlet-api:2.4" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="&lt;N/A&gt;" />
+          </containerElement>
+          <containerElement type="library" name="javax.servlet:servlet-api:2.5" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="&lt;N/A&gt;" />
+          </containerElement>
+          <containerElement type="library" name="javax.transaction:jta:1.0.1B" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/hibernate-entitymanager-3.2.1.ga.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/jta-1.0.1B.jar" />
           </containerElement>
           <containerElement type="library" name="jboss:javassist:3.3.ga" level="module">
             <attribute name="method" value="1" />
@@ -98,73 +146,81 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/jboss-archive-browsing-5.0.0alpha-200607201-119.jar" />
           </containerElement>
-          <containerElement type="library" name="org.hibernate:hibernate-tools:3.2.0.beta9a" level="module">
+          <containerElement type="library" name="joda-time:joda-time:1.5.1" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/hibernate-tools-3.2.0.beta9a.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/joda-time-1.5.1.jar" />
           </containerElement>
-          <containerElement type="library" name="freemarker:freemarker:2.3.8" level="module">
+          <containerElement type="library" name="jparsec:jparsec:1.2" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/freemarker-2.3.8.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/jparsec-1.2.jar" />
           </containerElement>
-          <containerElement type="library" name="org.hibernate:jtidy:r8-20060801" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/jtidy-r8-20060801.jar" />
+          <containerElement type="library" name="jtidy:jtidy:4aug2000r7-dev" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
-          <containerElement type="library" name="mysql:mysql-connector-java:5.1.5" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
-          </containerElement>
-          <containerElement type="library" name="c3p0:c3p0:0.9.0.2" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/c3p0-0.9.0.2.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.springframework:spring:2.0.5" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/spring-2.0.5.jar" />
+          <containerElement type="library" name="junit:junit:4.0" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
           <containerElement type="library" name="log4j:log4j:1.2.13" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/log4j-1.2.13.jar" />
           </containerElement>
-          <containerElement type="module" name="sport-j2ee">
-            <attribute name="method" value="5" />
-            <attribute name="URI" value="/WEB-INF/lib/sport-j2ee-1.0-SNAPSHOT.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.apache.struts:struts2-core:2.0.11" level="module">
+          <containerElement type="library" name="mysql:mysql-connector-java:5.1.5" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/struts2-core-2.0.11.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
           </containerElement>
-          <containerElement type="library" name="com.opensymphony:xwork:2.0.4" level="module">
+          <containerElement type="library" name="nekohtml:nekohtml:0.9.1" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="net.sf.ehcache:ehcache:1.2.3" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/xwork-2.0.4.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/ehcache-1.2.3.jar" />
           </containerElement>
           <containerElement type="library" name="opensymphony:ognl:2.6.11" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/ognl-2.6.11.jar" />
           </containerElement>
-          <containerElement type="library" name="joda-time:joda-time:1.5.1" level="module">
+          <containerElement type="library" name="org.apache.struts:struts2-core:2.0.11" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/joda-time-1.5.1.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/struts2-core-2.0.11.jar" />
           </containerElement>
-          <containerElement type="module" name="nikeplus">
-            <attribute name="method" value="5" />
-            <attribute name="URI" value="/WEB-INF/lib/nikeplus-1.0-SNAPSHOT.jar" />
-          </containerElement>
-          <containerElement type="library" name="commons-httpclient:commons-httpclient:3.0.1" level="module">
+          <containerElement type="library" name="org.hibernate:hibernate-annotations:3.2.1.ga" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/commons-httpclient-3.0.1.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/hibernate-annotations-3.2.1.ga.jar" />
           </containerElement>
-          <containerElement type="library" name="commons-codec:commons-codec:1.2" level="module">
+          <containerElement type="library" name="org.hibernate:hibernate-entitymanager:3.2.1.ga" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/commons-codec-1.2.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/hibernate-entitymanager-3.2.1.ga.jar" />
           </containerElement>
-          <containerElement type="module" name="geoportail">
-            <attribute name="method" value="5" />
-            <attribute name="URI" value="/WEB-INF/lib/geoportail-1.0-SNAPSHOT.jar" />
-          </containerElement>
-          <containerElement type="module" name="sport-war">
+          <containerElement type="library" name="org.hibernate:hibernate-tools:3.2.0.beta9a" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/classes" />
+            <attribute name="URI" value="/WEB-INF/lib/hibernate-tools-3.2.0.beta9a.jar" />
+          </containerElement>
+          <containerElement type="library" name="org.hibernate:hibernate:3.2.4.sp1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/hibernate-3.2.4.sp1.jar" />
+          </containerElement>
+          <containerElement type="library" name="org.hibernate:jtidy:r8-20060801" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/jtidy-r8-20060801.jar" />
+          </containerElement>
+          <containerElement type="library" name="org.springframework:spring:2.0.5" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/spring-2.0.5.jar" />
+          </containerElement>
+          <containerElement type="library" name="rhino:js:1.5R4.1" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="xerces:xercesImpl:2.6.2" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="xerces:xmlParserAPIs:2.2.1" level="module">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
         </packaging>
       </configuration>

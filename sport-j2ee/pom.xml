@@ -46,6 +46,11 @@
             <version>1.5.1</version>
         </dependency>
         <dependency>
+            <groupId>jparsec</groupId>
+            <artifactId>jparsec</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
             <groupId>httpunit</groupId>
             <artifactId>httpunit</artifactId>
             <version>1.6.1</version>

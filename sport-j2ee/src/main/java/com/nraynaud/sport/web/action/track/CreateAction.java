@@ -6,6 +6,8 @@ import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import jfun.parsec.pattern.Pattern;
+import static jfun.parsec.pattern.Patterns.*;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -17,6 +19,12 @@ import org.apache.struts2.config.Results;
 public class CreateAction extends DefaultAction {
     public String track;
     public double length;
+    private static final Pattern POINT_LIST;
+
+    static {
+        final Pattern point = seq(isChar('['), isDecimal(), isChar(','), isDecimal(), isChar(']'));
+        POINT_LIST = seq(point, many(seq(isChar(','), point)));
+    }
 
     public CreateAction(final Application application) {
         super(application);
@@ -24,7 +32,14 @@ public class CreateAction extends DefaultAction {
 
     @PostOnly
     public String create() {
+        if (!matchPoint(track))
+            throw new RuntimeException("error in track : " + track);
         application.createTrack(getUser(), track, length);
         return SUCCESS;
+    }
+
+    public static boolean matchPoint(final String input) {
+        final int result = POINT_LIST.match(input, input.length(), 0);
+        return result == input.length();
     }
 }

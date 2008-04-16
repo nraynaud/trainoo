@@ -220,7 +220,9 @@ Editor.prototype.draw = function() {
         if (poly.length > 0)
             distance += poly[poly.length - 1].distanceFrom(pnt);
         poly.push(pnt);
-        encodedTrack += '[' + pnt.lat() + ',' + pnt.lng() + '],';
+        if (i > 0)
+            encodedTrack += ',';
+        encodedTrack += '[' + pnt.lat() + ',' + pnt.lng() + ']';
     }
     this.line = new GPolyline(poly, 'blue', 3, 1);
     map.addOverlay(this.line);

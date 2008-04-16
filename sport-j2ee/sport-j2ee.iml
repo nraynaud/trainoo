@@ -159,6 +159,19 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="jparsec:jparsec:1.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/jparsec/jparsec/1.2/jparsec-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/jparsec/jparsec/1.2/jparsec-1.2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/jparsec/jparsec/1.2/jparsec-1.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library name="httpunit:httpunit:1.6.1">
         <CLASSES>
