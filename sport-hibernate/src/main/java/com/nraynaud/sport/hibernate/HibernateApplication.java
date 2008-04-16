@@ -86,7 +86,7 @@ public class HibernateApplication implements Application {
 
     private PaginatedCollection<Workout> getWorkouts(final User user, final String discipline, final int startIndex,
                                                      final int pageSize) {
-        final String wherePart = "1=1" + (user != null ? " and :user MEMBER OF w.participants" : "");
+        final String wherePart = user != null ? ":user MEMBER OF w.participants" : "1=1";
         final Query query = workoutSelection(discipline, "WorkoutImpl w", wherePart);
         if (user != null)
             query.setParameter("user", user);
@@ -96,7 +96,7 @@ public class HibernateApplication implements Application {
     private PaginatedCollection<Workout> getWorkouts(final Group group, final String discipline, final int firstIndex,
                                                      final int pageSize) {
         final String joinPart = "GroupImpl g inner join g.members u inner join u.workouts w ";
-        final Query query = workoutSelection(discipline, joinPart, " g =:group");
+        final Query query = workoutSelection(discipline, joinPart, "g =:group");
         query.setParameter("group", group);
         return paginateWorkoutQuery(firstIndex, pageSize, query);
     }
