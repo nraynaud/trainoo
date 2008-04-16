@@ -17,7 +17,7 @@ var map;
 var editor;
 var MARKER_ICON = createMarkerIcon();
 function loadTrack(track) {
-    editor.loadTrack(eval('[' + track.replace(/(.*),$/, "$1") + ']'));
+    editor.loadTrack(eval('[' + track + ']'));
 }
 function createHandleIcon() {
     var icon = new GIcon();
@@ -37,7 +37,7 @@ function startMap() {
     if (GBrowserIsCompatible()) {
         var IGN_PHOTO_TYPE = createGeoMapType(IGN_PHOTO_KEY, 'white', 18);
         var IGN_MAP_TYPE = createGeoMapType(IGN_MAP_KEY, 'black', 16);
-        map = new GMap2($("map"), {googleBarOptions:{showOnLoad:true, draggableCursor:'pointer, crosshair, default'}});
+        map = new GMap2($("map"), {googleBarOptions:{showOnLoad:true}});
         map.addMapType(IGN_MAP_TYPE);
         map.addMapType(IGN_PHOTO_TYPE);
         map.removeMapType(G_NORMAL_MAP);
@@ -64,10 +64,11 @@ function Editor(map) {
     this.map = map;
     var editor = this
     this.addPointCallback = function(overlay, latLng) {
+        editor.hideTransientPath();
         editor.addMarker(latLng);
         map.panTo(latLng);
         editor.draw();
-    };
+    }.bind(this);
     this.insertionEditor = new PointInsertionEditor(map, this);
     this.insertionEditor.canInsertPoint(true);
     this.markers = [];
@@ -262,7 +263,7 @@ Editor.prototype.hideTransientPath = function () {
 };
 Editor.prototype.setTransientPath = function (path) {
     this.hideTransientPath();
-    this.transientPath = new GPolyline(path, '#D97900', 8, 0.8);
+    this.transientPath = new GPolyline(path, '#D97900', 8, 0.8, {clickable: false});
     map.addOverlay(this.transientPath);
 };
 function PointInsertionEditor(map, editor) {
@@ -316,12 +317,15 @@ function PointInsertionEditor(map, editor) {
                     {
                         insertionEditor.myMarker.setPoint(pointMin);
                         insertionEditor.myMarker.show();
+                        editor.hideTransientPath();
                         return;
                     }
                 }
             }
             insertionEditor.myMarker.hide();
         }
+        if (editor.markers.length > 0)
+            editor.setTransientPath([editor.markers[editor.markers.length - 1].getPoint(), latLng]);
     }
     GEvent.addListener(this.myMarker, 'mouseover', function() {
         insertionEditor.myMarker.setImage($('map_handle_active').src);
