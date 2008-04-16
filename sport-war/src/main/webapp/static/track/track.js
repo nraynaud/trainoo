@@ -280,7 +280,7 @@ function PointInsertionEditor(map, editor) {
             function square(x) {
                 return Math.pow(x, 2);
             }
-            function computeNearestPoint(p, p1, p2) {
+            function computeNearestPointOnSegment(p, p1, p2) {
                 var diffLng = p2.lng() - p1.lng();
                 var diffLat = p2.lat() - p1.lat();
                 var numerator = ((p.lng() - p1.lng()) * diffLng + (p.lat() - p1.lat()) * diffLat);
@@ -296,7 +296,7 @@ function PointInsertionEditor(map, editor) {
             var distMin = Infinity;
             var pointMin = null;
             for (var i = 0; i < editor.markers.length - 1; i++) {
-                var point = computeNearestPoint(latLng, editor.markers[i].getPoint(), editor.markers[i + 1].getPoint());
+                var point = computeNearestPointOnSegment(latLng, editor.markers[i].getPoint(), editor.markers[i + 1].getPoint());
                 if (point != null) {
                     var dist = square(latLng.lng() - point.lng()) + square(latLng.lat() - point.lat());
                     if (dist < distMin) {
