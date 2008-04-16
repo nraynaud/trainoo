@@ -76,6 +76,7 @@ function Editor(map) {
     this.transientPath = null;
 }
 Editor.prototype.canAppendPoint = function(can) {
+    this.hideTransientPath();
     if (can)
         this.canAppendPointHandler = GEvent.addListener(map, 'click', this.addPointCallback);
     else
@@ -267,6 +268,7 @@ Editor.prototype.setTransientPath = function (path) {
     map.addOverlay(this.transientPath);
 };
 function PointInsertionEditor(map, editor) {
+    this.editor = editor;
     this.myMarker = new GMarker(new GLatLng(47.081850, 2.3995035), {
         icon: createHandleIcon(), title:"insérer un point", draggable: true});
     map.addOverlay(this.myMarker);
@@ -359,6 +361,7 @@ function PointInsertionEditor(map, editor) {
     this.insertLinePointHandleHandler = null;
 }
 PointInsertionEditor.prototype.canInsertPoint = function(can, keepMarker) {
+    this.editor.hideTransientPath();
     if (can) {
         if (this.insertLinePointHandleHandler == null)
             this.insertLinePointHandleHandler = GEvent.addListener(map, 'mousemove', this.insertLinePointHandleCallback);
