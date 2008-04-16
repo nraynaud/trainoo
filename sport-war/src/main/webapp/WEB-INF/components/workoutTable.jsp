@@ -46,13 +46,15 @@
             <td><p:duration name="duration"/></td>
             <td><p:distance name="distance"/></td>
             <td class="img">
-                <%if (workout.getMessageCount() > 0) {%>
+                <%
+                    final Long messageCount = workout.getMessageCount();
+                    if (messageCount > 0) {
+                %>
                 <div class="messageLink">
                     <s:a cssClass="messageLink" href="%{workoutUrl}"
                          title="Discussions à propos de cet entraînement"><img
-                            src="<%=stat("/static/bulle.png")%>" alt="commenter"><s:if test="%{messageNumber > 0}">
-                        <span class="messageNumber"><s:property value="messageNumber"/></span>
-                    </s:if></s:a>
+                            src="<%=stat("/static/bulle.png")%>" alt="commenter"><span
+                            class="messageNumber"><%=messageCount%></span></s:a>
                 </div>
 
                 <%}%>
