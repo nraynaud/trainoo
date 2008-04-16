@@ -84,39 +84,36 @@ public class HibernateApplication implements Application {
         return query.getResultList();
     }
 
-    @SuppressWarnings({"unchecked"})
     private PaginatedCollection<Workout> getWorkouts(final User user, final String discipline, final int startIndex,
                                                      final int pageSize) {
-        return fetchWorkouts(user, discipline, startIndex, pageSize);
-    }
-
-    private PaginatedCollection<Workout> fetchWorkouts(final User user, final String discipline, final int startIndex,
-                                                       final int pageSize) {
-        final Query query = query(
-                "select w, count(m) from WorkoutImpl w left join w.publicMessages m  where 1=1"
-                        + (user != null ? " and :user MEMBER OF w.participants" : "")
-                        + (discipline != null ? " and w.discipline =:discipline" : "")
-                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline, w.nikePlusId, w.comment order by w.date desc, w.id asc");
+        final String wherePart = "1=1" + (user != null ? " and :user MEMBER OF w.participants" : "");
+        final Query query = workoutSelection(discipline, "WorkoutImpl w", wherePart);
         if (user != null)
             query.setParameter("user", user);
-        return paginateWorkoutQuery(discipline, startIndex, pageSize, query);
+        return paginateWorkoutQuery(startIndex, pageSize, query);
     }
 
     private PaginatedCollection<Workout> getWorkouts(final Group group, final String discipline, final int firstIndex,
                                                      final int pageSize) {
-        final Query query = query("select w, count(m) "
-                + "from GroupImpl g inner join g.members u inner join u.workouts w left join w.publicMessages m "
-                + "where g =:group"
-                + (discipline != null ? " and w.discipline =:discipline" : "")
-                + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline order by  w.date desc, w.id desc");
+        final String joinPart = "GroupImpl g inner join g.members u inner join u.workouts w ";
+        final Query query = workoutSelection(discipline, joinPart, " g =:group");
         query.setParameter("group", group);
-        return paginateWorkoutQuery(discipline, firstIndex, pageSize, query);
+        return paginateWorkoutQuery(firstIndex, pageSize, query);
     }
 
-    private static PaginatedCollection<Workout> paginateWorkoutQuery(final String discipline, final int firstIndex,
-                                                                     final int pageSize, final Query query) {
+    private Query workoutSelection(final String discipline, final String joinPart, final String wherePart) {
+        final Query query = query(
+                "select w, count(m) from " + joinPart + " left join w.publicMessages m  where " + wherePart
+                        + (discipline != null ? " and w.discipline = :discipline" : "")
+                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline, w.nikePlusId, w.comment"
+                        + " order by w.date desc, w.id asc");
         if (discipline != null)
             query.setParameter("discipline", discipline);
+        return query;
+    }
+
+    private static PaginatedCollection<Workout> paginateWorkoutQuery(final int firstIndex, final int pageSize,
+                                                                     final Query query) {
         final List<Object[]> result = paginatedQuery(pageSize, firstIndex, query);
         final List<Workout> list = new ArrayList(result.size());
         for (final Object[] row : result) {
