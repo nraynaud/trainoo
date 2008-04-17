@@ -9,10 +9,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 public class DateConverter extends StrutsTypeConverter {
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("dd/MM/yy");
+    private static final DateTimeFormatter DATE_FORMATTER = pattern("dd/MM/yy");
     private static final Parser FULL_FORMAT_PARSER = new Parser() {
         public DateTime parse(final String source) throws IllegalArgumentException {
             return DATE_FORMATTER.parseDateTime(source);
@@ -33,7 +34,7 @@ public class DateConverter extends StrutsTypeConverter {
 
     private static DateTime parseAndComplete(final String source, final String pattern) {
         final MutableDateTime date = new MutableDateTime(now());
-        final int result = DateTimeFormat.forPattern(pattern).parseInto(date, source, 0);
+        final int result = pattern(pattern).parseInto(date, source, 0);
         if (result != source.length())
             throw new IllegalArgumentException();
         return new DateTime(date);
@@ -92,7 +93,8 @@ public class DateConverter extends StrutsTypeConverter {
     public static String parseAndPrettyPrint(final String source) {
         final DateMidnight now = new DateMidnight();
         final DateMidnight date = parseDateTime(source).toDateMidnight();
-        final String formatted = DateTimeFormat.forPattern("EEEE dd/MM/yy").print(date);
+        final String pattern = "EEEE dd/MM/yy";
+        final String formatted = pattern(pattern).print(date);
         if (now.equals(date))
             return "Aujourd'hui (" + formatted + ")";
         if (now.minusDays(1).equals(date))
@@ -102,7 +104,12 @@ public class DateConverter extends StrutsTypeConverter {
         return formatted;
     }
 
+    private static DateTimeFormatter pattern(final String pattern) {
+        return DateTimeFormat.forPattern(pattern).withLocale(Locale.FRANCE);
+    }
+
     private interface Parser {
+
         DateTime parse(final String source) throws IllegalArgumentException;
     }
 }
