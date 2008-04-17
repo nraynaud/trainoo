@@ -69,6 +69,9 @@ function Editor(map) {
         map.panTo(latLng);
         editor.draw();
     }.bind(this);
+    GEvent.addListener(map, 'mouseout', function() {
+        editor.hideTransientPath();
+    })
     this.insertionEditor = new PointInsertionEditor(map, this);
     this.insertionEditor.canInsertPoint(true);
     this.markers = [];
@@ -326,8 +329,10 @@ function PointInsertionEditor(map, editor) {
             }
             insertionEditor.myMarker.hide();
         }
-        if (editor.markers.length > 0)
+        if (editor.markers.length > 0 && latLng != null)
             editor.setTransientPath([editor.markers[editor.markers.length - 1].getPoint(), latLng]);
+        else
+            editor.hideTransientPath();
     }
     GEvent.addListener(this.myMarker, 'mouseover', function() {
         insertionEditor.myMarker.setImage($('map_handle_active').src);
