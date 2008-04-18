@@ -14,10 +14,10 @@ import java.util.List;
 @Result(name = SUCCESS, value = "/WEB-INF/pages/track/edit.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
-public class Action extends DefaultAction {
+public class EditAction extends DefaultAction {
     public long id;
 
-    public Action(final Application application) {
+    public EditAction(final Application application) {
         super(application);
     }
 

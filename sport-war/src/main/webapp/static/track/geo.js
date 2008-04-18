@@ -49,29 +49,29 @@ GeoProjection.prototype.fromPixelToLatLng = function(pix, _zoom, bounded) {
 GeoProjection.prototype.getWrapWidth = function() {
     return 99999999999999;
 }
-function createMapType(key, textColor, maxZoom) {
-    var copyCollection = new GCopyrightCollection('© ');
-    var earth = new GLatLngBounds(new GLatLng(-90, -180), new GLatLng(90, 180));
-    var copyIndex = 1;
-    function addCopyright(text) {
-        var copyright = new GCopyright(copyIndex++, earth, 0, text);
-        copyCollection.addCopyright(copyright);
+var IGN_PHOTO_TYPE = createGeoMapType([createLayer(IGN_PHOTO_KEY, 18, 1)], 'white');
+var IGN_MAP_TYPE = createGeoMapType([createLayer(IGN_PHOTO_KEY, 18, 1), createLayer(IGN_MAP_KEY, 16, 0.3)], 'black');
+var copyCollection = new GCopyrightCollection('© ');
+var copyIndex = 1;
+function addCopyright(text) {
+    var copyright = new GCopyright(copyIndex++, new GLatLngBounds(new GLatLng(-90, -180), new GLatLng(90, 180)), 0, text);
+    copyCollection.addCopyright(copyright);
+}
+addCopyright("<a class='copyright' href='http://www.ign.fr'>IGN</a>");
+addCopyright("<a class='copyright' href='http://www.spotimage.fr'>SpotImage</a>");
+addCopyright("<a class='copyright' href='http://www.cnes.fr'>CNES</a>");
+addCopyright("<a class='copyright' href='http://www.planetobserver.com'>PlanetObserver</a>");
+function createLayer(key, maxZoom, opacity) {
+    var layer = new GTileLayer(copyCollection, 5, maxZoom, {opacity: opacity});
+    layer.getTileUrl = function (pt, zoom) {
+        var geoZoom = googleToGeoZoom(zoom);
+        return "/track/getTile?p=" + key + "&z=" + geoZoom + "&x=" + pt.x + "&y=" + googleToGeoTileY(pt.y, geoZoom)
+                + "&s=.jpg";
     }
-    addCopyright("<a class='copyright' href='http://www.ign.fr'>IGN</a>");
-    addCopyright("<a class='copyright' href='http://www.spotimage.fr'>SpotImage</a>");
-    addCopyright("<a class='copyright' href='http://www.cnes.fr'>CNES</a>");
-    addCopyright("<a class='copyright' href='http://www.planetobserver.com'>PlanetObserver</a>");
-    function createLayer(key) {
-        var layer = new GTileLayer(copyCollection, 5, maxZoom);
-        layer.getTileUrl = function (pt, zoom) {
-            var geoZoom = googleToGeoZoom(zoom);
-            return "/track/getTile?p=" + key + "&z=" + geoZoom + "&x=" + pt.x + "&y=" + googleToGeoTileY(pt.y, geoZoom)
-                    + "&s=.jpg";
-        }
-        return layer;
-    }
-    return new GMapType([createLayer(key)], new GeoProjection(), "IGN", {
-        errorMessage:"Aucune donnée disponible", textColor:textColor});
+    return layer;
+}
+function createMapType(layers, textColor) {
+    return new GMapType(layers, new GeoProjection(), "IGN", {errorMessage:"Aucune donnée disponible", textColor:textColor});
 }
 function googleToGeoZoom(googleZoom) {
     var z = 22 - googleZoom;
@@ -81,7 +81,6 @@ function createGeoMapType(prefix, textColor, maxZoom) {
     testProjection();
     return new createMapType(prefix, textColor, maxZoom);
 }
-var lastTimeCookieChecked;
 /******some tests ******/
 function testProjection() {
     var projection = new GeoProjection();
