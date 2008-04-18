@@ -11,6 +11,7 @@ public class PageDetail {
     private final List<String> headers = new ArrayList<String>(1);
     private boolean showTitle = true;
     private boolean showFooter = true;
+    private boolean showHeader = true;
 
     public static PageDetail detailFor(final ServletRequest request) {
         PageDetail detail = (PageDetail) request.getAttribute("detail");
@@ -70,6 +71,14 @@ public class PageDetail {
 
     public void setShowFooter(final boolean showFooter) {
         this.showFooter = showFooter;
+    }
+
+    public void setShowHeader(final boolean showHeader) {
+        this.showHeader = showHeader;
+    }
+
+    public boolean isShowHeader() {
+        return showHeader;
     }
 
     public static class Javascript {

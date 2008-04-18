@@ -35,6 +35,7 @@
 </head>
 <body id="body">
 <div id="center">
+    <%if (pageDetail.isShowHeader()) {%>
     <div id="heading">
         <div id="leftHeading">
             <%call(pageContext, "logo.jsp");%>
@@ -45,6 +46,7 @@
         </div>
         <div id="adPlaceholder">publicité google</div>
     </div>
+    <%}%>
     <%call(pageContext, "loginHeader.jsp");%>
     <div id="content">
         <%if (pageDetail.isShowTitle()) {%>
@@ -115,7 +117,7 @@
     initClickHeat();
     //-->
     </script>
-
+    <%if (pageDetail.isShowHeader()) {%>
     <div id="ad">
         <script type="text/javascript"><!--
         google_ad_client = "pub-1788371406648361";
@@ -130,6 +132,7 @@
     <script type="text/javascript">
         $('adPlaceholder').update($('ad'));
     </script>
+    <%}%>
 </div>
 </body>
 </html>
