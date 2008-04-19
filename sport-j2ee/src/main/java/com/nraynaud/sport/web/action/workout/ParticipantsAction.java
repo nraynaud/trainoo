@@ -43,7 +43,6 @@ public class ParticipantsAction extends DefaultAction {
 
     @PostOnly
     public String create() {
-        initData();
         try {
             application.setWorkoutParticipants(getUser(), id, participants);
             return SUCCESS;
