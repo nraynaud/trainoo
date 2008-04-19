@@ -793,4 +793,11 @@ public class HibernateApplication implements Application {
         final Query query = entityManager.createQuery("select t from TrackImpl t");
         return query.getResultList();
     }
+
+    public Track fetchTrack(final long id) throws TrackNotFoundException {
+        final TrackImpl track = entityManager.find(TrackImpl.class, id);
+        if (track == null)
+            throw new TrackNotFoundException();
+        return track;
+    }
 }

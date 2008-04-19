@@ -12,11 +12,18 @@ function loaded() {
     startMap();
 }
 window.onresize = updateHeight;
-window.onload = loaded;
+window.onload = function() {
+    onLoaded.each(function (f) {
+        f();
+    });
+};
+var onLoaded = [loaded]
 var map;
 var editor;
 var MARKER_ICON = createMarkerIcon();
 function loadTrack(track) {
+    log("loadtrack :" + track)
+    log("editor :" + editor)
     editor.loadTrack(eval('[' + track + ']'));
 }
 function createHandleIcon() {
@@ -53,7 +60,6 @@ function startMap() {
         map.addControl(new GScaleControl(), new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(10, 15)));
         editor = new Editor(map);
         editor.canAppendPoint(true);
-        editor.draw();
         map.setMapType(IGN_PHOTO_TYPE);
     }
 }
@@ -214,6 +220,7 @@ Editor.prototype.deleteMarker = function (marker) {
     renumberMarkers(this.markers);
 }
 Editor.prototype.draw = function() {
+    log("draw")
     if (this.line) {
         map.removeOverlay(this.line);
     }
@@ -251,6 +258,7 @@ Editor.prototype.clearMap = function() {
     this.draw()
 }
 Editor.prototype.loadTrack = function (track) {
+    log(track)
     this.clearMap();
     var editor = this;
     track.each(function(point) {

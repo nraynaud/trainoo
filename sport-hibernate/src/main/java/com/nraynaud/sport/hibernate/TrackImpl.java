@@ -26,6 +26,9 @@ public class TrackImpl implements Track {
     @Column(name = "POINTS")
     private String points;
 
+    @Column(name = "LENGTH")
+    private double length;
+
     @ManyToOne(targetEntity = UserImpl.class)
     @JoinColumn(name = "OWNER_ID", nullable = false, updatable = false)
     private User user;
@@ -52,5 +55,9 @@ public class TrackImpl implements Track {
 
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    public double getLength() {
+        return length;
     }
 }

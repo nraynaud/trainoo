@@ -115,4 +115,6 @@ public interface Application extends UserStore {
     List<String> fetchTracks(final User user);
 
     List<Track> fetchTracks();
+
+    Track fetchTrack(final long id) throws TrackNotFoundException;
 }

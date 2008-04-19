@@ -12,4 +12,6 @@ public interface Track {
     String getPoints();
 
     Date getCreationDate();
+
+    double getLength();
 }

@@ -17,8 +17,8 @@
     <span id="distance"></span>(<span id="pointsCount"></span> points)
 
     <s:form id="createForm" namespace="/track" action="create">
-        <s:hidden id="trackVar" name="track"/>
-        <s:hidden id="lengthVar" name="length"/>
+        <s:hidden id="trackVar" name="track" value="%{track.points}"/>
+        <s:hidden id="lengthVar" name="length" value="%{track.length}"/>
         <s:submit id="submit" value="Enregistrer" onclick="" tabindex="1"/>
     </s:form>
     <a href="#" onclick="newTrack(); return false;">Nouveau parcours</a>
@@ -44,3 +44,5 @@
     </div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
+<p:javascript> onLoaded.push(function() {loadTrack($('trackVar').value);});</p:javascript>
+
