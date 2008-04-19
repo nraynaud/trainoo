@@ -54,7 +54,6 @@ function startMap() {
         editor = new Editor(map);
         editor.canAppendPoint(true);
         editor.draw();
-        new GDraggableObject($('controlPanel'));
         map.setMapType(IGN_PHOTO_TYPE);
     }
 }

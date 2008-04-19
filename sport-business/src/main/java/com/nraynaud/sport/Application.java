@@ -7,11 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface Application extends UserStore {
-    Workout createWorkout(Date date,
-                          final User user,
-                          final Long duration,
-                          final Double distance,
-                          final String discipline, String comment);
 
     User createUser(String login, String password, final String email) throws NameClashException, MailException;
 
@@ -118,4 +113,6 @@ public interface Application extends UserStore {
     void createTrack(final User user, final String track, final double length);
 
     List<String> fetchTracks(final User user);
+
+    List<Track> fetchTracks();
 }

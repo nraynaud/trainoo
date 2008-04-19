@@ -53,7 +53,7 @@ public class RefreshNikePlusAction extends ChainBackAction {
                                                final Double distance, final Long duration) {
                         insertions.add(new Runnable() {
                             public void run() {
-                                application.createWorkout(date, action.getUser(), duration, distance, discipline,
+                                application.createWorkout(date, action.getUser(), duration, distance, discipline, null,
                                         nikePlusId);
                             }
                         });

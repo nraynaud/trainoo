@@ -10,7 +10,6 @@ html, body, #center {
 #map {
     height: 100%;
     width: 100%;
-    background-color: red;
 }
 
 #content, #loginHeader {

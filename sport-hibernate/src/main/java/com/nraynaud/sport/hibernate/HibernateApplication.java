@@ -21,15 +21,6 @@ public class HibernateApplication implements Application {
                                  final Long duration,
                                  final Double distance,
                                  final String discipline,
-                                 final String comment) {
-        return createWorkout(date, user, duration, distance, discipline, comment, null);
-    }
-
-    public Workout createWorkout(final Date date,
-                                 final User user,
-                                 final Long duration,
-                                 final Double distance,
-                                 final String discipline,
                                  final String comment,
                                  final String nikePlusId) {
         if (nikePlusId != null) {
@@ -796,5 +787,10 @@ public class HibernateApplication implements Application {
         userImpl.setNikePlusPassword(nikePlusPassword);
         userImpl.setNikePlusId(nikePlusId);
         entityManager.merge(userImpl);
+    }
+
+    public List<Track> fetchTracks() {
+        final Query query = entityManager.createQuery("select t from TrackImpl t");
+        return query.getResultList();
     }
 }
