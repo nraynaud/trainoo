@@ -11,7 +11,7 @@
 
 <div id="map"></div>
 <div id="controlPanel">
-    <div id="trackName"><span>Mon parcours</span>
+    <div><span id="trackName">Mon parcours</span>
         <button onclick="" style="font-size:10px">Renommer</button>
     </div>
     <span id="distance"></span>(<span id="pointsCount"></span> points)
@@ -23,12 +23,6 @@
     </s:form>
     <a href="#" onclick="newTrack(); return false;">Nouveau parcours</a>
 
-    <div style="visibility:hidden">
-        <img id="map_handle" src="<%=stat("/static/track/map_handle.png")%>" alt="">
-        <img id="map_handle_active" src="<%=stat("/static/track/map_handle_active.png")%>" alt="">
-        <img id="map_marker" src="<%=stat("/static/track/map_marker.png")%>" alt="">
-        <img id="map_marker_active" src="<%=stat("/static/track/map_marker_active.png")%>" alt="">
-    </div>
     <div style="margin:0 auto; width:125px;">
         <script type="text/javascript"><!--
         google_ad_client = "pub-1788371406648361";
@@ -44,5 +38,5 @@
     </div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
-<p:javascript> onLoaded.push(function() {loadTrack($('trackVar').value);});</p:javascript>
+<p:javascript>loadOnStartup($('trackVar').value);</p:javascript>
 

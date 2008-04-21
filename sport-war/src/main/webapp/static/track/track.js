@@ -21,6 +21,13 @@ var onLoaded = [loaded]
 var map;
 var editor;
 var MARKER_ICON = createMarkerIcon();
+function loadOnStartup(track) {
+    log("loadOnStartup: " + track)
+    onLoaded.push(function() {
+        loadTrack(track);
+    });
+    log("after loadOnStartup")
+}
 function loadTrack(track) {
     log("loadtrack :" + track)
     log("editor :" + editor)
@@ -219,8 +226,17 @@ Editor.prototype.deleteMarker = function (marker) {
     this.draw();
     renumberMarkers(this.markers);
 }
+function setValue(id, value) {
+    var element = $(id);
+    if (element)
+        element.setValue(value);
+}
+function update(id, content) {
+    var element = $(id);
+    if (element)
+        element.update(content);
+}
 Editor.prototype.draw = function() {
-    log("draw")
     if (this.line) {
         map.removeOverlay(this.line);
     }
@@ -238,10 +254,10 @@ Editor.prototype.draw = function() {
     }
     this.line = new GPolyline(poly, 'blue', 3, 1);
     map.addOverlay(this.line);
-    $('trackVar').setValue(encodedTrack);
-    $('distance').update((distance / 1000).toFixed(2) + "km");
-    $('lengthVar').setValue(distance / 1000);
-    $('pointsCount').update(this.markers.length);
+    setValue('trackVar', encodedTrack);
+    update('distance', (distance / 1000).toFixed(2) + "km");
+    update('lengthVar', distance / 1000);
+    update('pointsCount', this.markers.length);
 }
 Editor.prototype.fit = function() {
     var bounds = new GLatLngBounds();
