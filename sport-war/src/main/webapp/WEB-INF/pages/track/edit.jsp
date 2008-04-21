@@ -38,5 +38,6 @@
     </div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
+<p:javascript src="<%=stat("/static/track/track.js")%>"/>
 <p:javascript>loadOnStartup($('trackVar').value);</p:javascript>
 

@@ -32,8 +32,9 @@
         <% }%>
     </table>
     <hr>
-    <span id="distance"></span>(<span id="pointsCount"></span> points)
+    <span id="distance"></span>
 </div>
 
 <%call(pageContext, "trackLoader.jsp");%>
+<p:javascript src="<%=stat("/static/track/trackView.js")%>"/>
 <p:javascript>loadOnStartup("<%=property("track", Track.class).getPoints()%>");</p:javascript>
