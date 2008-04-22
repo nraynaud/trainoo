@@ -60,4 +60,8 @@ public class TrackImpl implements Track {
     public double getLength() {
         return length;
     }
+
+    public void setTitle(final String title) {
+        this.title = title;
+    }
 }

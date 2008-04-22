@@ -22,7 +22,8 @@ public class CreateAction extends DefaultAction {
     private static final Pattern POINT_LIST;
 
     static {
-        final Pattern point = seq(isChar('['), isDecimal(), isChar(','), isDecimal(), isChar(']'));
+        final Pattern coord = seq(optional(isChar('-')), isDecimal());
+        final Pattern point = seq(isChar('['), coord, isChar(','), coord, isChar(']'));
         POINT_LIST = seq(point, many(seq(isChar(','), point)));
     }
 
@@ -32,10 +33,14 @@ public class CreateAction extends DefaultAction {
 
     @PostOnly
     public String create() {
-        if (!matchPoint(track))
-            throw new RuntimeException("error in track : " + track);
+        ensurePointFormat(track);
         application.createTrack(getUser(), track, length);
         return SUCCESS;
+    }
+
+    public static void ensurePointFormat(final String points) {
+        if (!matchPoint(points))
+            throw new RuntimeException("error in track : " + points);
     }
 
     public static boolean matchPoint(final String input) {

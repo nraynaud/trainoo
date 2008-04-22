@@ -45,3 +45,7 @@ a.copyright {
 #deleteButton:hover {
     background-color: black;
 }
+
+button {
+    margin: 0 2px;
+}

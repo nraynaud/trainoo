@@ -30,7 +30,8 @@ public class Action extends DefaultAction {
     @SkipValidation
     public String index() {
         try {
-            track = application.fetchTrack(id);
+            if (id != null)
+                track = application.fetchTrack(id.longValue());
             tracks = application.fetchTracks();
             return SUCCESS;
         } catch (TrackNotFoundException e) {

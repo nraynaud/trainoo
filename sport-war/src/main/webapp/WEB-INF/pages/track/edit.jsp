@@ -11,15 +11,14 @@
 
 <div id="map"></div>
 <div id="controlPanel">
-    <div><span id="trackName">Mon parcours</span>
-        <button onclick="" style="font-size:10px">Renommer</button>
-    </div>
-    <span id="distance"></span>(<span id="pointsCount"></span> points)
-
-    <s:form id="createForm" namespace="/track" action="create">
-        <s:hidden id="trackVar" name="track" value="%{track.points}"/>
+    <s:form id="createForm" namespace="/track" action="edit">
+        <s:hidden name="id" value="%{track.id}"/>
+        <s:hidden id="trackVar" name="points" value="%{track.points}"/>
         <s:hidden id="lengthVar" name="length" value="%{track.length}"/>
-        <s:submit id="submit" value="Enregistrer" onclick="" tabindex="1"/>
+        <s:textfield name="title" value="%{track.title}" cssStyle="width:99%"/>
+        <s:submit id="submit" value="Enregistrer" tabindex="1"/>
+
+        <span id="distance"></span>(<span id="pointsCount"></span> points)
     </s:form>
     <a href="#" onclick="newTrack(); return false;">Nouveau parcours</a>
 

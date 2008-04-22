@@ -37,4 +37,7 @@
 
 <%call(pageContext, "trackLoader.jsp");%>
 <p:javascript src="<%=stat("/static/track/trackView.js")%>"/>
-<p:javascript>loadOnStartup("<%=property("track", Track.class).getPoints()%>");</p:javascript>
+<% final Track track = property("track", Track.class);
+    if (track != null) {%>
+<p:javascript>loadOnStartup("<%=track.getPoints()%>");</p:javascript>
+<%}%>

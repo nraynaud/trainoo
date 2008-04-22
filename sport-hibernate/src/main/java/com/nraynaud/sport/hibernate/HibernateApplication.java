@@ -794,10 +794,17 @@ public class HibernateApplication implements Application {
         return query.getResultList();
     }
 
-    public Track fetchTrack(final long id) throws TrackNotFoundException {
+    public TrackImpl fetchTrack(final long id) throws TrackNotFoundException {
         final TrackImpl track = entityManager.find(TrackImpl.class, id);
         if (track == null)
             throw new TrackNotFoundException();
         return track;
+    }
+
+    public void updateTrack(final long id, final String title, final String points) throws TrackNotFoundException {
+        final TrackImpl track = fetchTrack(id);
+        track.setTitle(title);
+        track.setPoints(points);
+        entityManager.merge(track);
     }
 }

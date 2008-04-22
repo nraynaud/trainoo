@@ -22,15 +22,11 @@ var map;
 var editor;
 var MARKER_ICON = createMarkerIcon();
 function loadOnStartup(track) {
-    log("loadOnStartup: " + track)
     onLoaded.push(function() {
         loadTrack(track);
     });
-    log("after loadOnStartup")
 }
 function loadTrack(track) {
-    log("loadtrack :" + track)
-    log("editor :" + editor)
     editor.loadTrack(eval('[' + track + ']'));
 }
 function createHandleIcon() {
@@ -274,7 +270,6 @@ Editor.prototype.clearMap = function() {
     this.draw()
 }
 Editor.prototype.loadTrack = function (track) {
-    log(track)
     this.clearMap();
     var editor = this;
     track.each(function(point) {
@@ -297,7 +292,7 @@ Editor.prototype.setTransientPath = function (path) {
 function PointInsertionEditor(map, editor) {
     this.editor = editor;
     this.myMarker = new GMarker(new GLatLng(47.081850, 2.3995035), {
-        icon: createHandleIcon(), title:"insérer un point", draggable: true});
+        icon: createHandleIcon(), title:"tirez pour insérer un point", draggable: true});
     map.addOverlay(this.myMarker);
     this.myMarker.hide();
     var markerIndex = null;
