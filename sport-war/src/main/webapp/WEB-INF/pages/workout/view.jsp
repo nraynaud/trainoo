@@ -72,6 +72,9 @@
             <%}%>
             <div class="<%=defaultOrUserClass(workout.getComment())%>"><%=escapedOrNullmultilines(workout.getComment(),
                     "Pas de commentaire")%>
+                <%if (isCurrentUser) {%>
+                <s:a href="%{editurl}" title="Modifier"><img src="<%=stat("/static/pen.png")%>" alt=""></s:a>
+                <%}%>
             </div>
         </div>
     </div>
