@@ -15,7 +15,10 @@
         <s:hidden name="id" value="%{track.id}"/>
         <s:hidden id="trackVar" name="points" value="%{track.points}"/>
         <s:hidden id="lengthVar" name="length" value="%{track.length}"/>
-        <s:textfield name="title" value="%{track.title}" cssStyle="width:99%"/>
+        <label for="title">Titre&nbsp;:</label>
+
+        <p><s:textfield id="title" name="title" value="%{track.title}" cssStyle="width:99%"/></p>
+        <p:javascript>makeItCount('title', 25);</p:javascript>
         <s:submit id="submit" value="Enregistrer" tabindex="1"/>
 
         <span id="distance"></span>(<span id="pointsCount"></span> points)

@@ -7,6 +7,7 @@ import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import static com.nraynaud.sport.web.action.track.CreateAction.ensurePointFormat;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
+import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
@@ -14,7 +15,8 @@ import org.apache.struts2.config.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 @Results({
-@Result(name = SUCCESS, value = "/WEB-INF/pages/track/edit.jsp", params = {"id", "%{id}"})
+@Result(name = SUCCESS, value = "/WEB-INF/pages/track/edit.jsp", params = {"id", "%{id}"}),
+@Result(name = "saved", type = Redirect.class, params = {"namespace", "/track", "id", "${id}"}, value = "")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class EditAction extends DefaultAction {
@@ -40,13 +42,13 @@ public class EditAction extends DefaultAction {
 
     @PostOnly
     public String create() {
-        ensurePointFormat(points);
         try {
+            ensurePointFormat(points);
             application.updateTrack(id, title, points);
+            return "saved";
         } catch (TrackNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return SUCCESS;
     }
 
     public Track getTrack() {
