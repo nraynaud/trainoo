@@ -6,6 +6,7 @@ import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
+import com.nraynaud.sport.web.URIValidator;
 import com.nraynaud.sport.web.converter.DistanceConverter;
 import com.nraynaud.sport.web.converter.DurationConverter;
 import com.opensymphony.xwork2.ActionContext;
@@ -43,13 +44,18 @@ public class Helpers {
             return ifNull;
         else {
             final StringBuilder builder = new StringBuilder();
-            builder.append("<a href='");
-            builder.append(url.toString());
-            builder.append("'>");
-            builder.append(url.toString());
-            builder.append("</a>");
+            final String stringUrl = url.toString();
+            formatUrl(builder, stringUrl);
             return builder.toString();
         }
+    }
+
+    private static void formatUrl(final StringBuilder builder, final String stringUrl) {
+        builder.append("<a href='");
+        builder.append(stringUrl);
+        builder.append("'>");
+        builder.append(stringUrl);
+        builder.append("</a>");
     }
 
     public static String stringProperty(final String expression) {
@@ -125,10 +131,21 @@ public class Helpers {
 
     public static String multilineText(final UserString input) {
         final StringBuilder builder = new StringBuilder((int) (input.nonEscaped().length() * 1.2));
-        final StringTokenizer tokenizer = new StringTokenizer(input.nonEscaped(), "\n");
-        while (tokenizer.hasMoreTokens()) {
-            Helper.escape(tokenizer.nextToken(), builder);
-            builder.append("<br>");
+        final StringTokenizer lineTokenizer = new StringTokenizer(input.nonEscaped(), "\n");
+        while (lineTokenizer.hasMoreTokens()) {
+            final String line = lineTokenizer.nextToken();
+            final StringTokenizer wordTokenizer = new StringTokenizer(line);
+            while (wordTokenizer.hasMoreTokens()) {
+                final String word = wordTokenizer.nextToken();
+                if (URIValidator.verifyUrI(word))
+                    formatUrl(builder, word);
+                else
+                    Helper.escape(word, builder);
+                if (wordTokenizer.hasMoreTokens())
+                    builder.append(' ');
+            }
+            if (lineTokenizer.hasMoreTokens())
+                builder.append("<br>");
         }
         return builder.toString();
     }
