@@ -23,7 +23,6 @@
 
         <span id="distance"></span>(<span id="pointsCount"></span> points)
     </s:form>
-    <a href="#" onclick="newTrack(); return false;">Nouveau parcours</a>
 
     <div style="margin:10px auto; width:125px;">
         <script type="text/javascript"><!--

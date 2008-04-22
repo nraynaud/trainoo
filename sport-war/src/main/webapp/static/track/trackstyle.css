@@ -49,3 +49,12 @@ a.copyright {
 button {
     margin: 0 2px;
 }
+
+img.pen {
+    width: 1.5em;
+    height: 1.2em;
+}
+
+#trackTable {
+    width: 100%;
+}

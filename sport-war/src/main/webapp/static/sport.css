@@ -95,15 +95,15 @@ table.workouts {
     padding-right: 0;
 }
 
-table.workouts tr.odd {
+tr.odd {
     background-color: #FFF0DE;
 }
 
-table.workouts tr.even {
+tr.even {
     background-color: #FFFAF4;
 }
 
-table.workouts tr.highLight {
+tr.highLight {
     background-color: #E0E0D0;
 }
 

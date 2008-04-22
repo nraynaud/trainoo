@@ -340,15 +340,20 @@ public class Helpers {
 
     public static String bibLink(final User user) {
         final UserString fullName = user.getName();
-        final String shortName = shortName(user);
+        final String shortName = shortString(user.getName());
         return selectableLink("/bib", "", shortName, "Voir le dossard de " + escaped(fullName), "id",
                 user.getId().toString());
     }
 
-    public static String shortName(final User user) {
-        final String nonEscaped = user.getName().nonEscaped();
+    public static String shortString(final UserString userString) {
+        final String nonEscaped = userString.nonEscaped();
         return nonEscaped.length() > 10 ? Helper.escaped(nonEscaped.substring(0, 7))
                 + "…" : Helper.escaped(nonEscaped);
+    }
+
+    public static String shortSpan(final UserString userString) {
+        return userString == null ? "" : "<span title='" + escaped(userString) + "'>" + shortString(userString)
+                + "</span>";
     }
 
     public static String formatDistance(final Double distance) {

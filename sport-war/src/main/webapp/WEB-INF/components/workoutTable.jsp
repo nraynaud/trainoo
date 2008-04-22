@@ -34,9 +34,11 @@
                             participants.append(", ").append(escaped(user.getName()));
                 %>
                     <span title="<%=participants.substring(2)%>" style="cursor:help">collectif</span>
-                    <% } else {%>
-                    <span title="<%=workout.getUser().getName()%>"><%=shortName(workout.getUser())%></span>
-                    <%}%>
+                    <%
+                        } else {
+                            out.append(shortSpan(workout.getUser().getName()));
+                        }
+                    %>
                 </td>
             </s:if>
             <td><s:a id="%{'a_' + id}" cssClass="messageLink" href="%{workoutUrl}"

@@ -11,21 +11,27 @@
     <link href="<%=stat("/static/track/trackstyle.css")%>" rel="stylesheet" type="text/css">
 </p:header>
 
+<% final Track track = property("track", Track.class);%>
 <div id="map"></div>
 <div id="controlPanel">
-    <table>
+    <table id="trackTable">
         <%
-            for (final Track track : (List<Track>) property("tracks", List.class)) {
+            boolean parity = false;
+            for (final Track loopTrack : (List<Track>) property("tracks", List.class)) {
+                parity = !parity;
         %>
-        <tr>
-            <td><%=selectableLink("/track", "", track.getId().toString(), "voir le parcours", "id",
-                    track.getId().toString())%>
+        <tr class="<%=parity ? "odd":"even"%> <%=loopTrack.equals(track) ? "highLight" : ""%>">
+            <td><%=selectableLink("/track", "", loopTrack.getId().toString(), "voir le parcours", "id",
+                    loopTrack.getId().toString())%>
             </td>
-            <td><%=track.getUser().getName()%>
+            <td><%=shortSpan(loopTrack.getTitle())%>
             </td>
-            <%if (track.getUser().equals(currentUser())) { %>
-            <td><%=selectableLink("/track", "edit", "modifier", "modifier le parcours", "id",
-                    track.getId().toString())%>
+            <td><%=shortSpan(loopTrack.getUser().getName())%>
+            </td>
+            <%if (loopTrack.getUser().equals(currentUser())) { %>
+            <td><%=selectableLink("/track", "edit",
+                    "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
+                    "modifier le parcours", "id", loopTrack.getId().toString())%>
             </td>
             <%}%>
         </tr>
@@ -37,7 +43,6 @@
 
 <%call(pageContext, "trackLoader.jsp");%>
 <p:javascript src="<%=stat("/static/track/trackView.js")%>"/>
-<% final Track track = property("track", Track.class);
-    if (track != null) {%>
+<%if (track != null) {%>
 <p:javascript>loadOnStartup("<%=track.getPoints()%>");</p:javascript>
 <%}%>

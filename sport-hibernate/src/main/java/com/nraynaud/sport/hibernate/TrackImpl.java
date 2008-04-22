@@ -64,4 +64,17 @@ public class TrackImpl implements Track {
     public void setTitle(final String title) {
         this.title = title;
     }
+
+    @SuppressWarnings({"NonFinalFieldReferenceInEquals"})
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TrackImpl)) return false;
+        final TrackImpl track = (TrackImpl) o;
+        return id.equals(track.id);
+    }
+
+    @SuppressWarnings({"NonFinalFieldReferencedInHashCode"})
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
