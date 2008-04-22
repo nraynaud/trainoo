@@ -22,7 +22,7 @@
     </s:form>
     <a href="#" onclick="newTrack(); return false;">Nouveau parcours</a>
 
-    <div style="margin:0 auto; width:125px;">
+    <div style="margin:10px auto; width:125px;">
         <script type="text/javascript"><!--
         google_ad_client = "pub-1788371406648361";
         /* pour les tracks 125x125, date de création 17/04/08 */
