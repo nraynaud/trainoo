@@ -14,6 +14,7 @@
 <% final Track track = property("track", Track.class);%>
 <div id="map"></div>
 <div id="controlPanel">
+    <%=selectableLink("/track", "edit", "Nouveau Parcours", "")%>
     <table id="trackTable">
         <%
             boolean parity = false;
@@ -28,12 +29,14 @@
             </td>
             <td><%=shortSpan(loopTrack.getUser().getName())%>
             </td>
-            <%if (loopTrack.getUser().equals(currentUser())) { %>
-            <td><%=selectableLink("/track", "edit",
-                    "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
-                    "modifier le parcours", "id", loopTrack.getId().toString())%>
+            <td>
+                <%if (loopTrack.getUser().equals(currentUser())) { %>
+                <%=selectableLink("/track", "edit",
+                        "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
+                        "modifier le parcours", "id", loopTrack.getId().toString())%>
+
+                <%}%>
             </td>
-            <%}%>
         </tr>
         <% }%>
     </table>

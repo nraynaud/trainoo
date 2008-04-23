@@ -21,13 +21,14 @@ html, body, #center {
 }
 
 #controlPanel {
-    width: 150px;
+    width: 160px;
     top: 30px;
     left: 80px;
     position: absolute;
     z-index: 10;
     background-color: white;
     border: #824900 medium solid;
+    padding: 5px;
 }
 
 a.copyright {

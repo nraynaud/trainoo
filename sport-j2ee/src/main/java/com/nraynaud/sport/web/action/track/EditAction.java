@@ -1,5 +1,6 @@
 package com.nraynaud.sport.web.action.track;
 
+import com.nraynaud.sport.AccessDeniedException;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Track;
 import com.nraynaud.sport.TrackNotFoundException;
@@ -20,10 +21,11 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class EditAction extends DefaultAction {
-    public long id;
+    public Long id;
     private Track track;
     public String title;
     public String points;
+    public double length;
 
     public EditAction(final Application application) {
         super(application);
@@ -33,7 +35,8 @@ public class EditAction extends DefaultAction {
     @SkipValidation
     public String index() {
         try {
-            track = application.fetchTrack(id);
+            if (id != null)
+                track = application.fetchTrack(id);
             return SUCCESS;
         } catch (TrackNotFoundException e) {
             throw new RuntimeException(e);
@@ -44,9 +47,14 @@ public class EditAction extends DefaultAction {
     public String create() {
         try {
             ensurePointFormat(points);
-            application.updateTrack(id, title, points);
+            if (id != null)
+                application.updateTrack(getUser(), id.longValue(), title, points);
+            else
+                application.createTrack(getUser(), points, length);
             return "saved";
         } catch (TrackNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (AccessDeniedException e) {
             throw new RuntimeException(e);
         }
     }

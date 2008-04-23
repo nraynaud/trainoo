@@ -48,7 +48,7 @@ function startMap() {
         G_SATELLITE_MAP.getName = function() {
             return 'google';
         }
-        map = new GMap2($("map"), {googleBarOptions:{showOnLoad:true}});
+        map = new GMap2($("map"), {draggableCursor: 'crosshair', googleBarOptions:{showOnLoad:true}});
         map.addMapType(IGN_MAP_TYPE);
         map.addMapType(IGN_PHOTO_TYPE);
         map.removeMapType(G_NORMAL_MAP);
@@ -212,8 +212,8 @@ Editor.prototype.addMarker = function(point, index) {
         this.markers.splice(index, 0, marker);
         renumberMarkers(this.markers);
     }
-    map.addOverlay(marker);
     marker.enableDragging();
+    map.addOverlay(marker);
     registerEvents(this.markers, marker, this);
 }
 Editor.prototype.deleteMarker = function (marker) {

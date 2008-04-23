@@ -794,15 +794,18 @@ public class HibernateApplication implements Application {
         return query.getResultList();
     }
 
-    public TrackImpl fetchTrack(final long id) throws TrackNotFoundException {
+    public TrackImpl fetchTrack(final Long id) throws TrackNotFoundException {
         final TrackImpl track = entityManager.find(TrackImpl.class, id);
         if (track == null)
             throw new TrackNotFoundException();
         return track;
     }
 
-    public void updateTrack(final long id, final String title, final String points) throws TrackNotFoundException {
+    public void updateTrack(final User user, final long id, final String title, final String points) throws
+            TrackNotFoundException, AccessDeniedException {
         final TrackImpl track = fetchTrack(id);
+        if (!track.getUser().equals(user))
+            throw new AccessDeniedException();
         track.setTitle(title);
         track.setPoints(points);
         entityManager.merge(track);

@@ -1,6 +1,7 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.Track" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <p:layoutParams title="Édition d'un parcours" showHeader="false" showTitleInPage="false" showFooter="false"/>
@@ -9,15 +10,18 @@
     <link href="<%=stat("/static/track/trackstyle.css")%>" rel="stylesheet" type="text/css">
 </p:header>
 
+<% final Track track = property("track", Track.class);%>
 <div id="map"></div>
 <div id="controlPanel">
     <s:form id="createForm" namespace="/track" action="edit">
-        <s:hidden name="id" value="%{track.id}"/>
-        <s:hidden id="trackVar" name="points" value="%{track.points}"/>
-        <s:hidden id="lengthVar" name="length" value="%{track.length}"/>
+        <input type="hidden" name="id" value="<%=track == null ? "" : track.getId()%>"/>
+        <input type="hidden" id="trackVar" name="points" value="<%=track == null ? "" : track.getPoints()%>"/>
+        <input type="hidden" id="lengthVar" name="length" value="<%=track == null ? "" : track.getLength()%>"/>
         <label for="title">Titre&nbsp;:</label>
 
-        <p><s:textfield id="title" name="title" value="%{track.title}" cssStyle="width:99%"/></p>
+        <div><input type="text" id="title" name="title"
+                    value="<%=track == null ? "Nouveau parcours" : track.getTitle()%>"
+                    style="width:99%"/></div>
         <p:javascript>makeItCount('title', 25);</p:javascript>
         <s:submit id="submit" value="Enregistrer" tabindex="1"/>
 
@@ -40,5 +44,7 @@
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
 <p:javascript src="<%=stat("/static/track/track.js")%>"/>
+<%if (track != null) {%>
 <p:javascript>loadOnStartup($('trackVar').value);</p:javascript>
+<%}%>
 
