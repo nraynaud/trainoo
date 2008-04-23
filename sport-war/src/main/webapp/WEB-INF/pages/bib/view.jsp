@@ -4,6 +4,7 @@
 <%@ page import="com.nraynaud.sport.data.BibPageData" %>
 <%@ page import="com.nraynaud.sport.web.view.PrivateMessageFormConfig" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
+<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -50,7 +51,7 @@
         <%
             call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.user.getName()),
                     "hideReceiverBox", true);
-            call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'messagePageIndex'");
+            paginate(pageContext, "messageList.jsp", view(data.privateMessages, "messagePageIndex"));
         %>
     </div>
 </div>

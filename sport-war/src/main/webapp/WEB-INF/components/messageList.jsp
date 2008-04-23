@@ -8,7 +8,6 @@
 <%@ page import="static com.nraynaud.sport.web.action.messages.WritePublicAction.CONTENT_MAX_LENGTH" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 
-<div class="pagination">
 <% final PaginatedCollection<Message> messages = top(PaginatedCollection.class);
     for (final Message message : messages) {
         push(message);
@@ -114,19 +113,6 @@
         }
     }
 %>
-<%if (messages.hasPrevious()) { %>
-<s:url id="previousPageUrl" includeParams="get">
-    <s:param name="%{parameters.pageVariable}" value="previousIndex"/>
-</s:url>
-<div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
-<%}%>
-<%if (messages.hasNext()) { %>
-<s:url id="nextPageUrl" includeParams="get">
-    <s:param name="%{parameters.pageVariable}" value="nextIndex"/>
-</s:url>
-<div class="paginationNext"><s:a href="%{nextPageUrl}">Suivants->></s:a></div>
-<%}%>
-</div>
 <%!
     private static final String EDIT_MESSAGE = "editMessage";
 

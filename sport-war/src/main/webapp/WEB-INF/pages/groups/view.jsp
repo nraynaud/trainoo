@@ -6,6 +6,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="static com.nraynaud.sport.web.action.groups.CreateAction.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
+<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -56,7 +57,7 @@
     <h2>Aucun message pour l'instant.</h2>
     <%
         }
-        call(pageContext, "messageList.jsp", groupPage.messages, "pageVariable", "'messagesStartIndex'");
+        paginate(pageContext, "messageList.jsp", view(groupPage.messages, "messagesStartIndex"));
     %>
 </div>
 <%}%>

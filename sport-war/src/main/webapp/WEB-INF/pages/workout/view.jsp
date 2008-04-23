@@ -7,6 +7,7 @@
 <%@ page import="static com.nraynaud.sport.web.converter.DistanceConverter.formatDistance" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
+<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -89,7 +90,7 @@
         <%
             } else
                 call(pageContext, "publicMessageForm.jsp", workout);
-            call(pageContext, "messageList.jsp", data.messages, "pageVariable", "'publicMessagesPageIndex'",
+            paginate(pageContext, "messageList.jsp", view(data.messages, "publicMessagesPageIndex"),
                     "hideWorkoutSubject", true);
         %>
     </div>
@@ -110,7 +111,7 @@
     <div class="content">
         <%
             call(pageContext, "privateMessageForm.jsp", privateFormConfig(workout, runner), "hideReceiverBox", true);
-            call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'privateMessagesPageIndex'");
+            paginate(pageContext, "messageList.jsp", view(data.privateMessages, "privateMessagesPageIndex"));
         %>
     </div>
     <%}%>

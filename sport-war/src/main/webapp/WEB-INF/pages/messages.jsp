@@ -1,5 +1,6 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.ConversationData" %>
+<%@ page import="com.nraynaud.sport.web.view.PaginationView" %>
 <%@ page import="com.nraynaud.sport.web.view.PrivateMessageFormConfig" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -12,6 +13,6 @@
     <%
         call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.receiver),
                 "hideReceiverBox", true);
-        call(pageContext, "messageList.jsp", data.privateMessages, "pageVariable", "'pageIndex'");
+        paginate(pageContext, "messageList.jsp", PaginationView.view(data.privateMessages, "pageIndex"));
     %>
 </div>
