@@ -345,7 +345,7 @@ div.autocomplete ul li {
 .message {
     margin-top: 0.5em;
     width: 99%;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .workout {
