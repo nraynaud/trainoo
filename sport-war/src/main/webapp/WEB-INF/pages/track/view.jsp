@@ -1,6 +1,7 @@
 <%@ page import="com.nraynaud.sport.Track" %>
-<%@ page import="java.util.List" %>
+<%@ page import="com.nraynaud.sport.web.converter.DistanceConverter" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -15,6 +16,7 @@
 <div id="map"></div>
 <div id="controlPanel">
     <%=selectableLink("/track", "edit", "Nouveau Parcours", "")%>
+    <hr>
     <table id="trackTable">
         <%
             boolean parity = false;
@@ -29,19 +31,30 @@
             </td>
             <td><%=shortSpan(loopTrack.getUser().getName())%>
             </td>
-            <td>
-                <%if (loopTrack.getUser().equals(currentUser())) { %>
-                <%=selectableLink("/track", "edit",
-                        "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
-                        "modifier le parcours", "id", loopTrack.getId().toString())%>
-
-                <%}%>
+            <td><%=DistanceConverter.formatDistance(loopTrack.getLength())%>km
             </td>
         </tr>
         <% }%>
     </table>
     <hr>
+    <%
+        if (track != null) {
+            if (track.getTitle() != null) {
+    %>
+    <h3><%=track.getTitle()%>
+    </h3>
+    <%}%>
     <span id="distance"></span>
+    <%if (track.getUser().equals(currentUser())) { %>
+    <%=selectableLink("/track", "edit",
+            "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
+            "modifier le parcours", "id", track.getId().toString())%>
+    <%
+            }
+        }
+    %>
+
+
 </div>
 
 <%call(pageContext, "trackLoader.jsp");%>
