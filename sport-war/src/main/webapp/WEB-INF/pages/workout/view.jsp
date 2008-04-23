@@ -6,6 +6,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="static com.nraynaud.sport.web.converter.DistanceConverter.formatDistance" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -98,7 +99,8 @@
     <h2><%=isCurrentUser ? "Mes" : "Ses"%> derniers entraînements</h2>
 
     <div class="content">
-        <% call(pageContext, "workoutTable.jsp", data.lastWorkouts, "highLight", workout.getId());%>
+        <% paginate(pageContext, "workoutTable.jsp", view(data.lastWorkouts, "workoutPage"), "highLight",
+                workout.getId());%>
     </div>
 
     <% if (isLogged() && !isCurrentUser) {%>

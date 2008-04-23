@@ -150,6 +150,19 @@ public class Helpers {
         return builder.toString();
     }
 
+    public static void paginate(final PageContext context,
+                                final String template,
+                                final PaginationView<?> stackTop,
+                                final Object... arguments) throws Exception {
+        context.getOut().append("<div class=\"pagination\">");
+        try {
+            call(context, template, stackTop.collection, arguments);
+            call(context, "paginationButtons.jsp", stackTop);
+        } finally {
+            context.getOut().append("</div>");
+        }
+    }
+
     public static void call(final PageContext context,
                             final String template,
                             final Object stackTop,

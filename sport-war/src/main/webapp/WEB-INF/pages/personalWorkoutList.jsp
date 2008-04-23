@@ -1,6 +1,7 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.ConversationSummary" %>
 <%@ page import="com.nraynaud.sport.data.UserPageData" %>
+<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
@@ -13,7 +14,8 @@
 
     <div class="content">
         <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
-        <% call(pageContext, "workoutTable.jsp", data.getStatisticsData().workouts, "displayEdit", "true");%>
+        <% paginate(pageContext, "workoutTable.jsp", view(data.getStatisticsData().workouts, "workoutPage"),
+                "displayEdit", "true");%>
     </div>
     <h2>Nouvel entraînement</h2>
 

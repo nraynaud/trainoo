@@ -5,6 +5,7 @@
 <%@ page import="com.nraynaud.sport.data.GroupPageData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="static com.nraynaud.sport.web.action.groups.CreateAction.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -68,8 +69,8 @@
     <div class="content">
         <%
             call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
-            call(pageContext, "workoutTable.jsp", groupPage.statistics.workouts, "displayEdit", "false", "displayName",
-                    "true");%>
+            paginate(pageContext, "workoutTable.jsp", view(groupPage.statistics.workouts, "workoutPage"), "displayEdit",
+                    "false", "displayName", "true");%>
     </div>
     <%
         if (!groupPage.users.isEmpty()) {
