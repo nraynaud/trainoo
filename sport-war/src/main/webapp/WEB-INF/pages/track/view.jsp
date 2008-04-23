@@ -1,7 +1,6 @@
 <%@ page import="com.nraynaud.sport.Track" %>
-<%@ page import="com.nraynaud.sport.web.converter.DistanceConverter" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="java.util.List" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -31,15 +30,16 @@
             </td>
             <td><%=shortSpan(loopTrack.getUser().getName())%>
             </td>
-            <td><%=DistanceConverter.formatDistance(loopTrack.getLength())%>km
+            <td style="text-align:right;"><%=(int) loopTrack.getLength()%>km
             </td>
         </tr>
         <% }%>
     </table>
+    <%
+        if (track != null) {%>
     <hr>
     <%
-        if (track != null) {
-            if (track.getTitle() != null) {
+        if (track.getTitle() != null) {
     %>
     <h3><%=track.getTitle()%>
     </h3>
@@ -53,7 +53,20 @@
             }
         }
     %>
-
+    <hr>
+    <div style="margin:10px auto; width:125px;">
+        <script type="text/javascript"><!--
+        google_ad_client = "pub-1788371406648361";
+        /* pour les tracks 125x125, date de création 17/04/08 */
+        google_ad_slot = "5961618039";
+        google_ad_width = 125;
+        google_ad_height = 125;
+        //-->
+        </script>
+        <script type="text/javascript"
+                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+    </div>
 
 </div>
 

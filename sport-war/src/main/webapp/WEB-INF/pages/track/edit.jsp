@@ -27,7 +27,7 @@
 
         <span id="distance"></span>(<span id="pointsCount"></span> points)
     </s:form>
-
+    <hr>
     <div style="margin:10px auto; width:125px;">
         <script type="text/javascript"><!--
         google_ad_client = "pub-1788371406648361";
