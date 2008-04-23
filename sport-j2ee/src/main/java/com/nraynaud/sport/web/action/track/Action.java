@@ -32,7 +32,7 @@ public class Action extends DefaultAction {
         try {
             if (id != null)
                 track = application.fetchTrack(id.longValue());
-            tracks = application.fetchTracks();
+            tracks = application.fetchTracks(getUser());
             return SUCCESS;
         } catch (TrackNotFoundException e) {
             throw new RuntimeException(e);

@@ -69,9 +69,9 @@ public class HibernateApplication implements Application {
         query.executeUpdate();
     }
 
-    public List<String> fetchTracks(final User user) {
-        final Query query = entityManager.createNativeQuery("SELECT POINTS FROM TRACKS WHERE OWNER_ID=:userId ");
-        query.setParameter("userId", user.getId());
+    public List<Track> fetchTracks(final User user) {
+        final Query query = entityManager.createQuery("select t from TrackImpl t where t.user =:user");
+        query.setParameter("user", user);
         return query.getResultList();
     }
 

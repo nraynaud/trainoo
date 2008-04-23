@@ -16,6 +16,7 @@
 <div id="controlPanel">
     <%=selectableLink("/track", "edit", "Nouveau Parcours", "")%>
     <hr>
+    <h3 style="margin:0.3em 5px">Mes parcours&nbsp;:</h3>
     <table id="trackTable">
         <%
             boolean parity = false;

@@ -112,7 +112,7 @@ public interface Application extends UserStore {
 
     void createTrack(final User user, final String track, final double length);
 
-    List<String> fetchTracks(final User user);
+    List<Track> fetchTracks(final User user);
 
     List<Track> fetchTracks();
 
