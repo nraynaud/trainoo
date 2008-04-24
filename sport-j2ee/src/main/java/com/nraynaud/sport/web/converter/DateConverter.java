@@ -33,7 +33,7 @@ public class DateConverter extends StrutsTypeConverter {
     };
 
     private static DateTime parseAndComplete(final String source, final String pattern) {
-        final MutableDateTime date = new MutableDateTime(now());
+        final MutableDateTime date = new MutableDateTime(today());
         final int result = pattern(pattern).parseInto(date, source, 0);
         if (result != source.length())
             throw new IllegalArgumentException();
@@ -44,11 +44,11 @@ public class DateConverter extends StrutsTypeConverter {
         public DateTime parse(final String source) throws IllegalArgumentException {
             if (source.length() > 0) {
                 if ("aujourd'hui".startsWith(source.toLowerCase()))
-                    return now();
+                    return today();
                 if ("hier".startsWith(source.toLowerCase()))
-                    return now().minusDays(1);
+                    return today().minusDays(1);
                 if ("avant-hier".startsWith(source.toLowerCase()))
-                    return now().minusDays(2);
+                    return today().minusDays(2);
             }
             throw new IllegalArgumentException();
         }
@@ -56,8 +56,8 @@ public class DateConverter extends StrutsTypeConverter {
 
     private static final Parser[] PARSERS = {FULL_FORMAT_PARSER, DAY_MOUTH_PARSER, DAY_PARSER, WORD_PARSER};
 
-    private static DateTime now() {
-        return new DateTime();
+    private static DateTime today() {
+        return new DateTime(new DateMidnight());
     }
 
     @SuppressWarnings({"RawUseOfParameterizedType"})
