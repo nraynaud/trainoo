@@ -6,10 +6,11 @@ import com.nraynaud.sport.Track;
 import com.nraynaud.sport.TrackNotFoundException;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
-import static com.nraynaud.sport.web.action.track.CreateAction.ensurePointFormat;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import jfun.parsec.pattern.Pattern;
+import static jfun.parsec.pattern.Patterns.*;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -26,6 +27,13 @@ public class EditAction extends DefaultAction {
     public String title;
     public String points;
     public double length;
+    private static final Pattern POINT_LIST;
+
+    static {
+        final Pattern coord = seq(optional(isChar('-')), isDecimal());
+        final Pattern point = seq(isChar('['), coord, isChar(','), coord, isChar(']'));
+        POINT_LIST = seq(point, many(seq(isChar(','), point)));
+    }
 
     public EditAction(final Application application) {
         super(application);
@@ -61,5 +69,15 @@ public class EditAction extends DefaultAction {
 
     public Track getTrack() {
         return track;
+    }
+
+    public static void ensurePointFormat(final String points) {
+        if (!matchPoint(points))
+            throw new RuntimeException("error in track : " + points);
+    }
+
+    public static boolean matchPoint(final String input) {
+        final int result = POINT_LIST.match(input, input.length(), 0);
+        return result == input.length();
     }
 }

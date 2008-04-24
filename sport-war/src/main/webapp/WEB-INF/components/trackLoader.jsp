@@ -19,3 +19,4 @@
         src="http://www.google.com/maps?file=api&v=2&key=<%=key%>&hl=fr"></script>
 
 <p:javascript src="<%=stat("/static/track/geo.js")%>"/>
+<p:javascript src="<%=stat("/static/track/trackCommon.js")%>"/>

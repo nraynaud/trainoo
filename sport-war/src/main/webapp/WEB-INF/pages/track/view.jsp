@@ -4,19 +4,38 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<p:layoutParams title="Les parcours" showHeader="false" showTitleInPage="false" showFooter="false"/>
+<% final Track track = property("track", Track.class);%>
+<p:layoutParams title="<%=track == null ? "Mes parcours" : track.getTitle() == null ? "Mon parcours" : track.getTitle()
+        .toString()%>" showHeader="false" showTitleInPage="false" showFooter="false"/>
 
 
 <p:header>
     <link href="<%=stat("/static/track/trackstyle.css")%>" rel="stylesheet" type="text/css">
 </p:header>
 
-<% final Track track = property("track", Track.class);%>
 <div id="map"></div>
 <div id="controlPanel">
+    <%
+        if (track != null) {
+            if (track.getTitle() != null) {
+    %>
+    <h3><%=track.getTitle()%>
+    </h3>
+    <%}%>
+    <span id="distance"></span>
+    <%if (track.getUser().equals(currentUser())) { %>
+    <%=selectableLink("/track", "edit",
+            "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
+            "modifier le parcours", "id", track.getId().toString())%>
+    <%
+        }%>
+    <hr>
+    <%
+        }
+    %>
     <%=selectableLink("/track", "edit", "Nouveau Parcours", "")%>
     <hr>
-    <h3 style="margin:0.3em 5px">Mes parcours&nbsp;:</h3>
+    <h3>Mes parcours&nbsp;:</h3>
     <table id="trackTable">
         <%
             boolean parity = false;
@@ -36,24 +55,6 @@
         </tr>
         <% }%>
     </table>
-    <%
-        if (track != null) {%>
-    <hr>
-    <%
-        if (track.getTitle() != null) {
-    %>
-    <h3><%=track.getTitle()%>
-    </h3>
-    <%}%>
-    <span id="distance"></span>
-    <%if (track.getUser().equals(currentUser())) { %>
-    <%=selectableLink("/track", "edit",
-            "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
-            "modifier le parcours", "id", track.getId().toString())%>
-    <%
-            }
-        }
-    %>
     <hr>
     <div style="margin:10px auto; width:125px;">
         <script type="text/javascript"><!--

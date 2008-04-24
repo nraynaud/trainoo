@@ -1,34 +1,5 @@
-_mPreferMetric = true;
 var DELETE_BUTTON = "<div id='deleteButton' title='effacer le point'>X</div>"
-function log(txt) {
-    if ("console" in window && "firebug" in console)
-        console.log(txt);
-}
-function updateHeight() {
-    $('content').style.height = $('center').clientHeight - $('content').offsetTop + "px";
-}
-function loaded() {
-    updateHeight();
-    startMap();
-}
-window.onresize = updateHeight;
-window.onload = function() {
-    onLoaded.each(function (f) {
-        f();
-    });
-};
-var onLoaded = [loaded]
-var map;
-var editor;
 var MARKER_ICON = createMarkerIcon();
-function loadOnStartup(track) {
-    onLoaded.push(function() {
-        loadTrack(track);
-    });
-}
-function loadTrack(track) {
-    editor.loadTrack(eval('[' + track + ']'));
-}
 function createHandleIcon() {
     var icon = new GIcon();
     icon.image = $('map_handle').src;

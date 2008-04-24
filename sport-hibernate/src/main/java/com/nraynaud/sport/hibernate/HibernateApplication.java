@@ -803,11 +803,21 @@ public class HibernateApplication implements Application {
 
     public void updateTrack(final User user, final long id, final String title, final String points) throws
             TrackNotFoundException, AccessDeniedException {
-        final TrackImpl track = fetchTrack(id);
-        if (!track.getUser().equals(user))
-            throw new AccessDeniedException();
+        final TrackImpl track = fetchTrackForUpdate(user, id);
         track.setTitle(title);
         track.setPoints(points);
         entityManager.merge(track);
+    }
+
+    private TrackImpl fetchTrackForUpdate(final User user, final long id) throws TrackNotFoundException,
+            AccessDeniedException {
+        final TrackImpl track = fetchTrack(id);
+        if (!track.getUser().equals(user))
+            throw new AccessDeniedException();
+        return track;
+    }
+
+    public void deleteTrack(final User user, final Long id) throws TrackNotFoundException, AccessDeniedException {
+        entityManager.remove(fetchTrackForUpdate(user, id.longValue()));
     }
 }

@@ -121,4 +121,6 @@ public interface Application extends UserStore {
     void updateTrack(final User user, final long id, final String title, final String points) throws
             TrackNotFoundException,
             AccessDeniedException;
+
+    void deleteTrack(final User user, final Long id) throws TrackNotFoundException, AccessDeniedException;
 }

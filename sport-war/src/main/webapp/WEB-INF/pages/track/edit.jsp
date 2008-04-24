@@ -20,13 +20,18 @@
         <label for="title">Titre&nbsp;:</label>
 
         <div><input type="text" id="title" name="title"
-                    value="<%=track == null ? "Nouveau parcours" : track.getTitle()%>"
-                    style="width:99%"/></div>
+                    value="<%=track == null ? "Nouveau parcours" : track.getTitle()%>" style="width:99%"/></div>
         <p:javascript>makeItCount('title', 25);</p:javascript>
+        <label>Longueur&nbsp;:</label><span id="distance"></span>
         <s:submit id="submit" value="Enregistrer" tabindex="1"/>
-
-        <span id="distance"></span>(<span id="pointsCount"></span> points)
     </s:form>
+    <%if (track != null) {%>
+    <hr>
+    <s:form namespace="/track" action="delete">
+        <input type="hidden" name="id" value="<%=track == null ? "" : track.getId()%>"/>
+        <s:submit value="Supprimer le parcours"/>
+    </s:form>
+    <%}%>
     <hr>
     <div style="margin:10px auto; width:125px;">
         <script type="text/javascript"><!--
@@ -43,7 +48,7 @@
     </div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
-<p:javascript src="<%=stat("/static/track/track.js")%>"/>
+<p:javascript src="<%=stat("/static/track/trackEdit.js")%>"/>
 <%if (track != null) {%>
 <p:javascript>loadOnStartup($('trackVar').value);</p:javascript>
 <%}%>
