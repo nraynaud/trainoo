@@ -97,7 +97,7 @@ public class HibernateApplication implements Application {
                 "select w, count(m) from " + joinPart + " left join w.publicMessages m  where " + wherePart
                         + (discipline != null ? " and w.discipline = :discipline" : "")
                         + " group by w.id, w.user, w.date, w.duration, w.distance, w.discipline, w.nikePlusId, w.comment"
-                        + " order by w.date desc, w.id asc");
+                        + " order by w.date desc, w.id desc");
         if (discipline != null)
             query.setParameter("discipline", discipline);
         return query;
