@@ -22,7 +22,6 @@ public class TileCache implements TileFetcher {
         final TileData data;
         if (file.exists()) {
             try {
-                System.out.println("reading: " + file.getAbsolutePath());
                 data = new TileData("", new FileInputStream(file), file.length());
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -39,7 +38,6 @@ public class TileCache implements TileFetcher {
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
-        System.out.println("saving: " + file.getAbsolutePath());
         try {
             final FileOutputStream fileOutputStream = new FileOutputStream(file);
             IOUtils.copy(data.inputStream, fileOutputStream);
