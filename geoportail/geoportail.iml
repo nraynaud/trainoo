@@ -93,6 +93,19 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.apache.commons:commons-io:1.3.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/commons/commons-io/1.3.2/commons-io-1.3.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/commons/commons-io/1.3.2/commons-io-1.3.2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/commons/commons-io/1.3.2/commons-io-1.3.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntryProperties />
   </component>
 </module>

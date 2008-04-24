@@ -16,8 +16,8 @@
     <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
             property("id", String.class))%>
     <div style="text-align:center;margin-top:2em; clear:both;"><a
-            href="<s:url action="workouts" namespace="/" includeParams="none"/>">Annuler et
-        revenir à mon vestiaire</a></div>
+            href="<s:url action="workouts" namespace="/" includeParams="none"/>">Annuler et revenir à mon vestiaire</a>
+    </div>
 </div>
 
 <p:javascript>$('date').focus();</p:javascript>

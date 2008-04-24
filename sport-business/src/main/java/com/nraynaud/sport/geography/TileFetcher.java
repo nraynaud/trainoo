@@ -3,11 +3,6 @@ package com.nraynaud.sport.geography;
 import java.io.InputStream;
 
 public interface TileFetcher {
-    /**
-     * @param name
-     * @return the JPEG content of the tile.
-     */
-    TileData fetchTile(String name);
 
     TileData fetchTile(String prefix, int zoom, int x, int y, String suffix);
 

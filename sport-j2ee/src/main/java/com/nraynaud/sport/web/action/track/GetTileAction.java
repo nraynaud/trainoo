@@ -39,6 +39,8 @@ public class GetTileAction extends DefaultAction implements ServletResponseAware
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
     public String index() {
+        if (!p.matches("[a-zA-Z0-9]+") || !s.matches("[.][a-z]+"))
+            throw new RuntimeException();
         if (request.getHeader("If-None-Match") != null || request.getHeader("If-Modified-Since") != null)
             return "fromCache";
         tileData = tileFetcher.fetchTile(p, z, x, y, s);

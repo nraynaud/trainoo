@@ -18,6 +18,7 @@ public class GeoportailTileFetcher implements TileFetcher {
     private static final char[] SHORT_TABLE = new char[]{'x', 'G', '3', 'r', '8', 'k', 'T', 'Q', 'm', 'Y', 'I', 'c',
             'j', 'K', 'M', '7', 'W', 'b', '2', 'q', 't', 'L', 'H', '9', 'f'};
     private static final char[] SIGN_TABLE = new char[]{'2', 'A', '9', 'r'};
+    @SuppressWarnings({"StaticNonFinalField"})
     private static volatile String[][] cookies = {};
 
     static TileData getTile(final String uri) {
@@ -94,12 +95,8 @@ public class GeoportailTileFetcher implements TileFetcher {
         return abs - r == 0 ? currentValue : geoEncode((abs - r) / base, currentValue);
     }
 
-    public TileData fetchTile(final String name) {
-        return getTile("http://visu-2d.geoportail.fr/geoweb/" + name);
-    }
-
-    public TileData fetchTile(final String prefix, int zoom, int x, int y, String suffix) {
+    public TileData fetchTile(final String prefix, final int zoom, final int x, final int y, final String suffix) {
         final String s = "maps" + encodeTile(prefix, x, y, zoom) + suffix;
-        return fetchTile(s);
+        return getTile("http://visu-2d.geoportail.fr/geoweb/" + s);
     }
 }
