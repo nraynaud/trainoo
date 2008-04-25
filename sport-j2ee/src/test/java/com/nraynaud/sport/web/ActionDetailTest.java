@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ActionDetailTest {
 
@@ -15,7 +16,7 @@ public class ActionDetailTest {
     }
 
     private static HashMap<String, String[]> parameters(final String... params) {
-        final HashMap<String, String[]> map = new HashMap<String, String[]>();
+        final HashMap<String, String[]> map = new LinkedHashMap<String, String[]>();
         for (int i = 0; i < params.length; i += 2)
             map.put(params[i], new String[]{params[i + 1]});
         return map;
