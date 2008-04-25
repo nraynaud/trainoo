@@ -14,6 +14,7 @@ function createMarkerIcon() {
     icon.iconAnchor = new GPoint(8, 8);
     return icon;
 }
+mapOptions = {draggableCursor: 'crosshair', googleBarOptions:{showOnLoad:true}};
 onLoaded.push(myStart);
 function myStart() {
     editor = new Editor(map);
