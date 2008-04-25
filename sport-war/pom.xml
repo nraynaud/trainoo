@@ -44,11 +44,6 @@
                     <manifest>
                         <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                     </manifest>
-                    <archive>
-                        <manifestEntries>
-                            <Implementation-Version>${buildNumber}</Implementation-Version>
-                        </manifestEntries>
-                    </archive>
                 </configuration>
             </plugin>
         </plugins>
