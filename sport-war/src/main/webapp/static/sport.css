@@ -570,6 +570,10 @@ p.submit {
     cursor: help;
 }
 
+.pen {
+    border: #D97900 dashed thin;
+}
+
 /************* tooltip stuff ***************/
 #bubble_tooltip {
     width: 182px;

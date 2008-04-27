@@ -31,7 +31,8 @@
     <s:url id="editurl" namespace="/workout" action="edit" includeParams="none">
         <s:param name="id" value="id"/>
     </s:url>
-    <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img src="<%=stat("/static/pen.png")%>" alt=""></s:a>
+    <s:a href="%{editurl}" title="Modifier ou effacer cet entraînement"><img class="pen"
+                                                                             src="<%=stat("/static/pen.png")%>" alt=""></s:a>
     <%}%>
 </div>
 <div id="globalLeft">
@@ -75,7 +76,8 @@
             <div class="<%=defaultOrUserClass(workout.getComment())%>"><%=escapedOrNullmultilines(workout.getComment(),
                     "Pas de commentaire")%>
                 <%if (isCurrentUser) {%>
-                <s:a href="%{editurl}" title="Modifier"><img src="<%=stat("/static/pen.png")%>" alt=""></s:a>
+                <s:a href="%{editurl}" title="Modifier"><img class="pen" src="<%=stat("/static/pen.png")%>"
+                                                             alt=""></s:a>
                 <%}%>
             </div>
         </div>
