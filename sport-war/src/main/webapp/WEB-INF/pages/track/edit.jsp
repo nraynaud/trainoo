@@ -11,41 +11,43 @@
 </p:header>
 
 <% final Track track = property("track", Track.class);%>
-<div id="map"></div>
-<div id="controlPanel">
-    <s:form id="createForm" namespace="/track" action="edit">
-        <input type="hidden" name="id" value="<%=track == null ? "" : track.getId()%>"/>
-        <input type="hidden" id="trackVar" name="points" value="<%=track == null ? "" : track.getPoints()%>"/>
-        <input type="hidden" id="lengthVar" name="length" value="<%=track == null ? "" : track.getLength()%>"/>
-        <label for="title">Titre&nbsp;:</label>
+<div id="mapGlobalContainer">
+    <div id="controlPanel">
+        <s:form id="createForm" namespace="/track" action="edit">
+            <input type="hidden" name="id" value="<%=track == null ? "" : track.getId()%>"/>
+            <input type="hidden" id="trackVar" name="points" value="<%=track == null ? "" : track.getPoints()%>"/>
+            <input type="hidden" id="lengthVar" name="length" value="<%=track == null ? "" : track.getLength()%>"/>
+            <label for="title">Titre&nbsp;:</label>
 
-        <div><input type="text" id="title" name="title"
-                    value="<%=track == null ? "Nouveau parcours" : track.getTitle()%>" style="width:99%"/></div>
-        <p:javascript>makeItCount('title', 25);</p:javascript>
-        <label>Longueur&nbsp;:</label><span id="distance"></span>
-        <s:submit id="submit" value="Enregistrer" tabindex="1"/>
-    </s:form>
-    <%if (track != null) {%>
-    <hr>
-    <s:form namespace="/track" action="delete">
-        <input type="hidden" name="id" value="<%=track == null ? "" : track.getId()%>"/>
-        <s:submit value="Supprimer le parcours"/>
-    </s:form>
-    <%}%>
-    <hr>
-    <div style="margin:10px auto; width:125px;">
-        <script type="text/javascript"><!--
-        google_ad_client = "pub-1788371406648361";
-        /* pour les tracks 125x125, date de création 17/04/08 */
-        google_ad_slot = "5961618039";
-        google_ad_width = 125;
-        google_ad_height = 125;
-        //-->
-        </script>
-        <script type="text/javascript"
-                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-        </script>
+            <div><input type="text" id="title" name="title"
+                        value="<%=track == null ? "Nouveau parcours" : track.getTitle()%>" style="width:99%"/></div>
+            <p:javascript>makeItCount('title', 25);</p:javascript>
+            <label>Longueur&nbsp;:</label><span id="distance"></span>
+            <s:submit id="submit" value="Enregistrer" tabindex="1"/>
+        </s:form>
+        <%if (track != null) {%>
+        <hr>
+        <s:form namespace="/track" action="delete">
+            <input type="hidden" name="id" value="<%=track == null ? "" : track.getId()%>"/>
+            <s:submit value="Supprimer le parcours"/>
+        </s:form>
+        <%}%>
+        <hr>
+        <div style="margin:10px auto; width:125px;">
+            <script type="text/javascript"><!--
+            google_ad_client = "pub-1788371406648361";
+            /* pour les tracks 125x125, date de création 17/04/08 */
+            google_ad_slot = "5961618039";
+            google_ad_width = 125;
+            google_ad_height = 125;
+            //-->
+            </script>
+            <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+            </script>
+        </div>
     </div>
+    <div id="map"></div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
 <p:javascript src="<%=stat("/static/track/trackEdit.js")%>"/>

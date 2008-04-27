@@ -8,8 +8,8 @@ html, body, #center {
 }
 
 #map {
+    overflow: hidden;
     height: 100%;
-    width: 100%;
 }
 
 #content, #loginHeader {
@@ -21,14 +21,19 @@ html, body, #center {
 }
 
 #controlPanel {
+    height: 100%;
     width: 160px;
-    top: 30px;
-    left: 80px;
-    position: absolute;
-    z-index: 10;
+    float: left;
     background-color: white;
-    border: #824900 medium solid;
+    border-right: #824900 medium solid;
     padding: 5px;
+}
+
+#mapGlobalContainer {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 a.copyright {
