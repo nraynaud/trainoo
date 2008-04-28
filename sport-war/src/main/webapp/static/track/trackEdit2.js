@@ -130,12 +130,17 @@ Editor.prototype.draw = function() {
     setValue('trackVar', encodedTrack);
     update('distance', (distance / 1000).toFixed(2) + "km");
     update('lengthVar', distance / 1000);
-    if (this.markers.length > 0) {
-        $('tip').update(SHIFT_KEY_TIP_MESSAGE);
-    } else {
-        $('tip').update('Cliquez pour insérer votre point de départ');
+    var tip = $('tip');
+    function updateTip(value) {
+        if (tip.innerHTML != value)
+            tip.update(value);
     }
-    $('tip').show();
+    if (this.markers.length > 0) {
+        updateTip(SHIFT_KEY_TIP_MESSAGE);
+    } else {
+        updateTip('Cliquez pour insérer votre point de départ');
+    }
+    tip.show();
 }
 Editor.prototype.fit = function() {
     var bounds = new GLatLngBounds();
