@@ -47,9 +47,14 @@
             </script>
         </div>
     </div>
+    <div id="tip" style="display:none;">Appuyez sur la touche <img src="<%=stat("/static/track/shift_key.png")%>"
+                                                                   alt="Majuscule"> pour modifier votre chemin.
+    </div>
     <div id="map"></div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
+<p:javascript src="<%=stat("/static/track/updateEditor.js")%>"/>
+<p:javascript src="<%=stat("/static/track/appendEditor.js")%>"/>
 <p:javascript src="<%=stat("/static/track/trackEdit2.js")%>"/>
 <%if (track != null) {%>
 <p:javascript>loadOnStartup($('trackVar').value);</p:javascript>

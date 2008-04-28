@@ -65,6 +65,15 @@ button {
     border: gray thin solid;
 }
 
+#tip {
+    font-size: 15px;
+    background-color: yellow;
+}
+
+#tip img {
+    height: 18px;
+}
+
 h3 {
     margin: 0.3em 5px;
 }
