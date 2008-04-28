@@ -50,7 +50,7 @@
     <div id="map"></div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
-<p:javascript src="<%=stat("/static/track/trackEdit.js")%>"/>
+<p:javascript src="<%=stat("/static/track/trackEdit2.js")%>"/>
 <%if (track != null) {%>
 <p:javascript>loadOnStartup($('trackVar').value);</p:javascript>
 <%}%>
