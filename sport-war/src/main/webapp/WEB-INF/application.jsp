@@ -68,7 +68,7 @@
 
     <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
     <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
-
+    <%if (pageDetail.isShowHeader()) {%>
     <!--[if !IE]>-->
     <script type="text/javascript">
         var canvas = new Element('canvas', {'id': 'gradient'});
@@ -90,6 +90,7 @@
           $('logoHref').insert("<div id='gradient'><"+"/div>");
     </script>
     <![endif]-->
+    <%}%>
     <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
     <r:writeJavascript/>
 
