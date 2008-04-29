@@ -1,7 +1,8 @@
 function AppendEditor(editor) {
     this.editor = editor;
     function nextPreviewPoint(latLng) {
-        editor.setTransientPath([editor.markers[editor.markers.length - 1].getPoint(), latLng]);
+        if (editor.markers.length > 0)
+            editor.setTransientPath([editor.markers[editor.markers.length - 1].getPoint(), latLng]);
     }
     function isByBorder(latLng) {
         var mapDiv = $('map');

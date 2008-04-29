@@ -20,7 +20,6 @@ onLoaded.push(myStart);
 function myStart() {
     editor = new Editor(map);
     map.setMapType(IGN_PHOTO_TYPE);
-    editor.canAppendPoint(true);
     map.enableGoogleBar();
 }
 function newTrack() {
@@ -37,11 +36,14 @@ function Editor(map) {
         if (isKey(event, SHIFT_KEY))
             editor.toUpdateMode();
     }
-    this.insertionModeCallback = function(event) {
+    this.insertionModeKeyCallback = function(event) {
         if (isKey(event, SHIFT_KEY)) {
             editor.toAppendMode();
         }
     };
+    this.insertionModeBlurCallback = function() {
+        editor.toAppendMode();
+    }
     GEvent.addListener(map, 'mouseout', function() {
         editor.hideTransientPath();
     })
@@ -53,17 +55,19 @@ function Editor(map) {
 }
 Editor.prototype.toUpdateMode = function() {
     document.stopObserving('keydown', this.updateModeCallback);
-    document.observe('keyup', this.insertionModeCallback);
+    document.observe('keyup', this.insertionModeKeyCallback);
+    document.body.observe('blur', this.insertionModeBlurCallback);
     this.unInstallSubEditor();
     this.installSubEditor(new UpdateEditor(this))
     log("update")
 }
 Editor.prototype.toAppendMode = function() {
-    document.stopObserving('keyup', this.insertionModeCallback);
+    document.body.stopObserving('blur', this.insertionModeBlurCallback);
+    document.stopObserving('keyup', this.insertionModeKeyCallback);
     document.observe('keydown', this.updateModeCallback);
     this.unInstallSubEditor();
     this.installSubEditor(new AppendEditor(this));
-    log("insertion")
+    log("append")
 }
 Editor.prototype.installSubEditor = function(subEditor) {
     this.subEditor = subEditor;

@@ -4,22 +4,51 @@ function UpdateEditor(editor) {
 }
 function hideDeleteMarkerButton() {
     var del = $('deleteButton');
-    del.hide();
+    if (del)
+        del.hide();
 }
 UpdateEditor.prototype.install = function() {
     var editor = this.editor;
-    var map = editor.map;
-    editor.markers.each(function(m) {
-        var marker = m.marker;
-        map.addOverlay(marker);
-        m.dragStartHandler = GEvent.addListener(marker, "dragstart", function() {
+    if (editor.markers.length > 0) {
+        this.showMarker(editor.markers[0]);
+        if (editor.markers.length > 1)
+            this.showMarker(editor.markers[editor.markers.length - 1]);
+    }
+    this.vocalMarkerFollowMouse();
+}
+UpdateEditor.prototype.unInstall = function() {
+    log('enter uninstall update')
+    this.muteMarkerFollowMouse();
+    hideDeleteMarkerButton();
+    var map = this.editor.map;
+    this.editor.markers.each(function(m) {
+        /*
+        m.listeners.each(function(listener) {
+            GEvent.removeListener(listener);
+        });*/
+        map.removeOverlay(m.marker);
+    });
+}
+UpdateEditor.prototype.showMarker = function(m) {
+    var marker = m.marker
+    var subeditor = this;
+    var editor = this.editor;
+    editor.map.addOverlay(marker);
+    marker.enableDragging();
+    if (m.listeners == null) {
+        m.listeners = [];
+        function addListener(type, callback) {
+            m.listeners.push(GEvent.addListener(marker, type, callback));
+        }
+        addListener("dragstart", function() {
+            log('drag')
             hideDeleteMarkerButton();
         });
-        m.dragEndHandler = GEvent.addListener(marker, "dragend", function() {
+        addListener("dragend", function() {
             editor.hideTransientPath();
             editor.draw();
         });
-        m.dragHandler = GEvent.addListener(marker, "drag", function() {
+        addListener("drag", function() {
             var index = m.index;
             var poly = [m.getPoint()];
             if (index > 0) {
@@ -30,19 +59,14 @@ UpdateEditor.prototype.install = function() {
             }
             editor.setTransientPath(poly);
         });
-        m.mouseOverHandler = GEvent.addListener(marker, "mouseover", function() {
+        addListener("mouseover", function() {
+            subeditor.muteMarkerFollowMouse();
             var del = $('deleteButton');
             if (del == null) {
                 $("map").insert(DELETE_BUTTON);
                 del = $('deleteButton');
                 GEvent.addListener(editor.map, "move", hideDeleteMarkerButton);
                 GEvent.addListener(editor.map, "zoomend", hideDeleteMarkerButton);
-                GEvent.addDomListener(del, 'mouseover', function() {
-                    editor.insertionEditor.canInsertPoint(false);
-                });
-                GEvent.addDomListener(del, 'mouseout', function() {
-                    editor.insertionEditor.canInsertPoint(true);
-                });
             }
             if (editor.deleteHandler != null)
                 GEvent.removeListener(editor.deleteHandler);
@@ -58,20 +82,43 @@ UpdateEditor.prototype.install = function() {
             del.show();
             marker.setImage($('map_marker_active').src);
         });
-        m.mouseOutHandler = GEvent.addListener(marker, "mouseout", function() {
+        addListener("mouseout", function() {
             marker.setImage($('map_marker').src);
+            subeditor.vocalMarkerFollowMouse();
         });
-    });
+    }
 }
-UpdateEditor.prototype.unInstall = function() {
-    hideDeleteMarkerButton();
-    var map = this.editor.map;
-    this.editor.markers.each(function(m) {
-        GEvent.removeListener(m.mouseOutHandler);
-        GEvent.removeListener(m.mouseOverHandler);
-        GEvent.removeListener(m.dragHandler);
-        GEvent.removeListener(m.dragEndHandler);
-        GEvent.removeListener(m.dragStartHandler);
-        map.removeOverlay(m.marker);
-    });
+UpdateEditor.prototype.muteMarkerFollowMouse = function() {
+    log('mute')
+    GEvent.removeListener(this.mouseMoveListener);
+    this.mouseMoveListener = null;
+}
+UpdateEditor.prototype.vocalMarkerFollowMouse = function() {
+    log('vocal')
+    var subEditor = this;
+    if (this.mouseMoveListener == null)
+        this.mouseMoveListener = GEvent.addListener(map, 'mousemove', function(latLng) {
+            function square(x) {
+                return Math.pow(x, 2);
+            }
+            function squareDistance(p1, p2) {
+                return square(p2.lng() - p1.lng()) + square(p2.lat() - p1.lat());
+            }
+            if (this.transientMarkers != null) {
+                this.transientMarkers.each(function(m) {
+                    map.removeOverlay(m.marker.marker);
+                });
+            }
+            var distances = [];
+            editor.markers.each(function(m) {
+                distances.push({distance: squareDistance(latLng, m.getPoint()), marker: m});
+            });
+            distances.sort(function(d1, d2) {
+                return d1.distance - d2.distance;
+            });
+            this.transientMarkers = distances.slice(0, 10);
+            this.transientMarkers.each(function(m) {
+                subEditor.showMarker(m.marker);
+            });
+        });
 }
