@@ -54,11 +54,6 @@
                 <param name="namespace">/</param>
             </result>
         </global-results>
-        <!--
-            <global-exception-mappings>
-           <     <exception-mapping exception="com.nraynaud.sport.UserNotFoundException" result="userError"/>
-            </global-exception-mappings>
-        -->
         <action name="" class="com.nraynaud.sport.web.action.GlobalWorkoutsAction">
             <result>/WEB-INF/pages/globalWorkouts.jsp</result>
         </action>
