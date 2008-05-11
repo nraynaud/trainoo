@@ -133,7 +133,7 @@ Editor.prototype.draw = function() {
     map.addOverlay(this.line);
     setValue('trackVar', encodedTrack);
     update('distance', (distance / 1000).toFixed(2) + "km");
-    update('lengthVar', distance / 1000);
+    setValue('lengthVar', distance / 1000);
     var tip = $('tip');
     function updateTip(value) {
         if (tip.innerHTML != value)

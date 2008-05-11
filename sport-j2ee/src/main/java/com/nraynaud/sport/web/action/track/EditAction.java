@@ -58,7 +58,7 @@ public class EditAction extends DefaultAction {
             if (id != null)
                 application.updateTrack(getUser(), id.longValue(), title, points);
             else
-                application.createTrack(getUser(), points, length);
+                application.createTrack(getUser(), title, points, length);
             return "saved";
         } catch (TrackNotFoundException e) {
             throw new RuntimeException(e);

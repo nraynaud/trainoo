@@ -60,11 +60,12 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public void createTrack(final User user, final String track, final double length) {
+    public void createTrack(final User user, final String title, final String points, final double length) {
         final Query query = entityManager.createNativeQuery(
-                "INSERT INTO TRACKS SET OWNER_ID=:userId, POINTS=:points, LENGTH=:length");
+                "INSERT INTO TRACKS SET OWNER_ID=:userId, TITLE=:title, POINTS=:points, LENGTH=:length");
         query.setParameter("userId", user.getId());
-        query.setParameter("points", track);
+        query.setParameter("title", title);
+        query.setParameter("points", points);
         query.setParameter("length", length);
         query.executeUpdate();
     }

@@ -110,7 +110,7 @@ public interface Application extends UserStore {
 
     void forgotPassword(final String email) throws UserNotFoundException, MailException;
 
-    void createTrack(final User user, final String track, final double length);
+    void createTrack(final User user, final String title, final String points, final double length);
 
     List<Track> fetchTracks(final User user);
 

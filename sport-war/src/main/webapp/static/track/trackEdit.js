@@ -208,7 +208,7 @@ Editor.prototype.draw = function() {
     map.addOverlay(this.line);
     setValue('trackVar', encodedTrack);
     update('distance', (distance / 1000).toFixed(2) + "km");
-    update('lengthVar', distance / 1000);
+    setValue('lengthVar', distance / 1000);
     update('pointsCount', this.markers.length);
 }
 Editor.prototype.fit = function() {
