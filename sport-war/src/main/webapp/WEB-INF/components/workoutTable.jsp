@@ -2,6 +2,7 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
+<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -24,7 +25,8 @@
         <p:javascript>
             clickableRow($('<%=trId%>'));
         </p:javascript>
-        <td><s:date name="date" format="E dd/M"/></td>
+        <td style="text-align:right;"><%=Helpers.formatWorkoutDate(workout.getDate())%>
+        </td>
         <s:if test="%{parameters.displayName}">
             <td><%
                 if (workout.getParticipants().size() > 1) {

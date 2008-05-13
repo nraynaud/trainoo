@@ -20,9 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Helpers {
     private static final String OVERRIDES_KEY = "overrides";
@@ -399,5 +398,15 @@ public class Helpers {
      */
     public static String stat(final String path) {
         return STATIC_CONTENT_PREFIX + path;
+    }
+
+    public static String formatWorkoutDate(final Date date) {
+        final int thisYear = new GregorianCalendar().get(Calendar.YEAR);
+        final GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        if (thisYear == calendar.get(Calendar.YEAR))
+            return new SimpleDateFormat("E dd/MM", Locale.FRANCE).format(date);
+        else
+            return new SimpleDateFormat("E dd/MM/y", Locale.FRANCE).format(date);
     }
 }
