@@ -12,6 +12,7 @@ public class AbstractWorkoutAction extends DefaultAction {
     private Date date = new Date();
     private Long duration;
     private Double distance;
+    private Long energy;
     private String discipline;
     private String comment;
 
@@ -34,6 +35,10 @@ public class AbstractWorkoutAction extends DefaultAction {
     @TypeConversion(converter = "com.nraynaud.sport.web.converter.DistanceConverter")
     public void setDistance(final Double distance) {
         this.distance = distance;
+    }
+
+    public void setEnergy(final Long energy) {
+        this.energy = energy;
     }
 
     @RequiredStringValidator(message = "Vous avez oublié la discipline")
@@ -69,5 +74,9 @@ public class AbstractWorkoutAction extends DefaultAction {
 
     public String getComment() {
         return comment;
+    }
+
+    public Long getEnergy() {
+        return energy;
     }
 }

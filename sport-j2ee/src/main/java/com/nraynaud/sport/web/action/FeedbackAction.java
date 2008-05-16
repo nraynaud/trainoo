@@ -5,6 +5,7 @@ import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.converter.DateConverter;
 import com.nraynaud.sport.web.converter.DistanceConverter;
 import com.nraynaud.sport.web.converter.DurationConverter;
+import com.nraynaud.sport.web.converter.EnergyConverter;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -41,6 +42,8 @@ public class FeedbackAction {
             return convertDuration();
         } else if ("distance".equals(type)) {
             return convertDistance();
+        } else if ("energy".equals(type)) {
+            return convertEnergy();
         }
         return "";
     }
@@ -72,6 +75,15 @@ public class FeedbackAction {
             return DateConverter.parseAndPrettyPrint(data);
         } catch (Exception e) {
             return "La date n'a pas été comprise.";
+        }
+    }
+
+    private String convertEnergy() {
+        try {
+            final Long energy = EnergyConverter.parseEnergy(data);
+            return EnergyConverter.formatEnergy(energy) + "kCal";
+        } catch (Exception e) {
+            return "L'énerge dépensée n'a pas été comprise.";
         }
     }
 

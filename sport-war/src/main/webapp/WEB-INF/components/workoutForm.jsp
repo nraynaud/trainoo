@@ -58,6 +58,13 @@
                                  onkeyup="feedback('distance', this.value)"/></td>
             </tr>
             <tr>
+                <th><label for="energy" style="vertical-align:text-top;">Énergie dépensée&nbsp;:</label></th>
+                <td colspan="3"><s:textfield id="energy" name="energy" size="6" maxlength="10"
+                                             onfocus="showWorkoutToolTip(event, 'En kilocalories.', 'energy', this.value);"
+                                             onblur="hideToolTip();"
+                                             onkeyup="feedback('energy', this.value)"/></td>
+            </tr>
+            <tr>
                 <th><label for="comment" style="vertical-align:text-top;">Commentaire&nbsp;:</label></th>
                 <td colspan="3"><s:textarea id="comment" cssStyle="width:99%" name="comment"></s:textarea></td>
                 <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>

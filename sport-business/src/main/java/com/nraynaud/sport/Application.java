@@ -22,7 +22,7 @@ public interface Application extends UserStore {
                        final Date date,
                        final Long duration,
                        final Double distance,
-                       final String discipline, final String comment) throws
+                       final Long energy, final String discipline, final String comment) throws
             WorkoutNotFoundException,
             AccessDeniedException;
 
