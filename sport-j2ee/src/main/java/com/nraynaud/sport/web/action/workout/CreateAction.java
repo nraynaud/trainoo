@@ -36,7 +36,8 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
 
     @PostOnly
     public String create() {
-        application.createWorkout(getDate(), getUser(), getDuration(), getDistance(), getDiscipline(), getComment(),
+        application.createWorkout(getDate(), getUser(), getDuration(), getDistance(), null, getDiscipline(),
+                getComment(),
                 null);
         return SUCCESS;
     }

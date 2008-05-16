@@ -52,7 +52,7 @@ public class ApplicationTest {
         assertNull(application.authenticate("lolé", "pass+é", false));
         final User user = application.createUser("lolé", "pass+é");
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
-                "lol", null, null);
+                null, "lol", null, null);
         assertEquals(Arrays.asList(workout).iterator().next(),
                 application.fetchFrontPageData(0, 20, null).statisticsData.workouts.iterator().next());
     }
@@ -81,7 +81,7 @@ public class ApplicationTest {
     public void testWorkoutFetching() throws NameClashException, WorkoutNotFoundException, AccessDeniedException {
         final User user = application.createUser("user", "lol");
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
-                "lol", null, null);
+                null, "lol", null, null);
         {
             final Workout workout1 = application.fetchWorkoutAndCheckUser(workout.getId(), user, true);
             assertEquals(workout, workout1);

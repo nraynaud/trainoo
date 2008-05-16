@@ -31,4 +31,6 @@ public interface Workout extends Topic {
     String getNikePlusId();
 
     UserString getComment();
+
+    Long getEnergy();
 }

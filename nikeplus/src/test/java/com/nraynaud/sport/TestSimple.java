@@ -89,8 +89,7 @@ public class TestSimple {
         NikePlusExtractor.extractWorkouts(testValue.getBytes("UTF-8"), new WorkoutCollector() {
 
             public void collectWorkout(final String nikePlusId, final String discipline, final Date date,
-                                       final Double distance,
-                                       final Long duration) {
+                                       final Double distance, final Long duration, final Long energy) {
                 runCount.incrementAndGet();
             }
 

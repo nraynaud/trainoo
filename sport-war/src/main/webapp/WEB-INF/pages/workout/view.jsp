@@ -56,6 +56,11 @@
                     averageTimeByKM % 60)%>''/km)</span>
             <br>
             <%}%>
+            <%if (workout.getEnergy() != null) {%>
+            <span class="label">Energie dépensée&nbsp;:</span>
+            <span class="userInteresting"><%=workout.getEnergy()%>kCal</span>
+            <br>
+            <%}%>
             <%
                 if (isNikePlus) {
                     call(pageContext, "nikePlusDetail.jsp", workout);

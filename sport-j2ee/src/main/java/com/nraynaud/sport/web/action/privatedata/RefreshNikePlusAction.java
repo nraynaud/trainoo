@@ -50,11 +50,11 @@ public class RefreshNikePlusAction extends ChainBackAction {
                     List<Runnable> insertions = new ArrayList<Runnable>();
 
                     public void collectWorkout(final String nikePlusId, final String discipline, final Date date,
-                                               final Double distance, final Long duration) {
+                                               final Double distance, final Long duration, final Long energy) {
                         insertions.add(new Runnable() {
                             public void run() {
-                                application.createWorkout(date, action.getUser(), duration, distance, discipline, null,
-                                        nikePlusId);
+                                application.createWorkout(date, action.getUser(), duration, distance, energy,
+                                        discipline, null, nikePlusId);
                             }
                         });
                     }

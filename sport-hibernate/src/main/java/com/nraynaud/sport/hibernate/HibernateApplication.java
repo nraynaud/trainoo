@@ -20,6 +20,7 @@ public class HibernateApplication implements Application {
                                  final User user,
                                  final Long duration,
                                  final Double distance,
+                                 final Long energy,
                                  final String discipline,
                                  final String comment,
                                  final String nikePlusId) {
@@ -32,7 +33,8 @@ public class HibernateApplication implements Application {
                 return entityManager.find(WorkoutImpl.class, workoutId);
             }
         }
-        final Workout workout = new WorkoutImpl(user, date, duration, distance, discipline, comment, nikePlusId);
+        final Workout workout = new WorkoutImpl(user, date, duration, distance, energy, discipline, comment,
+                nikePlusId);
         entityManager.persist(workout);
         try {
             setWorkoutParticipants(user, workout.getId(), new String[0]);

@@ -24,6 +24,9 @@ public class WorkoutImpl implements Workout {
     @Column(name = "DURATION")
     private Long duration;
 
+    @Column(name = "ENERGY")
+    private Long energy;
+
     @Column(name = "DISCIPLINE", nullable = false)
     private String discipline;
 
@@ -69,6 +72,7 @@ public class WorkoutImpl implements Workout {
                        final Date date,
                        final Long duration,
                        final Double distance,
+                       final Long energy,
                        final String discipline,
                        final String comment,
                        final String nikePlusId) {
@@ -76,6 +80,7 @@ public class WorkoutImpl implements Workout {
         this.user = user;
         this.duration = duration;
         this.distance = distance;
+        this.energy = energy;
         this.discipline = discipline;
         this.comment = comment;
         this.nikePlusId = nikePlusId;
@@ -159,5 +164,13 @@ public class WorkoutImpl implements Workout {
 
     public void setComment(final String comment) {
         this.comment = comment;
+    }
+
+    public Long getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(final Long energy) {
+        this.energy = energy;
     }
 }

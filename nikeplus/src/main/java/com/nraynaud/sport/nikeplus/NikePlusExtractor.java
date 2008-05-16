@@ -22,6 +22,7 @@ public class NikePlusExtractor implements Importer {
     private static final XPathExpression RUN_LIST;
     private final static XPathExpression DISTANCE;
     private final static XPathExpression DURATION;
+    private final static XPathExpression ENERGY;
     private final static XPathExpression START_TIME;
     private final static XPathExpression USER_ID;
 
@@ -32,6 +33,7 @@ public class NikePlusExtractor implements Importer {
             RUN_LIST = xPath.compile("/plusService/runList/*");
             DISTANCE = xPath.compile("distance");
             DURATION = xPath.compile("duration");
+            ENERGY = xPath.compile("calories");
             START_TIME = xPath.compile("startTime");
             USER_ID = xPath.compile("/plusService/user/@id");
         } catch (XPathExpressionException e) {
@@ -107,9 +109,10 @@ public class NikePlusExtractor implements Importer {
                 final String nikeId = node.getAttributes().getNamedItem("id").getTextContent();
                 final String distance = DISTANCE.evaluate(node);
                 final String duration = DURATION.evaluate(node);
+                final String energy = ENERGY.evaluate(node);
                 final String date = START_TIME.evaluate(node);
                 workoutCollector.collectWorkout(nikeId, "course", new SimpleDateFormat("yyyy-MM-dd").parse(date),
-                        Double.valueOf(distance), Long.parseLong(duration) / 1000);
+                        Double.valueOf(distance), Long.parseLong(duration) / 1000, Long.parseLong(energy));
             }
             workoutCollector.endCollection();
         } catch (XPathExpressionException e) {

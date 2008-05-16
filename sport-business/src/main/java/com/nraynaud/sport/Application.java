@@ -102,7 +102,7 @@ public interface Application extends UserStore {
                           User user,
                           Long duration,
                           Double distance,
-                          String discipline,
+                          final Long energy, String discipline,
                           String comment,
                           String nikePlusId);
 
