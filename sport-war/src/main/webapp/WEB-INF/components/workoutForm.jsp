@@ -5,6 +5,7 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <% allowOverrides();%>
+
 <form action="<s:property value="%{parameters.action + '#workoutMessage'}"/>" method="post">
 
     <s:actionerror/>
@@ -74,7 +75,6 @@
     <div style="float:right;">
         <input type="submit" name="submit" value="<s:property value="%{parameters.submit}"/>">
     </div>
-
 </form>
 <s:if test="%{parameters.showDelete}">
     <div style="float:right;">
@@ -84,3 +84,4 @@
         </s:form>
     </div>
 </s:if>
+<i>Tous les champs sauf la date sont optionnels.</i>
