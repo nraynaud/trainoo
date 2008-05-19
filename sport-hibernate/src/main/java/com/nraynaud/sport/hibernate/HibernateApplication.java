@@ -259,7 +259,7 @@ public class HibernateApplication implements Application {
         query.setParameter("discipline", workout.getDiscipline().nonEscaped());
         query.setParameter("minDist", workout.getDistance().doubleValue() * (1.0 - precision));
         query.setParameter("maxDist", workout.getDistance().doubleValue() * (1.0 + precision));
-        return paginateQuery(5, similarPageIndex, query);
+        return paginateQuery(10, similarPageIndex, query);
     }
 
     private PaginatedCollection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id,
