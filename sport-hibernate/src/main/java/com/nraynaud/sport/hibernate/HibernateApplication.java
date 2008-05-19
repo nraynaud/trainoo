@@ -249,17 +249,63 @@ public class HibernateApplication implements Application {
                 privateConversation);
     }
 
+    private static class WhereFragment {
+        public final String wherePart;
+        public final Parameter[] parameters;
+
+        private WhereFragment(final String wherePart, final Parameter... parameters) {
+            this.wherePart = wherePart;
+            this.parameters = parameters;
+        }
+    }
+
+    private static class Parameter {
+        public final String name;
+        public final Object value;
+
+        private Parameter(final String name, final Object value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
     private PaginatedCollection<Workout> getSimilarWorkouts(final Workout workout, final int similarPageIndex) {
-        if (workout.getDistance() == null)
-            return emptyPage();
-        final Query query = query(
-                "select w from WorkoutImpl w where w.discipline=:discipline and w.user=:user and (w.distance between :minDist and :maxDist)"
-                        + " order by w.date desc, w.id desc");
         final double precision = 0.1;
+        final double infCoeff = 1.0 - precision;
+        final double suppCoeff = 1.0 + precision;
+        final List<WhereFragment> clauses = new ArrayList<WhereFragment>(3);
+        if (workout.getDistance() != null) {
+            final double distance = workout.getDistance().doubleValue();
+            clauses.add(new WhereFragment("(w.distance between :minDist and :maxDist)",
+                    new Parameter("minDist", distance * infCoeff),
+                    new Parameter("maxDist", distance * suppCoeff)));
+        }
+        if (workout.getDuration() != null) {
+            final long duration = workout.getDuration().longValue();
+            clauses.add(new WhereFragment("(w.duration between :minDur and :maxDur)",
+                    new Parameter("minDur", (long) (duration * infCoeff)),
+                    new Parameter("maxDur", (long) (duration * suppCoeff))));
+        }
+        if (clauses.isEmpty())
+            return emptyPage();
+        final StringBuilder dynamicPart = new StringBuilder("(");
+        for (Iterator<WhereFragment> i = clauses.iterator(); i.hasNext();) {
+            final WhereFragment clause = i.next();
+            dynamicPart.append(clause.wherePart);
+            if (i.hasNext())
+                dynamicPart.append(" or ");
+        }
+        dynamicPart.append(')');
+        final Query query = query(
+                "select w from WorkoutImpl w where w.discipline=:discipline and w.user=:user and " + dynamicPart
+                        + " order by w.date desc, w.id desc");
         query.setParameter("user", workout.getUser());
         query.setParameter("discipline", workout.getDiscipline().nonEscaped());
-        query.setParameter("minDist", workout.getDistance().doubleValue() * (1.0 - precision));
-        query.setParameter("maxDist", workout.getDistance().doubleValue() * (1.0 + precision));
+        for (final WhereFragment clause : clauses) {
+            for (final Parameter parameter : clause.parameters) {
+                query.setParameter(parameter.name, parameter.value);
+            }
+        }
         return paginateQuery(10, similarPageIndex, query);
     }
 
