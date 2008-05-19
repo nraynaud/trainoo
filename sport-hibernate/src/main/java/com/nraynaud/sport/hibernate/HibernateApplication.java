@@ -236,7 +236,8 @@ public class HibernateApplication implements Application {
     }
 
     public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId,
-                                                final int workoutStartIndex, final int messagesStartIndex,
+                                                final int similarPage, final int workoutStartIndex,
+                                                final int messagesStartIndex,
                                                 final int privateMessagesPageIndex) throws WorkoutNotFoundException {
         final Workout workout = fetchWorkout(workoutId);
         final PaginatedCollection<PrivateMessage> emptyPage = emptyPage();
@@ -244,7 +245,21 @@ public class HibernateApplication implements Application {
                 == null ? emptyPage : fetchPrivateConversation(currentUser, workout.getUser().getId(),
                 privateMessagesPageIndex);
         return new WorkoutPageData(workout, fetchPublicMessages(Topic.Kind.WORKOUT, workoutId, 5, messagesStartIndex),
-                getWorkouts(workout.getUser(), null, workoutStartIndex, 10), privateConversation);
+                getSimilarWorkouts(workout, similarPage), getWorkouts(workout.getUser(), null, workoutStartIndex, 10),
+                privateConversation);
+    }
+
+    private PaginatedCollection<Workout> getSimilarWorkouts(final Workout workout, final int similarPageIndex) {
+        if (workout.getDistance() == null)
+            return emptyPage();
+        final Query query = query(
+                "select w from WorkoutImpl w where w.discipline=:discipline and (w.distance between :minDist and :maxDist)"
+                        + " order by w.date desc, w.id desc");
+        final double precision = 0.1;
+        query.setParameter("discipline", workout.getDiscipline().nonEscaped());
+        query.setParameter("minDist", workout.getDistance().doubleValue() * (1.0 - precision));
+        query.setParameter("maxDist", workout.getDistance().doubleValue() * (1.0 + precision));
+        return paginateQuery(5, similarPageIndex, query);
     }
 
     private PaginatedCollection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id,

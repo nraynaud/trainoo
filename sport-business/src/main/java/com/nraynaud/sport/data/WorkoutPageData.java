@@ -8,13 +8,16 @@ public class WorkoutPageData {
     public final Workout workout;
     public final PaginatedCollection<PublicMessage> messages;
     public final PaginatedCollection<PrivateMessage> privateMessages;
+    public final PaginatedCollection<Workout> similarWorkouts;
     public final PaginatedCollection<Workout> lastWorkouts;
 
     public WorkoutPageData(final Workout workout, final PaginatedCollection<PublicMessage> messages,
+                           final PaginatedCollection<Workout> similarWorkouts,
                            final PaginatedCollection<Workout> lastWorkouts,
                            final PaginatedCollection<PrivateMessage> privateMessages) {
         this.workout = workout;
         this.messages = messages;
+        this.similarWorkouts = similarWorkouts;
         this.lastWorkouts = lastWorkouts;
         this.privateMessages = privateMessages;
     }

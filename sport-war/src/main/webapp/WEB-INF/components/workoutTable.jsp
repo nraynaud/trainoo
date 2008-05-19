@@ -51,7 +51,7 @@
         <td class="img">
             <%
                 final Long messageCount = workout.getMessageCount();
-                if (messageCount > 0) {
+                if (messageCount != null && messageCount > 0) {
             %>
             <div class="messageLink">
                 <s:a cssClass="messageLink" href="%{workoutUrl}"

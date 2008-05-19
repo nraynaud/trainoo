@@ -104,6 +104,14 @@
 </div>
 
 <div id="globalRight">
+    <%if (!data.similarWorkouts.isEmpty()) {%>
+    <h2><%=isCurrentUser ? "Mes" : "Ses"%> entraînements similaires</h2>
+
+    <div class="content">
+        <% paginate(pageContext, "workoutTable.jsp", view(data.similarWorkouts, "similarPage"), "highLight",
+                workout.getId());%>
+    </div>
+    <%}%>
     <h2><%=isCurrentUser ? "Mes" : "Ses"%> derniers entraînements</h2>
 
     <div class="content">
