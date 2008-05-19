@@ -253,9 +253,10 @@ public class HibernateApplication implements Application {
         if (workout.getDistance() == null)
             return emptyPage();
         final Query query = query(
-                "select w from WorkoutImpl w where w.discipline=:discipline and (w.distance between :minDist and :maxDist)"
+                "select w from WorkoutImpl w where w.discipline=:discipline and w.user=:user and (w.distance between :minDist and :maxDist)"
                         + " order by w.date desc, w.id desc");
         final double precision = 0.1;
+        query.setParameter("user", workout.getUser());
         query.setParameter("discipline", workout.getDiscipline().nonEscaped());
         query.setParameter("minDist", workout.getDistance().doubleValue() * (1.0 - precision));
         query.setParameter("maxDist", workout.getDistance().doubleValue() * (1.0 + precision));
