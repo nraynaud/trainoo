@@ -58,9 +58,19 @@
             <%}%>
             <%if (workout.getEnergy() != null) {%>
             <span class="label">Energie dépensée&nbsp;:</span>
-            <span class="userInteresting"><%=workout.getEnergy()%>kCal</span>
+            <span class="userInteresting"><%=workout.getEnergy()%>kcal</span>
             <br>
-            <%}%>
+            <%
+                if (workout.getDuration() != null) {
+            %>
+            <span class="label">Puissance moyenne&nbsp;:</span>
+            <span class="userInteresting"><%=workout.getEnergy().longValue() * 4187 / workout.getDuration()
+                    .longValue()%>W</span>
+            <br>
+            <%
+                    }
+                }
+            %>
             <%
                 if (isNikePlus) {
                     call(pageContext, "nikePlusDetail.jsp", workout);
