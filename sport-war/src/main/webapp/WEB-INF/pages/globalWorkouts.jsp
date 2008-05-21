@@ -7,7 +7,7 @@
 
 <p:layoutParams title="Trainoo.com, pour les sportifs du dimanche." showTitleInPage="false"/>
 <div id="globalLeft">
-    <h2>Les dernières sorties</h2>
+    <h2>Les dernières sorties sportives</h2>
 
     <div class="content">
         <p>
