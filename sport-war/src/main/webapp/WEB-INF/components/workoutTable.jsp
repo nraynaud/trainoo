@@ -9,14 +9,17 @@
 
 
 <table class="workouts" style="clear:both;">
-    <% final PaginatedCollection<Workout> workouts = top(PaginatedCollection.class);%>
-    <% if (!workouts.isEmpty()) {
-        boolean parity = false;
-        for (final Workout workout : workouts) {
-            push(workout);
-            try {
-                parity = !parity;
-                final String trId = "tr_" + workout.getId();%>
+    <% final PaginatedCollection<Workout> workouts = top(PaginatedCollection.class);
+        String prefix = parameter("idPrefix", String.class);
+        if (prefix == null)
+            prefix = "a_";
+        if (!workouts.isEmpty()) {
+            boolean parity = false;
+            for (final Workout workout : workouts) {
+                push(workout);
+                try {
+                    parity = !parity;
+                    final String trId = "tr_" + prefix + workout.getId();%>
     <s:url id="workoutUrl" action="" namespace="/workout" includeParams="none">
         <s:param name="id" value="id"/>
     </s:url>
@@ -42,9 +45,9 @@
                 %>
             </td>
         </s:if>
-        <td><s:a id="%{'a_' + id}" cssClass="messageLink" href="%{workoutUrl}"
-                 title="Détails de cet entraînement"><%=workout.getDiscipline()%>
-        </s:a>
+        <td><a id="a_<%=prefix + workout.getId()%>" class="messageLink" href="<%=stringProperty("workoutUrl")%>"
+               title="Détails de cet entraînement"><%=workout.getDiscipline()%>
+        </a>
         </td>
         <td><p:duration name="duration"/></td>
         <td><p:distance name="distance"/></td>

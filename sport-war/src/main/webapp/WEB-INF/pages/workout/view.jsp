@@ -118,15 +118,16 @@
     <h2><%=isCurrentUser ? "Mes" : "Ses"%> entraînements similaires</h2>
 
     <div class="content">
-        <% paginate(pageContext, "workoutTable.jsp", view(data.similarWorkouts, "similarPage"), "highLight",
-                workout.getId());%>
+        <% paginate(pageContext, "workoutTable.jsp", view(data.similarWorkouts, "similarPage"), "idPrefix",
+                "'similar_'",
+                "highLight", workout.getId());%>
     </div>
     <%}%>
     <h2><%=isCurrentUser ? "Mes" : "Ses"%> derniers entraînements</h2>
 
     <div class="content">
-        <% paginate(pageContext, "workoutTable.jsp", view(data.lastWorkouts, "workoutPage"), "highLight",
-                workout.getId());%>
+        <% paginate(pageContext, "workoutTable.jsp", view(data.lastWorkouts, "workoutPage"), "idPrefix", "'lasts_'",
+                "highLight", workout.getId());%>
     </div>
 
     <% if (isLogged() && !isCurrentUser) {%>

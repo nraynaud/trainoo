@@ -21,10 +21,10 @@ function showWorkoutToolTip(event, tip, fieldName, val) {
     feedback(fieldName, val);
 }
 function clickableRow(row) {
-    var disciplineLink = $('a_' + row.id.substring(3));
-    var href = disciplineLink.href;
-    var childValue = disciplineLink.firstChild.nodeValue;
-    Element.update(disciplineLink.parentNode, childValue);
+    var workoutLink = $('a_' + row.id.substring(3));
+    var href = workoutLink.href;
+    var childValue = workoutLink.firstChild.nodeValue;
+    Element.update(workoutLink.parentNode, childValue);
     row.observe('mouseover', function() {
         row.addClassName('current');
         window.status = href;
