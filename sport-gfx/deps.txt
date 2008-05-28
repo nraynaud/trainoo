@@ -1,0 +1,5 @@
+Software :
+	- Inkscape 0.46 devel
+
+Fonts :
+	- Trebuchet MS
