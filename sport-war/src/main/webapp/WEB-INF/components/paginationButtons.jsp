@@ -1,22 +1,22 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page import="com.nraynaud.sport.web.view.PaginationView" %>
+<%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.web.view.PaginationView" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    final PaginationView collection = top(PaginationView.class);
-    if (collection.collection.hasPrevious()) {
+    final PaginatedCollection collection = top(PaginationView.class).collection;
+    final String pageVariable = property("pageVariable", String.class);
+    if (collection.hasPrevious()) {
 %>
-<s:url id="previousPageUrl" includeParams="get">
-    <s:param name="%{pageVariable}" value="collection.previousIndex"/>
-</s:url>
-<div class="paginationPrevious"><s:a href="%{previousPageUrl}">&lt;&lt;-Précédents</s:a></div>
-<%}%>
+<div class="paginationPrevious"><%=currenUrlWithParams("&lt;&lt;-Précédents", false, pageVariable,
+        String.valueOf(collection.getPreviousIndex()))%>
+</div>
 <%
-    if (collection.collection.hasNext()) {
+    }
+    if (collection.hasNext()) {
 %>
-<s:url id="nextPageUrl" includeParams="get">
-    <s:param name="%{pageVariable}" value="collection.nextIndex"/>
-</s:url>
-<div class="paginationNext"><s:a href="%{nextPageUrl}">Suivants->></s:a></div>
+<div class="paginationNext"><%=currenUrlWithParams("Suivants->>", false, pageVariable,
+        String.valueOf(collection.getNextIndex()))%>
+</div>
 <%}%>
