@@ -594,7 +594,7 @@ public class HibernateApplication implements Application {
     private List<DisciplineDistance> fetchDistanceByDiscipline(final User user) {
         final String string =
                 "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, sum(w.distance))"
-                        + " from WorkoutImpl w where w.distance is not null"
+                        + " from WorkoutImpl w where 1=1 "
                         + (user != null ? " and  :user MEMBER OF w.participants" : "")
                         + " group by w.discipline";
         final Query nativeQuery = query(string);

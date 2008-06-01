@@ -8,13 +8,16 @@
     |
     <%
         for (final DisciplineDistance dd : (List<DisciplineDistance>) property("distanceByDisciplines",
-                List.class)) { %>
-    <%=currenUrlWithParams(dd.discipline + "&nbsp;(" + (long) dd.distance.doubleValue() + "km)", true,
-            "disciplineFilter", dd.discipline.nonEscaped())%>&nbsp;|
-    <%}%>
-
-    <%=currenUrlWithParams(
-            "toutes disciplines&nbsp;(" + (long) property("globalDistance", Double.class).doubleValue() + "km)", true,
-            "disciplineFilter", "")%>&nbsp;|
+                List.class)) {
+            final String distancePart = dd.distance == null ? "" : "&nbsp;(" + dd.distance + "km)";
+            out.append(currenUrlWithParams(dd.discipline + distancePart, true, "disciplineFilter",
+                    dd.discipline.nonEscaped()));
+            out.append("&nbsp;|");
+        }
+        out.append(currenUrlWithParams(
+                "toutes disciplines&nbsp;(" + (long) property("globalDistance", Double.class).doubleValue() + "km)",
+                true, "disciplineFilter", ""));
+        out.append("&nbsp;|");
+    %>
 
 </s:if>
