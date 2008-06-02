@@ -9,7 +9,7 @@
     <%
         for (final DisciplineDistance dd : (List<DisciplineDistance>) property("distanceByDisciplines",
                 List.class)) {
-            final String distancePart = dd.distance == null ? "" : "&nbsp;(" + dd.distance + "km)";
+            final String distancePart = dd.distance == null ? "" : "&nbsp;(" + formatDistance(dd.distance) + ")";
             out.append(currenUrlWithParams(dd.discipline + distancePart, true, "disciplineFilter",
                     dd.discipline.nonEscaped()));
             out.append("&nbsp;| ");
