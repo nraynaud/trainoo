@@ -12,12 +12,12 @@
             final String distancePart = dd.distance == null ? "" : "&nbsp;(" + dd.distance + "km)";
             out.append(currenUrlWithParams(dd.discipline + distancePart, true, "disciplineFilter",
                     dd.discipline.nonEscaped()));
-            out.append("&nbsp;|");
+            out.append("&nbsp;| ");
         }
         out.append(currenUrlWithParams(
                 "toutes disciplines&nbsp;(" + (long) property("globalDistance", Double.class).doubleValue() + "km)",
                 true, "disciplineFilter", ""));
-        out.append("&nbsp;|");
+        out.append("&nbsp;| ");
     %>
 
 </s:if>
