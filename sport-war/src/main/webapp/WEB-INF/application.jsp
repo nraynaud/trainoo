@@ -1,5 +1,4 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
-<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -107,16 +106,6 @@
         var pageTracker = _gat._getTracker("UA-3412937-1");
         pageTracker._initData();
         pageTracker._trackPageview();
-    </script>
-    <script type="text/javascript" src="http://nraynaud.fr/clickheat/js/clickheat.js"></script>
-    <noscript><a href="http://www.labsmedia.com/index.html">Open source tools</a></noscript>
-    <% final ActionDetail actionDetail = property("actionDescription", ActionDetail.class); %>
-    <script type="text/javascript"><!--
-    clickHeatSite = 'trainoo.com';
-    clickHeatGroup = '<%=actionDetail.namespace.replaceAll("/", "-") +'-' + actionDetail.name + (isLogged() ? "-logged" : "")%>';
-    clickHeatServer = 'http://nraynaud.fr/clickheat/click.php';
-    initClickHeat();
-    //-->
     </script>
     <%if (pageDetail.isShowHeader()) {%>
     <div id="ad">
