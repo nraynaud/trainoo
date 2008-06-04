@@ -90,11 +90,6 @@ table.workouts {
     padding-right: 0.5em;
 }
 
-.workouts tr tdg {
-    padding-left: 0;
-    padding-right: 0;
-}
-
 tr.odd {
     background-color: #FFF0DE;
 }
