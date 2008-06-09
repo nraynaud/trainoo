@@ -81,7 +81,7 @@ public class FeedbackAction {
     private String convertEnergy() {
         try {
             final Long energy = EnergyConverter.parseEnergy(data);
-            return EnergyConverter.formatEnergy(energy) + "kCal";
+            return EnergyConverter.formatEnergy(energy) + "kcal";
         } catch (Exception e) {
             return "L'énerge dépensée n'a pas été comprise.";
         }
