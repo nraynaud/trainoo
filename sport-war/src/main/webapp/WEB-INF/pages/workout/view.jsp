@@ -89,7 +89,7 @@
                     workout.getId().toString())%>
             <%}%>
             <div class="<%=defaultOrUserClass(workout.getComment())%>"><%=escapedOrNullmultilines(workout.getComment(),
-                    "Pas de commentaire")%>
+                    "Pas de compte rendu")%>
                 <%if (isCurrentUser) {%>
                 <s:a href="%{editurl}" title="Modifier"><img class="pen" src="<%=stat("/static/pen.png")%>"
                                                              alt=""></s:a>

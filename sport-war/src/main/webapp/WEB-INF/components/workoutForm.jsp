@@ -66,7 +66,7 @@
                                              onkeyup="feedback('energy', this.value)"/></td>
             </tr>
             <tr>
-                <th><label for="comment" style="vertical-align:text-top;">Commentaire&nbsp;:</label></th>
+                <th><label for="comment" style="vertical-align:text-top;">Compte rendu&nbsp;:</label></th>
                 <td colspan="3"><s:textarea id="comment" cssStyle="width:99%" name="comment"></s:textarea></td>
                 <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
             </tr>
