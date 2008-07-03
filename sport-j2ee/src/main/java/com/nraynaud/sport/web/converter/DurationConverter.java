@@ -4,6 +4,8 @@ import static com.nraynaud.sport.web.converter.DurationConverter.Multiplier.*;
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
 
+import java.util.Formatter;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,7 +70,6 @@ public class DurationConverter extends StrutsTypeConverter {
         }
     }
 
-
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
         try {
             final String input = values[0];
@@ -97,10 +98,16 @@ public class DurationConverter extends StrutsTypeConverter {
         final long hourRemainder = dur % HOUR.factor;
         final long minutes = hourRemainder / MINUTE.factor;
         final long seconds = hourRemainder % MINUTE.factor;
-        return nilIfZero(hours, hoursFmt) + nilIfZero(minutes, minutesFmt) + nilIfZero(seconds, secondsFmt);
+        return nilIfZero(hours, hoursFmt) + nilIfZeroTwoDigits(minutes, minutesFmt) + nilIfZeroTwoDigits(seconds,
+                secondsFmt);
     }
 
     private static String nilIfZero(final long time, final String suffix) {
         return time == 0 ? "" : time + suffix;
+    }
+
+    private static String nilIfZeroTwoDigits(final long time, final String suffix) {
+        final Formatter formatter = new Formatter(Locale.FRANCE);
+        return time == 0 ? "" : formatter.format("%02d", time).toString() + suffix;
     }
 }
