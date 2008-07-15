@@ -18,7 +18,7 @@
         if (currentUser() != null && currentUser().getNikePluEmail() != null ) {
      %>
          <a class="refreshNikePlus" title="Rafraichir les données Nike+"
-            href="<%=createUrl("/", "privatedata")%>" >
+            href="<%=createUrl("/privatedata", "refreshNikePlus", "fromAction", findFromAction())%>" >
             Rafraichir les donnés Nike+
          </a>
      <% } %>
