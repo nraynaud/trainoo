@@ -15,34 +15,36 @@
     final String errorParam = getFirstValue("error");
     if (errorParam == null || errorParam.equals(MY_ERROR_CODE)) {
         allowOverrides();%>
-<s:form id="writeMessage" name="writeMessage" action="writePublic" namespace="/messages">
-    <fieldset>
-        <legend>Nouveau message</legend>
-        <%
-            if (MY_ERROR_CODE.equals(errorParam)) {
-        %>
-        <s:actionerror/>
-        <s:fielderror>
-            <s:param value="'content'"/>
-        </s:fielderror>
-        <a name="errorMessage"> </a>
-        <%}%>
-        <s:hidden name="fromAction" value="%{actionDescription}"/>
-        <input type="hidden" id="pub_onErrorAction" name="onErrorAction"
-               value="<%=property("actionDescription",ActionDetail.class).addParam("error", MY_ERROR_CODE)%>"/>
-        <s:hidden name="publicMessage" value="true"/>
-        <s:hidden name="aboutId" value="%{id}"/>
-        <s:hidden name="topicKind" value="%{kind}"/>
-        <input type="hidden" name="messageKind" value="<%=PUBLIC%>"/>
-        <%if (property("kind", Topic.Kind.class) == Topic.Kind.WORKOUT) {%>
-        <div id="aboutWorkoutDiv" class="workout">
-            à propos de la sortie&nbsp;: <span class="tinyWorkout"><%
-            call(pageContext, "workoutComponent.jsp", top(Workout.class));%></span>
-        </div>
-        <%}%>
-        <s:textarea id="messageContent" cssClass="messageContentArea" name="content" rows="5"/>
-        <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
-        <s:submit value="Envoyer"/>
-    </fieldset>
-</s:form>
+
+<div class="block addCommentBlock">
+    <div class="content">
+        <form id="writeMessage" name="writeMessage" action="<%=createUrl("/messages", "writePublic")%>" method="POST">
+            <%
+                if (MY_ERROR_CODE.equals(errorParam)) {
+            %>
+            <s:actionerror/>
+            <s:fielderror>
+                <s:param value="'content'"/>
+            </s:fielderror>
+            <a name="errorMessage"> </a>
+            <%}%>
+            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="onErrorAction"
+                   value="<%=property("actionDescription",ActionDetail.class).addParam("error", MY_ERROR_CODE)%>"/>
+            <input type="hidden" name="publicMessage" value="true"/>
+            <input type="hidden" name="aboutId" value="<%=stringProperty("id")%>" />
+            <input type="hidden" name="topicKind" value="<%=stringProperty("kind")%>" />
+            <input type="hidden" name="messageKind" value="<%=PUBLIC%>"/>
+            
+            <span class="input">
+                <textarea name="content" id="messageContent"></textarea>
+            </span>
+            <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
+
+            <span class="actions">
+                <input type="submit" class="submit" value="Ajouter un message"/>
+            </span>
+        </form>
+    </div>
+</div>
 <%}%>

@@ -36,10 +36,12 @@ public class LogoutAction extends DefaultAction implements ServletRequestAware, 
                 application.forgetMe(getUser());
             session.invalidate();
         }
-        for (final Cookie cookie : request.getCookies()) {
-            cookie.setMaxAge(0);
-            response.addCookie(cookie);
-        }
+        final Cookie[] cookies = request.getCookies();
+        if (cookies != null)
+            for (final Cookie cookie : cookies) {
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
         return super.index();
     }
 

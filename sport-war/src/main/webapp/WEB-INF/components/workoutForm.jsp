@@ -1,12 +1,13 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.allowOverrides" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <% allowOverrides();%>
 
-<form action="<s:property value="%{parameters.action + '#workoutMessage'}"/>" method="post">
+<form action="<%=stringParam("action") +"#workoutMessage"%>" method="POST" class="workoutEditor">
 
     <s:actionerror/>
 
@@ -67,7 +68,7 @@
             </tr>
             <tr>
                 <th><label for="comment" style="vertical-align:text-top;">Compte rendu&nbsp;:</label></th>
-                <td colspan="3"><s:textarea id="comment" cssStyle="width:99%" name="comment"></s:textarea></td>
+                <td colspan="3"><s:textarea id="comment" name="comment"></s:textarea></td>
                 <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
             </tr>
         </table>
@@ -76,12 +77,12 @@
         <input type="submit" name="submit" value="<s:property value="%{parameters.submit}"/>">
     </div>
 </form>
-<s:if test="%{parameters.showDelete}">
-    <div style="float:right;">
-        <s:form namespace="/workout" action="delete">
-            <s:hidden name="id" value="%{id}"/>
-            <input type="submit" name="delete" value="Supprimer"/>
-        </s:form>
-    </div>
-</s:if>
+<%if (boolParam("showDelete")) {%>
+<div style="float:right;">
+    <form action="<%=createUrl("/workout", "delete")%>">
+        <s:hidden name="id" value="%{id}"/>
+        <input type="submit" name="delete" value="Supprimer"/>
+    </form>
+</div>
+<%}%>
 <i>Tous les champs sauf la date sont optionnels.</i>

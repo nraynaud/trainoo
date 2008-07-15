@@ -1,4 +1,5 @@
 <%@ page import="static com.nraynaud.sport.web.action.bib.EditAction.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -6,32 +7,46 @@
 
 <p:layoutParams title="Mon Dossard"/>
 
-<s:form action="edit" namespace="/bib">
-    <s:actionerror/>
-    <s:fielderror/>
-    <div id="tinyCenter">
-        <p>En mettant à jour votre dossard, les autres pourront mieux vous connaître.<br>
-            Aucun champ n'est obligatoire.
-        </p>
+<div id="tinyCenter">
+    <div class="block">
+        <div class="content textContent">
+            <form method="POST" action="<%=createUrl("/bib", "edit")%>">
+                <s:actionerror/>
+                <s:fielderror/>
+                <p>En mettant à jour votre dossard, les autres pourront mieux vous connaître.<br />
+                    Aucun champ n'est obligatoire.
+                </p>
 
-        <p><label for="town">Ma ville&nbsp;: </label></p>
+                <span class="label">
+                    <label for="town">Ma ville&nbsp;:</label>
+                </span>
+                <span class="input fullWidth">
+                    <input class="text" id="town" name="town" value="<%=escapedOrNull(stringProperty("town"), "")%>"/>
+                </span>
 
-        <s:textfield id="town" name="town" cssStyle="width:100%;"/>
+                <p:javascript>makeItCount('town', <%=TOWN_MAX_LENGTH%>);</p:javascript>
 
-        <p:javascript>makeItCount('town', <%=TOWN_MAX_LENGTH%>);</p:javascript>
+                <span class="label">
+                    <label for="description">Moi&nbsp;:</label>
+                    <span class="help">C'est l'occasion de vous présenter.</span>
+                </span>
+                <span class="input fullWidth">
+                    <textarea id="description" name="description"><%=escapedOrNull(stringProperty("description"), "")%></textarea>
+                </span>
+                <p:javascript>makeItCount('description', <%=DESCRIPTION_MAX_LENGTH%>);</p:javascript>
 
-        <p><label for="description">Moi&nbsp;: </label></p>
-        <span style="font-size:smaller; color:gray;">C'est l'occasion de vous présenter.</span><br>
+                <span class="label">
+                    <label for="webSite">Mon site&nbsp;:</label>
+                </span>
+                <span class="input fullWidth">
+                    <input class="text" id="webSite" name="webSite"  value="<%=escapedOrNull(stringProperty("webSite"), "")%>"/>
+                </span>
+                <p:javascript>makeItCount('webSite', <%=WEBSITE_MAX_LENGTH%>);</p:javascript>
 
-        <div><s:textarea id="description" name="description" rows="5" cssStyle="width:100%;"/></div>
-
-        <p:javascript>makeItCount('description', <%=DESCRIPTION_MAX_LENGTH%>);</p:javascript>
-
-        <p><label for="webSite">Mon site&nbsp;: </label></p>
-
-        <s:textfield id="webSite" name="webSite" cssStyle="width:100%;"/>
-
-        <p:javascript>makeItCount('webSite', <%=WEBSITE_MAX_LENGTH%>);</p:javascript>
-        <s:submit value="Valider !"/>
+                <span class="actions">
+                    <input type="submit" class="submit" value="Valider !" />
+                </span>
+            </form>
+        </div>
     </div>
-</s:form>
+</div>

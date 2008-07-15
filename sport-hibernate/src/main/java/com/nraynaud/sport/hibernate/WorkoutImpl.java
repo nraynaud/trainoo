@@ -135,7 +135,7 @@ public class WorkoutImpl implements Workout {
     }
 
     public Long getMessageCount() {
-        return messageCount;
+        return messageCount != null ? messageCount : Long.valueOf(0);
     }
 
     public void setMessageCount(final Long messageCount) {

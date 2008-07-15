@@ -1,38 +1,6 @@
-body {
-    font-size: 14px;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-    font-family: sans-serif;
-    color: #303030;
-    background: #fff url( 'bg.gif' );
-}
 
-/* Neutralize styling:
-Elements with a vertical margin: */
-h1, h2, h3, h4, h5, h6, p, pre,
-    blockquote, ul, ol, dl, address {
-    margin: 1em 0;
-    padding: 0;
-}
-
-/* Apply left margin:
-Only to the few elements that need it: */
-li, dd, blockquote {
-    margin-left: 1em;
-}
 
 /* Miscellaneous conveniences: */
-form label {
-    font-weight: bold;
-}
-
-fieldset {
-    border: 2px #6C3C1E solid;
-    margin: 10px 0 10px 0;
-    padding: 10px 5px 10px 3px;
-}
-
 img {
     border: none;
     margin: 0;
@@ -41,38 +9,20 @@ img {
 
 input, select, textarea {
     font-size: 100%;
-    border: gray solid thin;
+    border: #808080 solid 1px;
     margin: 0;
-    padding: 0;
+    padding: 3px;
     vertical-align: baseline;
 }
 
-textarea, input[type=text] {
-    border: gray inset 1px;
+input:focus, select:focus, textarea:focus {
+    border: 2px solid #404040;
+    padding: 2px;
 }
 
 form {
     margin: 0;
     padding: 0;
-}
-
-a, a:visited {
-    color: #D97900;
-    text-decoration: underline;
-}
-
-a:hover {
-    text-decoration: none;
-    background-color: #D97900;
-    color: #FFFAF3;
-}
-
-#center {
-    width: 962px;
-    margin: 0 auto 0;
-    text-align: left;
-    background-color: white;
-    padding: 0 10px 10px 10px;
 }
 
 table {
@@ -81,7 +31,7 @@ table {
 }
 
 table.workouts {
-    border: #4B4C3C solid thin;
+    border: 1px solid #FFFFFF;
     margin: 2px auto;
 }
 
@@ -103,7 +53,7 @@ tr.highLight {
 }
 
 table.workouts tr.current {
-    background-color: #D97900;
+    abackground-color: #D97900;
     cursor: pointer;
 }
 
@@ -113,33 +63,7 @@ table.workouts tr.current a {
 
 th {
     text-align: left;
-    color: #6C3C1E;
-}
-
-hr {
-    color: #6C3C1E;
-    background-color: #6C3C1E;
-    height: 2px;
-    border: none;
-}
-
-h2, h1 {
-    margin-top: 1em;
-    color: #6C3C1E;
-    font-family: georgia, "times new roman", serif;
-    font-size: 22px;
-    background-image: url( 'db1.gif' );
-    background-repeat: no-repeat;
-    height: 60px;
-    padding-left: 22px;
-    margin-bottom: -15px;
-
-}
-
-.content {
-    padding-left: 22px;
-    position: relative;
-    overflow: hidden;
+    color: #403615;
 }
 
 .feedback {
@@ -195,8 +119,12 @@ label .labelComplement {
     line-height: 1;
 }
 
+#logoSpan {
+    position: relative;
+    display: block;
+}
+
 #logoHref, a#logoHref:hover {
-    background-color: white;
     color: #824900;
     text-decoration: none;
 }
@@ -205,22 +133,13 @@ label .labelComplement {
     color: #D97900;
 }
 
-#catchPhrase {
-    font-size: 20px;
-    color: #824900;
-    width: 120%;
-    text-align: right;
-    line-height: 1;
-}
-
 #loginHeader {
     margin-bottom: 0.5em;
     text-align: right;
     font-size: 100%;
-    background-color: #824900;
+    background-color: #E0C87A;
     font-family: Tahoma, sans-serif;
     font-weight: bold;
-    color: white;
     overflow: hidden;
     zoom: 1;
     _overflow: visible;
@@ -229,15 +148,15 @@ label .labelComplement {
 
 #loginHeader a {
     font-weight: bold;
-    color: white;
+    color: #8F5902;
     padding-left: 0.3em;
     padding-right: 0.3em;
     text-decoration: none;
 }
 
 #loginHeader * .selected {
-    background-color: white;
-    color: #824900;
+    background-color: #F5F5E0;
+    color: #8F5902;
 }
 
 #loginHeader #loginName {
@@ -258,20 +177,12 @@ label .labelComplement {
     width: 49.5%;
     float: left;
     position: relative;
+    overflow: hidden; _overflow: visible; zoom: 1;
 }
 
 #globalRight {
-    width: 46%;
-    float: right;
-    padding: 2px;
     position: relative;
-}
-
-#content {
-    overflow: hidden;
-    zoom: 1;
-    _overflow: visible;
-    margin-top: 1em;
+    overflow: hidden; _overflow: visible; zoom: 1;
 }
 
 #bottom {
@@ -306,8 +217,7 @@ div.autocomplete ul li {
 }
 
 .messageHeading {
-    color: white;
-    background: #824900 url( thbg.gif ) repeat-x scroll 0;
+    background-color: #BACF6D;
     padding-left: 0.5em;
     border: none;
     height: 1.9em;
@@ -349,8 +259,7 @@ div.autocomplete ul li {
 }
 
 .received, .public {
-    background-color: white;
-    border: #A9A9A9 solid thin;
+    background-color: #F6F4D7;
 }
 
 .received .messageHeading .message_from, .public .messageHeading .message_from {
@@ -359,7 +268,7 @@ div.autocomplete ul li {
 }
 
 .newMessage {
-    border: black solid thick;
+    border-top: 2px solid #000000;
 }
 
 .sent {
@@ -385,6 +294,7 @@ textarea.messageContentArea {
 }
 
 .charcount {
+    display: block;
     text-align: right;
 }
 
@@ -398,32 +308,13 @@ textarea.messageContentArea {
 }
 
 #tinyCenter {
-    width: 40%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto
 }
 
 .workout .tinyWorkout {
     font-weight: bold;
-}
-
-table.displayFormLayoutTable {
-    border-collapse: separate;
-    border: none;
-    font-size: larger;
-}
-
-table.displayFormLayoutTable tr td, table.displayFormLayoutTable tr td .userInteresting {
-    vertical-align: text-top;
-    padding-top: 1em;
-    font-size: inherit;
-    font-weight: bold;
-}
-
-table.displayFormLayoutTable tr td .label {
-    white-space: nowrap;
-    text-align: right;
-    display: block;
 }
 
 .serverDefault {
@@ -451,7 +342,6 @@ table.displayFormLayoutTable tr td .label {
 }
 
 .bigWorkout {
-    border: solid thick #824900;
     text-align: center;
     margin: 1.5em;
     padding: 3px;
@@ -520,14 +410,9 @@ a.messageLink:hover {
     margin-left: 20%;
 }
 
-a.selected {
-    font-size: large;
-}
-
-.newMessages {
-    vertical-align: super;
-    color: red;
-    font-weight: normal;
+.content a.selected {
+    text-decoration: none;
+    cursor: normal;
 }
 
 div.userInteresting {
@@ -541,13 +426,6 @@ ul {
     list-style-image: none;
     list-style-position: outside;
     list-style-type: none;
-}
-
-li {
-    background-image: url( bullet.gif );
-    background-position: 0 6px;
-    background-repeat: no-repeat;
-    padding-left: 12px;
 }
 
 p.submit {
@@ -569,11 +447,62 @@ p.submit {
     border: #D97900 dashed thin;
 }
 
+#about {
+    text-align: center;
+}
+
+#myAccount {
+    font-size: x-small;
+}
+
+#nikeplusRunLink {
+    font-size: 18px;
+}
+
+#comment {
+    width: 99%;
+}
+
+.groupForm {
+    text-align: right;
+    display: block;
+}
+
+.groupSubmit {
+    width: 150px;
+}
+
+.createGroupName {
+    width: 99%;
+}
+
+.messageSource {
+    float: left;
+    margin-top: 5px;
+}
+
+.messageButtons {
+    float: right;
+    margin-top: 5px;
+}
+
+.deleteMessageForm {
+    display: inline;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+}
+
+.groupTopicPrefix {
+    font-weight: normal;
+}
+
 /************* tooltip stuff ***************/
 #bubble_tooltip {
     width: 182px;
     position: absolute;
     display: block;
+    z-index: 1;
 }
 
 #bubble_tooltip .bubble_top {
@@ -586,14 +515,12 @@ p.submit {
     background-image: url( 'tooltip/bubble_middle.png' );
     background-repeat: repeat-y;
     background-position: bottom left;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding: 0 12px;
 }
 
 #bubble_tooltip .bubble_middle div {
     position: relative;
-    font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 #bubble_tooltip .bubble_bottom {

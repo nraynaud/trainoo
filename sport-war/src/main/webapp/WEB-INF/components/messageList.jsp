@@ -6,7 +6,8 @@
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="static com.nraynaud.sport.web.action.messages.WritePublicAction.CONTENT_MAX_LENGTH" %>
-<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
+<%@ page import="com.nraynaud.sport.web.DateHelper" %>
+<%@ page import="java.util.HashMap" %>
 
 <% final PaginatedCollection<Message> messages = top(PaginatedCollection.class);
     for (final Message message : messages) {
@@ -15,112 +16,123 @@
             final boolean isEditingMessage = message.getId()
                     .toString()
                     .equals(getFirstValue(EDIT_MESSAGE));
-            final String cssClasses;
-            if (message instanceof PrivateMessage) {
-                final PrivateMessage privateMessage = (PrivateMessage) message;
-                cssClasses = (currentUser().equals(privateMessage.getReceiver()) ? "received" : "sent")
-                        + (privateMessage.isNew() ? " newMessage" : "");
-            } else {
-                cssClasses = "public";
-            }
 %>
-<div class="message <%=cssClasses%>">
-    <div class="messageHeading">
-        <div style="float:left;margin-top:5px;">
-            <s:date name="date" format="E dd/M à HH:mm:ss"/>
-            <span class="message_from"><%=bibLink(message.getSender())%></span>
-            a écrit&nbsp;:
-        </div>
-        <%
-            final boolean canDelete = message.canDelete(currentUser());
-            final boolean canEdit = message.canEdit(currentUser());
-            if (!boolParam("showTopicLink") && (canDelete || canEdit)) {
-        %>
-        <div style="float:right;margin-top:5px;">
-            <%=canEdit ? currenUrlWithParams("Modifier", false, EDIT_MESSAGE, String.valueOf(message.getId())) : ""%>
-            <%if (canDelete) {%>
-            <form name="delete" action="<%=deleteUrl(message)%>" method="post"
-                  style="display:inline;vertical-align:top;padding:0; margin:0;">
-                <s:hidden name="id" value="%{id}"/>
-                <s:hidden name="fromAction" value="%{actionDescription}"/>
-                <s:submit value="X" title="supprimer" template="bare-submit"/>
-            </form>
-            <%}%>
-        </div>
-        <%}%>
-    </div>
-    <% if (message.getWorkout() != null && !boolParam("hideWorkoutSubject")) {%>
-    <div class="workout">à propos de la sortie&nbsp;:
-        <span class="tinyWorkout"><% call(pageContext, "workoutComponent.jsp", message.getWorkout());%></span>
-    </div>
-    <% } %>
-    <%if (isEditingMessage) {%>
-    <form id="edit" name="edit" onsubmit="return true;" action="/messages/edit" method="post">
-        <%
-            allowOverrides();
-            try {
-        %>
-        <s:actionerror/>
-        <s:fielderror>
-            <s:param value="'content'"/>
-        </s:fielderror>
-        <a name="errorMessage"> </a>
-        <s:hidden name="id"/>
-        <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
-        <input type="hidden" name="fromAction"
-               value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>"/>
-        <input type="hidden" name="onErrorAction"
-               value="<%=property("actionDescription",ActionDetail.class).addParam("error", "editMessage")%>"/>
-
-        <div><s:textarea id="editContent" name="content" rows="5" cssClass="messageContentArea"
-                         cssStyle="border-width:2px" value="%{content.nonEscaped()}"/></div>
-        <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
-            $('editContent').focus();</p:javascript>
-        <p class="submit"><%=currenUrlWithoutParam("Annuler", EDIT_MESSAGE)%> <s:submit value="Valider"
-                                                                                        template="bare-submit"/></p>
-        <%
-            } finally {
-                disAllowOverrides();
-            }
-        %>
-    </form>
-    <%} else {%>
-    <p class="messageContent"><%= multilineText(message.getContent())%>
-    </p>
-    <%}%>
-    <s:if test="%{parameters.showTopicLink}">
-        <div class="messageFooter">
-            <% if (message instanceof PublicMessage) {
-                final PublicMessage publicMessage = (PublicMessage) message;
-                if (publicMessage.getTopic() == Topic.Kind.WORKOUT) {
-                    out.append(Helpers.selectableLink("/workout", "", "Voir la page de l'entraînement", null, "id",
-                            String.valueOf(publicMessage.getWorkout().getId())));
-                } else {
-                    final Group group = publicMessage.getGroup();
-                    out.append(
-                            Helpers.selectableLink("/groups", "",
-                                    "<span style='font-weight:normal'>Groupe </span>" + group.getName(), null, "id",
-                                    String.valueOf(group.getId())));
-                }
-            }
+<div class="block messageBlock">
+    <div class="decoLeft">
+        <div class="decoRight">
+            <div class="heading">
+                <span class="primary"><span class="decoPrimary">Par <%=bibLink(
+                        message.getSender())%>&nbsp;:</span></span>
+                <span class="secondary"><%=DateHelper.humanizePastDate(message.getDate(),
+                        "'Aujourd''hui à 'HH'h'mm",
+                        "'Hier à 'HH'h'mm",
+                        "'Avant-hier à 'HH'h'mm",
+                        "'Le 'd MMMM")%></span>
+            </div>
+            <%
+                final boolean canDelete = message.canDelete(currentUser());
+                final boolean canEdit = message.canEdit(currentUser());
+                if (!boolParam("showTopicLink") && (canDelete || canEdit)) {
             %>
+
+            <%}%>
+            <div class="content textContent">
+            <%if (isEditingMessage) {%>
+                <form method="POST" action="<%=createUrl("/messages", "edit")%>" >
+                    <%
+                        allowOverrides();
+                        try {
+                    %>
+                    <s:actionerror/>
+                    <s:fielderror>
+                        <s:param value="'content'"/>
+                    </s:fielderror>
+                    <a name="errorMessage"> </a>
+                    <input type="hidden" name="id" />
+                    <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
+                    <input type="hidden" name="fromAction"
+                           value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>"/>
+                    <input type="hidden" name="onErrorAction"
+                           value="<%=property("actionDescription",ActionDetail.class).addParam("error", "editMessage")%>"/>
+                        
+                    <span class="input">
+                        <textarea id="editContent" name="content" ><%=property("content", UserString.class).nonEscaped()%></textarea>
+                    </span>
+                    <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
+                        $('editContent').focus();</p:javascript>
+                    
+                    <span class="actions">
+                        <a href="<%=currentUrlLinkWithAndWithoutParams(EDIT_MESSAGE, new HashMap<String, String>())%>"
+                        title="Annuler">Annuler</a>
+                        <input type="submit" name="submit" value="Valider" />
+                    </span>
+                    
+                    <%
+                        } finally {
+                            disAllowOverrides();
+                        }
+                    %>
+                </form>
+            <%} else {%>
+                <%
+                    if (message instanceof PublicMessage && boolParam("showTopicLink")) {
+                        final PublicMessage publicMessage = (PublicMessage) message;
+                        if (publicMessage.getTopic() == Topic.Kind.WORKOUT) {
+                            if (!boolParam("hideWorkoutSubject")) {
+                %>
+                <div class="subHeading">à propos de la <a
+                        href="<%=createUrl("/workout", "", "id", String.valueOf(message.getWorkout().getId()))%>">Sortie <%
+                    call(pageContext, "workoutComponent.jsp", message.getWorkout());%></a>
+                </div>
+                <% }
+                } else {
+                    final Group group = publicMessage.getGroup();%>
+                <div class="subHeading">dans le groupe <a
+                        href="<%=createUrl("/groups", "", "id", String.valueOf(group.getId()))%>">
+                    <%=group.getName()%>
+                </a>
+                </div>
+                <%
+                        }
+                    }
+                %>
+                <% if (!boolParam("hideToolbar")) {%>
+                <span class="smallButtonList">
+                    <% if (canEdit) {%>
+                    <a href="<%=currentUrlLinkWithAndWithoutParams(null, new HashMap<String, String>(),
+                        EDIT_MESSAGE, String.valueOf(message.getId()))%>"
+                        title="Modifier ce message" class="button editButton">Modifier</a>
+                    <%}%>
+                    <%if (canDelete) {%>
+                    <form action="<%=deleteUrl(message)%>" method="POST">
+                        <input type="hidden" name="id" value="<%=stringProperty("id")%>"/>
+                        <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+                        <label for="editDelete" class="button deleteButton">Supprimer</label>
+                        <input id="editDelete" type="image" src="<%=stat("/static/blank.gif")%>" value="Supprimer" title="Supprimer ce message" name="submit" class="image"/>
+                    </form>
+                    <%}%>
+                </span>
+                <%}%>
+                <p><%= multilineText(message.getContent())%>
+                </p>
+            <%}%>
+            </div>
         </div>
-    </s:if>
+    </div>
 </div>
 <%
+
         } finally {
             pop();
         }
     }
+
 %>
 <%!
     private static final String EDIT_MESSAGE = "editMessage";
 
     private static String deleteUrl(final Message message) {
-        return message instanceof PrivateMessage ? urlFor("/messages", "delete") : urlFor("/messages", "deletePublic");
-    }
-
-    private static String urlFor(final String namespace, final String action) {
-        return namespace + '/' + action;
+        return message instanceof PrivateMessage ? createUrl("/messages", "delete") : createUrl("/messages",
+                "deletePublic");
     }
 %>

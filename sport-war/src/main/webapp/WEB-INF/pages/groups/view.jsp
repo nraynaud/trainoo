@@ -12,119 +12,156 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<%final GroupPageData groupPage = top(GroupPageData.class);%>
-<%final Group group = groupPage.group;%>
+<%
+    final GroupPageData groupPage = top(GroupPageData.class);
+    final Group group = groupPage.group;
+%>
 <p:layoutParams title="<%=group == null ? "Les groupes" : "Groupe : " + group.getName()%>"/>
 
 <% if (group != null) {%>
-<div id="globalLeft" class="content">
-    <span class="label">Créé le&nbsp;: </span><span class="userInteresting"><%=new SimpleDateFormat(
+<div class="subHeading">
+    Créé le <%=new SimpleDateFormat(
         "dd/MM/yyyy").format(
-        group.getCreationDate())%></span> <span class="label">par&nbsp;:</span> <span
-        class="userInteresting"><%=group.getOwner().getName()%></span>
+        group.getCreationDate())%> par <%=bibLink(group.getOwner())%>
+</div>
 
-    <div class="<%=defaultOrUserClass(group.getDescription())%>"><%=escapedOrNullmultilines(group.getDescription(),
-            "Aucune description")%>
-    </div>
+<div id="globalLeft">
+
+    <h2>Messages</h2>
     <%
         if (isLogged()) {
-            if (!groupPage.isMember) {
-    %>
-    <s:form action="join" namespace="/groups" cssStyle="text-align: right;display:block;">
-        <s:hidden name="fromAction" value="%{actionDescription}"/>
-        <s:hidden name="groupId" value="%{id}"/>
-        <s:submit value="Rejoindre le groupe" cssStyle="width:150px"
-                  title="Rejoindre le groupe vous permettra de suivre les nouveaux messages depuis votre vestiaire."/>
-    </s:form>
-    <%
-    } else {
-    %>
-    <s:form action="part" namespace="/groups" cssStyle="text-align: right;display:block;">
-        <s:hidden name="fromAction" value="%{actionDescription}"/>
-        <s:hidden name="groupId" value="%{id}"/>
-        <s:submit value="Quitter le groupe" cssStyle="width:150px"/>
-    </s:form>
-    <%
-            }
-            if (group.getOwner().equals(currentUser()))
-                out.append("<div style='text-align: right'>")
-                        .append(selectableLink("/groups", "edit", "Mettre à jour", null, "id",
-                                String.valueOf(group.getId())))
-                        .append("</div>");
             call(pageContext, "publicMessageForm.jsp", group);
         }
-        if (groupPage.messages.isEmpty()) {%>
+        if (groupPage.messages.isEmpty()) {
+    %>
     <h2>Aucun message pour l'instant.</h2>
     <%
+        } else {
+            paginate(pageContext, "messageList.jsp", view(groupPage.messages, "messagesStartIndex"));
         }
-        paginate(pageContext, "messageList.jsp", view(groupPage.messages, "messagesStartIndex"));
     %>
 </div>
-<%}%>
+<% } %>
+
 <div id="<%=group == null ? "tinyCenter" : "globalRight"%>">
-    <%
-        if (group != null) {
-    %>
-    <h2>Les entraînements du groupe</h2>
+<% if (group != null) { %>
 
-    <div class="content">
-        <%
-            call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
-            paginate(pageContext, "workoutTable.jsp", view(groupPage.statistics.workouts, "workoutPage"), "displayEdit",
-                    "false", "displayName", "true");%>
+<% if (group.getOwner().equals(currentUser()) || group.getDescription() != null) { %>
+<h2>
+        <span class="buttonList">
+        <% if (group.getOwner().equals(currentUser())) { %>
+            <a href="<%=createUrl("/groups", "edit", "id", group.getId().toString())%>" title="Modifier"
+               class="button editButton">Modifier</a>
+        <%}%>
+        </span>
+    Description
+</h2>
+
+<div class="block">
+    <div class="content textContent">
+        <p><%=escapedOrNullmultilines(group.getDescription(),
+                "<em>Aucune description</em>")%>
+        </p>
+
     </div>
-    <%
-        if (!groupPage.users.isEmpty()) {
-    %>
-    <h2>Les membres</h2>
+</div>
+<%}%>
 
-    <div class="content">
-        <ul>
+<h2>Membres</h2>
+
+<div class="block userListBlock">
+    <div class="content textContent">
+        <ul class="userList">
             <% for (final User user : groupPage.users) {
-                out.append("<li>").append(bibLink(user)).append("</li>\n");
+                out.append("<li>");
+                out.append(bibLink(user)).append("</li>\n");
             }%>
         </ul>
+        <% if (groupPage.isMember) { %>
+        <form method="POST" action="<%=createUrl("/groups", "part")%>">
+            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="groupId" value="<%=stringProperty("id")%>"/>
+                    <span class="actions">
+                        <input type="submit" class="submit" value="Quitter le groupe"/>
+                    </span>
+        </form>
+        <%} else {%>
+        <form method="POST" action="<%=createUrl("/groups", "join")%>">
+            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="groupId" value="<%=stringProperty("id")%>"/>
+                    <span class="actions">
+                        <input type="submit" class="submit" value="Rejoindre le groupe"
+                               title="Rejoindre le groupe vous permettra de suivre les nouveaux messages depuis votre vestiaire."/>
+                    </span>
+        </form>
+        <%}%>
     </div>
-    <%
-            } else {
-                out.append("<h2>Aucun membre</h2>\n");
-            }
-        }
-    %>
-    <h2>Tous les groupes</h2>
+</div>
 
-    <div class="content">
-        <table>
-            <s:iterator value="%{allGroups}">
-                <%final GroupData groupData = top(GroupData.class);%>
-                <tr>
-                    <td><%=selectableLink("/groups", "", groupData.name.toString(), null, "id",
-                            String.valueOf(groupData.id))%>
-                    </td>
-                    <%final int newCount = groupData.newMessagesCount; %>
-                    <td><%=newCount > 0 ? newCount + (newCount == 1 ? " nouveau message" : " nouveaux messages") : ""%>
-                    </td>
-                    <td><%final long count = property("memberCount", Long.class).longValue();%>
-                        <%=count > 1 ? count + " membres" : count == 1 ? "un membre" : "aucun membre"%>
-                    </td>
-                </tr>
-            </s:iterator>
+<h2>Les entraînements du groupe</h2>
+<%
+    call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
+    paginate(pageContext, "workoutTable.jsp",
+            view(groupPage.statistics.workouts, "workoutPage", DEFAULT_WORKOUT_TRANSFORMER), "displayEdit",
+            "false", "displayName", "true");%>
+<%
+    if (!groupPage.users.isEmpty()) {
+%>
+
+<%
+        } else {
+            out.append("<h2>Aucun membre</h2>\n");
+        }
+    }
+%>
+
+<% if (group != null) {%>
+<h2>Voir les autres groupes</h2>
+<%} else {%>
+<h2>Tout les groupes</h2>
+<%}%>
+<div class="block">
+    <div class="content textContent">
+        <table class="groupList">
+            <tbody>
+                <s:iterator value="%{allGroups}">
+                    <%final GroupData groupData = top(GroupData.class);%>
+                    <tr>
+                        <th><%=selectableLink("/groups", "", groupData.name.toString(), null, "id",
+                                String.valueOf(groupData.id))%>
+                        </th>
+                        <%final int newCount = groupData.newMessagesCount; %>
+                        <td><%=newCount > 0 ? newCount + (newCount
+                                == 1 ? " nouveau message" : " nouveaux messages") : ""%>
+                        </td>
+                        <td><%final long count = property("memberCount", Long.class).longValue();%>
+                            <%=count > 1 ? count + " membres" : count == 1 ? "un seul membre" : "aucun membre"%>
+                        </td>
+                    </tr>
+                </s:iterator>
+            </tbody>
         </table>
     </div>
-    <%if (isLogged()) {%>
-    <h2>Créer un groupe</h2>
+</div>
 
-    <div class="content" style="width:20em">
-        <s:form action="create" namespace="/groups">
+<%if (isLogged()) {%>
+<h2>Créer un groupe</h2>
 
+<div class="block">
+    <div class="content textContent">
+        <form method="POST" action="<%=createUrl("/groups", "create")%>">
             <s:actionerror/>
             <s:fielderror/>
-
-            <s:hidden name="fromAction" value="%{actionDescription}"/>
-            <s:textfield id="name" name="name" cssStyle="width:99%"/>
+            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+                <span class="input">
+                    <input class="text" id="name" name="name"/>
+                </span>
             <p:javascript>makeItCount('name', <%=MAX_NAME_LENGTH%>, <%=MIN_NAME_LENGTH%>);</p:javascript>
-            <s:submit value="Créer !"/>
-        </s:form>
+                <span class="actions">
+                    <input type="submit" class="submit" value="Créer !"/>
+                </span>
+        </form>
     </div>
-    <%}%>
+</div>
+<%}%>
 </div>

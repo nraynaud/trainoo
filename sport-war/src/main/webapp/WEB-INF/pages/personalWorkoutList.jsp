@@ -1,29 +1,33 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.ConversationSummary" %>
+<%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="com.nraynaud.sport.data.UserPageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 
-<p:layoutParams title="Mon Vestiaire" showTitleInPage="false"/>
+<p:layoutParams title="Mon Vestiaire" showTitleInPage="true"/>
 
 <%final UserPageData data = top(UserPageData.class);%>
 <div id="globalLeft">
+
     <h2>Mes dernières sorties</h2>
 
-    <div class="content">
-        <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
-        <% paginate(pageContext, "workoutTable.jsp", view(data.getStatisticsData().workouts, "workoutPage"),
-                "displayEdit", "true");%>
-    </div>
+    <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
+    <% paginate(pageContext, "workoutTable.jsp",
+            view(data.getStatisticsData().workouts, "workoutPage", DEFAULT_WORKOUT_TRANSFORMER),
+            "displayEdit", "true");%>
+
     <h2>Nouvel entraînement</h2>
 
-    <div class="content">
-        <s:url id="createteurl" namespace="/workout" action="create" includeParams="none">
-            <s:param name="id" value="id"/>
-        </s:url>
-        <%call(pageContext, "workoutForm.jsp", null, "action", "createteurl", "submit", literal("Ajouter"));%>
+    <div class="block">
+        <div class="content">
+            <%
+                call(pageContext, "workoutForm.jsp", null, "action",
+                        createUrl("/workout", "create"), "submit", "Ajouter");
+            %>
+        </div>
     </div>
 </div>
 
@@ -31,44 +35,55 @@
     <%if (property("groupMembership", Iterable.class).iterator().hasNext()) {%>
     <h2>Les groupes dont je suis membre</h2>
 
-    <div class="content">
-        <ul>
-            <s:iterator value="%{groupMembership}">
-                <s:url id="groupUrl" namespace="/groups" action="" includeParams="none">
-                    <s:param name="id" value="%{id}"/>
-                </s:url>
-                <li><a href="<s:property value="%{groupUrl}"/>"><%=stringProperty("name")%>
-                </a>
-                    <s:if test="%{top.newMessagesCount > 0}">
-                        <span class="newMessages"><s:property
-                                value="%{top.newMessagesCount}"/> <s:if
-                                test="%{top.newMessagesCount > 1}">nouveaux</s:if><s:else>nouveau</s:else></span>
-                    </s:if></li>
-            </s:iterator>
-        </ul>
+    <div class="block">
+        <div class="content textContent">
+            <table class="groupList">
+                <tbody>
+                    <s:iterator value="%{groupMembership}">
+                        <%final GroupData groupData = top(GroupData.class);%>
+                        <tr>
+                            <th><%=selectableLink("/groups", "", groupData.name.toString(), null, "id",
+                                    String.valueOf(groupData.id))%>
+                            </th>
+                            <%final int newCount = groupData.newMessagesCount; %>
+                            <td><%=newCount > 0 ? newCount + (newCount
+                                    == 1 ? " nouveau message" : " nouveaux messages") : ""%>
+                            </td>
+                            <td><%final long count = property("memberCount", Long.class).longValue();%>
+                                <%=count > 1 ? count + " membres" : count == 1 ? "un seul membre" : "aucun membre"%>
+                            </td>
+                        </tr>
+                    </s:iterator>
+                </tbody>
+            </table>
+        </div>
     </div>
     <%}%>
+
     <h2>Mes correspondances</h2>
 
-    <div class="content">
-        <ul>
-            <s:iterator value="%{privateMessageReceivers}">
-                <%
-                    final ConversationSummary summary = top(ConversationSummary.class);
-                %>
-                <li>
-                    <%=selectableLink("/messages", "", summary.correspondentName.toString(), null, "receiver",
-                            summary.correspondentName.nonEscaped())%>
+    <div class="block userListBlock">
+        <div class="content">
+            <ul class="userList">
+                <s:iterator value="%{privateMessageReceivers}">
                     <%
+                        final ConversationSummary summary = top(ConversationSummary.class);
                         final long newCount = summary.newMessageCount;
-                        if (newCount > 0) {
                     %>
-                    <span class="newMessages"><%=newCount%> <%=newCount > 1 ? "nouveaux" : "nouveau"%></span>
-                    <%}%>
-                </li>
-            </s:iterator>
-        </ul>
+                    <li class="<%=newCount > 0 ? "hasNewMessage" : "noNewMessage"%>">
+                        <%=selectableLink("/messages", "", summary.correspondentName.toString(), null, "receiver",
+                                summary.correspondentName.nonEscaped())%>
+                        <%
+                            if (newCount > 0) {
+                        %>
+                        <span class="newMessages"><%=newCount%> <%=newCount > 1 ? "nouveaux" : "nouveau"%></span>
+                        <%}%>
+                    </li>
+                </s:iterator>
+            </ul>
+        </div>
     </div>
+    <h2>Envoyer un message</h2>
     <%
         call(pageContext, "privateMessageForm.jsp");
     %>

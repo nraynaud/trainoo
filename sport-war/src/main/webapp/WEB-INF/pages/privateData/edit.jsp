@@ -1,63 +1,102 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
-<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <p:layoutParams title="Modification des données personnelles"/>
 
 <div id="tinyCenter">
+
     <s:actionerror/>
-    <fieldset>
-        <legend>Changer votre e-mail de contact</legend>
-        <s:form action="changeEmail" namespace="/privatedata">
-            <s:fielderror>
-                <s:param value="'email'"/>
-            </s:fielderror>
-            <p><label for="email">Votre nouvelle adresse <span class="labelComplement">(videz la case pour le
-                supprimer du site)</span></label>
-            </p>
 
-            <p><s:textfield id="email" name="email" cssStyle="width:100%"/></p>
-            <p:javascript>$('email').focus();</p:javascript>
-            <s:submit id="submit" value="Valider !"/>
-        </s:form>
-    </fieldset>
-    <fieldset>
-        <legend>Changer de mot de passe</legend>
-        <s:form name="privatedata_form" id="privatedata_form" action="changePassword" namespace="/privatedata">
-            <s:fielderror>
-                <s:param value="'oldPassword'"/>
-                <s:param value="'password'"/>
-            </s:fielderror>
-            <s:hidden id="fromAction" name="fromAction" value="%{actionDescription}"/>
-            <p><label for="oldPassword">Votre mot de passe actuel</label></p>
+    <h2>Changer votre e-mail de contact</h2>
+    <div class="block">
+        <div class="content textContent">
+            <form method="POST" action="<%=createUrl("/privatedata", "changeEmail")%>" />
 
-            <p><s:password id="oldPassword" name="oldPassword" cssStyle="width:100%"/></p>
-            <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null, "adjective", "'nouveau'"); %>
-            <s:submit id="submit" value="Valider !"/>
-        </s:form>
-    </fieldset>
-    <fieldset>
-        <legend>Mon compte Nike+</legend>
-        <s:form action="changeNikePlus" namespace="/privatedata">
-            <s:fielderror>
-                <s:param value="'nikePlusEmail'"/>
-                <s:param value="'nikePlusPassword'"/>
-            </s:fielderror>
-            <s:hidden id="fromAction" name="fromAction" value="%{actionDescription}"/>
-            <p><label for="nikePlusEmail">Votre email Nike+ <span class="labelComplement">(videz la case pour supprimer
-                votre compte Nike+ du site mais pas vos entraînements)</span></label>
-            </p>
+                <s:fielderror>
+                    <s:param value="'email'"/>
+                </s:fielderror>
 
-            <p><s:textfield id="nikePlusEmail" name="nikePlusEmail" cssStyle="width:100%"/></p>
+                <span class="label">
+                    <label for="email">Votre e-mail</label>
+                    <span class="help fullWidth">vider la case pour le supprimer du site</span>
+                </span>
+                <span class="input fullWidth">
+                    <input name="email" id="email" class="text" value="<%=escapedOrNull(stringProperty("email"), "")%>" />
+                </span>
+                
+                <p:javascript>$('email').focus();</p:javascript>
+                <span class="actions">
+                    <input type="submit" class="submit" value="Valider !" />
+                </span>
+            </form>
+        </div>
+    </div>
 
-            <p><label for="nikePlusPassword">Votre mot de passe Nike+</label></p>
+    <h2>Changer de mot de passe</h2>
+    <div class="block">
+        <div class="content textContent">
+            <form method="POST" action="<%=createUrl("/privatedata", "changePassword")%>" >
+                
+                <s:fielderror>
+                    <s:param value="'oldPassword'"/>
+                    <s:param value="'password'"/>
+                </s:fielderror>
 
-            <p><s:password id="nikePlusPassword" name="nikePlusPassword" cssStyle="width:100%"/></p>
+                <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+                <span class="label">
+                    <label for="oldPassword">Votre mot de passe actuel</label>
+                </span>
+                <span class="input fullWidth">
+                    <input id="oldPassword" name="oldPassword" type="password" class="text" />
+                </span>
 
-            <s:submit id="submit" value="Valider !"/>
-        </s:form>
-    </fieldset>
+                <% call(pageContext, "passwordAndConfirm.jsp", null, "adjective", "'nouveau'"); %>
+                <span class="actions">
+                    <input type="submit" class="submit" value="Valider !"/>
+                </span>
+            </form>
+        </div>
+    </div>
 
-    <p style="text-align:right;"><a href="<s:url action="workouts" namespace="/"/>">Revenir à mon vestiaire</a></p>
+    <h2>Mon compte Nike+</h2>
+    <div class="block">
+        <div class="content textContent">
+            <form method="POST"action="<%=createUrl("/privatedata", "changeNikePlus")%>" >
+
+                <s:fielderror>
+                    <s:param value="'nikePlusEmail'"/>
+                    <s:param value="'nikePlusPassword'"/>
+                </s:fielderror>
+
+                <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+                <span class="label">
+                    <label for="nikePlusEmail">Votre e-mail Nike+</label>
+                    <span class="help fullWidth">vider la case pour supprimer votre compte Nike+ du site mais pas vos entraînements</span>
+                </span>
+                <span class="input fullWidth">
+                    <input name="nikePlusEmail" id="nikePlusEmail" class="text" 
+                        value="<%=escapedOrNull(stringProperty("nikePlusEmail"), "")%>"/>
+                </span>
+
+                <span class="label">
+                    <label for="nikePlusPassword">Votre mot de passe Nike+</label>
+                </span>
+                <span class="input fullWidth">
+                    <input id="nikePlusPassword" name="nikePlusPassword" type="password" class="text"/>
+                </span>
+
+                <span class="actions">
+                    <input type="submit" class="submit" value="Valider !"/>
+                </span>
+            </form>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="content textContent">
+            <p><a href="<%=createUrl("/", "workouts")%>" title="Revenir à mon vestiaire">Revenir à mon vestiaire</a></p>
+        </div>
+    </div>
 </div>

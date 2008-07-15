@@ -59,24 +59,4 @@
         <tag-class>com.nraynaud.sport.web.view.HeaderTag</tag-class>
         <description>For the individual pages : defines a new header fragment for the page.</description>
     </tag>
-    <tag>
-        <name>duration</name>
-        <tag-class>com.nraynaud.sport.web.view.DurationTag</tag-class>
-        <description>displays duration</description>
-        <attribute>
-            <name>name</name>
-            <required>false</required>
-            <description>name of the duration property</description>
-        </attribute>
-    </tag>
-    <tag>
-        <name>distance</name>
-        <tag-class>com.nraynaud.sport.web.view.DistanceTag</tag-class>
-        <description>displays distance</description>
-        <attribute>
-            <name>name</name>
-            <required>false</required>
-            <description>name of the distance property</description>
-        </attribute>
-    </tag>
 </taglib>

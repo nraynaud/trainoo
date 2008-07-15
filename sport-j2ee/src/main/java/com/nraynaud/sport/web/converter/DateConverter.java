@@ -1,19 +1,17 @@
 package com.nraynaud.sport.web.converter;
 
+import com.nraynaud.sport.web.DateHelper;
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.MutableDateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 public class DateConverter extends StrutsTypeConverter {
-    private static final DateTimeFormatter DATE_FORMATTER = pattern("dd/MM/yy");
+    private static final DateTimeFormatter DATE_FORMATTER = DateHelper.pattern("dd/MM/yy");
     private static final Parser FULL_FORMAT_PARSER = new Parser() {
         public DateTime parse(final String source) throws IllegalArgumentException {
             return DATE_FORMATTER.parseDateTime(source);
@@ -33,8 +31,8 @@ public class DateConverter extends StrutsTypeConverter {
     };
 
     private static DateTime parseAndComplete(final String source, final String pattern) {
-        final MutableDateTime date = new MutableDateTime(today());
-        final int result = pattern(pattern).parseInto(date, source, 0);
+        final MutableDateTime date = new MutableDateTime(DateHelper.today());
+        final int result = DateHelper.pattern(pattern).parseInto(date, source, 0);
         if (result != source.length())
             throw new IllegalArgumentException();
         return new DateTime(date);
@@ -44,21 +42,17 @@ public class DateConverter extends StrutsTypeConverter {
         public DateTime parse(final String source) throws IllegalArgumentException {
             if (source.length() > 0) {
                 if ("aujourd'hui".startsWith(source.toLowerCase()))
-                    return today();
+                    return DateHelper.today();
                 if ("hier".startsWith(source.toLowerCase()))
-                    return today().minusDays(1);
+                    return DateHelper.today().minusDays(1);
                 if ("avant-hier".startsWith(source.toLowerCase()))
-                    return today().minusDays(2);
+                    return DateHelper.today().minusDays(2);
             }
             throw new IllegalArgumentException();
         }
     };
 
     private static final Parser[] PARSERS = {FULL_FORMAT_PARSER, DAY_MOUTH_PARSER, DAY_PARSER, WORD_PARSER};
-
-    private static DateTime today() {
-        return new DateTime(new DateMidnight());
-    }
 
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
@@ -91,25 +85,15 @@ public class DateConverter extends StrutsTypeConverter {
     }
 
     public static String parseAndPrettyPrint(final String source) {
-        final DateMidnight now = new DateMidnight();
-        final DateMidnight date = parseDateTime(source).toDateMidnight();
         final String pattern = "EEEE dd/MM/yy";
-        final String formatted = pattern(pattern).print(date);
-        if (now.equals(date))
-            return "Aujourd'hui (" + formatted + ")";
-        if (now.minusDays(1).equals(date))
-            return "Hier (" + formatted + ")";
-        if (now.minusDays(2).equals(date))
-            return "Avant-hier (" + formatted + ")";
-        return formatted;
-    }
-
-    private static DateTimeFormatter pattern(final String pattern) {
-        return DateTimeFormat.forPattern(pattern).withLocale(Locale.FRANCE);
+        return DateHelper.humanizePastDate(parseDateTime(source).toDate(),
+                "'Aujourd''hui ('" + pattern + "')'",
+                "'Hier ('" + pattern + "')'",
+                "'Avant-hier ('" + pattern + "')'",
+                pattern);
     }
 
     private interface Parser {
-
         DateTime parse(final String source) throws IllegalArgumentException;
     }
 }

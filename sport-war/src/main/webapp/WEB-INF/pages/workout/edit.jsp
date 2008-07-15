@@ -6,17 +6,14 @@
 <p:layoutParams title="Modification d'un entraînement"/>
 
 <div id="tinyCenter">
-    <s:url id="updateurl" namespace="/workout" action="edit" includeParams="none">
-        <s:param name="id" value="id"/>
-    </s:url>
     <%
-        call(pageContext, "workoutForm.jsp", null, "action", "updateurl", "showDelete", "true", "submit",
-                literal("Modifier"));
+        final String id = property("id", String.class);
+        call(pageContext, "workoutForm.jsp", null, "action", createUrl("/workout", "edit", "id", id), "showDelete",
+                true, "submit", "Modifier");
     %>
-    <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
-            property("id", String.class))%>
-    <div style="text-align:center;margin-top:2em; clear:both;"><a
-            href="<s:url action="workouts" namespace="/" includeParams="none"/>">Annuler et revenir à mon vestiaire</a>
+    <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id", id)%>
+    <div style="text-align:center;margin-top:2em; clear:both;"><a href="<%=createUrl("/",  "workouts")%>">Annuler et
+        revenir à mon vestiaire</a>
     </div>
 </div>
 

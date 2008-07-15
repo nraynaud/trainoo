@@ -1,39 +1,51 @@
 <%@ page import="static com.nraynaud.sport.web.action.SignupAction.*" %>
-<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<p:layoutParams title="Inscrivez-vous !"/>
-<div class="content">
-    <p>Vous pourrez suivre votre vie sportive et rencontrer d'autres amateurs comme vous&nbsp;!</p>
+<p:layoutParams title="Inscription"/>
+<div id="tinyCenter">
+    <div class="block">
+        <div class="content textContent">
+            <form method="POST" action="<%=createUrl("/", "signup")%>" >
+                <s:actionerror/>
+                <s:fielderror/>
+                <input type="hidden" name="fromAction" value="%{fromAction}"/>
+                <span class="label">
+                    <label for="login">Votre surnom</label>
+                    <span class="help fullWidth">c'est par ce nom que vous serez visible sur tout le site</span>
+                </span>
+                <span class="input fullWidth">
+                    <input name="login" id="login" class="text" />
+                </span>
+                
+                <p:javascript>$('login').focus();</p:javascript>
+                <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>, <%= LOGIN_MIN_LENGTH%>);</p:javascript>
+                <% call(pageContext, "passwordAndConfirm.jsp", null); %>
 
-    <div id="tinyCenter">
-        <s:form action="signup">
-            <s:actionerror/>
-            <s:fielderror/>
-            <s:hidden name="fromAction" value="%{fromAction}"/>
-            <p class="loginLabel"><label for="login">Votre surnom <span
-                    class="labelComplement">(C'est par ce nom que vous serez visible sur tout le site)</span></label>
-            </p>
+                <span class="actions">
+                    <input type="submit" value="S'inscrire !" class="submit"/>
+                </span>
 
-            <s:textfield id="login" name="login" cssStyle="width:100%"/>
-            <p:javascript>$('login').focus();</p:javascript>
-            <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>, <%= LOGIN_MIN_LENGTH%>);</p:javascript>
-            <% Helpers.call(pageContext, "passwordAndConfirm.jsp", null); %>
-
-            <s:submit value="Inscription !"/>
-            <fieldset style="width:80%; font-size:11px; margin:auto;">
-                <legend>Optionnel</legend>
-                <p class="loginLabel  tinyLabel" style="padding-top:0"><label for="email">Votre e-mail <span
-                        class="labelComplement">(si vous désirez recevoir un rappel de vos identifants)</span></label>
-                </p>
-                <s:textfield id="email" name="email" cssStyle="width:100%"/>
-                <p class="loginLabel tinyLabel"><s:checkbox id="rememberMe" name="rememberMe"/><label for="rememberMe">Se
-                    souvenir de moi <span
-                        class="labelComplement">(décocher si ce n'est pas votre propre ordinateur)</span></label></p>
-            </fieldset>
-        </s:form>
+                <fieldset>
+                    <legend>Champs optionnels</legend>
+                    <span class="label">
+                        <label for="email">Votre e-mail</label>
+                        <span class="help fullWidth">en cas de perte de vos identifiants</span>
+                    </span>
+                    <span class="input fullWidth">
+                        <input name="email" id="email" class="text" />
+                    </span>
+                    <span class="input precedingInput">
+                        <input type="checkbox" class="checkbox" name="rememberMe" id="rememberMe" checked="checked" />
+                    </span>
+                    <span class="label">
+                        <label for="rememberMe">Se souvenir de moi</label>
+                        <span class="help fullWidth">décocher si ce n'est pas votre propre ordinateur</span>
+                    </span>
+                </fieldset>
+            </form>
+        </div>
     </div>
-    Déjà un compte&nbsp;? <%=Helpers.loginUrl("Connectez-vous&nbsp;!")%>
 </div>

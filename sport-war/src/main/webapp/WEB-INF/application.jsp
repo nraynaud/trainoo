@@ -1,6 +1,8 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.data.NewMessageData" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
 
@@ -13,16 +15,10 @@
     </title>
     <meta name="verify-v1" content="yZTq8PJgPZNW+ohX4rJs4so6GlFfVS3hawur2jTQEIA=">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!--[if IE ]>
-    <style>
-    #gradient {
-      background: none;
-      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<%=stat("/static/gradient.png")%>', sizingMethod='scale');
-    }
-    </style>
-    <![endif]-->
-
+    
     <link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
+    <link href="<%=stat("/static/reset.css")%>" rel="stylesheet" type="text/css">
+    <link href="<%=stat("/static/pimp/sport_pimp.css")%>" rel="stylesheet" type="text/css">
     <!--[if lt IE 7]>
         <link href="<%=stat("/static/sport_ie6.iecss")%>" rel="stylesheet" type="text/css">
     <![endif]-->
@@ -32,97 +28,82 @@
         }
     %>
 </head>
-<body id="body">
-<div id="center">
-    <%if (pageDetail.isShowHeader()) {%>
-    <div id="heading">
-        <div id="leftHeading">
-            <%call(pageContext, "logo.jsp");%>
-
-            <div id="catchPhrase">
-                Vous allez en suer&nbsp;!
+<body>
+    <div id="body">
+        <div id="center">
+            <%if (pageDetail.isShowHeader()) {%>
+            <div id="header">
+                <div id="logo"><a href="/">Trainoo.com</a></div>
+                <div id="catchPhrase">Vous allez en suer&hellip;</div>
+                <div id="adPlaceHolder">publicité google</div>
             </div>
+            <%}%>
+            <%call(pageContext, "menu.jsp");%>
+            <div id="content">
+			     <% if (isLogged()) {
+                    final List<NewMessageData> newMessages = property("newMessages", List.class);
+                    if (newMessages.size() > 0) {
+                        int count = 0;
+                        for (final NewMessageData privateMessage : newMessages) {
+                            count += privateMessage.messageCount;
+                        }%>
+                <s:url id="messagesURL" action="" namespace="/messages">
+                    <s:param name="receiver" value="newMessages.get(0).sender"/>
+                </s:url>
+                <div id="infoPop">
+                <a class="newMessages" href="<s:property value="%{messagesURL}"/>"><%=count + " " + pluralize(count,
+                        "nouveau message", "nouveaux messages")%>
+                </a>
+                </div>
+                <% }} %>
+                <%if (pageDetail.isShowTitle()) {%>
+                <h1><%=pageDetail.getTitle()%>
+                </h1>
+                <%}%>
+                <s:actionmessage/>
+                <% /* the page content*/
+                    final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
+                    out.append(detail.getContent());
+                %>
+            </div>
+            <%if (pageDetail.isShowFooter()) {%>
+            <div id="footer">
+                <hr>
+                <p><%=selectableLink("/", "about", "À propos de trainoo.com…",  null)%> -
+                <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
+            <%}%>
+
+            <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
+            <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
+            <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
+            <r:writeJavascript/>
+
+            <script type="text/javascript">
+                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+            </script>
+            <script type="text/javascript">
+                var pageTracker = _gat._getTracker("UA-3412937-1");
+                pageTracker._initData();
+                pageTracker._trackPageview();
+            </script>
+            <%if (pageDetail.isShowHeader()) {%>
+            <div id="ad">
+                <script type="text/javascript"><!--
+                google_ad_client = "pub-1788371406648361";
+                /* 468x60, trainoo_pimp */
+                google_ad_slot = "8185304312";
+                google_ad_width = 468;
+                google_ad_height = 60;
+                //-->
+                </script>
+                <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+            </div>
+            <script type="text/javascript">
+                $('adPlaceHolder').update($('ad'));
+            </script>
+            <%}%>
         </div>
-        <div id="adPlaceholder">publicité google</div>
     </div>
-    <%}%>
-    <%call(pageContext, "loginHeader.jsp");%>
-    <div id="content">
-        <%if (pageDetail.isShowTitle()) {%>
-        <h1><%=pageDetail.getTitle()%>
-        </h1>
-        <%}%>
-        <s:actionmessage/>
-        <% /* the page content*/
-            final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
-            out.append(detail.getContent());
-        %>
-    </div>
-    <%if (pageDetail.isShowFooter()) {%>
-    <hr id="bottom">
-    <div><p class="smaller" style="text-align:center;"><%=selectableLink("/", "about", "À propos de trainoo.com",
-            null)%> -
-        <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
-    <%}%>
-
-    <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
-    <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
-    <%if (pageDetail.isShowHeader()) {%>
-    <!--[if !IE]>-->
-    <script type="text/javascript">
-        var canvas = new Element('canvas', {'id': 'gradient'});
-        $('logoHref').insert(canvas);
-        var height = $('logoHref').getHeight();
-        var width = $('logoHref').getWidth();
-        canvas.height = height
-        canvas.width = width
-        var ctx = canvas.getContext('2d');
-        var lineargradient = ctx.createLinearGradient(0, 0, 0, height);
-        lineargradient.addColorStop(0.5, 'rgba(255,255,255,0)');
-        lineargradient.addColorStop(0, 'white');
-        ctx.fillStyle = lineargradient;
-        ctx.fillRect(0, 0, width, height);
-    </script>
-    <!--<![endif]-->
-    <!--[if IE]>
-    <script type="text/javascript">
-          $('logoHref').insert("<div id='gradient'><"+"/div>");
-    </script>
-    <![endif]-->
-    <%}%>
-    <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
-    <r:writeJavascript/>
-
-    <!--[if lt IE 7]>
-    <script type="text/javascript">
-        fixPNGIE();
-    </script>
-    <![endif]-->
-    <script type="text/javascript">
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-        var pageTracker = _gat._getTracker("UA-3412937-1");
-        pageTracker._initData();
-        pageTracker._trackPageview();
-    </script>
-    <%if (pageDetail.isShowHeader()) {%>
-    <div id="ad">
-        <script type="text/javascript"><!--
-        google_ad_client = "pub-1788371406648361";
-        /* trainoo */
-        google_ad_slot = "2814569948";
-        google_ad_width = 468;
-        google_ad_height = 60;
-        //-->
-        </script>
-        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-    </div>
-    <script type="text/javascript">
-        $('adPlaceholder').update($('ad'));
-    </script>
-    <%}%>
-</div>
 </body>
 </html>

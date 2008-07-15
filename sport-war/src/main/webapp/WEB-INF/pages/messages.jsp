@@ -10,6 +10,7 @@
 <p:layoutParams title="<%="Messages privés avec " + data.receiver%>"/>
 
 <div id="tinyCenter">
+    <h2>Nouveau message privé</h2>
     <%
         call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.receiver),
                 "hideReceiverBox", true);

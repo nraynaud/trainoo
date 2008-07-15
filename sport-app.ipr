@@ -54,6 +54,7 @@
         <option name="BINARY_OPERATION_WRAP" value="5" />
         <option name="BINARY_OPERATION_SIGN_ON_NEXT_LINE" value="true" />
         <option name="ARRAY_INITIALIZER_WRAP" value="5" />
+        <option name="HTML_DO_NOT_INDENT_CHILDREN_OF" value="" />
         <ADDITIONAL_INDENT_OPTIONS fileType="js">
           <option name="INDENT_SIZE" value="4" />
           <option name="CONTINUATION_INDENT_SIZE" value="8" />
@@ -322,6 +323,7 @@
         <inspection_tool class="CastConflictsWithInstanceof" level="WARNING" enabled="true" />
         <inspection_tool class="CastToIncompatibleInterface" level="WARNING" enabled="true" />
         <inspection_tool class="CheckTagEmptyBody" level="WARNING" enabled="false" />
+        <inspection_tool class="CssNoGenericFontName" level="WARNING" enabled="false" />
       </profile>
     </profiles>
     <list size="4">

@@ -16,4 +16,7 @@ public interface PaginatedCollection<T> extends Iterable<T> {
     public int getNextIndex();
 
     public boolean isEmpty();
+    public interface Transformer<T,U> {
+        U transform(PaginatedCollection<T> collection);
+    }
 }

@@ -14,46 +14,47 @@
     final boolean lookingOwnBib = user.equals(currentUser());%>
 <p:layoutParams title="<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + user.getName()%>"/>
 
-<div id="<%= lookingOwnBib || !isLogged() ? "tinyCenter" : "globalLeft"%>">
-    <% final String defaultValue = "non précisé";
-        final String townLabel = "Ma ville";%>
-    <table class="displayFormLayoutTable">
-        <tr>
-            <td><span class="label"><%=townLabel%>&nbsp;:</span></td>
-            <td><span class="<%=defaultOrUserClass(user.getTown())%>"><%=escapedOrNull(user.getTown(),
-                    defaultValue)%></span>
-            </td>
-        </tr>
-        <tr>
-            <td><span class="label">Moi&nbsp;:</span></td>
-            <td><span class="<%=defaultOrUserClass(user.getDescription())%>"><%=escapedOrNullmultilines(
-                    user.getDescription(), defaultValue)%></span></td>
-        </tr>
-        <tr>
-            <td><span class="label">Mon site&nbsp;: </span></td>
-            <td><span class="<%=defaultOrUserClass(user.getWebSite())%>"><%=formatUrl(user.getWebSite(),
-                    defaultValue)%></span></td>
-        </tr>
-    </table>
-    <% if (lookingOwnBib) {%>
-    <p align="right"><a href="<s:url action="edit" namespace="/bib"/>">Mettre à jour</a></p>
-    <%} else {%>
+<div <%=!lookingOwnBib && isLogged() ? "id='globalLeft'" : "" %> >
+    <div class="block bibBlock">
+        <div class="content">
+            <span class="buttonList">
+                <% if (lookingOwnBib) {%>
+                <a href="<%=createUrl("/bib", "edit")%>" title="Modifier mon dossard"
+                   class="button editButton">Modifier</a>
+                <%}%>
+            </span>
+            <% final String defaultValue = "non précisé";
+                final String townLabel = "Ma ville";%>
+            <dl>
+                <dt><%=townLabel%>&nbsp;:</dt>
+                <dd><%=escapedOrNull(user.getTown(),
+                        defaultValue)%>
+                </dd>
+                <dt>Moi&nbsp;:</dt>
+                <dd><%=escapedOrNullmultilines(
+                        user.getDescription(), defaultValue)%>
+                </dd>
+                <dt>Mon site&nbsp;:</dt>
+                <dd><%=formatUrl(user.getWebSite(),
+                        defaultValue)%>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <% if (!lookingOwnBib) {%>
     <h2>Ses dernières sorties</h2>
-    <% paginate(pageContext, "workoutTable.jsp", view(data.workouts, "workoutPage"));%>
+    <% paginate(pageContext, "workoutTable.jsp", view(data.workouts, "workoutPage", DEFAULT_WORKOUT_TRANSFORMER));%>
     <%}%>
 </div>
 <%if (!lookingOwnBib && isLogged()) {%>
 <div id="globalRight">
     <h2>Envoyer un message à <%=user.getName()%>
     </h2>
-
-    <div class="content">
-        <%
-            call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.user.getName()),
-                    "hideReceiverBox", true);
-            paginate(pageContext, "messageList.jsp", view(data.privateMessages, "messagePageIndex"));
-        %>
-    </div>
+    <%
+        call(pageContext, "privateMessageForm.jsp", new PrivateMessageFormConfig(data.user.getName()),
+                "hideReceiverBox", true);
+        paginate(pageContext, "messageList.jsp", view(data.privateMessages, "messagePageIndex"));
+    %>
 </div>
 <%}%>
 <%!

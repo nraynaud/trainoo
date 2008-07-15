@@ -1,0 +1,717 @@
+/* --- whole site --- */
+html {
+	font-size: 100%;
+}
+
+body {
+	color: #000;
+	background-color: #869c34;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 0.875em;
+}
+
+small {
+	font-size: 0.8em;
+}
+
+#center {
+	position: relative;
+	width: 68.571429em;
+	margin: 0 auto;
+	background-color: #f7f7e2;
+
+	background-image: url(border_left.png);
+	background-position: left top;
+	background-repeat: repeat-y;
+}
+
+/* --- Header --- */
+
+#header {
+	position: relative;
+	height: 50px;
+	padding: 10px;
+	
+	background-image: url(border_right.png);
+	background-position: right top;
+	background-repeat: repeat-y;
+}
+
+#logo a {
+	color: #514621;
+	font-size: 47px;
+	padding-left: 6px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#catchPhrase {
+	position: absolute;
+	bottom: 0;
+	left: 140px;
+	
+	font-style: italic;
+	font-size: 18px;
+	color: #000000;
+	cursor: default;
+}
+
+#adPlaceHolder {
+	position: absolute;
+	top: 10px;
+	right: 14px;
+	width: 468px;
+	height: 60px;
+	
+	background-color: #EEE;
+}
+
+#menu {
+	height: 82px;
+	overflow: hidden;
+
+	font-size: 1.0714286em;
+	font-weight:bold;
+	color: #000;
+	background-image: url(menu_band.png);
+	background-position: left 10px;
+	background-repeat: repeat-x;
+}
+
+#menu ul {
+	padding : 13px 20px 20px 20px;
+	overflow: hidden; _overflow: visible; zoom: 1;
+}
+
+#menu ul.primary {
+	padding-left: 42px;
+	background-image: url(menu_left.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+}
+
+#menu ul.secondary {
+	float: right;
+
+	background-image: url(menu_right.png);
+	background-position: right top;
+	background-repeat: no-repeat;
+}
+
+#menu ul li {
+	display: block;
+	float: left;
+	margin-left: -23px;
+
+	background-image: url(menu_unselected_left.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+}
+
+#menu ul li.first {
+	background-image: url(menu_first_unselected_left.png);
+}
+
+#menu ul li span {
+	display: block;
+	padding: 6px 10px 48px 10px;
+	
+	background-image: url(menu_unselected_right.png);
+	background-position: right top;
+	background-repeat: no-repeat;
+}
+
+#menu a {
+	display:block;
+	padding: 0 20px;
+	
+	color: #5a533b;
+	text-decoration:none;
+	outline: none;
+}
+
+#menu a:hover {
+	color: #000;
+}
+
+#menu ul li.current {
+	background-image: url(menu_selected_left.png);
+	position: relative;
+	z-index: 1;
+	margin-left: -30px;
+}
+
+#menu ul li.currentFirst {
+	background-image: url(menu_first_selected_left.png);
+}
+
+#menu ul li.current span {
+	background-image: url(menu_selected_right.png);
+	padding: 6px 38px 48px 33px;
+	cursor: default;
+}
+
+#menu ul li.currentLast span {
+	background-image: url(menu_last_selected_right.png);
+}
+
+/* --- Footer --- */
+#footer {
+	overflow: hidden; _overflow: visible; zoom: 1;
+
+	background-image: url(border_right.png);
+	background-position: right top;
+	background-repeat: repeat-y;
+	text-align: center;
+	padding: 20px 40px 0;
+}
+
+#footer p {
+	padding: 10px 0;
+}
+
+#footer a {
+	color: #514621;
+	text-decoration: none;
+}
+
+#footer a:hover {
+	text-decoration: underline;
+}
+
+#footer hr {
+	background-color: #869c34;
+	border: none;
+	height: 2px;
+}
+
+/* --- Content --- */
+
+#content {
+	z-index: 1;
+	overflow: hidden; _overflow: visible; zoom: 1;
+	clear: both;
+	padding: 0 20px;
+	/* Draw over the bottom part of menu tabs */
+	position: relative;
+	top: -38px;
+	margin-bottom: -38px;
+	
+	background-image: url(border_right.png);
+	background-position: right top;
+	background-repeat: repeat-y;
+}
+
+#content h1 {
+	font-size: 36px;
+	font-weight: bold;
+	color: #514621;
+	padding: 3px 0 20px 20px;
+	cursor: default;
+}
+
+.vsplit-1-on-2 {
+	float: left;
+	width: 49.9%; /* IE fix */
+}
+
+#content h2 {
+	padding:6px 0 10px 20px;
+	font-size: 24px;
+	color: #403615;
+}
+
+/* --- Content block --- */
+.block {
+	position: relative;
+	padding: 0 20px 10px 10px;
+}
+
+.block .content {
+	clear: both;
+	padding-bottom: 1px;
+}
+
+.block .textContent p {
+	margin: 6px 8px 6px 12px;
+	line-height: 1.2;
+}
+
+.block .textContent ul li {
+	line-height: 1.3;
+	margin: 0 12px 0 48px;
+	list-style: disc;
+}
+
+.block .textContent p a,
+.block .textContent ul a,
+.block .textContent dl a,
+.block .textContent ol a {
+	color: #204a87;
+	padding: 0 1px;
+}
+
+.block .textContent p a:hover,
+.block .textContent ul a:hover,
+.block .textContent dl a:hover,
+.block .textContent ol a:hover {
+	background-color: #f3f0d8;
+}
+
+/* --- workout sheet block --- */
+
+dl.sheet {
+	border: 3px solid #ffffff;
+	border-top-width: 0;
+	background-color: #bacf6d;
+}
+
+dl.sheet dt {
+	margin: 0 0 4px 0;
+	border-top: 10px solid #ffffff;
+	padding: 6px 0 0 6px;
+	
+	font-size: 1.28571em;
+	font-weight: bold;
+}
+
+dl.sheet ul {
+	margin: 6px;
+}
+
+dl.sheet li span {
+	display: block;
+	float: left;
+	width: 25%;
+}
+
+dl.sheet li span.discipline {
+	width: 19%;
+}
+
+dl.sheet li span.user {
+	width: 23%;
+}
+
+dl.sheet li span.date {
+	width: 20%;
+	text-align: right;
+	padding-right: 3%;
+}
+
+dl.sheet li span.duration {
+	width: 28%;
+	overflow: hidden; _overflow: visible; zoom: 1;
+}
+
+dl.sheet li span.duration span {
+	display: block;
+	float: left;
+	text-align: right;
+	width: 1.65em;
+}
+
+dl.sheet li span.duration span.seconds {
+	width: 1.85em;
+}
+
+dl.sheet li span.distance {
+	overflow: hidden; _overflow: visible; zoom: 1;
+}
+
+dl.sheet li span.distance span {
+	display: block;
+	float: left;
+	text-align: right;
+	width: 1.5em;
+}
+
+dl.sheet li span.distance span.decimal {
+	text-align: left;
+}
+
+dl.sheet li span.coms {
+	float: none;
+	width: auto;
+	text-align: center;
+	height: 13px;
+	padding: 2px 0 0 0;
+	font-size: 0.71428571em;
+	background-image: url(bulle_odd.png);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+dl.sheet li span.comsNone {
+	visibility: hidden;
+}
+
+dl.sheet li.even span.coms {
+	background-image: url(bulle_even.png);
+}
+
+dl.sheet li a:hover span.coms {
+	background-image: url(bulle_hover.png);
+}
+
+dl.sheet li a {
+	display: block;
+	overflow: hidden; _overflow: visible; zoom: 1;
+	background-color: #e7f3b9;
+	margin-top: 1px;
+	padding: 3px 10px;
+	text-decoration: none;
+	color: #000000;
+}
+
+dl.sheet li.even a {
+	background-color: #f7f7e2;
+}
+
+dl.sheet li a:hover {
+	background-color: #d8ee87;
+}
+
+dl.sheet li {
+	display: block;
+	clear: left;
+}
+
+/* --- sheet-only block */
+
+.sheetBlock .content {
+	padding: 0 8px;
+}
+
+/* --- important block */
+
+.importantBlock .textContent p {
+	font-size: 1.1428571em;
+	line-height: 1.3;
+}
+
+.importantBlock .textContent ul {
+	font-size: 1.1428571em;
+}
+
+/* --- message block --- */
+
+.messageBlock .decoLeft {
+	padding-left: 11px;
+
+	background-image: url(block_deco_left.png);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.messageBlock .decoRight {
+	padding-right: 11px;
+	
+	background-image: url(block_deco_right.png);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+.messageBlock .heading {
+	overflow: hidden; _overflow: visible; zoom: 1;
+
+	background-image: url(block_heading.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+	background-color: #cab46d;
+}
+
+.messageBlock .heading .secondary {
+	display: block;
+	padding: 14px 10px 1px 0;
+	text-align: right;
+
+	color: #938247;
+	background-image: url(block_heading_right.png);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+.messageBlock .heading .primary {
+	float: left;
+	
+	color: #f6f4d7;
+	background-image: url(block_heading_primary.png);
+	background-repeat: no-repeat;
+	background-position: right top;
+	background-color: #789426;
+}
+
+.messageBlock .heading .decoPrimary {
+	display: block;
+	padding: 12px 28px 1px 10px;
+	
+	background-image: url(block_heading_primary_left.png);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+.messageBlock .heading a {
+	text-decoration: none;
+	color: #f6f4d7;
+	font-weight: bold;
+	font-size: 1.0714286em;
+}
+
+.messageBlock .heading a:hover {
+	text-decoration: underline;
+}
+
+.messageBlock .subHeading {
+	padding: 2px 12px 2px 0;
+	margin: 6px;
+	
+	text-align: right;
+	background-image: url(block_subheading.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.messageBlock .subHeading a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #403615;
+}
+
+.messageBlock .subHeading a:hover {
+	text-decoration: underline;
+}
+
+.messageBlock .content {
+	background-color: #f7f7e2;
+}
+
+/* --- forms base --- */
+form {
+	overflow: hidden; _overflow: visible; zoom: 1;
+}
+
+label {
+	font-weight: bold;
+}
+
+form .actions {
+	text-align: right;
+}
+	
+input, select, textarea {
+	font-family: inherit;
+	font-size: 1em;
+	border: #808080 solid 1px;
+	padding: 2px;
+	vertical-align: baseline;
+}
+
+textarea {
+	width: 100%;
+	font-size: 1.0714286em;
+}
+
+input:focus, select:focus, textarea:focus {
+	border: 2px solid #404040;
+	padding: 1px;
+}
+
+input.text {
+	width: 100%;
+	display: block;
+}
+
+input.submit {
+	padding: 1px 8px;
+}
+
+input.submit:focus {
+	padding: 0 7px;
+}
+
+.label {
+	margin: 6px 0 2px 0;
+	display: block;
+}
+
+.label label {
+	display: block;
+	float: left;
+	padding: 5px 6px 0 0;
+}
+
+.input {
+	display: block;
+	padding: 0 6px 0 0;
+	overflow: hidden; _overflow: visible; zoom: 1;
+	margin-bottom: 4px;
+}
+
+/* To be used on .input block to make
+ * them take the whole line under the label,
+ * instead of being at the right of the label.
+ */
+.fullWidth {
+	clear: left;
+}
+
+.help {
+	display: block;
+	text-align: right;
+}
+
+.actions {
+	display: block;
+	text-align: right;
+}
+
+/* --- subscribe form --- */
+
+#subscribeForm input.text ,
+#subscribeForm input.password {
+	width: 100%;
+}
+
+#subscribeForm .actions {
+	text-align: center;
+	font-size: 1.2857143em;
+	font-weight: bold;
+}
+
+/* --- comment adding block --- */
+
+.addCommentBlock .content {
+	padding: 0 11px;
+}
+
+/* --- workout block --- */
+
+.workoutBlock .content {
+	overflow: hidden; _overflow: visible; zoom: 1;
+}
+
+.workoutBlock dl {
+	padding-top: 6px;
+}
+
+.workoutBlock dl dt {
+	display: block;
+	float: left;
+	clear: left;
+	width: 49.9%;
+	
+	text-align: right;
+	font-size: 1.4287514em;
+	line-height: 1.25;
+	margin-bottom: 14px;
+}
+
+.workoutBlock dl dd {
+	overflow: hidden; _overflow: visible; zoom: 1;
+	display: block;
+	padding-left: 6px;
+	text-align: left;
+	font-size: 1.7857143em;
+	margin-bottom: 14px;
+}
+
+.editingWorkoutBlock dl dd.editable {
+	padding-left: 2px;
+	position: relative;
+	top: -6px;
+	margin-bottom: 1px;
+}
+
+.workoutBlock .applyButton ,
+.workoutBlock .cancelButton ,
+.editingWorkoutBlock .editButton {
+	display: none;
+}
+
+.editingWorkoutBlock .applyButton ,
+.editingWorkoutBlock .cancelButton {
+	display: block;
+}
+
+/* --- user list --- */
+
+.userListBlock .content {
+	padding: 0 6px;
+}
+
+ul.userList {
+	overflow: hidden; _overflow: visible; zoom: 1;
+}
+
+ul.userList li {
+	display: block;
+	float: left;
+	margin: 6px;
+	
+}
+
+ul.userList li a {
+	display: block;
+	width: 80px;
+	height: 40px;
+	padding: 20px 5px 0 5px;
+	text-align: center;
+	overflow: hidden;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 14px;
+	text-decoration: none;
+	color: #444;
+	background-image: url(dossard.png);
+	background-color: #FFF;
+}
+
+/* -- title buttons --- */
+
+.buttonList {
+	overflow: hidden; _overflow: visible; zoom: 1;
+	float: right;
+	clear: right;
+}
+
+.button {
+	height: 24px;
+	width: 0px;
+	padding: 0 0 0 24px;
+	line-height: 24px;
+	overflow: hidden;
+	text-align: right;
+	text-decoration: none;
+	margin: 2px 2px 5px 2px;
+	float: right;
+	clear: right;
+
+	background-position: right top;
+	background-repeat: no-repeat;
+	color: #000;
+	font-size: 14px;
+}
+
+h2 .button {
+	font-size: 14px;
+	margin-right: 20px;
+}
+
+.button:hover,
+.verboseButton {
+	width: auto;
+	padding: 0 28px 0 2px;
+}
+
+.editButton {
+	background-image: url(edit.png);
+}
+
+.applyButton {
+	background-image: url(apply.png);
+}
+
+.cancelButton {
+	background-image: url(cancel.png);
+}

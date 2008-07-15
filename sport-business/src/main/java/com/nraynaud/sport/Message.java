@@ -1,5 +1,7 @@
 package com.nraynaud.sport;
 
+import java.util.Date;
+
 public interface Message {
 
     Long getId();
@@ -15,4 +17,6 @@ public interface Message {
     boolean canEdit(User user);
 
     MessageKind getMessageKind();
+
+    Date getDate();
 }

@@ -17,52 +17,63 @@
 <% final Workout workout = property("aboutWorkout", Workout.class);
     final Workout answerWorkout = workout != null ? workout : parameter("aboutWorkout", Workout.class);%>
 
-<form id="writeMessage" name="writeMessage"
-      action="<s:url action="write" namespace="/messages" anchor="errorMessage" includeParams="none"/>" method="post">
-    <fieldset>
-        <legend>Nouveau message privé</legend>
-
-        <%
-            if (MY_ERROR_CODE.equals(errorParam)) {
-        %>
-        <s:actionerror/>
-        <s:fielderror>
-            <s:param value="'receiver'"/>
-            <s:param value="'content'"/>
-        </s:fielderror>
-        <a name="errorMessage"> </a>
+<div class="block addCommentBlock">
+    <div class="content">
+        <% if (answerWorkout != null) {%>
+        <p>
+        à propos de la sortie&nbsp;:
+        <%call(pageContext, "workoutComponent.jsp", answerWorkout);%>
+        </p>
         <%}%>
-        <% if (!boolParam("hideReceiverBox")) {%>
-        <div id="answerReceiver">
-            <div id="privateReceiver" style="display:inline;">
-                <label for="receiver">Destinataire&nbsp;:</label><br>
-                <s:textfield name="receiver" id="receiver" maxlength="20"
-                             value="%{receiver != null ? receiver : parameters.receiver}"/>
+        <form method="POST" action="<%=createUrl("/messages", "write")%>#errorMessage" >
+            <%
+                if (MY_ERROR_CODE.equals(errorParam)) {
+            %>
+            <s:actionerror/>
+            <s:fielderror>
+                <s:param value="'receiver'"/>
+                <s:param value="'content'"/>
+            </s:fielderror>
+            <a name="errorMessage"> </a>
+            <%}%>
+            <% if (!boolParam("hideReceiverBox")) {%>
+            <span class="label">
+                <label for="receiver">À :</label>
+            </span>
+            <span class="input">
+                <input name="receiver" id="receiver" class="text"
+                    value="<%=property("receiver", UserString.class) != null
+                        ? property("receiver", UserString.class)
+                        : ( parameter("receiver", UserString.class) != null
+                            ? parameter("receiver", UserString.class)
+                            : "" ) %>"/>
                 <div id="receiver_choices" class="autocomplete">&nbsp;</div>
                 <p:javascript>
                     new Ajax.Autocompleter("receiver", "receiver_choices", "/feedback",
-                    {paramName: "data", minChars:1, parameters:"type=logins"});
+                    {paramName: "data", minChars: 1, parameters:"type=logins"});
                 </p:javascript>
-            </div>
-        </div>
-        <% } else {%>
-        <input type="hidden" name="receiver" value="<%=property("receiver", UserString.class)%>"/>
-        <%}%>
-        <input type="hidden" name="messageKind" value="<%=PRIVATE%>"/>
-        <s:hidden id="priv_fromAction" name="fromAction" value="%{actionDescription}"/>
-        <input type="hidden" id="priv_onErrorAction" name="onErrorAction"
-               value="<%=((ActionDetail)property("actionDescription",Object.class)).addParam("error", MY_ERROR_CODE)%>"/>
-        <s:hidden name="publicMessage" value="false"/>
-        <s:hidden name="aboutWorkoutId" value="%{aboutWorkout.id}"/>
-        <div id="priv_aboutWorkoutDiv" class="workout">
-            <% if (answerWorkout != null) {%>
-            à propos de la sortie&nbsp;: <span class="tinyWorkout"><%
-            call(pageContext, "workoutComponent.jsp", answerWorkout);%></span>
+            </span>
+            <% } else {%>
+            <input type="hidden" name="receiver" value="<%=property("receiver", UserString.class)%>"/>
             <%}%>
-        </div>
-        <s:textarea id="priv_messageContent" cssClass="messageContentArea" name="content" cols="40" rows="5"/>
-        <p:javascript>makeItCount('priv_messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
-        <s:submit id="priv_submit" value="Envoyer"/>
-    </fieldset>
-</form>
+            <input type="hidden" name="messageKind" value="<%=PRIVATE%>"/>
+            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="onErrorAction"
+               value="<%=((ActionDetail)property("actionDescription",Object.class)).addParam("error", MY_ERROR_CODE)%>"/>
+            <input type="hidden" name="publicMessage" value="false"/>
+            <% if (property("aboutWorkout", Workout.class) != null) { %>
+            <input type="hidden" name="aboutWorkoutId" value="<%=property("aboutWorkout", Workout.class).getId()%>"/>
+            <% } %>
+            
+            <span class="input">
+                <textarea name="content" id="messageContent"></textarea>
+            </span>
+            <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
+
+            <span class="actions">
+                <input type="submit" class="submit" value="Envoyer"/>
+            </span>
+        </form>
+    </div>
+</div>
 <%}%>

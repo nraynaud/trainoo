@@ -5,9 +5,8 @@
 <%
     final Workout workout = Helpers.top(Workout.class);
     if (workout.getUser().getNikePlusId() != null) {
-%> <a style="font-size:18px"
-      href="http://nikeplus.nike.com/nikeplus/?l=runners,runs,<%=workout.getUser().getNikePlusId()%>,runID,<%=workout.getNikePlusId()%>">Voir
-    la course sur nike.com</a> <%
+%> <a href="http://nikeplus.nike.com/nikeplus/?l=runners,runs,<%=workout.getUser().getNikePlusId()%>,runID,<%=workout.getNikePlusId()%>"
+    >Voir la course sur nike.com</a> <%
 } else {
 %>
 Entraînement Nike+

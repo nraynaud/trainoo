@@ -4,6 +4,8 @@ import com.nraynaud.sport.Helper;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.data.PaginatedCollection;
+import com.nraynaud.sport.web.DateHelper;
 import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
 import com.nraynaud.sport.web.URIValidator;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.BreakIterator;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -28,6 +31,40 @@ public class Helpers {
     public static final SportActionMapper MAPPER = new SportActionMapper();
 
     private static final String STATIC_CONTENT_PREFIX;
+    public static final Comparator<Date> REVERSE_DATE_COMPARATOR = new Comparator<Date>() {
+        public int compare(final Date o1, final Date o2) {
+            return o2.compareTo(o1);
+        }
+    };
+    public static final PaginatedCollection.Transformer<Workout, TableContent> DEFAULT_WORKOUT_TRANSFORMER = new PaginatedCollection.Transformer<Workout, TableContent>() {
+        public TableContent transform(final PaginatedCollection<Workout> paginatedCollection) {
+            final Map<Date, Collection<Workout>> theMap = new TreeMap<Date, Collection<Workout>>(
+                    REVERSE_DATE_COMPARATOR);
+            for (final Workout workout : paginatedCollection) {
+                final Date date = workout.getDate();
+                final Collection<Workout> workoutCollection = theMap.get(date);
+                if (workoutCollection == null) {
+                    final Collection<Workout> theCollection = new ArrayList<Workout>();
+                    theCollection.add(workout);
+                    theMap.put(date, theCollection);
+                } else
+                    workoutCollection.add(workout);
+            }
+            final List<TableContent.TableSheet> sheets = new ArrayList<TableContent.TableSheet>(
+                    theMap.size());
+            for (final Map.Entry<Date, Collection<Workout>> sheetData : theMap.entrySet()) {
+                final String formated = DateHelper.humanizePastDate(sheetData.getKey(),
+                        "'Aujourd''hui'", "'Hier'",
+                        "'Avant-hier'", "EE dd/MM");
+                sheets.add(new TableContent.TableSheet(formated, sheetData.getValue(), new TableContent.RowRenderer() {
+                    public void render(final Workout workout, final PageContext context) throws Exception {
+                        call(context, "workoutLineElements.jsp", workout, "withUser", true);
+                    }
+                }));
+            }
+            return new TableContent(sheets);
+        }
+    };
 
     static {
         final String envVar = System.getenv("SPORT_CONTENT_PREFIX");
@@ -57,6 +94,27 @@ public class Helpers {
         builder.append("</a>");
     }
 
+    public static String toTitleCase(final String string) {
+        final StringBuffer accum = new StringBuffer();
+        final BreakIterator wordIterator = BreakIterator.getWordInstance();
+        wordIterator.setText(string);
+        int start = wordIterator.first();
+        for (int end = wordIterator.next(); end != BreakIterator.DONE; start = end, end = wordIterator.next()) {
+            accum.append(string.substring(start, start + 1).toUpperCase());
+            accum.append(string.substring(start + 1, end));
+        }
+        return accum.toString();
+    }
+
+    public static String firstNonNull(final String... strings) {
+        for (final String string : strings) {
+            if (string != null) {
+                return string;
+            }
+        }
+        return null;
+    }
+
     public static String stringProperty(final String expression) {
         return property(expression, String.class);
     }
@@ -84,6 +142,10 @@ public class Helpers {
     public static boolean boolParam(final String expression) {
         final Boolean param = parameter(expression, Boolean.class);
         return param != null && param.booleanValue();
+    }
+
+    public static String stringParam(final String expression) {
+        return parameter(expression, String.class);
     }
 
     private static ValueStack stack() {
@@ -149,13 +211,13 @@ public class Helpers {
         return builder.toString();
     }
 
-    public static void paginate(final PageContext context,
-                                final String template,
-                                final PaginationView<?> stackTop,
-                                final Object... arguments) throws Exception {
+    public static <T, U> void paginate(final PageContext context,
+                                       final String template,
+                                       final PaginationView<T, U> stackTop,
+                                       final Object... arguments) throws Exception {
         context.getOut().append("<div class=\"pagination\">");
         try {
-            call(context, template, stackTop.collection, arguments);
+            call(context, template, stackTop.transformer.transform(stackTop.collection), arguments);
             call(context, "paginationButtons.jsp", stackTop);
         } finally {
             context.getOut().append("</div>");
@@ -176,8 +238,7 @@ public class Helpers {
             {
                 for (int i = 0; i < arguments.length; i += 2) {
                     final Object arg = arguments[i + 1];
-                    final Object value = arg instanceof String ? stack().findValue((String) arg) : arg;
-                    parameters.put((String) arguments[i], value);
+                    parameters.put((String) arguments[i], arg);
                 }
             }
 
@@ -238,10 +299,6 @@ public class Helpers {
         }
     }
 
-    public static String literal(final String string) {
-        return '\'' + string + '\'';
-    }
-
     public static String literal(final UserString string) {
         return '\'' + string.toString() + '\'';
     }
@@ -274,61 +331,79 @@ public class Helpers {
 
     public static String selectableLink(final String namespace, final String action, final String content,
                                         final String title, final String... params) {
-        final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
-        final String url = actionUrl(namespace, action);
-        boolean selected = namespace.equals(mapping.getNamespace()) && action.equals(
-                mapping.getName());
+        boolean selected = isCurrentAction(namespace, action);
+        final String finalUrl = createUrl(namespace, action, params);
+        for (int i = 0; i < params.length; i += 2) {
+            selected &= params[i + 1].equals(getFirstValue(params[i]));
+        }
+        return selectableAnchorTag(content, finalUrl, selected, title);
+    }
+
+    public static String createUrl(final String namespace, final String action, final String... params) {
+        final String urlPrefix = actionUrl(namespace, action);
         final String query;
         if (params.length > 0) {
             final StringBuilder getParams = new StringBuilder(20);
             getParams.append("?");
             for (int i = 0; i < params.length; i += 2) {
                 pushParam(getParams.append("&amp;"), params[i], params[i + 1]);
-                selected &= params[i + 1].equals(getFirstValue(params[i]));
             }
             query = getParams.toString();
         } else
             query = "";
-        final String finalUrl = url + query;
-        return selectableAnchorTag(content, selected, finalUrl, title);
+        return urlPrefix + query;
+    }
+
+    public static boolean isCurrentAction(final String namespace, final String action) {
+        final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
+        return namespace.equals(mapping.getNamespace()) && action.equals(mapping.getName());
     }
 
     public static String actionUrl(final String namespace, final String action) {
         return MAPPER.getUriFromActionMapping(new ActionMapping(action, namespace, null, null));
     }
 
-    private static String selectableAnchorTag(final String content, final boolean selected, final String finalUrl,
-                                              final String title) {
-        return "<a "
-                + (selected ? "class='selected'" : "")
-                + (title != null ? "title='" + title + '\'' : "")
-                + " href='"
-                + finalUrl
-                + "'>"
-                + content
-                + "</a>";
+    public static String selectableAnchorTag(final String content, final String url, final boolean selected,
+                                             final String title) {
+        final String selectedPart = selected ? "class='selected'" : "";
+        final String titlePart = title != null ? "title='" + title + '\'' : "";
+        return "<a " + selectedPart + titlePart + " href='" + url + "'>" + content + "</a>";
     }
 
-    public static String currenUrlWithoutParam(final String content, final String excludedKey) {
-        return currenUrlWithAndWithoutParams(content, false, excludedKey);
+    public static String linkCurrenUrlWithoutParam(final String content, final String excludedKey) {
+        return linkCurrenUrlWithAndWithoutParams(content, false, excludedKey);
     }
 
-    public static String currenUrlWithParams(final String content, final boolean selectable, final String... params) {
-        return currenUrlWithAndWithoutParams(content, selectable, null, params);
+    public static String linkCurrenUrlWithParams(final String content, final boolean selectable,
+                                                 final String... params) {
+        return linkCurrenUrlWithAndWithoutParams(content, selectable, null, params);
     }
 
     @SuppressWarnings({"unchecked"})
-    public static String currenUrlWithAndWithoutParams(final String content, final boolean selectable,
-                                                       final String excludedKey,
-                                                       final String... params) {
-        final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
-        final String base = actionUrl(mapping.getNamespace(), mapping.getName());
-        final Map<String, String[]> queryString = ServletActionContext.getRequest().getParameterMap();
+    public static String linkCurrenUrlWithAndWithoutParams(final String content, final boolean selectable,
+                                                           final String excludedKey,
+                                                           final String... params) {
+        final Map<String, String> newParams = new HashMap<String, String>();
         boolean selected = false;
+        final Map<String, String[]> queryString = ServletActionContext.getRequest().getParameterMap();
+        final String url = currentUrlLinkWithAndWithoutParams(excludedKey, newParams, params);
+        for (final Map.Entry<String, String[]> queries : queryString.entrySet())
+            if (newParams.containsKey(queries.getKey())) {
+                selected |= newParams.get(queries.getKey()).equals(queries.getValue()[0]);
+            }
+        return selectableAnchorTag(content, url, selectable && selected, null);
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public static String currentUrlLinkWithAndWithoutParams(final String excludedKey,
+                                                            final Map<String, String> newParams,
+                                                            final String... params) {
+        final ActionMapping mapping = (ActionMapping) ActionContext.getContext().get("struts.actionMapping");
+        final Map<String, String[]> queryString = ServletActionContext.getRequest().getParameterMap();
+        final String base = actionUrl(mapping.getNamespace(), mapping.getName());
         final StringBuilder url = new StringBuilder(20);
         url.append(base);
         url.append('?');
-        final Map<String, String> newParams = new HashMap<String, String>();
         for (int i = 0; i < params.length; i += 2) {
             if (i > 0)
                 url.append("&amp;");
@@ -337,14 +412,10 @@ public class Helpers {
         }
         if (excludedKey != null)
             newParams.put(excludedKey, "lol");
-        for (final Map.Entry<String, String[]> entry : queryString.entrySet()) {
-            if (!newParams.containsKey(entry.getKey()))
-                pushParam(url.append("&amp;"), entry.getKey(), entry.getValue()[0]);
-            else {
-                selected |= newParams.get(entry.getKey()).equals(entry.getValue()[0]);
-            }
-        }
-        return selectableAnchorTag(content, selectable && selected, url.toString(), null);
+        for (final Map.Entry<String, String[]> queries : queryString.entrySet())
+            if (!newParams.containsKey(queries.getKey()))
+                pushParam(url.append("&amp;"), queries.getKey(), queries.getValue()[0]);
+        return url.toString();
     }
 
     private static void pushParam(final StringBuilder url, final String key, final String value) {
@@ -385,12 +456,12 @@ public class Helpers {
                 + "</span>";
     }
 
-    public static String formatDistance(final Double distance) {
-        return distance != null ? DistanceConverter.formatDistance(distance) + "km" : "";
+    public static String formatDistance(final Double distance, final String ifNull) {
+        return distance != null ? DistanceConverter.formatDistance(distance) + "km" : ifNull;
     }
 
-    public static String formatDuration(final Long duration) {
-        return duration != null ? DurationConverter.formatDuration(duration, "h", "\'", "''") : "";
+    public static String formatDuration(final Long duration, final String ifNull) {
+        return duration != null ? DurationConverter.formatDuration(duration, "h", "\'", "''") : ifNull;
     }
 
     /**
@@ -408,5 +479,16 @@ public class Helpers {
             return new SimpleDateFormat("E dd/MM", Locale.FRANCE).format(date);
         else
             return new SimpleDateFormat("E dd/MM/y", Locale.FRANCE).format(date);
+    }
+
+    public static String anchor(final String content, final String url) {
+        return selectableAnchorTag(content, url, false, null);
+    }
+
+    public static String joinNames(final Collection<User> participans) {
+        final StringBuilder participantsCollector = new StringBuilder();
+        for (final User user : participans)
+            participantsCollector.append(", ").append(escaped(user.getName()));
+        return participantsCollector.substring(2);
     }
 }
