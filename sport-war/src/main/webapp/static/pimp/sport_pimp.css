@@ -873,3 +873,15 @@ form.workoutEditor {
     width: 90%;
     line-height: 1.3;
 }
+
+/* -- nike + --- */
+
+.refreshNikePlus {
+    display: block;
+    float: right;
+    height: 24px;
+    width: 0;
+    padding-left: 24px;
+    background: url(nike_refresh.png) no-repeat center left;
+    overflow: hidden;
+}
