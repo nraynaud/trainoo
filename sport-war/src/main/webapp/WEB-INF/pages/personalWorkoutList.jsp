@@ -3,6 +3,7 @@
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="com.nraynaud.sport.data.UserPageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
@@ -12,7 +13,17 @@
 <%final UserPageData data = top(UserPageData.class);%>
 <div id="globalLeft">
 
-    <h2>Mes dernières sorties</h2>
+    <h2>
+    <%
+        if (currentUser() != null && currentUser().getNikePluEmail() != null ) {
+     %>
+         <a class="refreshNikePlus" title="Rafraichir les données Nike+"
+            href="<%=createUrl("/", "privatedata")%>" >
+            Rafraichir les donnés Nike+
+         </a>
+     <% } %>
+     Mes dernières sorties
+     </h2>
 
     <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
     <% paginate(pageContext, "workoutTable.jsp",
