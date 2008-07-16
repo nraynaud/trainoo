@@ -74,6 +74,12 @@ public class Helpers {
             call(context, "workoutLineElements.jsp", workout);
         }
     };
+    public static final PaginatedCollection.Transformer<Workout, TableContent> ONE_SHEET_CONTENT_TRANSFORMER = new PaginatedCollection.Transformer<Workout, TableContent>() {
+        public TableContent transform(final PaginatedCollection<Workout> collection) {
+            final TableContent.TableSheet sheet = new TableContent.TableSheet("", collection, SECONDARY_TABLE_RENDERER);
+            return new TableContent(Collections.singletonList(sheet));
+        }
+    };
 
     static {
         final String envVar = System.getenv("SPORT_CONTENT_PREFIX");

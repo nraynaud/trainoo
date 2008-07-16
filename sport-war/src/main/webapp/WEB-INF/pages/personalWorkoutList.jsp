@@ -1,13 +1,8 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.ConversationSummary" %>
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
-<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="com.nraynaud.sport.data.UserPageData" %>
-<%@ page import="com.nraynaud.sport.web.view.TableContent" %>
-<%@ page import="java.util.Collections" %>
+<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
@@ -30,14 +25,9 @@
     </h2>
 
     <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
-    <% final PaginatedCollection.Transformer<Workout, TableContent> contentTransformer = new PaginatedCollection.Transformer<Workout, TableContent>() {
-        public TableContent transform(final PaginatedCollection<Workout> collection) {
-            final TableContent.TableSheet sheet = new TableContent.TableSheet("", collection, SECONDARY_TABLE_RENDERER);
-            return new TableContent(Collections.singletonList(sheet));
-        }
-    };
+    <%
         paginate(pageContext, "workoutTable.jsp",
-                view(data.getStatisticsData().workouts, "workoutPage", contentTransformer),
+                view(data.getStatisticsData().workouts, "workoutPage", ONE_SHEET_CONTENT_TRANSFORMER),
                 "displayEdit", "true");%>
 
     <h2>Nouvel entraînement</h2>
