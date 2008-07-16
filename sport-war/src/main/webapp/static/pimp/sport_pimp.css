@@ -304,6 +304,11 @@ dl.sheet li span.user {
 	width: 23%;
 }
 
+dl.sheet li span.user span {
+	float: none;
+	display: inline;
+}
+
 dl.sheet li span.date {
 	width: 20%;
 	text-align: right;
