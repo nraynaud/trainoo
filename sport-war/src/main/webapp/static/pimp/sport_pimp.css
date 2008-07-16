@@ -226,6 +226,10 @@ small {
     color: #413611;
 }
 
+#content h1 a:hover {
+    text-decoration: underline;
+}
+
 #content h2 {
 	padding:16px 20px 10px 20px;
 	font-size: 24px;
