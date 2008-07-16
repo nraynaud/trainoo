@@ -34,10 +34,8 @@
         </span>
         <dl>
             <%
-
                 final List<DataHelper.Data> dataList = DataHelper.compute(workout);
                 for (final DataHelper.Data row : dataList) {
-
             %>
             <dt <%=row.userProvided ? "class=\"editable\"" : ""%>><%=row.label%>
             </dt>
@@ -54,19 +52,8 @@
             <dt class="noDescription">Entrainement Nike+</dt>
             <%}%>
             <%}%>
-            <%if (isCurrentUser) {%>
-            <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id",
-                    workout.getId().toString())%>
-            <%}%>
-            <div class="<%=defaultOrUserClass(workout.getComment())%>"><%=escapedOrNullmultilines(workout.getComment(),
-                    "Pas de compte rendu")%>
-                <%if (isCurrentUser) {%>
-                <s:a href="%{editurl}" title="Modifier"><img class="pen" src="<%=stat("/static/pen.png")%>"
-                                                             alt=""></s:a>
-                <%}%>
-            </div>
+        </dl>
     </div>
-</div>
 </div>
 
 <div id="globalLeft">
