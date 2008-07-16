@@ -1,9 +1,13 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.ConversationSummary" %>
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
-<%@ page import="com.nraynaud.sport.data.UserPageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
+<%@ page import="com.nraynaud.sport.data.UserPageData" %>
+<%@ page import="com.nraynaud.sport.web.view.TableContent" %>
+<%@ page import="java.util.Collections" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
@@ -14,20 +18,27 @@
 <div id="globalLeft">
 
     <h2>
-    <%
-        if (currentUser() != null && currentUser().getNikePluEmail() != null ) {
-     %>
-         <a class="refreshNikePlus" title="Rafraichir les données Nike+"
-            href="<%=createUrl("/privatedata", "refreshNikePlus", "fromAction", findFromAction())%>" >
+        <%
+            if (currentUser() != null && currentUser().getNikePluEmail() != null) {
+        %>
+        <a class="refreshNikePlus" title="Rafraichir les données Nike+"
+           href="<%=createUrl("/privatedata", "refreshNikePlus", "fromAction", findFromAction())%>">
             Rafraichir les donnés Nike+
-         </a>
-     <% } %>
-     Mes dernières sorties
-     </h2>
+        </a>
+        <% } %>
+        Mes dernières sorties
+    </h2>
 
     <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
     <% paginate(pageContext, "workoutTable.jsp",
-            view(data.getStatisticsData().workouts, "workoutPage", DEFAULT_WORKOUT_TRANSFORMER),
+            view(data.getStatisticsData().workouts, "workoutPage",
+                    new PaginatedCollection.Transformer<Workout, TableContent>() {
+                        public TableContent transform(final PaginatedCollection<Workout> collection) {
+                            final TableContent.TableSheet sheet = new TableContent.TableSheet("", collection,
+                                    SECONDARY_TABLE_RENDERER);
+                            return new TableContent(Collections.singleton(sheet));
+                        }
+                    }),
             "displayEdit", "true");%>
 
     <h2>Nouvel entraînement</h2>

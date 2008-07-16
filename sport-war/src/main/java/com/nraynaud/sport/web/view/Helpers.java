@@ -65,6 +65,15 @@ public class Helpers {
             return new TableContent(sheets);
         }
     };
+    public static final TableContent.RowRenderer SECONDARY_TABLE_RENDERER = new TableContent.RowRenderer() {
+        public void render(final Workout workout, final PageContext context) throws Exception {
+            context.getOut()
+                    .append("<span class='date'>")
+                    .append(com.nraynaud.sport.web.DateHelper.printDate("EE dd/MM", workout.getDate()))
+                    .append("</span>");
+            call(context, "workoutLineElements.jsp", workout);
+        }
+    };
 
     static {
         final String envVar = System.getenv("SPORT_CONTENT_PREFIX");

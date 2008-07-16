@@ -34,8 +34,10 @@
         </span>
         <dl>
             <%
+
                 final List<DataHelper.Data> dataList = DataHelper.compute(workout);
                 for (final DataHelper.Data row : dataList) {
+
             %>
             <dt <%=row.userProvided ? "class=\"editable\"" : ""%>><%=row.label%>
             </dt>
@@ -63,8 +65,8 @@
                                                              alt=""></s:a>
                 <%}%>
             </div>
-        </div>
     </div>
+</div>
 </div>
 
 <div id="globalLeft">
@@ -133,23 +135,14 @@
     </div>
     <%
         }
-        final TableContent.RowRenderer renderer = new TableContent.RowRenderer() {
-            public void render(final Workout workout, final PageContext context) throws Exception {
-                context.getOut()
-                        .append("<span class='date'>")
-                        .append(printDate("EE dd/MM", workout.getDate()))
-                        .append("</span>");
-                call(context, "workoutLineElements.jsp", workout);
-            }
-        };
         final ArrayList<TableContent.TableSheet> sheets = new ArrayList<TableContent.TableSheet>(2);
         if (!data.similarWorkouts.isEmpty()) {
             final TableContent.TableSheet similarSheet = new TableContent.TableSheet("Entraînements similaires",
-                    data.similarWorkouts, renderer);
+                    data.similarWorkouts, SECONDARY_TABLE_RENDERER);
             sheets.add(similarSheet);
         }
         final TableContent.TableSheet lastSheet = new TableContent.TableSheet("Derniers entraînements",
-                data.lastWorkouts, renderer);
+                data.lastWorkouts, SECONDARY_TABLE_RENDERER);
         sheets.add(lastSheet);
         call(pageContext, "workoutTable.jsp", new TableContent(sheets), "idPrefix", "'lasts_'", "highLight",
                 workout.getId());
