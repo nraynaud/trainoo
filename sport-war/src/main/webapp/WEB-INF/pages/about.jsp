@@ -33,13 +33,10 @@
             ont toujours une connexion wifi au chaud quand celle du bureau tombe.</p>
     </div>
 
-    <h2>Un peu de nourriture pour les légalistes</h2>
+    <h2>Mention spéciale</h2>
 
     <div class="content">
         <ul>
-            <li>Ce site utilise le thème <a href="http://www.nodethirtythree.com">bookish</a>.</li>
-            <li>Ce site utilise des icônes issues du set <a href="http://www.famfamfam.com/lab/icons/silk/">Silk</a>.
-            </li>
             <li>Le traitement des données est déclaré auprès de la CNIL.</li>
         </ul>
     </div>
