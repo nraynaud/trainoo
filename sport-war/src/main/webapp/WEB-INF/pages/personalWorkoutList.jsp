@@ -32,9 +32,8 @@
     <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
     <% final PaginatedCollection.Transformer<Workout, TableContent> contentTransformer = new PaginatedCollection.Transformer<Workout, TableContent>() {
         public TableContent transform(final PaginatedCollection<Workout> collection) {
-            final TableContent.TableSheet sheet = new TableContent.TableSheet("", collection,
-                    SECONDARY_TABLE_RENDERER);
-            return new TableContent(Collections.singleton(sheet));
+            final TableContent.TableSheet sheet = new TableContent.TableSheet("", collection, SECONDARY_TABLE_RENDERER);
+            return new TableContent(Collections.singletonList(sheet));
         }
     };
         paginate(pageContext, "workoutTable.jsp",
