@@ -297,8 +297,9 @@ public class HibernateApplication implements Application {
         }
         dynamicPart.append(')');
         final Query query = query(
-                "select w from WorkoutImpl w where w.discipline=:discipline and w.user=:user and " + dynamicPart
+                "select w from WorkoutImpl w where w.discipline=:discipline and w.id!=:selfId and w.user=:user and " + dynamicPart
                         + " order by w.date desc, w.id desc");
+        query.setParameter("selfId", workout.getId());
         query.setParameter("user", workout.getUser());
         query.setParameter("discipline", workout.getDiscipline().nonEscaped());
         for (final WhereFragment clause : clauses) {
