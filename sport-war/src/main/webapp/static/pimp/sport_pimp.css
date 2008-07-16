@@ -258,7 +258,11 @@ small {
 .textContent p a,
 .textContent ul a,
 .textContent dl a,
-.textContent ol a {
+.textContent ol a,
+.textContent th a,
+.textcontent tr a,
+.paginationPrevious a,
+.paginationNext a {
 	color: #204a87;
 	padding: 0 1px;
 }
@@ -266,7 +270,11 @@ small {
 .textContent p a:hover,
 .textContent ul a:hover,
 .textContent dl a:hover,
-.textContent ol a:hover {
+.textContent ol a:hover,
+.textContent th a:hover, 
+.textContent tr a:hover,
+.paginationPrevious a:hover,
+.paginationNext a:hover {
 	background-color: #f3f0d8;
 }
 
