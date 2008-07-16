@@ -22,7 +22,8 @@
 %>
 <p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"
                 showTitleInPage="false"/>
-<h1><%=bibLink(runner)%>&nbsp;: Sortie <%=workout.getDiscipline()%> - <%=printDate("EEEE dd MMMM", workout.getDate())%>
+<h1><%=bibLink(runner, 15)%>&nbsp;: Sortie <%=workout.getDiscipline()%> - <%=printDate("EEEE dd MMMM",
+        workout.getDate())%>
 </h1>
 
 <div class="block workoutBlock" id="workoutBlock">
@@ -109,15 +110,7 @@
 
     <div class="block userListBlock">
         <div class="content">
-            <ul class="userList">
-                <%
-                    for (final User participant : workout.getParticipants()) {
-                        out.append("<li>")
-                                .append(bibLink(participant))
-                                .append("</li>");
-                    }
-                %>
-            </ul>
+            <%call(pageContext, "userListBlock.jsp", workout.getParticipants());%>
         </div>
     </div>
     <%

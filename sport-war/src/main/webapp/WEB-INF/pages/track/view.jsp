@@ -45,9 +45,9 @@
                 <td><%=selectableLink("/track", "", loopTrack.getId().toString(), "voir le parcours", "id",
                         loopTrack.getId().toString())%>
                 </td>
-                <td><%=shortSpan(loopTrack.getTitle())%>
+                <td><%=shortSpan(loopTrack.getTitle(), 10)%>
                 </td>
-                <td><%=shortSpan(loopTrack.getUser().getName())%>
+                <td><%=shortSpan(loopTrack.getUser().getName(), 10)%>
                 </td>
                 <td style="text-align:right;"><%=(int) loopTrack.getLength()%>km
                 </td>

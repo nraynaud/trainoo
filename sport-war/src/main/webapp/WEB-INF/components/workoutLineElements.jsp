@@ -16,7 +16,7 @@
         <span title="<%=joinNames(participans)%>" style="cursor:help">collectif</span>
         <%
             } else
-                out.append(shortSpan(workout.getUser().getName()));
+                out.append(shortSpan(workout.getUser().getName(), 15));
         %>
         </span>
 <%}%>

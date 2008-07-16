@@ -1,8 +1,9 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.UserString" %>
 <%@ page import="com.nraynaud.sport.data.ConversationSummary" %>
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
-<%@ page import="com.nraynaud.sport.data.UserPageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
+<%@ page import="com.nraynaud.sport.data.UserPageData" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
@@ -77,10 +78,10 @@
                     <%
                         final ConversationSummary summary = top(ConversationSummary.class);
                         final long newCount = summary.newMessageCount;
-                    %>
+                        final UserString name = summary.correspondentName;%>
                     <li class="<%=newCount > 0 ? "hasNewMessage" : "noNewMessage"%>">
-                        <%=selectableLink("/messages", "", summary.correspondentName.toString(), null, "receiver",
-                                summary.correspondentName.nonEscaped())%>
+                        <%=link("/messages", "", shortString(name, 10), "voir la discussion avec " + name, "receiver",
+                                name.nonEscaped())%>
                         <%
                             if (newCount > 0) {
                         %>

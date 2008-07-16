@@ -1,11 +1,9 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.Group" %>
-<%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="com.nraynaud.sport.data.GroupPageData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="static com.nraynaud.sport.web.action.groups.CreateAction.*" %>
-<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -22,7 +20,7 @@
 <div class="subHeading">
     Créé le <%=new SimpleDateFormat(
         "dd/MM/yyyy").format(
-        group.getCreationDate())%> par <%=bibLink(group.getOwner())%>
+        group.getCreationDate())%> par <%=bibLink(group.getOwner(), 10)%>
 </div>
 
 <div id="globalLeft">
@@ -71,12 +69,7 @@
 
 <div class="block userListBlock">
     <div class="content textContent">
-        <ul class="userList">
-            <% for (final User user : groupPage.users) {
-                out.append("<li>");
-                out.append(bibLink(user)).append("</li>\n");
-            }%>
-        </ul>
+        <%call(pageContext, "userListBlock.jsp", groupPage.users);%>
         <% if (groupPage.isMember) { %>
         <form method="POST" action="<%=createUrl("/groups", "part")%>">
             <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>

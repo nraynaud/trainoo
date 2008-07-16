@@ -354,6 +354,12 @@ public class Helpers {
         return selectableAnchorTag(content, finalUrl, selected, title);
     }
 
+    public static String link(final String namespace, final String action, final String content,
+                              final String title, final String... params) {
+        final String finalUrl = createUrl(namespace, action, params);
+        return selectableAnchorTag(content, finalUrl, false, title);
+    }
+
     public static String createUrl(final String namespace, final String action, final String... params) {
         final String urlPrefix = actionUrl(namespace, action);
         final String query;
@@ -453,22 +459,22 @@ public class Helpers {
         return Helper.escaped(string);
     }
 
-    public static String bibLink(final User user) {
+    public static String bibLink(final User user, final int maxLength) {
         final UserString fullName = user.getName();
-        final String shortName = shortString(user.getName());
+        final String shortName = shortString(user.getName(), maxLength);
         return selectableLink("/bib", "", shortName, "Voir le dossard de " + escaped(fullName), "id",
                 user.getId().toString());
     }
 
-    public static String shortString(final UserString userString) {
+    public static String shortString(final UserString userString, final int maxLength) {
         final String nonEscaped = userString.nonEscaped();
-        final int maxLength = 10;
         return nonEscaped.length() > maxLength ? Helper.escaped(nonEscaped.substring(0, maxLength - 2))
                 + "…" : Helper.escaped(nonEscaped);
     }
 
-    public static String shortSpan(final UserString userString) {
-        return userString == null ? "" : "<span title='" + escaped(userString) + "'>" + shortString(userString)
+    public static String shortSpan(final UserString userString, final int maxLength) {
+        return userString == null ? "" : "<span title='" + escaped(userString) + "'>" + shortString(userString,
+                maxLength)
                 + "</span>";
     }
 
