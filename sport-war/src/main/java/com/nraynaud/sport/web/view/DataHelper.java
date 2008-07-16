@@ -40,13 +40,13 @@ public class DataHelper {
     private static Data computeAverageSpeed(final Workout workout) {
         final double distance = workout.getDistance().doubleValue();
         final long duration = workout.getDuration().longValue();
-        final String value = DistanceConverter.formatDistance(distance / (duration / 60.0 / 60)) + "&nbsp;Km/h";
+        final String value = DistanceConverter.formatDistance(distance / (duration / 60.0 / 60)) + "&nbsp;km/h";
         final double averageTimeByKM = duration / distance;
         final String value2 = " <small>("
                 + (int) (averageTimeByKM / 60)
                 + "'&nbsp;"
                 + (int) (averageTimeByKM % 60)
-                + "/Km)</small>";
+                + "/km)</small>";
         return new Data("Vitesse Moyenne&nbsp;:", value + value2, false);
     }
 
