@@ -30,16 +30,16 @@
     </h2>
 
     <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
-    <% paginate(pageContext, "workoutTable.jsp",
-            view(data.getStatisticsData().workouts, "workoutPage",
-                    new PaginatedCollection.Transformer<Workout, TableContent>() {
-                        public TableContent transform(final PaginatedCollection<Workout> collection) {
-                            final TableContent.TableSheet sheet = new TableContent.TableSheet("", collection,
-                                    SECONDARY_TABLE_RENDERER);
-                            return new TableContent(Collections.singleton(sheet));
-                        }
-                    }),
-            "displayEdit", "true");%>
+    <% final PaginatedCollection.Transformer<Workout, TableContent> contentTransformer = new PaginatedCollection.Transformer<Workout, TableContent>() {
+        public TableContent transform(final PaginatedCollection<Workout> collection) {
+            final TableContent.TableSheet sheet = new TableContent.TableSheet("", collection,
+                    SECONDARY_TABLE_RENDERER);
+            return new TableContent(Collections.singleton(sheet));
+        }
+    };
+        paginate(pageContext, "workoutTable.jsp",
+                view(data.getStatisticsData().workouts, "workoutPage", contentTransformer),
+                "displayEdit", "true");%>
 
     <h2>Nouvel entraînement</h2>
 
