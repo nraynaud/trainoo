@@ -899,3 +899,10 @@ form.workoutEditor {
     background: url(nike_refresh.png) no-repeat center left;
     overflow: hidden;
 }
+
+/* --- about block ---*/
+
+.aboutBlock {
+    width: 80%;
+    margin: auto;
+}
