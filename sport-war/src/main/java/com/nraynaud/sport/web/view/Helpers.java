@@ -54,8 +54,8 @@ public class Helpers {
                     theMap.size());
             for (final Map.Entry<Date, Collection<Workout>> sheetData : theMap.entrySet()) {
                 final String formated = DateHelper.humanizePastDate(sheetData.getKey(),
-                        "'aujourd''hui'", "'hier'",
-                        "'avant-hier'", "EE dd/MM");
+                        "'Aujourd''hui'", "'Hier'",
+                        "'Avant-hier'", "EEEE dd/MM");
                 sheets.add(new TableContent.TableSheet(formated, sheetData.getValue(), new TableContent.RowRenderer() {
                     public void render(final Workout workout, final PageContext context) throws Exception {
                         call(context, "workoutLineElements.jsp", workout, "withUser", true);
