@@ -60,9 +60,6 @@
                             <td><%=newCount > 0 ? newCount + (newCount
                                     == 1 ? " nouveau message" : " nouveaux messages") : ""%>
                             </td>
-                            <td><%final long count = property("memberCount", Long.class).longValue();%>
-                                <%=count > 1 ? count + " membres" : count == 1 ? "un seul membre" : "aucun membre"%>
-                            </td>
                         </tr>
                     </s:iterator>
                 </tbody>
