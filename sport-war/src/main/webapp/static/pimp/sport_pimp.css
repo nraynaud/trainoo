@@ -468,6 +468,7 @@ dl.sheet li {
 .messageBlock .heading .decoPrimary {
 	display: block;
 	padding: 12px 28px 2px 10px;
+	min-width: 8em;
 
 	background-image: url(block_heading_primary_left.png);
 	background-repeat: no-repeat;
