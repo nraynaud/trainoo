@@ -462,7 +462,8 @@ public class Helpers {
 
     public static String shortString(final UserString userString) {
         final String nonEscaped = userString.nonEscaped();
-        return nonEscaped.length() > 10 ? Helper.escaped(nonEscaped.substring(0, 7))
+        final int maxLength = 10;
+        return nonEscaped.length() > maxLength ? Helper.escaped(nonEscaped.substring(0, maxLength - 2))
                 + "…" : Helper.escaped(nonEscaped);
     }
 
