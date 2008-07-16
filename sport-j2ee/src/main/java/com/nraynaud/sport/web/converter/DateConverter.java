@@ -90,7 +90,7 @@ public class DateConverter extends StrutsTypeConverter {
                 "'Aujourd''hui ('" + pattern + "')'",
                 "'Hier ('" + pattern + "')'",
                 "'Avant-hier ('" + pattern + "')'",
-                pattern);
+                "'Le '" + pattern);
     }
 
     private interface Parser {
