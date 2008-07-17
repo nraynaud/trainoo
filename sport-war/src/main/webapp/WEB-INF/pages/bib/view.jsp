@@ -23,21 +23,26 @@
                    class="button editButton">Modifier</a>
                 <%}%>
             </span>
-            <% final String defaultValue = "non précisé";
-                final String townLabel = "Ma ville";%>
+            <% final String townLabel = "Ma ville";%>
             <dl>
+                <% if (user.getTown() != null) { %>
                 <dt><%=townLabel%>&nbsp;:</dt>
                 <dd><%=escapedOrNull(user.getTown(),
-                        defaultValue)%>
+                        "")%>
                 </dd>
+                <% } %>
+                <% if (user.getDescription() != null) { %>
                 <dt>Moi&nbsp;:</dt>
                 <dd><%=escapedOrNullmultilines(
-                        user.getDescription(), defaultValue)%>
+                        user.getDescription(), "")%>
                 </dd>
+                <% } %>
+                <% if (user.getWebSite() != null) { %>
                 <dt>Mon site&nbsp;:</dt>
                 <dd><%=formatUrl(user.getWebSite(),
-                        defaultValue)%>
+                        "")%>
                 </dd>
+                <% } %>
             </dl>
         </div>
     </div>
