@@ -29,9 +29,11 @@
 <div class="block workoutBlock" id="workoutBlock">
     <div class="content">
         <span class="buttonList">
+            <% if (isCurrentUser) { %>
             <a href="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>"
                title="Modifier ou effacer cet entrainement" class="button editButton">
                 Modifier</a>
+            <% } %>
         </span>
         <dl>
             <%
@@ -85,7 +87,7 @@
                class="button editButton">Modifier</a>
             <%}%>
         </span>
-        Compte rendu
+        Compte rendu de <%=bibLink(runner, 20)%>
     </h2>
 
     <div class="block">

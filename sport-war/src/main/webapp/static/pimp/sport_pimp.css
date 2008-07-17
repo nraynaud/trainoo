@@ -237,6 +237,25 @@ small {
 	color: #403615;
 }
 
+#content h2 a {
+    color: #514635;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#content h2 a:hover {
+    text-decoration: underline;
+}
+
+#content span.buttonList a {
+    color: #514635;
+    font-weight: bold;
+}
+
+#content span.buttonList a:hover {
+    text-decoration: none;
+}
+
 /* --- Content block --- */
 .block {
 	position: relative;
