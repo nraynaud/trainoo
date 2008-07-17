@@ -66,7 +66,7 @@
             <% } %>
             
             <span class="input">
-                <textarea name="content" id="messageContent"></textarea>
+                <textarea rows="3" name="content" id="messageContent"></textarea>
             </span>
             <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
 
