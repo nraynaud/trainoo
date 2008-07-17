@@ -1,7 +1,8 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
-<%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.NewMessageData" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.web.DateHelper" %>
+<%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
@@ -11,11 +12,12 @@
 <html>
 <head>
     <!-- rev <%= PageDetail.class.getPackage().getImplementationVersion()%> -->
+    <!-- date <%=DateHelper.today()%> -->
     <title><%= pageDetail.getTitle()%>
     </title>
     <meta name="verify-v1" content="yZTq8PJgPZNW+ohX4rJs4so6GlFfVS3hawur2jTQEIA=">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+
     <link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=stat("/static/reset.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=stat("/static/pimp/sport_pimp.css")%>" rel="stylesheet" type="text/css">
@@ -40,7 +42,7 @@
             <%}%>
             <%call(pageContext, "menu.jsp");%>
             <div id="content">
-			     <% if (isLogged()) {
+                <% if (isLogged()) {
                     final List<NewMessageData> newMessages = property("newMessages", List.class);
                     if (newMessages.size() > 0) {
                         int count = 0;
@@ -51,11 +53,13 @@
                     <s:param name="receiver" value="newMessages.get(0).sender"/>
                 </s:url>
                 <div id="infoPop">
-                <a class="newMessages" href="<s:property value="%{messagesURL}"/>"><%=count + " " + pluralize(count,
-                        "nouveau message", "nouveaux messages")%>
-                </a>
+                    <a class="newMessages" href="<s:property value="%{messagesURL}"/>"><%=count + " " + pluralize(
+                            count,
+                            "nouveau message", "nouveaux messages")%>
+                    </a>
                 </div>
-                <% }} %>
+                <% }
+                } %>
                 <%if (pageDetail.isShowTitle()) {%>
                 <h1><%=pageDetail.getTitle()%>
                 </h1>
@@ -69,8 +73,8 @@
             <%if (pageDetail.isShowFooter()) {%>
             <div id="footer">
                 <hr>
-                <p><%=selectableLink("/", "about", "À propos de trainoo.com…",  null)%> -
-                <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
+                <p><%=selectableLink("/", "about", "À propos de trainoo.com…", null)%> -
+                    <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
             <%}%>
 
             <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
@@ -97,7 +101,8 @@
                 google_ad_height = 60;
                 //-->
                 </script>
-                <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+                <script type="text/javascript"
+                        src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
             </div>
             <script type="text/javascript">
                 $('adPlaceHolder').update($('ad'));
