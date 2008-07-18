@@ -4,7 +4,6 @@
 <%@ page import="com.nraynaud.sport.data.BibPageData" %>
 <%@ page import="com.nraynaud.sport.web.view.PrivateMessageFormConfig" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
-<%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -47,8 +46,8 @@
         </div>
     </div>
     <% if (!lookingOwnBib) {%>
-    <h2>Ses dernières sorties</h2>
-    <% paginate(pageContext, "workoutTable.jsp", view(data.workouts, "workoutPage", DEFAULT_WORKOUT_TRANSFORMER));%>
+    <% paginate(pageContext, "workoutTable.jsp",
+            view(data.workouts, "workoutPage", oneSheetContentTransformer("Ses dernières sorties")));%>
     <%}%>
 </div>
 <%if (!lookingOwnBib && isLogged()) {%>

@@ -28,7 +28,7 @@
     <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
     <%
         paginate(pageContext, "workoutTable.jsp",
-                view(data.getStatisticsData().workouts, "workoutPage", ONE_SHEET_CONTENT_TRANSFORMER),
+                view(data.getStatisticsData().workouts, "workoutPage", oneSheetContentTransformer("")),
                 "displayEdit", "true");%>
 
     <h2>Nouvel entraînement</h2>
