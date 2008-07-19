@@ -30,14 +30,20 @@
         }
     %>
 </head>
-<body>
+<body class="<%= isLogged() ? "isLogged" : ""%>" >
     <div id="body">
         <div id="center">
             <%if (pageDetail.isShowHeader()) {%>
             <div id="header">
-                <div id="logo"><a href="/">Trainoo.com</a></div>
+                <div id="logo"><a href="/" title="Trainoo.com - Tableau général">Trainoo.com</a></div>
                 <div id="catchPhrase">Vous allez en suer&hellip;</div>
                 <div id="adPlaceHolder">publicité google</div>
+                <% if (isLogged()) { %>
+                <ul id="accountLinks">
+                    <li class="userName"><%=currentUser().getName()%></li>
+                    <li><a href="<%=createUrl("/", "logout")%>" title="Déconnection">Déconnection</a></li>
+                </ul>
+                <% } %>
             </div>
             <%}%>
             <%call(pageContext, "menu.jsp");%>

@@ -8,9 +8,8 @@
         <% if (isLogged()) {
             final User user = currentUser();
         %><%= tab("/privatedata", "", "mon compte", "first", "current currentFirst")%>
-        <%= tab("/", "workouts", "Mon vestiaire", "", "current")%><%= tab("/bib", "", "Mon dossard", "", "current",
+        <%= tab("/", "workouts", "Mon vestiaire", "", "current")%><%= tab("/bib", "", "Mon dossard", "last", "current currentLast",
             "id", String.valueOf(user.getId()))%>
-        <%=tab("/", "logout", "Déconnexion", "last", "current currentLast")%>
         <% } else {
             final String from = findFromAction();
             out.append(tab("/", "forgotPassword", "Mot de passe oublié ?", "first", "current currentFirst"))

@@ -38,21 +38,26 @@ small {
 }
 
 #logo a {
-	color: #514621;
-	font-size: 47px;
-	padding-left: 6px;
-	font-weight: bold;
-	text-decoration: none;
+	display: block;
+	overflow: hidden;
+	height: 63px;
+	width: 0;
+	padding-left: 326px; 
+	background-image: url(logo.png);
+	position:absolute;
+	top: 8px;
+	left: 14px;
 }
 
 #catchPhrase {
 	position: absolute;
-	bottom: 0;
-	left: 140px;
+	top: 56px;
+	left: 180px;
 
+	font-weight: bold;
 	font-style: italic;
-	font-size: 18px;
-	color: #000000;
+	font-size: 16px;
+	color: #655c34;
 	cursor: default;
 }
 
@@ -64,6 +69,41 @@ small {
 	height: 60px;
 
 	background-color: #EEE;
+}
+
+.isLogged #adPlaceHolder {
+	right: 126px;
+}
+
+#accountLinks {
+	position: absolute;
+	bottom: 0;
+	right: 5px;
+	width: 90px;
+	height: 36px;
+	padding: 12px 10px;
+	text-align: right;
+	background-image: url(account_links.png);
+	color: #5A533B;
+}
+
+#accountLinks li {
+	margin-top: 8px;
+}
+
+#accountLinks li a {
+	font-size: 12px;
+	text-decoration: none;
+	color: #000000;
+}
+
+#accountLinks li a:hover {
+	text-decoration: underline;
+}
+
+#accountLinks .userName {
+	font-weight: bold;
+	margin: auto;
 }
 
 #infoPop {
