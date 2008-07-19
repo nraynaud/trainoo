@@ -8,7 +8,8 @@
         <% if (isLogged()) {
             final User user = currentUser();
         %><%= tab("/privatedata", "", "mon compte", "first", "current currentFirst")%>
-        <%= tab("/", "workouts", "Mon vestiaire", "", "current")%><%= tab("/bib", "", "Mon dossard", "last", "current currentLast",
+        <%= tab("/", "workouts", "Mon vestiaire", "", "current")%><%= tab("/bib", "", "Mon dossard", "last",
+            "current currentLast",
             "id", String.valueOf(user.getId()))%>
         <% } else {
             final String from = findFromAction();
@@ -25,15 +26,6 @@
         if (isLogged()) {
             final User user = currentUser();
     %>
-    <!--
-    <div><span id="loginName"><%= user.getName()%><%= user.getNikePluEmail()
-            != null ? selectableLink(
-            "/privatedata", "refreshNikePlus",
-            "<img src='" + stat("/static/silk/arrow_refresh.png") + "' alt='Rafraîchir nike+'/>",
-            "Rafraîchir les données Nike+", "fromAction", findFromAction()) : ""%>
-        </span>
-    </div>
--->
     <%}%>
 </div>
 <%!
