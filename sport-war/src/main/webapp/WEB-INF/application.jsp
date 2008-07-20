@@ -41,7 +41,7 @@
                 <% if (isLogged()) { %>
                 <ul id="accountLinks">
                     <li class="userName"><%=currentUser().getName()%>&nbsp;:</li>
-                    <li><a href="<%=createUrl("/privateData", "")%>" title="Mon compte">Mon compte</a></li>
+                    <li><a href="<%=createUrl("/privatedata", "")%>" title="Mon compte">Mon compte</a></li>
                     <li><a href="<%=createUrl("/", "logout")%>" title="Déconnexion">Déconnexion</a></li>
                 </ul>
                 <% } else { %>
