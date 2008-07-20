@@ -42,14 +42,14 @@
                 <ul id="accountLinks">
                     <li class="userName"><%=currentUser().getName()%>&nbsp;:</li>
                     <li><a href="<%=createUrl("/privateData", "")%>" title="Mon compte">Mon compte</a></li>
-                    <li><a href="<%=createUrl("/", "logout")%>" title="Déconnection">Déconnection</a></li>
+                    <li><a href="<%=createUrl("/", "logout")%>" title="Déconnexion">Déconnexion</a></li>
                 </ul>
                 <% } else { %>
                 <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
                     <ul id="accountLinks">
                         <li><input name="login" id="loginUpper" class="text" /></li>
                         <li><input name="password" id="passwordUpper" type="password" class="text" /></li>
-                        <li><input type="submit" class="submit" name="submit" value="Connection" /></li>
+                        <li><input type="submit" class="submit" name="submit" value="Connexion" /></li>
                     </ul>
                 </form>
                 <% } %>
