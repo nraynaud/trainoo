@@ -40,9 +40,18 @@
                 <div id="adPlaceHolder">publicité google</div>
                 <% if (isLogged()) { %>
                 <ul id="accountLinks">
-                    <li class="userName"><%=currentUser().getName()%></li>
+                    <li class="userName"><%=currentUser().getName()%>&nbsp;:</li>
+                    <li><a href="<%=createUrl("/privateData", "")%>" title="Mon compte">Mon compte</a></li>
                     <li><a href="<%=createUrl("/", "logout")%>" title="Déconnection">Déconnection</a></li>
                 </ul>
+                <% } else { %>
+                <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
+                    <ul id="accountLinks">
+                        <li><input name="login" id="login" class="text" /></li>
+                        <li><input name="password" id="password" type="password" class="text" /></li>
+                        <li><input type="submit" class="submit" name="submit" value="Connection" /></li>
+                    </ul>
+                </form>
                 <% } %>
             </div>
             <%}%>

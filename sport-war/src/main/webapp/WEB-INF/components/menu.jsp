@@ -7,8 +7,8 @@
     <ul class="secondary">
         <% if (isLogged()) {
             final User user = currentUser();
-        %><%= tab("/privatedata", "", "mon compte", "first", "current currentFirst")%>
-        <%= tab("/", "workouts", "Mon vestiaire", "", "current")%><%= tab("/bib", "", "Mon dossard", "last",
+        %>
+        <%= tab("/", "workouts", "Mon vestiaire", "first", "current currentFirst")%><%= tab("/bib", "", "Mon dossard", "last",
             "current currentLast",
             "id", String.valueOf(user.getId()))%>
         <% } else {
