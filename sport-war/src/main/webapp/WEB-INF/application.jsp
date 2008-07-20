@@ -47,8 +47,8 @@
                 <% } else { %>
                 <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
                     <ul id="accountLinks">
-                        <li><input name="login" id="login" class="text" /></li>
-                        <li><input name="password" id="password" type="password" class="text" /></li>
+                        <li><input name="login" id="loginUpper" class="text" /></li>
+                        <li><input name="password" id="passwordUpper" type="password" class="text" /></li>
                         <li><input type="submit" class="submit" name="submit" value="Connection" /></li>
                     </ul>
                 </form>
