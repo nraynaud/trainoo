@@ -5,7 +5,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<p:layoutParams title="Mon Dossard"/>
+<p:layoutParams title="Mon dossard"/>
 
 <div id="tinyCenter">
     <div class="block">
