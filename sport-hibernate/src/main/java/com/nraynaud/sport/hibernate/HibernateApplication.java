@@ -437,7 +437,7 @@ public class HibernateApplication implements Application {
     }
 
     private PaginatedCollection<User> fetchGroupMembers(final Group group) {
-        final String queryString = "select u from GroupImpl g inner join g.members u where g=:group";
+        final String queryString = "select u from GroupImpl g inner join g.members u where g=:group order by u.name";
         final Query query = query(queryString);
         query.setParameter("group", group);
         return paginateList(0, 100, query.getResultList());
