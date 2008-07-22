@@ -40,19 +40,19 @@ small {
 #logo a {
 	display: block;
 	overflow: hidden;
-	height: 63px;
+	height: 64px;
 	width: 0;
-	padding-left: 326px; 
+	padding-left: 201px; 
 	background-image: url(logo.png);
 	position:absolute;
-	top: 32px;
+	top: 30px;
 	left: 16px;
 }
 
 #catchPhrase {
 	position: absolute;
-	top: 80px;
-	left: 180px;
+	bottom: -4px;
+	left: 264px;
 
 	font-weight: bold;
 	font-style: italic;
