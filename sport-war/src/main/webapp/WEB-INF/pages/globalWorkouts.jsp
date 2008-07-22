@@ -23,7 +23,7 @@
         <div class="content textContent">
             <p>Vous pratiquez le sport en dehors de la télé&nbsp;?<br/>
                 Vous voulez suivre votre vie active&nbsp;?<br/>
-                <%=signupUrl("Inscrivez vous")%> et vous pourrez&nbsp;:</p>
+                <%=signupUrl("Inscrivez-vous")%> et vous pourrez&nbsp;:</p>
             <ul>
                 <li>Publier vos entrainements</li>
                 <li>Commenter vos entrainements et ceux des autres</li>
