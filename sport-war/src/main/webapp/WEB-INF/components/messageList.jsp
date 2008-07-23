@@ -46,7 +46,7 @@
                 <s:param value="'content'"/>
             </s:fielderror>
             <a name="errorMessage"> </a>
-            <input type="hidden" name="id"/>
+            <input type="hidden" name="id" value="<%=message.getId()%>"/>
             <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
             <input type="hidden" name="fromAction"
                    value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>"/>
