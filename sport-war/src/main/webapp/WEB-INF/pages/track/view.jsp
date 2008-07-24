@@ -23,7 +23,7 @@
         <%}%>
         <span id="distance"></span>
         <%if (track.getUser().equals(currentUser())) { %>
-        <%=selectableLink("/track", "edit",
+        <%=link("/track", "edit",
                 "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
                 "modifier le parcours", "id", track.getId().toString())%>
         <%
@@ -32,7 +32,7 @@
         <%
             }
         %>
-        <%=selectableLink("/track", "edit", "Nouveau Parcours", "")%>
+        <%=link("/track", "edit", "Nouveau Parcours", "")%>
         <hr>
         <h3>Mes parcours&nbsp;:</h3>
         <table id="trackTable">
@@ -42,7 +42,7 @@
                     parity = !parity;
             %>
             <tr class="<%=parity ? "odd":"even"%> <%=loopTrack.equals(track) ? "highLight" : ""%>">
-                <td><%=selectableLink("/track", "", loopTrack.getId().toString(), "voir le parcours", "id",
+                <td><%=link("/track", "", loopTrack.getId().toString(), "voir le parcours", "id",
                         loopTrack.getId().toString())%>
                 </td>
                 <td><%=shortSpan(loopTrack.getTitle(), 10)%>

@@ -318,12 +318,12 @@ public class Helpers {
 
     public static String signupUrl(final String text) {
         final String from = findFromAction();
-        return selectableLink("/", "signup", text, null, "fromAction", from);
+        return link("/", "signup", text, null, "fromAction", from);
     }
 
     public static String loginUrl(final String text) {
         final String from = findFromAction();
-        return selectableLink("/", "login", text, null, "fromAction", from);
+        return link("/", "login", text, null, "fromAction", from);
     }
 
     public static String findFromAction() {
@@ -338,20 +338,10 @@ public class Helpers {
         return null;
     }
 
-    public static String selectableLink(final String namespace, final String action, final String content,
-                                        final String title, final String... params) {
-        boolean selected = isCurrentAction(namespace, action);
-        final String finalUrl = createUrl(namespace, action, params);
-        for (int i = 0; i < params.length; i += 2) {
-            selected &= params[i + 1].equals(getFirstValue(params[i]));
-        }
-        return selectableAnchorTag(content, finalUrl, selected, title);
-    }
-
     public static String link(final String namespace, final String action, final String content,
                               final String title, final String... params) {
         final String finalUrl = createUrl(namespace, action, params);
-        return selectableAnchorTag(content, finalUrl, false, title);
+        return anchorTag(content, finalUrl, title);
     }
 
     public static String createUrl(final String namespace, final String action, final String... params) {
@@ -378,35 +368,25 @@ public class Helpers {
         return MAPPER.getUriFromActionMapping(new ActionMapping(action, namespace, null, null));
     }
 
-    public static String selectableAnchorTag(final String content, final String url, final boolean selected,
-                                             final String title) {
-        final String selectedPart = selected ? "class='selected'" : "";
+    public static String anchorTag(final String content, final String url, final String title) {
         final String titlePart = title != null ? "title='" + title + '\'' : "";
-        return "<a " + selectedPart + titlePart + " href='" + url + "'>" + content + "</a>";
+        return "<a " + titlePart + " href='" + url + "'>" + content + "</a>";
     }
 
     public static String linkCurrenUrlWithoutParam(final String content, final String excludedKey) {
-        return linkCurrenUrlWithAndWithoutParams(content, false, excludedKey);
+        return linkCurrenUrlWithAndWithoutParams(content, excludedKey);
     }
 
-    public static String linkCurrenUrlWithParams(final String content, final boolean selectable,
-                                                 final String... params) {
-        return linkCurrenUrlWithAndWithoutParams(content, selectable, null, params);
+    public static String linkCurrenUrlWithParams(final String content, final String... params) {
+        return linkCurrenUrlWithAndWithoutParams(content, null, params);
     }
 
     @SuppressWarnings({"unchecked"})
-    public static String linkCurrenUrlWithAndWithoutParams(final String content, final boolean selectable,
-                                                           final String excludedKey,
+    public static String linkCurrenUrlWithAndWithoutParams(final String content, final String excludedKey,
                                                            final String... params) {
         final Map<String, String> newParams = new HashMap<String, String>();
-        boolean selected = false;
-        final Map<String, String[]> queryString = ServletActionContext.getRequest().getParameterMap();
         final String url = currentUrlLinkWithAndWithoutParams(excludedKey, newParams, params);
-        for (final Map.Entry<String, String[]> queries : queryString.entrySet())
-            if (newParams.containsKey(queries.getKey())) {
-                selected |= newParams.get(queries.getKey()).equals(queries.getValue()[0]);
-            }
-        return selectableAnchorTag(content, url, selectable && selected, null);
+        return anchorTag(content, url, null);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -456,7 +436,7 @@ public class Helpers {
     public static String bibLink(final User user, final int maxLength) {
         final UserString fullName = user.getName();
         final String shortName = shortString(user.getName(), maxLength);
-        return selectableLink("/bib", "", shortName, "Voir le dossard de " + escaped(fullName), "id",
+        return link("/bib", "", shortName, "Voir le dossard de " + escaped(fullName), "id",
                 user.getId().toString());
     }
 
@@ -498,7 +478,7 @@ public class Helpers {
     }
 
     public static String anchor(final String content, final String url) {
-        return selectableAnchorTag(content, url, false, null);
+        return anchorTag(content, url, null);
     }
 
     public static String joinNames(final Collection<User> participans) {

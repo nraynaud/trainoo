@@ -120,7 +120,7 @@
                 <s:iterator value="%{allGroups}">
                     <%final GroupData groupData = top(GroupData.class);%>
                     <tr>
-                        <th><%=selectableLink("/groups", "", groupData.name.toString(), null, "id",
+                        <th><%=link("/groups", "", groupData.name.toString(), null, "id",
                                 String.valueOf(groupData.id))%>
                         </th>
                         <%final int newCount = groupData.newMessagesCount; %>

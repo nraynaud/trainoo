@@ -9,14 +9,14 @@
     final String pageVariable = property("pageVariable", String.class);
     if (collection.hasPrevious()) {
 %>
-<div class="paginationPrevious"><%=linkCurrenUrlWithParams("&lt;&lt;-Précédents", false, pageVariable,
+<div class="paginationPrevious"><%=linkCurrenUrlWithParams("&lt;&lt;-Précédents", pageVariable,
         String.valueOf(collection.getPreviousIndex()))%>
 </div>
 <%
     }
     if (collection.hasNext()) {
 %>
-<div class="paginationNext"><%=linkCurrenUrlWithParams("Suivants->>", false, pageVariable,
+<div class="paginationNext"><%=linkCurrenUrlWithParams("Suivants->>", pageVariable,
         String.valueOf(collection.getNextIndex()))%>
 </div>
 <%}%>

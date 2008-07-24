@@ -11,7 +11,7 @@
         call(pageContext, "workoutForm.jsp", null, "action", createUrl("/workout", "edit", "id", id), "showDelete",
                 true, "submit", "Modifier");
     %>
-    <%=selectableLink("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id", id)%>
+    <%=link("/workout", "participants", "Ajouter des participants", "Ajouter des participants", "id", id)%>
     <div style="text-align:center;margin-top:2em; clear:both;"><a href="<%=createUrl("/",  "workouts")%>">Annuler et
         revenir à mon vestiaire</a>
     </div>

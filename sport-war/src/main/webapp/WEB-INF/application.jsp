@@ -30,7 +30,7 @@
         }
     %>
 </head>
-<body class="<%= isLogged() ? "isLogged" : ""%>" >
+<body class="<%= isLogged() ? "isLogged" : ""%>">
     <div id="body">
         <div id="center">
             <%if (pageDetail.isShowHeader()) {%>
@@ -47,9 +47,9 @@
                 <% } else { %>
                 <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
                     <ul id="accountLinks">
-                        <li><input name="login" id="loginUpper" class="text" /></li>
-                        <li><input name="password" id="passwordUpper" type="password" class="text" /></li>
-                        <li><input type="submit" class="submit" name="submit" value="Connexion" /></li>
+                        <li><input name="login" id="loginUpper" class="text"/></li>
+                        <li><input name="password" id="passwordUpper" type="password" class="text"/></li>
+                        <li><input type="submit" class="submit" name="submit" value="Connexion"/></li>
                     </ul>
                 </form>
                 <% } %>
@@ -88,7 +88,7 @@
             <%if (pageDetail.isShowFooter()) {%>
             <div id="footer">
                 <hr>
-                <p><%=selectableLink("/", "about", "À propos de trainoo.com…", null)%> -
+                <p><%=link("/", "about", "À propos de trainoo.com…", null)%> -
                     <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
             <%}%>
 
