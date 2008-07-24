@@ -8,7 +8,8 @@
         <% if (isLogged()) {
             final User user = currentUser();
         %>
-        <%= tab("/", "workouts", "Mon vestiaire", "first", "current currentFirst")%><%= tab("/bib", "", "Mon dossard", "last",
+        <%= tab("/", "workouts", "Mon vestiaire", "first", "current currentFirst")%><%= tab("/bib", "", "Mon dossard",
+            "last",
             "current currentLast",
             "id", String.valueOf(user.getId()))%>
         <% } else {
@@ -34,7 +35,6 @@
         final boolean current = isCurrentAction(namespace, action);
         final String url = createUrl(namespace, action, params);
         final String selectedPart = current ? " " + selectedClasses : "";
-        final String decoratedContent = current ? content : anchor(content, url);
-        return "<li class='" + classes + selectedPart + "'><span>" + decoratedContent + "</span></li>";
+        return "<li class='" + classes + selectedPart + "'><span>" + anchor(content, url) + "</span></li>";
     }
 %>
