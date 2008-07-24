@@ -95,7 +95,7 @@
 <%
     call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
     paginate(pageContext, "workoutTable.jsp",
-            view(groupPage.statistics.workouts, "workoutPage", DEFAULT_WORKOUT_TRANSFORMER), "displayEdit",
+            view(groupPage.statistics.workouts, "workoutPage", oneSheetContentTransformer("")), "displayEdit",
             "false", "displayName", "true");%>
 <%
     if (!groupPage.users.isEmpty()) {
