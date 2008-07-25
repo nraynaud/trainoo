@@ -55,7 +55,7 @@
 <%call(pageContext, "trackLoader.jsp");%>
 <p:javascript src="<%=stat("/static/track/updateEditor.js")%>"/>
 <p:javascript src="<%=stat("/static/track/appendEditor.js")%>"/>
-<p:javascript src="<%=stat("/static/track/trackEdit2.js")%>"/>
+<p:javascript src="<%=stat("/static/track/trackEdit.js")%>"/>
 <%if (track != null) {%>
 <p:javascript>loadOnStartup($('trackVar').value);</p:javascript>
 <%}%>
