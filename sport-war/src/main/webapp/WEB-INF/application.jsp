@@ -40,11 +40,12 @@
     <div id="adPlaceHolder">publicité google</div>
     <div id="topBar">
         <div id="secondaryTop">
-            <form action="http://www.google.fr/cse" id="cse-search-box" target="_blank">
+            <form action="http://trainoo.com/search/" id="cse-search-box">
                 <div>
-                    <input type="hidden" name="cx" value="partner-pub-1788371406648361:9jh24y6t3bo"/>
+                    <input type="hidden" name="cx" value="partner-pub-1788371406648361:36ti6n6fck5"/>
+                    <input type="hidden" name="cof" value="FORID:10"/>
                     <input type="hidden" name="ie" value="UTF-8"/>
-                    <input type="text" name="q" size="30"/>
+                    <input type="text" name="q" size="31"/>
                     <input type="submit" name="sa" value="Rechercher"/>
                 </div>
             </form>
