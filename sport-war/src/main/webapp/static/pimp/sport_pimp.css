@@ -71,48 +71,56 @@ small {
     background-color: #EEE;
 }
 
-#accountLinks {
+#secondaryTop {
+    float: right;
+}
+
+#primaryTop {
+    float: left;
+}
+
+#topBar {
     position: absolute;
     top: 0;
     left: 14px;
     width: 912px;
     padding: 4px 10px 0 10px;
     height: 20px;
-    text-align: right;
+    text-align: left;
     background-image: url( upper_bar.png );
     color: #5A533B;
 }
 
-form #accountLinks {
+#topBar form {
     padding-top: 1px;
     height: 23px;
 }
 
-#accountLinks li {
+#topBar li {
     display: inline;
     margin: 0 0 0 2px;
 }
 
-form #accountLinks li {
+#topBar form li {
     margin: 0 0 0 4px;
 }
 
-#accountLinks li a {
+#topBar li a {
     font-size: 12px;
     text-decoration: none;
     color: #000000;
 }
 
-#accountLinks li a:hover {
+#topBar li a:hover {
     text-decoration: underline;
 }
 
-#accountLinks .userName {
+#topBar .userName {
     font-weight: bold;
     margin: auto;
 }
 
-#accountLinks input {
+#topBar input {
     float: none;
     display: inline;
     border: 1px solid #e1dfbc;
@@ -123,7 +131,7 @@ form #accountLinks li {
     font-size: 12px;
 }
 
-#accountLinks input.submit {
+#topBar input.submit {
     width: auto;
 }
 
