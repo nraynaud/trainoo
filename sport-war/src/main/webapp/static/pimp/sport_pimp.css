@@ -40,12 +40,12 @@ small {
 #logo a {
     display: block;
     overflow: hidden;
-    height: 56px;
+    height: 50px;
     width: 0;
-    padding-left: 301px;
+    padding-left: 295px;
     background-image: url( logo.png );
     position: absolute;
-    top: 30px;
+    top: 32px;
     left: 20px;
 }
 
@@ -53,7 +53,7 @@ small {
     position: absolute;
     top: 78px;
     left: 24px;
-	 width: 301px;
+	 width: 295px;
 
     font-weight: bold;
     font-style: italic;
