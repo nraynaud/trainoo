@@ -40,25 +40,27 @@ small {
 #logo a {
     display: block;
     overflow: hidden;
-    height: 63px;
+    height: 56px;
     width: 0;
-    padding-left: 326px;
+    padding-left: 301px;
     background-image: url( logo.png );
     position: absolute;
-    top: 32px;
-    left: 16px;
+    top: 30px;
+    left: 20px;
 }
 
 #catchPhrase {
     position: absolute;
-    top: 80px;
-    left: 180px;
+    top: 78px;
+    left: 24px;
+	 width: 301px;
 
     font-weight: bold;
     font-style: italic;
     font-size: 16px;
     color: #655c34;
     cursor: default;
+	 text-align: center;
 }
 
 #adPlaceHolder {
