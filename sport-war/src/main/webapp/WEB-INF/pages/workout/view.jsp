@@ -87,14 +87,14 @@
                class="button editButton">Modifier</a>
             <%}%>
         </span>
-        Compte rendu de <%=bibLink(runner, 20)%>
+        Compte rendu par <%=bibLink(runner, 20)%>
     </h2>
 
     <div class="block">
         <div class="content textContent">
             <p>
                 <%=escapedOrNullmultilines(workout.getComment(),
-                        "<em>Pas de commentaire</em>")%>
+                        "<em>Pas de compte-rendu</em>")%>
             </p>
         </div>
     </div>
