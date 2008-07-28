@@ -10,19 +10,20 @@
 
 <div id="globalLeft">
     <h2>Dernières sorties sportives</h2>
+
     <div class="block sheetBlock">
         <div class="header">
             <div class="deco"></div>
             <% final GlobalWorkoutsPageData data = top(GlobalWorkoutsPageData.class);
-            call(pageContext, "distanceByDiscipline.jsp", data.statisticsData);
+                call(pageContext, "distanceByDiscipline.jsp", data.statisticsData);
             %>
         </div>
         <div class="content">
             <div class="deco"></div>
             <%
-            paginate(pageContext, "workoutTable.jsp",
-                view(data.statisticsData.workouts, "workoutPage"),
-                "displayEdit", "false", "displayName", "true", "withUser", "true");
+                paginate(pageContext, "workoutTable.jsp",
+                        view(data.statisticsData.workouts, "workoutPage"),
+                        "displayEdit", "false", "displayName", "true", "withUser", "true");
             %>
         </div>
         <div class="footer">
@@ -47,7 +48,7 @@
             </ul>
             <form method="GET" id="subscribeForm" action="<%=createUrl("/", "signup")%>">
                 <span class="actions">
-                    <input type="submit" value="S'inscrire" class="submit"/>
+                    <input type="submit" value="Inscription" class="submit"/>
                 </span>
             </form>
         </div>
