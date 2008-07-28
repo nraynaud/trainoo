@@ -111,7 +111,7 @@
 <% if (group != null) {%>
 <h2>Voir les autres groupes</h2>
 <%} else {%>
-<h2>Tout les groupes</h2>
+<h2>Tous les groupes</h2>
 <%}%>
 <div class="block">
     <div class="content textContent">
