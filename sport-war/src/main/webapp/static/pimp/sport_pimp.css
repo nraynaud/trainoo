@@ -410,6 +410,8 @@ small {
 .sheetBlock .deco {
 	background: url( workoutsheet.png );
 	position: relative;
+    overflow: hidden;
+    zoom: 1;
 }
 
 .sheetBlock .deco {
@@ -417,6 +419,8 @@ small {
 	top: 0;
 	right: 0;
 	bottom: 0;
+    _height: 1000px;
+    _right: -1px; /* IE6 : lacks robustness */
 }
 
 .sheetBlock .header {
@@ -464,6 +468,7 @@ small {
 
 .sheetBlock .pagination {
 	background-color: #f7f7e2;
+    zoom: 1;
 }
 
 .sheetBlock .paginationPrevious,
@@ -498,14 +503,18 @@ small {
 .sheetBlock .header .disciplineList li a {
 	display: block;
 	height: 31px;
-	line-height: 26px;
+	line-height: 28px;
 	background-position: 100% -64px;
 	text-decoration: none;
 	color: #403615;
+    _float: left;
 }
 
 .sheetBlock .header .disciplineList li.current {
 	background-image: url( workoutsheet.png );
+    margin-left: -16px;
+    position: relative;
+    left: 16px;
 }
 
 .sheetBlock .header .disciplineList li.current a {
@@ -513,7 +522,6 @@ small {
 	color: #000000;
 	cursor: default;
 	padding-right: 16px;
-	margin-right: -16px;
 }
 
 ul.sheet {
@@ -618,6 +626,7 @@ ul.sheet li a {
     zoom: 1;
     background-color: #ffffff;
     margin-top: 1px;
+	 _margin-bottom: -1px; /* IE6: ugly */
     padding: 3px 10px;
     text-decoration: none;
     color: #000000;
