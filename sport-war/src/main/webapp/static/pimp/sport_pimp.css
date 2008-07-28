@@ -74,19 +74,27 @@ small {
 }
 
 #secondaryTop {
-    float: right;
+	_width: 50%; /* IE6 bug */
+	float: right;
+	text-align: right;
+}
+
+#cse-search-box input.text {
+	width: 170px;
 }
 
 #primaryTop {
-    float: left;
+	clear: none;
+	overflow: hidden;
 }
 
 #topBar {
     position: absolute;
+	 overflow: hidden;
     top: 0;
     left: 14px;
     width: 912px;
-    padding: 4px 10px 0 10px;
+    padding: 2px 10px 2px 10px;
     height: 20px;
     text-align: left;
     background-image: url( upper_bar.png );
@@ -94,7 +102,6 @@ small {
 }
 
 #topBar form {
-    padding-top: 1px;
     height: 23px;
 }
 
@@ -131,10 +138,16 @@ small {
     margin: 0;
     width: 10em;
     font-size: 12px;
+	 vertical-align: middle;
+	 /* block google script style tweaking */
+	 _padding: 0 !important;
+    _border: 1px solid #e1dfbc !important;
 }
 
 #topBar input.submit {
     width: auto;
+	 padding: 0 2px;
+	 _padding: 0 2px !important;
 }
 
 #infoPop {

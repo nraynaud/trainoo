@@ -45,8 +45,8 @@
                     <input type="hidden" name="cx" value="partner-pub-1788371406648361:36ti6n6fck5"/>
                     <input type="hidden" name="cof" value="FORID:10"/>
                     <input type="hidden" name="ie" value="UTF-8"/>
-                    <input type="text" name="q" size="31"/>
-                    <input type="submit" name="sa" value="Rechercher"/>
+                    <input type="text" class="text" name="q" size="31"/>
+                    <input type="submit" class="submit" name="sa" value="Rechercher"/>
                 </div>
             </form>
             <script type="text/javascript"
