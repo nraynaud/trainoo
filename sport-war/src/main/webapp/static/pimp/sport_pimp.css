@@ -398,139 +398,243 @@ small {
 
 /* --- workout sheet block --- */
 
-dl.sheet {
-    border: 3px solid #ffffff;
-    border-top-width: 0;
-    background-color: #bacf6d;
+.sheetBlock {
+	padding: 0;
+	margin: 0 21px;
 }
 
-dl.sheet dt {
-    margin: 0 0 4px 0;
-    border-top: 10px solid #ffffff;
-    padding: 6px 0 0 6px;
-
-    font-size: 1.28571em;
-    font-weight: bold;
+.sheetBlock .header,
+.sheetBlock .secondaryHeader,
+.sheetBlock .content,
+.sheetBlock .footer,
+.sheetBlock .deco {
+	background: url( workoutsheet.png );
+	position: relative;
 }
 
-dl.sheet ul {
-    margin: 6px;
+.sheetBlock .deco {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
 }
 
-dl.sheet li span {
+.sheetBlock .header {
+	background-position: -12px 0;
+	height: 31px;
+	padding-left: 14px;
+}
+
+.sheetBlock .header .deco {
+	background-position: 100% 0;
+	width: 14px;
+}
+
+.sheetBlock .secondaryHeader {
+	background-position: -12px -95px;
+	height: 40px;
+	padding-left: 14px;
+}
+
+.sheetBlock .secondaryHeader .deco {
+	background-position: 100% -95px;
+	width: 14px;
+}
+
+.sheetBlock .content {
+	background-position: -6px 0;
+	padding: 0 6px;
+}
+
+.sheetBlock .content .deco {
+	background-position: 0 0;
+	width: 6px;
+}
+
+.sheetBlock .footer {
+	background-position: -12px -31px;
+	height: 19px;
+	padding-left: 14px;
+}
+
+.sheetBlock .footer .deco {
+	background-position: 100% -31px;
+	width: 14px;
+}
+
+.sheetBlock .pagination {
+	background-color: #f7f7e2;
+}
+
+.sheetBlock .paginationPrevious,
+.sheetBlock .paginationNext {
+	margin: 0;
+	padding: 8px 12px;
+}
+
+.sheetBlock .header h3 {
+   font-size: 1.2857143em;
+	font-weight: bold;
+	padding-top: 5px;
+}
+
+.sheetBlock .secondaryHeader h3 {
+   font-size: 1.2857143em;
+	font-weight: bold;
+	padding-top: 14px;
+}
+
+.sheetBlock .header .disciplineList li.label {
+	padding: 0;
+	font-weight: bold;
+}
+
+.sheetBlock .header .disciplineList li {
+	float: left;
+	padding-left: 16px;
+	background-position: -12px -64px;
+}
+
+.sheetBlock .header .disciplineList li a {
+	display: block;
+	height: 31px;
+	line-height: 26px;
+	background-position: 100% -64px;
+	text-decoration: none;
+	color: #403615;
+}
+
+.sheetBlock .header .disciplineList li.current {
+	background-image: url( workoutsheet.png );
+}
+
+.sheetBlock .header .disciplineList li.current a {
+	background-image: url( workoutsheet.png );
+	color: #000000;
+	cursor: default;
+	padding-right: 16px;
+	margin-right: -16px;
+}
+
+ul.sheet {
+	padding-bottom: 1px;
+	background-color: #bbd06e;
+}
+
+ul.sheet li span {
     float: left;
     _display: inline;
     width: 25%;
 }
 
-dl.sheet li span.discipline {
-    width: 19%;
+ul.sheet li span.discipline {
+    width: 17%;
 }
 
-dl.sheet li span.user {
+ul.sheet li span.user {
     width: 23%;
 }
 
-dl.sheet li span.user span {
+ul.sheet li span.user span {
     float: none;
     display: inline;
 }
 
-dl.sheet li span.date {
-    width: 20%;
+ul.sheet li span.date {
+    width: 10%;
     text-align: right;
-    padding-right: 3%;
+    padding-right: 5%;
 }
 
-dl.sheet li span.duration {
-    width: 28%;
+ul.sheet li span.duration {
+    width: 20%;
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
 }
 
-dl.sheet li span.duration span {
+ul.sheet li span.duration span {
     float: left;
     _display: inline;
     text-align: right;
     width: 1.65em;
 }
 
-dl.sheet li span.duration span.seconds {
+ul.sheet li span.duration span.seconds {
     width: 1.85em;
 }
 
-dl.sheet li span.distance {
+ul.sheet li span.distance {
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
+	 width: 20%;
 }
 
-dl.sheet li span.distance span {
+.userSheetBlock ul.sheet li span.distance {
+	width: 43%;
+}
+
+ul.sheet li span.distance span {
     float: left;
     _display: inline;
     text-align: right;
     width: 1.5em;
 }
 
-dl.sheet li span.distance span.decimal {
+ul.sheet li span.distance span.decimal {
     text-align: left;
 }
 
-dl.sheet li span.coms {
+ul.sheet li span.coms {
     display: block;
     float: none;
     width: auto;
     text-align: center;
-    height: 13px;
+    height: 15px;
     padding: 2px 0 0 0;
     font-size: 0.71428571em;
-    background-image: url( bulle_odd.png );
+    background-image: url( bulle.png );
     background-repeat: no-repeat;
-    background-position: right top;
+    background-position: right 0;
 }
 
-dl.sheet li span.comsNone {
+ul.sheet li span.comsNone {
     visibility: hidden;
 }
 
-dl.sheet li.even span.coms {
-    background-image: url( bulle_even.png );
+ul.sheet li.even span.coms {
+	background-position: right -22px;
 }
 
-dl.sheet li a:hover span.coms {
-    background-image: url( bulle_hover.png );
+ul.sheet li a:hover span.coms {
+	background-position: right -44px;
 }
 
-dl.sheet li a {
+ul.sheet li a {
     display: block;
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
-    background-color: #e7f3b9;
+    background-color: #ffffff;
     margin-top: 1px;
     padding: 3px 10px;
     text-decoration: none;
     color: #000000;
 }
 
-dl.sheet li.even a {
-    background-color: #f7f7e2;
+ul.sheet li.even a {
+    background-color: #e7f3b9;
 }
 
-dl.sheet li a:hover {
+ul.sheet li a:hover {
     background-color: #d8ee87;
 }
 
-dl.sheet li {
+ul.sheet li {
     display: block;
     clear: left;
-}
-
-/* --- sheet-only block */
-
-.sheetBlock .content {
-    padding: 0 8px;
+	 overflow: hidden;
 }
 
 /* --- important block */

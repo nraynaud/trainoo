@@ -115,19 +115,41 @@
             <%call(pageContext, "userListBlock.jsp", workout.getParticipants());%>
         </div>
     </div>
+
+    <% if (!data.similarWorkouts.isEmpty()) { %>
+    <div class="block sheetBlock">
+        <div class="header">
+            <div class="deco"></div>
+            <h3>Entraînements similaires</h3>
+        </div>
+        <div class="content">
+            <div class="deco"></div>
+            <%
+            call(pageContext, "workoutTable.jsp",
+                data.similarWorkouts,
+                "displayEdit", "false", "displayName", "true", "withUser", "true");
+            %>
+        </div>
+        <div class="secondaryHeader">
+            <div class="deco"></div>
+            <h3>Derniers entraînements</h3>
+        </div>
+        <div class="content">
+            <div class="deco"></div>
+            <%
+            call(pageContext, "workoutTable.jsp",
+                data.lastWorkouts,
+                "displayEdit", "false", "displayName", "true", "withUser", "true");
+            %>
+        </div>
+        <div class="footer">
+            <div class="deco"></div>
+        </div>
+    </div>
+    <% } %>
+
     <%
         }
-        final ArrayList<TableContent.TableSheet> sheets = new ArrayList<TableContent.TableSheet>(2);
-        if (!data.similarWorkouts.isEmpty()) {
-            final TableContent.TableSheet similarSheet = new TableContent.TableSheet("Entraînements similaires",
-                    data.similarWorkouts, SECONDARY_TABLE_RENDERER);
-            sheets.add(similarSheet);
-        }
-        final TableContent.TableSheet lastSheet = new TableContent.TableSheet("Derniers entraînements",
-                data.lastWorkouts, SECONDARY_TABLE_RENDERER);
-        sheets.add(lastSheet);
-        call(pageContext, "workoutTable.jsp", new TableContent(sheets), "idPrefix", "'lasts_'", "highLight",
-                workout.getId());
         if (isLogged() && !isCurrentUser) {%>
     <h2>Envoyer un message à <%=runner.getName()%>
     </h2>

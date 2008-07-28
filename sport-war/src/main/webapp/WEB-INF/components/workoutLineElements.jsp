@@ -2,10 +2,12 @@
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.web.DateHelper" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
 <% final Workout workout = top(Workout.class); %>
+<span class="date"><%=DateHelper.printDate("dd/MM", workout.getDate())%></span>
 <span class="discipline"><%=workout.getDiscipline()%></span>
 <% if (boolParam("withUser")) {%>
         <span class="user">

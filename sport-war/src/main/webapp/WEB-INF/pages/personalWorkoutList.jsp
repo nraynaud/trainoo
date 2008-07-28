@@ -25,11 +25,22 @@
         Mes dernières sorties
     </h2>
 
-    <p><%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%></p>
+    <div class="block sheetBlock userSheetBlock">
+        <div class="header">
+            <div class="deco"></div>
+    <%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
+        </div>
+        <div class="content">
+            <div class="deco"></div>
     <%
         paginate(pageContext, "workoutTable.jsp",
-                view(data.getStatisticsData().workouts, "workoutPage", oneSheetContentTransformer("")),
+                view(data.getStatisticsData().workouts, "workoutPage"),
                 "displayEdit", "true");%>
+        </div>
+        <div class="footer">
+            <div class="deco"></div>
+        </div>
+    </div>
 
     <h2>Nouvel entraînement</h2>
 

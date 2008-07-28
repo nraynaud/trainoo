@@ -4,19 +4,21 @@
 <%@ page import="com.nraynaud.sport.web.view.PaginationView" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<%
-    final PaginatedCollection collection = top(PaginationView.class).collection;
-    final String pageVariable = property("pageVariable", String.class);
-    if (collection.hasPrevious()) {
-%>
-<div class="paginationPrevious"><%=linkCurrenUrlWithParams("&lt;&lt;-Précédents", pageVariable,
-        String.valueOf(collection.getPreviousIndex()))%>
+<div class="pagination">
+    <%
+        final PaginatedCollection collection = top(PaginationView.class).collection;
+        final String pageVariable = property("pageVariable", String.class);
+        if (collection.hasPrevious()) {
+    %>
+    <div class="paginationPrevious"><%=linkCurrenUrlWithParams("« Précédents", pageVariable,
+            String.valueOf(collection.getPreviousIndex()))%>
+    </div>
+    <%
+        }
+        if (collection.hasNext()) {
+    %>
+    <div class="paginationNext"><%=linkCurrenUrlWithParams("Suivants »", pageVariable,
+            String.valueOf(collection.getNextIndex()))%>
+    </div>
+    <%}%>
 </div>
-<%
-    }
-    if (collection.hasNext()) {
-%>
-<div class="paginationNext"><%=linkCurrenUrlWithParams("Suivants->>", pageVariable,
-        String.valueOf(collection.getNextIndex()))%>
-</div>
-<%}%>

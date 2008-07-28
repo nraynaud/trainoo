@@ -46,8 +46,22 @@
         </div>
     </div>
     <% if (!lookingOwnBib) {%>
-    <% paginate(pageContext, "workoutTable.jsp",
-            view(data.workouts, "workoutPage", oneSheetContentTransformer("Ses dernières sorties")));%>
+    <div class="block sheetBlock userSheetBlock">
+        <div class="header">
+            <div class="deco"></div>
+            <h3>Dernières sorties</h3>
+        </div>
+        <div class="content">
+            <div class="deco"></div>
+        <%
+        paginate(pageContext, "workoutTable.jsp",
+                view(data.workouts, "workoutPage"),
+                "displayEdit", "false");%>
+        </div>
+        <div class="footer">
+            <div class="deco"></div>
+        </div>
+    </div>
     <%}%>
 </div>
 <%if (!lookingOwnBib && isLogged()) {%>

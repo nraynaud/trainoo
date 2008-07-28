@@ -224,13 +224,8 @@ public class Helpers {
                                        final String template,
                                        final PaginationView<T, U> stackTop,
                                        final Object... arguments) throws Exception {
-        context.getOut().append("<div class=\"pagination\">");
-        try {
-            call(context, template, stackTop.transformer.transform(stackTop.collection), arguments);
-            call(context, "paginationButtons.jsp", stackTop);
-        } finally {
-            context.getOut().append("</div>");
-        }
+			call(context, template, stackTop.transformer.transform(stackTop.collection), arguments);
+			call(context, "paginationButtons.jsp", stackTop);
     }
 
     public static void call(final PageContext context,

@@ -92,11 +92,24 @@
 </div>
 
 <h2>Les entraînements du groupe</h2>
-<%
-    call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics);
-    paginate(pageContext, "workoutTable.jsp",
-            view(groupPage.statistics.workouts, "workoutPage", oneSheetContentTransformer("")), "displayEdit",
-            "false", "displayName", "true");%>
+<div class="block sheetBlock">
+    <div class="header">
+        <div class="deco"></div>
+        <% call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics); %>
+    </div>
+    <div class="content">
+        <div class="deco"></div>
+        <%
+        paginate(pageContext, "workoutTable.jsp",
+            view(groupPage.statistics.workouts, "workoutPage"),
+            "displayEdit", "false", "displayName", "true", "withUser", "true");
+        %>
+    </div>
+    <div class="footer">
+        <div class="deco"></div>
+    </div>
+</div>
+
 <%
     if (!groupPage.users.isEmpty()) {
 %>

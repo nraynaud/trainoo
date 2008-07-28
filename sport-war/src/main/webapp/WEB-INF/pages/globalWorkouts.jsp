@@ -10,10 +10,25 @@
 
 <div id="globalLeft">
     <h2>Dernières sorties sportives</h2>
-    <% final GlobalWorkoutsPageData data = top(GlobalWorkoutsPageData.class);
-        paginate(pageContext, "workoutTable.jsp",
-                view(data.statisticsData.workouts, "workoutPage", DEFAULT_WORKOUT_TRANSFORMER),
-                "displayEdit", "false", "displayName", "true");%>
+    <div class="block sheetBlock">
+        <div class="header">
+            <div class="deco"></div>
+            <% final GlobalWorkoutsPageData data = top(GlobalWorkoutsPageData.class);
+            call(pageContext, "distanceByDiscipline.jsp", data.statisticsData);
+            %>
+        </div>
+        <div class="content">
+            <div class="deco"></div>
+            <%
+            paginate(pageContext, "workoutTable.jsp",
+                view(data.statisticsData.workouts, "workoutPage"),
+                "displayEdit", "false", "displayName", "true", "withUser", "true");
+            %>
+        </div>
+        <div class="footer">
+            <div class="deco"></div>
+        </div>
+    </div>
 </div>
 <div id="globalRight">
     <%if (!isLogged()) {%>
