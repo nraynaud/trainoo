@@ -4,25 +4,25 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-final List<DisciplineDistance> disciplines = (List<DisciplineDistance>) property(
-        "distanceByDisciplines",
-        List.class);
-String currentFilter = pageContext.getRequest().getParameter("disciplineFilter");
-if (currentFilter == null) {
-    currentFilter = "";
-}
+    final List<DisciplineDistance> disciplines = listProperty("distanceByDisciplines", DisciplineDistance.class);
+    String currentFilter = pageContext.getRequest().getParameter("disciplineFilter");
+    if (currentFilter == null) {
+        currentFilter = "";
+    }
 %>
 <% if (disciplines.size() == 0) { %>
 <ul class="emptyDisciplineList">
-<% } else { %>
-<ul class="disciplineList">
-    <li class="label">Voir :</li>
-    <li class="<%=currentFilter.equals("")?"current":""%>"><%=linkCurrenUrlWithParams("Tous", "disciplineFilter", "")%></li>
-    <% for (final DisciplineDistance dd : disciplines) { %>
-        <li class="<%=currentFilter.equals(dd.discipline.nonEscaped())?"current":""%>" >
-            <%=linkCurrenUrlWithParams(dd.discipline.toString(), "disciplineFilter",
-                dd.discipline.nonEscaped())%>
+    <% } else { %>
+    <ul class="disciplineList">
+        <li class="label">Voir :</li>
+        <li class="<%=currentFilter.equals("")?"current":""%>"><%=linkCurrenUrlWithParams("Tous", "disciplineFilter",
+                "")%>
         </li>
-    <% } %>
-<% } %>
-</ul>
+        <% for (final DisciplineDistance dd : disciplines) { %>
+        <li class="<%=currentFilter.equals(dd.discipline.nonEscaped())?"current":""%>">
+            <%=linkCurrenUrlWithParams(dd.discipline.toString(), "disciplineFilter",
+                    dd.discipline.nonEscaped())%>
+        </li>
+        <% } %>
+        <% } %>
+    </ul>

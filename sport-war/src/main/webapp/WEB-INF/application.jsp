@@ -62,8 +62,10 @@
             <% } else { %>
             <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
                 <ul id="accountLinks">
-                    <li><label for="loginUpper">Surnom&nbsp;:</label><input name="login" id="loginUpper" class="text"/></li>
-                    <li><label for="passwordUpper">Mot de passe&nbsp;:</label><input name="password" id="passwordUpper" type="password" class="text"/></li>
+                    <li><label for="loginUpper">Surnom&nbsp;:</label><input name="login" id="loginUpper" class="text"/>
+                    </li>
+                    <li><label for="passwordUpper">Mot de passe&nbsp;:</label><input name="password" id="passwordUpper"
+                                                                                     type="password" class="text"/></li>
                     <li><input type="submit" class="submit" name="submit" value="Connexion"/></li>
                 </ul>
                 <% } %>
@@ -76,7 +78,7 @@
 <%call(pageContext, "menu.jsp");%>
 <div id="content">
     <% if (isLogged()) {
-        final List<NewMessageData> newMessages = property("newMessages", List.class);
+        final List<NewMessageData> newMessages = listProperty("newMessages", NewMessageData.class);
         if (newMessages.size() > 0) {
             int count = 0;
             for (final NewMessageData privateMessage : newMessages) {

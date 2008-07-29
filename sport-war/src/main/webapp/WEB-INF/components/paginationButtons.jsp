@@ -7,7 +7,7 @@
 <div class="pagination">
     <%
         final PaginatedCollection collection = top(PaginationView.class).collection;
-        final String pageVariable = property("pageVariable", String.class);
+        final String pageVariable = stringProperty("pageVariable");
         if (collection.hasPrevious()) {
     %>
     <div class="paginationPrevious"><%=linkCurrenUrlWithParams("« Précédents", pageVariable,

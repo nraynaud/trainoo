@@ -141,6 +141,11 @@ public class Helpers {
         return cast(stack().findValue(expression, type), type);
     }
 
+    @SuppressWarnings({"unchecked"})
+    public static <T> List<T> listProperty(final String name, final Class<T> elementType) {
+        return property(name, List.class);
+    }
+
     public static <T> T parameter(final String expression, final Class<T> type) {
         return property("parameters." + expression, type);
     }
@@ -224,8 +229,8 @@ public class Helpers {
                                        final String template,
                                        final PaginationView<T, U> stackTop,
                                        final Object... arguments) throws Exception {
-			call(context, template, stackTop.transformer.transform(stackTop.collection), arguments);
-			call(context, "paginationButtons.jsp", stackTop);
+        call(context, template, stackTop.transformer.transform(stackTop.collection), arguments);
+        call(context, "paginationButtons.jsp", stackTop);
     }
 
     public static void call(final PageContext context,

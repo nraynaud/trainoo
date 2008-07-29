@@ -1,5 +1,4 @@
 <%@ page import="com.nraynaud.sport.Track" %>
-<%@ page import="java.util.List" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -38,7 +37,7 @@
         <table id="trackTable">
             <%
                 boolean parity = false;
-                for (final Track loopTrack : (List<Track>) property("tracks", List.class)) {
+                for (final Track loopTrack : listProperty("tracks", Track.class)) {
                     parity = !parity;
             %>
             <tr class="<%=parity ? "odd":"even"%> <%=loopTrack.equals(track) ? "highLight" : ""%>">

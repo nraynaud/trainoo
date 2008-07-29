@@ -7,7 +7,7 @@
 
 <div id="tinyCenter">
     <%
-        final String id = property("id", String.class);
+        final String id = stringProperty("id");
         call(pageContext, "workoutForm.jsp", null, "action", createUrl("/workout", "edit", "id", id), "showDelete",
                 true, "submit", "Modifier");
     %>
