@@ -430,7 +430,7 @@ small {
 	right: 0;
 	bottom: 0;
     _height: 1000px;
-    _right: -1px; /* IE6 : lacks robustness */
+    _right: -1px;
 }
 
 .sheetBlock .header {
@@ -458,6 +458,7 @@ small {
 .sheetBlock .content {
 	background-position: -6px 0;
 	padding: 0 6px;
+	_padding: 0 5px 0 6px;
 }
 
 .sheetBlock .content .deco {
