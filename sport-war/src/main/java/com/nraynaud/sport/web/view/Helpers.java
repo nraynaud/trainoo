@@ -4,6 +4,7 @@ import com.nraynaud.sport.Helper;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.data.DisciplineDistance;
 import com.nraynaud.sport.data.PaginatedCollection;
 import com.nraynaud.sport.web.DateHelper;
 import com.nraynaud.sport.web.SportActionMapper;
@@ -72,6 +73,14 @@ public class Helpers {
                     .append(com.nraynaud.sport.web.DateHelper.printDate("EE dd/MM", workout.getDate()))
                     .append("</span>");
             call(context, "workoutLineElements.jsp", workout);
+        }
+    };
+    public static final Comparator<DisciplineDistance> DISCIPLNE_DISTANCE_COMPARATOR = new Comparator<DisciplineDistance>() {
+        public int compare(final DisciplineDistance o1, final DisciplineDistance o2) {
+            final long diff = o2.count.longValue() - o1.count.longValue();
+            if (diff != 0)
+                return (int) diff < 0 ? -1 : 1;
+            return o1.discipline.nonEscaped().compareTo(o2.discipline.nonEscaped());
         }
     };
 

@@ -1,7 +1,6 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.DisciplineDistance" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Comparator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.TreeSet" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -25,15 +24,7 @@
                 "disciplineFilter",
                 "")%>
         </li>
-        <% final TreeSet<DisciplineDistance> ddSet = new TreeSet<DisciplineDistance>(
-                new Comparator<DisciplineDistance>() {
-                    public int compare(final DisciplineDistance o1, final DisciplineDistance o2) {
-                        final long diff = o2.count.longValue() - o1.count.longValue();
-                        if (diff != 0)
-                            return (int) diff < 0 ? -1 : 1;
-                        return o1.discipline.nonEscaped().compareTo(o2.discipline.nonEscaped());
-                    }
-                });
+        <% final TreeSet<DisciplineDistance> ddSet = new TreeSet<DisciplineDistance>(DISCIPLNE_DISTANCE_COMPARATOR);
             ddSet.addAll(disciplines);
             final ArrayList<DisciplineDistance> orderedDD = new ArrayList<DisciplineDistance>(
                     ddSet);
