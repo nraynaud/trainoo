@@ -297,7 +297,8 @@ public class HibernateApplication implements Application {
         }
         dynamicPart.append(')');
         final Query query = query(
-                "select w from WorkoutImpl w where w.discipline=:discipline and w.id!=:selfId and w.user=:user and " + dynamicPart
+                "select w from WorkoutImpl w where w.discipline=:discipline and w.id!=:selfId and w.user=:user and "
+                        + dynamicPart
                         + " order by w.date desc, w.id desc");
         query.setParameter("selfId", workout.getId());
         query.setParameter("user", workout.getUser());
@@ -594,7 +595,7 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     private List<DisciplineDistance> fetchDistanceByDiscipline(final User user) {
         final String string =
-                "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, sum(w.distance))"
+                "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, sum(w.distance), count(*))"
                         + " from WorkoutImpl w where 1=1 "
                         + (user != null ? " and  :user MEMBER OF w.participants" : "")
                         + " group by w.discipline";
