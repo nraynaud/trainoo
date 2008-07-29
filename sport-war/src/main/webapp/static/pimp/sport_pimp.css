@@ -101,6 +101,12 @@ small {
     color: #5A533B;
 }
 
+#topBar label {
+	 font-weight: normal;
+    font-size: 0.92857143em;
+	 margin-right: 4px;
+}
+
 #topBar form {
     height: 23px;
 }
@@ -137,7 +143,7 @@ small {
     padding: 0;
     margin: 0;
     width: 10em;
-    font-size: 12px;
+    font-size: 0.85714286em;
 	 vertical-align: middle;
 	 /* block google script style tweaking */
 	 _padding: 0 !important;
@@ -148,6 +154,10 @@ small {
     width: auto;
 	 padding: 0 2px;
 	 _padding: 0 2px !important;
+}
+
+.isLogged #primaryTop ul {
+	padding-top: 2px;
 }
 
 #infoPop {

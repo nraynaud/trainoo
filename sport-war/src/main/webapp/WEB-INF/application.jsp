@@ -62,8 +62,8 @@
             <% } else { %>
             <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
                 <ul id="accountLinks">
-                    <li><input name="login" id="loginUpper" class="text"/></li>
-                    <li><input name="password" id="passwordUpper" type="password" class="text"/></li>
+                    <li><label for="loginUpper">Surnom&nbsp;:</label><input name="login" id="loginUpper" class="text"/></li>
+                    <li><label for="passwordUpper">Mot de passe&nbsp;:</label><input name="password" id="passwordUpper" type="password" class="text"/></li>
                     <li><input type="submit" class="submit" name="submit" value="Connexion"/></li>
                 </ul>
                 <% } %>
