@@ -608,7 +608,7 @@ public class HibernateApplication implements Application {
     private List<DisciplineDistance> fetchDistanceByDiscipline(final Group group) {
         final String string =
                 "select new com.nraynaud.sport.data.DisciplineDistance("
-                        + "w.discipline, sum(w.distance))"
+                        + "w.discipline, sum(w.distance), count(*))"
                         + " from GroupImpl g left join g.members u left join u.workouts w where w.distance is not null"
                         + " and g=:group group by w.discipline";
         final Query query = query(string);
