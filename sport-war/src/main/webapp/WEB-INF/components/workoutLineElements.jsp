@@ -1,8 +1,8 @@
 <%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
-<%@ page import="java.util.Collection" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.web.DateHelper" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="java.util.Collection" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -12,10 +12,10 @@
 <% if (boolParam("withUser")) {%>
         <span class="user">
         <%
-            final Collection<User> participans = workout.getParticipants();
-            if (participans.size() > 1) {
+            final Collection<User> participants = workout.getParticipants();
+            if (participants.size() > 1) {
         %>
-        <span title="<%=joinNames(participans)%>" style="cursor:help">collectif</span>
+        <span title="<%=joinNames(participants)%>" style="cursor:help">collectif</span>
         <%
             } else
                 out.append(shortSpan(workout.getUser().getName(), 15));
