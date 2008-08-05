@@ -15,6 +15,7 @@ public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
     private static final Random TOKEN_GENERATOR = new Random();
+    private static final String DISCPLINE_DISTANCE_SELECTION = "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, sum(w.distance), count(*))";
 
     public Workout createWorkout(final Date date,
                                  final User user,
@@ -533,23 +534,16 @@ public class HibernateApplication implements Application {
         final int count = query.executeUpdate();
         if (count != participantWithSelf.size())
             throw new RuntimeException(
-                    " ça a couillé : " + count + " lignes insérées au lieu de " + participants.length);
+                    " erreur : " + count + " lignes insérées au lieu de " + participants.length);
     }
 
     private Query createParticipantsInsertQuery(final Long workoutId, final Set<String> participants) {
-        final StringBuilder clause = new StringBuilder(20);
-        for (int i = 0; i < participants.size(); i++)
-            (i > 0 ? clause.append(", ") : clause).append(':').append("participant").append(i);
+        final SQLHelper.Predicate inPredicate = SQLHelper.createInListPredicate(participants, "participant");
         final Query query = entityManager.createNativeQuery(
-                "insert INTO WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE NAME IN ("
-                        + clause
-                        + ")");
+                "insert INTO WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE NAME "
+                        + inPredicate.sql());
         query.setParameter("workoutId", workoutId);
-        int i = 0;
-        for (final String participant : participants) {
-            query.setParameter("participant" + i, participant);
-            i++;
-        }
+        inPredicate.bindVariables(query);
         return query;
     }
 
@@ -595,7 +589,7 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     private List<DisciplineDistance> fetchDistanceByDiscipline(final User user) {
         final String string =
-                "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, sum(w.distance), count(*))"
+                DISCPLINE_DISTANCE_SELECTION
                         + " from WorkoutImpl w where 1=1 "
                         + (user != null ? " and  :user MEMBER OF w.participants" : "")
                         + " group by w.discipline";
@@ -607,8 +601,7 @@ public class HibernateApplication implements Application {
 
     private List<DisciplineDistance> fetchDistanceByDiscipline(final Group group) {
         final String string =
-                "select new com.nraynaud.sport.data.DisciplineDistance("
-                        + "w.discipline, sum(w.distance), count(*))"
+                DISCPLINE_DISTANCE_SELECTION
                         + " from GroupImpl g left join g.members u left join u.workouts w where w.distance is not null"
                         + " and g=:group group by w.discipline";
         final Query query = query(string);
