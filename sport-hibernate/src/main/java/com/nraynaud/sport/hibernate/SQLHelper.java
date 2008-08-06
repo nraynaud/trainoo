@@ -1,22 +1,26 @@
 package com.nraynaud.sport.hibernate;
 
 import javax.persistence.Query;
-import java.util.Set;
+import java.util.Collection;
 
 public class SQLHelper {
     private SQLHelper() {
     }
 
-    public static Predicate createInListPredicate(final Set<String> values, final String variablePrefix) {
+    public static Predicate createInListPredicate(final String leftPart, final Collection<String> values,
+                                                  final String variablePrefix) {
         if (values.size() == 1)
-            return createEqualsPredicate(values.iterator().next(), variablePrefix);
+            return createEqualsPredicate(leftPart, values.iterator().next(), variablePrefix);
         final StringBuilder clause = new StringBuilder(20);
         for (int i = 0; i < values.size(); i++)
             (i > 0 ? clause.append(", ") : clause).append(':').append(variablePrefix).append(i);
         final String text = " IN (" + clause + ")";
         return new Predicate() {
             public String sql() {
-                return text;
+                if (values.size() > 0)
+                    return leftPart + text;
+                else
+                    return "";
             }
 
             public void bindVariables(final Query query) {
@@ -29,10 +33,11 @@ public class SQLHelper {
         };
     }
 
-    private static Predicate createEqualsPredicate(final String value, final String variablePrefix) {
+    private static Predicate createEqualsPredicate(final String leftPart, final String value,
+                                                   final String variablePrefix) {
         return new Predicate() {
             public String sql() {
-                return " = :" + variablePrefix;
+                return leftPart + " = :" + variablePrefix;
             }
 
             public void bindVariables(final Query query) {

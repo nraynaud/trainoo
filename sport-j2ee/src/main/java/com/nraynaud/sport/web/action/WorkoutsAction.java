@@ -14,6 +14,10 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 @Conversion
 @Results({
 @Result(name = SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
@@ -36,9 +40,14 @@ public class WorkoutsAction extends DefaultAction implements ModelDriven<UserPag
     }
 
     public UserPageData getModel() {
-        if (data == null)
-            data = application.fetchUserPageData(getUser(), workoutPage,
-                    disciplineFilter.length() > 0 ? disciplineFilter : null);
+        if (data == null) {
+            final Collection<String> disciplines;
+            if (disciplineFilter == null)
+                disciplines = Collections.emptyList();
+            else
+                disciplines = Arrays.asList(disciplineFilter.split(","));
+            data = application.fetchUserPageData(getUser(), workoutPage, disciplines);
+        }
         return data;
     }
 }

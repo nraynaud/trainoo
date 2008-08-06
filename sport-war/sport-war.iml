@@ -162,6 +162,10 @@
             <attribute name="method" value="5" />
             <attribute name="URI" value="/WEB-INF/lib/geoportail-1.0-SNAPSHOT.jar" />
           </containerElement>
+          <containerElement type="library" name="commons-lang:commons-lang:2.3" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/commons-lang-2.3.jar" />
+          </containerElement>
           <containerElement type="module" name="sport-war">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/classes" />
@@ -623,6 +627,19 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="geoportail" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library name="commons-lang:commons-lang:2.3">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library name="httpunit:httpunit:1.6.1">
         <CLASSES>

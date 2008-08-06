@@ -3,6 +3,7 @@ package com.nraynaud.sport;
 import com.nraynaud.sport.data.*;
 import com.nraynaud.sport.mail.MailException;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +27,10 @@ public interface Application extends UserStore {
             WorkoutNotFoundException,
             AccessDeniedException;
 
-    GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final int pageSize, final String discipline);
+    GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final int pageSize,
+                                              final Collection<String> disciplines);
 
-    UserPageData fetchUserPageData(final User user, final int firstIndex, final String discipline);
+    UserPageData fetchUserPageData(final User user, final int firstIndex, final Collection<String> discipline);
 
     PrivateMessage createPrivateMessage(User sender,
                                         String receiverName,

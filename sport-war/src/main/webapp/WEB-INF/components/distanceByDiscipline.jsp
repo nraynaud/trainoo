@@ -1,7 +1,9 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.DisciplineDistance" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="static java.lang.Math.min" %>
 <%@ page import="java.util.TreeSet" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -16,25 +18,32 @@
     }
 %>
 <% if (disciplines.size() == 0) { %>
-<ul class="emptyDisciplineList">
-    <% } else { %>
-    <ul class="disciplineList">
-        <li class="label">Voir :</li>
-        <li class="<%=currentFilter.equals("") ? "current" : ""%>"><%=linkCurrenUrlWithParams("Tous",
-                "disciplineFilter",
-                "")%>
-        </li>
-        <% final TreeSet<DisciplineDistance> ddSet = new TreeSet<DisciplineDistance>(DISCIPLNE_DISTANCE_COMPARATOR);
-            ddSet.addAll(disciplines);
-            final ArrayList<DisciplineDistance> orderedDD = new ArrayList<DisciplineDistance>(
-                    ddSet);
-            System.out.println(orderedDD);
-            for (final DisciplineDistance dd : orderedDD.subList(0,
-                    Math.min(orderedDD.size(), MAX_DISCIPLINES_TABS))) { %>
-        <li class="<%=currentFilter.equals(dd.discipline.nonEscaped())?"current":""%>">
-            <%=linkCurrenUrlWithParams(dd.discipline.toString(), "disciplineFilter",
-                    dd.discipline.nonEscaped())%>
-        </li>
-        <% }
-        } %>
-    </ul>
+<ul class="emptyDisciplineList"></ul>
+<% } else { %>
+<ul class="disciplineList">
+    <li class="label">Voir :</li>
+    <li class="<%=currentFilter.equals("") ? "current" : ""%>"><%=linkCurrenUrlWithoutParam("Tous",
+            "disciplineFilter")%>
+    </li>
+    <% final TreeSet<DisciplineDistance> ddSet = new TreeSet<DisciplineDistance>(DISCIPLNE_DISTANCE_COMPARATOR);
+        ddSet.addAll(disciplines);
+        final ArrayList<DisciplineDistance> orderedDD = new ArrayList<DisciplineDistance>(
+                ddSet);
+        System.out.println(orderedDD);
+        for (final DisciplineDistance dd : orderedDD.subList(0, min(orderedDD.size(), MAX_DISCIPLINES_TABS))) { %>
+    <li class="<%=currentFilter.equals(dd.discipline.nonEscaped())?"current":""%>">
+        <%=linkCurrenUrlWithParams(dd.discipline.toString(), "disciplineFilter", dd.discipline.nonEscaped())%>
+    </li>
+    <%
+        }
+        if (orderedDD.size() > MAX_DISCIPLINES_TABS) {%>
+    <li class="<%=currentFilter.equals("others")?"current":""%>">
+        <%=linkCurrenUrlWithParams("autres", "disciplineFilter",
+                StringUtils.join(orderedDD.subList(MAX_DISCIPLINES_TABS, orderedDD.size()), ','))%>
+    </li>
+    <%
+        }
+    %>
+</ul>
+<% } %>
+

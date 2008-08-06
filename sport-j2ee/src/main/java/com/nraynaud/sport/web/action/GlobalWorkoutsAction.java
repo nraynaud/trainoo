@@ -10,6 +10,10 @@ import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 @Result(name = Action.SUCCESS, value = "/WEB-INF/pages/globalWorkouts.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
@@ -23,8 +27,14 @@ public class GlobalWorkoutsAction extends DefaultAction implements ModelDriven<G
     }
 
     public GlobalWorkoutsPageData getModel() {
-        if (statisticsData == null)
-            statisticsData = application.fetchFrontPageData(workoutPage, 20, disciplineFilter);
+        if (statisticsData == null) {
+            final Collection<String> disciplines;
+            if (disciplineFilter == null)
+                disciplines = Collections.emptyList();
+            else
+                disciplines = Arrays.asList(disciplineFilter.split(","));
+            statisticsData = application.fetchFrontPageData(workoutPage, 20, disciplines);
+        }
         return statisticsData;
     }
 }
