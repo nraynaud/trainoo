@@ -42,7 +42,7 @@ public class WorkoutsAction extends DefaultAction implements ModelDriven<UserPag
     public UserPageData getModel() {
         if (data == null) {
             final Collection<String> disciplines;
-            if (disciplineFilter == null)
+            if (disciplineFilter == null || disciplineFilter.isEmpty())
                 disciplines = Collections.emptyList();
             else
                 disciplines = Arrays.asList(disciplineFilter.split(","));

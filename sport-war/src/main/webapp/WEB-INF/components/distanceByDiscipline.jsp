@@ -36,10 +36,11 @@
     </li>
     <%
         }
-        if (orderedDD.size() > MAX_DISCIPLINES_TABS) {%>
-    <li class="<%=currentFilter.equals("others")?"current":""%>">
-        <%=linkCurrenUrlWithParams("autres", "disciplineFilter",
-                StringUtils.join(orderedDD.subList(MAX_DISCIPLINES_TABS, orderedDD.size()), ','))%>
+        if (orderedDD.size() > MAX_DISCIPLINES_TABS) {
+            final String otherFilter = StringUtils.join(orderedDD.subList(MAX_DISCIPLINES_TABS, orderedDD.size()),
+                    ',');%>
+    <li class="<%=currentFilter.equals(otherFilter)?"current":""%>">
+        <%=linkCurrenUrlWithParams("autres", "disciplineFilter", otherFilter)%>
     </li>
     <%
         }
