@@ -1,5 +1,4 @@
 import com.nraynaud.sport.*;
-import com.nraynaud.sport.data.PaginatedCollection;
 import com.nraynaud.sport.hibernate.HibernateApplication;
 import org.junit.After;
 import static org.junit.Assert.*;
@@ -59,21 +58,6 @@ public class ApplicationTest {
         final List<String> disciplines = Collections.emptyList();
         assertEquals(Arrays.asList(workout).iterator().next(),
                 application.fetchFrontPageData(0, 20, disciplines).statisticsData.workouts.iterator().next());
-    }
-
-    @Test
-    public void testWorkoutGroupParticipation() throws NameClashException, AccessDeniedException {
-        final User user = application.createUser("lolé", "pass+é");
-        final User user2 = application.createUser("lolé2", "pass+é");
-        final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
-                null, "lol", null, null);
-        final List<String> disciplines = Collections.emptyList();
-        //application.setWorkoutParticipants(user, workout.getId(),
-        //        new String[]{user.getName().nonEscaped(), user2.getName().nonEscaped()});
-        final PaginatedCollection<Workout> workouts = application.fetchFrontPageData(0, 20, disciplines)
-                .statisticsData.workouts;
-        assertEquals(Arrays.asList(workout).iterator().next(), workouts.iterator().next());
-        assertEquals(Arrays.asList(user, user2), workouts.iterator().next().getParticipants());
     }
 
     @Test
