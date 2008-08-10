@@ -48,6 +48,7 @@
             </ul>
             <form method="GET" id="subscribeForm" action="<%=createUrl("/", "signup")%>">
                 <span class="actions">
+                    <input type="hidden" name="fromAction" value="<%=findFromAction()%>"/>
                     <input type="submit" value="Inscription" class="submit"/>
                 </span>
             </form>
