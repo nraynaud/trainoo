@@ -14,7 +14,12 @@ import org.apache.struts2.ServletActionContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import static java.net.URLDecoder.decode;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 public class SportInterceptor extends AbstractInterceptor {
     private static final Class<?>[] NO_PARAMS = new Class[0];
@@ -37,7 +42,7 @@ public class SportInterceptor extends AbstractInterceptor {
         final ActionProxy actionProxy = invocation.getProxy();
         final Method actionMethod = getActionMethod(actionClass, actionProxy.getMethod());
         filterPostMethod(actionMethod, request);
-        setMetadata(action, actionProxy, invocationContext);
+        setMetadata(action, actionProxy, servletRequest);
         try {
             final Method requestMethod = actionClass.getMethod("setRequest", SportRequest.class);
             requestMethod.invoke(action, request);
@@ -67,11 +72,27 @@ public class SportInterceptor extends AbstractInterceptor {
     }
 
     private static void setMetadata(final Object action, final ActionProxy actionProxy,
-                                    final ActionContext invocationContext) {
+                                    final HttpServletRequest invocationContext) {
         if (action instanceof DefaultAction) {
+            final Map<String, String[]> getParams = queryParams(invocationContext);
             ((DefaultAction) action).setActionDescription(new ActionDetail(actionProxy.getNamespace(),
-                    actionProxy.getActionName(), invocationContext.getParameters()));
+                    actionProxy.getActionName(), getParams));
         }
+    }
+
+    private static Map<String, String[]> queryParams(final HttpServletRequest invocationContext) {
+        final Map<String, String[]> getParams = new HashMap<String, String[]>();
+        final String queryString = invocationContext.getQueryString();
+        final StringTokenizer st1 = new StringTokenizer(queryString == null ? "" : queryString, "&");
+        while (st1.hasMoreTokens()) {
+            final StringTokenizer st2 = new StringTokenizer(st1.nextToken(), "=");
+            try {
+                getParams.put(decode(st2.nextToken(), "UTF-8"), new String[]{decode(st2.nextToken(), "UTF-8")});
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return getParams;
     }
 
     private static boolean isPublic(final Class<?> actionClass) throws Exception {
