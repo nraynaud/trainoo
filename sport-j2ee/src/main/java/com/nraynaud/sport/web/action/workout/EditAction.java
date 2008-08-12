@@ -48,7 +48,8 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
         if (id != null) {
             final Workout workout;
             try {
-                workout = application.fetchWorkoutAndCheckUser(id, getUser(), true);
+                workout = data.workout;
+                application.checkEditionGrant(workout, getUser());
                 setDate(workout.getDate());
                 setDistance(workout.getDistance());
                 setDuration(workout.getDuration());
@@ -56,9 +57,6 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
                 setEnergy(workout.getEnergy());
                 final UserString comment = workout.getComment();
                 setComment(comment != null ? comment.nonEscaped() : null);
-                return INPUT;
-            } catch (WorkoutNotFoundException e) {
-                addActionError("L'entraînement désigné n'existe pas");
                 return INPUT;
             } catch (AccessDeniedException e) {
                 addActionError("Vous n'avez pas le droit de modifier cet entraînement.");

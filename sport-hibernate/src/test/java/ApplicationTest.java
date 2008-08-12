@@ -86,12 +86,12 @@ public class ApplicationTest {
         final Workout workout = application.createWorkout(new Date(), user, new Long(12), new Double(10),
                 null, "lol", null, null);
         {
-            final Workout workout1 = application.fetchWorkoutAndCheckUser(workout.getId(), user, true);
+            final Workout workout1 = application.fetchWorkoutForEdition(workout.getId(), user, true);
             assertEquals(workout, workout1);
         }
         {
             try {
-                application.fetchWorkoutAndCheckUser(Long.valueOf(1043345), user, true);
+                application.fetchWorkoutForEdition(Long.valueOf(1043345), user, true);
                 fail();
             } catch (WorkoutNotFoundException e) {
                 //ok
@@ -100,7 +100,7 @@ public class ApplicationTest {
         {
             final User user1 = application.createUser("user1", "lol");
             try {
-                application.fetchWorkoutAndCheckUser(workout.getId(), user1, true);
+                application.fetchWorkoutForEdition(workout.getId(), user1, true);
                 fail();
             } catch (AccessDeniedException e) {
                 //ok

@@ -225,13 +225,12 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) throws
+    public Workout fetchWorkoutForEdition(final Long id, final User user, final boolean willWrite) throws
             WorkoutNotFoundException, AccessDeniedException {
         final Workout workout = fetchWorkout(id);
-        if (!willWrite || workout.getUser().equals(user))
-            return workout;
-        else
-            throw new AccessDeniedException();
+        if (willWrite)
+            checkEditionGrant(workout, user);
+        return workout;
     }
 
     public Workout fetchWorkout(final Long id) throws WorkoutNotFoundException {
@@ -566,7 +565,7 @@ public class HibernateApplication implements Application {
                               final Long energy, final String discipline, final String comment) throws
             WorkoutNotFoundException,
             AccessDeniedException {
-        final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutAndCheckUser(id, user, true);
+        final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutForEdition(id, user, true);
         workoutImpl.setDate(date);
         workoutImpl.setDuration(duration);
         workoutImpl.setDistance(distance);
@@ -691,7 +690,7 @@ public class HibernateApplication implements Application {
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException, AccessDeniedException {
-        final Workout workout = fetchWorkoutAndCheckUser(id, user, true);
+        final Workout workout = fetchWorkoutForEdition(id, user, true);
         separatePrivateMessagesFromWorkout(id);
         deletePublicMessageAboutWorkout(id);
         entityManager.remove(workout);
@@ -892,5 +891,10 @@ public class HibernateApplication implements Application {
 
     public void deleteTrack(final User user, final Long id) throws TrackNotFoundException, AccessDeniedException {
         entityManager.remove(fetchTrackForUpdate(user, id.longValue()));
+    }
+
+    public void checkEditionGrant(final Workout workout, final User user) throws AccessDeniedException {
+        if (!workout.getUser().equals(user))
+            throw new AccessDeniedException();
     }
 }

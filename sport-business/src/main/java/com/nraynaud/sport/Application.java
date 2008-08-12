@@ -13,7 +13,7 @@ public interface Application extends UserStore {
 
     User authenticate(String login, String password, final boolean rememberMe);
 
-    Workout fetchWorkoutAndCheckUser(final Long id, final User user, final boolean willWrite) throws
+    Workout fetchWorkoutForEdition(final Long id, final User user, final boolean willWrite) throws
             WorkoutNotFoundException, AccessDeniedException;
 
     void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException, AccessDeniedException;
@@ -126,4 +126,6 @@ public interface Application extends UserStore {
             AccessDeniedException;
 
     void deleteTrack(final User user, final Long id) throws TrackNotFoundException, AccessDeniedException;
+
+    void checkEditionGrant(final Workout workout, final User user) throws AccessDeniedException;
 }
