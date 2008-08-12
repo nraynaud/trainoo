@@ -1,13 +1,16 @@
 package com.nraynaud.sport.web.action.workout;
 
 import com.nraynaud.sport.*;
+import com.nraynaud.sport.data.WorkoutPageData;
 import com.nraynaud.sport.web.Constants;
+import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionChainResult;
+import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.validator.annotations.Validation;
 import org.apache.struts2.config.ParentPackage;
@@ -27,9 +30,14 @@ import javax.servlet.http.HttpServletRequest;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
-public class EditAction extends AbstractWorkoutAction implements ServletRequestAware {
+public class EditAction extends AbstractWorkoutAction implements ServletRequestAware, ModelDriven<WorkoutPageData> {
     public Long id;
     private boolean delete;
+    private WorkoutPageData data;
+    public int workoutPage;
+    public int similarPage;
+    public int publicMessagesPageIndex;
+    public int privateMessagesPageIndex;
 
     public EditAction(final Application application) {
         super(application);
@@ -83,5 +91,17 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
 
     public void setServletRequest(final HttpServletRequest request) {
         delete = request.getParameter("delete") != null;
+    }
+
+    public WorkoutPageData getModel() {
+        if (data == null)
+            try {
+                data = application.fetchWorkoutPageData(getUser(), id, similarPage, workoutPage,
+                        publicMessagesPageIndex,
+                        privateMessagesPageIndex);
+            } catch (WorkoutNotFoundException e) {
+                throw new DataInputException(e);
+            }
+        return data;
     }
 }
