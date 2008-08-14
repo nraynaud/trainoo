@@ -114,7 +114,7 @@
                     <%}%>
                 </span>
         <%}%>
-        <p><%= multilineText(message.getContent())%>
+        <p class="messageContent"><%= multilineText(message.getContent())%>
         </p>
         <%}%>
     </div>

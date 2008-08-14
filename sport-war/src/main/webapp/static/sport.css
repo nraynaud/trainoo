@@ -385,8 +385,6 @@ a.messageLink:hover {
 
 .pagination {
     overflow: hidden;
-    margin-right: auto;
-    margin-left: auto;
 }
 
 .paginationPrevious, .paginationNext {
@@ -457,10 +455,6 @@ p.submit {
 
 #nikeplusRunLink {
     font-size: 18px;
-}
-
-#comment {
-    width: 99%;
 }
 
 .groupForm {

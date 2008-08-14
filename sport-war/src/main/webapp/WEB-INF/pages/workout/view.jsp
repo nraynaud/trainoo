@@ -28,13 +28,22 @@
 
 <div class="block workoutBlock" id="workoutBlock">
     <div class="content">
-        <span class="buttonList">
-            <% if (isCurrentUser) { %>
-            <a href="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>"
-               title="Modifier ou effacer cet entrainement" class="button editButton">
-                Modifier</a>
-            <% } %>
-        </span>
+        <form action="<%=createUrl("/workout", "delete")%>" method="POST" name="delWorkoutForm">
+            <span class="buttonList">
+                <% if (isCurrentUser) { %>
+                <a href="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>"
+                   title="Modifier ou effacer cet entrainement" class="button editButton">
+                    Modifier</a>
+                    <input id="delete" type="submit" class="submit" name="delete" value="Supprimer"/>
+                    <a href="#" class="button deleteButton"
+                    onclick="document.delWorkoutForm.submit(); return false;" 
+                    >
+                        <label for="delete">Supprimer</label>
+                    </a>
+                    <input type="hidden" name="id" value="<%=workout.getId()%>"/>
+                <% } %>
+            </span>
+        </form>
         <dl>
             <%
                 final List<DataHelper.Data> dataList = DataHelper.compute(workout);
@@ -81,12 +90,6 @@
 <div id="globalRight">
 
     <h2>
-        <span class="buttonList">
-            <%if (isCurrentUser) {%>
-            <a href="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>" title="Modifier"
-               class="button editButton">Modifier</a>
-            <%}%>
-        </span>
         Compte rendu par <%=bibLink(runner, 20)%>
     </h2>
 

@@ -73,16 +73,16 @@
             </tr>
         </table>
     </div>
-    <div style="float:right;">
-        <input type="submit" name="submit" value="<s:property value="%{parameters.submit}"/>">
-    </div>
+    <span class="actions">
+        <input type="submit" name="submit" class="submit" value="<s:property value="%{parameters.submit}"/>">
+    </span>
 </form>
 <%if (boolParam("showDelete")) {%>
-<div style="float:right;">
-    <form action="<%=createUrl("/workout", "delete")%>">
+<form action="<%=createUrl("/workout", "delete")%>">
+    <span class="actions">
         <s:hidden name="id" value="%{id}"/>
-        <input type="submit" name="delete" value="Supprimer"/>
-    </form>
-</div>
+        <input type="submit" class="submit" name="delete" value="Supprimer"/>
+    </span>
+</form>
 <%}%>
 <i>Tous les champs sauf la date sont optionnels.</i>

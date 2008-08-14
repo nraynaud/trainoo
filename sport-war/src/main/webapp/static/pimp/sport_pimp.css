@@ -335,6 +335,7 @@ small {
     font-size: 24px;
     font-weight: normal;
     color: #403615;
+    position: relative;
 }
 
 #content h2 a {
@@ -373,7 +374,7 @@ small {
 }
 
 .textContent p {
-    margin: 6px 8px 6px 12px;
+    padding: 6px 8px 6px 12px;
     line-height: 1.2;
 }
 
@@ -789,10 +790,17 @@ ul.sheet li {
     padding-right: 3px;
 }
 
+.messageBlock .messageContent {
+    zoom: 1;
+}
+
 /* --- forms base --- */
 form {
     overflow: hidden;
     _overflow: visible;
+}
+
+#globalRight form {
     zoom: 1;
 }
 
@@ -928,6 +936,7 @@ input.submit:focus {
 .workoutBlock dl,
     .bibBlock dl {
     padding-top: 6px;
+    color: expression(this.innerHTML += '', this.style.color = ' ');
 }
 
 .workoutBlock dl dt,
@@ -1039,11 +1048,8 @@ ul.userList .newMessages {
 /* -- title buttons --- */
 
 .buttonList {
-    overflow: hidden;
-    _overflow: visible;
-    zoom: 1;
     float: right;
-    clear: right;
+    _float: none;
 }
 
 .smallButtonList {
@@ -1056,21 +1062,29 @@ ul.userList .newMessages {
 
 .buttonList .button {
     height: 24px;
-    width: 0px;
-    padding: 0 0 0 24px;
     line-height: 24px;
     overflow: hidden;
     text-align: right;
-    text-decoration: none;
     margin: 2px 2px 5px 2px;
-    float: left;
+    float: right;
+    clear: right;
     _display: inline;
-    clear: left;
 
-    background-position: 2px top;
-    background-repeat: no-repeat;
     color: #000;
     font-size: 14px;
+    overflow: hidden;
+    width : 0;
+    background-position: 2px top;
+    background-repeat: no-repeat;
+    padding: 0 0 0 24px;
+    text-decoration: none;
+}
+
+.buttonList .button:hover,
+.buttonList .verboseButton {
+    background-position: right top;
+    width: auto;
+    padding: 0 28px 0 2px;
 }
 
 .smallButtonList .button {
@@ -1083,6 +1097,7 @@ ul.userList .newMessages {
     margin: 2px 2px 2px 5px;
     float: right;
     _display: inline;
+    zoom: 1;
     border: none;
 
     background-position: right top;
@@ -1095,21 +1110,12 @@ ul.userList .newMessages {
     display: none;
 }
 
-.smallButtonList label.button {
-    font-weight: normal;
+.buttonList .button label {
     cursor: pointer;
 }
 
-.smallButtonList label.button:focus {
-    outline: 1px dotted #000;
-}
-
-.buttonList form {
-    height: 28px;
-    width: 28px;
-    float: right;
-    clear: right;
-    margin: 0;
+.smallButtonList label.button {
+    font-weight: normal;
 }
 
 .smallButtonList form {
@@ -1122,23 +1128,31 @@ h2 .button {
     margin-right: 20px;
 }
 
-.buttonList .button:hover,
-    .buttonList .verboseButton {
-    background-position: right top;
-    width: auto;
-    padding: 0 28px 0 2px;
+.workoutBlock form {
+    overflow: visible;
 }
 
-.buttonList .editButton {
+.buttonList input.submit {
+    position: absolute;
+    left: -5000px;
+}
+
+.buttonList .editButton{
     background-image: url( edit.png );
 }
 
-.buttonList .applyButton {
+.buttonList .applyButton{
     background-image: url( apply.png );
 }
 
-.buttonList .cancelButton {
+.buttonList .cancelButton{
     background-image: url( cancel.png );
+}
+
+.buttonList .deleteButton{
+    background-image: url( delete.png );
+    background-position: 0 top;
+    margin-top: 12px;
 }
 
 .smallButtonList .editButton {
