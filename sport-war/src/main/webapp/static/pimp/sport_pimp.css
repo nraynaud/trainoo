@@ -162,13 +162,16 @@ small {
 
 #infoPop {
     float: right;
-    padding: 20px 20px 0 0;
+    padding: 16px 17px 0 0;
 }
 
 #infoPop a.newMessages {
     text-decoration: none;
     font-weight: bold;
     color: #546904;
+	 display: block;
+	 padding: 7px 34px 10px 0;
+	 background: url(mail.gif) no-repeat right top;
 }
 
 #menu {
