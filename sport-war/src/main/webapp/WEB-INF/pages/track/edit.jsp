@@ -24,11 +24,14 @@
             <p:javascript>makeItCount('title', 25);</p:javascript>
             <label>Longueur&nbsp;:</label><span id="distance"></span>
             <s:submit id="submit" value="Enregistrer" tabindex="1"/>
+            <br>
+            <%=link("/track", "", "Annuler et revenir", "",
+                    track == null ? new String[0] : new String[]{"id", track.getId().toString()})%>
         </s:form>
         <%if (track != null) {%>
         <hr>
         <s:form namespace="/track" action="delete">
-            <input type="hidden" name="id" value="<%=track == null ? "" : track.getId()%>"/>
+            <input type="hidden" name="id" value="<%=track.getId()%>"/>
             <s:submit value="Supprimer le parcours"/>
         </s:form>
         <%}%>
