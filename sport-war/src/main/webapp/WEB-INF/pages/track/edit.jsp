@@ -39,10 +39,10 @@
         <div style="margin:10px auto; width:125px;">
             <script type="text/javascript"><!--
             google_ad_client = "pub-1788371406648361";
-            /* pour les tracks 125x125, date de création 17/04/08 */
-            google_ad_slot = "5961618039";
-            google_ad_width = 125;
-            google_ad_height = 125;
+            /* tracks 120x240 */
+            google_ad_slot = "9652632317";
+            google_ad_width = 120;
+            google_ad_height = 240;
             //-->
             </script>
             <script type="text/javascript"
