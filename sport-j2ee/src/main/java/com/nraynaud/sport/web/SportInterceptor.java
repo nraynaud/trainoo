@@ -87,7 +87,13 @@ public class SportInterceptor extends AbstractInterceptor {
         while (st1.hasMoreTokens()) {
             final StringTokenizer st2 = new StringTokenizer(st1.nextToken(), "=");
             try {
-                getParams.put(decode(st2.nextToken(), "UTF-8"), new String[]{decode(st2.nextToken(), "UTF-8")});
+                final String key = decode(st2.nextToken(), "UTF-8");
+                final String[] value;
+                if (st2.hasMoreTokens())
+                    value = new String[]{decode(st2.nextToken(), "UTF-8")};
+                else
+                    value = new String[]{""};
+                getParams.put(key, value);
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }

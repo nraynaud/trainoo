@@ -371,6 +371,21 @@
     <option name="FILTER_INFO" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/geoportail/pom.xml" />
+        <option value="$PROJECT_DIR$/bcrypt/pom.xml" />
+        <option value="$PROJECT_DIR$/nikeplus/pom.xml" />
+        <option value="$PROJECT_DIR$/search-lucene/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/sport-business/pom.xml" />
+        <option value="$PROJECT_DIR$/sport-hibernate/pom.xml" />
+        <option value="$PROJECT_DIR$/sport-j2ee/pom.xml" />
+        <option value="$PROJECT_DIR$/sport-war/pom.xml" />
+      </list>
+    </option>
+  </component>
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
@@ -573,6 +588,7 @@
         </entry>
       </map>
     </option>
+    <option name="myVersion" value="123" />
   </component>
   <component name="SvnChangesBrowserSettings">
     <option name="USE_AUTHOR_FIELD" value="true" />
