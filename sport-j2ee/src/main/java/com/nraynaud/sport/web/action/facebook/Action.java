@@ -17,7 +17,6 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.w3c.dom.Document;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -65,10 +64,6 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
 
     public void setServletRequest(final HttpServletRequest request) {
         this.request = request;
-        System.out.print("facebook request :");
-        for (final Cookie cookie : request.getCookies()) {
-            System.out.println(cookie.getName() + " : " + cookie.getValue());
-        }
     }
 
     public void setServletResponse(final HttpServletResponse response) {
