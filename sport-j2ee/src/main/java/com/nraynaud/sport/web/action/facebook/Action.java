@@ -5,6 +5,7 @@ import com.facebook.api.FacebookRestClient;
 import com.facebook.api.ProfileField;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.web.Constants;
+import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -60,6 +61,11 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
             throw new RuntimeException(e);
         }
         return SUCCESS;
+    }
+
+    @PostOnly
+    public String create() {
+        return index();
     }
 
     public void setServletRequest(final HttpServletRequest request) {
