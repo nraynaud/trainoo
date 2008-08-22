@@ -34,6 +34,7 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
     private HttpServletRequest request;
     private HttpServletResponse response;
     public String name;
+    public String auth_token;
 
     public Action(final Application application) {
         super(application);
@@ -45,6 +46,7 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
         final FacebookRestClient restClient = new FacebookRestClient("4d7b60f54176c2752cc66138c01105a7",
                 "cb3408a206dc084cec8107298a5a9faf", "");
         try {
+            restClient.auth_getSession(auth_token);
             final long userID = restClient.users_getLoggedInUser();
             final Collection<Long> users = new ArrayList<Long>();
             users.add(userID);
