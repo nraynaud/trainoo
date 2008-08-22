@@ -21,11 +21,11 @@
     <div class="content">
         <% if (answerWorkout != null) {%>
         <p>
-        à propos de la sortie&nbsp;:
-        <%call(pageContext, "workoutComponent.jsp", answerWorkout);%>
+            à propos de la sortie&nbsp;:
+            <%call(pageContext, "workoutComponent.jsp", answerWorkout);%>
         </p>
         <%}%>
-        <form method="POST" action="<%=createUrl("/messages", "write")%>#errorMessage" >
+        <form method="POST" action="<%=createUrl("/messages", "write")%>#errorMessage">
             <%
                 if (MY_ERROR_CODE.equals(errorParam)) {
             %>
@@ -36,17 +36,17 @@
             </s:fielderror>
             <a name="errorMessage"> </a>
             <%}%>
-            <% if (!boolParam("hideReceiverBox")) {%>
+            <% final UserString receiverProperty = property("receiver", UserString.class);
+                if (!boolParam("hideReceiverBox")) {
+                    final UserString receiverParameter = parameter("receiver", UserString.class);
+                    final String receiver = receiverProperty != null ? receiverProperty.toString() : receiverParameter
+                            != null ? receiverParameter.toString() : "";%>
             <span class="label">
                 <label for="receiver">À :</label>
             </span>
             <span class="input">
                 <input name="receiver" id="receiver" class="text"
-                    value="<%=property("receiver", UserString.class) != null
-                        ? property("receiver", UserString.class)
-                        : ( parameter("receiver", UserString.class) != null
-                            ? parameter("receiver", UserString.class)
-                            : "" ) %>"/>
+                       value="<%=receiver %>"/>
                 <div id="receiver_choices" class="autocomplete">&nbsp;</div>
                 <p:javascript>
                     new Ajax.Autocompleter("receiver", "receiver_choices", "/feedback",
@@ -54,12 +54,12 @@
                 </p:javascript>
             </span>
             <% } else {%>
-            <input type="hidden" name="receiver" value="<%=property("receiver", UserString.class)%>"/>
+            <input type="hidden" name="receiver" value="<%=receiverProperty%>"/>
             <%}%>
             <input type="hidden" name="messageKind" value="<%=PRIVATE%>"/>
             <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
             <input type="hidden" name="onErrorAction"
-               value="<%=((ActionDetail)property("actionDescription",Object.class)).addParam("error", MY_ERROR_CODE)%>"/>
+                   value="<%=((ActionDetail)property("actionDescription",Object.class)).addParam("error", MY_ERROR_CODE)%>"/>
             <input type="hidden" name="publicMessage" value="false"/>
             <% if (property("aboutWorkout", Workout.class) != null) { %>
             <input type="hidden" name="aboutWorkoutId" value="<%=property("aboutWorkout", Workout.class).getId()%>"/>
@@ -71,7 +71,7 @@
             <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
 
             <span class="actions">
-                <input type="submit" class="submit" value="Envoyer"/>
+                <input type="submit" class="submit" value="Envoyer" accesskey="s"/>
             </span>
         </form>
     </div>
