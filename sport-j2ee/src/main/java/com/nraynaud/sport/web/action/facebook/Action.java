@@ -1,5 +1,6 @@
 package com.nraynaud.sport.web.action.facebook;
 
+import com.facebook.api.Facebook;
 import com.facebook.api.FacebookException;
 import com.facebook.api.FacebookRestClient;
 import com.facebook.api.ProfileField;
@@ -35,6 +36,8 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
     private HttpServletResponse response;
     public String name;
     public String auth_token;
+    private static final String API_KEY = "4d7b60f54176c2752cc66138c01105a7";
+    private static final String SECRET_KEY = "cb3408a206dc084cec8107298a5a9faf";
 
     public Action(final Application application) {
         super(application);
@@ -43,16 +46,14 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
     public String index() {
-        final FacebookRestClient restClient = new FacebookRestClient("4d7b60f54176c2752cc66138c01105a7",
-                "cb3408a206dc084cec8107298a5a9faf", "");
         try {
-            restClient.auth_getSession(auth_token);
+            final Facebook facebook = new Facebook(request, response, API_KEY, SECRET_KEY);
+            facebook.requireLogin("");
+            final FacebookRestClient restClient = facebook.get_api_client();
             final long userID = restClient.users_getLoggedInUser();
             final Collection<Long> users = new ArrayList<Long>();
             users.add(userID);
-            final EnumSet<ProfileField> fields = EnumSet.of(
-                    com.facebook.api.ProfileField.NAME,
-                    com.facebook.api.ProfileField.PIC);
+            final EnumSet<ProfileField> fields = EnumSet.of(com.facebook.api.ProfileField.NAME);
             final Document d = restClient.users_getInfo(users, fields);
             name = d.getElementsByTagName("name").item(0).getTextContent();
         } catch (FacebookException e) {

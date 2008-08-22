@@ -315,6 +315,19 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="com.facebook.api:facebook-util:1.8.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/facebook/api/facebook-util/1.8.0/facebook-util-1.8.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/facebook/api/facebook-util/1.8.0/facebook-util-1.8.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/facebook/api/facebook-util/1.8.0/facebook-util-1.8.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntryProperties />
   </component>
 </module>
