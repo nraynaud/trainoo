@@ -30,6 +30,12 @@ public interface Application extends UserStore {
     GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final int pageSize,
                                               final Collection<String> disciplines);
 
+    /**
+     * @param user
+     * @param firstIndex
+     * @param discipline selection, pass empty collection to retrieve everything without filtering
+     * @return
+     */
     UserPageData fetchUserPageData(final User user, final int firstIndex, final Collection<String> discipline);
 
     PrivateMessage createPrivateMessage(User sender,
@@ -42,6 +48,14 @@ public interface Application extends UserStore {
 
     void updateBib(final User user, final String town, final String description, final String webSite);
 
+    /**
+     * @param currentUser              the user LOOKING at the bib, can be null
+     * @param targetUserId             the bib LOOKED AT
+     * @param workoutStartIndex
+     * @param privateMessagesPageIndex
+     * @return
+     * @throws UserNotFoundException
+     */
     BibPageData fetchBibPageData(final User currentUser, final Long targetUserId, final int workoutStartIndex,
                                  final int privateMessagesPageIndex) throws
             UserNotFoundException;

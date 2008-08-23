@@ -22,8 +22,7 @@
             <div class="deco"></div>
             <%
                 paginate(pageContext, "workoutTable.jsp",
-                        view(data.statisticsData.workouts, "workoutPage"),
-                        "displayEdit", "false", "displayName", "true", "withUser", "true");
+                        view(data.statisticsData.workouts, "workoutPage"), "displayName", "true", "withUser", "true");
             %>
         </div>
         <div class="footer">

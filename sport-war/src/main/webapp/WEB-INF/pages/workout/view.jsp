@@ -4,8 +4,6 @@
 <%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
 <%@ page import="com.nraynaud.sport.web.view.DataHelper" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
-<%@ page import="com.nraynaud.sport.web.view.TableContent" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="static com.nraynaud.sport.web.DateHelper.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -36,8 +34,8 @@
                     Modifier</a>
                     <input id="delete" type="submit" class="submit" name="delete" value="Supprimer"/>
                     <a href="#" class="button deleteButton"
-                    onclick="document.delWorkoutForm.submit(); return false;" 
-                    >
+                       onclick="document.delWorkoutForm.submit(); return false;"
+                            >
                         <label for="delete">Supprimer</label>
                     </a>
                     <input type="hidden" name="id" value="<%=workout.getId()%>"/>
@@ -128,9 +126,8 @@
         <div class="content">
             <div class="deco"></div>
             <%
-            call(pageContext, "workoutTable.jsp",
-                data.similarWorkouts,
-                "displayEdit", "false", "displayName", "true", "withUser", "true");
+                call(pageContext, "workoutTable.jsp", data.similarWorkouts, "displayName",
+                        "true", "withUser", "true");
             %>
         </div>
         <div class="secondaryHeader">
@@ -140,9 +137,7 @@
         <div class="content">
             <div class="deco"></div>
             <%
-            call(pageContext, "workoutTable.jsp",
-                data.lastWorkouts,
-                "displayEdit", "false", "displayName", "true", "withUser", "true");
+                call(pageContext, "workoutTable.jsp", data.lastWorkouts, "displayName", "true", "withUser", "true");
             %>
         </div>
         <div class="footer">

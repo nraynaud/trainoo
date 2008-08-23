@@ -53,10 +53,8 @@
         </div>
         <div class="content">
             <div class="deco"></div>
-        <%
-        paginate(pageContext, "workoutTable.jsp",
-                view(data.workouts, "workoutPage"),
-                "displayEdit", "false");%>
+            <%
+                paginate(pageContext, "workoutTable.jsp", view(data.workouts, "workoutPage"));%>
         </div>
         <div class="footer">
             <div class="deco"></div>

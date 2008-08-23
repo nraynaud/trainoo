@@ -28,14 +28,12 @@
     <div class="block sheetBlock userSheetBlock">
         <div class="header">
             <div class="deco"></div>
-    <%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
+            <%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
         </div>
         <div class="content">
             <div class="deco"></div>
-    <%
-        paginate(pageContext, "workoutTable.jsp",
-                view(data.getStatisticsData().workouts, "workoutPage"),
-                "displayEdit", "true");%>
+            <%
+                paginate(pageContext, "workoutTable.jsp", view(data.getStatisticsData().workouts, "workoutPage"));%>
         </div>
         <div class="footer">
             <div class="deco"></div>

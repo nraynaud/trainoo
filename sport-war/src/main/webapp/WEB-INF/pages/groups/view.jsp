@@ -92,6 +92,7 @@
 </div>
 
 <h2>Les entraînements du groupe</h2>
+
 <div class="block sheetBlock">
     <div class="header">
         <div class="deco"></div>
@@ -100,9 +101,8 @@
     <div class="content">
         <div class="deco"></div>
         <%
-        paginate(pageContext, "workoutTable.jsp",
-            view(groupPage.statistics.workouts, "workoutPage"),
-            "displayEdit", "false", "displayName", "true", "withUser", "true");
+            paginate(pageContext, "workoutTable.jsp", view(groupPage.statistics.workouts, "workoutPage"), "displayName",
+                    "true", "withUser", "true");
         %>
     </div>
     <div class="footer">

@@ -3,11 +3,7 @@
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
-<%@ page import="com.nraynaud.sport.web.view.DataHelper" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
-<%@ page import="com.nraynaud.sport.web.view.TableContent" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
 <%@ page import="static com.nraynaud.sport.web.DateHelper.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -18,18 +14,17 @@
     final User runner = workout.getUser();
     final User currentUser = currentUser();
     final boolean isCurrentUser = currentUser != null && currentUser.equals(runner);
-    final boolean isNikePlus = workout.isNikePlus();
     final boolean hasPartners = workout.getParticipants().size() > 1;
 %>
 <p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"
                 showTitleInPage="false"/>
 <% if (boolParam("createWorkout")) { %>
 <form action="<%=createUrl("/workout", "create")%>" method="POST" name="workoutForm">
-    <h1>Création d'une sortie</h1>
+<h1>Création d'une sortie</h1>
 <% } else { %>
 <form action="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>" method="POST" name="workoutForm">
     <h1>Modification d'une sortie</h1>
-<% } %>
+    <% } %>
 
     <div class="block workoutBlock editingWorkoutBlock" id="workoutBlock">
         <div class="content">
@@ -45,13 +40,13 @@
                 <% } %>
                 <input id="submitWorkout" type="submit" class="submit" value="Valider">
                 <a href="#" class="button applyButton verboseButton"
-                onclick="document.workoutForm.submit(); return false;" 
-                ><label for="submitWorkout" >Valider</label></a>
+                   onclick="document.workoutForm.submit(); return false;"
+                        ><label for="submitWorkout">Valider</label></a>
             </span>
             <dl>
                 <dt>Discipline :</dt>
-                <dd class="editable" >
-                    <select name="discipline" value="<%=escapedOrNull(stringProperty("discipline"), "")%>" >
+                <dd class="editable">
+                    <select name="discipline" value="<%=escapedOrNull(stringProperty("discipline"), "")%>">
                         <option value="course">Course</option>
                         <option value="vélo">Vélo</option>
                         <option value="VTT">VTT</option>
@@ -61,38 +56,38 @@
                     </select>
                 </dd>
                 <dt>Date :</dt>
-                <dd class="editable" >
+                <dd class="editable">
                     <input id="date" name="date" value="<%=escapedOrNull(stringProperty("date"), "")%>"
-                        maxlength="15"
-                        onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03/10/2006 ou «hier»' , 'date', this.value);"
-                        onblur="hideToolTip();"
-                        onkeyup="feedback('date', this.value)"
-                        onmouseover=""
-                        onmouseout="">
+                           maxlength="15"
+                           onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03/10/2006 ou «hier»' , 'date', this.value);"
+                           onblur="hideToolTip();"
+                           onkeyup="feedback('date', this.value)"
+                           onmouseover=""
+                           onmouseout="">
                 </dd>
                 <dt>Distance :</dt>
-                <dd class="editable" >
+                <dd class="editable">
                     <input id="distance" name="distance" value="<%=escapedOrNull(stringProperty("distance"), "")%>"
-                        maxlength="10"
-                        onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
-                        onblur="hideToolTip();"
-                        onkeyup="feedback('distance', this.value)">
+                           maxlength="10"
+                           onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
+                           onblur="hideToolTip();"
+                           onkeyup="feedback('distance', this.value)">
                 </dd>
                 <dt>Durée :</dt>
-                <dd class="editable" >
+                <dd class="editable">
                     <input id="duration" name="duration" value="<%=escapedOrNull(stringProperty("duration"), "")%>"
-                        maxlength="10"
-                        onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03h41\'17 ou 40\'22' , 'duration', this.value);"
-                        onblur="hideToolTip();"
-                        onkeyup="feedback('duration', this.value)">
+                           maxlength="10"
+                           onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03h41\'17 ou 40\'22' , 'duration', this.value);"
+                           onblur="hideToolTip();"
+                           onkeyup="feedback('duration', this.value)">
                 </dd>
                 <dt>Énergie Dépensée :</dt>
-                <dd class="editable" >
+                <dd class="editable">
                     <input id="energy" name="energy" value="<%=escapedOrNull(stringProperty("energy"), "")%>"
-                        maxlength="10"
-                        onfocus="showWorkoutToolTip(event, 'En kilocalories.', 'energy', this.value);"
-                        onblur="hideToolTip();"
-                        onkeyup="feedback('energy', this.value)">
+                           maxlength="10"
+                           onfocus="showWorkoutToolTip(event, 'En kilocalories.', 'energy', this.value);"
+                           onblur="hideToolTip();"
+                           onkeyup="feedback('energy', this.value)">
                 </dd>
             </dl>
         </div>
@@ -121,8 +116,9 @@
             <p>
                 <span class="input">
                     <textarea id="comment" name="comment"><%=
-                        escapedOrNullmultilines(workout.getComment(), "")
-                    %></textarea>
+                    escapedOrNullmultilines(workout.getComment(), "")
+                    %>
+                    </textarea>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
@@ -154,9 +150,7 @@
         <div class="content">
             <div class="deco"></div>
             <%
-            call(pageContext, "workoutTable.jsp",
-                data.similarWorkouts,
-                "displayEdit", "false", "displayName", "true", "withUser", "true");
+                call(pageContext, "workoutTable.jsp", data.similarWorkouts, "displayName", "true", "withUser", "true");
             %>
         </div>
         <div class="secondaryHeader">
@@ -166,9 +160,7 @@
         <div class="content">
             <div class="deco"></div>
             <%
-            call(pageContext, "workoutTable.jsp",
-                data.lastWorkouts,
-                "displayEdit", "false", "displayName", "true", "withUser", "true");
+                call(pageContext, "workoutTable.jsp", data.lastWorkouts, "displayName", "true", "withUser", "true");
             %>
         </div>
         <div class="footer">
