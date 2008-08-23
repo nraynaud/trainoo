@@ -360,7 +360,9 @@ public class Helpers {
             final StringBuilder getParams = new StringBuilder(20);
             getParams.append("?");
             for (int i = 0; i < params.length; i += 2) {
-                pushParam(getParams.append("&amp;"), params[i], params[i + 1]);
+                if (i != 0)
+                    getParams.append("&amp;");
+                pushParam(getParams, params[i], params[i + 1]);
             }
             query = getParams.toString();
         } else
