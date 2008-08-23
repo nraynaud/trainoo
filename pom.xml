@@ -21,7 +21,6 @@
         <module>bcrypt</module>
         <module>nikeplus</module>
         <module>geoportail</module>
-        <module>search-lucene</module>
     </modules>
     <build>
         <plugins>
