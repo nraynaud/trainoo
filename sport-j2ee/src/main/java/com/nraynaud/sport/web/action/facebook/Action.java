@@ -36,8 +36,10 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
     private HttpServletResponse response;
     public String name;
     public String auth_token;
+    public String trainoo_account;
     private static final String API_KEY = "4d7b60f54176c2752cc66138c01105a7";
     private static final String SECRET_KEY = "cb3408a206dc084cec8107298a5a9faf";
+    private static final int TRAINOO_ACCOUNT_KEY = 1;
 
     public Action(final Application application) {
         super(application);
@@ -51,6 +53,11 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
             facebook.requireLogin("");
             final FacebookRestClient restClient = facebook.get_api_client();
             final long userID = restClient.users_getLoggedInUser();
+            if (trainoo_account != null) {
+                restClient.data_setUserPreference(TRAINOO_ACCOUNT_KEY,
+                        trainoo_account.equals("0") ? null : trainoo_account);
+            }
+            trainoo_account = restClient.data_getUserPreference(TRAINOO_ACCOUNT_KEY);
             final Collection<Long> users = new ArrayList<Long>();
             users.add(userID);
             final EnumSet<ProfileField> fields = EnumSet.of(com.facebook.api.ProfileField.NAME);
