@@ -66,6 +66,11 @@ Compte trainoo :
 <%
     if (trainoo_account != null) {
         final BibPageData data = property("model", BibPageData.class);
+        if (data == null) {
+%>
+Désolé, ce compte est inconnu sur trainoo.com.
+<%
+} else {
 %>
 <div style="width:450px">
     <div class="block sheetBlock userSheetBlock">
@@ -85,4 +90,7 @@ Compte trainoo :
         </div>
     </div>
 </div>
-<%}%>
+<%
+        }
+    }
+%>
