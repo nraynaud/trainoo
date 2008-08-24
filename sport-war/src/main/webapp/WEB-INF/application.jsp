@@ -34,10 +34,21 @@
 <div id="body">
 <div id="center">
 <%if (pageDetail.isShowHeader()) {%>
+<%
+    if (isLogged()) {
+    final int newMessagesCount = property("newMessagesTotal", Integer.class);
+    if (newMessagesCount > 0) {
+%>
+<div id="alertBox">
+    <a href="<%=createUrl("/messages", "", "reciever", listProperty("newMessages", NewMessageData.class).get(0).sender.toString())%>"
+    title="Aller voir le 1er message">
+        Vous avez <%=newMessagesCount%> <%=pluralize(newMessagesCount, "nouveau message", "nouveaux messages")%>
+    </a>
+</div>
+<%  }} %>
 <div id="header">
     <div id="logo"><a href="/" title="Trainoo.com - Tableau général">Trainoo.com</a></div>
     <div id="catchPhrase">Vous allez en suer&hellip;</div>
-
 </div>
 <%}%>
 <div id="contentWrapper">

@@ -28,6 +28,28 @@ small {
     zoom: 1;
 }
 
+/* --- alertBox --- */
+
+#alertBox {
+    height: 29px;
+    padding: 0 0 0 10px;
+    background: #f7f7e2 url(alertbox.png) no-repeat left top;
+    position: absolute;
+    top: 10px;
+    z-index: 2;
+    right: 260px;
+}
+
+#alertBox a {
+    display: block;
+    padding: 7px 22px 7px 0;
+    background: #f7f7e2 url(alertbox.png) no-repeat right top;
+    font-weight: bold;
+    color: #514621;
+    text-decoration: none;
+}
+
+
 /* --- Header --- */
 
 #header {

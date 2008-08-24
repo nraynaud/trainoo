@@ -29,17 +29,6 @@
             <li><a href="<%=createUrl("/privatedata", "")%>" title="Mon compte">Mon compte</a></li>
             <li><a href="<%=createUrl("/", "logout")%>" title="Déconnexion">Déconnexion</a></li>
         </ul>
-        <%
-            final int newMessagesCount = property("newMessagesTotal", Integer.class);
-            if (newMessagesCount > 1) {
-        %>
-        <div class="alertBox">
-            <a href="<%=createUrl("/messages", "", "reciever", listProperty("newMessages", NewMessageData.class).get(0).sender.toString())%>"
-            title="Aller voir le 1er message">
-                <%=newMessagesCount%> <%=pluralize(newMessagesCount, "nouveau message", "nouveaux messages")%>
-            </a>
-        </div>
-        <%  } %>
         <% } else { %>
         <h2>Connexion</h2>
         <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
