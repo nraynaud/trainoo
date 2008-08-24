@@ -32,22 +32,26 @@ small {
 
 #header {
     position: relative;
-    margin-bottom: -30px;
+    margin-bottom: -38px;
     z-index: 2;
     width: 300px;
+}
+
+#logo {
+    margin: 0 0 -12px 24px;
 }
 
 #logo a {
     display: block;
     overflow: hidden;
-    height: 50px;
+    height: 61px;
     width: 0;
-    padding-left: 295px;
+    padding-left: 305px;
     background-image: url( logo.png );
 }
 
 #catchPhrase {
-	width: 295px;
+	width: 300px;
 
     font-weight: bold;
     font-style: italic;
@@ -55,61 +59,7 @@ small {
     color: #f7f7e2;
     cursor: default;
 	text-align: center;
-}
-
-#cse-search-box input.text {
-	width: 170px;
-}
-
-#topBar {
-    position: absolute;
-	 overflow: hidden;
-    top: 0;
-    left: 14px;
-    width: 912px;
-    padding: 2px 10px 2px 10px;
-    height: 20px;
-    text-align: left;
-    background-image: url( upper_bar.png );
-    color: #5A533B;
-}
-
-#topBar label {
-	 font-weight: normal;
-    font-size: 0.92857143em;
-	 margin-right: 4px;
-}
-
-#topBar form {
-    height: 23px;
-}
-
-#topBar li {
-    display: inline;
-    margin: 0 0 0 2px;
-}
-
-#topBar form li {
-    margin: 0 0 0 4px;
-}
-
-#topBar li a {
-    font-size: 12px;
-    text-decoration: none;
-    color: #000000;
-}
-
-#topBar li a:hover {
-    text-decoration: underline;
-}
-
-#topBar .userName {
-    font-weight: bold;
-    margin: auto;
-}
-
-.isLogged #primaryTop ul {
-	padding-top: 2px;
+    margin: 0 0 0 29px;
 }
 
 #menu {
@@ -121,7 +71,7 @@ small {
     color: #000;
     position: absolute;
     top: 0;
-    left: 300px;
+    left: 320px;
 }
 
 #menu ul {
@@ -156,6 +106,8 @@ small {
     background-image: url( menu_unselected_right.png );
     background-position: right top;
     background-repeat: no-repeat;
+    width: 11em;
+    text-align: center;
 }
 
 #menu a {
