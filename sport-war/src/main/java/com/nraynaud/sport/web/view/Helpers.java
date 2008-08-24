@@ -150,7 +150,7 @@ public class Helpers {
         return cast(stack().findValue(expression, type), type);
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({"unchecked", "UnusedDeclaration"})
     public static <T> List<T> listProperty(final String name, final Class<T> elementType) {
         return property(name, List.class);
     }
@@ -473,6 +473,8 @@ public class Helpers {
 
     /**
      * rewriting for static resources
+     *
+     * @param path the path, with the leading /
      */
     public static String stat(final String path) {
         return STATIC_CONTENT_PREFIX + path;

@@ -5,11 +5,15 @@ import com.facebook.api.FacebookException;
 import com.facebook.api.FacebookRestClient;
 import com.facebook.api.ProfileField;
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.User;
+import com.nraynaud.sport.UserNotFoundException;
+import com.nraynaud.sport.data.BibPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -31,7 +35,7 @@ import java.util.EnumSet;
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
-public class Action extends DefaultAction implements ServletRequestAware, ServletResponseAware {
+public class Action extends DefaultAction implements ServletRequestAware, ServletResponseAware, ModelDriven<BibPageData> {
     private HttpServletRequest request;
     private HttpServletResponse response;
     public String name;
@@ -82,5 +86,17 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
 
     public void setServletResponse(final HttpServletResponse response) {
         this.response = response;
+    }
+
+    public BibPageData getModel() {
+        if (trainoo_account != null) {
+            try {
+                final User user = application.fetchUser(trainoo_account);
+                return application.fetchBibPageData(null, user.getId(), 0, 0);
+            } catch (UserNotFoundException e) {
+                return null;
+            }
+        } else
+            return null;
     }
 }
