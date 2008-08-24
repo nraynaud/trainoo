@@ -37,80 +37,32 @@
 <div id="header">
     <div id="logo"><a href="/" title="Trainoo.com - Tableau général">Trainoo.com</a></div>
     <div id="catchPhrase">Vous allez en suer&hellip;</div>
-    <div id="adPlaceHolder">publicité google</div>
-    <div id="topBar">
-        <div id="secondaryTop">
-            <form action="http://trainoo.com/search/" id="cse-search-box">
-                <div>
-                    <input type="hidden" name="cx" value="partner-pub-1788371406648361:36ti6n6fck5"/>
-                    <input type="hidden" name="cof" value="FORID:10"/>
-                    <input type="hidden" name="ie" value="UTF-8"/>
-                    <input type="text" class="text" name="q" size="31"/>
-                    <input type="submit" class="submit" name="sa" value="Rechercher"/>
-                </div>
-            </form>
-            <script type="text/javascript"
-                    src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=fr"></script>
-        </div>
-        <div id="primaryTop">
-            <% if (isLogged()) { %>
-            <ul id="accountLinks">
-                <li class="userName"><%=currentUser().getName()%>&nbsp;:</li>
-                <li><a href="<%=createUrl("/privatedata", "")%>" title="Mon compte">Mon compte</a></li>
-                <li><a href="<%=createUrl("/", "logout")%>" title="Déconnexion">Déconnexion</a></li>
-            </ul>
-            <% } else { %>
-            <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
-                <ul id="accountLinks">
-                    <li><label for="loginUpper">Surnom&nbsp;:</label><input name="login" id="loginUpper" class="text"/>
-                    </li>
-                    <li><label for="passwordUpper">Mot de passe&nbsp;:</label><input name="password" id="passwordUpper"
-                                                                                     type="password" class="text"/></li>
-                    <li><input type="submit" class="submit" name="submit" value="Connexion"/></li>
-                </ul>
-                <% } %>
-            </form>
-        </div>
 
-    </div>
 </div>
 <%}%>
-<%call(pageContext, "menu.jsp");%>
-<div id="content">
-    <% if (isLogged()) {
-        final List<NewMessageData> newMessages = listProperty("newMessages", NewMessageData.class);
-        if (newMessages.size() > 0) {
-            int count = 0;
-            for (final NewMessageData privateMessage : newMessages) {
-                count += privateMessage.messageCount;
-            }%>
-    <s:url id="messagesURL" action="" namespace="/messages">
-        <s:param name="receiver" value="newMessages.get(0).sender"/>
-    </s:url>
-    <div id="infoPop">
-        <a class="newMessages" href="<s:property value="%{messagesURL}"/>"><%=count + " " + pluralize(
-                count,
-                "nouveau message", "nouveaux messages")%>
-        </a>
+<div id="contentWrapper">
+    <%call(pageContext, "sidebar.jsp");%>
+    <div id="content">
+        <div id="contentDecor"></div>
+        <%call(pageContext, "menu.jsp");%>
+        <%if (pageDetail.isShowTitle()) {%>
+        <h1><%=pageDetail.getTitle()%>
+        </h1>
+        <%}%>
+        <s:actionmessage/>
+        <% /* the page content*/
+            final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
+            out.append(detail.getContent());
+        %>
     </div>
-    <% }
-    } %>
-    <%if (pageDetail.isShowTitle()) {%>
-    <h1><%=pageDetail.getTitle()%>
-    </h1>
+    <%if (pageDetail.isShowFooter()) {%>
+    <div id="footer">
+        <hr>
+        <p><%=link("/", "about", "À propos de trainoo.com…", null)%> -
+            <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p>
+    </div>
     <%}%>
-    <s:actionmessage/>
-    <% /* the page content*/
-        final PageDetail detail = (PageDetail) pageContext.getRequest().getAttribute("detail");
-        out.append(detail.getContent());
-    %>
 </div>
-<%if (pageDetail.isShowFooter()) {%>
-<div id="footer">
-    <hr>
-    <p><%=link("/", "about", "À propos de trainoo.com…", null)%> -
-        <a href="mailto:nicolas@trainoo.com">Une idée, une question&nbsp;?</a></p></div>
-<%}%>
 
 <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
 <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
@@ -128,16 +80,16 @@
 </script>
 <%if (pageDetail.isShowHeader()) {%>
 <div id="ad">
-    <script type="text/javascript"><!--
-    google_ad_client = "pub-1788371406648361";
-    /* 468x60, trainoo_pimp */
-    google_ad_slot = "8185304312";
-    google_ad_width = 468;
-    google_ad_height = 60;
-    //-->
+    <script type="text/javascript">
+        <!--
+        google_ad_client = "pub-1788371406648361";
+        /* 120x600, gratte-ciel */
+        google_ad_slot = "3759319574";
+        google_ad_width = 120;
+        google_ad_height = 600;
+        //-->
     </script>
-    <script type="text/javascript"
-            src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"> </script>
 </div>
 <script type="text/javascript">
     $('adPlaceHolder').update($('ad'));

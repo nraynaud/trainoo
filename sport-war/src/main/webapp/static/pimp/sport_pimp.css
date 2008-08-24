@@ -18,23 +18,23 @@ small {
     position: relative;
     width: 960px;
     margin: 0 auto;
-    background-color: #f7f7e2;
+    overflow: hidden;
+}
 
-    background-image: url( border_left.png );
-    background-position: left top;
-    background-repeat: repeat-y;
+#contentWrapper {
+    background: #f7f7e2 url(background.png) repeat-y right top;
+    overflow: hidden;
+    _overflow: visible;
+    zoom: 1;
 }
 
 /* --- Header --- */
 
 #header {
     position: relative;
-    height: 70px;
-    padding: 10px;
-
-    background-image: url( border_right.png );
-    background-position: right top;
-    background-repeat: repeat-y;
+    margin-bottom: -30px;
+    z-index: 2;
+    width: 300px;
 }
 
 #logo a {
@@ -44,48 +44,21 @@ small {
     width: 0;
     padding-left: 295px;
     background-image: url( logo.png );
-    position: absolute;
-    top: 32px;
-    left: 20px;
 }
 
 #catchPhrase {
-    position: absolute;
-    top: 78px;
-    left: 24px;
-	 width: 295px;
+	width: 295px;
 
     font-weight: bold;
     font-style: italic;
     font-size: 16px;
-    color: #655c34;
+    color: #f7f7e2;
     cursor: default;
-	 text-align: center;
-}
-
-#adPlaceHolder {
-    position: absolute;
-    top: 32px;
-    right: 14px;
-    width: 468px;
-    height: 60px;
-
-    background-color: #EEE;
-}
-
-#secondaryTop {
-	_width: 50%; /* IE6 bug */
-	float: right;
-	text-align: right;
+	text-align: center;
 }
 
 #cse-search-box input.text {
 	width: 170px;
-}
-
-#primaryTop {
-	clear: none;
-	overflow: hidden;
 }
 
 #topBar {
@@ -135,59 +108,24 @@ small {
     margin: auto;
 }
 
-#topBar input {
-    float: none;
-    display: inline;
-    border: 1px solid #e1dfbc;
-    background-color: #f7f7e2;
-    padding: 0;
-    margin: 0;
-    width: 10em;
-    font-size: 0.85714286em;
-	 vertical-align: middle;
-	 /* block google script style tweaking */
-	 _padding: 0 !important;
-    _border: 1px solid #e1dfbc !important;
-}
-
-#topBar input.submit {
-    width: auto;
-	 padding: 0 2px;
-	 _padding: 0 2px !important;
-}
-
 .isLogged #primaryTop ul {
 	padding-top: 2px;
 }
 
-#infoPop {
-    float: right;
-    padding: 16px 17px 0 0;
-}
-
-#infoPop a.newMessages {
-    text-decoration: none;
-    font-weight: bold;
-    color: #546904;
-	 display: block;
-	 padding: 7px 34px 10px 0;
-	 background: url(mail.gif) no-repeat right top;
-}
-
 #menu {
-    height: 82px;
+    height: 89px;
     overflow: hidden;
 
     font-size: 1.0714286em;
     font-weight: bold;
     color: #000;
-    background-image: url( menu_band.png );
-    background-position: left 10px;
-    background-repeat: repeat-x;
+    position: absolute;
+    top: 0;
+    left: 300px;
 }
 
 #menu ul {
-    padding: 13px 20px 20px 20px;
+    padding: 20px;
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
@@ -195,17 +133,6 @@ small {
 
 #menu ul.primary {
     padding-left: 42px;
-    background-image: url( menu_left.png );
-    background-position: left top;
-    background-repeat: no-repeat;
-}
-
-#menu ul.secondary {
-    float: right;
-
-    background-image: url( menu_right.png );
-    background-position: right top;
-    background-repeat: no-repeat;
 }
 
 #menu ul li {
@@ -265,15 +192,108 @@ small {
     background-image: url( menu_last_selected_right.png );
 }
 
+/* --- Sidebar --- */
+
+#sidebar {
+    float: right;
+    _display: inline;
+    width: 152px;
+    position: relative;
+    background: #f7f7e2 url( sidebar.png );
+}
+
+#sidebar form {
+    margin: 0;
+    padding: 0;
+}
+
+#sidebar form ul li {
+    text-align: right;
+    padding: 0 4px 0 0;
+}
+
+#sidebar form ul li label {
+    display: block;
+    text-align: left;
+	 font-size: 0.92857143em;
+    color: #514621;
+}
+
+#searchBox {
+    background: #F7F7E2 url( searchbox.png ) no-repeat;
+    width: 130px;
+    padding: 13px 11px 0;
+    height: 28px;
+}
+
+#searchBox input.text ,
+#sidebar ul li input.text {
+    float: none;
+    display: inline;
+    border: 1px solid #e1dfbc !important;
+    background-color: #f7f7e2 !important;
+    padding: 1px !important;
+    margin: 0 !important;
+    width: 100px !important;
+    font-size: 0.85714286em !important;
+	vertical-align: middle !important;
+}
+
+#searchBox input.submit {
+    width: 24px;
+    height: 20px;
+	padding: 0 2px !important;
+    margin: 0 !important;
+	vertical-align: middle !important;
+    opacity: 0.01;
+    _filter: alpha(opacity=1);
+    background-color: red;
+    font-size: 0 !important;
+    border: 0 !important;
+}
+
+#sidebar .content {
+    padding: 0 13px 0 11px;
+}
+
+#sidebar h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2142857em;
+    color: #514621;
+    padding: 12px 0 4px;
+}
+
+#sidebar ul li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 4px;
+}
+
+#sidebar ul li a {
+    text-decoration: none;
+	 font-weight: bold;
+	 font-size: 0.92857143em;
+    color: #514621;
+}
+
+#sidebar ul.secondary li a {
+	font-weight: normal;
+}
+
+#adPlaceHolder {
+    width: 120px;
+    height: 600px;
+    padding: 30px 16px 16px;
+    background: url( sidebar_bottom.png ) no-repeat left bottom;
+}
+
 /* --- Footer --- */
 #footer {
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
-
-    background-image: url( border_right.png );
-    background-position: right top;
-    background-repeat: repeat-y;
+    clear: both;
     text-align: center;
     padding: 20px 40px 0;
 }
@@ -305,23 +325,30 @@ small {
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
-    clear: both;
-    padding: 0 20px; /* Draw over the bottom part of menu tabs */
+    clear: left;
+    padding: 40px 20px 0;
     position: relative;
-    top: -38px;
-    margin-bottom: -38px;
+}
 
-    background-image: url( border_right.png );
-    background-position: right top;
-    background-repeat: repeat-y;
+#contentDecor {
+    background: #869c34 url(content_top.png) no-repeat left 35px;
+    height: 50px;
+    width: 100%;
+    _padding: 0 22px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 #content h1 {
     font-size: 36px;
     font-weight: bold;
     color: #514621;
-    padding: 3px 0 10px 20px;
+    padding: 20px 0 10px 20px;
     cursor: default;
+    position: relative;
+    z-index: 1;
+    background: url(heading_background.png) no-repeat 20px 80%;
 }
 
 #content h1 a {

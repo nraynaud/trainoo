@@ -351,6 +351,14 @@ public class HibernateApplication implements Application {
         return query.getResultList();
     }
 
+    public int fetchTotalNewMessagesCount(final User user) {
+        int sum = 0;
+        for (final NewMessageData newMessageData: fetchNewMessagesCount(user)) {
+            sum += newMessageData.messageCount;
+        }
+        return sum;
+    }
+
     public void deleteMessageFor(final Long id, final User user) {
         final Query query = entityManager.createNativeQuery(
                 "update MESSAGES SET deleted_by=:user_id where ID=:id and deleted_by IS NULL and receiver_id <> sender_id and (receiver_id=:user_id or sender_id=:user_id)");

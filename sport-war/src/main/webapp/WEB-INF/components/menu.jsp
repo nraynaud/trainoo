@@ -4,30 +4,10 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="menu">
-    <ul class="secondary">
-        <% if (isLogged()) {
-            final User user = currentUser();
-        %>
-        <%= tab("/", "workouts", "Mon vestiaire", "first", "current currentFirst")%><%= tab("/bib", "", "Mon dossard",
-            "last",
-            "current currentLast",
-            "id", String.valueOf(user.getId()))%>
-        <% } else {
-            final String from = findFromAction();
-            out.append(tab("/", "forgotPassword", "Mot de passe oublié ?", "first", "current currentFirst"))
-                    .append(tab("/", "login", "Connexion", "", "current", "fromAction", from))
-                    .append(' ')
-                    .append(tab("/", "signup", "Inscription", "last", "current currentLast", "fromAction", from));
-        } %>
-    </ul>
-    <ul class="primary"><%= tab("/", "", "Tableau général", "first", "current currentFirst")%> <%=tab("/groups", "",
-            "Groupes", "last", "current currentLast")%>
-    </ul>
-    <%
-        if (isLogged()) {
-            final User user = currentUser();
-    %>
-    <%}%>
+    <ul class="primary"><%=
+        tab("/", "", "Tableau général", "first", "current currentFirst")
+        %><%= tab("/groups", "", "Groupes", "last", "current currentLast")
+    %></ul>
 </div>
 <%!
     public static String tab(final String namespace, final String action, final String content, final String classes,

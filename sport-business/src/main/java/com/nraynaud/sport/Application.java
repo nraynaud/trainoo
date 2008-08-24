@@ -84,6 +84,8 @@ public interface Application extends UserStore {
 
     List<NewMessageData> fetchNewMessagesCount(final User user);
 
+    int fetchTotalNewMessagesCount(final User user);
+
     void deleteMessageFor(final Long id, final User user);
 
     void deletePublicMessageFor(final Long messageId, final User user);

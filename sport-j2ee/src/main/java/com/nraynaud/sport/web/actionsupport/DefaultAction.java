@@ -81,4 +81,8 @@ public class DefaultAction extends ActionSupport {
             newMessages = application.fetchNewMessagesCount(getUser());
         return newMessages;
     }
+
+	 public int getNewMessagesTotal() {
+		return application.fetchTotalNewMessagesCount(getUser());
+	 }
 }
