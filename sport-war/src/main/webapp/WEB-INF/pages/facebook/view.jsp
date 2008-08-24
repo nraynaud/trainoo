@@ -6,48 +6,21 @@
 <link href="<%=stat("/static/reset.css")%>" rel="stylesheet" type="text/css">
 <link href="<%=stat("/static/pimp/sport_pimp.css")%>" rel="stylesheet" type="text/css">
 <style type="text/css">
-    .sheetBlock .deco {
-        background: url( <%=stat("/static/pimp/workoutsheet.png")%> );
-    }
 
     ul.sheet li span.coms {
         background-image: url( <%=stat("/static/pimp/bulle.png")%> );
-        background-repeat: no-repeat;
-        background-position: right 0;
-    }
-
-    .sheetBlock .header .disciplineList li.current {
-        background-image: url( <%=stat("/static/pimp/workoutsheet.png")%> );
-        margin-left: -16px;
-        position: relative;
-        left: 16px;
-    }
-
-    .sheetBlock .header .disciplineList li.current a {
-        background-image: url( <%=stat("/static/pimp/workoutsheet.png")%> );
-        color: #000000;
-        cursor: default;
-        padding-right: 16px;
     }
 
     .sheetBlock .header,
         .sheetBlock .secondaryHeader,
         .sheetBlock .content,
         .sheetBlock .footer,
-        .sheetBlock .deco {
-        background: url( <%=stat("/static/pimp/workoutsheet.png")%> );
-    }
-
-    .sheetBlock .header {
-        background-position: -12px 0;
-    }
-
-    .sheetBlock .footer {
-        background-position: -12px -31px;
-    }
-
-    .sheetBlock .footer .deco {
-        background-position: 100% -31px;
+        .sheetBlock .deco,
+    /*added*/
+    .sheetBlock .deco,
+        .sheetBlock .header .disciplineList li.current,
+        .sheetBlock .header .disciplineList li.current a {
+        background-image: url( <%=stat("/static/pimp/workoutsheet.png")%> );
     }
 </style>
 
