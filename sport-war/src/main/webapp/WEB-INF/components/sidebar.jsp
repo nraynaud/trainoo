@@ -22,7 +22,7 @@
         <% if (isLogged()) { %>
         <h2><%=currentUser().getName()%></h2>
         <ul>
-            <li><a href="<%=createUrl("/", "workout")%>" title="Mon vestiaire">Mon vestiaire</a></li>
+            <li><a href="<%=createUrl("/", "workouts")%>" title="Mon vestiaire">Mon vestiaire</a></li>
             <li><a href="<%=createUrl("/bib", "", "id", String.valueOf(currentUser().getId()))%>" title="Mon dossard">Mon dossard</a></li>
         </ul>
         <ul class="secondary">
