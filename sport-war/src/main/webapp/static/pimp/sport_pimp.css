@@ -1003,6 +1003,15 @@ input.submit:focus {
     display: block;
 }
 
+/* ugly quick fix for the out-of-form comment problem */
+#hiddenComment {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+    width: 1;
+    height: 1;
+}
+
 /* --- user list --- */
 
 .userListBlock .content {
