@@ -60,7 +60,7 @@ function retrieveComment() {
                 </dd>
                 <dt>Date :</dt>
                 <dd class="editable">
-                    <input id="date" name="date" value="<%=escapedOrNull(stringProperty("date"), "")%>"
+                    <input id="date" class="text" name="date" value="<%=escapedOrNull(stringProperty("date"), "")%>"
                            maxlength="15"
                            onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03/10/2006 ou «hier»' , 'date', this.value);"
                            onblur="hideToolTip();"
@@ -70,7 +70,7 @@ function retrieveComment() {
                 </dd>
                 <dt>Distance :</dt>
                 <dd class="editable">
-                    <input id="distance" name="distance" value="<%=escapedOrNull(stringProperty("distance"), "")%>"
+                    <input id="distance" class="text" name="distance" value="<%=escapedOrNull(stringProperty("distance"), "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
                            onblur="hideToolTip();"
@@ -78,7 +78,7 @@ function retrieveComment() {
                 </dd>
                 <dt>Durée :</dt>
                 <dd class="editable">
-                    <input id="duration" name="duration" value="<%=escapedOrNull(stringProperty("duration"), "")%>"
+                    <input id="duration" class="text" name="duration" value="<%=escapedOrNull(stringProperty("duration"), "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03h41\'17 ou 40\'22' , 'duration', this.value);"
                            onblur="hideToolTip();"
@@ -86,7 +86,7 @@ function retrieveComment() {
                 </dd>
                 <dt>Énergie Dépensée :</dt>
                 <dd class="editable">
-                    <input id="energy" name="energy" value="<%=escapedOrNull(stringProperty("energy"), "")%>"
+                    <input id="energy" class="text" name="energy" value="<%=escapedOrNull(stringProperty("energy"), "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event, 'En kilocalories.', 'energy', this.value);"
                            onblur="hideToolTip();"

@@ -1003,6 +1003,10 @@ input.submit:focus {
     display: block;
 }
 
+.editingWorkoutBlock input.text {
+    width: 10em;
+}
+
 /* ugly quick fix for the out-of-form comment problem */
 #hiddenComment {
     position: absolute;
