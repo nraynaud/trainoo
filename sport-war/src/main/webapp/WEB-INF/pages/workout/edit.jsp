@@ -25,7 +25,7 @@
 <script>
 /* ugly quick fix for the out-of-form comment problem */
 function retrieveComment() {
-    document.workoutForm.comment.value = document.getElementById("comment").value;
+    document.workoutForm.comment.value = document.getElementById("externalComment").value;
 }
 </script>
 <form action="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>" method="POST" name="workoutForm"
@@ -118,7 +118,7 @@ function retrieveComment() {
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <textarea id="comment" name="comment"><%=stringProperty("comment")%></textarea>
+                    <textarea id="externalComment"><%=stringProperty("comment")%></textarea>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
