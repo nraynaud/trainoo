@@ -46,14 +46,8 @@
             <dl>
                 <dt>Discipline :</dt>
                 <dd class="editable">
-                    <select name="discipline" value="<%=escapedOrNull(stringProperty("discipline"), "")%>">
-                        <option value="course">Course</option>
-                        <option value="vélo">Vélo</option>
-                        <option value="VTT">VTT</option>
-                        <option value="marche">Marche</option>
-                        <option value="natation">Natation</option>
-                        <option value="roller">Roller</option>
-                    </select>
+                    <s:select id="discipline" list="{'course', 'vélo', 'VTT', 'marche', 'natation', 'roller'}"
+                              name="discipline" required="true" value="discipline"/>
                 </dd>
                 <dt>Date :</dt>
                 <dd class="editable">
