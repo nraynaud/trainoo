@@ -842,7 +842,7 @@ input.checkbox, input.radio, input.image {
 }
 
 textarea {
-    width: 98.6%;
+    width: 97%;
     font-size: 1.0714286em;
     overflow: auto;
     height: 4em;
@@ -854,7 +854,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 input.text {
-    width: 98.6%;
+    width: 97%;
     display: block;
 }
 
