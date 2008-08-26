@@ -23,14 +23,15 @@
 <h1>Création d'une sortie</h1>
 <% } else { %>
 <script>
-/* ugly quick fix for the out-of-form comment problem */
-function retrieveComment() {
-    document.workoutForm.comment.value = document.getElementById("externalComment").value;
-}
+    /* ugly quick fix for the out-of-form comment problem */
+    function retrieveComment() {
+        document.workoutForm.comment.value = document.getElementById("externalComment").value;
+    }
 </script>
 <form action="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>" method="POST" name="workoutForm"
-    onsubmit="retrieveComment(); return true">
-    <textarea name="comment" id="hiddenComment"><%=stringProperty("comment")%></textarea>
+      onsubmit="retrieveComment(); return true">
+    <textarea name="comment" id="hiddenComment"><%=escapedOrNull(stringProperty("comment"), "")%>
+    </textarea>
 
     <h1>Modification d'une sortie</h1>
     <% } %>
@@ -70,7 +71,8 @@ function retrieveComment() {
                 </dd>
                 <dt>Distance :</dt>
                 <dd class="editable">
-                    <input id="distance" class="text" name="distance" value="<%=escapedOrNull(stringProperty("distance"), "")%>"
+                    <input id="distance" class="text" name="distance"
+                           value="<%=escapedOrNull(stringProperty("distance"), "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
                            onblur="hideToolTip();"
@@ -78,7 +80,8 @@ function retrieveComment() {
                 </dd>
                 <dt>Durée :</dt>
                 <dd class="editable">
-                    <input id="duration" class="text" name="duration" value="<%=escapedOrNull(stringProperty("duration"), "")%>"
+                    <input id="duration" class="text" name="duration"
+                           value="<%=escapedOrNull(stringProperty("duration"), "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03h41\'17 ou 40\'22' , 'duration', this.value);"
                            onblur="hideToolTip();"
@@ -86,7 +89,8 @@ function retrieveComment() {
                 </dd>
                 <dt>Énergie Dépensée :</dt>
                 <dd class="editable">
-                    <input id="energy" class="text" name="energy" value="<%=escapedOrNull(stringProperty("energy"), "")%>"
+                    <input id="energy" class="text" name="energy"
+                           value="<%=escapedOrNull(stringProperty("energy"), "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event, 'En kilocalories.', 'energy', this.value);"
                            onblur="hideToolTip();"
@@ -118,7 +122,8 @@ function retrieveComment() {
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <textarea id="externalComment"><%=stringProperty("comment")%></textarea>
+                    <textarea id="externalComment"><%=escapedOrNull(stringProperty("comment"), "")%>
+                    </textarea>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
