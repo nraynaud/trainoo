@@ -82,6 +82,8 @@ small {
     cursor: default;
 	text-align: center;
     margin: 0 0 0 29px;
+	 position: relative;
+	 z-index: 1;
 }
 
 #menu {
@@ -93,7 +95,7 @@ small {
     color: #000;
     position: absolute;
     top: 0;
-    left: 320px;
+    left: 310px;
 }
 
 #menu ul {
@@ -101,6 +103,7 @@ small {
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
+	 white-space: nowrap;
 }
 
 #menu ul.primary {
