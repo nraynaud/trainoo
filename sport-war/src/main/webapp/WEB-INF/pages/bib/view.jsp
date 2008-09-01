@@ -13,38 +13,40 @@
     final boolean lookingOwnBib = user.equals(currentUser());%>
 <p:layoutParams title="<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + user.getName()%>"/>
 
-<div <%=!lookingOwnBib && isLogged() ? "id='globalLeft'" : "" %> >
-    <div class="block bibBlock">
-        <div class="content">
+<div class="block bibBlock">
+    <div class="content">
             <span class="buttonList">
                 <% if (lookingOwnBib) {%>
                 <a href="<%=createUrl("/bib", "edit")%>" title="Modifier mon dossard"
                    class="button editButton">Modifier</a>
                 <%}%>
             </span>
-            <% final String townLabel = "Ma ville";%>
-            <dl>
-                <% if (user.getTown() != null) { %>
-                <dt><%=townLabel%>&nbsp;:</dt>
-                <dd><%=escapedOrNull(user.getTown(),
-                        "")%>
-                </dd>
-                <% } %>
-                <% if (user.getDescription() != null) { %>
-                <dt>Moi&nbsp;:</dt>
-                <dd><%=escapedOrNullmultilines(
-                        user.getDescription(), "")%>
-                </dd>
-                <% } %>
-                <% if (user.getWebSite() != null) { %>
-                <dt>Mon site&nbsp;:</dt>
-                <dd><%=formatUrl(user.getWebSite(),
-                        "")%>
-                </dd>
-                <% } %>
-            </dl>
-        </div>
+        <% final String townLabel = "Ma ville";%>
+        <dl>
+            <% if (user.getTown() != null) { %>
+            <dt><%=townLabel%>&nbsp;:</dt>
+            <dd><%=escapedOrNull(user.getTown(),
+                    "")%>
+            </dd>
+            <% } %>
+            <% if (user.getDescription() != null) { %>
+            <dt>Moi&nbsp;:</dt>
+            <dd><%=escapedOrNullmultilines(
+                    user.getDescription(), "")%>
+            </dd>
+            <% } %>
+            <% if (user.getWebSite() != null) { %>
+            <dt>Mon site&nbsp;:</dt>
+            <dd><%=formatUrl(user.getWebSite(),
+                    "")%>
+            </dd>
+            <% } %>
+        </dl>
     </div>
+</div>
+
+<div <%=!lookingOwnBib && isLogged() ? "id='globalLeft'" : "" %> >
+
     <% if (!lookingOwnBib) {%>
     <div class="block sheetBlock userSheetBlock">
         <div class="header">
