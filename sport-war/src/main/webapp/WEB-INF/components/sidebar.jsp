@@ -22,11 +22,11 @@
         <% if (isLogged()) { %>
         <h2><%=currentUser().getName()%></h2>
         <ul>
-            <li><a href="<%=createUrl("/", "workouts")%>" title="Mon vestiaire">Mon vestiaire</a></li>
-            <li><a href="<%=createUrl("/bib", "", "id", String.valueOf(currentUser().getId()))%>" title="Mon dossard">Mon dossard</a></li>
+            <li class="<%=isCurrentAction("/", "workouts")?"current":""%>" ><a href="<%=createUrl("/", "workouts")%>" title="Mon vestiaire">Mon vestiaire</a></li>
+            <li class="<%=isCurrentAction("/bib", "")?"current":""%>" ><a href="<%=createUrl("/bib", "", "id", String.valueOf(currentUser().getId()))%>" title="Mon dossard">Mon dossard</a></li>
         </ul>
         <ul class="secondary">
-            <li><a href="<%=createUrl("/privatedata", "")%>" title="Mon compte">Mon compte</a></li>
+            <li class="<%=isCurrentAction("/privatedata", "")?"current":""%>" ><a href="<%=createUrl("/privatedata", "")%>" title="Mon compte">Mon compte</a></li>
             <li><a href="<%=createUrl("/", "logout")%>" title="Déconnexion">Déconnexion</a></li>
         </ul>
         <% } else { %>

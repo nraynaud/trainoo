@@ -241,10 +241,14 @@ small {
     padding: 12px 0 4px;
 }
 
+#sidebar ul li.current {
+    background: url( sidebar_current.png ) no-repeat left center;
+}
+
 #sidebar ul li {
     list-style-type: none;
     margin: 0;
-    padding: 0 0 0 4px;
+    padding: 0 0 0 6px;
 }
 
 #sidebar ul li a {
