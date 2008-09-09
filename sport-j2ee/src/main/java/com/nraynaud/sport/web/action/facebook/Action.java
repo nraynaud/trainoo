@@ -12,6 +12,7 @@ import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
+import com.nraynaud.sport.web.result.LayoutResult;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.config.ParentPackage;
@@ -23,9 +24,11 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.w3c.dom.Document;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -67,9 +70,15 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
             final EnumSet<ProfileField> fields = EnumSet.of(com.facebook.api.ProfileField.NAME);
             final Document d = restClient.users_getInfo(users, fields);
             name = d.getElementsByTagName("name").item(0).getTextContent();
+            final StringWriter stringWriter = new StringWriter();
+            LayoutResult.renderWithCharset("/WEB-INF/pages/facebook/view.jsp", stringWriter, response, request,
+                    "UTF-8");
+            restClient.profile_setFBML(stringWriter.toString(), "");
         } catch (FacebookException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ServletException e) {
             throw new RuntimeException(e);
         }
         return SUCCESS;

@@ -2,11 +2,10 @@
 <%@ page import="com.nraynaud.sport.data.BibPageData" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
-<link href="<%=stat("/static/reset.css")%>" rel="stylesheet" type="text/css">
-<link href="<%=stat("/static/pimp/sport_pimp.css")%>" rel="stylesheet" type="text/css">
 <style type="text/css">
-
+    <%@include file="/static/sport.css"%>
+    <%@include file="/static/reset.css"%>
+    <%@include file="/static/pimp/sport_pimp.css"%>
     ul.sheet li span.coms {
         background-image: url( <%=stat("/static/pimp/bulle.png")%> );
     }
@@ -45,7 +44,7 @@ Désolé, ce compte est inconnu sur trainoo.com.
 <%
 } else {
 %>
-<div style="width:450px">
+<div style="max-width:450px">
     <div class="block sheetBlock userSheetBlock">
         <div class="header">
             <div class="deco"></div>
