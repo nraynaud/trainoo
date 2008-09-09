@@ -23,7 +23,7 @@ public class LayoutResult extends StrutsResultSupport {
         final StringWriter stringWriter = new StringWriter();
         final HttpServletResponse response = ServletActionContext.getResponse();
         final HttpServletRequest request = ServletActionContext.getRequest();
-        includeWithCharset(finalLocation, stringWriter, response, request);
+        renderWithCharset(finalLocation, stringWriter, response, request, encoding);
         PageDetail.detailFor(request).setContent(stringWriter.toString());
         execute("/WEB-INF/application.jsp", request, response);
     }
@@ -32,8 +32,11 @@ public class LayoutResult extends StrutsResultSupport {
     // Include.include() uses the response encoding to write to the buffer,
     // but reads it with the strut's default encoding.
     // setting the response to the struts encoding before inclusion ensures that read and write will occur in the same encoding.
-    private void includeWithCharset(final String finalLocation, final Writer writer, final HttpServletResponse response,
-                                    final HttpServletRequest request) throws ServletException, IOException {
+    public static void renderWithCharset(final String finalLocation, final Writer writer,
+                                         final HttpServletResponse response,
+                                         final HttpServletRequest request, final String encoding) throws
+            ServletException,
+            IOException {
         response.setCharacterEncoding(encoding);
         Include.include(finalLocation, writer, request, response);
     }
