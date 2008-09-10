@@ -71,7 +71,7 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
             final Document d = restClient.users_getInfo(users, fields);
             name = d.getElementsByTagName("name").item(0).getTextContent();
             final StringWriter stringWriter = new StringWriter();
-            LayoutResult.renderWithCharset("/WEB-INF/pages/facebook/view.jsp", stringWriter, response, request,
+            LayoutResult.renderWithCharset("/WEB-INF/pages/facebook/profileView.jsp", stringWriter, response, request,
                     "UTF-8");
             restClient.profile_setFBML(stringWriter.toString(), "");
         } catch (FacebookException e) {
