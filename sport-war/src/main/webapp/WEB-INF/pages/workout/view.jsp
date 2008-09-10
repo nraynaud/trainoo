@@ -20,7 +20,7 @@
 %>
 <p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"
                 showTitleInPage="false"/>
-<h1><%=bibLink(runner, 15)%>&nbsp;: Sortie <%=workout.getDiscipline()%> - <%=printDate("EEEE dd MMMM",
+<h1><%=bibLink(runner, 15)%>&nbsp;: <%=workout.getDiscipline()%> - <%=printDate("EEEE dd MMMM",
         workout.getDate())%>
 </h1>
 
