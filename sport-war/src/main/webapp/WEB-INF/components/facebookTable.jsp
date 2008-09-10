@@ -19,7 +19,7 @@
     .sheetBlock .deco,
         .sheetBlock .header .disciplineList li.current,
         .sheetBlock .header .disciplineList li.current a {
-        background-image: url( <%=stat("/static/pimp/workoutsheet.png")%> );
+        background-image: url( <%=stat("/static/pimp/workoutsheet.png?")%> );
     }
 
     .sheetBlock {
@@ -31,7 +31,10 @@
     <div class="block sheetBlock userSheetBlock">
         <div class="header">
             <div class="deco"></div>
-            <h3>Dernières sorties de <%=data.user.getName()%>
+            <h3>Dernières sorties de <a
+                    href="http://trainoo.com<%=createUrl("/bib", "", "id", data.user.getId().toString())%>">
+                <%=data.user.getName()%>
+            </a>
             </h3>
         </div>
         <div class="content">
