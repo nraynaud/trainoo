@@ -7,7 +7,7 @@
     <%@include file="/static/reset.css"%>
     <%@include file="/static/pimp/sport_pimp.css"%>
     ul.sheet li span.coms {
-        background-image: url( <%=stat("/static/pimp/bulle.png")%> );
+        background-image: url( <%=stat("/static/pimp/bulle.png?")%> );
     }
 
     .sheetBlock .header,
@@ -20,6 +20,10 @@
         .sheetBlock .header .disciplineList li.current,
         .sheetBlock .header .disciplineList li.current a {
         background-image: url( <%=stat("/static/pimp/workoutsheet.png")%> );
+    }
+
+    .sheetBlock {
+        margin: 0;
     }
 </style>
 <% final BibPageData data = top(BibPageData.class); %>

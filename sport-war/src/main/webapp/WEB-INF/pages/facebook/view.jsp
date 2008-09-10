@@ -14,6 +14,8 @@ Compte trainoo :
                                                                                        value="Supprimer !">
     <%}%>
 </form>
+<fb:add-section-button section="profile"/>
+<br>
 <%
     if (trainoo_account != null) {
         final BibPageData data = property("model", BibPageData.class);
