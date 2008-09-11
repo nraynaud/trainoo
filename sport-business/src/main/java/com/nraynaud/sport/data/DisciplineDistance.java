@@ -3,19 +3,24 @@ package com.nraynaud.sport.data;
 import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.UserStringImpl;
 
-public class DisciplineDistance {
+public class DisciplineDistance<T> {
     public final UserString discipline;
+    public final T data;
 
-    public final Double distance;
-    public final Long count;
-
-    public DisciplineDistance(final String discipline, final Double distance, final Long count) {
-        this.count = count;
+    public DisciplineDistance(final String discipline, final T data) {
         this.discipline = UserStringImpl.valueOf(discipline);
-        this.distance = distance;
+        this.data = data;
     }
 
     public String toString() {
         return discipline.toString();
+    }
+
+    public static class CountAndDistance {
+        public final Long count;
+
+        public CountAndDistance(final Long count) {
+            this.count = count;
+        }
     }
 }

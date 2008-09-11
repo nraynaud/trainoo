@@ -75,9 +75,10 @@ public class Helpers {
             call(context, "workoutLineElements.jsp", workout);
         }
     };
-    public static final Comparator<DisciplineDistance> DISCIPLNE_DISTANCE_COMPARATOR = new Comparator<DisciplineDistance>() {
-        public int compare(final DisciplineDistance o1, final DisciplineDistance o2) {
-            final long diff = o2.count.longValue() - o1.count.longValue();
+    public static final Comparator<DisciplineDistance<DisciplineDistance.CountAndDistance>> DISCIPLNE_DISTANCE_COMPARATOR = new Comparator<DisciplineDistance<DisciplineDistance.CountAndDistance>>() {
+        public int compare(final DisciplineDistance<DisciplineDistance.CountAndDistance> o1,
+                           final DisciplineDistance<DisciplineDistance.CountAndDistance> o2) {
+            final long diff = o2.data.count.longValue() - o1.data.count.longValue();
             if (diff != 0)
                 return (int) diff < 0 ? -1 : 1;
             return o1.discipline.nonEscaped().compareTo(o2.discipline.nonEscaped());

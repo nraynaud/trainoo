@@ -17,7 +17,7 @@ public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
     private static final Random TOKEN_GENERATOR = new Random();
-    private static final String DISCPLINE_DISTANCE_SELECTION = "select new com.nraynaud.sport.data.DisciplineDistance(w.discipline, sum(w.distance), count(*))";
+    private static final String DISCPLINE_DISTANCE_SELECTION = "select new com.nraynaud.sport.data.DisciplineCount(w.discipline, count(*))";
     private static final List<String> EMPTY_STRING_LIST = Collections.emptyList();
 
     public Workout createWorkout(final Date date,
@@ -353,7 +353,7 @@ public class HibernateApplication implements Application {
 
     public int fetchTotalNewMessagesCount(final User user) {
         int sum = 0;
-        for (final NewMessageData newMessageData: fetchNewMessagesCount(user)) {
+        for (final NewMessageData newMessageData : fetchNewMessagesCount(user)) {
             sum += newMessageData.messageCount;
         }
         return sum;
