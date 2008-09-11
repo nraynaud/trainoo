@@ -1,13 +1,13 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="com.nraynaud.sport.User" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="menu">
     <ul class="primary"><%=
-        tab("/", "", "Tableau général", "first", "current currentFirst")
-        %><%= tab("/groups", "", "Groupes", "last", "current currentLast")
-    %></ul>
+    tab("/", "", "Tableau général", "first", "current currentFirst")
+    %><%= tab("/groups", "", "Groupes", "last", "current currentLast")
+    %>
+    </ul>
 </div>
 <%!
     public static String tab(final String namespace, final String action, final String content, final String classes,

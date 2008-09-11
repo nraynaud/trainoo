@@ -1,11 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="com.nraynaud.sport.data.NewMessageData" %>
-<%@ page import="com.nraynaud.sport.User" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="sidebar">
-     <div id="searchBox">
+    <div id="searchBox">
         <form action="http://trainoo.com/search/" id="cse-search-box">
             <div>
                 <input type="hidden" name="cx" value="partner-pub-1788371406648361:36ti6n6fck5"/>
@@ -20,17 +18,24 @@
     </div>
     <div class="content textContent">
         <% if (isLogged()) { %>
-        <h2><%=currentUser().getName()%></h2>
+        <h2><%=currentUser().getName()%>
+        </h2>
         <ul>
-            <li class="<%=isCurrentAction("/", "workouts")?"current":""%>" ><a href="<%=createUrl("/", "workouts")%>" title="Mon vestiaire">Mon vestiaire</a></li>
-            <li class="<%=isCurrentAction("/bib", "")?"current":""%>" ><a href="<%=createUrl("/bib", "", "id", String.valueOf(currentUser().getId()))%>" title="Mon dossard">Mon dossard</a></li>
+            <li class="<%=isCurrentAction("/", "workouts")?"current":""%>"><a href="<%=createUrl("/", "workouts")%>"
+                                                                              title="Mon vestiaire">Mon vestiaire</a>
+            </li>
+            <li class="<%=isCurrentAction("/bib", "")?"current":""%>"><a
+                    href="<%=createUrl("/bib", "", "id", String.valueOf(currentUser().getId()))%>" title="Mon dossard">Mon
+                dossard</a></li>
         </ul>
         <ul class="secondary">
-            <li class="<%=isCurrentAction("/privatedata", "")?"current":""%>" ><a href="<%=createUrl("/privatedata", "")%>" title="Mon compte">Mon compte</a></li>
+            <li class="<%=isCurrentAction("/privatedata", "")?"current":""%>"><a
+                    href="<%=createUrl("/privatedata", "")%>" title="Mon compte">Mon compte</a></li>
             <li><a href="<%=createUrl("/", "logout")%>" title="Déconnexion">Déconnexion</a></li>
         </ul>
         <% } else { %>
         <h2>Connexion</h2>
+
         <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
             <ul>
                 <li>
@@ -46,6 +51,7 @@
                 </li>
             </ul>
         </form>
+        <%=link("/", "forgotPassword", "Mot de passe oublié", "")%>
         <% } %>
     </div>
     <div id="adPlaceHolder">publicité google</div>
