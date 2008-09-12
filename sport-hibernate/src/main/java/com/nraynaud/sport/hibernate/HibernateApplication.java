@@ -599,7 +599,7 @@ public class HibernateApplication implements Application {
     }
 
     @SuppressWarnings({"unchecked"})
-    private List<DisciplineDistance> fetchDistanceByDiscipline(final User user) {
+    private List<DisciplineData> fetchDistanceByDiscipline(final User user) {
         final String string =
                 DISCPLINE_DISTANCE_SELECTION
                         + " from WorkoutImpl w where 1=1 "
@@ -608,17 +608,17 @@ public class HibernateApplication implements Application {
         final Query nativeQuery = query(string);
         if (user != null)
             nativeQuery.setParameter("user", user);
-        return (List<DisciplineDistance>) nativeQuery.getResultList();
+        return (List<DisciplineData>) nativeQuery.getResultList();
     }
 
-    private List<DisciplineDistance> fetchDistanceByDiscipline(final Group group) {
+    private List<DisciplineData> fetchDistanceByDiscipline(final Group group) {
         final String string =
                 DISCPLINE_DISTANCE_SELECTION
                         + " from GroupImpl g left join g.members u left join u.workouts w where 1=1"
                         + " and g=:group group by w.discipline having w.discipline is not null";
         final Query query = query(string);
         query.setParameter("group", group);
-        return (List<DisciplineDistance>) query.getResultList();
+        return (List<DisciplineData>) query.getResultList();
     }
 
     private Double fetchGlobalDistance(final Group group) {
@@ -656,8 +656,8 @@ public class HibernateApplication implements Application {
                                                final int pageSize) {
         final PaginatedCollection<Workout> workouts = getWorkouts(user, disciplines, firstIndex, pageSize);
         final Double globalDistance = fetchGlobalDistance(user);
-        final List<DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(user);
-        return new StatisticsData(workouts, globalDistance, distanceByDiscpline);
+        final List<DisciplineData> disciplineData = fetchDistanceByDiscipline(user);
+        return new StatisticsData(workouts, globalDistance, disciplineData);
     }
 
     private StatisticsData fetchStatisticsData(final Group group, final int firstIndex, String discipline) {
@@ -665,8 +665,8 @@ public class HibernateApplication implements Application {
             discipline = null;
         final PaginatedCollection<Workout> workouts = getWorkouts(group, discipline, firstIndex, 10);
         final Double globalDistance = fetchGlobalDistance(group);
-        final List<DisciplineDistance> distanceByDiscpline = fetchDistanceByDiscipline(group);
-        return new StatisticsData(workouts, globalDistance, distanceByDiscpline);
+        final List<DisciplineData> disciplineData = fetchDistanceByDiscipline(group);
+        return new StatisticsData(workouts, globalDistance, disciplineData);
     }
 
     private Collection<ConversationSummary> fetchCorrespondents(final User user) {

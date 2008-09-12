@@ -4,7 +4,7 @@ import com.nraynaud.sport.Helper;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
-import com.nraynaud.sport.data.DisciplineDistance;
+import com.nraynaud.sport.data.DisciplineData;
 import com.nraynaud.sport.data.PaginatedCollection;
 import com.nraynaud.sport.web.DateHelper;
 import com.nraynaud.sport.web.SportActionMapper;
@@ -75,9 +75,9 @@ public class Helpers {
             call(context, "workoutLineElements.jsp", workout);
         }
     };
-    public static final Comparator<DisciplineDistance<DisciplineDistance.CountAndDistance>> DISCIPLNE_DISTANCE_COMPARATOR = new Comparator<DisciplineDistance<DisciplineDistance.CountAndDistance>>() {
-        public int compare(final DisciplineDistance<DisciplineDistance.CountAndDistance> o1,
-                           final DisciplineDistance<DisciplineDistance.CountAndDistance> o2) {
+    public static final Comparator<DisciplineData<DisciplineData.CountAndDistance>> DISCIPLNE_DISTANCE_COMPARATOR = new Comparator<DisciplineData<DisciplineData.CountAndDistance>>() {
+        public int compare(final DisciplineData<DisciplineData.CountAndDistance> o1,
+                           final DisciplineData<DisciplineData.CountAndDistance> o2) {
             final long diff = o2.data.count.longValue() - o1.data.count.longValue();
             if (diff != 0)
                 return (int) diff < 0 ? -1 : 1;
