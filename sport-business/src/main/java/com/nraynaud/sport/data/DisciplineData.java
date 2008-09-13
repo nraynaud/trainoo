@@ -16,10 +16,10 @@ public class DisciplineData<T> {
         return discipline.toString();
     }
 
-    public static class CountAndDistance {
+    public static class Count {
         public final Long count;
 
-        public CountAndDistance(final Long count) {
+        public Count(final Long count) {
             this.count = count;
         }
     }

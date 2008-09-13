@@ -17,7 +17,7 @@ public class HibernateApplication implements Application {
 
     private EntityManager entityManager;
     private static final Random TOKEN_GENERATOR = new Random();
-    private static final String DISCPLINE_DISTANCE_SELECTION = "select new com.nraynaud.sport.data.DisciplineCount(w.discipline, count(*))";
+    private static final String DISCPLINE_COUNT_SELECTION = "select new com.nraynaud.sport.data.DisciplineCount(w.discipline, count(*))";
     private static final List<String> EMPTY_STRING_LIST = Collections.emptyList();
 
     public Workout createWorkout(final Date date,
@@ -601,7 +601,7 @@ public class HibernateApplication implements Application {
     @SuppressWarnings({"unchecked"})
     private List<DisciplineData> fetchDistanceByDiscipline(final User user) {
         final String string =
-                DISCPLINE_DISTANCE_SELECTION
+                DISCPLINE_COUNT_SELECTION
                         + " from WorkoutImpl w where 1=1 "
                         + (user != null ? " and  :user MEMBER OF w.participants" : "")
                         + " group by w.discipline";
@@ -611,14 +611,14 @@ public class HibernateApplication implements Application {
         return (List<DisciplineData>) nativeQuery.getResultList();
     }
 
-    private List<DisciplineData> fetchDistanceByDiscipline(final Group group) {
-        final String string =
-                DISCPLINE_DISTANCE_SELECTION
-                        + " from GroupImpl g left join g.members u left join u.workouts w where 1=1"
-                        + " and g=:group group by w.discipline having w.discipline is not null";
+    private <T> List<DisciplineData<T>> fetchDistanceByDiscipline(final Group group,
+                                                                  final DisciplineAggregator<T> countAggregator) {
+        final String string = "select " + countAggregator.queryPart
+                + " from GroupImpl g left join g.members u left join u.workouts w where 1=1"
+                + " and g=:group group by w.discipline having w.discipline is not null";
         final Query query = query(string);
         query.setParameter("group", group);
-        return (List<DisciplineData>) query.getResultList();
+        return countAggregator.castqueryResult(query.getResultList());
     }
 
     private Double fetchGlobalDistance(final Group group) {
@@ -665,7 +665,8 @@ public class HibernateApplication implements Application {
             discipline = null;
         final PaginatedCollection<Workout> workouts = getWorkouts(group, discipline, firstIndex, 10);
         final Double globalDistance = fetchGlobalDistance(group);
-        final List<DisciplineData> disciplineData = fetchDistanceByDiscipline(group);
+        final List<DisciplineData<DisciplineData.Count>> disciplineData = fetchDistanceByDiscipline(group,
+                DisciplineAggregator.COUNT_AGGREGATOR);
         return new StatisticsData(workouts, globalDistance, disciplineData);
     }
 

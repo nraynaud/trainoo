@@ -11,11 +11,11 @@
     private static final int MAX_DISCIPLINES_TABS = 4;
 %>
 <%
-    final List<DisciplineData> disciplines = listProperty("distanceByDisciplines", DisciplineData.class);
+    final List<DisciplineData<DisciplineData.Count>> disciplines = (List<DisciplineData<DisciplineData.Count>>) property(
+            "distanceByDisciplines", List.class);
     String currentFilter = pageContext.getRequest().getParameter("disciplineFilter");
-    if (currentFilter == null) {
+    if (currentFilter == null)
         currentFilter = "";
-    }
 %>
 <% if (disciplines.size() == 0) { %>
 <ul class="emptyDisciplineList"></ul>
@@ -25,7 +25,8 @@
     <li class="<%=currentFilter.equals("") ? "current" : ""%>"><%=linkCurrenUrlWithoutParam("Tous",
             "disciplineFilter")%>
     </li>
-    <% final TreeSet<DisciplineData> ddSet = new TreeSet<DisciplineData>(DISCIPLNE_DISTANCE_COMPARATOR);
+    <% final TreeSet<DisciplineData<DisciplineData.Count>> ddSet = new TreeSet<DisciplineData<DisciplineData.Count>>(
+            DISCIPLNE_DISTANCE_COMPARATOR);
         ddSet.addAll(disciplines);
         final ArrayList<DisciplineData> orderedDD = new ArrayList<DisciplineData>(
                 ddSet);
