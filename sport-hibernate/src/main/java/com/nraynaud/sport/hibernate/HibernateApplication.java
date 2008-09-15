@@ -550,6 +550,27 @@ public class HibernateApplication implements Application {
                     " erreur : " + count + " lignes insérées au lieu de " + participants.length);
     }
 
+    public void addWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
+            AccessDeniedException {
+        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, workoutId);
+        if (!workout.getUser().equals(user))
+            throw new AccessDeniedException();
+        final Set<String> participantsSet = new HashSet<String>(Arrays.asList(participants));
+        final Query query = createParticipantsInsertUnionQuery(workoutId, participantsSet);
+        final int count = query.executeUpdate();
+    }
+
+    public void removeWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
+            AccessDeniedException {
+        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, workoutId);
+        if (!workout.getUser().equals(user))
+            throw new AccessDeniedException();
+        final Set<String> participantsWithoutSelf = new HashSet<String>(Arrays.asList(participants));
+        participantsWithoutSelf.remove(user.getName().nonEscaped());
+        final Query query = createParticipantsDeleteQuery(workoutId, participantsWithoutSelf);
+        final int count = query.executeUpdate();
+    }
+
     private Query createParticipantsInsertQuery(final Long workoutId, final Set<String> participants) {
         final SQLHelper.Predicate namePred = createInListPredicate("NAME", participants, "participant");
         final Query query = entityManager.createNativeQuery(
@@ -559,6 +580,26 @@ public class HibernateApplication implements Application {
         return query;
     }
 
+    private Query createParticipantsInsertUnionQuery(final Long workoutId, final Set<String> participants) {
+        final SQLHelper.Predicate namePred = createInListPredicate("NAME", participants, "participant");
+        final Query query = entityManager.createNativeQuery(
+                "insert INTO WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE"
+                +" id not in (select user_id from workout_user where workout_id != :workoutId) and " + namePred);
+        query.setParameter("workoutId", workoutId);
+        namePred.bindVariables(query);
+        return query;
+    }
+
+    private Query createParticipantsDeleteQuery(final Long workoutId, final Set<String> participants) {
+        final SQLHelper.Predicate namePred = createInListPredicate("NAME", participants, "participant");
+        final Query query = entityManager.createNativeQuery(
+                "delete FROM WORKOUT_USER (USER_ID, WORKOUT_ID) WHERE WORKOUT_ID = :workoutId AND USER_ID IN "
+                +" (SELECT ID, :workoutId FROM USERS WHERE " + namePred + ")");
+        query.setParameter("workoutId", workoutId);
+        namePred.bindVariables(query);
+        return query;
+    }
+    
     private void deleteParticipation(final Long workoutId) {
         final Query query = entityManager.createNativeQuery("delete from WORKOUT_USER where WORKOUT_ID=:workoutId");
         query.setParameter("workoutId", workoutId);
