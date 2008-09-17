@@ -1,9 +1,14 @@
 package com.nraynaud.sport.hibernate;
 
+import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.data.PaginatedCollection;
+
 import javax.persistence.Query;
-import java.util.Collection;
+import java.util.*;
 
 public class SQLHelper {
+    static final List<String> EMPTY_STRING_LIST = Collections.emptyList();
+
     private SQLHelper() {
     }
 
@@ -44,6 +49,54 @@ public class SQLHelper {
                 query.setParameter(variablePrefix, value);
             }
         };
+    }
+
+    public static PaginatedCollection<Workout> paginateWorkoutQuery(final int firstIndex, final int pageSize,
+                                                                    final Query query) {
+        final List<Object[]> result = paginatedQuery(pageSize, firstIndex, query);
+        final List<Workout> list = new ArrayList<Workout>(result.size());
+        for (final Object[] row : result) {
+            final WorkoutImpl workout = (WorkoutImpl) row[0];
+            workout.setMessageCount(((Number) row[1]).longValue());
+            list.add(workout);
+        }
+        return paginateList(firstIndex, pageSize, list);
+    }
+
+    public static <T> PaginatedCollection<T> paginateList(final int startIndex, final int pageSize,
+                                                          final List<T> list) {
+        return new PaginatedCollection<T>() {
+            public boolean hasPrevious() {
+                return list.size() > pageSize;
+            }
+
+            public boolean hasNext() {
+                return startIndex > 0;
+            }
+
+            public int getPreviousIndex() {
+                return startIndex + pageSize;
+            }
+
+            public int getNextIndex() {
+                return startIndex - pageSize;
+            }
+
+            public boolean isEmpty() {
+                return list.isEmpty();
+            }
+
+            public Iterator<T> iterator() {
+                return list.subList(0, list.size() > pageSize ? pageSize : list.size()).iterator();
+            }
+        };
+    }
+
+    static <T> List<T> paginatedQuery(final int pageSize, final int startIndex, final Query query) {
+        query.setMaxResults(pageSize + 1);
+        query.setFirstResult(startIndex);
+        //noinspection unchecked
+        return query.getResultList();
     }
 
     public abstract static class Predicate {
