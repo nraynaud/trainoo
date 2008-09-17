@@ -726,6 +726,15 @@ public class HibernateApplication implements Application {
         return query.getResultList();
     }
 
+    public List<User> fetchUsersBeginningByAndAddableToWorkout(final String prefix, final long id) {
+        final Query query = entityManager.createQuery(
+                "select u from UserImpl u, WorkoutImpl workout where u.name<>'googlebot' AND u.name LIKE CONCAT(:prefix, '%')"
+                        + " AND u not MEMBER OF workout.participants AND workout.id = :id ");
+        query.setParameter("prefix", prefix);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+
     public void updateBib(final User user, final String town, final String description, final String webSite) {
         final UserImpl userImpl = (UserImpl) user;
         userImpl.setTown(town);

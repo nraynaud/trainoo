@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.User;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.converter.DateConverter;
 import com.nraynaud.sport.web.converter.DistanceConverter;
@@ -16,13 +17,15 @@ import java.util.List;
 @Results({
         //the type avoids having the page decorated by application.jsp
 @Result(name = Constants.FEEDBACK, type = ServletDispatcherResult.class, value = "/WEB-INF/pages/feedback.jsp"),
-@Result(name = "logins", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/logins.jsp")
+@Result(name = "logins", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/logins.jsp"),
+@Result(name = "participants", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/participants.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class FeedbackAction {
 
     private String data;
     private String type;
+    private long workout;
 
     private final Application application;
 
@@ -32,7 +35,9 @@ public class FeedbackAction {
 
     @SuppressWarnings({"MethodMayBeStatic"})
     public String create() {
-        return "logins".equals(type) ? "logins" : Constants.FEEDBACK;
+        return "logins".equals(type) ? "logins" : 
+            ("participants".equals(type) ? "participants" :
+                Constants.FEEDBACK);
     }
 
     public String getResult() {
@@ -50,6 +55,10 @@ public class FeedbackAction {
 
     public List<String> getLogins() {
         return application.fechLoginBeginningBy(data);
+    }
+
+    public List<User> getParticipants() {
+        return application.fetchUsersBeginningByAndAddableToWorkout(data, workout);
     }
 
     private String convertDistance() {
@@ -101,5 +110,13 @@ public class FeedbackAction {
 
     public void setType(final String type) {
         this.type = type;
+    }
+
+    public long getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(final long workout) {
+        this.workout = workout;
     }
 }

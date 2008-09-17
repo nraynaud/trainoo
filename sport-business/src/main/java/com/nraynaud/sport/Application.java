@@ -45,6 +45,8 @@ public interface Application extends UserStore {
                                         final Long aboutWorkout) throws UserNotFoundException, WorkoutNotFoundException;
 
     List<String> fechLoginBeginningBy(final String prefix);
+    
+    List<User> fetchUsersBeginningByAndAddableToWorkout(final String prefix, final long id);
 
     void updateBib(final User user, final String town, final String description, final String webSite);
 

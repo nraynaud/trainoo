@@ -1228,17 +1228,8 @@ form.workoutEditor {
 
 /* --- participants list editor ---*/
 
-#participant_button {
-    float: right;
-    width: 20%;
-}
-
-#participant_input {
-    width: 76%;
-}
-
-.editingParticipantsList .userList {
-    clear: both;
+#participant_choices span.id {
+    display: none;
 }
 
 .editingParticipantsList .editButton ,

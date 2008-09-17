@@ -13,7 +13,11 @@ function closeParticipantsListEditor(buttonList, content) {
 }
 
 function removeParticipant(element) {
-    Element.remove(element);
+    var links = element.select('a');
+    for (var i=0; i<links.length; ++i) {
+        links[i].observe('click', function(evt) { Event.stop(evt); });
+    }
+    element.fade({'duration': 0.4});
 }
 
 function addParticipant(name, id, destination) {
@@ -28,6 +32,7 @@ function addParticipant(name, id, destination) {
     link.insert(name);
     block.insert(link);
     block.insert(remover);
+    block.setOpacity(0);
     var elements = destination.select('.userList li');
     for (var i=0; i<elements.length; ++i) {
         if (elements[i].select('a')[0].innerHTML.toLowerCase() > name.toLowerCase()) {
@@ -37,9 +42,27 @@ function addParticipant(name, id, destination) {
             elements[i].insert({'after': block});
         }
     }
+    block.appear({'duration': 0.4});
 }
 
+var ParticipantAutocompleter = Class.create(Ajax.Autocompleter, {
+
+    markPrevious: function($super) {
+        if (this.index > 0) this.index--;
+        else this.index = this.entryCount-1;
+        this.element.value = this.getEntry(this.index).select('span.name')[0].innerHTML;
+    },
+
+    markNext : function($super) {
+        if (this.index < this.entryCount-1) this.index++;
+        else this.index = 0;
+        this.element.value = this.getEntry(this.index).select('span.name')[0].innerHTML;
+    }
+});
+
 function installParticipantsListEditor() {
+    var userName = $('sidebar').select('h2')[0].innerHTML.strip().toLowerCase();
+    var workoutId = parseInt($('workoutBlock').select('input[name=id]')[0].value, 10);
     var button = $('editParticipantsList');
     var content = $('participantsList');
     if (button && content) {
@@ -60,30 +83,23 @@ function installParticipantsListEditor() {
             new Element('div', {'id': 'participant_choices', 'class': 'autocomplete'})});
         content.insert({'top':
             new Element('input', {'class': 'text', 'id': 'participant_input'})});
-        content.insert({'top':
-            new Element('input', {'type': 'button', 'class': 'button', 'id': 'participant_button', 'value':'Ajouter'})});
-        new Ajax.Autocompleter('participant_input', 'participant_choices', '/feedback',
-            {paramName: 'data', minChars: 1, parameters: 'type=logins'});
-        $('participant_button').observe('click', function(evt) {
-            addParticipant($('participant_input').value, 42, content);
-            Event.stop(evt);
-        });
-        $('participant_input').observe('keypress', function(evt) {
-            if (Event.KEY_RETURN == evt.keyCode) {
-                addParticipant($('participant_input').value, 42, content);
-                Event.stop(evt);    
-            }
-        });
+        new ParticipantAutocompleter('participant_input', 'participant_choices', '/feedback',
+            {paramName: 'data', minChars: 1, parameters: 'type=participants&workout='+workoutId, updateElement: function(elt) {
+                addParticipant(elt.select('span.name')[0].innerHTML, elt.select('span.id')[0].innerHTML, content);
+                $('participant_input').value = '';
+            }});
         elements = content.select('.userList li');
         for (var i=0; i<elements.length; ++i) {
             (function (current) {
-                var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
-                    .insert('Supprimer');
-                remover.observe('click', function(evt) {
-                    removeParticipant(current);
-                    Event.stop(evt);
-                });
-                current.insert({'bottom': remover});
+                if (current.select('a')[0].innerHTML.strip().toLowerCase() != userName) {
+                    var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
+                        .insert('Supprimer');
+                    remover.observe('click', function(evt) {
+                        removeParticipant(current);
+                        Event.stop(evt);
+                    });
+                    current.insert({'bottom': remover});
+                }
             })(elements[i]);
         }
     }
