@@ -68,6 +68,12 @@ function installParticipantsListEditor() {
             addParticipant($('participant_input').value, 42, content);
             Event.stop(evt);
         });
+        $('participant_input').observe('keypress', function(evt) {
+            if (Event.KEY_RETURN == evt.keyCode) {
+                addParticipant($('participant_input').value, 42, content);
+                Event.stop(evt);    
+            }
+        });
         elements = content.select('.userList li');
         for (var i=0; i<elements.length; ++i) {
             (function (current) {
