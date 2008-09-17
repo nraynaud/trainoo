@@ -3,6 +3,8 @@ function openParticipantsListEditor(buttonList, content) {
     content.addClassName('editingParticipantsList');
     buttonList.removeClassName('notEditingParticipantsList');
     content.removeClassName('notEditingParticipantsList');
+    $('participant_input').value = '';
+    $('participant_input').focus();
 }
 
 function closeParticipantsListEditor(buttonList, content) {
@@ -50,12 +52,23 @@ var ParticipantAutocompleter = Class.create(Ajax.Autocompleter, {
     markPrevious: function($super) {
         if (this.index > 0) this.index--;
         else this.index = this.entryCount-1;
+        this.showCurrentEntry();
         this.element.value = this.getEntry(this.index).select('span.name')[0].innerHTML;
+    },
+
+    showCurrentEntry: function() {
+        var entry = this.getEntry(this.index);
+        if (entry.offsetTop < this.update.scrollTop) {
+            this.update.scrollTop = entry.offsetTop;
+        } else if (entry.offsetTop + entry.getHeight() > this.update.scrollTop + this.update.getHeight()) {
+            this.update.scrollTop = entry.offsetTop - this.update.getHeight() + entry.getHeight();
+        }
     },
 
     markNext : function($super) {
         if (this.index < this.entryCount-1) this.index++;
         else this.index = 0;
+        this.showCurrentEntry();
         this.element.value = this.getEntry(this.index).select('span.name')[0].innerHTML;
     }
 });
