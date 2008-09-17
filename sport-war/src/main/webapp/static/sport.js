@@ -1,3 +1,90 @@
+function openParticipantsListEditor(buttonList, content) {
+    buttonList.addClassName('editingParticipantsList');
+    content.addClassName('editingParticipantsList');
+    buttonList.removeClassName('notEditingParticipantsList');
+    content.removeClassName('notEditingParticipantsList');
+}
+
+function closeParticipantsListEditor(buttonList, content) {
+    buttonList.addClassName('notEditingParticipantsList');
+    content.addClassName('notEditingParticipantsList');
+    buttonList.removeClassName('editingParticipantsList');
+    content.removeClassName('editingParticipantsList');
+}
+
+function removeParticipant(element) {
+    Element.remove(element);
+}
+
+function addParticipant(name, id, destination) {
+    var block = new Element('li');
+    var link = new Element('a', {'href':'/bib/?id='+id, 'title':'Voir le dossard de '+name});
+    var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
+        .insert('Supprimer');
+    remover.observe('click', function(evt) {
+        removeParticipant(block);
+        Event.stop(evt);
+    });
+    link.insert(name);
+    block.insert(link);
+    block.insert(remover);
+    var elements = destination.select('.userList li');
+    for (var i=0; i<elements.length; ++i) {
+        if (elements[i].select('a')[0].innerHTML.toLowerCase() > name.toLowerCase()) {
+            elements[i].insert({'before': block});
+            break;
+        } else if (i == elements.length - 1) {
+            elements[i].insert({'after': block});
+        }
+    }
+}
+
+function installParticipantsListEditor() {
+    var button = $('editParticipantsList');
+    var content = $('participantsList');
+    if (button && content) {
+        closeParticipantsListEditor(button.up(), content);
+        button.observe('click', function(evt) {
+            openParticipantsListEditor(button.up(), content);
+            Event.stop(evt);
+        });
+        var applyButton =
+            new Element('a', {'href':'#', 'title': 'Terminer', 'class':'button applyButton verboseButton'})
+                .insert('Terminer');
+        applyButton.observe('click', function(evt) {
+            closeParticipantsListEditor(button.up(), content);
+            Event.stop(evt);
+        });
+        button.insert({'after': applyButton});
+        content.insert({'top':
+            new Element('div', {'id': 'participant_choices', 'class': 'autocomplete'})});
+        content.insert({'top':
+            new Element('input', {'class': 'text', 'id': 'participant_input'})});
+        content.insert({'top':
+            new Element('input', {'type': 'button', 'class': 'button', 'id': 'participant_button', 'value':'Ajouter'})});
+        new Ajax.Autocompleter('participant_input', 'participant_choices', '/feedback',
+            {paramName: 'data', minChars: 1, parameters: 'type=logins'});
+        $('participant_button').observe('click', function(evt) {
+            addParticipant($('participant_input').value, 42, content);
+            Event.stop(evt);
+        });
+        elements = content.select('.userList li');
+        for (var i=0; i<elements.length; ++i) {
+            (function (current) {
+                var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
+                    .insert('Supprimer');
+                remover.observe('click', function(evt) {
+                    removeParticipant(current);
+                    Event.stop(evt);
+                });
+                current.insert({'bottom': remover});
+            })(elements[i]);
+        }
+    }
+}
+
+document.observe("dom:loaded", installParticipantsListEditor);
+
 var oldValue = ''
 function feedback(field_name, val)
 {

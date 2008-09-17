@@ -1047,7 +1047,6 @@ ul.userList li {
     _display: inline;
     list-style-type: none;
     margin: 6px;
-
 }
 
 ul.userList li a {
@@ -1225,4 +1224,41 @@ form.workoutEditor {
 .aboutBlock {
     width: 80%;
     margin: auto;
+}
+
+/* --- participants list editor ---*/
+
+#participant_button {
+    float: right;
+    width: 20%;
+}
+
+#participant_input {
+    width: 76%;
+}
+
+.editingParticipantsList .userList {
+    clear: both;
+}
+
+.editingParticipantsList .editButton ,
+.notEditingParticipantsList .applyButton ,
+.notEditingParticipantsList input ,
+.notEditingParticipantsList .remover {
+    display: none;
+}
+
+.editingParticipantsList ul.userList li a.remover {
+    margin-top: -60px;
+    padding: 46px 5px 0 5px;
+    height: 14px;
+    background: transparent url( dossard.png ) no-repeat -90px 0;
+    color: #fff;
+    font-style: normal;
+    position: relative;
+    z-index: 1;
+}
+
+.editingParticipantsList ul.userList li a.remover:hover {
+    background-position: -180px 0;
 }

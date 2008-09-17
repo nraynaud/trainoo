@@ -105,14 +105,15 @@
         <span class="buttonList">
             <%if (isCurrentUser) {%>
             <a href="<%=createUrl("/workout", "participants", "id", workout.getId().toString())%>"
-               title="Ajouter des participants" class="button editButton">Ajouter des participants</a>
+               title="Ajouter des participants" class="button editButton"
+               id="editParticipantsList">Ajouter des participants</a>
             <%}%>
         </span>
         Participants
     </h2>
 
     <div class="block userListBlock">
-        <div class="content">
+        <div class="content" id="participantsList">
             <%call(pageContext, "userListBlock.jsp", workout.getParticipants());%>
         </div>
     </div>
