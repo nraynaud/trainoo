@@ -4,6 +4,7 @@
 <%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
 <%@ page import="com.nraynaud.sport.web.view.DataHelper" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
+<%@ page import="static com.nraynaud.sport.Helper.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="static com.nraynaud.sport.web.DateHelper.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -20,6 +21,16 @@
 %>
 <p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"
                 showTitleInPage="false"/>
+<script type="text/javascript">
+    Trainoo.isWorkout = true;
+    Trainoo.workout = {
+        id :<%=workout.getId()%>,
+        runner : {
+            id : <%=workout.getUser().getId()%>,
+            name : '<%=escapedForJavascript(workout.getUser().getName().nonEscaped())%>'
+        }
+    };
+</script>
 <h1><%=bibLink(runner, 15)%>&nbsp;: <%=workout.getDiscipline()%> - <%=printDate("EEEE dd MMMM",
         workout.getDate())%>
 </h1>

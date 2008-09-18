@@ -112,10 +112,10 @@ public interface Application extends UserStore {
     void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
             AccessDeniedException;
 
-    void addWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
+    void addWorkoutParticipants(final User user, final Long workoutId, final Long... participants) throws
             AccessDeniedException;
 
-    void removeWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
+    void removeWorkoutParticipants(final User user, final Long workoutId, final Long... participants) throws
             AccessDeniedException;
 
     User createUser(String login, String password) throws NameClashException;

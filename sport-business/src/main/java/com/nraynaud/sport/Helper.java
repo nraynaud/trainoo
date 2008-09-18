@@ -16,6 +16,58 @@ public class Helper {
         return str.toString();
     }
 
+    public static String escapedForJavascript(final String string) {
+        final String s = string != null && !"".equals(string) ? string : "";
+        final StringBuilder str = new StringBuilder();
+        escapeJavascript(s, str);
+        return str.toString();
+    }
+
+    private static String hexify(final char c) {
+        final int a = c % 16;
+        final int b = (c - a) / 16;
+        return "" + HEX_CHARS.charAt(b) + HEX_CHARS.charAt(a);
+    }
+
+    public static void escapeJavascript(final String input, final StringBuilder collector) {
+        for (int j=0; j < input.length(); j++) {
+            final char c = input.charAt(j);
+            if (c < '\040') {
+                collector.append("\\x").append(hexify(c));
+            } else switch (c) {
+                case '\\':
+                    collector.append("\\x5C");
+                    break;
+                case '\'':
+                    collector.append("\\x27");
+                    break;
+                case '"':
+                    collector.append("\\x22");
+                    break;
+                case '>':
+                    collector.append("\\x3E");
+                    break;
+                case '<':
+                    collector.append("\\x3C");
+                    break;
+                case '&':
+                    collector.append("\\x26");
+                    break;
+                case '=':
+                    collector.append("\\x3D");
+                    break;
+                case '-':
+                    collector.append("\\x2D");
+                    break;
+                case ';':
+                    collector.append("\\x3B");
+                    break;
+                default:
+                    collector.append(c);
+            }
+        }
+    }
+
     public static void escape(final String input, final StringBuilder collector) {
         for (int j = 0; j < input.length(); j++) {
             final char c = input.charAt(j);
@@ -23,6 +75,9 @@ public class Helper {
             // encode standard ASCII characters into HTML entities where needed
             if (c < '\200') {
                 switch (c) {
+                    case '\'':
+                        collector.append("&#39;");
+                        break;
                     case '"':
                         collector.append("&quot;");
                         break;
@@ -41,10 +96,7 @@ public class Helper {
             }
             // encode 'ugly' characters (ie Word "curvy" quotes etc)
             else if (c < '\377') {
-                final int a = c % 16;
-                final int b = (c - a) / 16;
-                final String hex = "" + HEX_CHARS.charAt(b) + HEX_CHARS.charAt(a);
-                collector.append("&#x").append(hex).append(";");
+                collector.append("&#x").append(hexify(c)).append(";");
             }
             //add other characters back in - to handle charactersets
             //other than ascii

@@ -1,6 +1,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.nraynaud.sport.data.NewMessageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.Helper.*" %>
 <%@ page import="com.nraynaud.sport.web.DateHelper" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -28,6 +29,18 @@
             out.append(header);
         }
     %>
+    <script type="text/javascript">
+        Trainoo = {
+            isLogged : <%=isLogged()?"true":"false"%>
+            <% if (isLogged()) { %>
+            ,user : {
+                id : <%=currentUser().getId()%>,
+                name : '<%=escapedForJavascript(currentUser().getName().nonEscaped())%>'
+            }
+            <% } %>
+            , isWorkout : false
+        }
+    </script>
 </head>
 <body class="<%= isLogged() ? "isLogged" : ""%>">
     <div id="body">

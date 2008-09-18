@@ -19,7 +19,7 @@ import org.apache.struts2.dispatcher.ServletDispatcherResult;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class AddParticipantAction extends DefaultAction {
     public Long id;
-    public String participant;
+    public Long participantId;
     private String result;
 
     public AddParticipantAction(final Application application) {
@@ -33,7 +33,7 @@ public class AddParticipantAction extends DefaultAction {
     @PostOnly
     public String create() {
         try {
-            application.addWorkoutParticipants(getUser(), id, new String[]{participant});
+            application.addWorkoutParticipants(getUser(), id, participantId);
             result = "success";
             return SUCCESS;
         } catch (AccessDeniedException e) {

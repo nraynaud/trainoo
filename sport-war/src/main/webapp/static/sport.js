@@ -78,7 +78,13 @@ Element.addMethods({
 		obj.right = obj.left + obj.width;
 		obj.bottom = obj.top + obj.height;
 		return obj;
-	}
+	},
+
+    getInnerText: function(element) {
+        element = $(element);
+        return element.innerText && !window.opera ? element.innerText
+            : element.innerHTML.stripScripts().unescapeHTML().replace(/[\n\r\s]+/g, ' ');
+    }
 
 });
 
@@ -120,12 +126,12 @@ function closeParticipantsListEditor(buttonList, content) {
     document.body.addClassName('notEditingParticipantsList');
 }
 
-function removeParticipant(element, name, id) {
+function removeParticipant(element, userId, workoutId) {
     new Ajax.Request('/workout/removeParticipant', {
         'method': 'post',
         'parameters': {
-            'participant': name,
-            'id': id
+            'participantId': userId,
+            'id': workoutId
         }
     });
     var links = element.select('a');
@@ -135,20 +141,21 @@ function removeParticipant(element, name, id) {
     element.fade({'duration': 0.4});
 }
 
-function addParticipant(name, id, destination) {
+function addParticipant(userName, userId, workoutId, destination) {
     new Ajax.Request('/workout/addParticipant', {
         'method': 'post',
         'parameters': {
-            'participant': name,
-            'id': id
+            'participantId': userId,
+            'id': workoutId
         }
     });
     var block = new Element('li');
-    var link = new Element('a', {'href':'/bib/?id='+id, 'title':'Voir le dossard de '+name});
+    var link = new Element('a', {'href':'/bib/?id='+userId, 'title':'Voir le dossard de '+userName})
+        .insert(userName);
     var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
         .insert('Supprimer');
     remover.observe('click', function(evt) {
-        removeParticipant(block, name, id);
+        removeParticipant(block, userId, workoutId);
         Event.stop(evt);
     });
     link.insert(name);
@@ -157,7 +164,7 @@ function addParticipant(name, id, destination) {
     block.setOpacity(0);
     var elements = destination.select('.userList li');
     for (var i=0; i<elements.length; ++i) {
-        if (elements[i].select('a')[0].innerHTML.toLowerCase() > name.toLowerCase()) {
+        if (elements[i].select('a')[0].getInnerText().toLowerCase() > userName.toLowerCase()) {
             elements[i].insert({'before': block});
             break;
         } else if (i == elements.length - 1) {
@@ -173,7 +180,7 @@ var ParticipantAutocompleter = Class.create(Ajax.Autocompleter, {
         if (this.index > 0) this.index--;
         else this.index = this.entryCount-1;
         this.showCurrentEntry();
-        this.element.value = this.getEntry(this.index).select('span.name')[0].innerHTML;
+        this.element.value = this.getEntry(this.index).select('span.name')[0].getInnerText();
     },
 
     showCurrentEntry: function() {
@@ -189,13 +196,12 @@ var ParticipantAutocompleter = Class.create(Ajax.Autocompleter, {
         if (this.index < this.entryCount-1) this.index++;
         else this.index = 0;
         this.showCurrentEntry();
-        this.element.value = this.getEntry(this.index).select('span.name')[0].innerHTML;
+        this.element.value = this.getEntry(this.index).select('span.name')[0].getInnerText();
     }
 });
 
 function installParticipantsListEditor() {
-    var userName = $('sidebar').select('h2')[0].innerHTML.strip().toLowerCase();
-    var workoutId = parseInt($('workoutBlock').select('input[name=id]')[0].value, 10);
+    if (!Trainoo.isLogged || !Trainoo.isWorkout) return;
     var button = $('editParticipantsList');
     var content = $('participantsList');
     if (button && content) {
@@ -218,18 +224,21 @@ function installParticipantsListEditor() {
         content.insert({'top':
             new Element('input', {'class': 'text', 'id': 'participant_input'})});
         new ParticipantAutocompleter('participant_input', 'participant_choices', '/feedback',
-            {paramName: 'data', minChars: 1, parameters: 'type=participants&workout='+workoutId, updateElement: function(elt) {
-                addParticipant(elt.select('span.name')[0].innerHTML.strip(), workoutId, content);
+            {paramName: 'data', minChars: 1, parameters: 'type=participants&workout='+Trainoo.workout.id, updateElement: function(elt) {
+                var userName = elt.select('span.name')[0].getInnerText().strip();
+                var userId = parseInt(elt.select('span.id')[0].getInnerText().strip(), 10);
+                addParticipant(userName, userId, Trainoo.workout.id, content);
                 $('participant_input').value = '';
             }});
         elements = content.select('.userList li');
         for (var i=0; i<elements.length; ++i) {
             (function (current) {
-                if (current.select('a')[0].innerHTML.strip().toLowerCase() != userName) {
+                var currentId = parseInt(current.select('a')[0].href.split('id=')[1].split('&')[0], 10);
+                if (currentId != Trainoo.user.id) {
                     var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
                         .insert('Supprimer');
                     remover.observe('click', function(evt) {
-                        removeParticipant(current, current.select('a')[0].innerHTML.strip().toLowerCase(), workoutId);
+                        removeParticipant(current, currentId, Trainoo.workout.id);
                         Event.stop(evt);
                     });
                     current.insert({'bottom': remover});
