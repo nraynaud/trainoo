@@ -14,7 +14,14 @@ function closeParticipantsListEditor(buttonList, content) {
     content.removeClassName('editingParticipantsList');
 }
 
-function removeParticipant(element) {
+function removeParticipant(element, name, id) {
+    new Ajax.Request('/workout/removeParticipant', {
+        'method': 'post',
+        'parameters': {
+            'participant': name,
+            'id': id
+        }
+    });
     var links = element.select('a');
     for (var i=0; i<links.length; ++i) {
         links[i].observe('click', function(evt) { Event.stop(evt); });
@@ -23,12 +30,19 @@ function removeParticipant(element) {
 }
 
 function addParticipant(name, id, destination) {
+    new Ajax.Request('/workout/addParticipant', {
+        'method': 'post',
+        'parameters': {
+            'participant': name,
+            'id': id
+        }
+    });
     var block = new Element('li');
     var link = new Element('a', {'href':'/bib/?id='+id, 'title':'Voir le dossard de '+name});
     var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
         .insert('Supprimer');
     remover.observe('click', function(evt) {
-        removeParticipant(block);
+        removeParticipant(block, name, id);
         Event.stop(evt);
     });
     link.insert(name);
@@ -98,7 +112,7 @@ function installParticipantsListEditor() {
             new Element('input', {'class': 'text', 'id': 'participant_input'})});
         new ParticipantAutocompleter('participant_input', 'participant_choices', '/feedback',
             {paramName: 'data', minChars: 1, parameters: 'type=participants&workout='+workoutId, updateElement: function(elt) {
-                addParticipant(elt.select('span.name')[0].innerHTML, elt.select('span.id')[0].innerHTML, content);
+                addParticipant(elt.select('span.name')[0].innerHTML.strip(), workoutId, content);
                 $('participant_input').value = '';
             }});
         elements = content.select('.userList li');
@@ -108,7 +122,7 @@ function installParticipantsListEditor() {
                     var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
                         .insert('Supprimer');
                     remover.observe('click', function(evt) {
-                        removeParticipant(current);
+                        removeParticipant(current, current.select('a')[0].innerHTML.strip().toLowerCase(), workoutId);
                         Event.stop(evt);
                     });
                     current.insert({'bottom': remover});

@@ -512,7 +512,7 @@ public class HibernateApplication implements Application {
         final SQLHelper.Predicate namePred = createInListPredicate("NAME", participants, "participant");
         final Query query = entityManager.createNativeQuery(
                 "insert INTO WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE"
-                        + " id not in (select user_id from workout_user where workout_id != :workoutId) and "
+                        + " ID not in (select USER_ID from WORKOUT_USER where WORKOUT_ID = :workoutId) and "
                         + namePred);
         query.setParameter("workoutId", workoutId);
         namePred.bindVariables(query);
@@ -522,8 +522,8 @@ public class HibernateApplication implements Application {
     private Query createParticipantsDeleteQuery(final Long workoutId, final Set<String> participants) {
         final SQLHelper.Predicate namePred = createInListPredicate("NAME", participants, "participant");
         final Query query = entityManager.createNativeQuery(
-                "delete FROM WORKOUT_USER (USER_ID, WORKOUT_ID) WHERE WORKOUT_ID = :workoutId AND USER_ID IN "
-                        + " (SELECT ID, :workoutId FROM USERS WHERE " + namePred + ")");
+                "delete FROM WORKOUT_USER WHERE WORKOUT_ID = :workoutId AND USER_ID IN "
+                        + " (SELECT ID FROM USERS WHERE " + namePred + ")");
         query.setParameter("workoutId", workoutId);
         namePred.bindVariables(query);
         return query;
