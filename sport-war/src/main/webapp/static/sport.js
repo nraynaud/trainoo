@@ -1,17 +1,123 @@
+var Browser = {Engine: {name: 'unknown', version: ''}};
+
+if (window.opera) Browser.Engine = {name: 'presto', version: (document.getElementsByClassName) ? 950 : 925};
+else if (window.ActiveXObject) Browser.Engine = {name: 'trident', version: (window.XMLHttpRequest) ? 5 : 4};
+else if (!navigator.taintEnabled) Browser.Engine = {name: 'webkit', version: (Browser.Features.xpath) ? 420 : 419};
+else if (document.getBoxObjectFor != null) Browser.Engine = {name: 'gecko', version: (document.getElementsByClassName) ? 19 : 18};
+Browser.Engine[Browser.Engine.name] = Browser.Engine[Browser.Engine.name + Browser.Engine.version] = true;
+
+Element.addMethods({
+    getComputedStyle: function(elt, property){
+		if (elt.currentStyle) return elt.currentStyle[property.camelCase()];
+        var win = elt.ownerDocument.defaultView || elt.ownerDocument.parentWindow;
+		var computed = win.getComputedStyle(elt, null);
+		return (computed) ? computed.getPropertyValue([property.dasherize()]) : null;
+	},
+
+    getScrolls: function(elt){
+		var element = elt, position = {x: 0, y: 0};
+		while (element && !isBody(element)){
+			position.x += element.scrollLeft;
+			position.y += element.scrollTop;
+			element = element.parentNode;
+		}
+		return position;
+	},
+
+
+    getOffsets: function(elt){
+		var element =elt, position = {x: 0, y: 0};
+		if (isBody(elt)) return position;
+
+		while (element && !isBody(element)){
+			position.x += element.offsetLeft;
+			position.y += element.offsetTop;
+
+			if (Browser.Engine.gecko){
+				if (!borderBox(element)){
+					position.x += leftBorder(element);
+					position.y += topBorder(element);
+				}
+				var parent = element.parentNode;
+				if (parent && styleString(parent, 'overflow') != 'visible'){
+					position.x += leftBorder(parent);
+					position.y += topBorder(parent);
+				}
+			} else if (element != elt && (Browser.Engine.trident || Browser.Engine.webkit)){
+				position.x += leftBorder(element);
+				position.y += topBorder(element);
+			}
+
+			element = element.offsetParent;
+			if (Browser.Engine.trident){
+				while (element && !element.currentStyle.hasLayout) element = element.offsetParent;
+			}
+		}
+		if (Browser.Engine.gecko && !borderBox(elt)){
+			position.x -= leftBorder(elt);
+			position.y -= topBorder(elt);
+		}
+		return position;
+	},
+
+    getPosition: function(elt, relative){
+		if (isBody(elt)) return {x: 0, y: 0};
+		var offset = elt.getOffsets(), scroll = elt.getScrolls();
+		var position = {x: offset.x - scroll.x, y: offset.y - scroll.y};
+		var relativePosition = (relative && (relative = $(relative))) ? relative.getPosition() : {x: 0, y: 0};
+		return {x: position.x - relativePosition.x, y: position.y - relativePosition.y};
+	},
+
+    getCoordinates: function(elt, relative){
+		if (isBody(elt)) {
+            var win = elt.ownerDocument.defaultView || elt.ownerDocument.parentWindow;
+            return win.getCoordinates();
+        }
+		var position = elt.getPosition(relative), size = {x: elt.offsetWidth, y: elt.offsetHeight};
+		var obj = {left: position.x, top: position.y, width: size.x, height: size.y};
+		obj.right = obj.left + obj.width;
+		obj.bottom = obj.top + obj.height;
+		return obj;
+	}
+
+});
+
+var styleString = Element.getComputedStyle;
+
+function styleNumber(element, style){
+	return parseInt(styleString(element, style), 10) || 0;
+};
+
+function borderBox(element){
+	return styleString(element, '-moz-box-sizing') == 'border-box';
+};
+
+function topBorder(element){
+	return styleNumber(element, 'border-top-width');
+};
+
+function leftBorder(element){
+	return styleNumber(element, 'border-left-width');
+};
+
+function isBody(element){
+	return (/^(?:body|html)$/i).test(element.tagName);
+};
+
 function openParticipantsListEditor(buttonList, content) {
-    buttonList.addClassName('editingParticipantsList');
-    content.addClassName('editingParticipantsList');
-    buttonList.removeClassName('notEditingParticipantsList');
-    content.removeClassName('notEditingParticipantsList');
+    document.body.addClassName('editingParticipantsList');
+    document.body.removeClassName('notEditingParticipantsList');
     $('participant_input').value = '';
     $('participant_input').focus();
+    var coords = $('participant_input').getCoordinates();
+    delete coords.right;
+    delete coords.bottom;
+    $('participant_choices').setStyle(coords);
 }
 
 function closeParticipantsListEditor(buttonList, content) {
-    buttonList.addClassName('notEditingParticipantsList');
-    content.addClassName('notEditingParticipantsList');
-    buttonList.removeClassName('editingParticipantsList');
-    content.removeClassName('editingParticipantsList');
+    document.body.removeClassName('editingParticipantsList');
+    document.body.addClassName('notEditingParticipantsList');
 }
 
 function removeParticipant(element, name, id) {
@@ -94,6 +200,7 @@ function installParticipantsListEditor() {
     var content = $('participantsList');
     if (button && content) {
         closeParticipantsListEditor(button.up(), content);
+        button.href = '#';
         button.observe('click', function(evt) {
             openParticipantsListEditor(button.up(), content);
             Event.stop(evt);
@@ -106,7 +213,7 @@ function installParticipantsListEditor() {
             Event.stop(evt);
         });
         button.insert({'after': applyButton});
-        content.insert({'top':
+        document.body.insert({'bottom':
             new Element('div', {'id': 'participant_choices', 'class': 'autocomplete'})});
         content.insert({'top':
             new Element('input', {'class': 'text', 'id': 'participant_input'})});

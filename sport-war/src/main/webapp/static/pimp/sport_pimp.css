@@ -1232,6 +1232,9 @@ form.workoutEditor {
     display: none;
 }
 
+#participant_choices {
+}
+
 .editingParticipantsList .editButton ,
 .notEditingParticipantsList .applyButton ,
 .notEditingParticipantsList input ,
@@ -1254,7 +1257,3 @@ form.workoutEditor {
     background-position: -180px 0;
 }
 
-.editingParticipantsList .autocomplete {
-    overflow: auto;
-    height: 66px;
-}
