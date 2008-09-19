@@ -12,8 +12,8 @@ public class SQLHelper {
     private SQLHelper() {
     }
 
-    public static Predicate createInListPredicate(final String leftPart, final Collection<String> values,
-                                                  final String variablePrefix) {
+    public static <T> Predicate createInListPredicate(final String leftPart, final Collection<T> values,
+                                                      final String variablePrefix) {
         if (values.size() == 1)
             return createEqualsPredicate(leftPart, values.iterator().next(), variablePrefix);
         final StringBuilder clause = new StringBuilder(20);
@@ -30,7 +30,7 @@ public class SQLHelper {
 
             public void bindVariables(final Query query) {
                 int i = 0;
-                for (final String value : values) {
+                for (final T value : values) {
                     query.setParameter(variablePrefix + i, value);
                     i++;
                 }
@@ -38,8 +38,8 @@ public class SQLHelper {
         };
     }
 
-    private static Predicate createEqualsPredicate(final String leftPart, final String value,
-                                                   final String variablePrefix) {
+    private static <T> Predicate createEqualsPredicate(final String leftPart, final T value,
+                                                       final String variablePrefix) {
         return new Predicate() {
             public String sql() {
                 return leftPart + " = :" + variablePrefix;
