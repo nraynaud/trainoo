@@ -963,11 +963,12 @@ input.submit:focus {
     _display: inline;
     clear: left;
     width: 49.9%;
+    height: 0.96em;
 
     text-align: right;
     font-size: 1.4287514em;
     line-height: 1.25;
-    margin-bottom: 14px;
+    margin-bottom: 0.56em;
 }
 
 .bibBlock dl dt {
@@ -999,6 +1000,7 @@ input.submit:focus {
     position: relative;
     top: -6px;
     margin-bottom: 1px;
+    height: 1.52em;
 }
 
 .workoutBlock .applyButton,
