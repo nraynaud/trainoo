@@ -45,7 +45,7 @@ public interface Application extends UserStore {
                                         final Long aboutWorkout) throws UserNotFoundException, WorkoutNotFoundException;
 
     List<String> fechLoginBeginningBy(final String prefix);
-    
+
     List<User> fetchUsersBeginningByAndAddableToWorkout(final String prefix, final long id);
 
     void updateBib(final User user, final String town, final String description, final String webSite);
@@ -71,8 +71,6 @@ public interface Application extends UserStore {
                                       final Date date,
                                       final Long topicId, final Topic.Kind topicKind) throws
             WorkoutNotFoundException;
-
-    Workout fetchWorkout(Long id) throws WorkoutNotFoundException;
 
     WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId, final int similarPage,
                                          final int lastWorkoutsPage, final int messagesStartIndex,
@@ -133,6 +131,12 @@ public interface Application extends UserStore {
                           String comment,
                           String nikePlusId);
 
+    /**
+     * executes the runnable under only one transaction.
+     * Usefull to do various action overt the application in one transaction
+     *
+     * @param runnable
+     */
     void execute(final Runnable runnable);
 
     void forgotPassword(final String email) throws UserNotFoundException, MailException;

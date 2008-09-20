@@ -27,26 +27,15 @@ public class HibernateApplication implements Application {
                                  final String discipline,
                                  final String comment,
                                  final String nikePlusId) {
-        if (nikePlusId != null) {
-            final Query query = entityManager.createNativeQuery("select ID from WORKOUTS where NIKEPLUSID=:nikeId");
-            query.setParameter("nikeId", nikePlusId);
-            final List list = query.getResultList();
-            if (!list.isEmpty()) {
-                final Long workoutId = ((Number) list.get(0)).longValue();
-                return entityManager.find(WorkoutImpl.class, workoutId);
-            }
-        }
-        final Workout workout = new WorkoutImpl(user, date, duration, distance, energy, discipline, comment,
-                nikePlusId);
-        entityManager.persist(workout);
-        try {
-            setWorkoutParticipants(user, workout.getId(), new String[0]);
-        } catch (AccessDeniedException e) {
-            throw new RuntimeException(e);
-        }
-        return workout;
+        return workoutStore.createWorkout(date, user, duration, distance, energy, discipline, comment, nikePlusId);
     }
 
+    /**
+     * executes the runnable under only one transaction.
+     * Usefull to do various action overt the application in one transaction
+     *
+     * @param runnable
+     */
     public void execute(final Runnable runnable) {
         runnable.run();
     }
@@ -155,24 +144,14 @@ public class HibernateApplication implements Application {
 
     public Workout fetchWorkoutForEdition(final Long id, final User user, final boolean willWrite) throws
             WorkoutNotFoundException, AccessDeniedException {
-        final Workout workout = fetchWorkout(id);
-        if (willWrite)
-            checkEditionGrant(workout, user);
-        return workout;
-    }
-
-    public Workout fetchWorkout(final Long id) throws WorkoutNotFoundException {
-        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, id);
-        if (workout == null)
-            throw new WorkoutNotFoundException();
-        return workout;
+        return workoutStore.fetchWorkoutForEdition(id, user, willWrite);
     }
 
     public WorkoutPageData fetchWorkoutPageData(final User currentUser, final Long workoutId,
                                                 final int similarPage, final int workoutStartIndex,
                                                 final int messagesStartIndex,
                                                 final int privateMessagesPageIndex) throws WorkoutNotFoundException {
-        final Workout workout = fetchWorkout(workoutId);
+        final Workout workout = workoutStore.fetchWorkout(workoutId);
         final PaginatedCollection<PrivateMessage> emptyPage = emptyPage();
         final PaginatedCollection<PrivateMessage> privateConversation = currentUser
                 == null ? emptyPage : fetchPrivateConversation(currentUser, workout.getUser().getId(),
@@ -183,66 +162,8 @@ public class HibernateApplication implements Application {
                 privateConversation);
     }
 
-    private static class WhereFragment {
-        public final String wherePart;
-        public final Parameter[] parameters;
-
-        private WhereFragment(final String wherePart, final Parameter... parameters) {
-            this.wherePart = wherePart;
-            this.parameters = parameters;
-        }
-    }
-
-    private static class Parameter {
-        public final String name;
-        public final Object value;
-
-        private Parameter(final String name, final Object value) {
-            this.name = name;
-            this.value = value;
-        }
-    }
-
     private PaginatedCollection<Workout> getSimilarWorkouts(final Workout workout, final int similarPageIndex) {
-        final double precision = 0.1;
-        final double infCoeff = 1.0 - precision;
-        final double suppCoeff = 1.0 + precision;
-        final List<WhereFragment> clauses = new ArrayList<WhereFragment>(3);
-        if (workout.getDistance() != null) {
-            final double distance = workout.getDistance().doubleValue();
-            clauses.add(new WhereFragment("(w.distance between :minDist and :maxDist)",
-                    new Parameter("minDist", distance * infCoeff),
-                    new Parameter("maxDist", distance * suppCoeff)));
-        }
-        if (workout.getDuration() != null) {
-            final long duration = workout.getDuration().longValue();
-            clauses.add(new WhereFragment("(w.duration between :minDur and :maxDur)",
-                    new Parameter("minDur", (long) (duration * infCoeff)),
-                    new Parameter("maxDur", (long) (duration * suppCoeff))));
-        }
-        if (clauses.isEmpty())
-            return emptyPage();
-        final StringBuilder dynamicPart = new StringBuilder("(");
-        for (Iterator<WhereFragment> i = clauses.iterator(); i.hasNext();) {
-            final WhereFragment clause = i.next();
-            dynamicPart.append(clause.wherePart);
-            if (i.hasNext())
-                dynamicPart.append(" or ");
-        }
-        dynamicPart.append(')');
-        final Query query = query(
-                "select w from WorkoutImpl w where w.discipline=:discipline and w.id!=:selfId and w.user=:user and "
-                        + dynamicPart
-                        + " order by w.date desc, w.id desc");
-        query.setParameter("selfId", workout.getId());
-        query.setParameter("user", workout.getUser());
-        query.setParameter("discipline", workout.getDiscipline().nonEscaped());
-        for (final WhereFragment clause : clauses) {
-            for (final Parameter parameter : clause.parameters) {
-                query.setParameter(parameter.name, parameter.value);
-            }
-        }
-        return paginateQuery(10, similarPageIndex, query);
+        return workoutStore.getSimilarWorkouts(workout, similarPageIndex);
     }
 
     private PaginatedCollection<PublicMessage> fetchPublicMessages(final Topic.Kind kind, final Long id,
@@ -375,10 +296,6 @@ public class HibernateApplication implements Application {
         }
     }
 
-    private static <T> PaginatedCollection<T> emptyPage() {
-        return paginateList(0, 1, Collections.<T>emptyList());
-    }
-
     private PaginatedCollection<User> fetchGroupMembers(final Group group) {
         final String queryString = "select u from GroupImpl g inner join g.members u where g=:group order by u.name";
         final Query query = query(queryString);
@@ -465,17 +382,7 @@ public class HibernateApplication implements Application {
 
     public void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
             AccessDeniedException {
-        final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, workoutId);
-        if (!workout.getUser().equals(user))
-            throw new AccessDeniedException();
-        deleteParticipation(workoutId);
-        final Set<String> participantWithSelf = new HashSet<String>(Arrays.asList(participants));
-        participantWithSelf.add(user.getName().nonEscaped());
-        final Query query = createParticipantsInsertQuery(workoutId, participantWithSelf);
-        final int count = query.executeUpdate();
-        if (count != participantWithSelf.size())
-            throw new RuntimeException(
-                    " erreur : " + count + " lignes insérées au lieu de " + participants.length);
+        workoutStore.setWorkoutParticipants(user, workoutId, participants);
     }
 
     public void addWorkoutParticipants(final User user, final Long workoutId, final Long... participants) throws
@@ -499,15 +406,6 @@ public class HibernateApplication implements Application {
         query.executeUpdate();
     }
 
-    private Query createParticipantsInsertQuery(final Long workoutId, final Set<String> participants) {
-        final SQLHelper.Predicate namePred = createInListPredicate("NAME", participants, "participant");
-        final Query query = entityManager.createNativeQuery(
-                "insert INTO WORKOUT_USER (USER_ID, WORKOUT_ID) SELECT ID, :workoutId FROM USERS WHERE " + namePred);
-        query.setParameter("workoutId", workoutId);
-        namePred.bindVariables(query);
-        return query;
-    }
-
     private Query createParticipantsInsertUnionQuery(final Long workoutId, final Set<Long> participants) {
         final SQLHelper.Predicate listPred = createInListPredicate("ID", participants, "participant");
         final Query query = entityManager.createNativeQuery(
@@ -526,12 +424,6 @@ public class HibernateApplication implements Application {
         query.setParameter("workoutId", workoutId);
         idPred.bindVariables(query);
         return query;
-    }
-
-    private void deleteParticipation(final Long workoutId) {
-        final Query query = entityManager.createNativeQuery("delete from WORKOUT_USER where WORKOUT_ID=:workoutId");
-        query.setParameter("workoutId", workoutId);
-        query.executeUpdate();
     }
 
     public void updateWorkout(final Long id,
@@ -696,7 +588,7 @@ public class HibernateApplication implements Application {
 
     private PrivateMessage createMessage(final User sender, final User receiver, final String content, final Date date,
                                          final Long workoutId) throws WorkoutNotFoundException {
-        final Workout workout = workoutId != null ? fetchWorkout(workoutId) : null;
+        final Workout workout = workoutId != null ? workoutStore.fetchWorkout(workoutId) : null;
         final PrivateMessageImpl message = new PrivateMessageImpl(sender, receiver, date, content, workout);
         entityManager.persist(message);
         return message;
@@ -707,7 +599,7 @@ public class HibernateApplication implements Application {
             WorkoutNotFoundException {
         final PublicMessageImpl message;
         if (topicKind == Topic.Kind.WORKOUT) {
-            final Workout workout = fetchWorkout(topicId);
+            final Workout workout = workoutStore.fetchWorkout(topicId);
             message = new PublicMessageImpl(sender, date, content, workout);
         } else {
             final GroupImpl group = entityManager.find(GroupImpl.class, topicId);
@@ -778,7 +670,7 @@ public class HibernateApplication implements Application {
 
     public ConversationData fetchConvertationData(final User sender, final String receiver, final Long aboutWorkoutId,
                                                   final int startIndex) throws WorkoutNotFoundException {
-        final Workout aboutWorkout = aboutWorkoutId == null ? null : fetchWorkout(aboutWorkoutId);
+        final Workout aboutWorkout = aboutWorkoutId == null ? null : workoutStore.fetchWorkout(aboutWorkoutId);
         final ConversationData conversationData = new ConversationData(fetchConversation(sender, receiver, startIndex),
                 aboutWorkout, UserStringImpl.valueOf(receiver));
         for (final PrivateMessage privateMessage : conversationData.privateMessages) {
@@ -806,12 +698,6 @@ public class HibernateApplication implements Application {
         for (int i = 0; i < args.length; i += 2)
             query.setParameter((String) args[i], args[i + 1]);
         return paginateQuery(pageSize, startIndex, query);
-    }
-
-    private static <T> PaginatedCollection<T> paginateQuery(final int pageSize, final int startIndex,
-                                                            final Query query) {
-        final List list = paginatedQuery(pageSize, startIndex, query);
-        return paginateList(startIndex, pageSize, list);
     }
 
     public User createUser(final String login, final String password) throws NameClashException {
@@ -870,7 +756,6 @@ public class HibernateApplication implements Application {
     }
 
     public void checkEditionGrant(final Workout workout, final User user) throws AccessDeniedException {
-        if (!workout.getUser().equals(user))
-            throw new AccessDeniedException();
+        workoutStore.checkEditionGrant(workout, user);
     }
 }

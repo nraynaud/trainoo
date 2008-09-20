@@ -1,5 +1,7 @@
+package com.nraynaud.sport.hibernate;
+
 import com.nraynaud.sport.*;
-import com.nraynaud.sport.hibernate.HibernateApplication;
+import com.nraynaud.sport.mail.MailException;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -38,9 +40,39 @@ public class ApplicationTest {
 
     @Test
     public void testUserFetching() throws NameClashException, UserNotFoundException {
+        try {
+            application.fetchUser(Long.valueOf(344444));
+            fail("should not find user");
+        } catch (UserNotFoundException e) {
+            //ok
+        }
+        try {
+            application.fetchUser("inexistant");
+            fail("should not find user");
+        } catch (UserNotFoundException e) {
+            //ok
+        }
         final User user = application.createUser("lol", "pouet");
         final User user1 = application.fetchUser(user.getId());
         assertEquals(user, user1);
+        final User user2 = application.fetchUser("lol");
+        assertEquals(user, user2);
+    }
+
+    @Test
+    public void testRemeberToken() throws NameClashException, UserNotFoundException {
+        final User user = application.createUser("lol", "pouet");
+        final User user1 = application.authenticate("lol", "pouet", true);
+        final User user2 = application.fetchRememberedUser(user1.getRememberToken());
+        assertEquals(user, user2);
+        application.forgetMe(user);
+        assertNull(user.getRememberToken());
+        try {
+            application.fetchRememberedUser(user1.getRememberToken());
+            fail("user should be forgotten");
+        } catch (UserNotFoundException e) {
+            //ok user not found
+        }
     }
 
     @Test
@@ -64,9 +96,25 @@ public class ApplicationTest {
     public void testUserAuth() throws NameClashException {
         assertNull(application.authenticate("lolé", "pass+é", false));
         application.createUser("lolé", "pass+é");
-        assertNotNull(application.authenticate("lolé", "pass+é", false));
+        {
+            final User user = application.authenticate("lolé", "pass+é", false);
+            assertNotNull(user);
+            assertNull(user.getRememberToken());
+        }
+        {
+            final User user = application.authenticate("lolé", "pass+é", true);
+            assertNotNull(user.getRememberToken());
+        }
         assertNull(application.authenticate("lolé", "wrongpass", false));
         assertNull(application.authenticate("jeanLouis", "wrongpass", false));
+    }
+
+    @Test
+    public void testChangePassword() throws NameClashException, MailException {
+        final User user = application.createUser("lolé", "pass+é");
+        application.checkAndChangePassword(user, "pass+é", "newpass");
+        assertNull(application.authenticate("lolé", "pass+é", false));
+        assertEquals(user, application.authenticate("lolé", "newpass", false));
     }
 
     @Test

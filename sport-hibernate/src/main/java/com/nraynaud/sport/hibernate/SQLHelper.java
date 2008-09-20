@@ -99,6 +99,16 @@ public class SQLHelper {
         return query.getResultList();
     }
 
+    static <T> PaginatedCollection<T> emptyPage() {
+        return paginateList(0, 1, Collections.<T>emptyList());
+    }
+
+    static <T> PaginatedCollection<T> paginateQuery(final int pageSize, final int startIndex,
+                                                    final Query query) {
+        final List<T> list = paginatedQuery(pageSize, startIndex, query);
+        return paginateList(startIndex, pageSize, list);
+    }
+
     public abstract static class Predicate {
         public String toString() {
             return sql();
