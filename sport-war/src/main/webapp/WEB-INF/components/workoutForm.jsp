@@ -16,6 +16,7 @@
         <s:param value="'date'"/>
         <s:param value="'duration'"/>
         <s:param value="'distance'"/>
+        <s:param value="'energy'"/>
     </s:fielderror>
     <a name="workoutMessage"></a>
 

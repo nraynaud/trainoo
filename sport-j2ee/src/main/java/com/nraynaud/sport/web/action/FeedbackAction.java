@@ -16,9 +16,9 @@ import java.util.List;
 
 @Results({
         //the type avoids having the page decorated by application.jsp
-@Result(name = Constants.FEEDBACK, type = ServletDispatcherResult.class, value = "/WEB-INF/pages/feedback.jsp"),
-@Result(name = "logins", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/logins.jsp"),
-@Result(name = "participants", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/participants.jsp")
+    @Result(name = Constants.FEEDBACK, type = ServletDispatcherResult.class, value = "/WEB-INF/pages/feedback.jsp"),
+    @Result(name = "logins", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/logins.jsp"),
+    @Result(name = "participants", type = ServletDispatcherResult.class, value = "/WEB-INF/pages/participants.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class FeedbackAction {
@@ -35,9 +35,7 @@ public class FeedbackAction {
 
     @SuppressWarnings({"MethodMayBeStatic"})
     public String create() {
-        return "logins".equals(type) ? "logins" : 
-            ("participants".equals(type) ? "participants" :
-                Constants.FEEDBACK);
+        return "logins".equals(type) ? "logins" : "participants".equals(type) ? "participants" : Constants.FEEDBACK;
     }
 
     public String getResult() {
@@ -92,7 +90,7 @@ public class FeedbackAction {
             final Long energy = EnergyConverter.parseEnergy(data);
             return EnergyConverter.formatEnergy(energy) + "kcal";
         } catch (Exception e) {
-            return "L'énerge dépensée n'a pas été comprise.";
+            return "L'énergie dépensée n'a pas été comprise.";
         }
     }
 
