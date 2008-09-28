@@ -55,10 +55,7 @@
             </span>
             <dl>
                 <dt>Discipline :</dt>
-                <dd class="editable">
-                    <s:select id="discipline" list="{'course', 'vélo', 'VTT', 'marche', 'natation', 'roller'}"
-                              name="discipline" required="true" value="discipline"/>
-                </dd>
+                <dd class="editable"><%call(pageContext, "disciplineSelect.jsp");%></dd>
                 <dt>Date :</dt>
                 <dd class="editable">
                     <input id="date" class="text" name="date" value="<%=escapedOrNull(stringProperty("date"), "")%>"

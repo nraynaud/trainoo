@@ -22,7 +22,7 @@ small {
 }
 
 #contentWrapper {
-    background: #f7f7e2 url(background.png) repeat-y right top;
+    background: #f7f7e2 url( background.png ) repeat-y right top;
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
@@ -33,7 +33,7 @@ small {
 #alertBox {
     height: 29px;
     padding: 0 0 0 10px;
-    background: #f7f7e2 url(alertbox.png) no-repeat left top;
+    background: #f7f7e2 url( alertbox.png ) no-repeat left top;
     position: absolute;
     top: 10px;
     z-index: 2;
@@ -43,12 +43,11 @@ small {
 #alertBox a {
     display: block;
     padding: 7px 22px 7px 0;
-    background: #f7f7e2 url(alertbox.png) no-repeat right top;
+    background: #f7f7e2 url( alertbox.png ) no-repeat right top;
     font-weight: bold;
     color: #514621;
     text-decoration: none;
 }
-
 
 /* --- Header --- */
 
@@ -73,17 +72,17 @@ small {
 }
 
 #catchPhrase {
-	width: 300px;
+    width: 300px;
 
     font-weight: bold;
     font-style: italic;
     font-size: 16px;
     color: #f7f7e2;
     cursor: default;
-	text-align: center;
+    text-align: center;
     margin: 0 0 0 29px;
-	 position: relative;
-	 z-index: 1;
+    position: relative;
+    z-index: 1;
 }
 
 #menu {
@@ -103,7 +102,7 @@ small {
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
-	 white-space: nowrap;
+    white-space: nowrap;
 }
 
 #menu ul.primary {
@@ -192,7 +191,7 @@ small {
 #sidebar form ul li label {
     display: block;
     text-align: left;
-	 font-size: 0.92857143em;
+    font-size: 0.92857143em;
     color: #514621;
 }
 
@@ -203,8 +202,8 @@ small {
     height: 28px;
 }
 
-#searchBox input.text ,
-#sidebar ul li input.text {
+#searchBox input.text,
+    #sidebar ul li input.text {
     float: none;
     display: inline;
     border: 1px solid #e1dfbc !important;
@@ -213,17 +212,17 @@ small {
     margin: 0 !important;
     width: 100px !important;
     font-size: 0.85714286em !important;
-	vertical-align: middle !important;
+    vertical-align: middle !important;
 }
 
 #searchBox input.submit {
     width: 24px;
     height: 20px;
-	padding: 0 2px !important;
+    padding: 0 2px !important;
     margin: 0 !important;
-	vertical-align: middle !important;
+    vertical-align: middle !important;
     opacity: 0.01;
-    _filter: alpha(opacity=1);
+    _filter: alpha( opacity = 1 );
     background-color: red;
     font-size: 0 !important;
     border: 0 !important;
@@ -258,15 +257,15 @@ small {
 
 #sidebar ul li a {
     text-decoration: none;
-	 font-weight: bold;
-	 font-size: 0.92857143em;
+    font-weight: bold;
+    font-size: 0.92857143em;
     color: #514621;
     display: block;
     padding: 1px 1px;
 }
 
 #sidebar ul.secondary li a {
-	font-weight: normal;
+    font-weight: normal;
 }
 
 #adPlaceHolder {
@@ -319,7 +318,7 @@ small {
 }
 
 #contentDecor {
-    background: #869c34 url(content_top.png) no-repeat left 35px;
+    background: #869c34 url( content_top.png ) no-repeat left 35px;
     height: 50px;
     width: 100%;
     _padding: 0 22px;
@@ -336,7 +335,7 @@ small {
     cursor: default;
     position: relative;
     z-index: 1;
-    background: url(heading_background.png) no-repeat 20px 80%;
+    background: url( heading_background.png ) no-repeat 20px 80%;
 }
 
 #content h1 a {
@@ -428,135 +427,135 @@ small {
 /* --- workout sheet block --- */
 
 .sheetBlock {
-	padding: 0;
-	margin: 0 21px;
+    padding: 0;
+    margin: 0 21px;
 }
 
 .sheetBlock .header,
-.sheetBlock .secondaryHeader,
-.sheetBlock .content,
-.sheetBlock .footer,
-.sheetBlock .deco {
-	background: url( workoutsheet.png );
-	position: relative;
+    .sheetBlock .secondaryHeader,
+    .sheetBlock .content,
+    .sheetBlock .footer,
+    .sheetBlock .deco {
+    background: url( workoutsheet.png );
+    position: relative;
     overflow: hidden;
     zoom: 1;
 }
 
 .sheetBlock .deco {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
     _height: 1000px;
     _right: -1px;
 }
 
 .sheetBlock .header {
-	background-position: -12px 0;
-	height: 31px;
-	padding-left: 14px;
+    background-position: -12px 0;
+    height: 31px;
+    padding-left: 14px;
 }
 
 .sheetBlock .header .deco {
-	background-position: 100% 0;
-	width: 14px;
+    background-position: 100% 0;
+    width: 14px;
 }
 
 .sheetBlock .secondaryHeader {
-	background-position: -12px -95px;
-	height: 40px;
-	padding-left: 14px;
+    background-position: -12px -95px;
+    height: 40px;
+    padding-left: 14px;
 }
 
 .sheetBlock .secondaryHeader .deco {
-	background-position: 100% -95px;
-	width: 14px;
+    background-position: 100% -95px;
+    width: 14px;
 }
 
 .sheetBlock .content {
-	background-position: -6px 0;
-	padding: 0 6px;
-	_padding: 0 5px 0 6px;
+    background-position: -6px 0;
+    padding: 0 6px;
+    _padding: 0 5px 0 6px;
 }
 
 .sheetBlock .content .deco {
-	background-position: 0 0;
-	width: 6px;
+    background-position: 0 0;
+    width: 6px;
 }
 
 .sheetBlock .footer {
-	background-position: -12px -31px;
-	height: 19px;
-	padding-left: 14px;
+    background-position: -12px -31px;
+    height: 19px;
+    padding-left: 14px;
 }
 
 .sheetBlock .footer .deco {
-	background-position: 100% -31px;
-	width: 14px;
+    background-position: 100% -31px;
+    width: 14px;
 }
 
 .sheetBlock .pagination {
-	background-color: #f7f7e2;
+    background-color: #f7f7e2;
     zoom: 1;
 }
 
 .sheetBlock .paginationPrevious,
-.sheetBlock .paginationNext {
-	margin: 0;
-	padding: 8px 12px;
+    .sheetBlock .paginationNext {
+    margin: 0;
+    padding: 8px 12px;
 }
 
 .sheetBlock .header h3 {
-   font-size: 1.2857143em;
-	font-weight: bold;
-	padding-top: 5px;
+    font-size: 1.2857143em;
+    font-weight: bold;
+    padding-top: 5px;
 }
 
 .sheetBlock .secondaryHeader h3 {
-   font-size: 1.2857143em;
-	font-weight: bold;
-	padding-top: 14px;
+    font-size: 1.2857143em;
+    font-weight: bold;
+    padding-top: 14px;
 }
 
 .sheetBlock .header .disciplineList li.label {
-	padding: 0;
-	font-weight: bold;
+    padding: 0;
+    font-weight: bold;
 }
 
 .sheetBlock .header .disciplineList li {
-	float: left;
-	padding-left: 16px;
-	background-position: -12px -64px;
+    float: left;
+    padding-left: 16px;
+    background-position: -12px -64px;
 }
 
 .sheetBlock .header .disciplineList li a {
-	display: block;
-	height: 31px;
-	line-height: 28px;
-	background-position: 100% -64px;
-	text-decoration: none;
-	color: #403615;
+    display: block;
+    height: 31px;
+    line-height: 28px;
+    background-position: 100% -64px;
+    text-decoration: none;
+    color: #403615;
     _float: left;
 }
 
 .sheetBlock .header .disciplineList li.current {
-	background-image: url( workoutsheet.png );
+    background-image: url( workoutsheet.png );
     margin-left: -16px;
     position: relative;
     left: 16px;
 }
 
 .sheetBlock .header .disciplineList li.current a {
-	background-image: url( workoutsheet.png );
-	color: #000000;
-	cursor: default;
-	padding-right: 16px;
+    background-image: url( workoutsheet.png );
+    color: #000000;
+    cursor: default;
+    padding-right: 16px;
 }
 
 ul.sheet {
-	padding-bottom: 1px;
-	background-color: #bbd06e;
+    padding-bottom: 1px;
+    background-color: #bbd06e;
 }
 
 ul.sheet li span {
@@ -606,11 +605,11 @@ ul.sheet li span.distance {
     overflow: hidden;
     _overflow: visible;
     zoom: 1;
-	 width: 20%;
+    width: 20%;
 }
 
 .userSheetBlock ul.sheet li span.distance {
-	width: 43%;
+    width: 43%;
 }
 
 ul.sheet li span.distance span {
@@ -642,11 +641,11 @@ ul.sheet li span.comsNone {
 }
 
 ul.sheet li.even span.coms {
-	background-position: right -22px;
+    background-position: right -22px;
 }
 
 ul.sheet li a:hover span.coms {
-	background-position: right -44px;
+    background-position: right -44px;
 }
 
 ul.sheet li a {
@@ -656,7 +655,7 @@ ul.sheet li a {
     zoom: 1;
     background-color: #ffffff;
     margin-top: 1px;
-	 _margin-bottom: -1px; /* IE6: ugly */
+    _margin-bottom: -1px; /* IE6: ugly */
     padding: 3px 10px;
     text-decoration: none;
     color: #000000;
@@ -673,7 +672,7 @@ ul.sheet li a:hover {
 ul.sheet li {
     display: block;
     clear: left;
-	 overflow: hidden;
+    overflow: hidden;
 }
 
 /* --- important block */
@@ -844,7 +843,7 @@ legend {
 
 input, select, textarea {
     font-family: inherit;
-    font-size: 1em;
+    font-size: 90%;;
     border: #808080 solid 1px;
     padding: 2px;
     vertical-align: baseline;
@@ -954,7 +953,7 @@ input.submit:focus {
 .workoutBlock dl,
     .bibBlock dl {
     padding-top: 6px;
-    color: expression(this.innerHTML += '', this.style.color = ' ');
+    color: expression( this . innerHTML + = '', this . style . color = ' ' );
 }
 
 .workoutBlock dl dt,
@@ -1105,7 +1104,7 @@ ul.userList .newMessages {
     color: #000;
     font-size: 14px;
     overflow: hidden;
-    width : 0;
+    width: 0;
     background-position: 2px top;
     background-repeat: no-repeat;
     padding: 0 0 0 24px;
@@ -1113,7 +1112,7 @@ ul.userList .newMessages {
 }
 
 .buttonList .button:hover,
-.buttonList .verboseButton {
+    .buttonList .verboseButton {
     background-position: right top;
     width: auto;
     padding: 0 28px 0 2px;
@@ -1169,19 +1168,19 @@ h2 .button {
     left: -5000px;
 }
 
-.buttonList .editButton{
+.buttonList .editButton {
     background-image: url( edit.png );
 }
 
-.buttonList .applyButton{
+.buttonList .applyButton {
     background-image: url( apply.png );
 }
 
-.buttonList .cancelButton{
+.buttonList .cancelButton {
     background-image: url( cancel.png );
 }
 
-.buttonList .deleteButton{
+.buttonList .deleteButton {
     background-image: url( delete.png );
     background-position: 0 top;
     margin-top: 12px;
@@ -1237,10 +1236,10 @@ form.workoutEditor {
 #participant_choices {
 }
 
-.editingParticipantsList .editButton ,
-.notEditingParticipantsList .applyButton ,
-.notEditingParticipantsList input ,
-.notEditingParticipantsList .remover {
+.editingParticipantsList .editButton,
+    .notEditingParticipantsList .applyButton,
+    .notEditingParticipantsList input,
+    .notEditingParticipantsList .remover {
     display: none;
 }
 
