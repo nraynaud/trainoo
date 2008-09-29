@@ -21,7 +21,7 @@ import junit.framework.TestCase;
  * @version 0.1
  */
 public class TestBCrypt extends TestCase {
-    String test_vectors[][] = {
+   final String test_vectors[][] = {
             {"",
                     "$2a$06$DCq7YPn5Rq63x1Lad4cll.",
                     "$2a$06$DCq7YPn5Rq63x1Lad4cll.TV4S6ytwfsfvkgY8jIucDrjc8deX1s."},
@@ -89,7 +89,7 @@ public class TestBCrypt extends TestCase {
      *
      * @param args unused
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         junit.textui.TestRunner.run(TestBCrypt.class);
     }
 
@@ -98,11 +98,11 @@ public class TestBCrypt extends TestCase {
      */
     public void testHashpw() {
         System.out.print("org.mindrot.bcrypt.BCrypt.hashpw(): ");
-        for (int i = 0; i < test_vectors.length; i++) {
-            String plain = test_vectors[i][0];
-            String salt = test_vectors[i][1];
-            String expected = test_vectors[i][2];
-            String hashed = BCrypt.hashpw(plain, salt);
+        for (final String[] test_vector : test_vectors) {
+            final String plain = test_vector[0];
+            final String salt = test_vector[1];
+            final String expected = test_vector[2];
+            final String hashed = BCrypt.hashpw(plain, salt);
             assertEquals(hashed, expected);
             System.out.print(".");
         }
@@ -117,10 +117,10 @@ public class TestBCrypt extends TestCase {
         for (int i = 4; i <= 12; i++) {
             System.out.print(" " + Integer.toString(i) + ":");
             for (int j = 0; j < test_vectors.length; j += 4) {
-                String plain = test_vectors[j][0];
-                String salt = BCrypt.gensalt(i);
-                String hashed1 = BCrypt.hashpw(plain, salt);
-                String hashed2 = BCrypt.hashpw(plain, hashed1);
+                final String plain = test_vectors[j][0];
+                final String salt = BCrypt.gensalt(i);
+                final String hashed1 = BCrypt.hashpw(plain, salt);
+                final String hashed2 = BCrypt.hashpw(plain, hashed1);
                 assertEquals(hashed1, hashed2);
                 System.out.print(".");
             }
@@ -134,10 +134,10 @@ public class TestBCrypt extends TestCase {
     public void testGensalt() {
         System.out.print("org.mindrot.bcrypt.BCrypt.gensalt(): ");
         for (int i = 0; i < test_vectors.length; i += 4) {
-            String plain = test_vectors[i][0];
-            String salt = BCrypt.gensalt();
-            String hashed1 = BCrypt.hashpw(plain, salt);
-            String hashed2 = BCrypt.hashpw(plain, hashed1);
+            final String plain = test_vectors[i][0];
+            final String salt = BCrypt.gensalt();
+            final String hashed1 = BCrypt.hashpw(plain, salt);
+            final String hashed2 = BCrypt.hashpw(plain, hashed1);
             assertEquals(hashed1, hashed2);
             System.out.print(".");
         }
@@ -150,9 +150,9 @@ public class TestBCrypt extends TestCase {
      */
     public void testCheckpw_success() {
         System.out.print("org.mindrot.bcrypt.BCrypt.checkpw w/ good passwords: ");
-        for (int i = 0; i < test_vectors.length; i++) {
-            String plain = test_vectors[i][0];
-            String expected = test_vectors[i][2];
+        for (final String[] test_vector : test_vectors) {
+            final String plain = test_vector[0];
+            final String expected = test_vector[2];
             assertTrue(BCrypt.checkpw(plain, expected));
             System.out.print(".");
         }
@@ -166,9 +166,9 @@ public class TestBCrypt extends TestCase {
     public void testCheckpw_failure() {
         System.out.print("org.mindrot.bcrypt.BCrypt.checkpw w/ bad passwords: ");
         for (int i = 0; i < test_vectors.length; i++) {
-            int broken_index = (i + 4) % test_vectors.length;
-            String plain = test_vectors[i][0];
-            String expected = test_vectors[broken_index][2];
+            final int broken_index = (i + 4) % test_vectors.length;
+            final String plain = test_vectors[i][0];
+            final String expected = test_vectors[broken_index][2];
             assertFalse(BCrypt.checkpw(plain, expected));
             System.out.print(".");
         }

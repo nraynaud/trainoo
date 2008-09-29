@@ -51,7 +51,7 @@ public class SportSession {
         private static final long serialVersionUID = 12;
         @SuppressWarnings({"TransientFieldNotInitialized"})
         private transient User user;
-        private Long userId;
+        private final Long userId;
 
         public UserWrapper(final User user) {
             this.user = user;

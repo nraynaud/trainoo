@@ -8,7 +8,7 @@ public class SportInterceptorTest {
 
     @Test
     public void testNothing() throws Exception {
-        final SportInterceptor interceptor = new SportInterceptor(null);
+        //final SportInterceptor interceptor = new SportInterceptor(null);
         final MockActionInvocation invocation = new MockActionInvocation();
         final Object action = new Object() {
             public String go() {

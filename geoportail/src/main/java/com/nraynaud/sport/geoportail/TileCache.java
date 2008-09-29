@@ -15,7 +15,7 @@ public class TileCache implements TileFetcher {
         CACHE_DIRECTORY = file;
     }
 
-    TileFetcher fetcher = new GeoportailTileFetcher();
+    final TileFetcher fetcher = new GeoportailTileFetcher();
 
     public TileData fetchTile(final String prefix, final int zoom, final int x, final int y, final String suffix) {
         final File file = getFile(prefix, zoom, x, y, suffix);

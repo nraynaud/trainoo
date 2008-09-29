@@ -248,7 +248,7 @@ public class Helpers {
                             final Object stackTop,
                             final Object... arguments) throws Exception {
         push(new Object() {
-            public Map<String, Object> parameters = new HashMap<String, Object>(1) {
+            public final Map<String, Object> parameters = new HashMap<String, Object>(1) {
                 public Object put(final String key, final Object value) {
                     return super.put(key, value);
                 }
@@ -290,7 +290,7 @@ public class Helpers {
     }
 
     public static void allowOverrides() {
-        final Map overrides = (Map) ActionContext.getContext().get(OVERRIDES_KEY);
+        final Map<?,?> overrides = (Map<?,?>) ActionContext.getContext().get(OVERRIDES_KEY);
         if (overrides != null)
             stack().setExprOverrides(overrides);
     }
@@ -300,7 +300,7 @@ public class Helpers {
     }
 
     private static void unplugOverridesIfNecessary() {
-        final Map exprOverrides = stack().getExprOverrides();
+        final Map<?,?> exprOverrides = stack().getExprOverrides();
         if (exprOverrides != null)
             exprOverrides.clear();
     }
@@ -309,9 +309,9 @@ public class Helpers {
     private static void saveAndUnplugOverrides() {
         final ActionContext context = ActionContext.getContext();
         final ValueStack stack = context.getValueStack();
-        final Map overrides = stack.getExprOverrides();
+        final Map<String,Object> overrides = stack.getExprOverrides();
         if (overrides != null) {
-            final Map overridesCopy = new HashMap(overrides);
+            final Map<String,?> overridesCopy = new HashMap<String,Object>(overrides);
             if (context.get(OVERRIDES_KEY) == null)
                 context.put(OVERRIDES_KEY, overridesCopy);
             unplugOverridesIfNecessary();

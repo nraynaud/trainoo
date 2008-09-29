@@ -30,79 +30,47 @@ public class Helper {
     }
 
     public static void escapeJavascript(final String input, final StringBuilder collector) {
-        for (int j=0; j < input.length(); j++) {
-            final char c = input.charAt(j);
-            if (c < '\040') {
-                collector.append("\\x").append(hexify(c));
-            } else switch (c) {
-                case '\\':
-                    collector.append("\\x5C");
-                    break;
-                case '\'':
-                    collector.append("\\x27");
-                    break;
-                case '"':
-                    collector.append("\\x22");
-                    break;
-                case '>':
-                    collector.append("\\x3E");
-                    break;
-                case '<':
-                    collector.append("\\x3C");
-                    break;
-                case '&':
-                    collector.append("\\x26");
-                    break;
-                case '=':
-                    collector.append("\\x3D");
-                    break;
-                case '-':
-                    collector.append("\\x2D");
-                    break;
-                case ';':
-                    collector.append("\\x3B");
-                    break;
-                default:
-                    collector.append(c);
-            }
+        for (int j = 0; j < input.length(); j++) {
+            final char inChar = input.charAt(j);
+            final String outString;
+            outString = javascriptEscape(inChar);
+            collector.append(outString);
         }
     }
 
-    public static void escape(final String input, final StringBuilder collector) {
-        for (int j = 0; j < input.length(); j++) {
-            final char c = input.charAt(j);
+    private static String javascriptEscape(final char inChar) {
+        if (inChar < '\040' || "\\\\'><&=-;".indexOf(inChar) >= 0)
+            return "\\x" + hexify(inChar);
+        else
+            return new String(new char[]{inChar});
+    }
 
-            // encode standard ASCII characters into HTML entities where needed
-            if (c < '\200') {
-                switch (c) {
-                    case '\'':
-                        collector.append("&#39;");
-                        break;
-                    case '"':
-                        collector.append("&quot;");
-                        break;
-                    case '&':
-                        collector.append("&amp;");
-                        break;
-                    case '<':
-                        collector.append("&lt;");
-                        break;
-                    case '>':
-                        collector.append("&gt;");
-                        break;
-                    default:
-                        collector.append(c);
-                }
-            }
-            // encode 'ugly' characters (ie Word "curvy" quotes etc)
-            else if (c < '\377') {
-                collector.append("&#x").append(hexify(c)).append(";");
-            }
-            //add other characters back in - to handle charactersets
-            //other than ascii
-            else {
-                collector.append(c);
-            }
+    public static void escape(final String input, final StringBuilder collector) {
+        for (int j = 0; j < input.length(); j++)
+            collector.append(htmlEscape(input.charAt(j)));
+    }
+
+    private static String htmlEscape(final char inChar) {
+        // encode standard ASCII characters into HTML entities where needed
+        switch (inChar) {
+            case '\'':
+                return "&#39;";
+            case '"':
+                return "&quot;";
+            case '&':
+                return "&amp;";
+            case '<':
+                return "&lt;";
+            case '>':
+                return "&gt;";
+            default:
+                // encode 'ugly' characters (ie Word "curvy" quotes etc)
+                if (inChar >= '\200' && inChar < '\377')
+                    return "&#x" + hexify(inChar) + ";";
+                    //add other characters back in - to handle charactersets
+                    //other than ascii
+                else
+                    return new String(new char[]{inChar});
         }
     }
 
