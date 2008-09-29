@@ -466,6 +466,13 @@ public class HibernateApplication implements Application {
                 + " group by w.discipline");
     }
 
+    private <T> List<DisciplineData<T>> aggregateByDiscipline(final Group group,
+                                                              final DisciplineAggregator<T> aggregator) {
+        return aggregate("group", group, aggregator,
+                " from GroupImpl g left join g.members u left join u.workouts w where"
+                        + " g=:group group by w.discipline having w.discipline is not null");
+    }
+
     private <T> List<DisciplineData<T>> aggregate(final String paramName, final Object paramValue,
                                                   final DisciplineAggregator<T> aggregator,
                                                   final String selectionPart) {
@@ -473,13 +480,6 @@ public class HibernateApplication implements Application {
         if (paramValue != null)
             query.setParameter(paramName, paramValue);
         return aggregator.castqueryResult(query.getResultList());
-    }
-
-    private <T> List<DisciplineData<T>> aggregateByDiscipline(final Group group,
-                                                              final DisciplineAggregator<T> aggregator) {
-        return aggregate("group", group, aggregator,
-                " from GroupImpl g left join g.members u left join u.workouts w where"
-                        + " g=:group group by w.discipline having w.discipline is not null");
     }
 
     private Double fetchGlobalDistance(final Group group) {
