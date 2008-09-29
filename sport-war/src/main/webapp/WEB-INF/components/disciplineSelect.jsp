@@ -2,5 +2,5 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <s:select id="discipline"
-          list="{'course', 'vélo', 'VTT', 'marche', 'natation', 'roller', 'vélo ellipitique', 'vélo d\\'appartement'}"
+          list="{'course', 'vélo', 'VTT', 'marche', 'natation', 'roller', 'vélo elliptique', 'vélo d\\'appartement'}"
           name="discipline" required="true" value="discipline"/>
