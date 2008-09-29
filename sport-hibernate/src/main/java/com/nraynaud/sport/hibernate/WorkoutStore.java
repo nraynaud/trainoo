@@ -44,9 +44,10 @@ class WorkoutStore {
         if (nikePlusId != null) {
             final Query query = entityManager.createNativeQuery("select ID from WORKOUTS where NIKEPLUSID=:nikeId");
             query.setParameter("nikeId", nikePlusId);
-            final List list = query.getResultList();
+            //noinspection unchecked
+            final List<Number> list = query.getResultList();
             if (!list.isEmpty()) {
-                final Long workoutId = ((Number) list.get(0)).longValue();
+                final Long workoutId = list.get(0).longValue();
                 return entityManager.find(WorkoutImpl.class, workoutId);
             }
         }

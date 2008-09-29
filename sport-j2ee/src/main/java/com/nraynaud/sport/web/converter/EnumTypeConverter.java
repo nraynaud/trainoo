@@ -5,6 +5,7 @@ import ognl.DefaultTypeConverter;
 import java.util.Map;
 
 public class EnumTypeConverter extends DefaultTypeConverter {
+    @SuppressWarnings({"unchecked", "RawUseOfParameterizedType"})
     public Object convertValue(final Map context, final Object o, final Class toClass) {
         if (o instanceof String[]) {
             return convertFromString(((String[]) o)[0], toClass);
@@ -24,7 +25,7 @@ public class EnumTypeConverter extends DefaultTypeConverter {
      * @param toClass - the class to convert to
      * @return the converted object
      */
-    public static java.lang.Enum convertFromString(final String value, final Class toClass) {
+    public static <T extends java.lang.Enum<T>> java.lang.Enum<T> convertFromString(final String value, final Class<T> toClass) {
         return Enum.valueOf(toClass, value);
     }
 }

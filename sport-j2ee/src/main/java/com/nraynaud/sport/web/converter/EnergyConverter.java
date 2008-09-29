@@ -11,11 +11,13 @@ import java.util.Locale;
 import java.util.Map;
 
 public class EnergyConverter extends StrutsTypeConverter {
+    @SuppressWarnings({"RawUseOfParameterizedType"})
     public Object convertFromString(final Map context, final String[] values, final Class toClass) {
         final String input = values[0];
         return parseEnergy(input);
     }
 
+    @SuppressWarnings({"RawUseOfParameterizedType"})
     public String convertToString(final Map context, final Object o) {
         if (o == null)
             return "";

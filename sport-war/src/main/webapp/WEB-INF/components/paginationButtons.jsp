@@ -6,7 +6,7 @@
 
 <div class="pagination">
     <%
-        final PaginatedCollection collection = top(PaginationView.class).collection;
+        final PaginatedCollection<?> collection = top(PaginationView.class).collection;
         final String pageVariable = stringProperty("pageVariable");
         if (collection.hasPrevious()) {
     %>

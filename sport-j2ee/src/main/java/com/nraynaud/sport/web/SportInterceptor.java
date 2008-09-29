@@ -101,7 +101,7 @@ public class SportInterceptor extends AbstractInterceptor {
         return getParams;
     }
 
-    private static boolean isPublic(final Class<?> actionClass) throws Exception {
+    private static boolean isPublic(final Class<?> actionClass) {
         return actionClass.isAnnotationPresent(Public.class);
     }
 

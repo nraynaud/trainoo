@@ -23,6 +23,7 @@ public class DurationConverter extends StrutsTypeConverter {
         }
     }
 
+    @SuppressWarnings({"UnusedDeclaration"})
     private enum Parser {
         HOURS_MINUTES_SECONDS_PATTERN("(\\d+)h(\\d+)'(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
         HOURS_MINUTES_M_SECONDS_PATTERN("(\\d+)h(\\d+)m(\\d+)(?:'')?", HOUR, MINUTE, SECOND),

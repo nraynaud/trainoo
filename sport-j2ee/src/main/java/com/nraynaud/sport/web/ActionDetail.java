@@ -49,8 +49,7 @@ public class ActionDetail {
         encoded.append(name);
         encoded.append('?');
         boolean first = true;
-        for (final Object o : parameters.entrySet()) {
-            final Map.Entry entry = (Map.Entry) o;
+        for (final Map.Entry<String, String[]> entry : parameters.entrySet()) {
             if (first)
                 first = false;
             else

@@ -142,7 +142,7 @@ public class Helpers {
         return property(expression, UserString.class);
     }
 
-    @SuppressWarnings({"UnusedDeclaration", "unchecked"})
+    @SuppressWarnings({"unchecked", "UnusedDeclaration"})
     public static <T> T cast(final Object value, final Class<T> type) {
         return (T) value;
     }

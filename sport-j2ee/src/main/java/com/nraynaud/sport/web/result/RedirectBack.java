@@ -17,9 +17,8 @@ public class RedirectBack extends BackResult {
     protected Result createRealResult(final ActionInvocation invocation, final ActionDetail detail) {
         final Redirect result = new Redirect(detail.namespace, detail.name, "index");
         result.setActionMapper(actionMapper);
-        for (final Object o : detail.parameters.entrySet()) {
-            final Map.Entry entry = (Map.Entry) o;
-            result.addParameter((String) entry.getKey(), ((String[]) entry.getValue())[0]);
+        for (final Map.Entry<String, String[]> entry : detail.parameters.entrySet()) {
+            result.addParameter(entry.getKey(), entry.getValue()[0]);
         }
         return result;
     }

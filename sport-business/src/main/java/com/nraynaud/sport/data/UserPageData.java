@@ -4,17 +4,17 @@ import java.util.Collection;
 
 public class UserPageData {
     public final Collection<ConversationSummary> privateMessageReceivers;
-    private final StatisticsData statisticsData;
+    private final StatisticsData<DisciplineData.Count> statisticsData;
     public final Collection<GroupData> groupMembership;
 
     public UserPageData(final Collection<ConversationSummary> privateMessageReceivers,
-                        final StatisticsData statisticsData, final Collection<GroupData> groupMembership) {
+                        final StatisticsData<DisciplineData.Count> statisticsData, final Collection<GroupData> groupMembership) {
         this.statisticsData = statisticsData;
         this.privateMessageReceivers = privateMessageReceivers;
         this.groupMembership = groupMembership;
     }
 
-    public StatisticsData getStatisticsData() {
+    public StatisticsData<DisciplineData.Count> getStatisticsData() {
         return statisticsData;
     }
 }

@@ -35,13 +35,12 @@ public class GeoportailTileFetcher implements TileFetcher {
         }
     }
 
-    static int fetchImageAndCookie(final HttpClient client, final GetMethod method) throws IOException {
+    static void fetchImageAndCookie(final HttpClient client, final GetMethod method) throws IOException {
         final int result = reallyFetchImage(client, method);
         if (result == 403) {
             fetchCookie(client);
-            return reallyFetchImage(client, method);
-        } else
-            return result;
+            reallyFetchImage(client, method);
+        }
     }
 
     static int reallyFetchImage(final HttpClient client, final GetMethod method) throws IOException {

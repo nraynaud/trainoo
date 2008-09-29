@@ -59,6 +59,7 @@ public class SportObjectFactory extends SpringObjectFactory {
         log.info("... initialized Struts-Spring integration successfully");
     }
 
+    @SuppressWarnings({"RawUseOfParameterizedType"})
     public Result buildResult(final ResultConfig resultConfig, final Map extraContext) throws Exception {
         final String resultClassName = resultConfig.getClassName();
         Result result = null;
@@ -69,7 +70,9 @@ public class SportObjectFactory extends SpringObjectFactory {
         return result;
     }
 
+    @SuppressWarnings({"RawUseOfParameterizedType"})
     private static void setProperties(final ResultConfig resultConfig, final Map extraContext, final Result result) {
+        //noinspection unchecked
         final Map<String, Object> props = resultConfig.getParams();
         if (props == null) {
             return;

@@ -24,8 +24,8 @@ public class SportFilter implements Filter {
         cleanupActionContext();
         try {
             Introspector.flushCaches();
-            for (Enumeration e = DriverManager.getDrivers(); e.hasMoreElements();) {
-                final Driver driver = (Driver) e.nextElement();
+            for (Enumeration<Driver> e = DriverManager.getDrivers(); e.hasMoreElements();) {
+                final Driver driver = e.nextElement();
                 if (driver.getClass().getClassLoader() == getClass().getClassLoader()) {
                     DriverManager.deregisterDriver(driver);
                 }
