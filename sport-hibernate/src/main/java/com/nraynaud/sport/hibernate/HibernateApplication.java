@@ -505,14 +505,15 @@ public class HibernateApplication implements Application {
                 fetchGroupDataForUser(user, true));
     }
 
-    private StatisticsData fetchStatisticsData(final User user, final Collection<String> disciplines,
-                                               final int firstIndex,
-                                               final int pageSize) {
+    private StatisticsData<DisciplineData.Count> fetchStatisticsData(final User user,
+                                                                     final Collection<String> disciplines,
+                                                                     final int firstIndex,
+                                                                     final int pageSize) {
         final PaginatedCollection<Workout> workouts = workoutStore.getWorkouts(user, disciplines, firstIndex, pageSize);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<DisciplineData<DisciplineData.Count>> disciplineData = aggregateByDiscipline(user,
                 DisciplineAggregator.COUNT_AGGREGATOR);
-        return new StatisticsData(workouts, globalDistance, disciplineData);
+        return new StatisticsData<DisciplineData.Count>(workouts, globalDistance, disciplineData);
     }
 
     private StatisticsData<DisciplineData.Count> fetchStatisticsData(final Group group, final int firstIndex,

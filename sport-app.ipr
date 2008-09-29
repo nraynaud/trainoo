@@ -324,6 +324,11 @@
         <inspection_tool class="CastToIncompatibleInterface" level="WARNING" enabled="true" />
         <inspection_tool class="CheckTagEmptyBody" level="WARNING" enabled="false" />
         <inspection_tool class="CssNoGenericFontName" level="WARNING" enabled="false" />
+        <inspection_tool class="RawUseOfParameterizedType" level="WARNING" enabled="true">
+          <option name="ignoreObjectConstruction" value="false" />
+          <option name="ignoreTypeCasts" value="false" />
+        </inspection_tool>
+        <inspection_tool class="IndexOfReplaceableByContains" level="WARNING" enabled="true" />
       </profile>
     </profiles>
     <list size="4">

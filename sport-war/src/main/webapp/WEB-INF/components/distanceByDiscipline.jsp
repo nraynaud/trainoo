@@ -28,10 +28,11 @@
     <% final TreeSet<DisciplineData<DisciplineData.Count>> ddSet = new TreeSet<DisciplineData<DisciplineData.Count>>(
             DISCIPLNE_DISTANCE_COMPARATOR);
         ddSet.addAll(disciplines);
-        final ArrayList<DisciplineData> orderedDD = new ArrayList<DisciplineData>(
+        final ArrayList<DisciplineData<DisciplineData.Count>> orderedDD = new ArrayList<DisciplineData<DisciplineData.Count>>(
                 ddSet);
         System.out.println(orderedDD);
-        for (final DisciplineData dd : orderedDD.subList(0, min(orderedDD.size(), MAX_DISCIPLINES_TABS))) { %>
+        for (final DisciplineData<DisciplineData.Count> dd : orderedDD.subList(0,
+                min(orderedDD.size(), MAX_DISCIPLINES_TABS))) { %>
     <li class="<%=currentFilter.equals(dd.discipline.nonEscaped())?"current":""%>">
         <%=linkCurrenUrlWithParams(dd.discipline.toString(), "disciplineFilter", dd.discipline.nonEscaped())%>
     </li>
