@@ -8,10 +8,10 @@ public class DisciplineAggregator<T> {
     public static final DisciplineAggregator<DisciplineData.Count> COUNT_AGGREGATOR = new DisciplineAggregator<DisciplineData.Count>(
             "new com.nraynaud.sport.data.DisciplineCount(w.discipline, count(*))");
 
-    public final String queryPart;
+    public final String projectionPart;
 
-    DisciplineAggregator(final String queryPart) {
-        this.queryPart = queryPart;
+    DisciplineAggregator(final String projectionPart) {
+        this.projectionPart = projectionPart;
     }
 
     @SuppressWarnings({"unchecked"})
