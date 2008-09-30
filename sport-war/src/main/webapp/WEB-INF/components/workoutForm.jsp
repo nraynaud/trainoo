@@ -26,8 +26,6 @@
             <tr>
                 <th><label for="discipline">Discipline</label></th>
                 <th><label for="date">Date</label></th>
-                <th><label for="duration">Durée</label></th>
-                <th><label for="distance">Distance</label></th>
             </tr>
             <tr>
                 <td><%call(pageContext, "disciplineSelect.jsp");%></td>
@@ -42,17 +40,22 @@
                                  onmouseout=""
                                  value="%{date == null  ? 'aujourd\\'hui' : date}"/>
                 </td>
+            </tr>
+            <tr>
+                <th><label for="duration">Durée&nbsp;:</label></th>
                 <td><s:textfield id="duration"
                                  name="duration"
-                                 size="6"
+                                 size="10"
                                  maxlength="10"
                                  onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03h41\\\'17 ou 40\\\'22' , 'duration', this.value);"
                                  onblur="hideToolTip();"
                                  onkeyup="feedback('duration', this.value)"/></td>
-
+            </tr>
+            <tr>
+                <th><label for="distance">Distance&nbsp;:</label></th>
                 <td><s:textfield id="distance"
                                  name="distance"
-                                 size="6"
+                                 size="10"
                                  maxlength="10"
                                  onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
                                  onblur="hideToolTip();"
@@ -60,13 +63,15 @@
             </tr>
             <tr>
                 <th><label for="energy" style="vertical-align:text-top;">Énergie dépensée&nbsp;:</label></th>
-                <td colspan="3"><s:textfield id="energy" name="energy" size="6" maxlength="10"
+                <td colspan="3"><s:textfield id="energy" name="energy" size="10" maxlength="10"
                                              onfocus="showWorkoutToolTip(event, 'En kilocalories.', 'energy', this.value);"
                                              onblur="hideToolTip();"
                                              onkeyup="feedback('energy', this.value)"/></td>
             </tr>
             <tr>
-                <th><label for="comment" style="vertical-align:text-top;">Compte rendu&nbsp;:</label></th>
+                <th><label for="comment" style="vertical-align:text-top;">Compte rendu</label></th>
+            </tr>
+            <tr>
                 <td colspan="3"><s:textarea id="comment" name="comment"></s:textarea></td>
                 <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
             </tr>
