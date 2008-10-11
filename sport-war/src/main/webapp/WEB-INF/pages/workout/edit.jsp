@@ -2,6 +2,7 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
+<%@ page import="static com.nraynaud.sport.Helper.*" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page import="static com.nraynaud.sport.web.DateHelper.*" %>
@@ -18,6 +19,16 @@
 %>
 <p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"
                 showTitleInPage="false"/>
+<script type="text/javascript">
+    Trainoo.isWorkout = true;
+    Trainoo.workout = {
+        id :<%=workout.getId()%>,
+        runner : {
+            id : <%=workout.getUser().getId()%>,
+            name : '<%=escapedForJavascript(workout.getUser().getName().nonEscaped())%>'
+        }
+    };
+</script>
 <% if (boolParam("createWorkout")) { %>
 <form action="<%=createUrl("/workout", "create")%>" method="POST" name="workoutForm">
 <h1>Création d'une sortie</h1>
@@ -131,17 +142,18 @@
     <h2 class="participantsEditingArea">
         <span class="buttonList">
             <a href="<%=createUrl("/workout", "participants", "id", workout.getId().toString())%>"
-               title="Ajouter des participants" class="button editButton">Ajouter des participants</a>
+               title="Ajouter des participants" class="button editButton"
+               id="editParticipantsList">Ajouter des participants</a>
         </span>
         Participants
     </h2>
-    <% } %>
 
     <div class="block userListBlock participantsEditingArea">
-        <div class="content">
+        <div class="content" id="participantsList">
             <%call(pageContext, "userListBlock.jsp", workout.getParticipants());%>
         </div>
     </div>
+    <% } %>
 
     <% if (!data.similarWorkouts.isEmpty()) { %>
     <div class="block sheetBlock">
