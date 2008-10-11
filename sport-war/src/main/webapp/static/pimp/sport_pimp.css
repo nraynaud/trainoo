@@ -981,6 +981,17 @@ input.submit:focus {
     text-align: center;
 }
 
+.workoutBlock dl dt.informative,
+    .bibBlock dl dt.informative {
+    color: #808080;
+    font-size: 1em;
+    width: 36em;
+    margin: auto;
+    height: 4em;
+    zoom: 1;
+    _margin-left: 8em;
+}
+
 .workoutBlock dl dd,
     .bibBlock dl dd {
     overflow: hidden;
@@ -1238,7 +1249,7 @@ form.workoutEditor {
 
 .editingParticipantsList .editButton,
     .notEditingParticipantsList .applyButton,
-    .notEditingParticipantsList input,
+    .notEditingParticipantsList #participant_input,
     .notEditingParticipantsList .remover {
     display: none;
 }

@@ -56,12 +56,19 @@
         <dl>
             <%
                 final List<DataHelper.Data> dataList = DataHelper.compute(workout);
+                if (dataList.size() == 0 && isCurrentUser) {
+            %>
+                <dt class="noDescription informative">Vous n'avez entré ni durée ni distance,
+                cliquez sur le petit crayon pour ajouter les informations manquantes.</dt>
+            <%} else {%>
+            <%
                 for (final DataHelper.Data row : dataList) {
             %>
             <dt <%=row.userProvided ? "class=\"editable\"" : ""%>><%=row.label%>
             </dt>
             <dd><span><%=row.value%></span></dd>
-            <% }%>
+            <%}%>
+            <%}%>
             <% if (isNikePlus) { %>
             <% if (workout.getUser().getNikePlusId() != null) { %>
             <dt>Entrainement Nike+&nbsp;:</dt>

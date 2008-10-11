@@ -23,6 +23,15 @@
             </span>
         <% final String townLabel = "Ma ville";%>
         <dl>
+            <% if (user.getTown() == null && user.getDescription() == null && user.getWebSite() == null) {%>
+            <dt class="noDescription informative">
+                <%if (lookingOwnBib) {%>
+                Vous n'avez entré aucune information, cliquez sur le petit crayon pour remplir votre dossard.
+                <%} else {%>
+                <%=user.getName()%> n'a pas encore rempli son dossard.
+                <%}%>
+            </dt>
+            <%}%>
             <% if (user.getTown() != null) { %>
             <dt><%=townLabel%>&nbsp;:</dt>
             <dd><%=escapedOrNull(user.getTown(),
