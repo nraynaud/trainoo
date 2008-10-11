@@ -1,4 +1,8 @@
-var Browser = {Engine: {name: 'unknown', version: ''}};
+var Browser = {
+	Engine: {name: 'unknown', version: ''},
+	Platform: {name: (navigator.platform.match(/mac|win|linux/i) || ['other'])[0].toLowerCase()},
+	Features: {xpath: !!(document.evaluate), air: !!(window.runtime)}
+};
 
 if (window.opera) Browser.Engine = {name: 'presto', version: (document.getElementsByClassName) ? 950 : 925};
 else if (window.ActiveXObject) Browser.Engine = {name: 'trident', version: (window.XMLHttpRequest) ? 5 : 4};
