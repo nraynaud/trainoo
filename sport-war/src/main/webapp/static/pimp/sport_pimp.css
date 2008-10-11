@@ -953,7 +953,6 @@ input.submit:focus {
 .workoutBlock dl,
     .bibBlock dl {
     padding-top: 6px;
-    color: expression( this . innerHTML + = '', this . style . color = ' ' );
 }
 
 .workoutBlock dl dt,
@@ -1247,10 +1246,10 @@ form.workoutEditor {
 #participant_choices {
 }
 
-.editingParticipantsList .editButton,
-    .notEditingParticipantsList .applyButton,
-    .notEditingParticipantsList #participant_input,
-    .notEditingParticipantsList .remover {
+.editingParticipantsList .participantsEditingArea .editButton,
+    .notEditingParticipantsList .participantsEditingArea .applyButton,
+    .notEditingParticipantsList .participantsEditingArea input,
+    .notEditingParticipantsList .participantsEditingArea .remover {
     display: none;
 }
 

@@ -128,7 +128,7 @@
     </div>
     <% if (!boolParam("createWorkout")) { %>
     <% if (hasPartners || isCurrentUser) { %>
-    <h2>
+    <h2 class="participantsEditingArea">
         <span class="buttonList">
             <a href="<%=createUrl("/workout", "participants", "id", workout.getId().toString())%>"
                title="Ajouter des participants" class="button editButton">Ajouter des participants</a>
@@ -137,7 +137,7 @@
     </h2>
     <% } %>
 
-    <div class="block userListBlock">
+    <div class="block userListBlock participantsEditingArea">
         <div class="content">
             <%call(pageContext, "userListBlock.jsp", workout.getParticipants());%>
         </div>

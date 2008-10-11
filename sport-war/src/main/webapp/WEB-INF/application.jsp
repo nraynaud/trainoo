@@ -39,7 +39,7 @@
             }
             <% } %>
             , isWorkout : false
-        }
+        };
     </script>
 </head>
 <body class="<%= isLogged() ? "isLogged" : ""%>">
@@ -88,40 +88,40 @@
                 </div>
                 <%}%>
             </div>
-
-            <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
-            <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
-            <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
-            <r:writeJavascript/>
-
-            <script type="text/javascript">
-                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-            </script>
-            <script type="text/javascript">
-                var pageTracker = _gat._getTracker("UA-3412937-1");
-                pageTracker._initData();
-                pageTracker._trackPageview();
-            </script>
-            <%if (pageDetail.isShowHeader()) {%>
-            <div id="ad">
-                <script type="text/javascript">
-                    <!--
-                    google_ad_client = "pub-1788371406648361";
-                    /* 120x600, gratte-ciel */
-                    google_ad_slot = "3759319574";
-                    google_ad_width = 120;
-                    google_ad_height = 600;
-                    //-->
-                </script>
-                <script type="text/javascript"
-                        src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-            </div>
-            <script type="text/javascript">
-                $('adPlaceHolder').update($('ad'));
-            </script>
-            <%}%>
         </div>
     </div>
+    
+    <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
+    <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
+    <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
+    <r:writeJavascript/>
+
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-3412937-1");
+        pageTracker._initData();
+        pageTracker._trackPageview();
+    </script>
+    <%if (pageDetail.isShowHeader()) {%>
+    <div id="ad">
+        <script type="text/javascript">
+            <!--
+            google_ad_client = "pub-1788371406648361";
+            /* 120x600, gratte-ciel */
+            google_ad_slot = "3759319574";
+            google_ad_width = 120;
+            google_ad_height = 600;
+            //-->
+        </script>
+        <script type="text/javascript"
+                src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+    </div>
+    <script type="text/javascript">
+        $('adPlaceHolder').update($('ad'));
+    </script>
+    <%}%>
 </body>
 </html>

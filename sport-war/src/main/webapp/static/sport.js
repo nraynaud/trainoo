@@ -111,8 +111,8 @@ function isBody(element){
 };
 
 function openParticipantsListEditor(buttonList, content) {
-    document.body.addClassName('editingParticipantsList');
-    document.body.removeClassName('notEditingParticipantsList');
+    $(document.body).addClassName('editingParticipantsList');
+    $(document.body).removeClassName('notEditingParticipantsList');
     $('participant_input').value = '';
     $('participant_input').focus();
     var coords = $('participant_input').getCoordinates();
@@ -122,8 +122,8 @@ function openParticipantsListEditor(buttonList, content) {
 }
 
 function closeParticipantsListEditor(buttonList, content) {
-    document.body.removeClassName('editingParticipantsList');
-    document.body.addClassName('notEditingParticipantsList');
+    $(document.body).removeClassName('editingParticipantsList');
+    $(document.body).addClassName('notEditingParticipantsList');
 }
 
 function removeParticipant(element, userId, workoutId) {
@@ -219,7 +219,7 @@ function installParticipantsListEditor() {
             Event.stop(evt);
         });
         button.insert({'after': applyButton});
-        document.body.insert({'bottom':
+        $(document.body).insert({'bottom':
             new Element('div', {'id': 'participant_choices', 'class': 'autocomplete'})});
         content.insert({'top':
             new Element('input', {'class': 'text', 'id': 'participant_input'})});
@@ -249,6 +249,18 @@ function installParticipantsListEditor() {
 }
 
 document.observe("dom:loaded", installParticipantsListEditor);
+
+function fixEditViewUnderIE() {
+    if (Browser.Engine.trident) {
+        $$('.workoutBlock dl, .bibBlock dl').each(
+            function (elem) {
+                elem.innerHTML += ' ';
+            }
+        );
+    }
+}
+
+document.observe("dom:loaded", fixEditViewUnderIE);
 
 var oldValue = ''
 function feedback(field_name, val)
