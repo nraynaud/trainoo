@@ -473,6 +473,7 @@ ul.sheet li .period {
 
 ul.sheet li .data {
     text-align: right;
+    width: 33%;
 }
 
 /************* tooltip stuff ***************/

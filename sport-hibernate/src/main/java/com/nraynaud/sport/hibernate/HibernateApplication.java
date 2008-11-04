@@ -767,12 +767,12 @@ public class HibernateApplication implements Application {
                 "select sum(w.distance) from WorkoutImpl w where :user MEMBER OF w.participants");
         query.setParameter("user", user);
         final Query query2 = query(
-                "select year(w.date), sum(w.distance) from WorkoutImpl w where :user MEMBER OF w.participants "
-                        + "GROUP BY year(w.date) HAVING sum(w.distance) is not null ORDER BY year(w.date)");
+                "select year(w.date), sum(w.distance), sum(w.duration) from WorkoutImpl w where :user MEMBER OF w.participants "
+                        + "GROUP BY year(w.date) ORDER BY year(w.date)");
         query2.setParameter("user", user);
         final Query query3 = query(
-                "select year(w.date), month(w.date), sum(w.distance) from WorkoutImpl w "
-                        + "where :user MEMBER OF w.participants GROUP BY year(w.date), month(w.date) HAVING sum(w.distance) is not null "
+                "select year(w.date), month(w.date), sum(w.distance), sum(w.duration) from WorkoutImpl w "
+                        + "where :user MEMBER OF w.participants GROUP BY year(w.date), month(w.date) "
                         + "ORDER BY year(w.date), month(w.date)");
         query3.setParameter("user", user);
         return new StatisticsPageData(((Number) query.getSingleResult()).doubleValue(), query2.getResultList(),

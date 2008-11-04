@@ -6,28 +6,33 @@ import java.util.Iterator;
 
 public class StatisticsPageData {
     public final double totalDistance;
-    public final Collection<PeriodData<Double>> distanceByYear;
-    public final Collection<PeriodData<Double>> distanceByMonth;
+    public final Collection<PeriodData<DistanceAndDuration>> distanceByYear;
+    public final Collection<PeriodData<DistanceAndDuration>> distanceByMonth;
 
     public StatisticsPageData(final double totalDistance,
                               final Collection<?> distanceByYear,
                               final Collection<?> distanceByMonth) {
         this.totalDistance = totalDistance;
-        this.distanceByYear = convert(distanceByYear, new RowConverter<PeriodData<Double>>() {
-            public PeriodData<Double> convert(final Object[] n) {
-                return new PeriodData<Double>(String.valueOf(n[0]), zeroIfNull(n[1]));
+        this.distanceByYear = convert(distanceByYear, new RowConverter<PeriodData<DistanceAndDuration>>() {
+            public PeriodData<DistanceAndDuration> convert(final Object[] n) {
+                return new PeriodData<DistanceAndDuration>(String.valueOf(n[0]),
+                        new DistanceAndDuration(numberToDouble(n[1]), numberToLong(n[2])));
             }
         });
-        this.distanceByMonth = convert(distanceByMonth, new RowConverter<PeriodData<Double>>() {
-            public PeriodData<Double> convert(final Object[] n) {
-                return new PeriodData<Double>(String.valueOf(n[1]) + '/' + String.valueOf(n[0]),
-                        zeroIfNull(n[2]));
+        this.distanceByMonth = convert(distanceByMonth, new RowConverter<PeriodData<DistanceAndDuration>>() {
+            public PeriodData<DistanceAndDuration> convert(final Object[] n) {
+                return new PeriodData<DistanceAndDuration>(String.valueOf(n[1]) + '/' + String.valueOf(n[0]),
+                        new DistanceAndDuration(numberToDouble(n[2]), numberToLong(n[3])));
             }
         });
     }
 
-    private static double zeroIfNull(final Object o) {
-        return o == null ? 0 : ((Number) o).doubleValue();
+    private static Double numberToDouble(final Object o) {
+        return o == null ? null : ((Number) o).doubleValue();
+    }
+
+    private static Long numberToLong(final Object o) {
+        return o == null ? null : ((Number) o).longValue();
     }
 
     public static <T> Collection<T> convert(final Collection<?> input, final RowConverter<T> converter) {
@@ -63,6 +68,16 @@ public class StatisticsPageData {
         public PeriodData(final String period, final T data) {
             this.period = period;
             this.data = data;
+        }
+    }
+
+    public static class DistanceAndDuration {
+        public final Double distance;
+        public final Long duration;
+
+        public DistanceAndDuration(final Double distance, final Long duration) {
+            this.distance = distance;
+            this.duration = duration;
         }
     }
 
