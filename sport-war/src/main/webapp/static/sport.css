@@ -469,11 +469,12 @@ p.submit {
 
 ul.sheet li .period {
     text-align: right;
+    width: 15%;
 }
 
 ul.sheet li .data {
     text-align: right;
-    width: 33%;
+    width: 28%;
 }
 
 /************* tooltip stuff ***************/

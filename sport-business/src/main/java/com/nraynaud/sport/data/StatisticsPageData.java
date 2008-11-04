@@ -6,23 +6,23 @@ import java.util.Iterator;
 
 public class StatisticsPageData {
     public final double totalDistance;
-    public final Collection<PeriodData<DistanceAndDuration>> distanceByYear;
-    public final Collection<PeriodData<DistanceAndDuration>> distanceByMonth;
+    public final Collection<PeriodData<WorkoutStat>> distanceByYear;
+    public final Collection<PeriodData<WorkoutStat>> distanceByMonth;
 
     public StatisticsPageData(final double totalDistance,
                               final Collection<?> distanceByYear,
                               final Collection<?> distanceByMonth) {
         this.totalDistance = totalDistance;
-        this.distanceByYear = convert(distanceByYear, new RowConverter<PeriodData<DistanceAndDuration>>() {
-            public PeriodData<DistanceAndDuration> convert(final Object[] n) {
-                return new PeriodData<DistanceAndDuration>(String.valueOf(n[0]),
-                        new DistanceAndDuration(numberToDouble(n[1]), numberToLong(n[2])));
+        this.distanceByYear = convert(distanceByYear, new RowConverter<PeriodData<WorkoutStat>>() {
+            public PeriodData<WorkoutStat> convert(final Object[] n) {
+                return new PeriodData<WorkoutStat>(String.valueOf(n[0]),
+                        new WorkoutStat(numberToDouble(n[1]), numberToLong(n[2]), numberToLong(n[3])));
             }
         });
-        this.distanceByMonth = convert(distanceByMonth, new RowConverter<PeriodData<DistanceAndDuration>>() {
-            public PeriodData<DistanceAndDuration> convert(final Object[] n) {
-                return new PeriodData<DistanceAndDuration>(String.valueOf(n[1]) + '/' + String.valueOf(n[0]),
-                        new DistanceAndDuration(numberToDouble(n[2]), numberToLong(n[3])));
+        this.distanceByMonth = convert(distanceByMonth, new RowConverter<PeriodData<WorkoutStat>>() {
+            public PeriodData<WorkoutStat> convert(final Object[] n) {
+                return new PeriodData<WorkoutStat>(String.valueOf(n[1]) + '/' + String.valueOf(n[0]),
+                        new WorkoutStat(numberToDouble(n[2]), numberToLong(n[3]), numberToLong(n[4])));
             }
         });
     }
@@ -71,13 +71,15 @@ public class StatisticsPageData {
         }
     }
 
-    public static class DistanceAndDuration {
+    public static class WorkoutStat {
         public final Double distance;
         public final Long duration;
+        public final Long energy;
 
-        public DistanceAndDuration(final Double distance, final Long duration) {
+        public WorkoutStat(final Double distance, final Long duration, final Long energy) {
             this.distance = distance;
             this.duration = duration;
+            this.energy = energy;
         }
     }
 

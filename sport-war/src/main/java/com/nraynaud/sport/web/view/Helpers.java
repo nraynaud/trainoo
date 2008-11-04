@@ -12,6 +12,7 @@ import com.nraynaud.sport.web.SportRequest;
 import com.nraynaud.sport.web.URIValidator;
 import com.nraynaud.sport.web.converter.DistanceConverter;
 import com.nraynaud.sport.web.converter.DurationConverter;
+import com.nraynaud.sport.web.converter.EnergyConverter;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.CreateIfNull;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -290,7 +291,7 @@ public class Helpers {
     }
 
     public static void allowOverrides() {
-        final Map<?,?> overrides = (Map<?,?>) ActionContext.getContext().get(OVERRIDES_KEY);
+        final Map<?, ?> overrides = (Map<?, ?>) ActionContext.getContext().get(OVERRIDES_KEY);
         if (overrides != null)
             stack().setExprOverrides(overrides);
     }
@@ -300,7 +301,7 @@ public class Helpers {
     }
 
     private static void unplugOverridesIfNecessary() {
-        final Map<?,?> exprOverrides = stack().getExprOverrides();
+        final Map<?, ?> exprOverrides = stack().getExprOverrides();
         if (exprOverrides != null)
             exprOverrides.clear();
     }
@@ -309,9 +310,9 @@ public class Helpers {
     private static void saveAndUnplugOverrides() {
         final ActionContext context = ActionContext.getContext();
         final ValueStack stack = context.getValueStack();
-        final Map<String,Object> overrides = stack.getExprOverrides();
+        final Map<String, Object> overrides = stack.getExprOverrides();
         if (overrides != null) {
-            final Map<String,?> overridesCopy = new HashMap<String,Object>(overrides);
+            final Map<String, ?> overridesCopy = new HashMap<String, Object>(overrides);
             if (context.get(OVERRIDES_KEY) == null)
                 context.put(OVERRIDES_KEY, overridesCopy);
             unplugOverridesIfNecessary();
@@ -466,6 +467,10 @@ public class Helpers {
 
     public static String formatDistance(final Double distance, final String ifNull) {
         return distance != null ? DistanceConverter.formatDistance(distance) + "km" : ifNull;
+    }
+
+    public static String formatEnergy(final Long energy, final String ifNull) {
+        return energy != null ? EnergyConverter.formatEnergy(energy) + "kcal" : ifNull;
     }
 
     public static String formatDuration(final Long duration, final String ifNull) {

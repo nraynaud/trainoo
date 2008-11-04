@@ -11,7 +11,7 @@
     if (data != null) {%>
 Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>km <br>
 
-<div style="width:40%">
+<div style="width:50%">
     <div class="block sheetBlock userSheetBlock">
         <div class="header">
             <div class="deco"></div>
@@ -22,7 +22,7 @@ Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>k
             <ul class="sheet">
                 <% {
                     boolean even = true;
-                    for (final StatisticsPageData.PeriodData<StatisticsPageData.DistanceAndDuration> longPeriodData : data.distanceByYear) {
+                    for (final StatisticsPageData.PeriodData<StatisticsPageData.WorkoutStat> longPeriodData : data.distanceByYear) {
                         even = !even;
                 %>
                 <li class="<%=even ? "odd":"even"%>">
@@ -30,6 +30,7 @@ Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>k
                         <span class="period"><%=longPeriodData.period%></span>
                         <span class="data"><%=formatDistance(longPeriodData.data.distance, "&nbsp;")%></span>
                         <span class="data"><%=formatDuration(longPeriodData.data.duration, "&nbsp;")%></span>
+                        <span class="data"><%=formatEnergy(longPeriodData.data.energy, "&nbsp;")%></span>
                     </a>
                 </li>
                 <%
@@ -54,7 +55,7 @@ Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>k
                 <%
                     {
                         boolean even = true;
-                        for (final StatisticsPageData.PeriodData<StatisticsPageData.DistanceAndDuration> longPeriodData : data.distanceByMonth) {
+                        for (final StatisticsPageData.PeriodData<StatisticsPageData.WorkoutStat> longPeriodData : data.distanceByMonth) {
                             even = !even;
                 %>
                 <li class="<%=even ? "odd":"even"%>">
@@ -62,6 +63,7 @@ Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>k
                         <span class="period"><%=longPeriodData.period%></span>
                         <span class="data"><%=formatDistance(longPeriodData.data.distance, "&nbsp;")%></span>
                         <span class="data"><%=formatDuration(longPeriodData.data.duration, "&nbsp;")%></span>
+                        <span class="data"><%=formatEnergy(longPeriodData.data.energy, "&nbsp;")%></span>
                     </a>
                 </li>
                 <%
