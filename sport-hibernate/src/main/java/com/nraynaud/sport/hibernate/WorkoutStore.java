@@ -48,7 +48,9 @@ class WorkoutStore {
             final List<Number> list = query.getResultList();
             if (!list.isEmpty()) {
                 final Long workoutId = list.get(0).longValue();
-                return entityManager.find(WorkoutImpl.class, workoutId);
+                final WorkoutImpl workout = entityManager.find(WorkoutImpl.class, workoutId);
+                correctEnergyIfNecessary(energy, workout);
+                return workout;
             }
         }
         final Workout workout = new WorkoutImpl(user, date, duration, distance, energy, discipline, comment,
@@ -60,6 +62,16 @@ class WorkoutStore {
             throw new RuntimeException(e);
         }
         return workout;
+    }
+
+    /**
+     * old nike+ workout were synchronized without the energy, it's time to correct this
+     */
+    private void correctEnergyIfNecessary(final Long energy, final WorkoutImpl workout) {
+        if (energy != null && workout.getEnergy() == null) {
+            workout.setEnergy(energy);
+            entityManager.persist(workout);
+        }
     }
 
     public void setWorkoutParticipants(final User user, final Long workoutId, final String[] participants) throws
