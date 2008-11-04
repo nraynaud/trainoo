@@ -20,6 +20,7 @@ import org.apache.struts2.config.Results;
 public class Action extends DefaultAction implements ModelDriven<StatisticsPageData> {
 
     public Long id;
+    public String discipline;
 
     public Action(final Application application) {
         super(application);
@@ -27,7 +28,7 @@ public class Action extends DefaultAction implements ModelDriven<StatisticsPageD
 
     public StatisticsPageData getModel() {
         try {
-            return application.fetchStatisticsPageData(id == null ? getUser().getId() : id);
+            return application.fetchStatisticsPageData(id == null ? getUser().getId() : id, discipline);
         } catch (UserNotFoundException e) {
             addActionError("Le numéro d'utilisateur demandé n'existe pas.");
             throw new RuntimeException(e);

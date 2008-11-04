@@ -762,21 +762,29 @@ public class HibernateApplication implements Application {
         workoutStore.checkEditionGrant(workout, user);
     }
 
-    public StatisticsPageData fetchStatisticsPageData(final Long userId) throws UserNotFoundException {
-        final User user = fetchUser(userId);
-        final Query query = query(
-                "select sum(w.distance) from WorkoutImpl w where :user MEMBER OF w.participants");
+    private static void bindQuery(final Query query, final User user, final String discipline) {
         query.setParameter("user", user);
+        if (discipline != null)
+            query.setParameter("discipline", discipline);
+    }
+
+    public StatisticsPageData fetchStatisticsPageData(final Long userId, final String discipline) throws
+            UserNotFoundException {
+        final User user = fetchUser(userId);
+        final String fromWhereClause = " from WorkoutImpl w where :user MEMBER OF w.participants "
+                + (discipline != null ? " and discipline = :discipline " : " ");
+        final Query query = query("select sum(w.distance) " + fromWhereClause);
+        bindQuery(query, user, discipline);
         final Query query2 = query(
-                "select year(w.date), sum(w.distance), sum(w.duration), sum(w.energy) from WorkoutImpl w "
-                        + "where :user MEMBER OF w.participants "
-                        + "GROUP BY year(w.date) ORDER BY year(w.date)");
-        query2.setParameter("user", user);
+                "select year(w.date), sum(w.distance), sum(w.duration), sum(w.energy) "
+                        + fromWhereClause
+                        + " GROUP BY year(w.date) ORDER BY year(w.date)");
+        bindQuery(query2, user, discipline);
         final Query query3 = query(
-                "select year(w.date), month(w.date), sum(w.distance), sum(w.duration), sum(w.energy) from WorkoutImpl w "
-                        + "where :user MEMBER OF w.participants GROUP BY year(w.date), month(w.date) "
+                "select year(w.date), month(w.date), sum(w.distance), sum(w.duration), sum(w.energy) "
+                        + fromWhereClause + "GROUP BY year(w.date), month(w.date) "
                         + "ORDER BY year(w.date), month(w.date)");
-        query3.setParameter("user", user);
+        bindQuery(query3, user, discipline);
         return new StatisticsPageData(user, ((Number) query.getSingleResult()).doubleValue(), query2.getResultList(),
                 query3.getResultList());
     }
