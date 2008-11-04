@@ -157,5 +157,5 @@ public interface Application extends UserStore {
 
     void checkEditionGrant(final Workout workout, final User user) throws AccessDeniedException;
 
-    double fetchTotalDistance(final User user);
+    StatisticsPageData fetchStatisticsPageData(final User user);
 }
