@@ -1,14 +1,16 @@
-<%@ page import="com.nraynaud.sport.data.StatisticsPageData" %>
+<%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.data.StatisticsPageData" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<p:layoutParams title="Statistiques"/>
-
 <%
     final StatisticsPageData data = top(StatisticsPageData.class);
-    if (data != null) {%>
+    final User user = data.user;
+    final boolean lookingOwnStats = user.equals(currentUser());%>
+<p:layoutParams title="<%=lookingOwnStats ? "Mes statistiques" : "Les statistiques de " + user.getName()%>"/>
+
 Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>km <br>
 
 <div style="width:50%">
@@ -76,6 +78,3 @@ Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>k
         </div>
     </div>
 </div>
-<%
-    }
-%>

@@ -762,7 +762,8 @@ public class HibernateApplication implements Application {
         workoutStore.checkEditionGrant(workout, user);
     }
 
-    public StatisticsPageData fetchStatisticsPageData(final User user) {
+    public StatisticsPageData fetchStatisticsPageData(final Long userId) throws UserNotFoundException {
+        final User user = fetchUser(userId);
         final Query query = query(
                 "select sum(w.distance) from WorkoutImpl w where :user MEMBER OF w.participants");
         query.setParameter("user", user);
@@ -776,7 +777,7 @@ public class HibernateApplication implements Application {
                         + "where :user MEMBER OF w.participants GROUP BY year(w.date), month(w.date) "
                         + "ORDER BY year(w.date), month(w.date)");
         query3.setParameter("user", user);
-        return new StatisticsPageData(((Number) query.getSingleResult()).doubleValue(), query2.getResultList(),
+        return new StatisticsPageData(user, ((Number) query.getSingleResult()).doubleValue(), query2.getResultList(),
                 query3.getResultList());
     }
 }

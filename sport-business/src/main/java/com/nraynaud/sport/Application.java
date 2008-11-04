@@ -157,5 +157,5 @@ public interface Application extends UserStore {
 
     void checkEditionGrant(final Workout workout, final User user) throws AccessDeniedException;
 
-    StatisticsPageData fetchStatisticsPageData(final User user);
+    StatisticsPageData fetchStatisticsPageData(final Long userId) throws UserNotFoundException;
 }
