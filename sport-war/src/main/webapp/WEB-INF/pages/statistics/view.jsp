@@ -22,7 +22,7 @@ Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>k
             <ul class="sheet">
                 <% {
                     boolean even = true;
-                    for (final StatisticsPageData.PeriodData<Long> longPeriodData : data.distanceByYear) {
+                    for (final StatisticsPageData.PeriodData<?> longPeriodData : data.distanceByYear) {
                         even = !even;
                 %>
                 <li class="<%=even ? "odd":"even"%>">
@@ -53,7 +53,7 @@ Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>k
                 <%
                     {
                         boolean even = true;
-                        for (final StatisticsPageData.PeriodData<Long> longPeriodData : data.distanceByMonth) {
+                        for (final StatisticsPageData.PeriodData<?> longPeriodData : data.distanceByMonth) {
                             even = !even;
                 %>
                 <li class="<%=even ? "odd":"even"%>">
