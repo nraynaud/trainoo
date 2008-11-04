@@ -96,12 +96,12 @@
 <div class="block sheetBlock">
     <div class="header">
         <div class="deco"></div>
-        <% call(pageContext, "distanceByDiscipline.jsp", groupPage.statistics); %>
+        <% call(pageContext, "distanceByDiscipline.jsp", groupPage.workouts); %>
     </div>
     <div class="content">
         <div class="deco"></div>
         <%
-            paginate(pageContext, "workoutTable.jsp", view(groupPage.statistics.workouts, "workoutPage"), "displayName",
+            paginate(pageContext, "workoutTable.jsp", view(groupPage.workouts.workouts, "workoutPage"), "displayName",
                     "true", "withUser", "true");
         %>
     </div>

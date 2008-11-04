@@ -4,11 +4,11 @@ import com.nraynaud.sport.PublicMessage;
 
 public class GlobalWorkoutsPageData {
     public final PaginatedCollection<PublicMessage> recentMessages;
-    public final StatisticsData<DisciplineData.Count> statisticsData;
+    public final WorkoutsData<DisciplineData.Count> workoutsData;
 
     public GlobalWorkoutsPageData(final PaginatedCollection<PublicMessage> recentMessages,
-                                  final StatisticsData<DisciplineData.Count> statisticsData) {
-        this.statisticsData = statisticsData;
+                                  final WorkoutsData<DisciplineData.Count> workoutsData) {
+        this.workoutsData = workoutsData;
         this.recentMessages = recentMessages;
     }
 }

@@ -89,7 +89,7 @@ public class ApplicationTest {
                 null, "lol", null, null);
         final List<String> disciplines = Collections.emptyList();
         assertEquals(Arrays.asList(workout).iterator().next(),
-                application.fetchFrontPageData(0, 20, disciplines).statisticsData.workouts.iterator().next());
+                application.fetchFrontPageData(0, 20, disciplines).workoutsData.workouts.iterator().next());
     }
 
     @Test

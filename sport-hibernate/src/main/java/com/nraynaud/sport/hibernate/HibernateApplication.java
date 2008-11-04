@@ -234,16 +234,16 @@ public class HibernateApplication implements Application {
                                             final int workoutStartIndex, final String discipline) {
         final Collection<GroupData> result = fetchGroupDataForUser(user, false);
         final GroupImpl group;
-        final StatisticsData<DisciplineData.Count> statisticsData;
+        final WorkoutsData<DisciplineData.Count> workoutsData;
         final PaginatedCollection<User> users;
         final boolean member;
         if (groupId != null) {
             group = entityManager.find(GroupImpl.class, groupId);
-            statisticsData = fetchStatisticsData(group, workoutStartIndex, discipline);
+            workoutsData = fetchStatisticsData(group, workoutStartIndex, discipline);
             users = fetchGroupMembers(group);
             member = user != null && isGroupMember(user, group);
         } else {
-            statisticsData = null;
+            workoutsData = null;
             group = null;
             users = emptyPage();
             member = false;
@@ -254,7 +254,7 @@ public class HibernateApplication implements Application {
             updateLastGroupVisit(user, group);
         }
         return new GroupPageData(group, member, result, messagePaginatedCollection,
-                statisticsData, users);
+                workoutsData, users);
     }
 
     private boolean isGroupMember(final User user, final GroupImpl group) {
@@ -505,26 +505,26 @@ public class HibernateApplication implements Application {
                 fetchGroupDataForUser(user, true));
     }
 
-    private StatisticsData<DisciplineData.Count> fetchStatisticsData(final User user,
-                                                                     final Collection<String> disciplines,
-                                                                     final int firstIndex,
-                                                                     final int pageSize) {
+    private WorkoutsData<DisciplineData.Count> fetchStatisticsData(final User user,
+                                                                   final Collection<String> disciplines,
+                                                                   final int firstIndex,
+                                                                   final int pageSize) {
         final PaginatedCollection<Workout> workouts = workoutStore.getWorkouts(user, disciplines, firstIndex, pageSize);
         final Double globalDistance = fetchGlobalDistance(user);
         final List<DisciplineData<DisciplineData.Count>> disciplineData = aggregateByDiscipline(user,
                 DisciplineAggregator.COUNT_AGGREGATOR);
-        return new StatisticsData<DisciplineData.Count>(workouts, globalDistance, disciplineData);
+        return new WorkoutsData<DisciplineData.Count>(workouts, globalDistance, disciplineData);
     }
 
-    private StatisticsData<DisciplineData.Count> fetchStatisticsData(final Group group, final int firstIndex,
-                                                                     String discipline) {
+    private WorkoutsData<DisciplineData.Count> fetchStatisticsData(final Group group, final int firstIndex,
+                                                                   String discipline) {
         if (discipline != null && discipline.length() == 0)
             discipline = null;
         final PaginatedCollection<Workout> workouts = workoutStore.getWorkouts(group, discipline, firstIndex, 10);
         final Double globalDistance = fetchGlobalDistance(group);
         final List<DisciplineData<DisciplineData.Count>> disciplineData = aggregateByDiscipline(group,
                 DisciplineAggregator.COUNT_AGGREGATOR);
-        return new StatisticsData<DisciplineData.Count>(workouts, globalDistance, disciplineData);
+        return new WorkoutsData<DisciplineData.Count>(workouts, globalDistance, disciplineData);
     }
 
     private Collection<ConversationSummary> fetchCorrespondents(final User user) {

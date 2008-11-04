@@ -15,14 +15,14 @@
         <div class="header">
             <div class="deco"></div>
             <% final GlobalWorkoutsPageData data = top(GlobalWorkoutsPageData.class);
-                call(pageContext, "distanceByDiscipline.jsp", data.statisticsData);
+                call(pageContext, "distanceByDiscipline.jsp", data.workoutsData);
             %>
         </div>
         <div class="content">
             <div class="deco"></div>
             <%
                 paginate(pageContext, "workoutTable.jsp",
-                        view(data.statisticsData.workouts, "workoutPage"), "displayName", "true", "withUser", "true");
+                        view(data.workoutsData.workouts, "workoutPage"), "displayName", "true", "withUser", "true");
             %>
         </div>
         <div class="footer">
