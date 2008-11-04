@@ -766,6 +766,16 @@ public class HibernateApplication implements Application {
         final Query query = query(
                 "select sum(w.distance) from WorkoutImpl w where :user MEMBER OF w.participants");
         query.setParameter("user", user);
-        return new StatisticsPageData(((Number) query.getSingleResult()).doubleValue());
+        final Query query2 = query(
+                "select year(w.date), sum(w.distance) from WorkoutImpl w where :user MEMBER OF w.participants "
+                        + "GROUP BY year(w.date) ORDER BY year(w.date)");
+        query2.setParameter("user", user);
+        final Query query3 = query(
+                "select year(w.date), month(w.date), sum(w.distance) from WorkoutImpl w "
+                        + "where :user MEMBER OF w.participants GROUP BY year(w.date), month(w.date) "
+                        + "ORDER BY year(w.date), month(w.date)");
+        query3.setParameter("user", user);
+        return new StatisticsPageData(((Number) query.getSingleResult()).doubleValue(), query2.getResultList(),
+                query3.getResultList());
     }
 }
