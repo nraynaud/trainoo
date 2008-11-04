@@ -156,4 +156,6 @@ public interface Application extends UserStore {
     void deleteTrack(final User user, final Long id) throws TrackNotFoundException, AccessDeniedException;
 
     void checkEditionGrant(final Workout workout, final User user) throws AccessDeniedException;
+
+    double fetchTotalDistance(final User user);
 }

@@ -1,6 +1,7 @@
 package com.nraynaud.sport.web.action.statistics;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.User;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
@@ -17,6 +18,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 @Public
 public class Action extends DefaultAction {
     public Long id;
+    public double totalDistance;
 
     public Action(final Application application) {
         super(application);
@@ -25,6 +27,8 @@ public class Action extends DefaultAction {
     @SuppressWarnings({"MethodMayBeStatic"})
     @SkipValidation
     public String index() {
+        final User user = getUser();
+        totalDistance = user == null ? 0.0 : application.fetchTotalDistance(user);
         return SUCCESS;
     }
 }

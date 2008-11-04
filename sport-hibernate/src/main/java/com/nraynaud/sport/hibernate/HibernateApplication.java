@@ -761,4 +761,11 @@ public class HibernateApplication implements Application {
     public void checkEditionGrant(final Workout workout, final User user) throws AccessDeniedException {
         workoutStore.checkEditionGrant(workout, user);
     }
+
+    public double fetchTotalDistance(final User user) {
+        final Query query = query(
+                "select sum(w.distance) from WorkoutImpl w where :user MEMBER OF w.participants");
+        query.setParameter("user", user);
+        return ((Number) query.getSingleResult()).doubleValue();
+    }
 }
