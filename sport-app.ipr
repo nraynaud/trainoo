@@ -139,7 +139,7 @@
   </component>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
-    <scope name="project minus JS libs" pattern="(src:*..*||test:*..*)&amp;&amp;!src[sport-war]:src/main/webapp/static/builder.js&amp;&amp;!src[sport-war]:src/main/webapp/static/controls.js&amp;&amp;!src[sport-war]:src/main/webapp/template/simple/dojoRequire.js&amp;&amp;!src[sport-war]:src/main/webapp/static/dragdrop.js&amp;&amp;!src[sport-war]:src/main/webapp/static/effects.js&amp;&amp;!src[sport-war]:src/main/webapp/static/prototype.js&amp;&amp;!src[sport-war]:src/main/webapp/static/scriptaculous.js&amp;&amp;!src[sport-war]:src/main/webapp/static/slider.js" />
+    <scope name="project minus JS libs" pattern="" />
   </component>
   <component name="EclipseCompilerSettings">
     <option name="DEBUGGING_INFO" value="true" />

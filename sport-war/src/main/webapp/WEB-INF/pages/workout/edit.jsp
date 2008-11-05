@@ -65,10 +65,10 @@
                         ><label for="submitWorkout">Valider</label></a>
             </span>
             <dl>
-                <dt>Discipline :</dt>
+                <dt><label for="discipline">Discipline :</label></dt>
                 <dd class="editable"><%=selectComponent("discipline", "discipline", DISCIPLINES, DISCIPLINES, null)%>
                 </dd>
-                <dt>Date :</dt>
+                <dt><label for="date">Date :</label></dt>
                 <dd class="editable">
                     <input id="date" class="text" name="date" value="<%=escapedOrNull(stringProperty("date"), "")%>"
                            maxlength="15"
@@ -78,7 +78,7 @@
                            onmouseover=""
                            onmouseout="">
                 </dd>
-                <dt>Distance :</dt>
+                <dt><label for="distance">Distance :</label></dt>
                 <dd class="editable">
                     <input id="distance" class="text" name="distance"
                            value="<%=escapedOrNull(stringProperty("distance"), "")%>"
@@ -87,7 +87,7 @@
                            onblur="hideToolTip();"
                            onkeyup="feedback('distance', this.value)">
                 </dd>
-                <dt>Durée :</dt>
+                <dt><label for="duration">Durée :</label></dt>
                 <dd class="editable">
                     <input id="duration" class="text" name="duration"
                            value="<%=escapedOrNull(stringProperty("duration"), "")%>"
@@ -96,7 +96,7 @@
                            onblur="hideToolTip();"
                            onkeyup="feedback('duration', this.value)">
                 </dd>
-                <dt>Énergie Dépensée :</dt>
+                <dt><label for="energy">Énergie Dépensée :</label></dt>
                 <dd class="editable">
                     <input id="energy" class="text" name="energy"
                            value="<%=escapedOrNull(stringProperty("energy"), "")%>"
