@@ -28,7 +28,9 @@ public class Action extends DefaultAction implements ModelDriven<StatisticsPageD
 
     public StatisticsPageData getModel() {
         try {
-            return application.fetchStatisticsPageData(id == null ? getUser().getId() : id, discipline);
+            if (id == null)
+                id = getUser().getId();
+            return application.fetchStatisticsPageData(id, discipline);
         } catch (UserNotFoundException e) {
             addActionError("Le numéro d'utilisateur demandé n'existe pas.");
             throw new RuntimeException(e);
