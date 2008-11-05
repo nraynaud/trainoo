@@ -21,7 +21,7 @@
     <input id="hiddenDiscipline" type="hidden" name="discipline" value="<%=discipline%>">
 </form>
 
-<form id="disciplineSelectForm" action="" style="font-size:30px">
+<form id="disciplineSelectForm" action="" style="font-size:20px">
     <%
         final LinkedList<String> values = new LinkedList<String>();
         values.add("");
