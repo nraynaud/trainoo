@@ -28,7 +28,8 @@
                 <th><label for="date">Date</label></th>
             </tr>
             <tr>
-                <td><%call(pageContext, "disciplineSelect.jsp");%></td>
+                <td><%=selectComponent("discipline", "discipline", DISCIPLINES, DISCIPLINES, null)%>
+                </td>
                 <td><s:textfield id="date"
                                  name="date"
                                  size="10"

@@ -1,6 +1,8 @@
 package com.nraynaud.sport.data;
 
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.UserString;
+import com.nraynaud.sport.UserStringImpl;
 
 import java.util.AbstractCollection;
 import java.util.Collection;
@@ -8,15 +10,21 @@ import java.util.Iterator;
 
 public class StatisticsPageData {
     public final User user;
-    public final double totalDistance;
+    public final Collection<UserString> userDisciplines;
+    public final Double totalDistance;
     public final Collection<PeriodData<WorkoutStat>> distanceByYear;
     public final Collection<PeriodData<WorkoutStat>> distanceByMonth;
 
-    public StatisticsPageData(final User user, final double totalDistance,
+    public StatisticsPageData(final User user, final Collection<?> userDisciplines, final Object totalDistance,
                               final Collection<?> distanceByYear,
                               final Collection<?> distanceByMonth) {
         this.user = user;
-        this.totalDistance = totalDistance;
+        this.userDisciplines = convert(userDisciplines, new RowConverter<UserString>() {
+            public UserString convert(final Object[] row) {
+                return UserStringImpl.valueOf((String) row[0]);
+            }
+        });
+        this.totalDistance = numberToDouble(totalDistance);
         this.distanceByYear = convert(distanceByYear, new RowConverter<PeriodData<WorkoutStat>>() {
             public PeriodData<WorkoutStat> convert(final Object[] n) {
                 return new PeriodData<WorkoutStat>(String.valueOf(n[0]),

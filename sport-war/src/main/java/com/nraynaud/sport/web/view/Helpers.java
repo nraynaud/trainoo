@@ -29,6 +29,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Helpers {
+    public static final Collection<String> DISCIPLINES = Arrays.asList("course",
+            "vélo",
+            "VTT",
+            "marche",
+            "natation",
+            "roller",
+            "vélo elliptique",
+            "vélo d'appartement");
     private static final String OVERRIDES_KEY = "overrides";
     public static final SportActionMapper MAPPER = new SportActionMapper();
 
@@ -516,5 +524,21 @@ public class Helpers {
                 return new TableContent(Collections.singletonList(sheet));
             }
         };
+    }
+
+    public static String selectComponent(final String name, final String id, final Iterable<String> values,
+                                         final Iterable<String> labels, final String selectedValue) {
+        final String prefix = "<select name=\"" + name + "\" id=\"" + id + "\">\n";
+        final String suffix = "</select>\n";
+        final StringBuilder builder = new StringBuilder(50);
+        final Iterator<String> labelIterator = labels.iterator();
+        for (final String value : values) {
+            final String label = labelIterator.next();
+            final boolean selected = value.equals(selectedValue);
+            builder.append("<option value=\"").append(value).append("\"")
+                    .append(selected ? " selected=\"selected\"" : "").append(">")
+                    .append(label).append("</option>\n");
+        }
+        return prefix + builder + suffix;
     }
 }

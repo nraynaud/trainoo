@@ -773,6 +773,9 @@ public class HibernateApplication implements Application {
         final User user = fetchUser(userId);
         final String fromWhereClause = " from WorkoutImpl w where :user MEMBER OF w.participants "
                 + (discipline != null ? " and discipline = :discipline " : " ");
+        final Query disciplineQuery = query("select w.discipline, count(*) from WorkoutImpl w "
+                + "WHERE :user MEMBER OF w.participants GROUP BY w.discipline ORDER BY count(*) DESC");
+        disciplineQuery.setParameter("user", user);
         final Query query = query("select sum(w.distance) " + fromWhereClause);
         bindQuery(query, user, discipline);
         final Query query2 = query(
@@ -785,7 +788,8 @@ public class HibernateApplication implements Application {
                         + fromWhereClause + "GROUP BY year(w.date), month(w.date) "
                         + "ORDER BY year(w.date), month(w.date)");
         bindQuery(query3, user, discipline);
-        return new StatisticsPageData(user, ((Number) query.getSingleResult()).doubleValue(), query2.getResultList(),
+        return new StatisticsPageData(user, disciplineQuery.getResultList(), query.getSingleResult(),
+                query2.getResultList(),
                 query3.getResultList());
     }
 }

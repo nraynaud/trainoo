@@ -66,7 +66,8 @@
             </span>
             <dl>
                 <dt>Discipline :</dt>
-                <dd class="editable"><%call(pageContext, "disciplineSelect.jsp");%></dd>
+                <dd class="editable"><%=selectComponent("discipline", "discipline", DISCIPLINES, DISCIPLINES, null)%>
+                </dd>
                 <dt>Date :</dt>
                 <dd class="editable">
                     <input id="date" class="text" name="date" value="<%=escapedOrNull(stringProperty("date"), "")%>"

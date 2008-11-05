@@ -1,6 +1,9 @@
-<%@ page import="com.nraynaud.sport.User" %>
+<%@ page import="com.nraynaud.sport.Helper" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.User" %>
+<%@ page import="com.nraynaud.sport.UserString" %>
 <%@ page import="com.nraynaud.sport.data.StatisticsPageData" %>
+<%@ page import="java.util.LinkedList" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -8,10 +11,40 @@
 <%
     final StatisticsPageData data = top(StatisticsPageData.class);
     final User user = data.user;
-    final boolean lookingOwnStats = user.equals(currentUser());%>
+    final boolean lookingOwnStats = user.equals(currentUser());
+    final String discipline = stringProperty("discipline");
+%>
 <p:layoutParams title="<%=lookingOwnStats ? "Mes statistiques" : "Les statistiques de " + user.getName()%>"/>
 
-Distance totale parcourue (tous sports confondus)&nbsp;:<%=data.totalDistance%>km <br>
+<form id="disciplineForm" action="" method="GET">
+    <input type="hidden" name="id" value="<%=property("id", Long.class)%>">
+    <input id="hiddenDiscipline" type="hidden" name="discipline" value="<%=discipline%>">
+</form>
+
+<form id="disciplineSelectForm" action="" style="font-size:30px">
+    <%
+        final LinkedList<String> values = new LinkedList<String>();
+        values.add("");
+        for (final UserString userDiscipline : data.userDisciplines)
+            values.add(userDiscipline.toString());
+        final LinkedList<String> labels = new LinkedList<String>();
+        labels.add("Tous les Sports");
+        for (final UserString userDiscipline : data.userDisciplines)
+            labels.add(userDiscipline.toString());
+    %>
+    <%=selectComponent("discipline", "discipline", values, labels, Helper.escaped(discipline))%>
+    <p:javascript>Event.observe('discipline', 'change', function(e) {
+        var d = $('discipline').value;
+        if (d.length == 0)
+        $('disciplineForm').removeChild($('hiddenDiscipline'));
+        else
+        $('hiddenDiscipline').value = d;
+        $('disciplineForm').submit();
+        })
+    </p:javascript>
+</form>
+<br>
+Distance totale parcourue&nbsp;:<%=data.totalDistance%>km <br>
 
 <div style="width:50%">
     <div class="block sheetBlock userSheetBlock">
