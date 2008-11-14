@@ -34,8 +34,11 @@
                                                                               title="Mon vestiaire">Mon vestiaire</a>
             </li>
             <li class="<%=isCurrentAction("/bib", "")?"current":""%>"><a
-                    href="<%=createUrl("/bib", "", "id", String.valueOf(currentUser().getId()))%>" title="Mon dossard">Mon
-                dossard</a></li>
+                    href="<%=createUrl("/bib", "", "id", String.valueOf(currentUser().getId()))%>"
+                    title="Mon dossard">Mon dossard</a></li>
+            <li class="<%=isCurrentAction("/statistics", "")?"current":""%>"><a
+                    href="<%=createUrl("/statistics", "", "id", String.valueOf(currentUser().getId()))%>"
+                    title="Mes statistiques">Mes statistiques</a></li>
         </ul>
         <ul class="secondary">
             <li class="<%=isCurrentAction("/privatedata", "")?"current":""%>"><a
