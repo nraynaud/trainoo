@@ -18,8 +18,17 @@
     </div>
     <div class="content textContent">
         <% if (isLogged()) { %>
-        <h2><%=currentUser().getName()%>
+        <h2>
+            <%=currentUser().getName()%>
         </h2>
+        <%
+            if (currentUser() != null && currentUser().getNikePluEmail() != null) {
+        %>
+        <a class="refreshNikePlus" title="Rafraichir les données Nike+"
+           href="<%=createUrl("/privatedata", "refreshNikePlus", "fromAction", findFromAction())%>">
+            Rafraichir les donnés Nike+
+        </a>
+        <% } %>
         <ul>
             <li class="<%=isCurrentAction("/", "workouts")?"current":""%>"><a href="<%=createUrl("/", "workouts")%>"
                                                                               title="Mon vestiaire">Mon vestiaire</a>
