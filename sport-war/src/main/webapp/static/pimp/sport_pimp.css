@@ -969,6 +969,12 @@ input.submit:focus {
     margin-bottom: 0.56em;
 }
 
+.bibBlock .importantLink a {
+    font-size: 1.7857143em;
+    text-align: center;
+    display: block;
+}
+
 .bibBlock dl dt {
     width: 45%;
 }

@@ -52,6 +52,8 @@
             <% } %>
         </dl>
     </div>
+    <span class="importantLink"><%=link("/statistics", "", "Voir ses statistiques", "", "id",
+            String.valueOf(user.getId()))%></span>
 </div>
 
 <div <%=!lookingOwnBib && isLogged() ? "id='globalLeft'" : "" %> >
