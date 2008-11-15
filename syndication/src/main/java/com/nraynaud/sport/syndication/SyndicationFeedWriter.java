@@ -31,7 +31,7 @@ public class SyndicationFeedWriter implements FeedWriter {
         final List<SyndEntry> entries = new ArrayList<SyndEntry>();
         for (final Workout workout : workoutsPageData.workoutsData.workouts) {
             final SyndEntry entry = new SyndEntryImpl();
-            entry.setTitle(workout.getDiscipline().toString() + " " + workout.getUser().getName());
+            entry.setTitle(workout.getDiscipline().nonEscaped() + " " + workout.getUser().getName().nonEscaped());
             entry.setLink("http://trainoo.com/workout/?id=" + workout.getId());
             entry.setPublishedDate(workout.getDate());
             final SyndContent description = new SyndContentImpl();
