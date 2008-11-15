@@ -24,5 +24,14 @@
     </url>
     <%
         }
+        for (final Number id : data.workoutIds) {
+    %>
+    <url>
+        <loc>http://trainoo.com/workout/?id=<%=id%></loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <%
+        }
     %>
 </urlset>
