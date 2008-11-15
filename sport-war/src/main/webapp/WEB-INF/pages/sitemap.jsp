@@ -3,35 +3,21 @@
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page session="false" contentType="text/xml;charset=UTF-8" language="java" %>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>http://trainoo.com/</loc>
-        <changefreq>hourly</changefreq>
-        <priority>0.8</priority>
-    </url>
+    <%=url("http://trainoo.com/", "hourly", "0.8")%>
     <%
         final SitemapData data = Helpers.top(SitemapData.class);
         for (final Number id : data.userIds) {
-    %>
-    <url>
-        <loc>http://trainoo.com/bib/?id=<%=id%></loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>http://trainoo.com/statistics/?id=<%=id%></loc>
-        <changefreq>daily</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <%
+            out.println(url("http://trainoo.com/bib/?id=" + String.valueOf(id), "weekly", "0.7"));
+            out.println(url("http://trainoo.com/statistics/?id=" + String.valueOf(id), "weekly", "0.7"));
         }
-        for (final Number id : data.workoutIds) {
-    %>
-    <url>
-        <loc>http://trainoo.com/workout/?id=<%=id%></loc>
-        <changefreq>daily</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <%
-        }
+        for (final Number id : data.workoutIds)
+            out.println(url("http://trainoo.com/workout/?id=" + String.valueOf(id), "daily", "0.7"));
     %>
 </urlset>
+<%!
+    static String url(final String url, final String freq, final String priority) {
+        final String frequencyPart = freq == null ? "" : "<changefreq>" + freq + "</changefreq>";
+        final String priorityPart = freq == null ? "" : "<priority>" + priority + "</priority>";
+        return "<url><loc>" + url + "</loc>" + frequencyPart + priorityPart + "</url>";
+    }
+%>
