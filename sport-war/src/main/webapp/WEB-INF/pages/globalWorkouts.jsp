@@ -6,6 +6,10 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <p:layoutParams title="Trainoo.com, pour les sportifs du dimanche." showTitleInPage="false"/>
+<p:header>
+    <link rel="alternate" type="application/rss+xml" title="Trainoo.com - Derniers entraînements"
+          href="http://trainoo.com/syndication/">
+</p:header>
 <h1>Tableau général</h1>
 
 <div id="globalLeft">

@@ -178,6 +178,14 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/servlet-api-2.3.jar" />
           </containerElement>
+          <containerElement type="library" name="rome:rome:0.9" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/rome-0.9.jar" />
+          </containerElement>
+          <containerElement type="library" name="jdom:jdom:1.0" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/jdom-1.0.jar" />
+          </containerElement>
           <containerElement type="module" name="nikeplus">
             <attribute name="method" value="5" />
             <attribute name="URI" value="/WEB-INF/lib/nikeplus-1.0-SNAPSHOT.jar" />
@@ -697,6 +705,32 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$MODULE_DIR$/../../../.m2/repository/javax/servlet/servlet-api/2.3/servlet-api-2.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="rome:rome:0.9">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/rome/rome/0.9/rome-0.9.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/rome/rome/0.9/rome-0.9-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/rome/rome/0.9/rome-0.9-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="jdom:jdom:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/jdom/jdom/1.0/jdom-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/jdom/jdom/1.0/jdom-1.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/jdom/jdom/1.0/jdom-1.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
