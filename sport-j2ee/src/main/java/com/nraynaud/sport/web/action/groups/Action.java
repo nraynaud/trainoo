@@ -13,8 +13,8 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
 @Results({
-@Result(name = SUCCESS, value = "/WEB-INF/pages/groups/view.jsp"),
-@Result(name = INPUT, value = "/WEB-INF/pages/groups/view.jsp")
+    @Result(name = SUCCESS, value = "/WEB-INF/pages/groups/view.jsp"),
+    @Result(name = INPUT, value = "/WEB-INF/pages/groups/view.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
@@ -23,15 +23,12 @@ public class Action extends DefaultAction implements ModelDriven<GroupPageData> 
     public String disciplineFilter;
     public int messagesStartIndex = 0;
     public int workoutPage = 0;
-    private GroupPageData pageData;
 
     public Action(final Application application) {
         super(application);
     }
 
     public GroupPageData getModel() {
-        if (pageData == null)
-            pageData = application.fetchGroupPageData(getUser(), id, messagesStartIndex, workoutPage, disciplineFilter);
-        return pageData;
+        return application.fetchGroupPageData(getUser(), id, messagesStartIndex, workoutPage, disciplineFilter);
     }
 }

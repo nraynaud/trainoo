@@ -18,7 +18,6 @@ import java.util.Collections;
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class GlobalWorkoutsAction extends DefaultAction implements ModelDriven<GlobalWorkoutsPageData> {
-    private GlobalWorkoutsPageData statisticsData;
     public int workoutPage;
     public String disciplineFilter;
 
@@ -27,14 +26,11 @@ public class GlobalWorkoutsAction extends DefaultAction implements ModelDriven<G
     }
 
     public GlobalWorkoutsPageData getModel() {
-        if (statisticsData == null) {
-            final Collection<String> disciplines;
-            if (disciplineFilter == null)
-                disciplines = Collections.emptyList();
-            else
-                disciplines = Arrays.asList(disciplineFilter.split(","));
-            statisticsData = application.fetchFrontPageData(workoutPage, 20, disciplines);
-        }
-        return statisticsData;
+        final Collection<String> disciplines;
+        if (disciplineFilter == null)
+            disciplines = Collections.emptyList();
+        else
+            disciplines = Arrays.asList(disciplineFilter.split(","));
+        return application.fetchFrontPageData(workoutPage, 20, disciplines);
     }
 }

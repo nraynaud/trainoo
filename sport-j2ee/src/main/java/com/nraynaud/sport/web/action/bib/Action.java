@@ -17,14 +17,13 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
 @Results({
-@Result(name = SUCCESS, value = "/WEB-INF/pages/bib/view.jsp"),
-@Result(name = INPUT, value = "/WEB-INF/pages/bib/view.jsp")
+    @Result(name = SUCCESS, value = "/WEB-INF/pages/bib/view.jsp"),
+    @Result(name = INPUT, value = "/WEB-INF/pages/bib/view.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class Action extends DefaultAction implements ModelDriven<BibPageData> {
     private Long id;
-    private BibPageData data;
     public int workoutPage = 0;
     public int messagePageIndex;
 
@@ -33,16 +32,13 @@ public class Action extends DefaultAction implements ModelDriven<BibPageData> {
     }
 
     public BibPageData getModel() {
-        if (data == null) {
-            try {
-                final User currentUser = currentUser();
-                final Long myId = id == null ? currentUser.getId() : id;
-                data = application.fetchBibPageData(currentUser, myId, workoutPage, messagePageIndex);
-            } catch (UserNotFoundException e) {
-                throw new DataInputException(e);
-            }
+        try {
+            final User currentUser = currentUser();
+            final Long myId = id == null ? currentUser.getId() : id;
+            return application.fetchBibPageData(currentUser, myId, workoutPage, messagePageIndex);
+        } catch (UserNotFoundException e) {
+            throw new DataInputException(e);
         }
-        return data;
     }
 
     private static User currentUser() {

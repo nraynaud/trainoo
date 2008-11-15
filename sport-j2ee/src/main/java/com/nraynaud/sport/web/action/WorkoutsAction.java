@@ -20,13 +20,12 @@ import java.util.Collections;
 
 @Conversion
 @Results({
-@Result(name = SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
-@Result(name = INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp")
+    @Result(name = SUCCESS, value = "/WEB-INF/pages/personalWorkoutList.jsp"),
+    @Result(name = INPUT, value = "/WEB-INF/pages/personalWorkoutList.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
 public class WorkoutsAction extends DefaultAction implements ModelDriven<UserPageData> {
-    private UserPageData data;
     public int workoutPage;
     public String disciplineFilter = "";
 
@@ -40,14 +39,11 @@ public class WorkoutsAction extends DefaultAction implements ModelDriven<UserPag
     }
 
     public UserPageData getModel() {
-        if (data == null) {
-            final Collection<String> disciplines;
-            if (disciplineFilter == null || disciplineFilter.isEmpty())
-                disciplines = Collections.emptyList();
-            else
-                disciplines = Arrays.asList(disciplineFilter.split(","));
-            data = application.fetchUserPageData(getUser(), workoutPage, disciplines);
-        }
-        return data;
+        final Collection<String> disciplines;
+        if (disciplineFilter == null || disciplineFilter.isEmpty())
+            disciplines = Collections.emptyList();
+        else
+            disciplines = Arrays.asList(disciplineFilter.split(","));
+        return application.fetchUserPageData(getUser(), workoutPage, disciplines);
     }
 }

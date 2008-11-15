@@ -15,14 +15,13 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
 @Results({
-@Result(name = SUCCESS, value = "/WEB-INF/pages/workout/view.jsp"),
-@Result(name = INPUT, value = "/WEB-INF/pages/workout/view.jsp")
+    @Result(name = SUCCESS, value = "/WEB-INF/pages/workout/view.jsp"),
+    @Result(name = INPUT, value = "/WEB-INF/pages/workout/view.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
 public class Action extends DefaultAction implements ModelDriven<WorkoutPageData> {
     public Long id;
-    private WorkoutPageData data;
     public int workoutPage;
     public int similarPage;
     public int publicMessagesPageIndex;
@@ -33,14 +32,11 @@ public class Action extends DefaultAction implements ModelDriven<WorkoutPageData
     }
 
     public WorkoutPageData getModel() {
-        if (data == null)
-            try {
-                data = application.fetchWorkoutPageData(getUser(), id, similarPage, workoutPage,
-                        publicMessagesPageIndex,
-                        privateMessagesPageIndex);
-            } catch (WorkoutNotFoundException e) {
-                throw new DataInputException(e);
-            }
-        return data;
+        try {
+            return application.fetchWorkoutPageData(getUser(), id, similarPage, workoutPage,
+                    publicMessagesPageIndex, privateMessagesPageIndex);
+        } catch (WorkoutNotFoundException e) {
+            throw new DataInputException(e);
+        }
     }
 }
