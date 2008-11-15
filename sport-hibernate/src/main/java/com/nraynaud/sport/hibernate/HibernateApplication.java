@@ -796,6 +796,7 @@ public class HibernateApplication implements Application {
     public SitemapData fetchSitemapData() {
         final Query userQuery = query("select u.id from UserImpl u where u.name<>'googlebot'");
         final Query workoutQuery = query("select w.id from WorkoutImpl w");
-        return new SitemapData(userQuery.getResultList(), workoutQuery.getResultList());
+        final Query groupQuery = query("select g.id from GroupImpl g");
+        return new SitemapData(userQuery.getResultList(), workoutQuery.getResultList(), groupQuery.getResultList());
     }
 }

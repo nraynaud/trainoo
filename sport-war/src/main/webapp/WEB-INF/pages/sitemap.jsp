@@ -12,6 +12,8 @@
         }
         for (final Number id : data.workoutIds)
             out.println(url("http://trainoo.com/workout/?id=" + String.valueOf(id), "daily", "0.7"));
+        for (final Number id : data.groupIds)
+            out.println(url("http://trainoo.com/groups/?id=" + String.valueOf(id), "daily", "0.7"));
     %>
 </urlset>
 <%!
