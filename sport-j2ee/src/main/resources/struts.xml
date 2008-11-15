@@ -57,5 +57,8 @@
         <action name="" class="com.nraynaud.sport.web.action.GlobalWorkoutsAction">
             <result>/WEB-INF/pages/globalWorkouts.jsp</result>
         </action>
+        <action name="sitemap.xml" class="com.nraynaud.sport.web.action.SitemapAction">
+            <result type="dispatcher">/WEB-INF/pages/sitemap.jsp</result>
+        </action>
     </package>
 </struts>
