@@ -792,4 +792,9 @@ public class HibernateApplication implements Application {
                 query2.getResultList(),
                 query3.getResultList());
     }
+
+    public SitemapData fetchSitemapData() {
+        final Query query = query("select u.id from UserImpl u where u.name<>'googlebot'");
+        return new SitemapData(query.getResultList());
+    }
 }
