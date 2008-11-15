@@ -130,13 +130,13 @@
             <attribute name="method" value="5" />
             <attribute name="URI" value="/WEB-INF/lib/sport-j2ee-1.0-SNAPSHOT.jar" />
           </containerElement>
-          <containerElement type="library" name="org.apache.struts:struts2-core:2.0.11" level="module">
+          <containerElement type="library" name="org.apache.struts:struts2-core:2.0.12" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/struts2-core-2.0.11.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/struts2-core-2.0.12.jar" />
           </containerElement>
-          <containerElement type="library" name="com.opensymphony:xwork:2.0.4" level="module">
+          <containerElement type="library" name="com.opensymphony:xwork:2.0.6" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/xwork-2.0.4.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/xwork-2.0.6.jar" />
           </containerElement>
           <containerElement type="library" name="opensymphony:ognl:2.6.11" level="module">
             <attribute name="method" value="1" />
@@ -545,28 +545,28 @@
     </orderEntry>
     <orderEntry type="module" module-name="sport-j2ee" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="org.apache.struts:struts2-core:2.0.11">
+      <library name="org.apache.struts:struts2-core:2.0.12">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/struts/struts2-core/2.0.11/struts2-core-2.0.11.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/struts/struts2-core/2.0.12/struts2-core-2.0.12.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/struts/struts2-core/2.0.11/struts2-core-2.0.11-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/struts/struts2-core/2.0.12/struts2-core-2.0.12-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/struts/struts2-core/2.0.11/struts2-core-2.0.11-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/org/apache/struts/struts2-core/2.0.12/struts2-core-2.0.12-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="com.opensymphony:xwork:2.0.4">
+      <library name="com.opensymphony:xwork:2.0.6">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/opensymphony/xwork/2.0.4/xwork-2.0.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/opensymphony/xwork/2.0.6/xwork-2.0.6.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/opensymphony/xwork/2.0.4/xwork-2.0.4-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/opensymphony/xwork/2.0.6/xwork-2.0.6-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/opensymphony/xwork/2.0.4/xwork-2.0.4-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/com/opensymphony/xwork/2.0.6/xwork-2.0.6-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
