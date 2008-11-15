@@ -13,6 +13,7 @@
 
         <interceptors>
             <interceptor name="sportPermissionInterceptor" class="com.nraynaud.sport.web.SportInterceptor"/>
+            <interceptor name="sportModelDrivenInterceptor" class="com.nraynaud.sport.web.SportModelDrivenInterceptor"/>
             <interceptor-stack name="sportStack">
                 <interceptor-ref name="exception"/>
                 <interceptor-ref name="alias"/>
@@ -35,7 +36,8 @@
                 <interceptor-ref name="validation">
                     <param name="excludeMethods">input,back,cancel,browse</param>
                 </interceptor-ref>
-                <interceptor-ref name="modelDriven"/>
+                <!-- replace normal modelDriven -->
+                <interceptor-ref name="sportModelDrivenInterceptor"/>
                 <interceptor-ref name="workflow">
                     <param name="excludeMethods">input,back,cancel,browse</param>
                 </interceptor-ref>
