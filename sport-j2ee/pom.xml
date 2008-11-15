@@ -66,10 +66,5 @@
             <artifactId>facebook-util</artifactId>
             <version>1.8.0</version>
         </dependency>
-        <dependency>
-            <groupId>rome</groupId>
-            <artifactId>rome</artifactId>
-            <version>0.9</version>
-        </dependency>
     </dependencies>
 </project>

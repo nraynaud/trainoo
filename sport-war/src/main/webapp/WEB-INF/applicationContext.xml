@@ -46,9 +46,8 @@
     <bean id="application" class="com.nraynaud.sport.hibernate.HibernateApplication" scope="singleton"
           lazy-init="true"/>
     <bean id="nikeplus" class="com.nraynaud.sport.nikeplus.NikePlusExtractor" scope="singleton" lazy-init="true"/>
-
-
-    <bean id="geoportail" class="com.nraynaud.sport.geoportail.TileCache" scope="singleton"
+    <bean id="geoportail" class="com.nraynaud.sport.geoportail.TileCache" scope="singleton" lazy-init="true"/>
+    <bean id="feedwriter" class="com.nraynaud.sport.syndication.SyndicationFeedWriter" scope="singleton"
           lazy-init="true"/>
 </beans>
 

@@ -528,6 +528,7 @@
       <module fileurl="file://$PROJECT_DIR$/sport-hibernate/sport-hibernate.iml" filepath="$PROJECT_DIR$/sport-hibernate/sport-hibernate.iml" />
       <module fileurl="file://$PROJECT_DIR$/sport-j2ee/sport-j2ee.iml" filepath="$PROJECT_DIR$/sport-j2ee/sport-j2ee.iml" />
       <module fileurl="file://$PROJECT_DIR$/sport-war/sport-war.iml" filepath="$PROJECT_DIR$/sport-war/sport-war.iml" />
+      <module fileurl="file://$PROJECT_DIR$/syndication/syndication.iml" filepath="$PROJECT_DIR$/syndication/syndication.iml" />
     </modules>
   </component>
   <component name="ProjectRootConfigurable.UI">
