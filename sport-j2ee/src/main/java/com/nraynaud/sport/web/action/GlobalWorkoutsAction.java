@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * BE CAREFUL THIS ACTION IS ACTUALLY CONFIGURED IN struts.xml !!!
+ */
 @Result(name = Action.SUCCESS, value = "/WEB-INF/pages/globalWorkouts.jsp")
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public
