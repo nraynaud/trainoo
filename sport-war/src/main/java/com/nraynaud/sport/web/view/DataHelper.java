@@ -1,7 +1,8 @@
 package com.nraynaud.sport.web.view;
 
 import com.nraynaud.sport.Workout;
-import com.nraynaud.sport.web.converter.DistanceConverter;
+import com.nraynaud.sport.formatting.DistanceIO;
+import com.nraynaud.sport.formatting.FormatHelper;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -40,7 +41,7 @@ public class DataHelper {
     private static Data computeAverageSpeed(final Workout workout) {
         final double distance = workout.getDistance().doubleValue();
         final long duration = workout.getDuration().longValue();
-        final String value = DistanceConverter.formatDistance(distance / (duration / 60.0 / 60)) + "&nbsp;km/h";
+        final String value = DistanceIO.formatDistance(distance / (duration / 60.0 / 60)) + "&nbsp;km/h";
         final double averageTimeByKM = duration / distance;
         final String value2 = " <small>("
                 + (int) (averageTimeByKM / 60)
@@ -58,11 +59,11 @@ public class DataHelper {
     private enum DataComputer {
         DISTANCE {
             public Data compute(final Workout workout) {
-                return new Data("Distance&nbsp;:", Helpers.formatDistance(workout.getDistance(), ""), true);
+                return new Data("Distance&nbsp;:", FormatHelper.formatDistance(workout.getDistance(), ""), true);
             }},
         DURATION {
             public Data compute(final Workout workout) {
-                return new Data("Durée&nbsp;:", Helpers.formatDuration(workout.getDuration(), ""), true);
+                return new Data("Durée&nbsp;:", FormatHelper.formatDuration(workout.getDuration(), ""), true);
             }},
         AVERAGE_SPEED {
             public Data compute(final Workout workout) {

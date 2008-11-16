@@ -1,4 +1,4 @@
-package com.nraynaud.sport.web.converter;
+package com.nraynaud.sport.formatting;
 
 import java.text.Format;
 import java.text.ParseException;

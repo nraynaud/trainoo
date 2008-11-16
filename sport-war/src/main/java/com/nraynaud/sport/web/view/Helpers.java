@@ -10,9 +10,6 @@ import com.nraynaud.sport.formatting.DateHelper;
 import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
 import com.nraynaud.sport.web.URIValidator;
-import com.nraynaud.sport.web.converter.DistanceConverter;
-import com.nraynaud.sport.web.converter.DurationConverter;
-import com.nraynaud.sport.web.converter.EnergyConverter;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.CreateIfNull;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -471,18 +468,6 @@ public class Helpers {
         return userString == null ? "" : "<span title='" + escaped(userString) + "'>" + shortString(userString,
                 maxLength)
                 + "</span>";
-    }
-
-    public static String formatDistance(final Double distance, final String ifNull) {
-        return distance != null ? DistanceConverter.formatDistance(distance) + "km" : ifNull;
-    }
-
-    public static String formatEnergy(final Long energy, final String ifNull) {
-        return energy != null ? EnergyConverter.formatEnergy(energy) + "kcal" : ifNull;
-    }
-
-    public static String formatDuration(final Long duration, final String ifNull) {
-        return duration != null ? DurationConverter.formatDuration(duration, "h", "\'", "''") : ifNull;
     }
 
     /**

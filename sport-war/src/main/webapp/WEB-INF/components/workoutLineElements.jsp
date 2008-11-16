@@ -2,6 +2,7 @@
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.formatting.FormatHelper" %>
 <%@ page import="java.util.Collection" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -22,7 +23,7 @@
         %>
         </span>
 <%}%>
-<span class="duration"><%=formatDuration(workout.getDuration(), "&nbsp;")%></span>
-<span class="distance"><%=formatDistance(workout.getDistance(), "&nbsp;")%></span>
+<span class="duration"><%=FormatHelper.formatDuration(workout.getDuration(), "&nbsp;")%></span>
+<span class="distance"><%=FormatHelper.formatDistance(workout.getDistance(), "&nbsp;")%></span>
 <%final Long messageCount = workout.getMessageCount();%>
 <span class="coms <%=messageCount > 0 ? "" : "comsNone"%>"><%=messageCount%></span>

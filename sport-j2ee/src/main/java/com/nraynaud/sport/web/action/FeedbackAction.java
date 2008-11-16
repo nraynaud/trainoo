@@ -2,11 +2,11 @@ package com.nraynaud.sport.web.action;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
+import com.nraynaud.sport.formatting.DateIO;
+import com.nraynaud.sport.formatting.DistanceIO;
+import com.nraynaud.sport.formatting.DurationIO;
+import com.nraynaud.sport.formatting.EnergyIO;
 import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.converter.DateConverter;
-import com.nraynaud.sport.web.converter.DistanceConverter;
-import com.nraynaud.sport.web.converter.DurationConverter;
-import com.nraynaud.sport.web.converter.EnergyConverter;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
@@ -61,8 +61,8 @@ public class FeedbackAction {
 
     private String convertDistance() {
         try {
-            final Double distance = DistanceConverter.parseDistance(data);
-            return DistanceConverter.formatDistance(distance) + " kilomètre(s)";
+            final Double distance = DistanceIO.parseDistance(data);
+            return DistanceIO.formatDistance(distance) + " kilomètre(s)";
         } catch (Exception e) {
             return "La distance n'a pas été comprise.";
         }
@@ -70,8 +70,8 @@ public class FeedbackAction {
 
     private String convertDuration() {
         try {
-            final Long globalSeconds = DurationConverter.parseDuration(data);
-            return DurationConverter.formatDuration(globalSeconds, " heure(s) ", " minute(s) ", " seconde(s)");
+            final Long globalSeconds = DurationIO.parseDuration(data);
+            return DurationIO.formatDuration(globalSeconds, " heure(s) ", " minute(s) ", " seconde(s)");
         } catch (Exception e) {
             return "La durée n'a pas été comprise.";
         }
@@ -79,7 +79,7 @@ public class FeedbackAction {
 
     private String convertDate() {
         try {
-            return DateConverter.parseAndPrettyPrint(data);
+            return DateIO.parseAndPrettyPrint(data);
         } catch (Exception e) {
             return "La date n'a pas été comprise.";
         }
@@ -87,8 +87,8 @@ public class FeedbackAction {
 
     private String convertEnergy() {
         try {
-            final Long energy = EnergyConverter.parseEnergy(data);
-            return EnergyConverter.formatEnergy(energy) + "kcal";
+            final Long energy = EnergyIO.parseEnergy(data);
+            return EnergyIO.formatEnergy(energy) + "kcal";
         } catch (Exception e) {
             return "L'énergie dépensée n'a pas été comprise.";
         }

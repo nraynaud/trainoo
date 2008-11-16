@@ -3,6 +3,7 @@
 <%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.UserString" %>
 <%@ page import="com.nraynaud.sport.data.StatisticsPageData" %>
+<%@ page import="com.nraynaud.sport.formatting.FormatHelper" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -63,9 +64,11 @@ Distance totale parcourue&nbsp;:<%=data.totalDistance%>km <br>
                 <li class="<%=even ? "odd":"even"%>">
                     <a>
                         <span class="period"><%=longPeriodData.period%></span>
-                        <span class="data"><%=formatDistance(longPeriodData.data.distance, "&nbsp;")%></span>
-                        <span class="data"><%=formatDuration(longPeriodData.data.duration, "&nbsp;")%></span>
-                        <span class="data"><%=formatEnergy(longPeriodData.data.energy, "&nbsp;")%></span>
+                        <span class="data"><%=FormatHelper.formatDistance(longPeriodData.data.distance,
+                                "&nbsp;")%></span>
+                        <span class="data"><%=FormatHelper.formatDuration(longPeriodData.data.duration,
+                                "&nbsp;")%></span>
+                        <span class="data"><%=FormatHelper.formatEnergy(longPeriodData.data.energy, "&nbsp;")%></span>
                     </a>
                 </li>
                 <%
@@ -96,9 +99,11 @@ Distance totale parcourue&nbsp;:<%=data.totalDistance%>km <br>
                 <li class="<%=even ? "odd":"even"%>">
                     <a>
                         <span class="period"><%=longPeriodData.period%></span>
-                        <span class="data"><%=formatDistance(longPeriodData.data.distance, "&nbsp;")%></span>
-                        <span class="data"><%=formatDuration(longPeriodData.data.duration, "&nbsp;")%></span>
-                        <span class="data"><%=formatEnergy(longPeriodData.data.energy, "&nbsp;")%></span>
+                        <span class="data"><%=FormatHelper.formatDistance(longPeriodData.data.distance,
+                                "&nbsp;")%></span>
+                        <span class="data"><%=FormatHelper.formatDuration(longPeriodData.data.duration,
+                                "&nbsp;")%></span>
+                        <span class="data"><%=FormatHelper.formatEnergy(longPeriodData.data.energy, "&nbsp;")%></span>
                     </a>
                 </li>
                 <%
