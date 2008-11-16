@@ -8,7 +8,7 @@
 <p:layoutParams title="Trainoo.com, pour les sportifs du dimanche." showTitleInPage="false"/>
 <p:header>
     <link rel="alternate" type="application/rss+xml" title="Trainoo.com - Derniers entraînements"
-          href="http://trainoo.com/syndication/">
+          href="http://feeds.feedburner.com/Trainoo">
 </p:header>
 <h1>Tableau général</h1>
 
