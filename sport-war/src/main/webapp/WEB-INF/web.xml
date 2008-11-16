@@ -20,6 +20,12 @@
         <filter-class>com.nraynaud.sport.web.SportFilter</filter-class>
     </filter>
 
+
+    <filter-mapping>
+        <filter-name>cleanup</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <filter-mapping>
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>

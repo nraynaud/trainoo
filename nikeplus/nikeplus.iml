@@ -19,78 +19,78 @@
     <orderEntry type="module-library" exported="">
       <library name="javax.mail:mail:1.4">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/javax/mail/mail/1.4/mail-1.4.jar!/" />
+          <root url="jar://$M2_REPO$/javax/mail/mail/1.4/mail-1.4.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/javax/mail/mail/1.4/mail-1.4-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/javax/mail/mail/1.4/mail-1.4-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/javax/mail/mail/1.4/mail-1.4-sources.jar!/" />
+          <root url="jar://$M2_REPO$/javax/mail/mail/1.4/mail-1.4-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library name="javax.activation:activation:1.1">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/javax/activation/activation/1.1/activation-1.1.jar!/" />
+          <root url="jar://$M2_REPO$/javax/activation/activation/1.1/activation-1.1.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/javax/activation/activation/1.1/activation-1.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/javax/activation/activation/1.1/activation-1.1-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/javax/activation/activation/1.1/activation-1.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/javax/activation/activation/1.1/activation-1.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library name="commons-httpclient:commons-httpclient:3.0.1">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1.jar!/" />
+          <root url="jar://$M2_REPO$/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library name="junit:junit:4.0">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/junit/junit/4.0/junit-4.0.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit/4.0/junit-4.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/junit/junit/4.0/junit-4.0-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit/4.0/junit-4.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/junit/junit/4.0/junit-4.0-sources.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit/4.0/junit-4.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library name="commons-logging:commons-logging:1.0.3">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3.jar!/" />
+          <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3-sources.jar!/" />
+          <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library name="commons-codec:commons-codec:1.2">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-codec/commons-codec/1.2/commons-codec-1.2.jar!/" />
+          <root url="jar://$M2_REPO$/commons-codec/commons-codec/1.2/commons-codec-1.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-codec/commons-codec/1.2/commons-codec-1.2-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/commons-codec/commons-codec/1.2/commons-codec-1.2-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/commons-codec/commons-codec/1.2/commons-codec-1.2-sources.jar!/" />
+          <root url="jar://$M2_REPO$/commons-codec/commons-codec/1.2/commons-codec-1.2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

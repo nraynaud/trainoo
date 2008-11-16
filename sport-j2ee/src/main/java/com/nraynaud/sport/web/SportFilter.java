@@ -41,5 +41,6 @@ public class SportFilter implements Filter {
      */
     private static void cleanupActionContext() {
         ActionContext.setContext(null);
+        System.out.println("context cleanup");
     }
 }
