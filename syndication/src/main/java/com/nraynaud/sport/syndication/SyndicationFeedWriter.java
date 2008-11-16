@@ -2,6 +2,7 @@ package com.nraynaud.sport.syndication;
 
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.data.GlobalWorkoutsPageData;
+import com.nraynaud.sport.formatting.FormatHelper;
 import com.sun.syndication.feed.synd.*;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
@@ -49,6 +50,8 @@ public class SyndicationFeedWriter implements FeedWriter {
         builder.append(workout.getDiscipline().nonEscaped())
                 .append(" ")
                 .append(workout.getUser().getName().nonEscaped());
+        builder.append(" ").append(FormatHelper.formatDistance(workout.getDistance(), ""));
+        builder.append(" ").append(FormatHelper.formatDuration(workout.getDuration(), ""));
         return builder.toString();
     }
 }
