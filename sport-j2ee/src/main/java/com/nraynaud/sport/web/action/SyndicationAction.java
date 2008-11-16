@@ -42,7 +42,7 @@ public class SyndicationAction extends DefaultAction implements ServletRequestAw
                     Collections.<String>emptyList());
             String feedType = request.getParameter(FEED_TYPE);
             System.out.println("feed type (requested): " + feedType);
-            feedType = feedType != null ? feedType : "atom_0.3";
+            feedType = feedType != null ? feedType : "atom_1.0";
             response.setContentType(MIME_TYPE);
             feedWriter.writeOn(workoutsPageData, response.getWriter(), feedType);
             return SUCCESS;
