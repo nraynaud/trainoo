@@ -33,6 +33,4 @@ public interface Workout extends Topic {
     UserString getComment();
 
     Long getEnergy();
-
-    Date getCreationDate();
 }
