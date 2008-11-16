@@ -31,8 +31,9 @@ public class SyndicationFeedWriter implements FeedWriter {
         final List<SyndEntry> entries = new ArrayList<SyndEntry>();
         for (final Workout workout : workoutsPageData.workoutsData.workouts) {
             final SyndEntry entry = new SyndEntryImpl();
-            entry.setTitle(workout.getDiscipline().nonEscaped() + " " + workout.getUser().getName().nonEscaped());
+            entry.setTitle(formatTitle(workout));
             entry.setLink("http://trainoo.com/workout/?id=" + workout.getId());
+            entry.setAuthor(workout.getUser().getName().nonEscaped());
             entry.setPublishedDate(workout.getDate());
             final SyndContent description = new SyndContentImpl();
             description.setType("text/plain");
@@ -41,5 +42,13 @@ public class SyndicationFeedWriter implements FeedWriter {
         }
         feed.setEntries(entries);
         return feed;
+    }
+
+    private static String formatTitle(final Workout workout) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(workout.getDiscipline().nonEscaped())
+                .append(" ")
+                .append(workout.getUser().getName().nonEscaped());
+        return builder.toString();
     }
 }
