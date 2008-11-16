@@ -18,6 +18,10 @@ public class WorkoutImpl implements Workout {
     @OrderBy
     private Date date;
 
+    @Column(name = "CREATIONDATE", nullable = false)
+    @OrderBy
+    private Date creationDate;
+
     @Column(name = "DISTANCE")
     private Double distance;
 
@@ -172,5 +176,9 @@ public class WorkoutImpl implements Workout {
 
     public void setEnergy(final Long energy) {
         this.energy = energy;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
     }
 }

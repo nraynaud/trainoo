@@ -37,7 +37,7 @@ public class SyndicationFeedWriter implements FeedWriter {
             entry.setLink("http://trainoo.com/workout/?id=" + workout.getId());
             entry.setAuthor(workout.getUser().getName().nonEscaped());
             entry.setPublishedDate(workout.getDate());
-            entry.setUpdatedDate(workout.getDate());
+            entry.setUpdatedDate(workout.getCreationDate());
             final SyndContent description = new SyndContentImpl();
             description.setType("text/plain");
             final UserString comment = workout.getComment();
