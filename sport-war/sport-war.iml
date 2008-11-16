@@ -130,6 +130,14 @@
             <attribute name="method" value="5" />
             <attribute name="URI" value="/WEB-INF/lib/sport-j2ee-1.0-SNAPSHOT.jar" />
           </containerElement>
+          <containerElement type="module" name="formatting">
+            <attribute name="method" value="5" />
+            <attribute name="URI" value="/WEB-INF/lib/formatting-1.0-SNAPSHOT.jar" />
+          </containerElement>
+          <containerElement type="library" name="joda-time:joda-time:1.5.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/joda-time-1.5.1.jar" />
+          </containerElement>
           <containerElement type="library" name="org.apache.struts:struts2-core:2.0.12" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/struts2-core-2.0.12.jar" />
@@ -141,10 +149,6 @@
           <containerElement type="library" name="opensymphony:ognl:2.6.11" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/ognl-2.6.11.jar" />
-          </containerElement>
-          <containerElement type="library" name="joda-time:joda-time:1.5.1" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/joda-time-1.5.1.jar" />
           </containerElement>
           <containerElement type="library" name="jparsec:jparsec:0.2.3" level="module">
             <attribute name="method" value="1" />
@@ -556,6 +560,20 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="sport-j2ee" exported="" />
+    <orderEntry type="module" module-name="formatting" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library name="joda-time:joda-time:1.5.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library" exported="">
       <library name="org.apache.struts:struts2-core:2.0.12">
         <CLASSES>
@@ -592,19 +610,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$MODULE_DIR$/../../../.m2/repository/opensymphony/ognl/2.6.11/ognl-2.6.11-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="joda-time:joda-time:1.5.1">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../.m2/repository/joda-time/joda-time/1.5.1/joda-time-1.5.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project>
+    <parent>
+        <artifactId>sport-app</artifactId>
+        <groupId>com.nraynaud.sport</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.nraynaud.sport</groupId>
+    <artifactId>formatting</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>sport-j2ee</name>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+    </dependencies>
+</project>

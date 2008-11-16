@@ -1,6 +1,6 @@
 <%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
-<%@ page import="com.nraynaud.sport.web.DateHelper" %>
+<%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="java.util.Collection" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>

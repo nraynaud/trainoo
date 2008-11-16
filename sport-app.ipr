@@ -520,6 +520,7 @@
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/formatting/formatting.iml" filepath="$PROJECT_DIR$/formatting/formatting.iml" />
       <module fileurl="file://$PROJECT_DIR$/geoportail/geoportail.iml" filepath="$PROJECT_DIR$/geoportail/geoportail.iml" />
       <module fileurl="file://$PROJECT_DIR$/bcrypt/jbcrypt.iml" filepath="$PROJECT_DIR$/bcrypt/jbcrypt.iml" />
       <module fileurl="file://$PROJECT_DIR$/nikeplus/nikeplus.iml" filepath="$PROJECT_DIR$/nikeplus/nikeplus.iml" />

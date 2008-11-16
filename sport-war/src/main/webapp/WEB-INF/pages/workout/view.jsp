@@ -6,7 +6,7 @@
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page import="static com.nraynaud.sport.Helper.*" %>
 <%@ page import="java.util.List" %>
-<%@ page import="static com.nraynaud.sport.web.DateHelper.*" %>
+<%@ page import="static com.nraynaud.sport.formatting.DateHelper.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -58,8 +58,9 @@
                 final List<DataHelper.Data> dataList = DataHelper.compute(workout);
                 if (dataList.size() == 0 && isCurrentUser) {
             %>
-                <dt class="noDescription informative">Vous n'avez entré ni durée ni distance,
-                cliquez sur le petit crayon pour ajouter les informations manquantes.</dt>
+            <dt class="noDescription informative">Vous n'avez entré ni durée ni distance,
+                cliquez sur le petit crayon pour ajouter les informations manquantes.
+            </dt>
             <%} else {%>
             <%
                 for (final DataHelper.Data row : dataList) {

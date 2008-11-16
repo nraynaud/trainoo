@@ -5,7 +5,7 @@
 <%@ page import="static com.nraynaud.sport.Helper.*" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
-<%@ page import="static com.nraynaud.sport.web.DateHelper.*" %>
+<%@ page import="static com.nraynaud.sport.formatting.DateHelper.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>

@@ -1,4 +1,4 @@
-package com.nraynaud.sport.web;
+package com.nraynaud.sport.formatting;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;

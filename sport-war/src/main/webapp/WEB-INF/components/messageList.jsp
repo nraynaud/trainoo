@@ -4,9 +4,9 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.*" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
-<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
+<%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="static com.nraynaud.sport.web.action.messages.WritePublicAction.CONTENT_MAX_LENGTH" %>
-<%@ page import="com.nraynaud.sport.web.DateHelper" %>
+<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="java.util.HashMap" %>
 
 <% final PaginatedCollection<Message> messages = top(PaginatedCollection.class);

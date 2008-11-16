@@ -2,7 +2,7 @@
 <%@ page import="com.nraynaud.sport.data.NewMessageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.Helper.*" %>
-<%@ page import="com.nraynaud.sport.web.DateHelper" %>
+<%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
@@ -17,7 +17,7 @@
     </title>
     <meta name="verify-v1" content="yZTq8PJgPZNW+ohX4rJs4so6GlFfVS3hawur2jTQEIA=">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" href="<%=stat("/static/favicon.ico")%>" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="<%=stat("/static/favicon.ico")%>" type="image/vnd.microsoft.icon"/>
     <link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=stat("/static/reset.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=stat("/static/pimp/sport_pimp.css")%>" rel="stylesheet" type="text/css">
@@ -34,9 +34,9 @@
             isLogged : <%=isLogged()?"true":"false"%>
             <% if (isLogged()) { %>
             ,user : {
-                id : <%=currentUser().getId()%>,
-                name : '<%=escapedForJavascript(currentUser().getName().nonEscaped())%>'
-            }
+            id : <%=currentUser().getId()%>,
+            name : '<%=escapedForJavascript(currentUser().getName().nonEscaped())%>'
+        }
             <% } %>
             , isWorkout : false
         };
@@ -90,7 +90,7 @@
             </div>
         </div>
     </div>
-    
+
     <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
     <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
     <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>

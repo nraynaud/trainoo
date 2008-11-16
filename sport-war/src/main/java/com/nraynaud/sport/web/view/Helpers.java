@@ -6,7 +6,7 @@ import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.data.DisciplineData;
 import com.nraynaud.sport.data.PaginatedCollection;
-import com.nraynaud.sport.web.DateHelper;
+import com.nraynaud.sport.formatting.DateHelper;
 import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
 import com.nraynaud.sport.web.URIValidator;
@@ -79,7 +79,7 @@ public class Helpers {
         public void render(final Workout workout, final PageContext context) throws Exception {
             context.getOut()
                     .append("<span class='date'>")
-                    .append(com.nraynaud.sport.web.DateHelper.printDate("EE dd/MM", workout.getDate()))
+                    .append(DateHelper.printDate("EE dd/MM", workout.getDate()))
                     .append("</span>");
             call(context, "workoutLineElements.jsp", workout);
         }

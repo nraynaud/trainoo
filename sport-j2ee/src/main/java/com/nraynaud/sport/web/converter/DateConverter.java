@@ -1,6 +1,6 @@
 package com.nraynaud.sport.web.converter;
 
-import com.nraynaud.sport.web.DateHelper;
+import com.nraynaud.sport.formatting.DateHelper;
 import com.opensymphony.xwork2.util.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
 import org.joda.time.DateTime;
