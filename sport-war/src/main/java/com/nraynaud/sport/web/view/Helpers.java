@@ -526,4 +526,8 @@ public class Helpers {
         }
         return prefix + builder + suffix;
     }
+
+    public static String textArea(final String id, final String name, final String content) {
+        return "<textarea id='" + id + "' name='" + name + "' cols='10' rows='10'>" + content + "</textarea>";
+    }
 }

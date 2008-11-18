@@ -33,10 +33,8 @@
             <input type="hidden" name="aboutId" value="<%=stringProperty("id")%>"/>
             <input type="hidden" name="topicKind" value="<%=stringProperty("kind")%>"/>
             <input type="hidden" name="messageKind" value="<%=PUBLIC%>"/>
-            
-            <span class="input">
-                <textarea rows="3" name="content" id="messageContent"></textarea>
-            </span>
+
+            <span class="input"><%=textArea("messageContent", "content", "")%></span>
             <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
 
             <span class="actions">

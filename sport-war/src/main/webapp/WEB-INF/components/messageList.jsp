@@ -19,8 +19,8 @@
 %>
 <div class="block messageBlock">
 <div class="decoLeft">
-<div class="decoRight">
-    <div class="heading">
+    <div class="decoRight">
+        <div class="heading">
                 <span class="primary"><span class="decoPrimary">
                     Par <%=bibLink(message.getSender(), 20)%>&nbsp;:
                 </span></span>
@@ -29,37 +29,35 @@
                         "'Hier à 'HH'h'mm",
                         "'Avant-hier à 'HH'h'mm",
                         "'Le 'd MMMM")%></span>
-    </div>
-    <%
-        final boolean canDelete = message.canDelete(currentUser());
-        final boolean canEdit = message.canEdit(currentUser());
-    %>
-    <div class="content textContent">
-        <%if (isEditingMessage) {%>
-        <form method="POST" action="<%=createUrl("/messages", "edit")%>">
-            <%
-                allowOverrides();
-                try {
-            %>
-            <s:actionerror/>
-            <s:fielderror>
-                <s:param value="'content'"/>
-            </s:fielderror>
-            <a name="errorMessage"> </a>
-            <input type="hidden" name="id" value="<%=message.getId()%>">
-            <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>">
-            <input type="hidden" name="fromAction"
-                   value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>">
-            <input type="hidden" name="onErrorAction"
-                   value="<%=property("actionDescription",ActionDetail.class).addParam("error", "editMessage")%>">
+        </div>
+        <%
+            final boolean canDelete = message.canDelete(currentUser());
+            final boolean canEdit = message.canEdit(currentUser());
+        %>
+        <div class="content textContent">
+            <%if (isEditingMessage) {%>
+            <form method="POST" action="<%=createUrl("/messages", "edit")%>">
+                <%
+                    allowOverrides();
+                    try {
+                %>
+                <s:actionerror/>
+                <s:fielderror>
+                    <s:param value="'content'"/>
+                </s:fielderror>
+                <a name="errorMessage"> </a>
+                <input type="hidden" name="id" value="<%=message.getId()%>">
+                <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>">
+                <input type="hidden" name="fromAction"
+                       value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>">
+                <input type="hidden" name="onErrorAction"
+                       value="<%=property("actionDescription",ActionDetail.class).addParam("error", "editMessage")%>">
                         
                     <span class="input">
-                        <textarea id="editContent" name="content"><%=property("content",
-                                UserString.class).nonEscaped()%>
-                        </textarea>
+                        <%=textArea("editContent", "content", property("content", UserString.class).nonEscaped())%>
                     </span>
-            <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
-                $('editContent').focus();</p:javascript>
+                <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
+                    $('editContent').focus();</p:javascript>
                     
                     <span class="actions">
                         <a href="<%=currentUrlLinkWithAndWithoutParams(EDIT_MESSAGE, new HashMap<String, String>())%>"
@@ -67,36 +65,36 @@
                         <input type="submit" name="submit" value="Valider">
                     </span>
 
+                <%
+                    } finally {
+                        disAllowOverrides();
+                    }
+                %>
+            </form>
+            <%} else {%>
             <%
-                } finally {
-                    disAllowOverrides();
+                if (message instanceof PublicMessage && boolParam("showTopicLink")) {
+                    final PublicMessage publicMessage = (PublicMessage) message;
+                    if (publicMessage.getTopic() == Topic.Kind.WORKOUT) {
+                        if (!boolParam("hideWorkoutSubject")) {
+            %>
+            <div class="subHeading">à propos de la <a
+                    href="<%=createUrl("/workout", "", "id", String.valueOf(message.getWorkout().getId()))%>">Sortie <%
+                call(pageContext, "workoutComponent.jsp", message.getWorkout());%></a>
+            </div>
+            <% }
+            } else {
+                final Group group = publicMessage.getGroup();%>
+            <div class="subHeading">dans le groupe <a
+                    href="<%=createUrl("/groups", "", "id", String.valueOf(group.getId()))%>">
+                <%=group.getName()%>
+            </a>
+            </div>
+            <%
+                    }
                 }
             %>
-        </form>
-        <%} else {%>
-        <%
-            if (message instanceof PublicMessage && boolParam("showTopicLink")) {
-                final PublicMessage publicMessage = (PublicMessage) message;
-                if (publicMessage.getTopic() == Topic.Kind.WORKOUT) {
-                    if (!boolParam("hideWorkoutSubject")) {
-        %>
-        <div class="subHeading">à propos de la <a
-                href="<%=createUrl("/workout", "", "id", String.valueOf(message.getWorkout().getId()))%>">Sortie <%
-            call(pageContext, "workoutComponent.jsp", message.getWorkout());%></a>
-        </div>
-        <% }
-        } else {
-            final Group group = publicMessage.getGroup();%>
-        <div class="subHeading">dans le groupe <a
-                href="<%=createUrl("/groups", "", "id", String.valueOf(group.getId()))%>">
-            <%=group.getName()%>
-        </a>
-        </div>
-        <%
-                }
-            }
-        %>
-        <% if (!boolParam("hideToolbar")) {%>
+            <% if (!boolParam("hideToolbar")) {%>
                 <span class="smallButtonList">
                     <% if (canEdit) {%>
                     <a href="<%=currentUrlLinkWithAndWithoutParams(null, new HashMap<String, String>(),
@@ -113,12 +111,12 @@
                     </form>
                     <%}%>
                 </span>
-        <%}%>
-        <p class="messageContent"><%= multilineText(message.getContent())%>
-        </p>
-        <%}%>
+            <%}%>
+            <p class="messageContent"><%= multilineText(message.getContent())%>
+            </p>
+            <%}%>
+        </div>
     </div>
-</div>
 </div>
 </div>
 <%

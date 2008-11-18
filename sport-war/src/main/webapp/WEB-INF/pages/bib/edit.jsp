@@ -13,7 +13,7 @@
             <form method="POST" action="<%=createUrl("/bib", "edit")%>">
                 <s:actionerror/>
                 <s:fielderror/>
-                <p>En mettant à jour votre dossard, les autres pourront mieux vous connaître.<br />
+                <p>En mettant à jour votre dossard, les autres pourront mieux vous connaître.<br/>
                     Aucun champ n'est obligatoire.
                 </p>
 
@@ -31,7 +31,7 @@
                     <span class="help">C'est l'occasion de vous présenter.</span>
                 </span>
                 <span class="input fullWidth">
-                    <textarea id="description" name="description"><%=escapedOrNull(stringProperty("description"), "")%></textarea>
+                    <%=textArea("description", "description", escapedOrNull(stringProperty("description"), ""))%>
                 </span>
                 <p:javascript>makeItCount('description', <%=DESCRIPTION_MAX_LENGTH%>);</p:javascript>
 
@@ -39,12 +39,13 @@
                     <label for="webSite">Mon site&nbsp;:</label>
                 </span>
                 <span class="input fullWidth">
-                    <input class="text" id="webSite" name="webSite"  value="<%=escapedOrNull(stringProperty("webSite"), "")%>"/>
+                    <input class="text" id="webSite" name="webSite"
+                           value="<%=escapedOrNull(stringProperty("webSite"), "")%>"/>
                 </span>
                 <p:javascript>makeItCount('webSite', <%=WEBSITE_MAX_LENGTH%>);</p:javascript>
 
                 <span class="actions">
-                    <input type="submit" class="submit" value="Valider !" />
+                    <input type="submit" class="submit" value="Valider !"/>
                 </span>
             </form>
         </div>

@@ -64,10 +64,8 @@
             <% if (property("aboutWorkout", Workout.class) != null) { %>
             <input type="hidden" name="aboutWorkoutId" value="<%=property("aboutWorkout", Workout.class).getId()%>">
             <% } %>
-            
-            <span class="input">
-                <textarea rows="3" name="content" id="messageContent"></textarea>
-            </span>
+
+            <span class="input"><%=textArea("messageContent", "content", "")%></span>
             <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
 
             <span class="actions">

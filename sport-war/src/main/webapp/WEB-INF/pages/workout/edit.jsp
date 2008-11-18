@@ -129,8 +129,7 @@ document.workoutForm.comment.value = document.getElementById("externalComment").
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <textarea id="externalComment" cols="10" rows="10"><%=escapedOrNull(stringProperty("comment"), "")%>
-                    </textarea>
+                    <%=textArea("externalComment", "externalComment", escapedOrNull(stringProperty("comment"), ""))%>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
