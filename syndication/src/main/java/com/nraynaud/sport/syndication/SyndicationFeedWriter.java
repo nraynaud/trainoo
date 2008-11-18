@@ -28,11 +28,13 @@ public class SyndicationFeedWriter implements FeedWriter {
     private static SyndFeed getFeed(final GlobalWorkoutsPageData workoutsPageData) {
         final SyndFeed feed = new SyndFeedImpl();
         feed.setTitle("Trainoo.com : les derniers entraînements");
+        feed.setUri("http://trainoo.com/");
         feed.setLink("http://trainoo.com/");
         feed.setDescription("Les derniers entraînements sur Trainoo.com");
         final List<SyndEntry> entries = new ArrayList<SyndEntry>();
         for (final Workout workout : workoutsPageData.workoutsData.workouts) {
             final SyndEntry entry = new SyndEntryImpl();
+            entry.setUri("workout" + workout.getId());
             entry.setTitle(formatTitle(workout));
             entry.setLink("http://trainoo.com/workout/?id=" + workout.getId());
             entry.setAuthor(workout.getUser().getName().nonEscaped());
