@@ -107,14 +107,21 @@
 <div id="globalRight">
 
     <h2>
+        <span class="buttonList">
+        <% if (isCurrentUser) { %>
+            <a href="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>"
+               title="Modifier le compte-rendu" class="button editButton">
+                Modifier</a>
+        <%}%>
+        </span>
+
         Compte rendu par <%=bibLink(runner, 20)%>
     </h2>
 
     <div class="block">
         <div class="content textContent">
-            <p>
-                <%=escapedOrNullmultilines(workout.getComment(),
-                        "<em>Pas de compte-rendu</em>")%>
+            <p><%=escapedOrNullmultilines(workout.getComment(),
+                    "<em>Pas de compte-rendu</em>")%>
             </p>
         </div>
     </div>
