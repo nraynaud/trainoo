@@ -95,22 +95,23 @@
                 }
             %>
             <% if (!boolParam("hideToolbar")) {%>
-                <span class="smallButtonList">
-                    <% if (canEdit) {%>
-                    <a href="<%=currentUrlLinkWithAndWithoutParams(null, new HashMap<String, String>(),
+            <div class="smallButtonList">
+                <% if (canEdit) {%>
+                <a href="<%=currentUrlLinkWithAndWithoutParams(null, new HashMap<String, String>(),
                         EDIT_MESSAGE, String.valueOf(message.getId()))%>"
-                       title="Modifier ce message" class="button editButton">Modifier</a>
-                    <%}%>
-                    <%if (canDelete) {%>
-                    <form action="<%=deleteUrl(message)%>" method="POST">
-                        <input type="hidden" name="id" value="<%=stringProperty("id")%>">
-                        <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>">
-                        <label for="editDelete" class="button deleteButton">Supprimer</label>
-                        <input id="editDelete" type="image" src="<%=stat("/static/blank.gif")%>" value="Supprimer"
-                               title="Supprimer ce message" name="submit" class="image">
-                    </form>
-                    <%}%>
-                </span>
+                   title="Modifier ce message" class="button editButton">Modifier</a>
+                <%}%>
+                <%if (canDelete) {%>
+                <form action="<%=deleteUrl(message)%>" method="POST">
+                    <input type="hidden" name="id" value="<%=stringProperty("id")%>">
+                    <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>">
+                    <%final String deleteId = uniqueId("editDelete");%>
+                    <label for="<%=deleteId%>" class="button deleteButton">Supprimer</label>
+                    <input id="<%=deleteId%>" type="image" src="<%=stat("/static/blank.gif")%>" value="Supprimer"
+                           title="Supprimer ce message" name="submit" class="image">
+                </form>
+                <%}%>
+            </div>
             <%}%>
             <p class="messageContent"><%= multilineText(message.getContent())%>
             </p>

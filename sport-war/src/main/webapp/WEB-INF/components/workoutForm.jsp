@@ -86,7 +86,7 @@
 <form action="<%=createUrl("/workout", "delete")%>">
     <span class="actions">
         <s:hidden name="id" value="%{id}"/>
-        <input type="submit" class="submit" name="delete" value="Supprimer"/>
+        <input type="submit" class="submit" name="delete" value="Supprimer">
     </span>
 </form>
 <%}%>

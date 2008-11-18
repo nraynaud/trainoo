@@ -65,8 +65,8 @@
             <input type="hidden" name="aboutWorkoutId" value="<%=property("aboutWorkout", Workout.class).getId()%>">
             <% } %>
 
-            <span class="input"><%=textArea("messageContent", "content", "")%></span>
-            <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
+            <span class="input"><%=textArea("privateMessageContent", "content", "")%></span>
+            <p:javascript>makeItCount('privateMessageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
 
             <span class="actions">
                 <input type="submit" class="submit" value="Envoyer" accesskey="s">

@@ -26,19 +26,19 @@
             </s:fielderror>
             <a name="errorMessage"> </a>
             <%}%>
-            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>">
             <input type="hidden" name="onErrorAction"
-                   value="<%=property("actionDescription",ActionDetail.class).addParam("error", MY_ERROR_CODE)%>"/>
-            <input type="hidden" name="publicMessage" value="true"/>
-            <input type="hidden" name="aboutId" value="<%=stringProperty("id")%>"/>
-            <input type="hidden" name="topicKind" value="<%=stringProperty("kind")%>"/>
-            <input type="hidden" name="messageKind" value="<%=PUBLIC%>"/>
+                   value="<%=property("actionDescription",ActionDetail.class).addParam("error", MY_ERROR_CODE)%>">
+            <input type="hidden" name="publicMessage" value="true">
+            <input type="hidden" name="aboutId" value="<%=stringProperty("id")%>">
+            <input type="hidden" name="topicKind" value="<%=stringProperty("kind")%>">
+            <input type="hidden" name="messageKind" value="<%=PUBLIC%>">
 
             <span class="input"><%=textArea("messageContent", "content", "")%></span>
             <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
 
             <span class="actions">
-                <input type="submit" class="submit" value="Ajouter un message" accesskey="s"/>
+                <input type="submit" class="submit" value="Ajouter un message" accesskey="s">
             </span>
         </form>
     </div>

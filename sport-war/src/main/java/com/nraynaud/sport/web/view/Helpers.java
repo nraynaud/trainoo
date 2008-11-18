@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Helpers {
+    private static final Random RNG = new Random();
     public static final Collection<String> DISCIPLINES = Arrays.asList("course",
             "vélo",
             "VTT",
@@ -529,5 +530,9 @@ public class Helpers {
 
     public static String textArea(final String id, final String name, final String content) {
         return "<textarea id='" + id + "' name='" + name + "' cols='10' rows='10'>" + content + "</textarea>";
+    }
+
+    public static String uniqueId(final String prefix) {
+        return prefix + RNG.nextInt();
     }
 }
