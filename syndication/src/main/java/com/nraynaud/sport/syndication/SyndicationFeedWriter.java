@@ -3,6 +3,7 @@ package com.nraynaud.sport.syndication;
 import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.data.GlobalWorkoutsPageData;
+import com.nraynaud.sport.data.PaginatedCollection;
 import com.nraynaud.sport.formatting.FormatHelper;
 import com.sun.syndication.feed.synd.*;
 import com.sun.syndication.io.FeedException;
@@ -11,6 +12,7 @@ import com.sun.syndication.io.SyndFeedOutput;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SyndicationFeedWriter implements FeedWriter {
@@ -31,12 +33,17 @@ public class SyndicationFeedWriter implements FeedWriter {
         feed.setUri("http://trainoo.com/");
         feed.setLink("http://trainoo.com/");
         feed.setDescription("Les derniers entraînements sur Trainoo.com");
+        final PaginatedCollection<Workout> workouts = workoutsPageData.workoutsData.workouts;
+        final Iterator<Workout> iterator = workouts.iterator();
+        if (iterator.hasNext())
+            feed.setPublishedDate(iterator.next().getDate());
         final List<SyndEntry> entries = new ArrayList<SyndEntry>();
-        for (final Workout workout : workoutsPageData.workoutsData.workouts) {
+        for (final Workout workout : workouts) {
             final SyndEntry entry = new SyndEntryImpl();
-            entry.setUri("workout" + workout.getId());
+            final String url = "http://trainoo.com/workout/?id=" + workout.getId();
+            entry.setUri(url);
             entry.setTitle(formatTitle(workout));
-            entry.setLink("http://trainoo.com/workout/?id=" + workout.getId());
+            entry.setLink(url);
             entry.setAuthor(workout.getUser().getName().nonEscaped());
             entry.setPublishedDate(workout.getDate());
             final SyndContent description = new SyndContentImpl();
