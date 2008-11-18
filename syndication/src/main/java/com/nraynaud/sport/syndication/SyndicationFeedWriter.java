@@ -53,6 +53,7 @@ public class SyndicationFeedWriter implements FeedWriter {
             entry.setAuthors(Collections.singletonList(person));
             entry.setPublishedDate(workout.getDate());
             final SyndContent description = new SyndContentImpl();
+            description.setType("text");
             final UserString comment = workout.getComment();
             description.setValue(comment == null ? "Aucun compte-rendu" : comment.nonEscaped());
             entry.setContents(Collections.singletonList(description));
