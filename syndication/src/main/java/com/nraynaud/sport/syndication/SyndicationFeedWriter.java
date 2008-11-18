@@ -1,5 +1,6 @@
 package com.nraynaud.sport.syndication;
 
+import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.data.GlobalWorkoutsPageData;
@@ -12,6 +13,7 @@ import com.sun.syndication.io.SyndFeedOutput;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,13 +46,16 @@ public class SyndicationFeedWriter implements FeedWriter {
             entry.setUri(url);
             entry.setTitle(formatTitle(workout));
             entry.setLink(url);
-            entry.setAuthor(workout.getUser().getName().nonEscaped());
+            final SyndPersonImpl person = new SyndPersonImpl();
+            final User user = workout.getUser();
+            person.setName(user.getName().nonEscaped());
+            person.setUri("http://trainoo.com/bib/?id=" + user.getId());
+            entry.setAuthors(Collections.singletonList(person));
             entry.setPublishedDate(workout.getDate());
             final SyndContent description = new SyndContentImpl();
-            //description.setType("text/plain");
             final UserString comment = workout.getComment();
             description.setValue(comment == null ? "Aucun compte-rendu" : comment.nonEscaped());
-            entry.setDescription(description);
+            entry.setContents(Collections.singletonList(description));
             entries.add(entry);
         }
         feed.setEntries(entries);
