@@ -5,7 +5,6 @@
 <%@ page import="static com.nraynaud.sport.Helper.*" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
-<%@ page import="static com.nraynaud.sport.formatting.DateHelper.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -19,30 +18,29 @@
 %>
 <p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"
                 showTitleInPage="false"/>
-<script type="text/javascript">
+<p:javascript>
     Trainoo.isWorkout = true;
     Trainoo.workout = {
-        id :<%=workout.getId()%>,
-        runner : {
-            id : <%=workout.getUser().getId()%>,
-            name : '<%=escapedForJavascript(workout.getUser().getName().nonEscaped())%>'
-        }
+    id :<%=workout.getId()%>,
+    runner : {
+    id : <%=workout.getUser().getId()%>,
+    name : '<%=escapedForJavascript(workout.getUser().getName().nonEscaped())%>'
+    }
     };
-</script>
+</p:javascript>
 <% if (boolParam("createWorkout")) { %>
 <form action="<%=createUrl("/workout", "create")%>" method="POST" name="workoutForm">
 <h1>Création d'une sortie</h1>
 <% } else { %>
-<script>
-    /* ugly quick fix for the out-of-form comment problem */
-    function retrieveComment() {
-        document.workoutForm.comment.value = document.getElementById("externalComment").value;
-    }
-</script>
+<p:javascript>
+/* ugly quick fix for the out-of-form comment problem */
+function retrieveComment() {
+document.workoutForm.comment.value = document.getElementById("externalComment").value;
+}
+</p:javascript>
 <form action="<%=createUrl("/workout", "edit", "id", workout.getId().toString())%>" method="POST" name="workoutForm"
       onsubmit="retrieveComment(); return true">
-    <textarea name="comment" id="hiddenComment"><%=escapedOrNull(stringProperty("comment"), "")%>
-    </textarea>
+    <input type="hidden" name="comment" id="hiddenComment" value="">
 
     <h1>Modification d'une sortie</h1>
     <% } %>
@@ -131,7 +129,7 @@
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <textarea id="externalComment"><%=escapedOrNull(stringProperty("comment"), "")%>
+                    <textarea id="externalComment" cols="10" rows="10"><%=escapedOrNull(stringProperty("comment"), "")%>
                     </textarea>
                 </span>
             </p>
