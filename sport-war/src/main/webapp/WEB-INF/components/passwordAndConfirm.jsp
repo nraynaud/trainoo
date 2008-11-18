@@ -8,14 +8,15 @@
     <label for="password">Votre <%=firstNonNull(stringParam("adjective"), "")%> mot de passe</label>
 </span>
 <span class="input fullWidth">
-    <input name="password" id="password" type="password" class="text" />
+    <input name="password" id="password" type="password" class="text">
 </span>
 <p:javascript>makeItCount('password', <%= PASSWORD_MAX_LENGTH%>, <%=PASSWORD_MIN_LENGTH%>);</p:javascript>
 
 <span class="label">
-    <label for="passwordConfirmation">Confirmation de votre <%=firstNonNull(stringParam("adjective"), "")%> mot de passe</label>
+    <label for="passwordConfirmation">Confirmation de votre <%=firstNonNull(stringParam("adjective"), "")%> mot de
+        passe</label>
     <span class="help fullWidth">pour éviter les erreurs de frappe</span>
 </span>
 <span class="input fullWidth">
-    <input name="passwordConfirmation" id="passwordConfirmation" type="password" class="text" />
+    <input name="passwordConfirmation" id="passwordConfirmation" type="password" class="text">
 </span>

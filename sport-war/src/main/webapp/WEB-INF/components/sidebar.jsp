@@ -6,11 +6,11 @@
     <div id="searchBox">
         <form action="http://trainoo.com/search/" id="cse-search-box">
             <div>
-                <input type="hidden" name="cx" value="partner-pub-1788371406648361:36ti6n6fck5"/>
-                <input type="hidden" name="cof" value="FORID:10"/>
-                <input type="hidden" name="ie" value="UTF-8"/>
-                <input type="text" class="text" name="q" size="31"/><!--
-                --><input type="submit" class="submit" name="sa" value="Rechercher"/>
+                <input type="hidden" name="cx" value="partner-pub-1788371406648361:36ti6n6fck5">
+                <input type="hidden" name="cof" value="FORID:10">
+                <input type="hidden" name="ie" value="UTF-8">
+                <input type="text" class="text" name="q" size="31">
+                <input type="submit" class="submit" name="sa" value="Rechercher">
             </div>
         </form>
         <script type="text/javascript"
@@ -52,14 +52,14 @@
             <ul>
                 <li>
                     <label for="loginSide">Surnom&nbsp;:</label>
-                    <input name="login" id="loginSide" class="text"/>
+                    <input name="login" id="loginSide" class="text">
                 </li>
                 <li>
                     <label for="passwordSide">Mot de passe&nbsp;:</label>
-                    <input name="password" id="passwordSide" type="password" class="text"/>
+                    <input name="password" id="passwordSide" type="password" class="text">
                 </li>
                 <li>
-                    <input type="submit" class="submit" name="submit" value="Connexion"/>
+                    <input type="submit" class="submit" name="submit" value="Connexion">
                 </li>
             </ul>
         </form>

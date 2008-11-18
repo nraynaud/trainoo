@@ -46,15 +46,15 @@
                 <s:param value="'content'"/>
             </s:fielderror>
             <a name="errorMessage"> </a>
-            <input type="hidden" name="id" value="<%=message.getId()%>"/>
-            <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>"/>
+            <input type="hidden" name="id" value="<%=message.getId()%>">
+            <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>">
             <input type="hidden" name="fromAction"
-                   value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>"/>
+                   value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>">
             <input type="hidden" name="onErrorAction"
-                   value="<%=property("actionDescription",ActionDetail.class).addParam("error", "editMessage")%>"/>
+                   value="<%=property("actionDescription",ActionDetail.class).addParam("error", "editMessage")%>">
                         
                     <span class="input">
-                        <textarea rows="3" id="editContent" name="content"><%=property("content",
+                        <textarea id="editContent" name="content"><%=property("content",
                                 UserString.class).nonEscaped()%>
                         </textarea>
                     </span>
@@ -64,7 +64,7 @@
                     <span class="actions">
                         <a href="<%=currentUrlLinkWithAndWithoutParams(EDIT_MESSAGE, new HashMap<String, String>())%>"
                            title="Annuler">Annuler</a>
-                        <input type="submit" name="submit" value="Valider"/>
+                        <input type="submit" name="submit" value="Valider">
                     </span>
 
             <%
@@ -105,11 +105,11 @@
                     <%}%>
                     <%if (canDelete) {%>
                     <form action="<%=deleteUrl(message)%>" method="POST">
-                        <input type="hidden" name="id" value="<%=stringProperty("id")%>"/>
-                        <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+                        <input type="hidden" name="id" value="<%=stringProperty("id")%>">
+                        <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>">
                         <label for="editDelete" class="button deleteButton">Supprimer</label>
                         <input id="editDelete" type="image" src="<%=stat("/static/blank.gif")%>" value="Supprimer"
-                               title="Supprimer ce message" name="submit" class="image"/>
+                               title="Supprimer ce message" name="submit" class="image">
                     </form>
                     <%}%>
                 </span>

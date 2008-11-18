@@ -46,7 +46,7 @@
             </span>
             <span class="input">
                 <input name="receiver" id="receiver" class="text"
-                       value="<%=receiver %>"/>
+                       value="<%=receiver %>">
                 <div id="receiver_choices" class="autocomplete">&nbsp;</div>
                 <p:javascript>
                     new Ajax.Autocompleter("receiver", "receiver_choices", "/feedback",
@@ -54,15 +54,15 @@
                 </p:javascript>
             </span>
             <% } else {%>
-            <input type="hidden" name="receiver" value="<%=receiverProperty%>"/>
+            <input type="hidden" name="receiver" value="<%=receiverProperty%>">
             <%}%>
-            <input type="hidden" name="messageKind" value="<%=PRIVATE%>"/>
-            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="messageKind" value="<%=PRIVATE%>">
+            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>">
             <input type="hidden" name="onErrorAction"
-                   value="<%=((ActionDetail)property("actionDescription",Object.class)).addParam("error", MY_ERROR_CODE)%>"/>
-            <input type="hidden" name="publicMessage" value="false"/>
+                   value="<%=((ActionDetail)property("actionDescription",Object.class)).addParam("error", MY_ERROR_CODE)%>">
+            <input type="hidden" name="publicMessage" value="false">
             <% if (property("aboutWorkout", Workout.class) != null) { %>
-            <input type="hidden" name="aboutWorkoutId" value="<%=property("aboutWorkout", Workout.class).getId()%>"/>
+            <input type="hidden" name="aboutWorkoutId" value="<%=property("aboutWorkout", Workout.class).getId()%>">
             <% } %>
             
             <span class="input">
@@ -71,7 +71,7 @@
             <p:javascript>makeItCount('messageContent', <%= WriteAction.CONTENT_MAX_LENGTH%>);</p:javascript>
 
             <span class="actions">
-                <input type="submit" class="submit" value="Envoyer" accesskey="s"/>
+                <input type="submit" class="submit" value="Envoyer" accesskey="s">
             </span>
         </form>
     </div>

@@ -9,32 +9,32 @@
 <div id="tinyCenter">
     <div class="block">
         <div class="content textContent">
-            <form method="POST" action="<%=createUrl("/", "login")%>" >
+            <form method="POST" action="<%=createUrl("/", "login")%>">
                 <s:actionerror/>
                 <s:fielderror/>
-                <input type="hidden" name="fromAction" value="<%=stringProperty("fromAction")%>"/>
+                <input type="hidden" name="fromAction" value="<%=stringProperty("fromAction")%>">
                 <span class="label">
                     <label for="login">Votre surnom</label>
                 </span>
                 <span class="input fullWidth">
-                    <input name="login" id="login" class="text" />
+                    <input name="login" id="login" class="text"/>
                 </span>
-                
+
                 <p:javascript>$('login').focus();</p:javascript>
 
                 <span class="label">
                     <label for="password">Votre mot de passe</label>
                 </span>
                 <span class="input fullWidth">
-                    <input id="password" name="password" type="password" class="text"/>
+                    <input id="password" name="password" type="password" class="text">
                 </span>
 
                 <span class="actions">
-                    <input type="submit" class="submit" value="Entrer !" class="submit"/>
+                    <input type="submit" value="Entrer !" class="submit">
                 </span>
 
                 <span class="input precedingInput">
-                    <input type="checkbox" class="checkbox" name="rememberMe" id="rememberMe" checked="checked" />
+                    <input type="checkbox" class="checkbox" name="rememberMe" id="rememberMe" checked="checked">
                 </span>
                 <span class="label">
                     <label for="rememberMe">Se souvenir de moi</label>

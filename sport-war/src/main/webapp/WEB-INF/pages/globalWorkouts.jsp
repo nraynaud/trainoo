@@ -40,8 +40,8 @@
 
     <div class="block importantBlock">
         <div class="content textContent">
-            <p>Vous pratiquez le sport en dehors de la télé&nbsp;?<br/>
-                Vous voulez suivre votre vie active&nbsp;?<br/>
+            <p>Vous pratiquez le sport en dehors de la télé&nbsp;?<br>
+                Vous voulez suivre votre vie active&nbsp;?<br>
                 <%=signupUrl("Inscrivez-vous")%> et vous pourrez&nbsp;:</p>
             <ul>
                 <li>Publier vos entrainements</li>
@@ -51,8 +51,8 @@
             </ul>
             <form method="GET" id="subscribeForm" action="<%=createUrl("/", "signup")%>">
                 <span class="actions">
-                    <input type="hidden" name="fromAction" value="<%=findFromAction()%>"/>
-                    <input type="submit" value="Inscription" class="submit"/>
+                    <input type="hidden" name="fromAction" value="<%=findFromAction()%>">
+                    <input type="submit" value="Inscription" class="submit">
                 </span>
             </form>
         </div>

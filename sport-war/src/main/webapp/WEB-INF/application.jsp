@@ -17,7 +17,7 @@
     </title>
     <meta name="verify-v1" content="yZTq8PJgPZNW+ohX4rJs4so6GlFfVS3hawur2jTQEIA=">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" href="<%=stat("/static/favicon.ico")%>" type="image/vnd.microsoft.icon"/>
+    <link rel="icon" href="<%=stat("/static/favicon.ico")%>" type="image/vnd.microsoft.icon">
     <link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=stat("/static/reset.css")%>" rel="stylesheet" type="text/css">
     <link href="<%=stat("/static/pimp/sport_pimp.css")%>" rel="stylesheet" type="text/css">
