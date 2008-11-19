@@ -88,14 +88,12 @@ public class NikePlusExtractor implements Importer {
 
     private static byte[] get(final HttpClient client, final String uri) throws IOException {
         final GetMethod getMethod = new GetMethod(uri);
-        final byte[] responseBody;
         try {
             client.executeMethod(getMethod);
-            responseBody = getMethod.getResponseBody();
+            return getMethod.getResponseBody();
         } finally {
             getMethod.releaseConnection();
         }
-        return responseBody;
     }
 
     public static void extractWorkouts(final byte[] responseBody, final WorkoutCollector workoutCollector) throws

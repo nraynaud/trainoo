@@ -1,5 +1,6 @@
 package com.nraynaud.sport;
 
+import static java.lang.Integer.toHexString;
 import java.util.Random;
 
 public class Helper {
@@ -23,12 +24,6 @@ public class Helper {
         return str.toString();
     }
 
-    private static String hexify(final char c) {
-        final int a = c % 16;
-        final int b = (c - a) / 16;
-        return "" + HEX_CHARS.charAt(b) + HEX_CHARS.charAt(a);
-    }
-
     public static void escapeJavascript(final String input, final StringBuilder collector) {
         for (int j = 0; j < input.length(); j++) {
             final char inChar = input.charAt(j);
@@ -39,10 +34,10 @@ public class Helper {
     }
 
     private static String javascriptEscape(final char inChar) {
-        if (inChar < '\040' || "\\\\'><&=-;".indexOf(inChar) >= 0)
-            return "\\x" + hexify(inChar);
+        if (inChar < '\040' || "\"\'\\><&=-;".indexOf(inChar) >= 0)
+            return "\\x" + toHexString(inChar);
         else
-            return new String(new char[]{inChar});
+            return Character.toString(inChar);
     }
 
     public static void escape(final String input, final StringBuilder collector) {
@@ -66,11 +61,11 @@ public class Helper {
             default:
                 // encode 'ugly' characters (ie Word "curvy" quotes etc)
                 if (inChar >= '\200' && inChar < '\377')
-                    return "&#x" + hexify(inChar) + ";";
+                    return "&#x" + toHexString(inChar) + ";";
                     //add other characters back in - to handle charactersets
                     //other than ascii
                 else
-                    return new String(new char[]{inChar});
+                    return Character.toString(inChar);
         }
     }
 
