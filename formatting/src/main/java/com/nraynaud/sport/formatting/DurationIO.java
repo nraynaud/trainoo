@@ -2,6 +2,7 @@ package com.nraynaud.sport.formatting;
 
 import static com.nraynaud.sport.formatting.DurationIO.Multiplier.*;
 
+import java.text.MessageFormat;
 import java.util.Formatter;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -72,13 +73,9 @@ public class DurationIO {
                 return null;
             final int count = matcher.groupCount();
             if (count != multipliers.length)
-                throw new IllegalStateException("pattern "
-                        + pattern.pattern()
-                        + " has "
-                        + count
-                        + " groups but is declared with "
-                        + multipliers.length
-                        + " multiplers");
+                throw new IllegalStateException(
+                        MessageFormat.format("pattern {0} has {1} groups but it was declared with {2} multipliers",
+                                pattern.pattern(), count, multipliers.length));
             long result = 0;
             for (int i = 0; i < count; i++)
                 result += multipliers[i].factor * Long.parseLong(matcher.group(i + 1));
