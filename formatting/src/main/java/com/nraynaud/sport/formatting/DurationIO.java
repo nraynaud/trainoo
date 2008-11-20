@@ -1,5 +1,7 @@
 package com.nraynaud.sport.formatting;
 
+import static com.nraynaud.sport.formatting.DurationIO.Multiplier.*;
+
 import java.util.Formatter;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -18,10 +20,10 @@ public class DurationIO {
                                         final String minutesFmt,
                                         final String secondsFmt) {
         final long dur = duration.longValue();
-        final long hours = dur / DurationIO.Multiplier.HOUR.factor;
-        final long hourRemainder = dur % DurationIO.Multiplier.HOUR.factor;
-        final long minutes = hourRemainder / DurationIO.Multiplier.MINUTE.factor;
-        final long seconds = hourRemainder % DurationIO.Multiplier.MINUTE.factor;
+        final long hours = dur / HOUR.factor;
+        final long hourRemainder = dur % HOUR.factor;
+        final long minutes = hourRemainder / MINUTE.factor;
+        final long seconds = hourRemainder % MINUTE.factor;
         return nilIfZero(hours, hoursFmt) + nilIfZeroTwoDigits(minutes, minutesFmt) + nilIfZeroTwoDigits(seconds,
                 secondsFmt);
     }
@@ -47,18 +49,14 @@ public class DurationIO {
 
     @SuppressWarnings({"UnusedDeclaration"})
     public enum Parser {
-        HOURS_MINUTES_SECONDS_PATTERN("(\\d+)h(\\d+)'(\\d+)(?:'')?", DurationIO.Multiplier.HOUR,
-                DurationIO.Multiplier.MINUTE, DurationIO.Multiplier.SECOND),
-        HOURS_MINUTES_M_SECONDS_PATTERN("(\\d+)h(\\d+)m(\\d+)(?:'')?", DurationIO.Multiplier.HOUR,
-                DurationIO.Multiplier.MINUTE, DurationIO.Multiplier.SECOND),
-        HOURS_MINUTES_PATTERN("(\\d+)h(\\d+)'?", DurationIO.Multiplier.HOUR, DurationIO.Multiplier.MINUTE),
-        MINUTES_SECONDS_PATTERN("(\\d+)'(\\d+)(?:'')?", DurationIO.Multiplier.MINUTE,
-                DurationIO.Multiplier.SECOND),
-        MINUTES_M_SECONDS_PATTERN("(\\d+)m(\\d+)(?:'')?", DurationIO.Multiplier.MINUTE,
-                DurationIO.Multiplier.SECOND),
-        HOURS_PATTERN("(\\d+)h", DurationIO.Multiplier.HOUR),
-        MINUTES_PATTERN("(\\d+)'?", DurationIO.Multiplier.MINUTE),
-        SECONDS_PATTERN("(\\d+)''", DurationIO.Multiplier.SECOND);
+        HOURS_MINUTES_SECONDS_PATTERN("(\\d+)h(\\d+)'(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
+        HOURS_MINUTES_M_SECONDS_PATTERN("(\\d+)h(\\d+)m(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
+        HOURS_MINUTES_PATTERN("(\\d+)h(\\d+)'?", HOUR, MINUTE),
+        MINUTES_SECONDS_PATTERN("(\\d+)'(\\d+)(?:'')?", MINUTE, SECOND),
+        MINUTES_M_SECONDS_PATTERN("(\\d+)m(\\d+)(?:'')?", MINUTE, SECOND),
+        HOURS_PATTERN("(\\d+)h", HOUR),
+        MINUTES_PATTERN("(\\d+)'?", MINUTE),
+        SECONDS_PATTERN("(\\d+)''", SECOND);
 
         private final Pattern pattern;
         private final Multiplier[] multipliers;
