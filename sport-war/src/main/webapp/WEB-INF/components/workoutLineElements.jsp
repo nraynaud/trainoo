@@ -8,7 +8,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<% final Workout workout = top(Workout.class); %>
+<% final Workout workout = top(); %>
 <span class="date"><%=DateHelper.printDate("dd/MM", workout.getDate())%></span>
 <span class="discipline"><%=workout.getDiscipline()%></span>
 <% if (boolParam("withUser")) {%>

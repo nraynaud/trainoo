@@ -5,7 +5,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<% final TableContent.TableSheet sheet = top(TableContent.TableSheet.class);%>
+<% final TableContent.TableSheet sheet = top();%>
 <dt><%=sheet.label%>
 </dt>
 <dd>

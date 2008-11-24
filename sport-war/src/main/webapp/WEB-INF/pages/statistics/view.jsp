@@ -11,7 +11,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <%
-    final StatisticsPageData data = top(StatisticsPageData.class);
+    final StatisticsPageData data = top();
     final User user = data.user;
     final boolean lookingOwnStats = user.equals(currentUser());
     final String discipline = stringProperty("discipline");

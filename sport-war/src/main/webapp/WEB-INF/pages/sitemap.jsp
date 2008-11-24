@@ -5,7 +5,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <%=url("http://trainoo.com/", "hourly", "0.8")%>
     <%
-        final SitemapData data = top(SitemapData.class);
+        final SitemapData data = top();
         for (final Number id : data.userIds) {
             out.println(url("http://trainoo.com/bib/?id=" + String.valueOf(id), "weekly", "0.7"));
             out.println(url("http://trainoo.com/statistics/?id=" + String.valueOf(id), "weekly", "0.7"));

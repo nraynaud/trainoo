@@ -11,7 +11,7 @@
 
 <p:layoutParams title="Mon Vestiaire" showTitleInPage="true"/>
 
-<%final UserPageData data = top(UserPageData.class);%>
+<%final UserPageData data = top();%>
 <div id="globalLeft">
 
     <h2>
@@ -62,7 +62,7 @@
             <table class="groupList">
                 <tbody>
                     <s:iterator value="%{groupMembership}">
-                        <%final GroupData groupData = top(GroupData.class);%>
+                        <%final GroupData groupData = top();%>
                         <tr>
                             <th><%=link("/groups", "", groupData.name.toString(), null, "id",
                                     String.valueOf(groupData.id))%>
@@ -86,7 +86,7 @@
             <ul class="userList">
                 <s:iterator value="%{privateMessageReceivers}">
                     <%
-                        final ConversationSummary summary = top(ConversationSummary.class);
+                        final ConversationSummary summary = top();
                         final long newCount = summary.newMessageCount;
                         final UserString name = summary.correspondentName;%>
                     <li class="<%=newCount > 0 ? "hasNewMessage" : "noNewMessage"%>">

@@ -3,7 +3,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    final Workout workout = top(Workout.class);
+    final Workout workout = top();
     if (workout.getUser().getNikePlusId() != null) {
 %>
 <a href="http://nikeplus.nike.com/nikeplus/?l=runners,runs,<%=workout.getUser().getNikePlusId()%>,runID,<%=workout.getNikePlusId()%>"

@@ -12,7 +12,7 @@
 
 
 <%
-    final GroupPageData groupPage = top(GroupPageData.class);
+    final GroupPageData groupPage = top();
     final Group group = groupPage.group;
 %>
 <p:layoutParams title="<%=group == null ? "Les groupes" : "Groupe : " + group.getName()%>"/>
@@ -131,21 +131,24 @@
     <div class="content textContent">
         <table class="groupList">
             <tbody>
-                <s:iterator value="%{allGroups}">
-                    <%final GroupData groupData = top(GroupData.class);%>
-                    <tr>
-                        <th><%=link("/groups", "", groupData.name.toString(), null, "id",
-                                String.valueOf(groupData.id))%>
-                        </th>
-                        <%final int newCount = groupData.newMessagesCount; %>
-                        <td><%=newCount > 0 ? newCount + (newCount
-                                == 1 ? " nouveau message" : " nouveaux messages") : ""%>
-                        </td>
-                        <td><%final long count = property("memberCount", Long.class).longValue();%>
-                            <%=count > 1 ? count + " membres" : count == 1 ? "un seul membre" : "aucun membre"%>
-                        </td>
-                    </tr>
-                </s:iterator>
+                <%
+                    for (final GroupData otherGroup : groupPage.allGroups) {
+                %>
+                <tr>
+                    <th><%=link("/groups", "", otherGroup.name.toString(), null, "id",
+                            String.valueOf(otherGroup.id))%>
+                    </th>
+                    <%final int newCount = otherGroup.newMessagesCount; %>
+                    <td><%=newCount > 0 ? newCount + (newCount
+                            == 1 ? " nouveau message" : " nouveaux messages") : ""%>
+                    </td>
+                    <td><%final long count = property("memberCount", Long.class).longValue();%>
+                        <%=count > 1 ? count + " membres" : count == 1 ? "un seul membre" : "aucun membre"%>
+                    </td>
+                </tr>
+                <%
+                    }
+                %>
             </tbody>
         </table>
     </div>

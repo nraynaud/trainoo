@@ -19,7 +19,7 @@
     <div class="block sheetBlock">
         <div class="header">
             <div class="deco"></div>
-            <% final GlobalWorkoutsPageData data = top(GlobalWorkoutsPageData.class);
+            <% final GlobalWorkoutsPageData data = top();
                 call(pageContext, "distanceByDiscipline.jsp", data.workoutsData);
             %>
         </div>

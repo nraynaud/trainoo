@@ -27,7 +27,7 @@
         margin: 0;
     }
 </style>
-<% final BibPageData data = top(BibPageData.class); %>
+<% final BibPageData data = top(); %>
 <div style="max-width:450px">
     <div class="block sheetBlock userSheetBlock">
         <div class="header">
