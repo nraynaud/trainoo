@@ -4,6 +4,7 @@
 <%@ page import="static com.nraynaud.sport.MessageKind.PRIVATE" %>
 <%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.web.view.StackUtil" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,8 +15,8 @@
     final String errorParam = getFirstValue("error");
     if (errorParam == null || errorParam.equals(MY_ERROR_CODE)) {
         allowOverrides();
-        final Workout workout = property("aboutWorkout", Workout.class);
-        final Workout answerWorkout = workout != null ? workout : parameter("aboutWorkout", Workout.class);
+        final Workout workout = property("aboutWorkout");
+        final Workout answerWorkout = workout != null ? workout : StackUtil.<Workout>parameter("aboutWorkout");
 %>
 
 <div class="block addCommentBlock">
@@ -37,9 +38,9 @@
             </s:fielderror>
             <a name="errorMessage"> </a>
             <%}%>
-            <% final UserString receiverProperty = property("receiver", UserString.class);
+            <% final UserString receiverProperty = property("receiver");
                 if (!boolParam("hideReceiverBox")) {
-                    final UserString receiverParameter = parameter("receiver", UserString.class);
+                    final UserString receiverParameter = parameter("receiver");
                     final String receiver = receiverProperty != null ? receiverProperty.toString() : receiverParameter
                             != null ? receiverParameter.toString() : "";%>
             <span class="label">
@@ -61,8 +62,9 @@
             <input type="hidden" name="fromAction" value="<%=currentAction()%>">
             <input type="hidden" name="onErrorAction" value="<%=currentAction().addParam("error", MY_ERROR_CODE)%>">
             <input type="hidden" name="publicMessage" value="false">
-            <% if (property("aboutWorkout", Workout.class) != null) { %>
-            <input type="hidden" name="aboutWorkoutId" value="<%=property("aboutWorkout", Workout.class).getId()%>">
+            <% final Workout aboutWorkout = property("aboutWorkout");
+                if (aboutWorkout != null) { %>
+            <input type="hidden" name="aboutWorkoutId" value="<%=aboutWorkout.getId()%>">
             <% } %>
 
             <span class="input"><%=textArea("privateMessageContent", "content", "")%></span>

@@ -6,8 +6,9 @@
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="static com.nraynaud.sport.web.action.messages.WritePublicAction.CONTENT_MAX_LENGTH" %>
-<%@ page import="java.util.HashMap" %>
+<%@ page import="com.nraynaud.sport.web.view.StackUtil" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="java.util.HashMap" %>
 
 <% final PaginatedCollection<Message> messages = top();
     for (final Message message : messages) {
@@ -53,7 +54,7 @@
                 <input type="hidden" name="onErrorAction" value="<%=currentAction().addParam("error", "editMessage")%>">
                         
                     <span class="input">
-                        <%=textArea("editContent", "content", property("content", UserString.class).nonEscaped())%>
+                        <%=textArea("editContent", "content", StackUtil.<UserString>property("content").nonEscaped())%>
                     </span>
                 <p:javascript>makeItCount('editContent', <%=CONTENT_MAX_LENGTH%>);
                     $('editContent').focus();</p:javascript>

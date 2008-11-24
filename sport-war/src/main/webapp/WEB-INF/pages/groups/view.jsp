@@ -2,10 +2,11 @@
 <%@ page import="com.nraynaud.sport.Group" %>
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="com.nraynaud.sport.data.GroupPageData" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.nraynaud.sport.web.view.StackUtil" %>
 <%@ page import="static com.nraynaud.sport.web.action.groups.CreateAction.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -142,13 +143,14 @@
                     <td><%=newCount > 0 ? newCount + (newCount
                             == 1 ? " nouveau message" : " nouveaux messages") : ""%>
                     </td>
-                    <td><%final long count = property("memberCount", Long.class).longValue();%>
+                    <td><%final long count = StackUtil.<Long>property("memberCount").longValue();%>
                         <%=count > 1 ? count + " membres" : count == 1 ? "un seul membre" : "aucun membre"%>
                     </td>
                 </tr>
                 <%
                     }
                 %>
+
             </tbody>
         </table>
     </div>

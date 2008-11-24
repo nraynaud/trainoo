@@ -1,7 +1,6 @@
 package com.nraynaud.sport.web.view;
 
 import com.nraynaud.sport.Helper;
-import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.data.PaginatedCollection;
 import com.nraynaud.sport.formatting.DateHelper;
@@ -65,51 +64,32 @@ public class StackUtil {
     }
 
     public static String stringProperty(final String expression) {
-        return property(expression, String.class);
-    }
-
-    public static UserString userStringProperty(final String expression) {
-        return property(expression, UserString.class);
-    }
-
-    @SuppressWarnings({"unchecked", "UnusedDeclaration"})
-    public static <T> T cast(final Object value, final Class<T> type) {
-        return (T) value;
-    }
-
-    public static <T> T property(final String expression, final Class<T> type) {
-        return cast(stack().findValue(expression, type), type);
+        return cast(stack().findValue(expression, String.class));
     }
 
     @SuppressWarnings({"unchecked"})
+    public static <T> T cast(final Object value) {
+        return (T) value;
+    }
+
     public static <T> T property(final String expression) {
-        return (T) stack().findValue(expression);
+        return cast(stack().findValue(expression));
     }
 
-    @SuppressWarnings({"unchecked", "UnusedDeclaration"})
-    public static <T> List<T> listProperty(final String name, final Class<T> elementType) {
-        return property(name, List.class);
-    }
-
-    @SuppressWarnings({"unchecked", "UnusedDeclaration"})
-    public static <T> List<T> listProperty(final String name) {
-        return property(name, List.class);
-    }
-
-    public static <T> T parameter(final String expression, final Class<T> type) {
-        return property("parameters." + expression, type);
+    public static <T> T parameter(final String expression) {
+        return property("parameters." + expression);
     }
 
     /**
      * null is false
      */
     public static boolean boolParam(final String expression) {
-        final Boolean param = parameter(expression, Boolean.class);
+        final Boolean param = parameter(expression);
         return param != null && param.booleanValue();
     }
 
     public static String stringParam(final String expression) {
-        return parameter(expression, String.class);
+        return parameter(expression);
     }
 
     public static ValueStack stack() {
@@ -125,13 +105,8 @@ public class StackUtil {
         return result == null ? ifNull : Helper.escaped(result);
     }
 
-    public static <T> T top(final Class<T> type) {
-        return cast(stack().peek(), type);
-    }
-
-    @SuppressWarnings({"unchecked"})
     public static <T> T top() {
-        return (T) stack().peek();
+        return cast(stack().peek());
     }
 
     public static void push(final Object object) {
@@ -234,7 +209,7 @@ public class StackUtil {
     }
 
     public static ActionDetail currentAction() {
-        return property("actionDescription", ActionDetail.class);
+        return property("actionDescription");
     }
 
     public static PaginatedCollection.Transformer<Workout, TableContent> oneSheetContentTransformer(

@@ -1,10 +1,12 @@
 <%@ page import="com.nraynaud.sport.Track" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.web.view.StackUtil" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<% final Track track = property("track", Track.class);%>
+<% final Track track = property("track");%>
 <p:layoutParams title="<%=track == null ? "Mes parcours" : track.getTitle() == null ? "Mon parcours" : track.getTitle()
         .toString()%>" showHeader="false" showTitleInPage="false" showFooter="false"/>
 
@@ -38,7 +40,7 @@
         <table id="trackTable">
             <%
                 boolean parity = false;
-                for (final Track loopTrack : listProperty("tracks", Track.class)) {
+                for (final Track loopTrack : StackUtil.<List<Track>>property("tracks")) {
                     parity = !parity;
             %>
             <tr class="<%=parity ? "odd":"even"%> <%=loopTrack.equals(track) ? "highLight" : ""%>">

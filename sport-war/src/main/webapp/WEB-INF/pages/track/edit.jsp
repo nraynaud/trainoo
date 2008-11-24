@@ -11,7 +11,7 @@
     <link href="<%=stat("/static/track/trackstyle.css")%>" rel="stylesheet" type="text/css">
 </p:header>
 
-<% final Track track = property("track", Track.class);%>
+<% final Track track = property("track");%>
 <div id="mapGlobalContainer">
     <div id="controlPanel">
         <s:form id="createForm" namespace="/track" action="edit">

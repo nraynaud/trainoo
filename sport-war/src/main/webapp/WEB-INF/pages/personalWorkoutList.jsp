@@ -5,6 +5,7 @@
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page import="com.nraynaud.sport.data.UserPageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
@@ -54,25 +55,31 @@
 </div>
 
 <div id="globalRight">
-    <%if (property("groupMembership", Iterable.class).iterator().hasNext()) {%>
+    <%
+        final Iterable<GroupData> membership = property("groupMembership");
+        if (membership.iterator().hasNext()) {
+    %>
     <h2>Les groupes dont je suis membre</h2>
 
     <div class="block">
         <div class="content textContent">
             <table class="groupList">
                 <tbody>
-                    <s:iterator value="%{groupMembership}">
-                        <%final GroupData groupData = top();%>
-                        <tr>
-                            <th><%=link("/groups", "", groupData.name.toString(), null, "id",
-                                    String.valueOf(groupData.id))%>
-                            </th>
-                            <%final int newCount = groupData.newMessagesCount; %>
-                            <td><%=newCount > 0 ? newCount + (newCount
-                                    == 1 ? " nouveau message" : " nouveaux messages") : ""%>
-                            </td>
-                        </tr>
-                    </s:iterator>
+                    <%
+                        for (final GroupData groupData : membership) {
+                    %>
+                    <tr>
+                        <th><%=link("/groups", "", groupData.name.toString(), null, "id",
+                                String.valueOf(groupData.id))%>
+                        </th>
+                        <%final int newCount = groupData.newMessagesCount; %>
+                        <td><%=newCount > 0 ? newCount + (newCount
+                                == 1 ? " nouveau message" : " nouveaux messages") : ""%>
+                        </td>
+                    </tr>
+                    <%
+                        }
+                    %>
                 </tbody>
             </table>
         </div>

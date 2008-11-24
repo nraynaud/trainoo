@@ -3,11 +3,12 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.web.view.PaginationView" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.web.view.StackUtil" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="pagination">
     <%
-        final PaginatedCollection<?> collection = top(PaginationView.class).collection;
+        final PaginatedCollection<?> collection = StackUtil.<PaginationView<?, ?>>top().collection;
         final String pageVariable = stringProperty("pageVariable");
         if (collection.hasPrevious()) {
     %>

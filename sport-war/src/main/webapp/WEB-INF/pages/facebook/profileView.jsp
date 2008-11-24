@@ -3,7 +3,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <a href="http://trainoo.com">Aller sur Trainoo.com</a>
 <%
-    final BibPageData data = property("model", BibPageData.class);
+    final BibPageData data = property("model");
     if (data != null) {
         call(pageContext, "facebookTable.jsp", data);
     }

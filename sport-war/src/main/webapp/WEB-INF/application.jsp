@@ -5,6 +5,8 @@
 <%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.web.view.StackUtil" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
 
@@ -49,11 +51,11 @@
             <%if (pageDetail.isShowHeader()) {%>
             <%
                 if (isLogged()) {
-                    final int newMessagesCount = property("newMessagesTotal", Integer.class).intValue();
+                    final int newMessagesCount = StackUtil.<Integer>property("newMessagesTotal").intValue();
                     if (newMessagesCount > 0) {
             %>
             <div id="alertBox">
-                <a href="<%=createUrl("/messages", "", "receiver", listProperty("newMessages", NewMessageData.class).get(0).sender.toString())%>"
+                <a href="<%=createUrl("/messages", "", "receiver", StackUtil.<List<NewMessageData>>property("newMessages").get(0).sender.toString())%>"
                    title="Aller voir le 1er message">
                     Vous avez <%=newMessagesCount%> <%=pluralize(newMessagesCount, "nouveau message",
                         "nouveaux messages")%>

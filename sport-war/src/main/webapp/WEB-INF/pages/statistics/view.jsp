@@ -19,7 +19,7 @@
 <p:layoutParams title="<%=lookingOwnStats ? "Mes statistiques" : "Les statistiques de " + user.getName()%>"/>
 
 <form id="disciplineForm" action="" method="GET">
-    <input type="hidden" name="id" value="<%=property("id", Long.class)%>">
+    <input type="hidden" name="id" value="<%=property("id")%>">
     <input id="hiddenDiscipline" type="hidden" name="discipline" value="<%=discipline%>">
 </form>
 
