@@ -5,8 +5,6 @@ import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.data.DisciplineData;
-import com.nraynaud.sport.data.PaginatedCollection;
-import com.nraynaud.sport.formatting.DateHelper;
 import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
 import com.nraynaud.sport.web.URIValidator;
@@ -14,7 +12,6 @@ import com.opensymphony.xwork2.ActionContext;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
-import javax.servlet.jsp.PageContext;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.BreakIterator;
@@ -34,49 +31,6 @@ public class Helpers {
     public static final SportActionMapper MAPPER = new SportActionMapper();
 
     private static final String STATIC_CONTENT_PREFIX;
-    public static final Comparator<Date> REVERSE_DATE_COMPARATOR = new Comparator<Date>() {
-        public int compare(final Date o1, final Date o2) {
-            return o2.compareTo(o1);
-        }
-    };
-    public static final PaginatedCollection.Transformer<Workout, TableContent> DEFAULT_WORKOUT_TRANSFORMER = new PaginatedCollection.Transformer<Workout, TableContent>() {
-        public TableContent transform(final PaginatedCollection<Workout> paginatedCollection) {
-            final Map<Date, Collection<Workout>> theMap = new TreeMap<Date, Collection<Workout>>(
-                    REVERSE_DATE_COMPARATOR);
-            for (final Workout workout : paginatedCollection) {
-                final Date date = workout.getDate();
-                final Collection<Workout> workoutCollection = theMap.get(date);
-                if (workoutCollection == null) {
-                    final Collection<Workout> theCollection = new ArrayList<Workout>();
-                    theCollection.add(workout);
-                    theMap.put(date, theCollection);
-                } else
-                    workoutCollection.add(workout);
-            }
-            final List<TableContent.TableSheet> sheets = new ArrayList<TableContent.TableSheet>(
-                    theMap.size());
-            for (final Map.Entry<Date, Collection<Workout>> sheetData : theMap.entrySet()) {
-                final String formated = DateHelper.humanizePastDate(sheetData.getKey(),
-                        "'Aujourd''hui'", "'Hier'",
-                        "'Avant-hier'", "EEEE dd/MM");
-                sheets.add(new TableContent.TableSheet(formated, sheetData.getValue(), new TableContent.RowRenderer() {
-                    public void render(final Workout workout, final PageContext context) throws Exception {
-                        StackUtil.call(context, "workoutLineElements.jsp", workout, "withUser", true);
-                    }
-                }));
-            }
-            return new TableContent(sheets);
-        }
-    };
-    public static final TableContent.RowRenderer SECONDARY_TABLE_RENDERER = new TableContent.RowRenderer() {
-        public void render(final Workout workout, final PageContext context) throws Exception {
-            context.getOut()
-                    .append("<span class='date'>")
-                    .append(DateHelper.printDate("EE dd/MM", workout.getDate()))
-                    .append("</span>");
-            StackUtil.call(context, "workoutLineElements.jsp", workout);
-        }
-    };
     public static final Comparator<DisciplineData<DisciplineData.Count>> DISCIPLNE_DISTANCE_COMPARATOR = new Comparator<DisciplineData<DisciplineData.Count>>() {
         public int compare(final DisciplineData<DisciplineData.Count> o1,
                            final DisciplineData<DisciplineData.Count> o2) {
@@ -183,18 +137,13 @@ public class Helpers {
     }
 
     public static String signupUrl(final String text) {
-        final String from = findFromAction();
+        final String from = StackUtil.fromActionOrCurrent();
         return link("/", "signup", text, null, "fromAction", from);
     }
 
     public static String loginUrl(final String text) {
-        final String from = findFromAction();
+        final String from = StackUtil.fromActionOrCurrent();
         return link("/", "login", text, null, "fromAction", from);
-    }
-
-    public static String findFromAction() {
-        return StackUtil.stringProperty("fromAction") == null ? StackUtil.stringProperty(
-                "actionDescription") : StackUtil.stringProperty("fromAction");
     }
 
     public static String getFirstValue(final String key) {
@@ -348,17 +297,6 @@ public class Helpers {
         for (final User user : participans)
             participantsCollector.append(", ").append(escaped(user.getName()));
         return participantsCollector.substring(2);
-    }
-
-    public static PaginatedCollection.Transformer<Workout, TableContent> oneSheetContentTransformer(
-            final String sheetLabel) {
-        return new PaginatedCollection.Transformer<Workout, TableContent>() {
-            public TableContent transform(final PaginatedCollection<Workout> collection) {
-                final TableContent.TableSheet sheet = new TableContent.TableSheet(sheetLabel, collection,
-                        SECONDARY_TABLE_RENDERER);
-                return new TableContent(Collections.singletonList(sheet));
-            }
-        };
     }
 
     public static String selectComponent(final String name, final String id, final Iterable<String> values,

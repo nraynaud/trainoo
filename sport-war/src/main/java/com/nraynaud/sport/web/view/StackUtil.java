@@ -2,6 +2,10 @@ package com.nraynaud.sport.web.view;
 
 import com.nraynaud.sport.Helper;
 import com.nraynaud.sport.UserString;
+import com.nraynaud.sport.Workout;
+import com.nraynaud.sport.data.PaginatedCollection;
+import com.nraynaud.sport.formatting.DateHelper;
+import com.nraynaud.sport.web.ActionDetail;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.CreateIfNull;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -9,12 +13,53 @@ import org.apache.struts2.components.Include;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StackUtil {
     public static final String OVERRIDES_KEY = "overrides";
+    public static final Comparator<Date> REVERSE_DATE_COMPARATOR = new Comparator<Date>() {
+        public int compare(final Date o1, final Date o2) {
+            return o2.compareTo(o1);
+        }
+    };
+    public static final PaginatedCollection.Transformer<Workout, TableContent> DEFAULT_WORKOUT_TRANSFORMER = new PaginatedCollection.Transformer<Workout, TableContent>() {
+        public TableContent transform(final PaginatedCollection<Workout> paginatedCollection) {
+            final Map<Date, Collection<Workout>> theMap = new TreeMap<Date, Collection<Workout>>(
+                    REVERSE_DATE_COMPARATOR);
+            for (final Workout workout : paginatedCollection) {
+                final Date date = workout.getDate();
+                final Collection<Workout> workoutCollection = theMap.get(date);
+                if (workoutCollection == null) {
+                    final Collection<Workout> theCollection = new ArrayList<Workout>();
+                    theCollection.add(workout);
+                    theMap.put(date, theCollection);
+                } else
+                    workoutCollection.add(workout);
+            }
+            final List<TableContent.TableSheet> sheets = new ArrayList<TableContent.TableSheet>(
+                    theMap.size());
+            for (final Map.Entry<Date, Collection<Workout>> sheetData : theMap.entrySet()) {
+                final String formated = DateHelper.humanizePastDate(sheetData.getKey(),
+                        "'Aujourd''hui'", "'Hier'",
+                        "'Avant-hier'", "EEEE dd/MM");
+                sheets.add(new TableContent.TableSheet(formated, sheetData.getValue(), new TableContent.RowRenderer() {
+                    public void render(final Workout workout, final PageContext context) throws Exception {
+                        call(context, "workoutLineElements.jsp", workout, "withUser", true);
+                    }
+                }));
+            }
+            return new TableContent(sheets);
+        }
+    };
+    public static final TableContent.RowRenderer SECONDARY_TABLE_RENDERER = new TableContent.RowRenderer() {
+        public void render(final Workout workout, final PageContext context) throws Exception {
+            context.getOut()
+                    .append("<span class='date'>")
+                    .append(DateHelper.printDate("EE dd/MM", workout.getDate()))
+                    .append("</span>");
+            call(context, "workoutLineElements.jsp", workout);
+        }
+    };
 
     private StackUtil() {
     }
@@ -178,5 +223,28 @@ public class StackUtil {
                                        final Object... arguments) throws Exception {
         call(context, template, stackTop.transformer.transform(stackTop.collection), arguments);
         call(context, "paginationButtons.jsp", stackTop);
+    }
+
+    /**
+     * used for login as an example, it forwards you to its previous action if the login was successful.
+     */
+    public static String fromActionOrCurrent() {
+        final String fromAction = stringProperty("fromAction");
+        return fromAction == null ? currentAction().toString() : fromAction;
+    }
+
+    public static ActionDetail currentAction() {
+        return property("actionDescription", ActionDetail.class);
+    }
+
+    public static PaginatedCollection.Transformer<Workout, TableContent> oneSheetContentTransformer(
+            final String sheetLabel) {
+        return new PaginatedCollection.Transformer<Workout, TableContent>() {
+            public TableContent transform(final PaginatedCollection<Workout> collection) {
+                final TableContent.TableSheet sheet = new TableContent.TableSheet(sheetLabel, collection,
+                        SECONDARY_TABLE_RENDERER);
+                return new TableContent(Collections.singletonList(sheet));
+            }
+        };
     }
 }

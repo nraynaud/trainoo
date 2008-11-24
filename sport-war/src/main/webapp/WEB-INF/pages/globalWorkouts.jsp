@@ -52,7 +52,7 @@
             </ul>
             <form method="GET" id="subscribeForm" action="<%=createUrl("/", "signup")%>">
                 <span class="actions">
-                    <input type="hidden" name="fromAction" value="<%=findFromAction()%>">
+                    <input type="hidden" name="fromAction" value="<%=fromActionOrCurrent()%>">
                     <input type="submit" value="Inscription" class="submit">
                 </span>
             </form>

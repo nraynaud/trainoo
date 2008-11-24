@@ -12,7 +12,7 @@
             <form method="POST" action="<%=createUrl("/", "signup")%>">
                 <s:actionerror/>
                 <s:fielderror/>
-                <input type="hidden" name="fromAction" value="<%=stringProperty("fromAction")%>"/>
+                <input type="hidden" name="fromAction" value="<%=fromActionOrCurrent()%>"/>
                 <span class="label">
                     <label for="login">Votre surnom</label>
                     <span class="help fullWidth">c'est par ce nom que vous serez visible sur tout le site</span>

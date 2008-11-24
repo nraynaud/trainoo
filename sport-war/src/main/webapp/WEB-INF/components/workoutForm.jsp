@@ -20,7 +20,8 @@
     </s:fielderror>
     <a name="workoutMessage"></a>
 
-    <s:hidden name="fromAction" value="%{actionDescription}"/>
+    <input type="hidden" name="fromAction" value="<%=currentAction()%>">
+
     <div style="clear:both;">
         <table>
             <tr>

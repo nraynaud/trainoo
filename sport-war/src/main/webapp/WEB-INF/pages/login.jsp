@@ -1,6 +1,6 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.signupUrl" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="static com.nraynaud.sport.web.view.StackUtil.stringProperty" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -13,7 +13,7 @@
             <form method="POST" action="<%=createUrl("/", "login")%>">
                 <s:actionerror/>
                 <s:fielderror/>
-                <input type="hidden" name="fromAction" value="<%=stringProperty("fromAction")%>">
+                <input type="hidden" name="fromAction" value="<%=fromActionOrCurrent()%>">
                 <span class="label">
                     <label for="login">Votre surnom</label>
                 </span>

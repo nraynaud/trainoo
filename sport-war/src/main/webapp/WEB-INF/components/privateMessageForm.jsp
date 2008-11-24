@@ -2,7 +2,6 @@
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="static com.nraynaud.sport.MessageKind.PRIVATE" %>
-<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -59,9 +58,8 @@
             <input type="hidden" name="receiver" value="<%=receiverProperty%>">
             <%}%>
             <input type="hidden" name="messageKind" value="<%=PRIVATE%>">
-            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>">
-            <input type="hidden" name="onErrorAction"
-                   value="<%=((ActionDetail)property("actionDescription",Object.class)).addParam("error", MY_ERROR_CODE)%>">
+            <input type="hidden" name="fromAction" value="<%=currentAction()%>">
+            <input type="hidden" name="onErrorAction" value="<%=currentAction().addParam("error", MY_ERROR_CODE)%>">
             <input type="hidden" name="publicMessage" value="false">
             <% if (property("aboutWorkout", Workout.class) != null) { %>
             <input type="hidden" name="aboutWorkoutId" value="<%=property("aboutWorkout", Workout.class).getId()%>">

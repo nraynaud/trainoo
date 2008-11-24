@@ -73,7 +73,7 @@
         <%call(pageContext, "userListBlock.jsp", groupPage.users);%>
         <% if (groupPage.isMember) { %>
         <form method="POST" action="<%=createUrl("/groups", "part")%>">
-            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="fromAction" value="<%=currentAction()%>"/>
             <input type="hidden" name="groupId" value="<%=stringProperty("id")%>"/>
                     <span class="actions">
                         <input type="submit" class="submit" value="Quitter le groupe"/>
@@ -81,7 +81,7 @@
         </form>
         <%} else {%>
         <form method="POST" action="<%=createUrl("/groups", "join")%>">
-            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="fromAction" value="<%=currentAction()%>"/>
             <input type="hidden" name="groupId" value="<%=stringProperty("id")%>"/>
                     <span class="actions">
                         <input type="submit" class="submit" value="Rejoindre le groupe"
@@ -159,7 +159,7 @@
         <form method="POST" action="<%=createUrl("/groups", "create")%>">
             <s:actionerror/>
             <s:fielderror/>
-            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+            <input type="hidden" name="fromAction" value="<%=currentAction()%>"/>
                 <span class="input">
                     <input class="text" id="name" name="name"/>
                 </span>

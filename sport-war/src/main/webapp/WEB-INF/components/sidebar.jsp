@@ -1,5 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="sidebar">
@@ -25,7 +26,7 @@
             if (currentUser() != null && currentUser().getNikePluEmail() != null) {
         %>
         <a class="refreshNikePlus" title="Rafraichir les données Nike+"
-           href="<%=createUrl("/privatedata", "refreshNikePlus", "fromAction", findFromAction())%>">
+           href="<%=createUrl("/privatedata", "refreshNikePlus", "fromAction", fromActionOrCurrent())%>">
             Rafraichir les donnés Nike+
         </a>
         <% } %>
@@ -48,7 +49,7 @@
         <% } else { %>
         <h2>Connexion</h2>
 
-        <form action="<%=createUrl("/", "login", "fromAction", findFromAction())%>" method="POST">
+        <form action="<%=createUrl("/", "login", "fromAction", fromActionOrCurrent())%>" method="POST">
             <ul>
                 <li>
                     <label for="loginSide">Surnom&nbsp;:</label>

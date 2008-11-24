@@ -1,6 +1,5 @@
-<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.MessageKind.PUBLIC" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -27,9 +26,8 @@
             </s:fielderror>
             <a name="errorMessage"> </a>
             <%}%>
-            <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>">
-            <input type="hidden" name="onErrorAction"
-                   value="<%=property("actionDescription",ActionDetail.class).addParam("error", MY_ERROR_CODE)%>">
+            <input type="hidden" name="fromAction" value="<%=currentAction()%>">
+            <input type="hidden" name="onErrorAction" value="<%=currentAction().addParam("error", MY_ERROR_CODE)%>">
             <input type="hidden" name="publicMessage" value="true">
             <input type="hidden" name="aboutId" value="<%=stringProperty("id")%>">
             <input type="hidden" name="topicKind" value="<%=stringProperty("kind")%>">

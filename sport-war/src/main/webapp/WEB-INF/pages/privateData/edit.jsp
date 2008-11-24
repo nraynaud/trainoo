@@ -48,7 +48,7 @@
                     <s:param value="'password'"/>
                 </s:fielderror>
 
-                <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+                <input type="hidden" name="fromAction" value="<%=currentAction()%>"/>
                 <span class="label">
                     <label for="oldPassword">Votre mot de passe actuel</label>
                 </span>
@@ -75,7 +75,7 @@
                     <s:param value="'nikePlusPassword'"/>
                 </s:fielderror>
 
-                <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>"/>
+                <input type="hidden" name="fromAction" value="<%=currentAction()%>"/>
                 <span class="label">
                     <label for="nikePlusEmail">Votre e-mail Nike+</label>
                     <span class="help fullWidth">vider la case pour supprimer votre compte Nike+ du site mais pas vos entraînements</span>

@@ -6,7 +6,6 @@
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="static com.nraynaud.sport.web.action.messages.WritePublicAction.CONTENT_MAX_LENGTH" %>
-<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 
@@ -50,9 +49,8 @@
                 <input type="hidden" name="id" value="<%=message.getId()%>">
                 <input type="hidden" name="messageKind" value="<%=message.getMessageKind()%>">
                 <input type="hidden" name="fromAction"
-                       value="<%=property("actionDescription",ActionDetail.class).removeParam(EDIT_MESSAGE).removeParam("error")%>">
-                <input type="hidden" name="onErrorAction"
-                       value="<%=property("actionDescription",ActionDetail.class).addParam("error", "editMessage")%>">
+                       value="<%=currentAction().removeParam(EDIT_MESSAGE).removeParam("error")%>">
+                <input type="hidden" name="onErrorAction" value="<%=currentAction().addParam("error", "editMessage")%>">
                         
                     <span class="input">
                         <%=textArea("editContent", "content", property("content", UserString.class).nonEscaped())%>
@@ -105,7 +103,7 @@
                 <%if (canDelete) {%>
                 <form action="<%=deleteUrl(message)%>" method="POST">
                     <input type="hidden" name="id" value="<%=stringProperty("id")%>">
-                    <input type="hidden" name="fromAction" value="<%=stringProperty("actionDescription")%>">
+                    <input type="hidden" name="fromAction" value="<%=currentAction()%>">
                     <%final String deleteId = uniqueId("editDelete");%>
                     <label for="<%=deleteId%>" class="button deleteButton">Supprimer</label>
                     <input id="<%=deleteId%>" type="image" src="<%=stat("/static/blank.gif")%>" value="Supprimer"
