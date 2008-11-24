@@ -4,6 +4,7 @@
 <%@ page import="static com.nraynaud.sport.MessageKind.PRIVATE" %>
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="com.nraynaud.sport.web.action.messages.WriteAction" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,9 +14,10 @@
 %><%
     final String errorParam = getFirstValue("error");
     if (errorParam == null || errorParam.equals(MY_ERROR_CODE)) {
-        allowOverrides();%>
-<% final Workout workout = property("aboutWorkout", Workout.class);
-    final Workout answerWorkout = workout != null ? workout : parameter("aboutWorkout", Workout.class);%>
+        allowOverrides();
+        final Workout workout = property("aboutWorkout", Workout.class);
+        final Workout answerWorkout = workout != null ? workout : parameter("aboutWorkout", Workout.class);
+%>
 
 <div class="block addCommentBlock">
     <div class="content">

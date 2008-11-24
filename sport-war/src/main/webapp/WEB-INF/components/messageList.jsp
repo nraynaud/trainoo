@@ -8,8 +8,9 @@
 <%@ page import="static com.nraynaud.sport.web.action.messages.WritePublicAction.CONTENT_MAX_LENGTH" %>
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 
-<% final PaginatedCollection<Message> messages = top(PaginatedCollection.class);
+<% final PaginatedCollection<Message> messages = top();
     for (final Message message : messages) {
         push(message);
         try {

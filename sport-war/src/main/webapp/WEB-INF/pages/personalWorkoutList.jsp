@@ -4,6 +4,7 @@
 <%@ page import="com.nraynaud.sport.data.GroupData" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page import="com.nraynaud.sport.data.UserPageData" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>

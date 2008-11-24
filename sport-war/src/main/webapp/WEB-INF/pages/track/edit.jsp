@@ -2,6 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.Track" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <p:layoutParams title="Édition d'un parcours" showHeader="false" showTitleInPage="false" showFooter="false"/>

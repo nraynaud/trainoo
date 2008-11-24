@@ -1,5 +1,6 @@
 <%@ page import="com.nraynaud.sport.data.BibPageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <style type="text/css">
@@ -39,9 +40,7 @@
         </div>
         <div class="content">
             <div class="deco"></div>
-            <%
-                call(pageContext, "workoutTable.jsp", data.workouts, "urlPrefix", "http://trainoo.com");
-            %>
+            <% call(pageContext, "workoutTable.jsp", data.workouts, "urlPrefix", "http://trainoo.com"); %>
         </div>
         <div class="footer">
             <div class="deco"></div>

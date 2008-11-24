@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <%@ page import="com.nraynaud.sport.data.SitemapData" %>
-<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/xml;charset=UTF-8" language="java" %>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <%=url("http://trainoo.com/", "hourly", "0.8")%>
     <%
-        final SitemapData data = Helpers.top(SitemapData.class);
+        final SitemapData data = top(SitemapData.class);
         for (final Number id : data.userIds) {
             out.println(url("http://trainoo.com/bib/?id=" + String.valueOf(id), "weekly", "0.7"));
             out.println(url("http://trainoo.com/statistics/?id=" + String.valueOf(id), "weekly", "0.7"));

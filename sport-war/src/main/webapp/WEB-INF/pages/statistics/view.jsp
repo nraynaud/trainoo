@@ -5,6 +5,7 @@
 <%@ page import="com.nraynaud.sport.data.StatisticsPageData" %>
 <%@ page import="com.nraynaud.sport.formatting.FormatHelper" %>
 <%@ page import="java.util.LinkedList" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>

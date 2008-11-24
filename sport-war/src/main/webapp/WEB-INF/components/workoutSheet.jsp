@@ -1,7 +1,7 @@
 <%@ page import="com.nraynaud.sport.Workout" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page import="com.nraynaud.sport.web.view.TableContent" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 

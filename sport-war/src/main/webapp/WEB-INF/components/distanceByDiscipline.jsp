@@ -5,14 +5,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="static java.lang.Math.min" %>
 <%@ page import="java.util.TreeSet" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <%!
     private static final int MAX_DISCIPLINES_TABS = 4;
 %>
 <%
-    final List<DisciplineData<DisciplineData.Count>> disciplines = (List<DisciplineData<DisciplineData.Count>>) property(
-            "distanceByDisciplines", List.class);
+    final List<DisciplineData<DisciplineData.Count>> disciplines = property("distanceByDisciplines");
     String currentFilter = pageContext.getRequest().getParameter("disciplineFilter");
     if (currentFilter == null)
         currentFilter = "";
@@ -30,7 +30,6 @@
         ddSet.addAll(disciplines);
         final ArrayList<DisciplineData<DisciplineData.Count>> orderedDD = new ArrayList<DisciplineData<DisciplineData.Count>>(
                 ddSet);
-        System.out.println(orderedDD);
         for (final DisciplineData<DisciplineData.Count> dd : orderedDD.subList(0,
                 min(orderedDD.size(), MAX_DISCIPLINES_TABS))) { %>
     <li class="<%=currentFilter.equals(dd.discipline.nonEscaped())?"current":""%>">

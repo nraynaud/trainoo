@@ -1,7 +1,7 @@
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.data.ConversationData" %>
 <%@ page import="com.nraynaud.sport.web.view.PaginationView" %>
 <%@ page import="com.nraynaud.sport.web.view.PrivateMessageFormConfig" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>

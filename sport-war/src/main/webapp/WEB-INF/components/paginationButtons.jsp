@@ -2,6 +2,7 @@
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.web.view.PaginationView" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="pagination">

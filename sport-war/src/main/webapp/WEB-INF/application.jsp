@@ -4,6 +4,7 @@
 <%@ page import="static com.nraynaud.sport.Helper.*" %>
 <%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="com.nraynaud.sport.web.view.PageDetail" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="r" uri="/sport-tags" %>
 
