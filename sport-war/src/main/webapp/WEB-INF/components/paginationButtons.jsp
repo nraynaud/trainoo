@@ -1,4 +1,3 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="com.nraynaud.sport.data.PaginatedCollection" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="com.nraynaud.sport.web.view.PaginationView" %>
