@@ -155,7 +155,7 @@
             <div class="deco"></div>
             <%
                 call(pageContext, "workoutTable.jsp", data.similarWorkouts, "displayName",
-                        "true", "withUser", "true");
+                        true, "withUser", true);
             %>
         </div>
         <div class="secondaryHeader">
@@ -165,7 +165,7 @@
         <div class="content">
             <div class="deco"></div>
             <%
-                call(pageContext, "workoutTable.jsp", data.lastWorkouts, "displayName", "true", "withUser", "true");
+                call(pageContext, "workoutTable.jsp", data.lastWorkouts, "displayName", true, "withUser", true);
             %>
         </div>
         <div class="footer">

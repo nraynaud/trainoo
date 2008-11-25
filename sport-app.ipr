@@ -330,6 +330,7 @@
           <option name="ignoreTypeCasts" value="false" />
         </inspection_tool>
         <inspection_tool class="IndexOfReplaceableByContains" level="WARNING" enabled="true" />
+        <inspection_tool class="RedundantTypeArguments" level="WARNING" enabled="false" />
       </profile>
     </profiles>
     <list size="4">

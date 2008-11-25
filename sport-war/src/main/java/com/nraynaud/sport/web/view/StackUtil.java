@@ -73,18 +73,19 @@ public class StackUtil {
     }
 
     public static <T> T property(final String expression) {
-        return cast(stack().findValue(expression));
+        return StackUtil.<T>cast(stack().findValue(expression));
     }
 
     public static <T> T parameter(final String expression) {
-        return property("parameters." + expression);
+        return StackUtil.<T>property("parameters." + expression);
     }
 
     /**
      * null is false
      */
     public static boolean boolParam(final String expression) {
-        final Boolean param = parameter(expression);
+        final Object aBoolean = parameter(expression);
+        final Boolean param = (Boolean) aBoolean;
         return param != null && param.booleanValue();
     }
 
@@ -106,7 +107,7 @@ public class StackUtil {
     }
 
     public static <T> T top() {
-        return cast(stack().peek());
+        return StackUtil.<T>cast(stack().peek());
     }
 
     public static void push(final Object object) {
