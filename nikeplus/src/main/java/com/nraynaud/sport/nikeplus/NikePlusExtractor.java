@@ -110,7 +110,7 @@ public class NikePlusExtractor implements Importer {
                 final String energy = ENERGY.evaluate(node);
                 final String date = START_TIME.evaluate(node);
                 workoutCollector.collectWorkout(nikeId, "course", new SimpleDateFormat("yyyy-MM-dd").parse(date),
-                        Double.valueOf(distance), Long.parseLong(duration) / 1000, Long.parseLong(energy));
+                        Double.valueOf(distance), Long.parseLong(duration) / 1000, Double.valueOf(energy).longValue());
             }
             workoutCollector.endCollection();
         } catch (XPathExpressionException e) {
