@@ -73,8 +73,7 @@
                                 String.valueOf(groupData.id))%>
                         </th>
                         <%final int newCount = groupData.newMessagesCount; %>
-                        <td><%=newCount > 0 ? newCount + (newCount
-                                == 1 ? " nouveau message" : " nouveaux messages") : ""%>
+                        <td><%= pluralize(newCount, "", "un nouveau message", newCount + " nouveaux messages")%>
                         </td>
                     </tr>
                     <%

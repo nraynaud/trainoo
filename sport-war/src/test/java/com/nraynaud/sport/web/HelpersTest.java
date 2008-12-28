@@ -1,7 +1,8 @@
 package com.nraynaud.sport.web;
 
 import com.nraynaud.sport.UserStringImpl;
-import com.nraynaud.sport.web.view.Helpers;
+import static com.nraynaud.sport.web.view.Helpers.multilineText;
+import static com.nraynaud.sport.web.view.Helpers.pluralize;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +20,17 @@ public class HelpersTest {
     }
 
     private static void checkMultiline(final String expected, final String input) {
-        final String output = Helpers.multilineText(UserStringImpl.valueOf(input));
+        final String output = multilineText(UserStringImpl.valueOf(input));
         Assert.assertEquals(expected, output);
+    }
+
+    @Test
+    public void testPluralize() {
+        Assert.assertEquals("0", pluralize(-1, "0", "", ""));
+        Assert.assertEquals("0", pluralize(0, "0", "", ""));
+        Assert.assertEquals("1", pluralize(1, "", "1", ""));
+        Assert.assertEquals("2", pluralize(2, "", "", "2"));
+        Assert.assertEquals("1", pluralize(1, "1", ""));
+        Assert.assertEquals("2", pluralize(2, "", "2"));
     }
 }

@@ -137,10 +137,10 @@
                     <th><%=link("/groups", "", otherGroup.name.toString(), null, "id", String.valueOf(otherGroup.id))%>
                     </th>
                     <%final int newCount = otherGroup.newMessagesCount; %>
-                    <td><%=newCount > 0 ? newCount + (newCount == 1 ? " nouveau message" : " nouveaux messages") : ""%>
+                    <td><%=pluralize(newCount, "", "un nouveau message", newCount + " nouveaux messages")%>
                     </td>
                     <td><%final long count = otherGroup.memberCount;%>
-                        <%=count > 1 ? count + " membres" : count == 1 ? "un seul membre" : "aucun membre"%>
+                        <%=pluralize(count, "aucun membre", "un seul membre", count + " membres")%>
                     </td>
                 </tr>
                 <%

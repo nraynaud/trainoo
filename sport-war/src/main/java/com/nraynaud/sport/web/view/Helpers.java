@@ -15,7 +15,6 @@ import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.BreakIterator;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Helpers {
@@ -238,8 +237,12 @@ public class Helpers {
         }
     }
 
-    public static String pluralize(final int count, final String one, final String various) {
-        return count > 1 ? various : one;
+    public static String pluralize(final long count, final String one, final String various) {
+        return pluralize(count, "", one, various);
+    }
+
+    public static String pluralize(final long count, final String none, final String one, final String various) {
+        return count <= 0 ? none : count == 1 ? one : various;
     }
 
     public static String defaultOrUserClass(final UserString string) {
@@ -276,16 +279,6 @@ public class Helpers {
      */
     public static String stat(final String path) {
         return STATIC_CONTENT_PREFIX + path;
-    }
-
-    public static String formatWorkoutDate(final Date date) {
-        final int thisYear = new GregorianCalendar().get(Calendar.YEAR);
-        final GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        if (thisYear == calendar.get(Calendar.YEAR))
-            return new SimpleDateFormat("E dd/MM", Locale.FRANCE).format(date);
-        else
-            return new SimpleDateFormat("E dd/MM/y", Locale.FRANCE).format(date);
     }
 
     public static String anchor(final String content, final String url) {
