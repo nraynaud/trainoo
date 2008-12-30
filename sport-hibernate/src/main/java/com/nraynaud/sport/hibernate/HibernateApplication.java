@@ -687,11 +687,6 @@ public class HibernateApplication implements Application {
         return conversationData;
     }
 
-    @SuppressWarnings({"unchecked"})
-    public PaginatedCollection<PrivateMessage> fetchPublicMessagesForWorkout(final Long workoutId) {
-        return fetchConversation("m.workout.id =:workoutId AND m.sender is null", 5, 0, "workoutId", workoutId);
-    }
-
     private PaginatedCollection<PrivateMessage> fetchConversation(final String where, final int pageSize,
                                                                   final int startIndex, final Object... args) {
         final Query query = query("select m from PrivateMessageImpl m where (" + where + ") order by m.date desc");

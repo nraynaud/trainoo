@@ -14,7 +14,6 @@ import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.BreakIterator;
 import java.util.*;
 
 public class Helpers {
@@ -68,18 +67,6 @@ public class Helpers {
         builder.append("</a>");
     }
 
-    public static String toTitleCase(final String string) {
-        final StringBuffer accum = new StringBuffer();
-        final BreakIterator wordIterator = BreakIterator.getWordInstance();
-        wordIterator.setText(string);
-        int start = wordIterator.first();
-        for (int end = wordIterator.next(); end != BreakIterator.DONE; start = end, end = wordIterator.next()) {
-            accum.append(string.substring(start, start + 1).toUpperCase());
-            accum.append(string.substring(start + 1, end));
-        }
-        return accum.toString();
-    }
-
     public static String firstNonNull(final String... strings) {
         for (final String string : strings) {
             if (string != null) {
@@ -125,10 +112,6 @@ public class Helpers {
                 builder.append("<br>");
         }
         return builder.toString();
-    }
-
-    public static String literal(final UserString string) {
-        return '\'' + string.toString() + '\'';
     }
 
     public static PrivateMessageFormConfig privateFormConfig(final Workout workout, final User user) {
@@ -243,10 +226,6 @@ public class Helpers {
 
     public static String pluralize(final long count, final String none, final String one, final String various) {
         return count <= 0 ? none : count == 1 ? one : various;
-    }
-
-    public static String defaultOrUserClass(final UserString string) {
-        return string == null ? "serverDefault" : "userInteresting";
     }
 
     public static String escaped(final UserString string) {
