@@ -68,11 +68,9 @@ public class Helpers {
     }
 
     public static String firstNonNull(final String... strings) {
-        for (final String string : strings) {
-            if (string != null) {
+        for (final String string : strings)
+            if (string != null)
                 return string;
-            }
-        }
         return null;
     }
 

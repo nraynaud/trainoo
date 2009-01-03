@@ -26,7 +26,7 @@
                 </span>
                 <span class="input fullWidth">
                     <input name="email" id="email" class="text"
-                           value="<%=escapedOrNull(stringProperty("email"), "")%>"/>
+                           value="<%=propertyEscapedOrNull("email", "")%>"/>
                 </span>
 
                 <p:javascript>$('email').focus();</p:javascript>
@@ -82,7 +82,7 @@
                 </span>
                 <span class="input fullWidth">
                     <input name="nikePlusEmail" id="nikePlusEmail" class="text"
-                           value="<%=escapedOrNull(stringProperty("nikePlusEmail"), "")%>"/>
+                           value="<%=propertyEscapedOrNull("nikePlusEmail", "")%>"/>
                 </span>
 
                 <span class="label">

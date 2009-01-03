@@ -22,7 +22,7 @@
                     <label for="town">Ma ville&nbsp;:</label>
                 </span>
                 <span class="input fullWidth">
-                    <input class="text" id="town" name="town" value="<%=escapedOrNull(stringProperty("town"), "")%>"/>
+                    <input class="text" id="town" name="town" value="<%=propertyEscapedOrNull("town", "")%>"/>
                 </span>
 
                 <p:javascript>makeItCount('town', <%=TOWN_MAX_LENGTH%>);</p:javascript>
@@ -32,7 +32,7 @@
                     <span class="help">C'est l'occasion de vous présenter.</span>
                 </span>
                 <span class="input fullWidth">
-                    <%=textArea("description", "description", escapedOrNull(stringProperty("description"), ""))%>
+                    <%=textArea("description", "description", propertyEscapedOrNull("description", ""))%>
                 </span>
                 <p:javascript>makeItCount('description', <%=DESCRIPTION_MAX_LENGTH%>);</p:javascript>
 
@@ -41,7 +41,7 @@
                 </span>
                 <span class="input fullWidth">
                     <input class="text" id="webSite" name="webSite"
-                           value="<%=escapedOrNull(stringProperty("webSite"), "")%>"/>
+                           value="<%=propertyEscapedOrNull("webSite", "")%>"/>
                 </span>
                 <p:javascript>makeItCount('webSite', <%=WEBSITE_MAX_LENGTH%>);</p:javascript>
 

@@ -1,4 +1,3 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 

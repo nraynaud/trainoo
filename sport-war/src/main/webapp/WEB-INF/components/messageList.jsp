@@ -103,7 +103,7 @@
                 <%}%>
                 <%if (canDelete) {%>
                 <form action="<%=deleteUrl(message)%>" method="POST">
-                    <input type="hidden" name="id" value="<%=stringProperty("id")%>">
+                    <input type="hidden" name="id" value="<%=message.getId()%>">
                     <input type="hidden" name="fromAction" value="<%=currentAction()%>">
                     <%final String deleteId = uniqueId("editDelete");%>
                     <label for="<%=deleteId%>" class="button deleteButton">Supprimer</label>

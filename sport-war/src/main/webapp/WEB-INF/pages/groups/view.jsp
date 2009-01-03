@@ -73,7 +73,7 @@
         <% if (groupPage.isMember) { %>
         <form method="POST" action="<%=createUrl("/groups", "part")%>">
             <input type="hidden" name="fromAction" value="<%=currentAction()%>"/>
-            <input type="hidden" name="groupId" value="<%=stringProperty("id")%>"/>
+            <input type="hidden" name="groupId" value="<%=group.getId()%>"/>
                     <span class="actions">
                         <input type="submit" class="submit" value="Quitter le groupe"/>
                     </span>
@@ -81,7 +81,7 @@
         <%} else {%>
         <form method="POST" action="<%=createUrl("/groups", "join")%>">
             <input type="hidden" name="fromAction" value="<%=currentAction()%>"/>
-            <input type="hidden" name="groupId" value="<%=stringProperty("id")%>"/>
+            <input type="hidden" name="groupId" value="<%=group.getId()%>"/>
                     <span class="actions">
                         <input type="submit" class="submit" value="Rejoindre le groupe"
                                title="Rejoindre le groupe vous permettra de suivre les nouveaux messages depuis votre vestiaire."/>

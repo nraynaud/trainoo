@@ -1,12 +1,14 @@
 <%@ page import="static com.nraynaud.sport.formatting.FormatHelper.*" %>
-<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.web.view.StackUtil" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
-<span class="userName"><%=stringProperty("user.name")%></span>
-<span class="date"><s:date name="date" format="dd/M"/></span>
-<span class="discipline"><%=stringProperty("discipline")%></span>
-<span class="duration"><%=formatDuration(StackUtil.<Long>property("duration"), "")%></span>
-<span class="distance"><%=formatDistance(StackUtil.<Double>property("distance"), "")%></span>
+<%final Workout workout = StackUtil.top();%>
+<span class="userName"><%=workout.getUser().getName()%></span>
+<span class="date"><%=new SimpleDateFormat("dd/M").format(workout.getDate())%></span>
+<span class="discipline"><%=workout.getDiscipline()%></span>
+<span class="duration"><%=formatDuration(workout.getDuration(), "")%></span>
+<span class="distance"><%=formatDistance(workout.getDistance(), "")%></span>

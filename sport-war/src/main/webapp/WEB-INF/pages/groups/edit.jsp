@@ -28,7 +28,7 @@
                     <label for="description">Description&nbsp;:</label>
                 </span>
                 <span class="input fullWidth">
-                    <%=textArea("description", "description", escapedOrNull(stringProperty("description"), ""))%>
+                    <%=textArea("description", "description", propertyEscapedOrNull("description", ""))%>
                 </span>
                 <p:javascript>makeItCount('description', <%=MAX_DESCRIPTION_LENGTH%>);</p:javascript>
 

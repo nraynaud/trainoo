@@ -69,7 +69,7 @@ document.workoutForm.comment.value = document.getElementById("externalComment").
                 </dd>
                 <dt><label for="date">Date :</label></dt>
                 <dd class="editable">
-                    <input id="date" class="text" name="date" value="<%=escapedOrNull(stringProperty("date"), "")%>"
+                    <input id="date" class="text" name="date" value="<%=propertyEscapedOrNull("date", "")%>"
                            maxlength="15"
                            onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03/10/2006 ou «hier»' , 'date', this.value);"
                            onblur="hideToolTip();"
@@ -80,7 +80,7 @@ document.workoutForm.comment.value = document.getElementById("externalComment").
                 <dt><label for="distance">Distance :</label></dt>
                 <dd class="editable">
                     <input id="distance" class="text" name="distance"
-                           value="<%=escapedOrNull(stringProperty("distance"), "")%>"
+                           value="<%=propertyEscapedOrNull("distance", "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
                            onblur="hideToolTip();"
@@ -89,7 +89,7 @@ document.workoutForm.comment.value = document.getElementById("externalComment").
                 <dt><label for="duration">Durée :</label></dt>
                 <dd class="editable">
                     <input id="duration" class="text" name="duration"
-                           value="<%=escapedOrNull(stringProperty("duration"), "")%>"
+                           value="<%=propertyEscapedOrNull("duration", "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03h41\'17 ou 40\'22' , 'duration', this.value);"
                            onblur="hideToolTip();"
@@ -98,7 +98,7 @@ document.workoutForm.comment.value = document.getElementById("externalComment").
                 <dt><label for="energy">Énergie Dépensée :</label></dt>
                 <dd class="editable">
                     <input id="energy" class="text" name="energy"
-                           value="<%=escapedOrNull(stringProperty("energy"), "")%>"
+                           value="<%=propertyEscapedOrNull("energy", "")%>"
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event, 'En kilocalories.', 'energy', this.value);"
                            onblur="hideToolTip();"
@@ -130,7 +130,7 @@ document.workoutForm.comment.value = document.getElementById("externalComment").
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <%=textArea("externalComment", "externalComment", escapedOrNull(stringProperty("comment"), ""))%>
+                    <%=textArea("externalComment", "externalComment", propertyEscapedOrNull("comment", ""))%>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
