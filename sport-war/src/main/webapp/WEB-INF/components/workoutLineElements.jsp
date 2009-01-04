@@ -1,16 +1,17 @@
 <%@ page import="com.nraynaud.sport.User" %>
+<%@ page import="com.nraynaud.sport.UserString" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
-<%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.nraynaud.sport.formatting.DateHelper" %>
 <%@ page import="com.nraynaud.sport.formatting.FormatHelper" %>
-<%@ page import="java.util.Collection" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="java.util.Collection" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 
 <% final Workout workout = top(); %>
 <span class="date"><%=DateHelper.printDate("dd/MM", workout.getDate())%></span>
-<span class="discipline"><%=workout.getDiscipline()%></span>
+<span class="discipline"><%=formatDiscipline(workout.getDiscipline())%></span>
 <% if (boolParam("withUser")) {%>
         <span class="user">
         <%
@@ -28,3 +29,12 @@
 <span class="distance"><%=FormatHelper.formatDistance(workout.getDistance(), "&nbsp;")%></span>
 <%final Long messageCount = workout.getMessageCount();%>
 <span class="coms <%=messageCount > 0 ? "" : "comsNone"%>"><%=messageCount%></span>
+<%!
+    private static Object formatDiscipline(final UserString discipline) {
+        if (discipline.nonEscaped().equals(Workout.HOME_BIKE))
+            return "<span title=\"" + discipline + "\">vélo&nbsp;A&hellip;</span>";
+        else if (discipline.nonEscaped().equals(Workout.ELLIPTIC_BIKE))
+            return "<span title=\"" + discipline + "\">vélo&nbsp;E&hellip;</span>";
+        return discipline;
+    }
+%>

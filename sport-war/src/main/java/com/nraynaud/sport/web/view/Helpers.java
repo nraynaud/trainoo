@@ -18,14 +18,6 @@ import java.util.*;
 
 public class Helpers {
     private static final Random RNG = new Random();
-    public static final Collection<String> DISCIPLINES = Arrays.asList("course",
-            "vélo",
-            "VTT",
-            "marche",
-            "natation",
-            "roller",
-            "vélo elliptique",
-            "vélo d'appartement");
     public static final SportActionMapper MAPPER = new SportActionMapper();
 
     private static final String STATIC_CONTENT_PREFIX;

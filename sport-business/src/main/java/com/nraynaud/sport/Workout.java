@@ -1,9 +1,21 @@
 package com.nraynaud.sport;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
 public interface Workout extends Topic {
+    String ELLIPTIC_BIKE = "vélo elliptique";
+    String HOME_BIKE = "vélo d'appartement";
+    Collection<String> DISCIPLINES = Arrays.asList("course",
+            "vélo",
+            "VTT",
+            "marche",
+            "natation",
+            "roller",
+            ELLIPTIC_BIKE,
+            HOME_BIKE);
+
     Date getDate();
 
     User getUser();

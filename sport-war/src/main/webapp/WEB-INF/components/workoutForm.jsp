@@ -1,6 +1,7 @@
-<%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -29,7 +30,7 @@
                 <th><label for="date">Date</label></th>
             </tr>
             <tr>
-                <td><%=selectComponent("discipline", "discipline", DISCIPLINES, DISCIPLINES, null)%>
+                <td><%=selectComponent("discipline", "discipline", Workout.DISCIPLINES, Workout.DISCIPLINES, null)%>
                 </td>
                 <td><s:textfield id="date"
                                  name="date"

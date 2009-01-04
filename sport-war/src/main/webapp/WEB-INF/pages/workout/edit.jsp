@@ -65,7 +65,8 @@ document.workoutForm.comment.value = document.getElementById("externalComment").
             </span>
             <dl>
                 <dt><label for="discipline">Discipline :</label></dt>
-                <dd class="editable"><%=selectComponent("discipline", "discipline", DISCIPLINES, DISCIPLINES, null)%>
+                <dd class="editable"><%=selectComponent("discipline", "discipline", Workout.DISCIPLINES,
+                        Workout.DISCIPLINES, null)%>
                 </dd>
                 <dt><label for="date">Date :</label></dt>
                 <dd class="editable">
