@@ -8,7 +8,7 @@
 <p:layoutParams title="Édition d'un parcours" showHeader="false" showTitleInPage="false" showFooter="false"/>
 
 <p:header>
-    <link href="<%=stat("/static/track/trackstyle.css")%>" rel="stylesheet" type="text/css">
+    <link href='<%=stat("/static/track/trackstyle.css")%>' rel="stylesheet" type="text/css">
 </p:header>
 
 <% final Track track = property("track");%>
@@ -57,9 +57,9 @@
     <div id="map"></div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
-<p:javascript src="<%=stat("/static/track/updateEditor.js")%>"/>
-<p:javascript src="<%=stat("/static/track/appendEditor.js")%>"/>
-<p:javascript src="<%=stat("/static/track/trackEdit.js")%>"/>
+<p:javascript src='<%=stat("/static/track/updateEditor.js")%>'/>
+<p:javascript src='<%=stat("/static/track/appendEditor.js")%>'/>
+<p:javascript src='<%=stat("/static/track/trackEdit.js")%>'/>
 <%if (track != null) {%>
 <p:javascript>loadOnStartup($('trackVar').value);</p:javascript>
 <%}%>

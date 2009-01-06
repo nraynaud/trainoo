@@ -12,7 +12,7 @@
 <% final BibPageData data = top();
     final User user = data.user;
     final boolean lookingOwnBib = user.equals(currentUser());%>
-<p:layoutParams title="<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + user.getName()%>"/>
+<p:layoutParams title='<%=lookingOwnBib ? "Mon dossard" : "Le dossard de " + user.getName()%>'/>
 
 <div class="block bibBlock">
     <div class="content">

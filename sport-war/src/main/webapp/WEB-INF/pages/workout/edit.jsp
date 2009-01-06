@@ -17,7 +17,7 @@
     final boolean isCurrentUser = currentUser != null && currentUser.equals(runner);
     final boolean hasPartners = workout.getParticipants().size() > 1;
 %>
-<p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"
+<p:layoutParams title='<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>'
                 showTitleInPage="false"/>
 <p:javascript>
     Trainoo.isWorkout = true;

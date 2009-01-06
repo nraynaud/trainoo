@@ -20,7 +20,7 @@
     final boolean isNikePlus = workout.isNikePlus();
     final boolean hasPartners = workout.getParticipants().size() > 1;
 %>
-<p:layoutParams title="<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>"
+<p:layoutParams title='<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>'
                 showTitleInPage="false"/>
 <script type="text/javascript">
     Trainoo.isWorkout = true;

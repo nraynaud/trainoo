@@ -7,7 +7,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" %>
 
 <%final ConversationData data = property("conversationData");%>
-<p:layoutParams title="<%="Messages privés avec " + data.receiver%>"/>
+<p:layoutParams title='<%="Messages privés avec " + data.receiver%>'/>
 
 <div id="tinyCenter">
     <h2>Nouveau message privé</h2>

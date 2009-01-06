@@ -7,12 +7,12 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <% final Track track = property("track");%>
-<p:layoutParams title="<%=track == null ? "Mes parcours" : track.getTitle() == null ? "Mon parcours" : track.getTitle()
-        .toString()%>" showHeader="false" showTitleInPage="false" showFooter="false"/>
+<p:layoutParams title='<%=track == null ? "Mes parcours" : track.getTitle() == null ? "Mon parcours" : track.getTitle()
+        .toString()%>' showHeader="false" showTitleInPage="false" showFooter="false"/>
 
 
 <p:header>
-    <link href="<%=stat("/static/track/trackstyle.css")%>" rel="stylesheet" type="text/css">
+    <link href='<%=stat("/static/track/trackstyle.css")%>' rel="stylesheet" type="text/css">
 </p:header>
 <div id="mapGlobalContainer">
     <div id="controlPanel">
@@ -74,7 +74,7 @@
     <div id="map"></div>
 </div>
 <%call(pageContext, "trackLoader.jsp");%>
-<p:javascript src="<%=stat("/static/track/trackView.js")%>"/>
+<p:javascript src='<%=stat("/static/track/trackView.js")%>'/>
 <%if (track != null) {%>
 <p:javascript>loadOnStartup("<%=track.getPoints()%>");</p:javascript>
 <%}%>

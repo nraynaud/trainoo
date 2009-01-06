@@ -16,7 +16,7 @@
     final boolean lookingOwnStats = user.equals(currentUser());
     final String discipline = stringProperty("discipline");
 %>
-<p:layoutParams title="<%=lookingOwnStats ? "Mes statistiques" : "Les statistiques de " + user.getName()%>"/>
+<p:layoutParams title='<%=lookingOwnStats ? "Mes statistiques" : "Les statistiques de " + user.getName()%>'/>
 
 <form id="disciplineForm" action="" method="GET">
     <input type="hidden" name="id" value="<%=property("id")%>">

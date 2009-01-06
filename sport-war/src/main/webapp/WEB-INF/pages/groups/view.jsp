@@ -15,7 +15,7 @@
     final GroupPageData groupPage = top();
     final Group group = groupPage.group;
 %>
-<p:layoutParams title="<%=group == null ? "Les groupes" : "Groupe : " + group.getName()%>"/>
+<p:layoutParams title='<%=group == null ? "Les groupes" : "Groupe : " + group.getName()%>'/>
 
 <% if (group != null) {%>
 <div class="subHeading">
