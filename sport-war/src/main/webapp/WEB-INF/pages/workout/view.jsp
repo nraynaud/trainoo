@@ -33,8 +33,7 @@
     };
 </script>
 <h1><%=bibLink(runner, 15)%>&nbsp;: <%=workout.getDiscipline()%> -
-    <small><%=printDate("EEEE dd MMMM",
-            workout.getDate())%>
+    <small><%=printDate("EEEE dd MMMM", workout.getDate())%>
     </small>
 </h1>
 
