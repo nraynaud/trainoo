@@ -18,4 +18,15 @@ public class UserStringImpl implements UserString {
     public static UserString valueOf(final String string) {
         return string == null ? null : new UserStringImpl(string);
     }
+
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserStringImpl)) return false;
+        final UserStringImpl that = (UserStringImpl) o;
+        return string.equals(that.string);
+    }
+
+    public int hashCode() {
+        return string.hashCode();
+    }
 }

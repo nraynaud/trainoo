@@ -107,7 +107,7 @@
 </div>
 
 <div id="globalRight">
-
+    <%if (isCurrentUser || workout.getComment() != null) {%>
     <h2>
         <span class="buttonList">
         <% if (isCurrentUser) { %>
@@ -119,7 +119,7 @@
 
         Compte rendu par <%=bibLink(runner, 20)%>
     </h2>
-
+    <%}%>
     <div class="block">
         <div class="content textContent">
             <p><%=escapedOrNullmultilines(workout.getComment(),
@@ -127,6 +127,7 @@
             </p>
         </div>
     </div>
+
 
     <% if (hasPartners || isCurrentUser) { %>
     <h2 class="participantsEditingArea">
@@ -178,13 +179,7 @@
     <%
         }
         if (isLogged() && !isCurrentUser) {%>
-    <h2>Envoyer un message à <%=runner.getName()%>
-    </h2>
-
-    <%
-            call(pageContext, "privateMessageForm.jsp", privateFormConfig(workout, runner), "hideReceiverBox", true);
-            paginate(pageContext, "messageList.jsp",
-                    view(data.privateMessages, "privateMessagesPageIndex"));
-        }
-    %>
+    <%=link("/messages", "", "Envoyer un message privé à " + runner.getName(), "", "receiver",
+            runner.getName().nonEscaped())%>
+    <%}%>
 </div>
