@@ -41,7 +41,7 @@ public class DataHelper {
     private static Data computeAverageSpeed(final Workout workout) {
         final double distance = workout.getDistance().doubleValue();
         final long duration = workout.getDuration().longValue();
-        final String value = DistanceIO.formatDistance(distance / (duration / 60.0 / 60)) + "&nbsp;km/h";
+        final String value = DistanceIO.formatDistance(distance / (duration / 60.0 / 60)) + "<small>km/h</small>";
         final double averageTimeByKM = duration / distance;
         final String value2 = " <small>("
                 + (int) (averageTimeByKM / 60)
@@ -71,12 +71,13 @@ public class DataHelper {
             }},
         ENERGY {
             public Data compute(final Workout workout) {
-                return new Data("Énergie Dépensée&nbsp;:", workout.getEnergy() + " kcal", true);
+                return new Data("Énergie Dépensée&nbsp;:", workout.getEnergy() + "<small>kcal</small>", true);
             }},
         AVERAGE_POWER {
             public Data compute(final Workout workout) {
                 return new Data("Puissance Moyenne&nbsp;:",
-                        workout.getEnergy().longValue() * 4187 / workout.getDuration().longValue() + "W", false);
+                        workout.getEnergy().longValue() * 4187 / workout.getDuration().longValue() + "<small>W</small>",
+                        false);
             }};
 
         public abstract Data compute(Workout workout);

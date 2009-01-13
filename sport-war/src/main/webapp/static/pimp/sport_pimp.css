@@ -627,9 +627,9 @@ ul.sheet li span.coms {
     display: block;
     float: none;
     width: auto;
-    text-align: center;
+    text-align: left;
     height: 15px;
-    padding: 2px 0 0 0;
+    padding: 3px 0 0 0;
     font-size: 0.71428571em;
     background-image: url( bulle.png );
     background-repeat: no-repeat;
