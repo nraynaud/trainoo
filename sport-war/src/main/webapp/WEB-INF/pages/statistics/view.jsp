@@ -65,7 +65,7 @@ Distance totale parcourue&nbsp;:<%=data.totalDistance%>km <br>
                 <li class="<%=even ? "odd":"even"%>">
                     <a>
                         <span class="period"><%=longPeriodData.period%></span>
-                        <span class="data"><%=FormatHelper.formatDistance(longPeriodData.data.distance,
+                        <span class="data"><%=FormatHelper.formatDistanceHtml(longPeriodData.data.distance,
                                 "&nbsp;")%></span>
                         <span class="data"><%=FormatHelper.formatDuration(longPeriodData.data.duration,
                                 "&nbsp;")%></span>
@@ -100,7 +100,7 @@ Distance totale parcourue&nbsp;:<%=data.totalDistance%>km <br>
                 <li class="<%=even ? "odd":"even"%>">
                     <a>
                         <span class="period"><%=longPeriodData.period%></span>
-                        <span class="data"><%=FormatHelper.formatDistance(longPeriodData.data.distance,
+                        <span class="data"><%=FormatHelper.formatDistanceHtml(longPeriodData.data.distance,
                                 "&nbsp;")%></span>
                         <span class="data"><%=FormatHelper.formatDuration(longPeriodData.data.duration,
                                 "&nbsp;")%></span>

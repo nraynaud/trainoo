@@ -59,7 +59,7 @@ public class DataHelper {
     private enum DataComputer {
         DISTANCE {
             public Data compute(final Workout workout) {
-                return new Data("Distance&nbsp;:", FormatHelper.formatDistance(workout.getDistance(), ""), true);
+                return new Data("Distance&nbsp;:", FormatHelper.formatDistanceHtml(workout.getDistance(), ""), true);
             }},
         DURATION {
             public Data compute(final Workout workout) {

@@ -4,8 +4,12 @@ public class FormatHelper {
     private FormatHelper() {
     }
 
-    public static String formatDistance(final Double distance, final String ifNull) {
+    public static String formatDistanceHtml(final Double distance, final String ifNull) {
         return distance != null ? DistanceIO.formatDistance(distance) + "<small>km</small>" : ifNull;
+    }
+
+    public static String formatDistance(final Double distance, final String ifNull) {
+        return distance != null ? DistanceIO.formatDistance(distance) + "km" : ifNull;
     }
 
     public static String formatEnergy(final Long energy, final String ifNull) {

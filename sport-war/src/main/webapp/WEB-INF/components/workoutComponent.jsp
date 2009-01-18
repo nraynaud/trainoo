@@ -11,4 +11,4 @@
 <span class="date"><%=new SimpleDateFormat("dd/M").format(workout.getDate())%></span>
 <span class="discipline"><%=workout.getDiscipline()%></span>
 <span class="duration"><%=formatDuration(workout.getDuration(), "")%></span>
-<span class="distance"><%=formatDistance(workout.getDistance(), "")%></span>
+<span class="distance"><%=formatDistanceHtml(workout.getDistance(), "")%></span>
