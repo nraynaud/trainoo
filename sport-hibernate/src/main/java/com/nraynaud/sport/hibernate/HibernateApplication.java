@@ -776,12 +776,12 @@ public class HibernateApplication implements Application {
         final Query query2 = query(
                 "select year(w.date), sum(w.distance), sum(w.duration), sum(w.energy) "
                         + fromWhereClause
-                        + " GROUP BY year(w.date) ORDER BY year(w.date)");
+                        + " GROUP BY year(w.date) ORDER BY year(w.date) DESC");
         bindQuery(query2, user, discipline);
         final Query query3 = query(
                 "select year(w.date), month(w.date), sum(w.distance), sum(w.duration), sum(w.energy) "
                         + fromWhereClause + "GROUP BY year(w.date), month(w.date) "
-                        + "ORDER BY year(w.date), month(w.date)");
+                        + "ORDER BY year(w.date)  DESC, month(w.date)  DESC");
         bindQuery(query3, user, discipline);
         return new StatisticsPageData(user, disciplineQuery.getResultList(), query.getSingleResult(),
                 query2.getResultList(),
