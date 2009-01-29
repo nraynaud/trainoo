@@ -32,9 +32,9 @@
 <%!
     private static Object formatDiscipline(final UserString discipline) {
         if (discipline.nonEscaped().equals(Workout.HOME_BIKE))
-            return "<span title=\"" + discipline + "\">vélo&nbsp;A&hellip;</span>";
+            return "<span title=\"" + discipline + "\">vélo&nbsp;A</span>";
         else if (discipline.nonEscaped().equals(Workout.ELLIPTIC_BIKE))
-            return "<span title=\"" + discipline + "\">vélo&nbsp;E&hellip;</span>";
+            return "<span title=\"" + discipline + "\">vélo&nbsp;E</span>";
         return discipline;
     }
 %>
