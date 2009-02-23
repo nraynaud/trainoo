@@ -12,7 +12,7 @@
 
 <% final PaginatedCollection<Message> messages = top();
     for (final Message message : messages) {
-        push(message);
+        final int stackIndex = push(message);
         try {
             final boolean isEditingMessage = message.getId()
                     .toString()
@@ -123,7 +123,7 @@
 <%
 
         } finally {
-            pop();
+            pop(stackIndex);
         }
     }
 

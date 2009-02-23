@@ -111,7 +111,7 @@ public class StackUtil {
     }
 
     /**
-     * @return the new size of the stack, can be passed to pop() for control
+     * @return the new size of the stack, should be passed to pop() for control
      */
     public static int push(final Object object) {
         stack().push(object);
@@ -121,10 +121,6 @@ public class StackUtil {
     public static Object pop(final int expectedSize) {
         if (expectedSize != stack().size())
             throw new IllegalStateException("stack is unbalanced ! " + expectedSize + " | " + stack().size());
-        return stack().pop();
-    }
-
-    public static Object pop() {
         return stack().pop();
     }
 
