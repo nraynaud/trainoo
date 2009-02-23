@@ -31,7 +31,7 @@
 <% call(pageContext, "workoutForm2.jsp", null,
         "actionUrl", createUrl("/workout", "edit", "id", workout.getId().toString()),
         "title", "Modification d'un entraînement",
-        "fromAction", new ActionDetail("/workout", ""),
+        "fromAction", new ActionDetail("/workout", "", "id", workout.getId().toString()),
         "discipline", workout.getDiscipline().nonEscaped(),
         "date", DateIO.DATE_FORMATTER.print(workout.getDate().getTime()),
         "duration", FormatHelper.formatDuration(workout.getDuration(), ""),
