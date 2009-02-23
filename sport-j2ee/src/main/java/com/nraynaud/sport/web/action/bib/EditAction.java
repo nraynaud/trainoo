@@ -43,13 +43,13 @@ public class EditAction extends DefaultAction {
     @SkipValidation
     public String index() {
         final User user = getUser();
-        town = nonEscaoedOrNull(user.getTown());
-        description = nonEscaoedOrNull(user.getDescription());
-        webSite = nonEscaoedOrNull(user.getWebSite());
+        town = nonEscapedOrNull(user.getTown());
+        description = nonEscapedOrNull(user.getDescription());
+        webSite = nonEscapedOrNull(user.getWebSite());
         return INPUT;
     }
 
-    private static String nonEscaoedOrNull(final UserString string) {
+    private static String nonEscapedOrNull(final UserString string) {
         return string == null ? null : string.nonEscaped();
     }
 
