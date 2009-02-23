@@ -1,7 +1,6 @@
 package com.nraynaud.sport.web.action.workout;
 
 import com.nraynaud.sport.*;
-import com.nraynaud.sport.data.WorkoutPageData;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.PostOnly;
@@ -23,17 +22,17 @@ import javax.servlet.http.HttpServletRequest;
 
 @Conversion
 @Results({
-@Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
-@Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = ""),
-@Result(name = "delete", type = ActionChainResult.class, value = "delete",
-        params = {"namespace", "/workout", "method", "create"})
+    @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
+    @Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = ""),
+    @Result(name = "delete", type = ActionChainResult.class, value = "delete",
+            params = {"namespace", "/workout", "method", "create"})
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
-public class EditAction extends AbstractWorkoutAction implements ServletRequestAware, ModelDriven<WorkoutPageData> {
+public class EditAction extends AbstractWorkoutAction implements ServletRequestAware, ModelDriven<Workout> {
     public Long id;
     private boolean delete;
-    private WorkoutPageData data;
+    private Workout data;
     public int workoutPage;
     public int similarPage;
     public int publicMessagesPageIndex;
@@ -48,7 +47,7 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
         if (id != null) {
             final Workout workout;
             try {
-                workout = data.workout;
+                workout = data;
                 application.checkEditionGrant(workout, getUser());
                 setDate(workout.getDate());
                 setDistance(workout.getDistance());
@@ -91,14 +90,14 @@ public class EditAction extends AbstractWorkoutAction implements ServletRequestA
         delete = request.getParameter("delete") != null;
     }
 
-    public WorkoutPageData getModel() {
+    public Workout getModel() {
         if (data == null)
             try {
-                data = application.fetchWorkoutPageData(getUser(), id, similarPage, workoutPage,
-                        publicMessagesPageIndex,
-                        privateMessagesPageIndex);
+                data = application.fetchWorkoutForEdition(id, getUser(), true);
             } catch (WorkoutNotFoundException e) {
                 throw new DataInputException(e);
+            } catch (AccessDeniedException e) {
+                throw new RuntimeException(e);
             }
         return data;
     }

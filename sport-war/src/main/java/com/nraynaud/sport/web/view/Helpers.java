@@ -5,6 +5,7 @@ import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserString;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.data.DisciplineData;
+import com.nraynaud.sport.web.ActionDetail;
 import com.nraynaud.sport.web.SportActionMapper;
 import com.nraynaud.sport.web.SportRequest;
 import com.nraynaud.sport.web.URIValidator;
@@ -283,5 +284,14 @@ public class Helpers {
 
     public static String uniqueId(final String prefix) {
         return prefix + RNG.nextInt();
+    }
+
+    public static String createUrl(final ActionDetail action) {
+        final List<String> accumulator = new ArrayList<String>(action.parameters.size() * 2);
+        for (final Map.Entry<String, String[]> parameter : action.parameters.entrySet()) {
+            accumulator.add(parameter.getKey());
+            accumulator.add(parameter.getValue()[0]);
+        }
+        return createUrl(action.namespace, action.name, accumulator.toArray(new String[accumulator.size()]));
     }
 }

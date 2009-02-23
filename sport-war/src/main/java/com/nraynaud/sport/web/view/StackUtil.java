@@ -110,8 +110,18 @@ public class StackUtil {
         return StackUtil.<T>cast(stack().peek());
     }
 
-    public static void push(final Object object) {
+    /**
+     * @return the new size of the stack, can be passed to pop() for control
+     */
+    public static int push(final Object object) {
         stack().push(object);
+        return stack().size();
+    }
+
+    public static Object pop(final int expectedSize) {
+        if (expectedSize != stack().size())
+            throw new IllegalStateException("stack is unbalanced ! " + expectedSize + " | " + stack().size());
+        return stack().pop();
     }
 
     public static Object pop() {
@@ -122,7 +132,7 @@ public class StackUtil {
                             final String template,
                             final Object stackTop,
                             final Object... arguments) throws Exception {
-        push(new Object() {
+        final int stackSize = push(new Object() {
             public final Map<String, Object> parameters = new HashMap<String, Object>(1) {
                 public Object put(final String key, final Object value) {
                     return super.put(key, value);
@@ -142,14 +152,19 @@ public class StackUtil {
             }
         });
         try {
-            push(stackTop);
+            final int innerStackSize;
+            if (stackTop != null)
+                innerStackSize = push(stackTop);
+            else
+                innerStackSize = 0;
             try {
                 call(context, template);
             } finally {
-                pop();
+                if (stackTop != null)
+                    pop(innerStackSize);
             }
         } finally {
-            pop();
+            pop(stackSize);
         }
     }
 

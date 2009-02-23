@@ -2,6 +2,7 @@ package com.nraynaud.sport.web;
 
 import com.nraynaud.sport.Helper;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -37,6 +38,10 @@ public class ActionDetail {
             }
         }
         parameters = map;
+    }
+
+    public ActionDetail(final String namespace, final String name) {
+        this(namespace, name, Collections.<String, String[]>emptyMap());
     }
 
     public ActionDetail(final String namespace, final String name, final Map<String, String[]> parameters) {

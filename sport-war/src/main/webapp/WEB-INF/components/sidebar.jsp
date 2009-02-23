@@ -30,8 +30,11 @@
         </a>
         <% } %>
         <ul>
-            <li class="<%=isCurrentAction("/", "workouts")?"current":""%>"><a href="<%=createUrl("/", "workouts")%>"
-                                                                              title="Mon vestiaire">Mon vestiaire</a>
+            <li class="<%=isCurrentAction("/workout", "new")?"current":""%>">
+                <a href="<%=createUrl("/workout", "new")%>" title="Enregistrer un entrainement">J'ai sué&nbsp;!</a>
+            </li>
+            <li class="<%=isCurrentAction("/", "workouts")?"current":""%>">
+                <a href="<%=createUrl("/", "workouts")%>" title="Mon vestiaire">Mon vestiaire</a>
             </li>
             <li class="<%=isCurrentAction("/bib", "")?"current":""%>"><a
                     href="<%=createUrl("/bib", "", "id", String.valueOf(currentUser().getId()))%>"
