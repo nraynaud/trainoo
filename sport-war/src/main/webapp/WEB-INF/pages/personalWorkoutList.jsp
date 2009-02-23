@@ -41,17 +41,6 @@
             <div class="deco"></div>
         </div>
     </div>
-
-    <h2>Nouvel entraînement</h2>
-
-    <div class="block">
-        <div class="content">
-            <%
-                call(pageContext, "workoutForm.jsp", null, "action",
-                        createUrl("/workout", "create"), "submit", "Ajouter");
-            %>
-        </div>
-    </div>
 </div>
 
 <div id="globalRight">
