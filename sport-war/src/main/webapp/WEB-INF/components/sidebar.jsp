@@ -1,3 +1,4 @@
+<%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,8 +14,7 @@
                 <input type="submit" class="submit" name="sa" value="Rechercher">
             </div>
         </form>
-        <script type="text/javascript"
-                src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=fr"></script>
+        <p:javascript src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=fr"/>
     </div>
     <div class="content textContent">
         <% if (isLogged()) { %>
