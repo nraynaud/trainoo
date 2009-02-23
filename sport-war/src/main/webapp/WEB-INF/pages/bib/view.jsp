@@ -53,7 +53,8 @@
             <% } %>
         </dl>
     </div>
-    <span class="importantLink"><%=link("/statistics", "", "Voir ses statistiques", "", "id",
+    <span class="importantLink"><%=link("/statistics", "",
+            lookingOwnBib ? "Mes statistiques" : "Ses statistiques", "", "id",
             String.valueOf(user.getId()))%></span>
 </div>
 
