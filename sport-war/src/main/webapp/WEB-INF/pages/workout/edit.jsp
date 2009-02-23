@@ -52,7 +52,7 @@
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <%=textArea("externalComment", "externalComment", propertyEscapedOrNull("comment", ""))%>
+                    <%=textArea("externalComment", "externalComment", workout.getComment().toString())%>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>

@@ -18,8 +18,8 @@ import org.apache.struts2.config.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 @Results({
-@Result(name = INPUT, value = "/WEB-INF/pages/bib/edit.jsp"),
-@Result(name = SUCCESS, type = Redirect.class, value = "")
+    @Result(name = INPUT, value = "/WEB-INF/pages/bib/edit.jsp"),
+    @Result(name = SUCCESS, type = Redirect.class, value = "")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class EditAction extends DefaultAction {
@@ -43,13 +43,13 @@ public class EditAction extends DefaultAction {
     @SkipValidation
     public String index() {
         final User user = getUser();
-        town = nonEscpaedorNull(user.getTown());
-        description = nonEscpaedorNull(user.getDescription());
-        webSite = nonEscpaedorNull(user.getWebSite());
+        town = nonEscaoedOrNull(user.getTown());
+        description = nonEscaoedOrNull(user.getDescription());
+        webSite = nonEscaoedOrNull(user.getWebSite());
         return INPUT;
     }
 
-    private static String nonEscpaedorNull(final UserString string) {
+    private static String nonEscaoedOrNull(final UserString string) {
         return string == null ? null : string.nonEscaped();
     }
 
