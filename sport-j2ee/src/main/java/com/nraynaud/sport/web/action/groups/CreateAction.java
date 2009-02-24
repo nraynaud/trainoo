@@ -8,14 +8,15 @@ import com.nraynaud.sport.web.actionsupport.ChainBackAction;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
 @Results({
-@Result(type = Redirect.class, params = {"namespace", "/groups", "id", "${id}"}, value = ""),
-@Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/groups/view.jsp")
+    @Result(type = Redirect.class, params = {"namespace", "/groups", "id", "${id}"}, value = ""),
+    @Result(name = INPUT, type = ChainBack.class, value = "/WEB-INF/pages/groups/view.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class CreateAction extends ChainBackAction {
@@ -42,6 +43,7 @@ public class CreateAction extends ChainBackAction {
 
     @StringLengthFieldValidator(message = "Le nom doit faire entre ${minLength} et ${maxLength} caratères.",
             maxLength = MAX_NAME_LENGTH, minLength = MIN_NAME_LENGTH)
+    @RequiredStringValidator(message = "Le nom du groupe est obligatoire.")
     public void setName(final String name) {
         this.name = name;
     }
