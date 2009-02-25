@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
@@ -70,28 +71,28 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.apache.struts:struts2-core:2.0.12">
+      <library name="org.apache.struts:struts2-core:2.0.11">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/apache/struts/struts2-core/2.0.12/struts2-core-2.0.12.jar!/" />
+          <root url="jar://$M2_REPO$/org/apache/struts/struts2-core/2.0.11/struts2-core-2.0.11.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/apache/struts/struts2-core/2.0.12/struts2-core-2.0.12-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/apache/struts/struts2-core/2.0.11/struts2-core-2.0.11-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/apache/struts/struts2-core/2.0.12/struts2-core-2.0.12-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/apache/struts/struts2-core/2.0.11/struts2-core-2.0.11-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="com.opensymphony:xwork:2.0.6">
+      <library name="com.opensymphony:xwork:2.0.4">
         <CLASSES>
-          <root url="jar://$M2_REPO$/com/opensymphony/xwork/2.0.6/xwork-2.0.6.jar!/" />
+          <root url="jar://$M2_REPO$/com/opensymphony/xwork/2.0.4/xwork-2.0.4.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/com/opensymphony/xwork/2.0.6/xwork-2.0.6-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/com/opensymphony/xwork/2.0.4/xwork-2.0.4-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/com/opensymphony/xwork/2.0.6/xwork-2.0.6-sources.jar!/" />
+          <root url="jar://$M2_REPO$/com/opensymphony/xwork/2.0.4/xwork-2.0.4-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -135,15 +136,15 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.springframework:spring:2.0.7">
+      <library name="org.springframework:spring:2.0.5">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.7/spring-2.0.7.jar!/" />
+          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.7/spring-2.0.7-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.7/spring-2.0.7-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
