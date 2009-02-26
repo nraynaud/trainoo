@@ -1,4 +1,5 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
@@ -33,6 +34,13 @@
 
     <div class="block workoutBlock editingWorkoutBlock" id="workoutBlock">
         <div class="content">
+            <s:actionerror/>
+            <s:fielderror>
+                <s:param value="'date'"/>
+                <s:param value="'distance'"/>
+                <s:param value="'duration'"/>
+                <s:param value="'energy'"/>
+            </s:fielderror>
             <span class="buttonList">
                 <a href="<%=Helpers.createUrl(fromAction)%>" title="Annuler les modifications"
                    class="button cancelButton verboseButton">

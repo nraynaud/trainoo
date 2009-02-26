@@ -71,7 +71,8 @@ public class DataHelper {
             }},
         ENERGY {
             public Data compute(final Workout workout) {
-                return new Data("Énergie Dépensée&nbsp;:", workout.getEnergy() + "<small>kcal</small>", true);
+                return new Data("Énergie Dépensée&nbsp;:", FormatHelper.formatEnergy(workout.getEnergy(), true, ""),
+                        true);
             }},
         AVERAGE_POWER {
             public Data compute(final Workout workout) {

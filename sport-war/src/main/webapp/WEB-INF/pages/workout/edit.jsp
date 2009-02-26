@@ -1,10 +1,9 @@
-<%@ page import="com.nraynaud.sport.Workout" %>
+<%@ page import="com.nraynaud.sport.UserString" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.Helper.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.formatting.DateIO" %>
-<%@ page import="com.nraynaud.sport.formatting.DistanceIO" %>
-<%@ page import="com.nraynaud.sport.formatting.EnergyIO" %>
 <%@ page import="com.nraynaud.sport.formatting.FormatHelper" %>
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
@@ -35,8 +34,9 @@
         "discipline", workout.getDiscipline().nonEscaped(),
         "date", DateIO.DATE_FORMATTER.print(workout.getDate().getTime()),
         "duration", FormatHelper.formatDuration(workout.getDuration(), ""),
-        "distance", DistanceIO.formatDistance(workout.getDistance()),
-        "energy", EnergyIO.formatEnergy(workout.getEnergy()));%>
+        "distance", FormatHelper.formatDistance(workout.getDistance(), false, ""),
+        "energy", FormatHelper.formatEnergy(workout.getEnergy(), false, ""));
+    final UserString comment = workout.getComment();%>
 
 <div id="globalLeft">
     &nbsp;
@@ -52,7 +52,7 @@
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <%=textArea("externalComment", "externalComment", workout.getComment().toString())%>
+                    <%=textArea("externalComment", "externalComment", comment != null ? comment.toString() : "")%>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>

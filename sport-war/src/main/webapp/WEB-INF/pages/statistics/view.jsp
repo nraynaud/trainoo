@@ -69,7 +69,8 @@ Distance totale parcourue&nbsp;:<%=data.totalDistance%>km <br>
                                 "&nbsp;")%></span>
                         <span class="data"><%=FormatHelper.formatDuration(longPeriodData.data.duration,
                                 "&nbsp;")%></span>
-                        <span class="data"><%=FormatHelper.formatEnergy(longPeriodData.data.energy, "&nbsp;")%></span>
+                        <span class="data"><%=FormatHelper.formatEnergy(longPeriodData.data.energy, true,
+                                "&nbsp;")%></span>
                     </a>
                 </li>
                 <%
@@ -104,7 +105,8 @@ Distance totale parcourue&nbsp;:<%=data.totalDistance%>km <br>
                                 "&nbsp;")%></span>
                         <span class="data"><%=FormatHelper.formatDuration(longPeriodData.data.duration,
                                 "&nbsp;")%></span>
-                        <span class="data"><%=FormatHelper.formatEnergy(longPeriodData.data.energy, "&nbsp;")%></span>
+                        <span class="data"><%=FormatHelper.formatEnergy(longPeriodData.data.energy, true,
+                                "&nbsp;")%></span>
                     </a>
                 </li>
                 <%
