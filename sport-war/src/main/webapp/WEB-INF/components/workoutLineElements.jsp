@@ -26,7 +26,7 @@
         </span>
 <%}%>
 <span class="duration"><%=FormatHelper.formatDuration(workout.getDuration(), "&nbsp;")%></span>
-<span class="distance"><%=FormatHelper.formatDistanceHtml(workout.getDistance(), "&nbsp;")%></span>
+<span class="distance"><%=FormatHelper.formatDistance(workout.getDistance(), "<small>km</small>", "&nbsp;")%></span>
 <%final Long messageCount = workout.getMessageCount();%>
 <span class="coms <%=messageCount > 0 ? "" : "comsNone"%>"><%=messageCount%></span>
 <%!

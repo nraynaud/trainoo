@@ -69,7 +69,7 @@ public class SyndicationFeedWriter implements FeedWriter {
         builder.append(workout.getDiscipline().nonEscaped())
                 .append(" ")
                 .append(workout.getUser().getName().nonEscaped());
-        builder.append(" ").append(FormatHelper.formatDistance(workout.getDistance(), true, ""));
+        builder.append(" ").append(FormatHelper.formatDistance(workout.getDistance(), "km", ""));
         builder.append(" ").append(FormatHelper.formatDuration(workout.getDuration(), ""));
         return builder.toString();
     }

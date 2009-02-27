@@ -31,9 +31,9 @@ public class WorkoutView {
         return new WorkoutView(id,
                 discipline,
                 DateIO.DATE_FORMATTER.print(date.getTime()),
-                FormatHelper.formatDistance(distance, false, ""),
+                FormatHelper.formatDistance(distance, "", ""),
                 FormatHelper.formatDuration(duration, ""),
-                FormatHelper.formatEnergy(energy, false, ""),
+                FormatHelper.formatEnergy(energy, "", ""),
                 comment);
     }
 }

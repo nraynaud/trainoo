@@ -2,7 +2,7 @@ package com.nraynaud.sport.web.view;
 
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.formatting.DistanceIO;
-import com.nraynaud.sport.formatting.FormatHelper;
+import static com.nraynaud.sport.formatting.FormatHelper.*;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -59,11 +59,12 @@ public class DataHelper {
     private enum DataComputer {
         DISTANCE {
             public Data compute(final Workout workout) {
-                return new Data("Distance&nbsp;:", FormatHelper.formatDistanceHtml(workout.getDistance(), ""), true);
+                return new Data("Distance&nbsp;:", formatDistance(workout.getDistance(), "<small>km</small>", ""),
+                        true);
             }},
         DURATION {
             public Data compute(final Workout workout) {
-                return new Data("Durée&nbsp;:", FormatHelper.formatDuration(workout.getDuration(), ""), true);
+                return new Data("Durée&nbsp;:", formatDuration(workout.getDuration(), ""), true);
             }},
         AVERAGE_SPEED {
             public Data compute(final Workout workout) {
@@ -71,7 +72,7 @@ public class DataHelper {
             }},
         ENERGY {
             public Data compute(final Workout workout) {
-                return new Data("Énergie Dépensée&nbsp;:", FormatHelper.formatEnergy(workout.getEnergy(), true, ""),
+                return new Data("Énergie Dépensée&nbsp;:", formatEnergy(workout.getEnergy(), "<small>kcal</small>", ""),
                         true);
             }},
         AVERAGE_POWER {
