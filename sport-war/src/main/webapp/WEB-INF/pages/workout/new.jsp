@@ -2,6 +2,7 @@
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
+<%@ page import="com.nraynaud.sport.web.view.WorkoutView" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -9,15 +10,12 @@
 <p:layoutParams title='Nouvel Entraîment' showTitleInPage="false"/>
 
 
-<% call(pageContext, "workoutForm2.jsp", null,
-        "actionUrl", Helpers.createUrl("/workout", "create"),
-        "title", "Création d'un Entraînement",
-        "fromAction", new ActionDetail("/workouts", ""),
-        "discipline", null,
-        "date", "Aujourd'hui",
-        "duration", "",
-        "distance", "",
-        "energy", "");%>
+<% final WorkoutView workoutView = top();
+    call(pageContext, "workoutForm2.jsp", null,
+            "actionUrl", Helpers.createUrl("/workout", "create"),
+            "title", "Création d'un Entraînement",
+            "fromAction", new ActionDetail("/workouts", ""),
+            "workoutView", workoutView);%>
 
 <div id="globalLeft">
     &nbsp;
@@ -33,7 +31,7 @@
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <%=Helpers.textArea("externalComment", "externalComment", propertyEscapedOrNull("comment", ""))%>
+                    <%=Helpers.textArea("externalComment", "externalComment", workoutView.comment)%>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>

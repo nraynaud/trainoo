@@ -1,42 +1,25 @@
-<%@ page import="com.nraynaud.sport.UserString" %>
-<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
-<%@ page import="static com.nraynaud.sport.Helper.*" %>
-<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
-<%@ page import="com.nraynaud.sport.Workout" %>
-<%@ page import="com.nraynaud.sport.formatting.DateIO" %>
-<%@ page import="com.nraynaud.sport.formatting.FormatHelper" %>
 <%@ page import="com.nraynaud.sport.web.ActionDetail" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
+<%@ page import="com.nraynaud.sport.web.view.WorkoutView" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
 <%
-    final Workout workout = top();
+    final WorkoutView workout = top();
 %>
 <p:layoutParams title='<%="Modification de mon entraînement"%>'
                 showTitleInPage="false"/>
-<p:javascript>
-    Trainoo.isWorkout = true;
-    Trainoo.workout = {
-    id :<%=workout.getId()%>,
-    runner : {
-    id : <%=workout.getUser().getId()%>,
-    name : '<%=escapedForJavascript(workout.getUser().getName().nonEscaped())%>'
-    }
-    };
-</p:javascript>
 
-<% call(pageContext, "workoutForm2.jsp", null,
-        "actionUrl", createUrl("/workout", "edit", "id", workout.getId().toString()),
-        "title", "Modification d'un entraînement",
-        "fromAction", new ActionDetail("/workout", "", "id", workout.getId().toString()),
-        "discipline", workout.getDiscipline().nonEscaped(),
-        "date", DateIO.DATE_FORMATTER.print(workout.getDate().getTime()),
-        "duration", FormatHelper.formatDuration(workout.getDuration(), ""),
-        "distance", FormatHelper.formatDistance(workout.getDistance(), false, ""),
-        "energy", FormatHelper.formatEnergy(workout.getEnergy(), false, ""));
-    final UserString comment = workout.getComment();%>
+<%
+    call(pageContext, "workoutForm2.jsp", null,
+            "actionUrl", createUrl("/workout", "reallyEdit", "id", workout.id),
+            "title", "Modification d'un entraînement",
+            "fromAction", new ActionDetail("/workout", "", "id", workout.id),
+            "workoutView", workout);
+%>
 
 <div id="globalLeft">
     &nbsp;
@@ -52,7 +35,7 @@
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <%=textArea("externalComment", "externalComment", comment != null ? comment.toString() : "")%>
+                    <%=textArea("externalComment", "externalComment", workout.comment != null ? workout.comment : "")%>
                 </span>
             </p>
             <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
