@@ -8,7 +8,7 @@
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    final String actionUrl = stringParam("actionUrl");
+    final ActionDetail actionUrl = parameter("actionUrl");
     final String title = stringParam("title");
     final ActionDetail fromAction = parameter("fromAction");
     final WorkoutView workout = parameter("workoutView");
@@ -21,7 +21,7 @@
     }
 </p:javascript>
 
-<form action="<%=actionUrl%>" method="POST" name="workoutForm"
+<form action="<%=Helpers.createUrl(actionUrl)%>" method="POST" name="workoutForm"
       onsubmit="retrieveComment(); return true">
     <input type="hidden" name="comment" id="hiddenComment" value="">
     <input type="hidden" name="fromAction" value="<%=fromAction%>">

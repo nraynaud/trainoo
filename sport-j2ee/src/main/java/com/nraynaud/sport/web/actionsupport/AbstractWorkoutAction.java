@@ -1,7 +1,9 @@
 package com.nraynaud.sport.web.actionsupport;
 
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.web.ActionDetail;
 import com.nraynaud.sport.web.SportRequest;
+import com.nraynaud.sport.web.view.WorkoutPageDetails;
 import com.nraynaud.sport.web.view.WorkoutView;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
@@ -12,7 +14,7 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import java.util.Date;
 import java.util.Map;
 
-public class AbstractWorkoutAction extends DefaultAction implements ModelDriven<WorkoutView> {
+public abstract class AbstractWorkoutAction extends DefaultAction implements ModelDriven<WorkoutPageDetails> {
     private Date date = new Date();
     private Long duration;
     private Double distance;
@@ -23,9 +25,11 @@ public class AbstractWorkoutAction extends DefaultAction implements ModelDriven<
     public String id;
 
     public static final String MAX_COMMENT_LENGTH = "4000";
+    private final String pageTitle;
 
-    public AbstractWorkoutAction(final Application application) {
+    public AbstractWorkoutAction(final Application application, final String pageTitle) {
         super(application);
+        this.pageTitle = pageTitle;
     }
 
     @TypeConversion(converter = "com.nraynaud.sport.web.converter.DateConverter")
@@ -86,17 +90,21 @@ public class AbstractWorkoutAction extends DefaultAction implements ModelDriven<
         return energy;
     }
 
-    public WorkoutView getModel() {
+    public WorkoutPageDetails getModel() {
         final WorkoutView interpreted = WorkoutView.createView(id, getDiscipline(), getDate(), getDistance(),
-                getDuration(), getEnergy(), getComment());
-        return new WorkoutView(id,
-                errorOrValue("discipline", interpreted.discipline),
-                errorOrValue("date", interpreted.date),
-                errorOrValue("distance", interpreted.distance),
-                errorOrValue("duration", interpreted.duration),
-                errorOrValue("energy", interpreted.energy),
-                errorOrValue("comment", interpreted.comment));
+                getDuration(), getEnergy(), getComment() == null ? "" : getComment());
+        return new WorkoutPageDetails(
+                new WorkoutView(id,
+                        errorOrValue("discipline", interpreted.discipline),
+                        errorOrValue("date", interpreted.date),
+                        errorOrValue("distance", interpreted.distance),
+                        errorOrValue("duration", interpreted.duration),
+                        errorOrValue("energy", interpreted.energy),
+                        errorOrValue("comment", interpreted.comment)),
+                pageTitle, actionDescription, cancelAction());
     }
+
+    protected abstract ActionDetail cancelAction();
 
     private static String errorOrValue(final String fieldKey, final String value) {
         //noinspection unchecked

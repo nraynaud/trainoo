@@ -1,24 +1,20 @@
-<%@ page import="com.nraynaud.sport.web.ActionDetail" %>
+<%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
-<%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
-<%@ page import="com.nraynaud.sport.web.view.WorkoutView" %>
+<%@ page import="com.nraynaud.sport.web.view.WorkoutPageDetails" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<%
-    final WorkoutView workout = top();
-%>
-<p:layoutParams title='<%="Modification de mon entraînement"%>'
-                showTitleInPage="false"/>
+<% final WorkoutPageDetails pageDetail = top();%>
+<p:layoutParams title='<%=pageDetail.pageTile%>' showTitleInPage="false"/>
 
 <%
     call(pageContext, "workoutForm2.jsp", null,
-            "actionUrl", createUrl("/workout", "reallyEdit", "id", workout.id),
-            "title", "Modification d'un entraînement",
-            "fromAction", new ActionDetail("/workout", "", "id", workout.id),
-            "workoutView", workout);
+            "actionUrl", pageDetail.doAction,
+            "title", pageDetail.pageTile,
+            "fromAction", pageDetail.cancelAction,
+            "workoutView", pageDetail.workoutView);
 %>
 
 <div id="globalLeft">
@@ -35,10 +31,10 @@
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <%=textArea("externalComment", "externalComment", workout.comment != null ? workout.comment : "")%>
+                    <%=textArea("externalComment", "externalComment", pageDetail.workoutView.comment)%>
                 </span>
             </p>
-            <p:javascript>makeItCount('comment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
+            <p:javascript>makeItCount('externalComment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
         </div>
     </div>
 </div>

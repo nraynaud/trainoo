@@ -4,7 +4,6 @@ import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.ActionDetail;
 import com.nraynaud.sport.web.ChainBackCapable;
-import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction;
 import com.nraynaud.sport.web.result.Redirect;
@@ -12,7 +11,6 @@ import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.validator.annotations.Validation;
-import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
@@ -20,10 +18,9 @@ import java.util.Date;
 
 @Conversion
 @Results({
-    @Result(name = INPUT, value = "/WEB-INF/pages/workout/new.jsp"),
+    @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
     @Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${newId}"}, value = "")
         })
-@ParentPackage(Constants.STRUTS_PACKAGE)
 @Validation
 public class CreateAction extends AbstractWorkoutAction implements ChainBackCapable {
 
@@ -32,7 +29,7 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
     public String newId;
 
     public CreateAction(final Application application) {
-        super(application);
+        super(application, NewAction.PAGE_TILE);
     }
 
     @PostOnly
@@ -56,5 +53,9 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
 
     public ActionDetail getOnErrorAction() {
         return ActionDetail.decodeActionDetail(onErrorAction);
+    }
+
+    protected ActionDetail cancelAction() {
+        return NewAction.CANCEL_ACTION;
     }
 }
