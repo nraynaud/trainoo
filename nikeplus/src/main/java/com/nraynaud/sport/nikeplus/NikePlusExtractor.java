@@ -43,7 +43,7 @@ public class NikePlusExtractor implements Importer {
 
     public static void checkStatus(final byte[] body) throws FailureException {
         try {
-            final String status = (String) evaluate(body, STATUS_EXPRESSION, XPathConstants.STRING);
+            final String status = evaluate(body, STATUS_EXPRESSION, XPathConstants.STRING);
             if (!"success".equals(status))
                 throw new FailureException();
         } catch (XPathExpressionException e) {
@@ -72,7 +72,7 @@ public class NikePlusExtractor implements Importer {
 
     public static String extractUserId(final byte[] responseBody) {
         try {
-            return (String) evaluate(responseBody, USER_ID, XPathConstants.STRING);
+            return evaluate(responseBody, USER_ID, XPathConstants.STRING);
         } catch (XPathExpressionException e) {
             throw new RuntimeException(e);
         }
@@ -101,7 +101,7 @@ public class NikePlusExtractor implements Importer {
             ParseException {
         checkStatus(responseBody);
         try {
-            final NodeList result = (NodeList) evaluate(responseBody, RUN_LIST, XPathConstants.NODESET);
+            final NodeList result = evaluate(responseBody, RUN_LIST, XPathConstants.NODESET);
             for (int i = 0; i < result.getLength(); i++) {
                 final Node node = result.item(i);
                 final String nikeId = node.getAttributes().getNamedItem("id").getTextContent();
@@ -118,9 +118,10 @@ public class NikePlusExtractor implements Importer {
         }
     }
 
-    private static Object evaluate(final byte[] responseBody, final XPathExpression runList,
-                                   final QName returnType) throws XPathExpressionException {
-        return runList.evaluate(new InputSource(new ByteArrayInputStream(responseBody)), returnType);
+    @SuppressWarnings({"unchecked"})
+    private static <T> T evaluate(final byte[] responseBody, final XPathExpression runList,
+                                  final QName returnType) throws XPathExpressionException {
+        return (T) runList.evaluate(new InputSource(new ByteArrayInputStream(responseBody)), returnType);
     }
 
     public static void connect(final HttpClient client, final String login, final String password) throws

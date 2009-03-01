@@ -74,10 +74,9 @@
             <%}%>
             <% if (isNikePlus) { %>
             <% if (workout.getUser().getNikePlusId() != null) { %>
-            <dt>Entrainement Nike+&nbsp;:</dt>
+            <dt>Entraînement Nike+&nbsp;:</dt>
             <dd>
-                <a href="http://nikeplus.nike.com/nikeplus/?l=runners,runs,<%=workout.getUser().getNikePlusId()%>,runID,<%=workout.getNikePlusId()%>">
-                    Voir la course sur nike.com</a>
+                <%call(pageContext, "nikePlusDetail.jsp", workout);%>
             </dd>
             <%} else {%>
             <dt class="noDescription">Entrainement Nike+</dt>
