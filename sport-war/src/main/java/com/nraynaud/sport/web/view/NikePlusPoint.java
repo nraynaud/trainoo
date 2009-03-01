@@ -10,9 +10,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class NikePlusPoint implements Comparable<NikePlusPoint> {
     public final double distance;
@@ -70,7 +68,7 @@ public class NikePlusPoint implements Comparable<NikePlusPoint> {
                     XPathConstants.NODE);
             final double totalDistance = Double.parseDouble(
                     (String) xPath.evaluate("//runSummary/distance/text()", root, XPathConstants.STRING));
-            final Set<NikePlusPoint> points = new TreeSet<NikePlusPoint>();
+            final SortedSet<NikePlusPoint> points = new TreeSet<NikePlusPoint>();
             final Node extended = (Node) xPath.evaluate("//extendedData[@dataType='distance']", root,
                     XPathConstants.NODE);
             final Config config = new Config(totalDistance / MAX_FINAL_POINTS);
@@ -80,6 +78,7 @@ public class NikePlusPoint implements Comparable<NikePlusPoint> {
             addSnapshot(xPath, root, points, snaps, "//snapShotList[@snapShotType='kmSplit']/snapShot", config);
             addSnapshot(xPath, root, points, snaps, "//snapShotList[@snapShotType='userClick']/snapShot", config);
             points.addAll(snaps);
+            points.last().pace = points.first().pace;
             dumpPoints(points, config);
             for (final NikePlusPoint point : points) {
                 point.pace = -point.pace / 60000; //go to minutes/km
@@ -99,12 +98,14 @@ public class NikePlusPoint implements Comparable<NikePlusPoint> {
         final String extendedData = xPath.evaluate("text()", extendedDataNode);
         double previousTime = 0.0;
         double previousDistance = 0.0;
-        final String[] distances = extendedData.split(",");
+        final List<String> distances = new ArrayList<String>(Arrays.asList(extendedData.split(",")));
+        if (Double.parseDouble(distances.get(0)) != 0)
+            distances.add(0, "0");
         boolean first = true;
-        for (int i = 0; i < distances.length; i++) {
+        for (int i = 0; i < distances.size(); i++) {
             final StringBuilder log = new StringBuilder();
             final int time = (int) (i * sampling * 1000);
-            final String fragment = distances[i];
+            final String fragment = distances.get(i);
             final double distance = Double.parseDouble(fragment);
             final double pace = (time - previousTime) / (distance - previousDistance);
             log.append("testing point ")
@@ -115,7 +116,8 @@ public class NikePlusPoint implements Comparable<NikePlusPoint> {
                     .append(distance - previousDistance)
                     .append("\tpace: ")
                     .append(pace);
-            if (i % (distances.length / MAX_FINAL_POINTS) == 0 && !Double.isInfinite(pace) && !Double.isNaN(pace)) {
+            if (i != 0 && i % (distances.size() / MAX_FINAL_POINTS) == 0 && !Double.isInfinite(pace) && !Double.isNaN(
+                    pace)) {
                 config.updateMinMax(pace);
                 points.add(new NikePlusPoint(distance, pace));
                 log.append(" (selected)");
