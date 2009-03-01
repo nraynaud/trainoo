@@ -11,10 +11,10 @@
     <link rel="alternate" type="application/rss+xml" title="Trainoo.com - Derniers entraînements"
           href="http://feeds.feedburner.com/Trainoo">
 </p:header>
-<h1>Tableau général</h1>
+<h1>Quoi de neuf sur Trainoo.com&nbsp;?</h1>
 
 <div id="globalLeft">
-    <h2>Dernières sorties sportives</h2>
+    <h2>Derniers entraînements</h2>
 
     <div class="block sheetBlock">
         <div class="header">
@@ -41,12 +41,12 @@
 
     <div class="block importantBlock">
         <div class="content textContent">
-            <p>Vous pratiquez le sport en dehors de la télé&nbsp;?<br>
+            <p>Vous pratiquez le sport&nbsp;?<br>
                 Vous voulez suivre votre vie active&nbsp;?<br>
                 <%=signupUrl("Inscrivez-vous")%> et vous pourrez&nbsp;:</p>
             <ul>
-                <li>Publier vos entrainements</li>
-                <li>Commenter vos entrainements et ceux des autres</li>
+                <li>Publier vos entraînements</li>
+                <li>Commenter vos entraînements et ceux des autres</li>
                 <li>Dialoguer avec d'autres sportifs</li>
                 <li>Organiser des sorties collectives</li>
             </ul>
