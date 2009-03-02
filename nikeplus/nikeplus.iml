@@ -56,6 +56,19 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-httpclient:commons-httpclient:3.0.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library name="junit:junit:4.0">
         <CLASSES>
@@ -66,6 +79,32 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$M2_REPO$/junit/junit/4.0/junit-4.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-logging:commons-logging:1.0.3">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.0.3/commons-logging-1.0.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-codec:commons-codec:1.2">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/commons-codec/commons-codec/1.2/commons-codec-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/commons-codec/commons-codec/1.2/commons-codec-1.2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/commons-codec/commons-codec/1.2/commons-codec-1.2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

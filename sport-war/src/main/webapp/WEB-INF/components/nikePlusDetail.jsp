@@ -16,17 +16,24 @@
 <%
     final String lowPass = pageContext.getRequest().getParameter("lowPass");
     final String min = pageContext.getRequest().getParameter("min");
-    final String parameter = pageContext.getRequest().getParameter("pointCount");
-    final int pointCount = parameter == null ? 20 : Integer.parseInt(parameter);
+    final String max = pageContext.getRequest().getParameter("max");
+    final String parameter = pageContext.getRequest().getParameter("radius");
+    final int radius = parameter == null ? 20 : Integer.parseInt(parameter);
 %>
 <p:javascript>
     var curve = <%=lowPass != null ?
-        getLowPassCurve(userId, workoutId, pointCount) :
+        getLowPassCurve(userId, workoutId, radius) :
         getNikePlusCurve(userId, workoutId)%>;
-    drawCurve(curve, $('container'), <%=min == null ? "null" : Integer.parseInt(min)%>);
+    drawCurve(curve, $('container'), <%=numberOrNull(min)%>, <%=numberOrNull(max)%>);
 </p:javascript>
 <div id="container" style="width:360px;height:100px;"></div>
 
 
 <a href="http://nikeplus.nike.com/nikeplus/?l=runners,runs,<%=userId%>,runID,<%=workoutId%>"
         >Voir la course sur nike.com</a>
+<%!
+    //only avoids injection in JS
+    private static String numberOrNull(final String String) {
+        return String == null ? "null" : Double.valueOf(String).toString();
+    }
+%>

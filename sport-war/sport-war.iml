@@ -190,10 +190,6 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/commons-io-1.3.2.jar" />
           </containerElement>
-          <containerElement type="module" name="geoportail">
-            <attribute name="method" value="5" />
-            <attribute name="URI" value="/WEB-INF/lib/geoportail-1.0-SNAPSHOT.jar" />
-          </containerElement>
           <containerElement type="library" name="commons-httpclient:commons-httpclient:3.0.1" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/commons-httpclient-3.0.1.jar" />
@@ -201,6 +197,10 @@
           <containerElement type="library" name="commons-codec:commons-codec:1.2" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/commons-codec-1.2.jar" />
+          </containerElement>
+          <containerElement type="module" name="geoportail">
+            <attribute name="method" value="5" />
+            <attribute name="URI" value="/WEB-INF/lib/geoportail-1.0-SNAPSHOT.jar" />
           </containerElement>
           <containerElement type="module" name="syndication">
             <attribute name="method" value="5" />
@@ -731,7 +731,6 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="geoportail" exported="" />
     <orderEntry type="module-library" exported="">
       <library name="commons-httpclient:commons-httpclient:3.0.1">
         <CLASSES>
@@ -771,6 +770,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="geoportail" exported="" />
     <orderEntry type="module" module-name="syndication" exported="" />
     <orderEntry type="module-library" exported="">
       <library name="rome:rome:0.9">
