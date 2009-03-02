@@ -64,7 +64,52 @@ public class NikeCurveHelper {
         }
     }
 
-    public static String getNikePlusData(final String userId, final String workoutId) {
+    public static String getLowPassCurve(final String userId, final String workoutId, final int pointCount) {
+        final XPath xPath = XPathFactory.newInstance().newXPath();
+        try {
+            final String url = "http://nikeplus.nike.com/nikeplus/v1/services/app/get_run.jsp?id="
+                    + workoutId
+                    + "&userID="
+                    + userId;
+            final Node root = (Node) xPath.evaluate("/", new InputSource(new URL(url).openStream()),
+                    XPathConstants.NODE);
+            final SortedSet<NikePlusPoint> points = new TreeSet<NikePlusPoint>();
+            final Node extended = (Node) xPath.evaluate("//extendedData[@dataType='distance']", root,
+                    XPathConstants.NODE);
+            registerExtandedLowPass(xPath, points, extended, pointCount);
+            for (final NikePlusPoint point : points) {
+                point.pace = -point.pace / 60000; //go to minutes/km
+            }
+            return points.toString();
+        } catch (XPathExpressionException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void registerExtandedLowPass(final XPath xPath, final Set<NikePlusPoint> points,
+                                                final Node extendedDataNode, final int pointCount) throws
+            XPathExpressionException {
+        final double sampling = Double.parseDouble(xPath.evaluate("@intervalValue", extendedDataNode));
+        final String extendedData = xPath.evaluate("text()", extendedDataNode);
+        double previousTime = 0.0;
+        double previousDistance = 0.0;
+        final List<String> distances = new ArrayList<String>(Arrays.asList(extendedData.split(",")));
+        for (int i = 0; i < distances.size(); i += distances.size() / pointCount) {
+            final int time = (int) (i * sampling * 1000);
+            final String fragment = distances.get(i);
+            final double distance = Double.parseDouble(fragment);
+            final double pace = (time - previousTime) / (distance - previousDistance);
+            if (!Double.isInfinite(pace) && !Double.isNaN(pace)) {
+                points.add(new NikePlusPoint(distance, pace));
+            }
+            previousDistance = distance;
+            previousTime = time;
+        }
+    }
+
+    public static String getNikePlusCurve(final String userId, final String workoutId) {
         final XPath xPath = XPathFactory.newInstance().newXPath();
         try {
             final String url = "http://nikeplus.nike.com/nikeplus/v1/services/app/get_run.jsp?id="

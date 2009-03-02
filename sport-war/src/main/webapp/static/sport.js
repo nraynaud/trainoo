@@ -292,13 +292,13 @@ function clickableRow(row) {
     });
 }
 /* nike plus stuff*/
-function drawCurve(data, element) {
+function drawCurve(data, element, min) {
     Flotr.draw(element, [ data ], {
         lines: {show: true},
         xaxis: {tickDecimals: 0, tickFormatter: function(num) {
             return num + "<small>km</small>"
         }},
-        yaxis: {autoscaleMargin: 0.1, ticks: []},
+        yaxis: {autoscaleMargin: 0.1, ticks: [], min: min, max: (min == null ? null : 0)},
         mouse:{
             track: true, color: 'purple',
             sensibility: 6,
