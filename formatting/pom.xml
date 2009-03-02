@@ -9,7 +9,7 @@
     <groupId>com.nraynaud.sport</groupId>
     <artifactId>formatting</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>sport-j2ee</name>
+    <name>formatting</name>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
