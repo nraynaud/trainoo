@@ -13,7 +13,11 @@ import com.opensymphony.xwork2.ActionContext;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -248,7 +252,16 @@ public class Helpers {
      * @param path the path, with the leading /
      */
     public static String stat(final String path) {
-        return STATIC_CONTENT_PREFIX + path;
+        try {
+            final URL resource = ServletActionContext.getServletContext().getResource(path);
+            final URLConnection connection = resource.openConnection();
+            final String suffix = String.valueOf(connection.getLastModified());
+            return STATIC_CONTENT_PREFIX + path + "?" + suffix;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static String anchor(final String content, final String url) {
