@@ -40,9 +40,15 @@ public class TileCache implements TileFetcher {
         }
         try {
             final FileOutputStream fileOutputStream = new FileOutputStream(file);
-            IOUtils.copy(data.inputStream, fileOutputStream);
-            fileOutputStream.close();
-            data.inputStream.close();
+            try {
+                try {
+                    IOUtils.copy(data.inputStream, fileOutputStream);
+                } finally {
+                    fileOutputStream.close();
+                }
+            } finally {
+                data.inputStream.close();
+            }
             return new TileData(data.mimeType, new FileInputStream(file), data.length);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

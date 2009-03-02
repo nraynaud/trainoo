@@ -8,8 +8,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.IOException;
-import java.net.URL;
+import java.io.ByteArrayInputStream;
 import java.util.*;
 
 public class NikeCurveHelper {
@@ -67,11 +66,8 @@ public class NikeCurveHelper {
     public static String getLowPassCurve(final String userId, final String workoutId, final int pointCount) {
         final XPath xPath = XPathFactory.newInstance().newXPath();
         try {
-            final String url = "http://nikeplus.nike.com/nikeplus/v1/services/app/get_run.jsp?id="
-                    + workoutId
-                    + "&userID="
-                    + userId;
-            final Node root = (Node) xPath.evaluate("/", new InputSource(new URL(url).openStream()),
+            final Node root = (Node) xPath.evaluate("/",
+                    new InputSource(new ByteArrayInputStream(NikeWorkoutCache.getWorkoutData(userId, workoutId))),
                     XPathConstants.NODE);
             final SortedSet<NikePlusPoint> points = new TreeSet<NikePlusPoint>();
             final Node extended = (Node) xPath.evaluate("//extendedData[@dataType='distance']", root,
@@ -82,8 +78,6 @@ public class NikeCurveHelper {
             }
             return points.toString();
         } catch (XPathExpressionException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -112,11 +106,8 @@ public class NikeCurveHelper {
     public static String getNikePlusCurve(final String userId, final String workoutId) {
         final XPath xPath = XPathFactory.newInstance().newXPath();
         try {
-            final String url = "http://nikeplus.nike.com/nikeplus/v1/services/app/get_run.jsp?id="
-                    + workoutId
-                    + "&userID="
-                    + userId;
-            final Node root = (Node) xPath.evaluate("/", new InputSource(new URL(url).openStream()),
+            final Node root = (Node) xPath.evaluate("/",
+                    new InputSource(new ByteArrayInputStream(NikeWorkoutCache.getWorkoutData(userId, workoutId))),
                     XPathConstants.NODE);
             final double totalDistance = Double.parseDouble(
                     (String) xPath.evaluate("//runSummary/distance/text()", root, XPathConstants.STRING));
@@ -137,8 +128,6 @@ public class NikeCurveHelper {
             }
             return points.toString();
         } catch (XPathExpressionException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -181,28 +170,34 @@ public class NikeCurveHelper {
                     first = false;
                 }
             }
-            System.out.println(log);
+            logText(log.toString());
             previousDistance = distance;
             previousTime = time;
         }
     }
 
     private static void dumpPoints(final Set<NikePlusPoint> points, final Config config) {
-        System.out.println("points: " + points.size());
-        System.out.println("min: " + config.minPace + "\tmax: " + config.maxPace);
+        logText("points: " + points.size());
+        logText("min: " + config.minPace + "\tmax: " + config.maxPace);
         int i = 0;
         for (final NikePlusPoint point : points) {
-            System.out
-                    .println("point "
-                            + i
-                            + "\t"
-                            + "pace: "
-                            + (int) point.pace
-                            + " ms/km\tdist: "
-                            + point
-                            .distance
-                            + " km");
+            logText("point "
+                    + i
+                    + "\t"
+                    + "pace: "
+                    + (int) point.pace
+                    + " ms/km\tdist: "
+                    + point
+                    .distance
+                    + " km");
             i++;
+        }
+    }
+
+    private static void logText(final String text) {
+        //noinspection ConstantIfStatement
+        if (false) {
+            System.out.println(text);
         }
     }
 
@@ -229,11 +224,11 @@ public class NikeCurveHelper {
                         || isFarEnough(snaps, snap, config)) {
                     removeClosePoints(points, snap, config);
                     snaps.add(snap);
-                    System.out.println("(addind snap)");
+                    logText("(addind snap)");
                 } else
-                    System.out.println("(removing snap)");
+                    logText("(removing snap)");
             } else
-                System.out.println("(ignoring snap no dist)");
+                logText("(ignoring snap no dist)");
         }
     }
 
