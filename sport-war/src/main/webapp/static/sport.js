@@ -1,119 +1,112 @@
 var Browser = {
-	Engine: {name: 'unknown', version: ''},
-	Platform: {name: (navigator.platform.match(/mac|win|linux/i) || ['other'])[0].toLowerCase()},
-	Features: {xpath: !!(document.evaluate), air: !!(window.runtime)}
+    Engine: {name: 'unknown', version: ''},
+    Platform: {name: (navigator.platform.match(/mac|win|linux/i) || ['other'])[0].toLowerCase()},
+    Features: {xpath: !!(document.evaluate), air: !!(window.runtime)}
 };
-
 if (window.opera) Browser.Engine = {name: 'presto', version: (document.getElementsByClassName) ? 950 : 925};
 else if (window.ActiveXObject) Browser.Engine = {name: 'trident', version: (window.XMLHttpRequest) ? 5 : 4};
 else if (!navigator.taintEnabled) Browser.Engine = {name: 'webkit', version: (Browser.Features.xpath) ? 420 : 419};
 else if (document.getBoxObjectFor != null) Browser.Engine = {name: 'gecko', version: (document.getElementsByClassName) ? 19 : 18};
 Browser.Engine[Browser.Engine.name] = Browser.Engine[Browser.Engine.name + Browser.Engine.version] = true;
-
 Element.addMethods({
-    getComputedStyle: function(elt, property){
-		if (elt.currentStyle) return elt.currentStyle[property.camelCase()];
+    getComputedStyle: function(elt, property) {
+        if (elt.currentStyle) return elt.currentStyle[property.camelCase()];
         var win = elt.ownerDocument.defaultView || elt.ownerDocument.parentWindow;
-		var computed = win.getComputedStyle(elt, null);
-		return (computed) ? computed.getPropertyValue([property.dasherize()]) : null;
-	},
+        var computed = win.getComputedStyle(elt, null);
+        return (computed) ? computed.getPropertyValue([property.dasherize()]) : null;
+    },
 
-    getScrolls: function(elt){
-		var element = elt, position = {x: 0, y: 0};
-		while (element && !isBody(element)){
-			position.x += element.scrollLeft;
-			position.y += element.scrollTop;
-			element = element.parentNode;
-		}
-		return position;
-	},
+    getScrolls: function(elt) {
+        var element = elt, position = {x: 0, y: 0};
+        while (element && !isBody(element)) {
+            position.x += element.scrollLeft;
+            position.y += element.scrollTop;
+            element = element.parentNode;
+        }
+        return position;
+    },
 
 
-    getOffsets: function(elt){
-		var element =elt, position = {x: 0, y: 0};
-		if (isBody(elt)) return position;
+    getOffsets: function(elt) {
+        var element = elt, position = {x: 0, y: 0};
+        if (isBody(elt)) return position;
+        while (element && !isBody(element)) {
+            position.x += element.offsetLeft;
+            position.y += element.offsetTop;
+            if (Browser.Engine.gecko) {
+                if (!borderBox(element)) {
+                    position.x += leftBorder(element);
+                    position.y += topBorder(element);
+                }
+                var parent = element.parentNode;
+                if (parent && styleString(parent, 'overflow') != 'visible') {
+                    position.x += leftBorder(parent);
+                    position.y += topBorder(parent);
+                }
+            } else if (element != elt && (Browser.Engine.trident || Browser.Engine.webkit)) {
+                position.x += leftBorder(element);
+                position.y += topBorder(element);
+            }
+            element = element.offsetParent;
+            if (Browser.Engine.trident) {
+                while (element && !element.currentStyle.hasLayout) element = element.offsetParent;
+            }
+        }
+        if (Browser.Engine.gecko && !borderBox(elt)) {
+            position.x -= leftBorder(elt);
+            position.y -= topBorder(elt);
+        }
+        return position;
+    },
 
-		while (element && !isBody(element)){
-			position.x += element.offsetLeft;
-			position.y += element.offsetTop;
+    getPosition: function(elt, relative) {
+        if (isBody(elt)) return {x: 0, y: 0};
+        var offset = elt.getOffsets(), scroll = elt.getScrolls();
+        var position = {x: offset.x - scroll.x, y: offset.y - scroll.y};
+        var relativePosition = (relative && (relative = $(relative))) ? relative.getPosition() : {x: 0, y: 0};
+        return {x: position.x - relativePosition.x, y: position.y - relativePosition.y};
+    },
 
-			if (Browser.Engine.gecko){
-				if (!borderBox(element)){
-					position.x += leftBorder(element);
-					position.y += topBorder(element);
-				}
-				var parent = element.parentNode;
-				if (parent && styleString(parent, 'overflow') != 'visible'){
-					position.x += leftBorder(parent);
-					position.y += topBorder(parent);
-				}
-			} else if (element != elt && (Browser.Engine.trident || Browser.Engine.webkit)){
-				position.x += leftBorder(element);
-				position.y += topBorder(element);
-			}
-
-			element = element.offsetParent;
-			if (Browser.Engine.trident){
-				while (element && !element.currentStyle.hasLayout) element = element.offsetParent;
-			}
-		}
-		if (Browser.Engine.gecko && !borderBox(elt)){
-			position.x -= leftBorder(elt);
-			position.y -= topBorder(elt);
-		}
-		return position;
-	},
-
-    getPosition: function(elt, relative){
-		if (isBody(elt)) return {x: 0, y: 0};
-		var offset = elt.getOffsets(), scroll = elt.getScrolls();
-		var position = {x: offset.x - scroll.x, y: offset.y - scroll.y};
-		var relativePosition = (relative && (relative = $(relative))) ? relative.getPosition() : {x: 0, y: 0};
-		return {x: position.x - relativePosition.x, y: position.y - relativePosition.y};
-	},
-
-    getCoordinates: function(elt, relative){
-		if (isBody(elt)) {
+    getCoordinates: function(elt, relative) {
+        if (isBody(elt)) {
             var win = elt.ownerDocument.defaultView || elt.ownerDocument.parentWindow;
             return win.getCoordinates();
         }
-		var position = elt.getPosition(relative), size = {x: elt.offsetWidth, y: elt.offsetHeight};
-		var obj = {left: position.x, top: position.y, width: size.x, height: size.y};
-		obj.right = obj.left + obj.width;
-		obj.bottom = obj.top + obj.height;
-		return obj;
-	},
+        var position = elt.getPosition(relative), size = {x: elt.offsetWidth, y: elt.offsetHeight};
+        var obj = {left: position.x, top: position.y, width: size.x, height: size.y};
+        obj.right = obj.left + obj.width;
+        obj.bottom = obj.top + obj.height;
+        return obj;
+    },
 
     getInnerText: function(element) {
         element = $(element);
         return element.innerText && !window.opera ? element.innerText
-            : element.innerHTML.stripScripts().unescapeHTML().replace(/[\n\r\s]+/g, ' ');
+                : element.innerHTML.stripScripts().unescapeHTML().replace(/[\n\r\s]+/g, ' ');
     }
 
 });
-
 var styleString = Element.getComputedStyle;
-
-function styleNumber(element, style){
-	return parseInt(styleString(element, style), 10) || 0;
-};
-
-function borderBox(element){
-	return styleString(element, '-moz-box-sizing') == 'border-box';
-};
-
-function topBorder(element){
-	return styleNumber(element, 'border-top-width');
-};
-
-function leftBorder(element){
-	return styleNumber(element, 'border-left-width');
-};
-
-function isBody(element){
-	return (/^(?:body|html)$/i).test(element.tagName);
-};
-
+function styleNumber(element, style) {
+    return parseInt(styleString(element, style), 10) || 0;
+}
+;
+function borderBox(element) {
+    return styleString(element, '-moz-box-sizing') == 'border-box';
+}
+;
+function topBorder(element) {
+    return styleNumber(element, 'border-top-width');
+}
+;
+function leftBorder(element) {
+    return styleNumber(element, 'border-left-width');
+}
+;
+function isBody(element) {
+    return (/^(?:body|html)$/i).test(element.tagName);
+}
+;
 function openParticipantsListEditor(buttonList, content) {
     $(document.body).addClassName('editingParticipantsList');
     $(document.body).removeClassName('notEditingParticipantsList');
@@ -124,12 +117,10 @@ function openParticipantsListEditor(buttonList, content) {
     delete coords.bottom;
     $('participant_choices').setStyle(coords);
 }
-
 function closeParticipantsListEditor(buttonList, content) {
     $(document.body).removeClassName('editingParticipantsList');
     $(document.body).addClassName('notEditingParticipantsList');
 }
-
 function removeParticipant(element, userId, workoutId) {
     new Ajax.Request('/workout/removeParticipant', {
         'method': 'post',
@@ -139,12 +130,13 @@ function removeParticipant(element, userId, workoutId) {
         }
     });
     var links = element.select('a');
-    for (var i=0; i<links.length; ++i) {
-        links[i].observe('click', function(evt) { Event.stop(evt); });
+    for (var i = 0; i < links.length; ++i) {
+        links[i].observe('click', function(evt) {
+            Event.stop(evt);
+        });
     }
     element.fade({'duration': 0.4});
 }
-
 function addParticipant(userName, userId, workoutId, destination) {
     new Ajax.Request('/workout/addParticipant', {
         'method': 'post',
@@ -154,10 +146,10 @@ function addParticipant(userName, userId, workoutId, destination) {
         }
     });
     var block = new Element('li');
-    var link = new Element('a', {'href':'/bib/?id='+userId, 'title':'Voir le dossard de '+userName})
-        .insert(userName);
+    var link = new Element('a', {'href':'/bib/?id=' + userId, 'title':'Voir le dossard de ' + userName})
+            .insert(userName);
     var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
-        .insert('Supprimer');
+            .insert('Supprimer');
     remover.observe('click', function(evt) {
         removeParticipant(block, userId, workoutId);
         Event.stop(evt);
@@ -167,7 +159,7 @@ function addParticipant(userName, userId, workoutId, destination) {
     block.insert(remover);
     block.setOpacity(0);
     var elements = destination.select('.userList li');
-    for (var i=0; i<elements.length; ++i) {
+    for (var i = 0; i < elements.length; ++i) {
         if (elements[i].select('a')[0].getInnerText().toLowerCase() > userName.toLowerCase()) {
             elements[i].insert({'before': block});
             break;
@@ -177,12 +169,11 @@ function addParticipant(userName, userId, workoutId, destination) {
     }
     block.appear({'duration': 0.4});
 }
-
 var ParticipantAutocompleter = Class.create(Ajax.Autocompleter, {
 
     markPrevious: function($super) {
         if (this.index > 0) this.index--;
-        else this.index = this.entryCount-1;
+        else this.index = this.entryCount - 1;
         this.showCurrentEntry();
         this.element.value = this.getEntry(this.index).select('span.name')[0].getInnerText();
     },
@@ -197,13 +188,12 @@ var ParticipantAutocompleter = Class.create(Ajax.Autocompleter, {
     },
 
     markNext : function($super) {
-        if (this.index < this.entryCount-1) this.index++;
+        if (this.index < this.entryCount - 1) this.index++;
         else this.index = 0;
         this.showCurrentEntry();
         this.element.value = this.getEntry(this.index).select('span.name')[0].getInnerText();
     }
 });
-
 function installParticipantsListEditor() {
     if (!Trainoo.isLogged || !Trainoo.isWorkout) return;
     var button = $('editParticipantsList');
@@ -216,31 +206,32 @@ function installParticipantsListEditor() {
             Event.stop(evt);
         });
         var applyButton =
-            new Element('a', {'href':'#', 'title': 'Terminer', 'class':'button applyButton verboseButton'})
-                .insert('Terminer');
+                new Element('a', {'href':'#', 'title': 'Terminer', 'class':'button applyButton verboseButton'})
+                        .insert('Terminer');
         applyButton.observe('click', function(evt) {
             closeParticipantsListEditor(button.up(), content);
             Event.stop(evt);
         });
         button.insert({'after': applyButton});
         $(document.body).insert({'bottom':
-            new Element('div', {'id': 'participant_choices', 'class': 'autocomplete'})});
+                new Element('div', {'id': 'participant_choices', 'class': 'autocomplete'})});
         content.insert({'top':
-            new Element('input', {'class': 'text', 'id': 'participant_input'})});
+                new Element('input', {'class': 'text', 'id': 'participant_input'})});
         new ParticipantAutocompleter('participant_input', 'participant_choices', '/feedback',
-            {paramName: 'data', minChars: 1, parameters: 'type=participants&workout='+Trainoo.workout.id, updateElement: function(elt) {
-                var userName = elt.select('span.name')[0].getInnerText().strip();
-                var userId = parseInt(elt.select('span.id')[0].getInnerText().strip(), 10);
-                addParticipant(userName, userId, Trainoo.workout.id, content);
-                $('participant_input').value = '';
-            }});
+        {paramName: 'data', minChars: 1, parameters: 'type=participants&workout=' + Trainoo.workout.id, updateElement: function(
+                elt) {
+            var userName = elt.select('span.name')[0].getInnerText().strip();
+            var userId = parseInt(elt.select('span.id')[0].getInnerText().strip(), 10);
+            addParticipant(userName, userId, Trainoo.workout.id, content);
+            $('participant_input').value = '';
+        }});
         elements = content.select('.userList li');
-        for (var i=0; i<elements.length; ++i) {
+        for (var i = 0; i < elements.length; ++i) {
             (function (current) {
                 var currentId = parseInt(current.select('a')[0].href.split('id=')[1].split('&')[0], 10);
                 if (currentId != Trainoo.user.id) {
                     var remover = new Element('a', {'class': 'remover', 'title':'Supprimer de la liste', 'href':'#'})
-                        .insert('Supprimer');
+                            .insert('Supprimer');
                     remover.observe('click', function(evt) {
                         removeParticipant(current, currentId, Trainoo.workout.id);
                         Event.stop(evt);
@@ -251,21 +242,16 @@ function installParticipantsListEditor() {
         }
     }
 }
-
 document.observe("dom:loaded", installParticipantsListEditor);
-
 function fixEditViewUnderIE() {
     if (Browser.Engine.trident) {
         $$('.workoutBlock dl, .bibBlock dl').each(
-            function (elem) {
-                elem.innerHTML += ' ';
-            }
-        );
+                function (elem) {
+                    elem.innerHTML += ' ';
+                });
     }
 }
-
 document.observe("dom:loaded", fixEditViewUnderIE);
-
 var oldValue = ''
 function feedback(field_name, val)
 {
@@ -303,6 +289,26 @@ function clickableRow(row) {
     });
     row.observe('click', function() {
         window.location = href;
+    });
+}
+/* nike plus stuff*/
+function drawCurve(data, element) {
+    Flotr.draw(element, [ data ], {
+        lines: {show: true},
+        xaxis: {tickDecimals: 0, tickFormatter: function(num) {
+            return num + "<small>km</small>"
+        }},
+        yaxis: {autoscaleMargin: 0.1, ticks: []},
+        mouse:{
+            track: true, color: 'purple',
+            sensibility: 6,
+            trackDecimals: 2,
+            trackFormatter: function(obj) {
+                var min = -obj.y;
+                var minDec = min - Math.floor(min);
+                return obj.x + 'km, ' + Math.floor(min) + "'" + Math.round((minDec) * 60) + "''/km";
+            }
+        }
     });
 }
 /* MIT licence bablaba */
