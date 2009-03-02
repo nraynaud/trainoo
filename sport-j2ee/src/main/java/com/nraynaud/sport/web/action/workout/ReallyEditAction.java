@@ -4,6 +4,7 @@ import com.nraynaud.sport.AccessDeniedException;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.ActionDetail;
+import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction;
 import com.nraynaud.sport.web.result.Redirect;
@@ -11,6 +12,7 @@ import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.validator.annotations.Validation;
+import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
@@ -20,6 +22,7 @@ import org.apache.struts2.config.Results;
     @Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = "")
         })
 @Validation
+@ParentPackage(Constants.STRUTS_PACKAGE)
 public class ReallyEditAction extends AbstractWorkoutAction {
 
     public ReallyEditAction(final Application application) {

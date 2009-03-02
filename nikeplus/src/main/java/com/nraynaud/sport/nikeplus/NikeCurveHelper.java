@@ -1,4 +1,4 @@
-package com.nraynaud.sport.web.view;
+package com.nraynaud.sport.nikeplus;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -12,34 +12,41 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class NikePlusPoint implements Comparable<NikePlusPoint> {
-    public final double distance;
-    public double pace;
+public class NikeCurveHelper {
+
     private static final int MAX_FINAL_POINTS = 20;
 
-    public NikePlusPoint(final double distance, final double pace) {
-        this.distance = distance;
-        this.pace = pace;
+    private NikeCurveHelper() {
     }
 
-    public String toString() {
-        return "[" + distance + ", " + pace + ']';
-    }
+    private static class NikePlusPoint implements Comparable<NikePlusPoint> {
+        public final double distance;
+        public double pace;
 
-    public int compareTo(final NikePlusPoint o) {
-        return Double.compare(distance, o.distance);
-    }
+        public NikePlusPoint(final double distance, final double pace) {
+            this.distance = distance;
+            this.pace = pace;
+        }
 
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final NikePlusPoint point = (NikePlusPoint) o;
-        return Double.compare(point.distance, distance) == 0;
-    }
+        public String toString() {
+            return "[" + distance + ", " + pace + ']';
+        }
 
-    public int hashCode() {
-        final long temp = distance != +0.0d ? Double.doubleToLongBits(distance) : 0L;
-        return (int) (temp ^ temp >>> 32);
+        public int compareTo(final NikePlusPoint o) {
+            return Double.compare(distance, o.distance);
+        }
+
+        public boolean equals(final Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            final NikePlusPoint point = (NikePlusPoint) o;
+            return Double.compare(point.distance, distance) == 0;
+        }
+
+        public int hashCode() {
+            final long temp = distance != +0.0d ? Double.doubleToLongBits(distance) : 0L;
+            return (int) (temp ^ temp >>> 32);
+        }
     }
 
     private static class Config {
@@ -116,7 +123,10 @@ public class NikePlusPoint implements Comparable<NikePlusPoint> {
                     .append(distance - previousDistance)
                     .append("\tpace: ")
                     .append(pace);
-            if (i != 0 && i % (distances.size() / MAX_FINAL_POINTS) == 0 && !Double.isInfinite(pace) && !Double.isNaN(
+            if (i != 0
+                    && i % (distances.size() / MAX_FINAL_POINTS) == 0
+                    && !Double.isInfinite(pace)
+                    && !Double.isNaN(
                     pace)) {
                 config.updateMinMax(pace);
                 points.add(new NikePlusPoint(distance, pace));
@@ -152,7 +162,8 @@ public class NikePlusPoint implements Comparable<NikePlusPoint> {
     }
 
     private static void addSnapshot(final XPath xPath, final Object root, final Set<NikePlusPoint> points,
-                                    final TreeSet<NikePlusPoint> snaps, final String query, final Config config) throws
+                                    final TreeSet<NikePlusPoint> snaps, final String query,
+                                    final Config config) throws
             XPathExpressionException {
         final NodeList snapshots = (NodeList) xPath.evaluate(query, root,
                 XPathConstants.NODESET);

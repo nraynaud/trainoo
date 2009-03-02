@@ -5,18 +5,21 @@ import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.ActionDetail;
+import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.nraynaud.sport.web.view.WorkoutPageDetails;
 import com.nraynaud.sport.web.view.WorkoutView;
 import static com.opensymphony.xwork2.Action.INPUT;
 import com.opensymphony.xwork2.ModelDriven;
+import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
 @Results({
     @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp")
         })
+@ParentPackage(Constants.STRUTS_PACKAGE)
 public class EditAction extends DefaultAction implements ModelDriven<WorkoutPageDetails> {
     public Long id;
     public static final String PAGE_TILE = "Modification de mon entraînement";
