@@ -1,16 +1,16 @@
-// script.aculo.us effects.js v1.8.1, Thu Jan 03 22:07:12 -0500 2008
+// script.aculo.us effects.js v1.8.2, Tue Nov 18 18:30:58 +0100 2008
 
-// Copyright (c) 2005-2007 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+// Copyright (c) 2005-2008 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
 // Contributors:
 //  Justin Palmer (http://encytemedia.com/)
 //  Mark Pilgrim (http://diveintomark.org/)
 //  Martin Bialasinki
-// 
+//
 // script.aculo.us is freely distributable under the terms of an MIT-style license.
-// For details, see the script.aculo.us web site: http://script.aculo.us/ 
+// For details, see the script.aculo.us web site: http://script.aculo.us/
 
-// converts rgb() and #xxx to #xxxxxx format,  
-// returns self (or first argument) if not convertable  
+// converts rgb() and #xxx to #xxxxxx format,
+// returns self (or first argument) if not convertable
 String.prototype.parseColor = function() {
     var color = '#';
     if (this.slice(0, 4) == 'rgb(') {
@@ -68,25 +68,20 @@ var Effect = {
     Transitions: {
         linear: Prototype.K,
         sinoidal: function(pos) {
-            return (-Math.cos(pos * Math.PI) / 2) + 0.5;
+            return (-Math.cos(pos * Math.PI) / 2) + .5;
         },
         reverse: function(pos) {
             return 1 - pos;
         },
         flicker: function(pos) {
-            var pos = ((-Math.cos(pos * Math.PI) / 4) + 0.75) + Math.random() / 4;
+            var pos = ((-Math.cos(pos * Math.PI) / 4) + .75) + Math.random() / 4;
             return pos > 1 ? 1 : pos;
         },
         wobble: function(pos) {
-            return (-Math.cos(pos * Math.PI * (9 * pos)) / 2) + 0.5;
+            return (-Math.cos(pos * Math.PI * (9 * pos)) / 2) + .5;
         },
         pulse: function(pos, pulses) {
-            pulses = pulses || 5;
-            return (
-                    ((pos % (1 / pulses)) * pulses).round() == 0 ?
-                    ((pos * pulses * 2) - (pos * pulses * 2).floor()) :
-                    1 - ((pos * pulses * 2) - (pos * pulses * 2).floor())
-                    );
+            return (-Math.cos((pos * ((pulses || 5) - .5) * 2) * Math.PI) / 2) + .5;
         },
         spring: function(pos) {
             return 1 - (Math.cos(pos * 4.5 * Math.PI) * Math.exp(-pos * 6));
@@ -236,18 +231,29 @@ Effect.Base = Class.create({
         this.fromToDelta = this.options.to - this.options.from;
         this.totalTime = this.finishOn - this.startOn;
         this.totalFrames = this.options.fps * this.options.duration;
-        eval('this.render = function(pos){ ' +
-             'if (this.state=="idle"){this.state="running";' +
-             codeForEvent(this.options, 'beforeSetup') +
-             (this.setup ? 'this.setup();' : '') +
-             codeForEvent(this.options, 'afterSetup') +
-             '};if (this.state=="running"){' +
-             'pos=this.options.transition(pos)*' + this.fromToDelta + '+' + this.options.from + ';' +
-             'this.position=pos;' +
-             codeForEvent(this.options, 'beforeUpdate') +
-             (this.update ? 'this.update(pos);' : '') +
-             codeForEvent(this.options, 'afterUpdate') +
-             '}}');
+        this.render = (function() {
+            function dispatch(effect, eventName) {
+                if (effect.options[eventName + 'Internal'])
+                    effect.options[eventName + 'Internal'](effect);
+                if (effect.options[eventName])
+                    effect.options[eventName](effect);
+            }
+            return function(pos) {
+                if (this.state === "idle") {
+                    this.state = "running";
+                    dispatch(this, 'beforeSetup');
+                    if (this.setup) this.setup();
+                    dispatch(this, 'afterSetup');
+                }
+                if (this.state === "running") {
+                    pos = (this.options.transition(pos) * this.fromToDelta) + this.options.from;
+                    this.position = pos;
+                    dispatch(this, 'beforeUpdate');
+                    if (this.update) this.update(pos);
+                    dispatch(this, 'afterUpdate');
+                }
+            };
+        })();
         this.event('beforeStart');
         if (!this.options.sync)
             Effect.Queues.get(Object.isString(this.options.queue) ?
@@ -332,7 +338,7 @@ Effect.Opacity = Class.create(Effect.Base, {
     initialize: function(element) {
         this.element = $(element);
         if (!this.element) throw(Effect._elementDoesNotExistError);
-    // make this work on IE on elements without 'layout'
+        // make this work on IE on elements without 'layout'
         if (Prototype.Browser.IE && (!this.element.currentStyle.hasLayout))
             this.element.setStyle({zoom: 1});
         var options = Object.extend({
@@ -372,7 +378,6 @@ Effect.Move = Class.create(Effect.Base, {
         });
     }
 });
-
 // for backwards compatibility
 Effect.MoveBy = function(element, toTop, toLeft) {
     return new Effect.Move(element,
@@ -459,7 +464,7 @@ Effect.Highlight = Class.create(Effect.Base, {
             this.cancel();
             return;
         }
-    // Disable background image during the effect
+        // Disable background image during the effect
         this.oldStyle = { };
         if (!this.options.keepBackgroundImage) {
             this.oldStyle.backgroundImage = this.element.getStyle('background-image');
@@ -469,7 +474,7 @@ Effect.Highlight = Class.create(Effect.Base, {
             this.options.endcolor = this.element.getStyle('background-color').parseColor('#ffffff');
         if (!this.options.restorecolor)
             this.options.restorecolor = this.element.getStyle('background-color');
-    // init color calculations
+        // init color calculations
         this._base = $R(0, 2).map(function(i) {
             return parseInt(this.options.startcolor.slice(i * 2 + 1, i * 2 + 3), 16)
         }.bind(this));
@@ -491,15 +496,14 @@ Effect.Highlight = Class.create(Effect.Base, {
 Effect.ScrollTo = function(element) {
     var options = arguments[1] || { },
             scrollOffsets = document.viewport.getScrollOffsets(),
-            elementOffsets = $(element).cumulativeOffset(),
-            max = (window.height || document.body.scrollHeight) - document.viewport.getHeight();
+            elementOffsets = $(element).cumulativeOffset();
     if (options.offset) elementOffsets[1] += options.offset;
     return new Effect.Tween(null,
             scrollOffsets.top,
-            elementOffsets[1] > max ? max : elementOffsets[1],
+            elementOffsets[1],
             options,
             function(p) {
-                scrollTo(scrollOffsets.left, p.round())
+                scrollTo(scrollOffsets.left, p.round());
             }
             );
 };
@@ -547,7 +551,7 @@ Effect.Puff = function(element) {
                 new Effect.Opacity(element, { sync: true, to: 0.0 }) ],
             Object.extend({ duration: 1.0,
                 beforeSetupInternal: function(effect) {
-                    Position.absolutize(effect.effects[0].element)
+                    Position.absolutize(effect.effects[0].element);
                 },
                 afterFinishInternal: function(effect) {
                     effect.effects[0].element.hide().setStyle(oldStyle);
@@ -602,7 +606,7 @@ Effect.SwitchOff = function(element) {
                 afterFinishInternal: function(effect) {
                     effect.element.hide().undoClipping().undoPositioned().setStyle({opacity: oldOpacity});
                 }
-            })
+            });
         }
     }, arguments[1] || { }));
 };
@@ -649,16 +653,16 @@ Effect.Shake = function(element) {
                         new Effect.Move(effect.element,
                         { x: -distance, y: 0, duration: split, afterFinishInternal: function(effect) {
                             effect.element.undoPositioned().setStyle(oldStyle);
-                        }})
-                    }})
-                }})
-            }})
-        }})
+                        }});
+                    }});
+                }});
+            }});
+        }});
     }});
 };
 Effect.SlideDown = function(element) {
     element = $(element).cleanWhitespace();
-  // SlideDown need to have the content of the element wrapped in a container element with fixed height!
+    // SlideDown need to have the content of the element wrapped in a container element with fixed height!
     var oldInnerBottom = element.down().getStyle('bottom');
     var elementDimensions = element.getDimensions();
     return new Effect.Scale(element, 100, Object.extend({
@@ -712,8 +716,7 @@ Effect.SlideUp = function(element) {
             }, arguments[1] || { })
             );
 };
-
-// Bug in opera makes the TD containing this element expand for a instance after finish 
+// Bug in opera makes the TD containing this element expand for a instance after finish
 Effect.Squish = function(element) {
     return new Effect.Scale(element, window.opera ? 1 : 0, {
         restoreAfterFinish: true,
@@ -791,7 +794,7 @@ Effect.Grow = function(element) {
                     effect.effects[0].element.undoClipping().undoPositioned().setStyle(oldStyle);
                 }
             }, options)
-                    )
+                    );
         }
     });
 };
@@ -848,13 +851,12 @@ Effect.Shrink = function(element) {
 };
 Effect.Pulsate = function(element) {
     element = $(element);
-    var options = arguments[1] || { };
-    var oldOpacity = element.getInlineOpacity();
-    var transition = options.transition || Effect.Transitions.sinoidal;
-    var reverser = function(pos) {
-        return transition(1 - Effect.Transitions.pulse(pos, options.pulses))
-    };
-    reverser.bind(transition);
+    var options = arguments[1] || { },
+            oldOpacity = element.getInlineOpacity(),
+            transition = options.transition || Effect.Transitions.linear,
+            reverser = function(pos) {
+                return 1 - transition((-Math.cos((pos * (options.pulses || 5) * 2) * Math.PI) / 2) + .5);
+            };
     return new Effect.Opacity(element,
             Object.extend(Object.extend({  duration: 2.0, from: 0,
                 afterFinishInternal: function(effect) {
@@ -906,7 +908,7 @@ Effect.Morph = Class.create(Effect.Base, {
                     effect.transforms.each(function(transform) {
                         effect.element.style[transform.style] = '';
                     });
-                }
+                };
             }
         }
         this.start(options);
@@ -917,7 +919,7 @@ Effect.Morph = Class.create(Effect.Base, {
             if (!color || ['rgba(0, 0, 0, 0)','transparent'].include(color)) color = '#ffffff';
             color = color.parseColor();
             return $R(0, 2).map(function(i) {
-                return parseInt(color.slice(i * 2 + 1, i * 2 + 3), 16)
+                return parseInt(color.slice(i * 2 + 1, i * 2 + 3), 16);
             });
         }
         this.transforms = this.style.map(function(pair) {
@@ -948,7 +950,7 @@ Effect.Morph = Class.create(Effect.Base, {
                             transform.unit != 'color' &&
                             (isNaN(transform.originalValue) || isNaN(transform.targetValue))
                             )
-                    )
+                    );
         });
     },
     update: function(position) {
@@ -1048,7 +1050,6 @@ if (document.defaultView && document.defaultView.getComputedStyle) {
         return styles;
     };
 }
-;
 Effect.Methods = {
     morph: function(element, style) {
         element = $(element);
@@ -1056,7 +1057,7 @@ Effect.Methods = {
         return element;
     },
     visualEffect: function(element, effect, options) {
-        element = $(element)
+        element = $(element);
         var s = effect.dasherize().camelize(), klass = s.charAt(0).toUpperCase() + s.substring(1);
         new Effect[klass](element, options);
         return element;
@@ -1074,7 +1075,7 @@ $w('fade appear grow shrink fold blindUp blindDown slideUp slideDown ' +
                 element = $(element);
                 Effect[effect.charAt(0).toUpperCase() + effect.substring(1)](element, options);
                 return element;
-            }
+            };
         }
         );
 $w('getInlineOpacity forceRerendering setContentZoom collectTextNodes collectTextNodesIgnoreClass getStyles').each(

@@ -1,24 +1,24 @@
-// script.aculo.us controls.js v1.8.1, Thu Jan 03 22:07:12 -0500 2008
+// script.aculo.us controls.js v1.8.2, Tue Nov 18 18:30:58 +0100 2008
 
-// Copyright (c) 2005-2007 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
-//           (c) 2005-2007 Ivan Krstic (http://blogs.law.harvard.edu/ivan)
-//           (c) 2005-2007 Jon Tirsen (http://www.tirsen.com)
+// Copyright (c) 2005-2008 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+//           (c) 2005-2008 Ivan Krstic (http://blogs.law.harvard.edu/ivan)
+//           (c) 2005-2008 Jon Tirsen (http://www.tirsen.com)
 // Contributors:
 //  Richard Livsey
 //  Rahul Bhargava
 //  Rob Wills
-// 
+//
 // script.aculo.us is freely distributable under the terms of an MIT-style license.
 // For details, see the script.aculo.us web site: http://script.aculo.us/
 
-// Autocompleter.Base handles all the autocompletion functionality 
+// Autocompleter.Base handles all the autocompletion functionality
 // that's independent of the data source for autocompletion. This
 // includes drawing the autocompletion menu, observing keyboard
 // and mouse events, and similar.
 //
-// Specific autocompleters need to provide, at the very least, 
+// Specific autocompleters need to provide, at the very least,
 // a getUpdatedChoices function that will be invoked every time
-// the text inside the monitored textbox changes. This method 
+// the text inside the monitored textbox changes. This method
 // should get the text for which to provide autocompletion by
 // invoking this.getToken(), NOT by directly accessing
 // this.element.value. This is to allow incremental tokenized
@@ -32,15 +32,15 @@
 // will incrementally autocomplete with a comma as the token.
 // Additionally, ',' in the above example can be replaced with
 // a token array, e.g. { tokens: [',', '\n'] } which
-// enables autocompletion on multiple tokens. This is most 
-// useful when one of the tokens is \n (a newline), as it 
+// enables autocompletion on multiple tokens. This is most
+// useful when one of the tokens is \n (a newline), as it
 // allows smart autocompletion after linebreaks.
 if (typeof Effect == 'undefined')
     throw("controls.js requires including script.aculo.us' effects.js library");
-var Autocompleter = { }
+var Autocompleter = { };
 Autocompleter.Base = Class.create({
     baseInitialize: function(element, update, options) {
-        element = $(element)
+        element = $(element);
         this.element = element;
         this.update = $(update);
         this.hasFocus = false;
@@ -74,7 +74,7 @@ Autocompleter.Base = Class.create({
                               };
         if (typeof(this.options.tokens) == 'string')
             this.options.tokens = new Array(this.options.tokens);
-    // Force carriage returns as token delimiters anyway
+        // Force carriage returns as token delimiters anyway
         if (!this.options.tokens.include('\n'))
             this.options.tokens.push('\n');
         this.observer = null;
@@ -203,13 +203,13 @@ Autocompleter.Base = Class.create({
     },
 
     markPrevious: function() {
-        if (this.index > 0) this.index--
+        if (this.index > 0) this.index--;
         else this.index = this.entryCount - 1;
         this.getEntry(this.index).scrollIntoView(true);
     },
 
     markNext: function() {
-        if (this.index < this.entryCount - 1) this.index++
+        if (this.index < this.entryCount - 1) this.index++;
         else this.index = 0;
         this.getEntry(this.index).scrollIntoView(false);
     },
@@ -351,7 +351,6 @@ Ajax.Autocompleter = Class.create(Autocompleter.Base, {
         this.updateChoices(request.responseText);
     }
 });
-
 // The local array autocompleter. Used when you'd prefer to
 // inject an array of autocompletion options into the page, rather
 // than sending out Ajax queries, which can be quite slow sometimes.
@@ -365,7 +364,7 @@ Ajax.Autocompleter = Class.create(Autocompleter.Base, {
 // - choices - How many autocompletion choices to offer
 //
 // - partialSearch - If false, the autocompleter will match entered
-//                    text only at the beginning of strings in the 
+//                    text only at the beginning of strings in the
 //                    autocomplete array. Defaults to true, which will
 //                    match text at the beginning of any *word* in the
 //                    strings in the autocomplete array. If you want to
@@ -382,7 +381,7 @@ Ajax.Autocompleter = Class.create(Autocompleter.Base, {
 // - ignoreCase - Whether to ignore case when autocompleting.
 //                 Defaults to true.
 //
-// It's possible to pass in a custom function as the 'selector' 
+// It's possible to pass in a custom function as the 'selector'
 // option, if you prefer to write your own autocompletion logic.
 // In that case, the other options above will not apply unless
 // you support them.
@@ -434,13 +433,12 @@ Autocompleter.Local = Class.create(Autocompleter.Base, {
                     }
                 }
                 if (partial.length)
-                    ret = ret.concat(partial.slice(0, instance.options.choices - ret.length))
+                    ret = ret.concat(partial.slice(0, instance.options.choices - ret.length));
                 return "<ul>" + ret.join('') + "</ul>";
             }
         }, options || { });
     }
 });
-
 // AJAX in-place editor and collection editor
 // Full rewrite by Christophe Porteneuve <tdd@tddsworld.com> (April 2007).
 
@@ -451,7 +449,7 @@ Field.scrollFreeActivate = function(field) {
     setTimeout(function() {
         Field.activate(field);
     }, 1);
-}
+};
 Ajax.InPlaceEditor = Class.create({
     initialize: function(element, url, options) {
         this.url = url;
@@ -581,7 +579,7 @@ Ajax.InPlaceEditor = Class.create({
         this.triggerCallback('onEnterHover');
     },
     getText: function() {
-        return this.element.innerHTML;
+        return this.element.innerHTML.unescapeHTML();
     },
     handleAJAXFailure: function(transport) {
         this.triggerCallback('onFailure', transport);
@@ -718,7 +716,7 @@ Ajax.InPlaceEditor = Class.create({
     },
     wrapUp: function(transport) {
         this.leaveEditMode();
-    // Can't use triggerCallback due to backward compatibility: requires
+        // Can't use triggerCallback due to backward compatibility: requires
         // binding + direct element
         this._boundComplete(transport, this.element);
     }
@@ -755,7 +753,7 @@ Ajax.InPlaceCollectionEditor = Class.create(Ajax.InPlaceEditor, {
             onSuccess: function(transport) {
                 var js = transport.responseText.strip();
                 if (!/^\[.*\]$/.test(js)) // TODO: improve sanity check
-                    throw 'Server returned an invalid collection representation.';
+                    throw('Server returned an invalid collection representation.');
                 this._collection = eval(js);
                 this.checkForExternalText();
             }.bind(this),
@@ -821,7 +819,6 @@ Ajax.InPlaceCollectionEditor = Class.create(Ajax.InPlaceEditor, {
         Field.scrollFreeActivate(this._controls.editor);
     }
 });
-
 //**** DEPRECATION LAYER FOR InPlace[Collection]Editor! ****
 //**** This only  exists for a while,  in order to  let ****
 //**** users adapt to  the new API.  Read up on the new ****
@@ -909,8 +906,7 @@ Object.extend(Ajax.InPlaceEditor, {
 Ajax.InPlaceCollectionEditor.DefaultOptions = {
     loadingCollectionText: 'Loading options...'
 };
-
-// Delayed observer, like Form.Element.Observer, 
+// Delayed observer, like Form.Element.Observer,
 // but waits for delay after last key input
 // Ideal for live-search fields
 Form.Element.DelayedObserver = Class.create({

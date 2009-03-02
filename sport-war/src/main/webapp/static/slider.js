@@ -1,11 +1,10 @@
-// script.aculo.us slider.js v1.8.1, Thu Jan 03 22:07:12 -0500 2008
+// script.aculo.us slider.js v1.8.2, Tue Nov 18 18:30:58 +0100 2008
 
-// Copyright (c) 2005-2007 Marty Haught, Thomas Fuchs 
+// Copyright (c) 2005-2008 Marty Haught, Thomas Fuchs
 //
 // script.aculo.us is freely distributable under the terms of an MIT-style license.
 // For details, see the script.aculo.us web site: http://script.aculo.us/
 if (!Control) var Control = { };
-
 // options:
 //  axis: 'vertical', or 'horizontal' (default)
 //
@@ -40,8 +39,7 @@ Control.Slider = Class.create({
         this.restricted = this.options.restricted || false;
         this.maximum = this.options.maximum || this.range.end;
         this.minimum = this.options.minimum || this.range.start;
-
-    // Will be used to align the handle onto the track, if necessary
+        // Will be used to align the handle onto the track, if necessary
         this.alignX = parseInt(this.options.alignX || '0');
         this.alignY = parseInt(this.options.alignY || '0');
         this.trackLength = this.maximumOffset() - this.minimumOffset();
@@ -54,8 +52,7 @@ Control.Slider = Class.create({
         this.dragging = false;
         this.disabled = false;
         if (this.options.disabled) this.setDisabled();
-
-    // Allowed values array
+        // Allowed values array
         this.allowedValues = this.options.values ? this.options.values.sortBy(Prototype.K) : false;
         if (this.allowedValues) {
             this.minimum = this.allowedValues.min();
@@ -64,8 +61,7 @@ Control.Slider = Class.create({
         this.eventMouseDown = this.startDrag.bindAsEventListener(this);
         this.eventMouseUp = this.endDrag.bindAsEventListener(this);
         this.eventMouseMove = this.update.bindAsEventListener(this);
-
-    // Initialize handles in reverse (make sure first handle is active)
+        // Initialize handles in reverse (make sure first handle is active)
         this.handles.each(function(h, i) {
             i = slider.handles.length - 1 - i;
             slider.setValue(parseFloat(

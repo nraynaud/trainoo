@@ -1,6 +1,6 @@
-// script.aculo.us builder.js v1.8.1, Thu Jan 03 22:07:12 -0500 2008
+// script.aculo.us builder.js v1.8.2, Tue Nov 18 18:30:58 +0100 2008
 
-// Copyright (c) 2005-2007 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+// Copyright (c) 2005-2008 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
 //
 // script.aculo.us is freely distributable under the terms of an MIT-style license.
 // For details, see the script.aculo.us web site: http://script.aculo.us/
@@ -25,8 +25,7 @@ var Builder = {
     //       due to a Firefox bug
     node: function(elementName) {
         elementName = elementName.toUpperCase();
-    
-    // try innerHTML approach
+        // try innerHTML approach
         var parentTag = this.NODEMAP[elementName] || 'div';
         var parentElement = document.createElement(parentTag);
         try { // prevent IE "feature": http://dev.rubyonrails.org/ticket/2707
@@ -34,18 +33,14 @@ var Builder = {
         } catch(e) {
         }
         var element = parentElement.firstChild || null;
-      
-    // see if browser added wrapping tags
+        // see if browser added wrapping tags
         if (element && (element.tagName.toUpperCase() != elementName))
             element = element.getElementsByTagName(elementName)[0];
-    
-    // fallback to createElement approach
+        // fallback to createElement approach
         if (!element) element = document.createElement(elementName);
-    
-    // abort if nothing could be created
+        // abort if nothing could be created
         if (!element) return;
-
-    // attributes (or text)
+        // attributes (or text)
         if (arguments[1])
             if (this._isStringOrNumber(arguments[1]) ||
                 (arguments[1] instanceof Array) ||
@@ -60,7 +55,7 @@ var Builder = {
                     } catch(e) {
                     }
                     element = parentElement.firstChild || null;
-            // workaround firefox 1.0.X bug
+                    // workaround firefox 1.0.X bug
                     if (!element) {
                         element = document.createElement(elementName);
                         for (attr in arguments[1])
@@ -70,11 +65,10 @@ var Builder = {
                         element = parentElement.getElementsByTagName(elementName)[0];
                 }
             }
-
-    // text, or array of children
+        // text, or array of children
         if (arguments[2])
             this._children(element, arguments[2]);
-        return element;
+        return $(element);
     },
     _text: function(text) {
         return document.createTextNode(text);
@@ -100,7 +94,7 @@ var Builder = {
         if (typeof children == 'object') { // array can hold nodes and text
             children.flatten().each(function(e) {
                 if (typeof e == 'object')
-                    element.appendChild(e)
+                    element.appendChild(e);
                 else
                     if (Builder._isStringOrNumber(e))
                         element.appendChild(Builder._text(e));
@@ -128,7 +122,7 @@ var Builder = {
         tags.each(function(tag) {
             scope[tag] = function() {
                 return Builder.node.apply(Builder, [tag].concat($A(arguments)));
-            }
+            };
         });
     }
-}
+};
