@@ -89,7 +89,7 @@ public class NikeCurveHelper {
         for (final Point point : points) {
             int count = 0;
             double accumulator = 0.0;
-            for (int j = index - radius; j < index + radius; j++)
+            for (int j = index - radius; j <= index + radius; j++)
                 try {
                     accumulator += pristine.get(j).pace;
                     count++;
