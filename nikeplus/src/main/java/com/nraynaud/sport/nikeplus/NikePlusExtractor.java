@@ -20,11 +20,11 @@ import java.text.SimpleDateFormat;
 public class NikePlusExtractor implements Importer {
     private static final XPathExpression STATUS_EXPRESSION;
     private static final XPathExpression RUN_LIST;
-    private final static XPathExpression DISTANCE;
-    private final static XPathExpression DURATION;
-    private final static XPathExpression ENERGY;
-    private final static XPathExpression START_TIME;
-    private final static XPathExpression USER_ID;
+    private static final XPathExpression DISTANCE;
+    private static final XPathExpression DURATION;
+    private static final XPathExpression ENERGY;
+    private static final XPathExpression START_TIME;
+    private static final XPathExpression USER_ID;
 
     static {
         try {
