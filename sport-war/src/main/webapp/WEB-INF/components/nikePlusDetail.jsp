@@ -25,7 +25,7 @@
     var nikeCurve = <%=getNikePlusCurve(userId, workoutId)%>;
     f = drawCurve([
     nikeCurve,
-    {data: lowPasscurve, lines: {lineWidth: 2}, color:'rgba(0,0,0,0.2)', mouse: {lineColor: 'black', radius:1}}], $('container'),<%=min%>, <%=max%>);
+    {data: lowPasscurve, lines: {lineWidth: 2}, color:'rgba(0,0,0,0.2)', mouse: {lineColor: 'black', radius:1, sensibility: 2}}], $('container'),<%=min%>, <%=max%>);
 
     var ymin = f.series[0].yaxis.min;
     var ymax = f.series[0].yaxis.max;

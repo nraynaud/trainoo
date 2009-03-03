@@ -1274,3 +1274,6 @@ form.workoutEditor {
     background-position: -180px 0;
 }
 
+.flotr-mouse-value {
+    font-size: 12px;
+}

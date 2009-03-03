@@ -301,7 +301,7 @@ function drawCurve(data, element, min, max) {
         yaxis: {autoscaleMargin: 0.1, ticks: [], min: min, max: max},
         mouse:{
             track: true, color: 'purple',
-            sensibility: 6,
+            sensibility: 7,
             trackDecimals: 2,
             radius:4,
             trackFormatter: function(obj) {
