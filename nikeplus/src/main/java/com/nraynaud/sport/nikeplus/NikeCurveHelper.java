@@ -136,7 +136,7 @@ public class NikeCurveHelper {
             final Node extended = (Node) EXTENDED_DATA.evaluate(root, XPathConstants.NODE);
             final Config config = new Config(totalDistance / MAX_FINAL_POINTS);
             registerExtanded(points, extended, config);
-            final TreeSet<Point> snaps = new TreeSet<Point>();
+            final TreeSet<Point> snaps = new TreeSet<Point>(POINT_COMPARATOR);
             //order is important !
             addSnapshot(root, points, snaps, KM_SNAPSHOTS, config);
             addSnapshot(root, points, snaps, CLICK_SNAPSHOTS, config);
