@@ -1232,7 +1232,7 @@ form.workoutEditor {
     height: 24px;
     width: 0;
     padding-left: 24px;
-    background: url( nike_refresh.png ) no-repeat center left;
+    background: url( nike_refresh.png ) no-repeat top left;
     overflow: hidden;
 }
 
