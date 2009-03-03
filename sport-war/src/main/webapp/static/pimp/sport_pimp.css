@@ -223,7 +223,7 @@ small {
     vertical-align: middle !important;
     opacity: 0.01;
     _filter: alpha( opacity = 1 );
-    background-color: red;
+    background: none;
     font-size: 0 !important;
     border: 0 !important;
 }
