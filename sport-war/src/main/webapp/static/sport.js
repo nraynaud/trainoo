@@ -293,8 +293,8 @@ function clickableRow(row) {
 }
 /* nike plus stuff*/
 function drawCurve(data, element, min, max) {
-    Flotr.draw(element, [ data ], {
-        lines: {show: true},
+    return Flotr.draw(element, data, {
+        lines: {show: true, lineWidth: 7},
         xaxis: {tickDecimals: 0, tickFormatter: function(num) {
             return num + "<small>km</small>"
         }},
@@ -303,10 +303,12 @@ function drawCurve(data, element, min, max) {
             track: true, color: 'purple',
             sensibility: 6,
             trackDecimals: 2,
+            radius:4,
             trackFormatter: function(obj) {
                 var min = -obj.y;
                 var minDec = min - Math.floor(min);
-                return obj.x + 'km, ' + Math.floor(min) + "'" + Math.round((minDec) * 60) + "''/km";
+                return obj.x + '<small>km</small>, ' + Math.floor(min) + "'" + Math.round((minDec) * 60)
+                        + "''<small>/km</small>";
             }
         }
     });
