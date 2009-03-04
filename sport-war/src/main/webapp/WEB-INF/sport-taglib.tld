@@ -55,6 +55,13 @@
         </attribute>
     </tag>
     <tag>
+        <name>javascript-raw</name>
+        <tag-class>com.nraynaud.sport.web.view.JavascriptTag</tag-class>
+        <description>For the individual pages : defines a new javascript to append to the page. Script content is not
+            check by Intellij so we can use &lt;%=value%> in it without error.
+        </description>
+    </tag>
+    <tag>
         <name>header</name>
         <tag-class>com.nraynaud.sport.web.view.HeaderTag</tag-class>
         <description>For the individual pages : defines a new header fragment for the page.</description>

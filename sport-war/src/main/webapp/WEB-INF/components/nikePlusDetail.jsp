@@ -3,6 +3,7 @@
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page import="static com.nraynaud.sport.nikeplus.NikeCurveHelper.*" %>
+<%@ page import="java.io.PrintWriter" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -14,24 +15,37 @@
 <p:javascript src="<%=Helpers.stat("/static/excanvas.js")%>"/>
 <p:javascript src="<%=Helpers.stat("/static/flotr-0.2.0-alpha.js")%>"/>
 <%
-    final String lowPass = pageContext.getRequest().getParameter("lowPass");
     final String min = numberOrNull(pageContext.getRequest().getParameter("min"));
     final String max = numberOrNull(pageContext.getRequest().getParameter("max"));
     final String parameter = pageContext.getRequest().getParameter("radius");
     final int radius = parameter == null ? 60 : Integer.parseInt(parameter);
+    try {
+        final String lowPassCurve = getLowPassCurve(userId, workoutId, radius);
+        final String nikePlusCurve = getNikePlusCurve(userId, workoutId);
 %>
+<p:javascript-raw>
+    var lowPasscurve = <%=lowPassCurve%>;
+    var nikeCurve = <%=nikePlusCurve%>;
+    var min = <%=min%>;
+    var max = <%=max%>;
+</p:javascript-raw>
 <p:javascript>
-    var lowPasscurve = <%=getLowPassCurve(userId, workoutId, radius)%>;
-    var nikeCurve = <%=getNikePlusCurve(userId, workoutId)%>;
     f = drawCurve([
-    nikeCurve,
-    {data: lowPasscurve, lines: {lineWidth: 2}, color:'rgba(0,0,0,0.2)', mouse: {lineColor: 'black', radius:1, sensibility: 2}}], $('container'),<%=min%>, <%=max%>);
-
+        nikeCurve,
+        {data: lowPasscurve, lines: {lineWidth: 2}, color:'rgba(0,0,0,0.2)',
+            mouse: {lineColor: 'black', radius:1, sensibility: 2}}], $('container'), min, max);
     var ymin = f.series[0].yaxis.min;
     var ymax = f.series[0].yaxis.max;
 </p:javascript>
 
 <div id="container" style="width:90%;height:100px;margin:auto;"></div>
+<%
+    } catch (Exception e) {
+        out.append("<!-- ");
+        e.printStackTrace(new PrintWriter(out));
+        out.append(" -->");
+    }
+%>
 <div style="text-align:center">
     <a href="http://nikeplus.nike.com/nikeplus/?l=runners,runs,<%=userId%>,runID,<%=workoutId%>">Voir la course sur
         nike.com</a>
