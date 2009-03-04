@@ -14,9 +14,9 @@
 
 
 <p:javascript>
-    /* ugly quick fix for the out-of-form comment problem */
+    /* ugly quick fix for the out-of-form debriefing problem */
     function retrieveComment() {
-    document.workoutForm.comment.value = document.getElementById("externalComment").value;
+        document.workoutForm.comment.value = document.getElementById("externalComment").value;
     }
 </p:javascript>
 
@@ -108,10 +108,10 @@
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <%=textArea("externalComment", "externalComment", workoutView.comment)%>
+                    <%=textArea("externalComment", "externalComment", workoutView.debriefing)%>
                 </span>
             </p>
-            <p:javascript>makeItCount('externalComment', <%=AbstractWorkoutAction.MAX_COMMENT_LENGTH%>);</p:javascript>
+            <p:javascript>makeItCount('externalComment', <%=AbstractWorkoutAction.MAX_DEBRIEFING_LENGTH%>);</p:javascript>
         </div>
     </div>
 </div>

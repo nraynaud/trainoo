@@ -20,11 +20,11 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
     private Double distance;
     private Long energy;
     private String discipline;
-    private String comment;
+    private String debriefing;
 
     public String id;
 
-    public static final String MAX_COMMENT_LENGTH = "4000";
+    public static final String MAX_DEBRIEFING_LENGTH = "4000";
     private final String pageTitle;
 
     public AbstractWorkoutAction(final Application application, final String pageTitle) {
@@ -56,10 +56,10 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
         this.discipline = discipline;
     }
 
-    @StringLengthFieldValidator(message = "Le commentaire doit faire moins de ${maxLength} caratères.",
-            maxLength = MAX_COMMENT_LENGTH)
-    public void setComment(final String comment) {
-        this.comment = comment != null && comment.length() > 0 ? comment : null;
+    @StringLengthFieldValidator(message = "Le compte-rend doit faire moins de ${maxLength} caratères.",
+            maxLength = MAX_DEBRIEFING_LENGTH)
+    public void setDebriefing(final String debriefing) {
+        this.debriefing = debriefing != null && debriefing.length() > 0 ? debriefing : null;
     }
 
     public Date getDate() {
@@ -82,8 +82,8 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
         return request;
     }
 
-    public String getComment() {
-        return comment;
+    public String getDebriefing() {
+        return debriefing;
     }
 
     public Long getEnergy() {
@@ -92,7 +92,7 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
 
     public WorkoutPageDetails getModel() {
         final WorkoutView interpreted = WorkoutView.createView(id, getDiscipline(), getDate(), getDistance(),
-                getDuration(), getEnergy(), getComment() == null ? "" : getComment());
+                getDuration(), getEnergy(), getDebriefing() == null ? "" : getDebriefing());
         return new WorkoutPageDetails(
                 new WorkoutView(id,
                         errorOrValue("discipline", interpreted.discipline),
@@ -100,7 +100,7 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
                         errorOrValue("distance", interpreted.distance),
                         errorOrValue("duration", interpreted.duration),
                         errorOrValue("energy", interpreted.energy),
-                        errorOrValue("comment", interpreted.comment)),
+                        errorOrValue("debriefing", interpreted.debriefing)),
                 pageTitle, actionDescription, cancelAction());
     }
 

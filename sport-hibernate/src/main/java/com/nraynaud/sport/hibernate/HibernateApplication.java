@@ -24,9 +24,9 @@ public class HibernateApplication implements Application {
                                  final Double distance,
                                  final Long energy,
                                  final String discipline,
-                                 final String comment,
+                                 final String debriefing,
                                  final String nikePlusId) {
-        return workoutStore.createWorkout(date, user, duration, distance, energy, discipline, comment, nikePlusId);
+        return workoutStore.createWorkout(date, user, duration, distance, energy, discipline, debriefing, nikePlusId);
     }
 
     /**
@@ -430,17 +430,9 @@ public class HibernateApplication implements Application {
                               final Date date,
                               final Long duration,
                               final Double distance,
-                              final Long energy, final String discipline, final String comment) throws
-            WorkoutNotFoundException,
-            AccessDeniedException {
-        final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutForEdition(id, user, true);
-        workoutImpl.setDate(date);
-        workoutImpl.setDuration(duration);
-        workoutImpl.setDistance(distance);
-        workoutImpl.setEnergy(energy);
-        workoutImpl.setDiscipline(discipline);
-        workoutImpl.setComment(comment);
-        entityManager.merge(workoutImpl);
+                              final Long energy, final String discipline, final String debriefing) throws
+            WorkoutNotFoundException, AccessDeniedException {
+        workoutStore.updateWorkout(id, user, date, duration, distance, energy, discipline, debriefing);
     }
 
     @SuppressWarnings({"unchecked"})

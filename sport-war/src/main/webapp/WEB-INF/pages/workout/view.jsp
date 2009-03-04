@@ -106,7 +106,7 @@
 </div>
 
 <div id="globalRight">
-    <%if (isCurrentUser || workout.getComment() != null) {%>
+    <%if (isCurrentUser || workout.getDebriefing() != null) {%>
     <h2>
         <span class="buttonList">
         <% if (isCurrentUser) { %>
@@ -121,7 +121,7 @@
     <%}%>
     <div class="block">
         <div class="content textContent">
-            <p><%=escapedOrNullmultilines(workout.getComment(),
+            <p><%=escapedOrNullmultilines(workout.getDebriefing(),
                     "<em>Pas de compte-rendu</em>")%>
             </p>
         </div>

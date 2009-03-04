@@ -39,7 +39,7 @@ class WorkoutStore {
                                  final Double distance,
                                  final Long energy,
                                  final String discipline,
-                                 final String comment,
+                                 final String debriefing,
                                  final String nikePlusId) {
         if (nikePlusId != null) {
             final Query query = entityManager.createNativeQuery("select ID from WORKOUTS where NIKEPLUSID=:nikeId");
@@ -53,7 +53,7 @@ class WorkoutStore {
                 return workout;
             }
         }
-        final Workout workout = new WorkoutImpl(user, date, duration, distance, energy, discipline, comment,
+        final Workout workout = new WorkoutImpl(user, date, duration, distance, energy, discipline, debriefing,
                 nikePlusId);
         entityManager.persist(workout);
         try {
@@ -62,6 +62,24 @@ class WorkoutStore {
             throw new RuntimeException(e);
         }
         return workout;
+    }
+
+    public void updateWorkout(final Long id,
+                              final User user,
+                              final Date date,
+                              final Long duration,
+                              final Double distance,
+                              final Long energy, final String discipline, final String debriefing) throws
+            WorkoutNotFoundException,
+            AccessDeniedException {
+        final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutForEdition(id, user, true);
+        workoutImpl.setDate(date);
+        workoutImpl.setDuration(duration);
+        workoutImpl.setDistance(distance);
+        workoutImpl.setEnergy(energy);
+        workoutImpl.setDiscipline(discipline);
+        workoutImpl.setDebriefing(debriefing);
+        entityManager.merge(workoutImpl);
     }
 
     /**
@@ -174,7 +192,7 @@ class WorkoutStore {
         final Query query = query(
                 "select w, count(m) from " + joinPart + " left join w.publicMessages m  where " + wherePart
                         + disciplinePredicate
-                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.energy, w.discipline, w.nikePlusId, w.comment"
+                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.energy, w.discipline, w.nikePlusId, w.debriefing"
                         + " order by w.date desc, w.id desc");
         disciplinePredicate.bindVariables(query);
         return query;

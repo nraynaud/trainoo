@@ -46,7 +46,7 @@ public class EditAction extends DefaultAction implements ModelDriven<WorkoutPage
                             workout.getDistance(),
                             workout.getDuration(),
                             workout.getEnergy(),
-                            workout.getComment() != null ? workout.getComment().toString() : ""),
+                            workout.getDebriefing() != null ? workout.getDebriefing().toString() : ""),
                     PAGE_TILE, new ActionDetail("/workout", "reallyEdit", "id", id.toString()),
                     cancelAction(id.toString()));
         } catch (WorkoutNotFoundException e) {

@@ -34,7 +34,7 @@ public class ReallyEditAction extends AbstractWorkoutAction {
         try {
             application.updateWorkout(Long.valueOf(id), getUser(), getDate(), getDuration(), getDistance(),
                     getEnergy(),
-                    getDiscipline(), getComment());
+                    getDiscipline(), getDebriefing());
             return SUCCESS;
         } catch (WorkoutNotFoundException e) {
             addActionError("l'entraînement désigné n'existe pas pour cet utilisateur");

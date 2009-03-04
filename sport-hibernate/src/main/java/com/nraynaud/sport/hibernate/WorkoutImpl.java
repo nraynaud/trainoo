@@ -33,8 +33,8 @@ public class WorkoutImpl implements Workout {
     @Column(name = "NIKEPLUSID", unique = true)
     private String nikePlusId;
 
-    @Column(name = "COMMENT")
-    private String comment;
+    @Column(name = "DEBRIEFING")
+    private String debriefing;
 
     @ManyToOne(targetEntity = UserImpl.class)
     @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
@@ -59,13 +59,13 @@ public class WorkoutImpl implements Workout {
                        final Long duration,
                        final Double distance,
                        final String discipline,
-                       final String comment) {
+                       final String debriefing) {
         this.date = date;
         this.user = user;
         this.duration = duration;
         this.distance = distance;
         this.discipline = discipline;
-        this.comment = comment;
+        this.debriefing = debriefing;
     }
 
     public WorkoutImpl(final User user,
@@ -74,7 +74,7 @@ public class WorkoutImpl implements Workout {
                        final Double distance,
                        final Long energy,
                        final String discipline,
-                       final String comment,
+                       final String debriefing,
                        final String nikePlusId) {
         this.date = date;
         this.user = user;
@@ -82,7 +82,7 @@ public class WorkoutImpl implements Workout {
         this.distance = distance;
         this.energy = energy;
         this.discipline = discipline;
-        this.comment = comment;
+        this.debriefing = debriefing;
         this.nikePlusId = nikePlusId;
     }
 
@@ -158,12 +158,12 @@ public class WorkoutImpl implements Workout {
         return nikePlusId;
     }
 
-    public UserString getComment() {
-        return UserStringImpl.valueOf(comment);
+    public UserString getDebriefing() {
+        return UserStringImpl.valueOf(debriefing);
     }
 
-    public void setComment(final String comment) {
-        this.comment = comment;
+    public void setDebriefing(final String debriefing) {
+        this.debriefing = debriefing;
     }
 
     public Long getEnergy() {

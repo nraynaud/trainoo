@@ -54,9 +54,10 @@ public class SyndicationFeedWriter implements FeedWriter {
             entry.setPublishedDate(workout.getDate());
             final SyndContent description = new SyndContentImpl();
             description.setType("text");
-            final UserString comment = workout.getComment();
+            final UserString debriefing = workout.getDebriefing();
             description.setValue(
-                    comment == null || comment.nonEscaped().isEmpty() ? "Aucun compte-rendu" : comment.nonEscaped());
+                    debriefing == null || debriefing.nonEscaped()
+                            .isEmpty() ? "Aucun compte-rendu" : debriefing.nonEscaped());
             entry.setContents(Collections.singletonList(description));
             entries.add(entry);
         }

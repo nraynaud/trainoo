@@ -42,7 +42,7 @@ public interface Workout extends Topic {
 
     String getNikePlusId();
 
-    UserString getComment();
+    UserString getDebriefing();
 
     Long getEnergy();
 }
