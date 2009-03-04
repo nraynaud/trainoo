@@ -3,10 +3,8 @@ package com.nraynaud.sport.web.action.workout;
 import com.nraynaud.sport.AccessDeniedException;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.Workout;
-import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.ActionDetail;
 import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
 import com.nraynaud.sport.web.view.WorkoutPageDetails;
 import com.nraynaud.sport.web.view.WorkoutView;
@@ -49,8 +47,6 @@ public class EditAction extends DefaultAction implements ModelDriven<WorkoutPage
                             workout.getDebriefing() != null ? workout.getDebriefing().toString() : ""),
                     PAGE_TILE, new ActionDetail("/workout", "reallyEdit", "id", id.toString()),
                     cancelAction(id.toString()));
-        } catch (WorkoutNotFoundException e) {
-            throw new DataInputException(e);
         } catch (AccessDeniedException e) {
             throw new RuntimeException(e);
         }

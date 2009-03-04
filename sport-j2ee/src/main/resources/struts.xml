@@ -55,7 +55,17 @@
                 <param name="actionName">error</param>
                 <param name="namespace">/</param>
             </result>
+            <result name="error404Workout" type="chain">
+                <param name="actionName">error</param>
+                <param name="namespace">/workout</param>
+                <param name="errorType">workout</param>
+            </result>
         </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="com.nraynaud.sport.WorkoutNotFoundException" result="error404Workout"/>
+        </global-exception-mappings>
+
         <action name="" class="com.nraynaud.sport.web.action.GlobalWorkoutsAction">
             <result>/WEB-INF/pages/globalWorkouts.jsp</result>
         </action>

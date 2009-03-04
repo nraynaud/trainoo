@@ -2,9 +2,7 @@ package com.nraynaud.sport.web.action.messages;
 
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.UserNotFoundException;
-import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.Constants;
-import com.nraynaud.sport.web.DataInputException;
 import com.nraynaud.sport.web.PostOnly;
 import com.nraynaud.sport.web.result.ChainBack;
 import com.nraynaud.sport.web.result.RedirectBack;
@@ -17,8 +15,8 @@ import org.apache.struts2.config.Results;
 import java.util.Date;
 
 @Results({
-@Result(type = RedirectBack.class, value = Constants.WORKOUTS_ACTION),
-@Result(name = Action.INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
+    @Result(type = RedirectBack.class, value = Constants.WORKOUTS_ACTION),
+    @Result(name = Action.INPUT, type = ChainBack.class, value = "/WEB-INF/pages/messages.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class WriteAction extends MessageContentAction {
@@ -39,8 +37,6 @@ public class WriteAction extends MessageContentAction {
         } catch (UserNotFoundException e) {
             addFieldError("receiver", "L'utilisateur '" + receiver + "' n'existe pas.");
             return INPUT;
-        } catch (WorkoutNotFoundException e) {
-            throw new DataInputException(e);
         }
     }
 

@@ -37,7 +37,7 @@ public class ReallyEditAction extends AbstractWorkoutAction {
                     getDiscipline(), getDebriefing());
             return SUCCESS;
         } catch (WorkoutNotFoundException e) {
-            addActionError("l'entraînement désigné n'existe pas pour cet utilisateur");
+            addActionError("l'entraînement désigné n'existe pas");
             return INPUT;
         } catch (AccessDeniedException e) {
             addActionError("Vous n'avez pas le droit de modifier cet entraînement");
