@@ -24,37 +24,51 @@ public class NikeWorkoutCache {
         final File file = new File(CACHE_DIRECTORY, filename);
         final ByteArrayOutputStream data = new ByteArrayOutputStream();
         try {
-            final FileInputStream inputStream = new FileInputStream(file);
-            System.out.println("getting nike workout from cache: " + file.getAbsolutePath());
-            try {
-                IOUtils.copy(inputStream, data);
-                return data.toByteArray();
-            } finally {
-                inputStream.close();
-            }
+            return fromCache(file, data);
         } catch (FileNotFoundException e) {
             try {
                 final String url = NIKE_PAGE + "?id=" + workoutId + "&userID=" + userId;
-                final InputStream inputStream = new URL(url).openConnection().getInputStream();
                 System.out.println("getting nike workout from web: " + url);
-                try {
-                    IOUtils.copy(inputStream, data);
-                    final byte[] bytes = data.toByteArray();
-                    final FileOutputStream output = new FileOutputStream(file);
-                    try {
-                        IOUtils.copy(new ByteArrayInputStream(bytes), output);
-                        return bytes;
-                    } finally {
-                        output.close();
-                    }
-                } finally {
-                    inputStream.close();
-                }
+                return fromWeb(file, data, url);
             } catch (IOException e1) {
                 throw new RuntimeException(e1);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static byte[] fromWeb(final File file, final ByteArrayOutputStream data, final String url) throws
+            IOException {
+        final InputStream inputStream = new URL(url).openConnection().getInputStream();
+        try {
+            return copyToFile(file, data, inputStream);
+        } finally {
+            inputStream.close();
+        }
+    }
+
+    private static byte[] copyToFile(final File file, final ByteArrayOutputStream data,
+                                     final InputStream inputStream) throws IOException {
+        IOUtils.copy(inputStream, data);
+        final byte[] bytes = data.toByteArray();
+        final FileOutputStream output = new FileOutputStream(file);
+        try {
+            IOUtils.copy(new ByteArrayInputStream(bytes), output);
+        } finally {
+            output.close();
+        }
+        return bytes;
+    }
+
+    private static byte[] fromCache(final File file, final ByteArrayOutputStream data) throws IOException {
+        final FileInputStream inputStream = new FileInputStream(file);
+        System.out.println("getting nike workout from cache: " + file.getAbsolutePath());
+        try {
+            IOUtils.copy(inputStream, data);
+            return data.toByteArray();
+        } finally {
+            inputStream.close();
         }
     }
 }
