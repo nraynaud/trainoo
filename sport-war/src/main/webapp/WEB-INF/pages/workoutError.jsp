@@ -7,10 +7,10 @@
 
 <div class="block aboutBlock">
     <div class="content textContent">
-        <h2>Plusieurs raisons sont possibles</h2>
+        <h2>Plusieurs raisons sont possibles&nbsp;:</h2>
         <ul>
             <li>L'entraînement a été supprimé</li>
-            <li>Il y une erreur dans le lien</li>
+            <li>Il y a une erreur dans le lien</li>
         </ul>
     </div>
 </div>
