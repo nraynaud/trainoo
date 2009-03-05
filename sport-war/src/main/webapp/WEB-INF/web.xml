@@ -43,4 +43,8 @@
         <param-name>log4jConfigLocation</param-name>
         <param-value>/WEB-INF/log4j.xml</param-value>
     </context-param>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/static/error.html</location>
+    </error-page>
 </web-app>

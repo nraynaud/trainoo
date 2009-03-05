@@ -58,7 +58,7 @@ public class SportSession {
             userId = user.getId();
         }
 
-        public User getUser(final UserStore userStore) {
+        private User getUser(final UserStore userStore) {
             if (user == null)
                 try {
                     user = userStore.fetchUser(userId);
