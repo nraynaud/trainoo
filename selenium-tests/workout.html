@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="selenium.base" href=""/>
+    <title>workout</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+    <tr>
+        <td rowspan="1" colspan="3">workout</td>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td>open</td>
+    <td>/</td>
+    <td></td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>loginSide</td>
+    <td>test10</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>passwordSide</td>
+    <td>test10</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>submit</td>
+    <td></td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>link=J'ai sué !</td>
+    <td></td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>date</td>
+    <td>03/03/08</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>distance</td>
+    <td>10,02km</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>duration</td>
+    <td>42'12''</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>energy</td>
+    <td>843</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>externalComment</td>
+    <td>lol</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>//div[@id='workoutBlock']/div/span/a[2]/label</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='content']/h1</td>
+    <td>test10 : course lundi 03 mars</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[1]/span</td>
+    <td>10,02km</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[2]/span</td>
+    <td>42'12''</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[3]/span</td>
+    <td>14,25km/h (4' 12/km)</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[4]/span</td>
+    <td>843kcal</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[5]/span</td>
+    <td>1394W</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='globalRight']/div[1]/div/p</td>
+    <td>lol</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>link=Modifier</td>
+    <td></td>
+</tr>
+<tr>
+    <td>select</td>
+    <td>discipline</td>
+    <td>label=vélo</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>date</td>
+    <td>04/03/08</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>distance</td>
+    <td>11,02</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>duration</td>
+    <td>52'12''</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>energy</td>
+    <td>913</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>externalComment</td>
+    <td>lol2</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>link=Valider</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='content']/h1</td>
+    <td>test10 : vélo mardi 04 mars</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[1]/span</td>
+    <td>11,02km</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[2]/span</td>
+    <td>52'12''</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[3]/span</td>
+    <td>12,67km/h (4' 44/km)</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[4]/span</td>
+    <td>913kcal</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[5]/span</td>
+    <td>1220W</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='globalRight']/div[1]/div/p</td>
+    <td>lol2</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>link=Modifier</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>date</td>
+    <td>04/03/08</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>distance</td>
+    <td>11,02</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>duration</td>
+    <td>52'12''</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>energy</td>
+    <td>913</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>externalComment</td>
+    <td>lol2</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>date</td>
+    <td>05/03/08</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>distance</td>
+    <td>10,02</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>duration</td>
+    <td>42'12''</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>energy</td>
+    <td>813</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>externalComment</td>
+    <td>lol</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>link=Annuler</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='content']/h1</td>
+    <td>test10 : vélo mardi 04 mars</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[1]/span</td>
+    <td>11,02km</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[2]/span</td>
+    <td>52'12''</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[3]/span</td>
+    <td>12,67km/h (4' 44/km)</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[4]/span</td>
+    <td>913kcal</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='workoutBlock']/div/dl/dd[5]/span</td>
+    <td>1220W</td>
+</tr>
+<tr>
+    <td>verifyText</td>
+    <td>//div[@id='globalRight']/div[1]/div/p</td>
+    <td>lol2</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>link=Supprimer</td>
+    <td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>
