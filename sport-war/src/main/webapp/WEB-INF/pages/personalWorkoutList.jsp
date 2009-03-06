@@ -28,6 +28,10 @@
     </h2>
 
     <div class="block sheetBlock userSheetBlock">
+        <%if (data.getStatisticsData().workouts.isEmpty()) {%>
+        Je n'ai encore aucun entraînement.<br>
+        <i>Courrage, allez transpirer&nbsp;!</i>
+        <%} else {%>
         <div class="header">
             <div class="deco"></div>
             <%call(pageContext, "distanceByDiscipline.jsp", data.getStatisticsData());%>
@@ -40,6 +44,7 @@
         <div class="footer">
             <div class="deco"></div>
         </div>
+        <%}%>
     </div>
 </div>
 
