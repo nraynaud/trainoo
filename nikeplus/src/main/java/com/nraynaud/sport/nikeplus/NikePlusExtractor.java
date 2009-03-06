@@ -16,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 public class NikePlusExtractor implements Importer {
     private static final XPathExpression STATUS_EXPRESSION;
@@ -25,6 +26,7 @@ public class NikePlusExtractor implements Importer {
     private static final XPathExpression ENERGY;
     private static final XPathExpression START_TIME;
     private static final XPathExpression USER_ID;
+    private static final Pattern ID__PATTERN = Pattern.compile("[0-9]+");
 
     static {
         try {
@@ -72,10 +74,18 @@ public class NikePlusExtractor implements Importer {
 
     public static String extractUserId(final byte[] responseBody) {
         try {
-            return evaluate(responseBody, USER_ID, XPathConstants.STRING);
+            final String stringId = (String) evaluate(responseBody, USER_ID, XPathConstants.STRING);
+            return checkInjection(stringId);
         } catch (XPathExpressionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String checkInjection(final String stringId) {
+        //avoid injection from upstream server
+        if (!ID__PATTERN.matcher(stringId).matches())
+            throw new IllegalStateException("strange upstream id " + stringId);
+        return Long.valueOf(stringId).toString();
     }
 
     private static HttpClient connectedClient(final String login, final String password) throws
@@ -109,7 +119,8 @@ public class NikePlusExtractor implements Importer {
                 final String duration = DURATION.evaluate(node);
                 final String energy = ENERGY.evaluate(node);
                 final String date = START_TIME.evaluate(node);
-                workoutCollector.collectWorkout(nikeId, "course", new SimpleDateFormat("yyyy-MM-dd").parse(date),
+                workoutCollector.collectWorkout(checkInjection(nikeId), "course",
+                        new SimpleDateFormat("yyyy-MM-dd").parse(date),
                         Double.valueOf(distance), Long.parseLong(duration) / 1000, Double.valueOf(energy).longValue());
             }
             workoutCollector.endCollection();
