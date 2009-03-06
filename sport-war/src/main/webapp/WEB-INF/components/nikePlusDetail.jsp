@@ -31,11 +31,9 @@
 </p:javascript-raw>
 <p:javascript>
     f = drawCurve([
-        nikeCurve,
+        {data: nikeCurve, points: {show: true}},
         {data: lowPasscurve, lines: {lineWidth: 2}, color:'rgba(0,0,0,0.2)',
             mouse: {lineColor: 'black', radius:1, sensibility: 2}}], $('container'), min, max);
-    var ymin = f.series[0].yaxis.min;
-    var ymax = f.series[0].yaxis.max;
 </p:javascript>
 
 <div id="container" style="width:90%;height:100px;margin:auto;"></div>
