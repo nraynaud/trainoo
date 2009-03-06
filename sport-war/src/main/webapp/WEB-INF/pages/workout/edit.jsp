@@ -16,13 +16,13 @@
 <p:javascript>
     /* ugly quick fix for the out-of-form debriefing problem */
     function retrieveComment() {
-        document.workoutForm.comment.value = document.getElementById("externalComment").value;
+        document.workoutForm.debriefing.value = document.getElementById("externalComment").value;
     }
 </p:javascript>
 
-<form action="<%=Helpers.createUrl(pageDetail.doAction)%>" method="POST" name="workoutForm"
+<form name="workoutForm" action="<%=Helpers.createUrl(pageDetail.doAction)%>" method="POST"
       onsubmit="retrieveComment(); return true">
-    <input type="hidden" name="comment" id="hiddenComment" value="">
+    <input type="hidden" name="debriefing" id="hiddenComment" value="">
 
     <h1><%=pageDetail.pageTile%>
     </h1>
@@ -111,7 +111,7 @@
                     <%=textArea("externalComment", "externalComment", workoutView.debriefing)%>
                 </span>
             </p>
-            <p:javascript>makeItCount('externalComment', <%=AbstractWorkoutAction.MAX_DEBRIEFING_LENGTH%>);</p:javascript>
+            <p:javascript-raw>makeItCount('externalComment', <%=AbstractWorkoutAction.MAX_DEBRIEFING_LENGTH%>);</p:javascript-raw>
         </div>
     </div>
 </div>
