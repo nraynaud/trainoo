@@ -43,7 +43,7 @@ var Scriptaculous = {
             throw("script.aculo.us requires the Prototype JavaScript framework >= " +
                   Scriptaculous.REQUIRED_PROTOTYPE);
         var js = /scriptaculous\.js(\?.*)?$/;
-        $$('head script[src]').findAll(function(s) {
+        $$('script[src]').findAll(function(s) {
             return s.src.match(js);
         }).each(function(s) {
             var path = s.src.replace(js, ''),
