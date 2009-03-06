@@ -22,7 +22,7 @@
 %>
 <p:layoutParams title='<%=isCurrentUser ? "Mon entraînement" : "Entraînement de " + runner.getName()%>'
                 showTitleInPage="false"/>
-<p:javascript>
+<p:javascript-raw>
     Trainoo.isWorkout = true;
     Trainoo.workout = {
     id :<%=workout.getId()%>,
@@ -31,7 +31,7 @@
     name : '<%=escapedForJavascript(workout.getUser().getName().nonEscaped())%>'
     }
     };
-</p:javascript>
+</p:javascript-raw>
 <h1><%=bibLink(runner, 15)%>&nbsp;: <%=workout.getDiscipline()%>
     <small><%=printDate("EEEE dd MMMM", workout.getDate())%>
     </small>
