@@ -2,7 +2,7 @@ package com.nraynaud.sport.web.action.facebook;
 
 import com.facebook.api.Facebook;
 import com.facebook.api.FacebookException;
-import com.facebook.api.FacebookRestClient;
+import com.facebook.api.IFacebookRestClient;
 import com.facebook.api.ProfileField;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
@@ -58,7 +58,7 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
         try {
             final Facebook facebook = new Facebook(request, response, API_KEY, SECRET_KEY);
             facebook.requireLogin("");
-            final FacebookRestClient restClient = facebook.get_api_client();
+            final IFacebookRestClient<Document> restClient = facebook.get_api_client();
             final long userID = restClient.users_getLoggedInUser();
             if (trainoo_account != null) {
                 restClient.data_setUserPreference(TRAINOO_ACCOUNT_KEY,
