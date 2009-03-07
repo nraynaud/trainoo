@@ -45,7 +45,12 @@ public class NikeCurveHelper {
     private NikeCurveHelper() {
     }
 
-    private static class Point {
+    public static byte[] getPNGImage(final String userId, final String workoutId) {
+        final SortedSet<Point> points = getNikeCurvePoints(userId, workoutId);
+        return NikeGraphDrawer.getPNGImage(points);
+    }
+
+    public static class Point {
         public final double distance;
         public double pace;
 
@@ -129,10 +134,15 @@ public class NikeCurveHelper {
     }
 
     public static String getNikePlusCurve(final String userId, final String workoutId) {
+        final SortedSet<Point> points = getNikeCurvePoints(userId, workoutId);
+        return convertToDisplay(points);
+    }
+
+    private static SortedSet<Point> getNikeCurvePoints(final String userId, final String workoutId) {
+        final SortedSet<Point> points = new TreeSet<Point>(POINT_COMPARATOR);
         try {
             final Node root = getRoot(userId, workoutId);
             final double totalDistance = parseDouble(TOTAL_DISTANCE.evaluate(root));
-            final SortedSet<Point> points = new TreeSet<Point>(POINT_COMPARATOR);
             final Node extended = (Node) EXTENDED_DATA.evaluate(root, XPathConstants.NODE);
             final Config config = new Config(totalDistance / MAX_FINAL_POINTS);
             registerExtanded(points, extended, config);
@@ -143,10 +153,10 @@ public class NikeCurveHelper {
             points.addAll(snaps);
             points.last().pace = points.first().pace;
             dumpPoints(points, config);
-            return convertToDisplay(points);
         } catch (XPathExpressionException e) {
             throw new RuntimeException(e);
         }
+        return points;
     }
 
     private static Node getRoot(final String userId, final String workoutId) throws XPathExpressionException {
@@ -210,7 +220,7 @@ public class NikeCurveHelper {
 
     private static void logText(final String text) {
         //noinspection ConstantIfStatement
-        if (false) {
+        if (true) {
             System.out.println(text);
         }
     }

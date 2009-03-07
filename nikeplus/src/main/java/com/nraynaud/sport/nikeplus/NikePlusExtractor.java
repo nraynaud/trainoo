@@ -169,4 +169,8 @@ public class NikePlusExtractor implements Importer {
             throw new FailureException(e);
         }
     }
+
+    public byte[] getPNGImage(final String userId, final String workoutId) {
+        return NikeCurveHelper.getPNGImage(checkInjection(userId), checkInjection(workoutId));
+    }
 }
