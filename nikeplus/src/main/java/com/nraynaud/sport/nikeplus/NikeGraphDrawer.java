@@ -58,6 +58,9 @@ public class NikeGraphDrawer {
         final BufferedImage logoData = ImageIO.read(logo);
         final int logoHeight = 25;
         final int logoWidth = logoHeight * logoData.getWidth() / logoData.getHeight();
+        g.setPaint(new Color(0x869C34));
+        g.setStroke(new BasicStroke(3));
+        g.drawRoundRect(1, 1, WIDTH - 3, HEIGHT - 3, 20, 20);
         g.drawImage(logoData, 0, HEIGHT - logoHeight, logoWidth, logoHeight, null);
     }
 
