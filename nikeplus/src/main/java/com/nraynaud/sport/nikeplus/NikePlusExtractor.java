@@ -14,6 +14,7 @@ import javax.xml.namespace.QName;
 import javax.xml.xpath.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
@@ -170,7 +171,7 @@ public class NikePlusExtractor implements Importer {
         }
     }
 
-    public byte[] getPNGImage(final String userId, final String workoutId) {
-        return NikeCurveHelper.getPNGImage(checkInjection(userId), checkInjection(workoutId));
+    public byte[] getPNGImage(final String userId, final String workoutId, final URL logo) {
+        return NikeCurveHelper.getPNGImage(checkInjection(userId), checkInjection(workoutId), logo);
     }
 }

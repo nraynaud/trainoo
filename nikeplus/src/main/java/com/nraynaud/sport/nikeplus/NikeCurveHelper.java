@@ -8,6 +8,7 @@ import org.xml.sax.InputSource;
 import javax.xml.xpath.*;
 import java.io.ByteArrayInputStream;
 import static java.lang.Double.parseDouble;
+import java.net.URL;
 import java.util.*;
 
 //all this dumb logging is for comparison with nike flash log outputs.
@@ -45,9 +46,9 @@ public class NikeCurveHelper {
     private NikeCurveHelper() {
     }
 
-    public static byte[] getPNGImage(final String userId, final String workoutId) {
+    public static byte[] getPNGImage(final String userId, final String workoutId, final URL logo) {
         final SortedSet<Point> points = getNikeCurvePoints(userId, workoutId);
-        return NikeGraphDrawer.getPNGImage(points);
+        return NikeGraphDrawer.getPNGImage(points, logo);
     }
 
     public static class Point {

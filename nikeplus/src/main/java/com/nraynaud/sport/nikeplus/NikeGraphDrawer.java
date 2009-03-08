@@ -8,7 +8,9 @@ import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.SortedSet;
 
 public class NikeGraphDrawer {
@@ -22,20 +24,46 @@ public class NikeGraphDrawer {
     private NikeGraphDrawer() {
     }
 
-    public static byte[] getPNGImage(final SortedSet<NikeCurveHelper.Point> points) {
-        double min = Double.MAX_VALUE;
-        double max = Double.MIN_VALUE;
-        for (final NikeCurveHelper.Point point : points) {
-            min = Math.min(min, point.pace);
-            max = Math.max(max, point.pace);
+    public static byte[] getPNGImage(final SortedSet<NikeCurveHelper.Point> points, final URL logo) {
+        try {
+            double min = Double.MAX_VALUE;
+            double max = Double.MIN_VALUE;
+            for (final NikeCurveHelper.Point point : points) {
+                min = Math.min(min, point.pace);
+                max = Math.max(max, point.pace);
+            }
+            final double variance = computeVariance(min, max);
+            final double distanceCoeff = (WIDTH - X_PADDING * 2) / points.last().distance;
+            final BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+            final Graphics2D g = image.createGraphics();
+            final AffineTransform shadower = AffineTransform.getTranslateInstance(3, 2);
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            drawLogo(logo, g);
+            drawCurve(points, min, variance, distanceCoeff, g, shadower);
+            drawSnaps(min, variance, distanceCoeff, g, points);
+            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(image, "PNG", buffer);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return buffer.toByteArray();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        final double variance = computeVariance(min, max);
-        final double distanceCoeff = (WIDTH - X_PADDING * 2) / points.last().distance;
-        final BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g = image.createGraphics();
-        final AffineTransform shadower = AffineTransform.getTranslateInstance(3, 2);
-        final Color curveColor = new Color(0x87DA06);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    }
+
+    private static void drawLogo(final URL logo, final Graphics2D g) throws IOException {
+        final BufferedImage logoData = ImageIO.read(logo);
+        final int logoHeight = 25;
+        final int logoWidth = logoHeight * logoData.getWidth() / logoData.getHeight();
+        g.drawImage(logoData, 0, HEIGHT - logoHeight, logoWidth, logoHeight, null);
+    }
+
+    private static void drawCurve(final SortedSet<NikeCurveHelper.Point> points,
+                                  final double min, final double variance,
+                                  final double distanceCoeff, final Graphics2D g,
+                                  final AffineTransform shadower) {
         g.setStroke(new BasicStroke(15, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         final java.util.List<NikeCurveHelper.Point> list = new ArrayList<NikeCurveHelper.Point>(points);
         final Path2D.Double path = new Path2D.Double();
@@ -52,20 +80,12 @@ public class NikeGraphDrawer {
         }
         g.setPaint(Color.GRAY);
         g.draw(shadower.createTransformedShape(path));
-        g.setPaint(curveColor);
+        g.setPaint(new Color(0x87DA06));
         g.draw(path);
-        drawSnaps(min, variance, distanceCoeff, g, list);
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        try {
-            ImageIO.write(image, "PNG", buffer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return buffer.toByteArray();
     }
 
     private static void drawSnaps(final double min, final double variance, final double distanceCoeff,
-                                  final Graphics2D g, final java.util.List<NikeCurveHelper.Point> list) {
+                                  final Graphics2D g, final Collection<NikeCurveHelper.Point> list) {
         g.setStroke(new BasicStroke(2));
         final AffineTransform shadower = AffineTransform.getTranslateInstance(3, 2);
         for (final NikeCurveHelper.Point point : list) {
