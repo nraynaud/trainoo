@@ -63,9 +63,10 @@ public class NikeGraphDrawer {
         g.drawRoundRect(1, 1, WIDTH - 3, HEIGHT - 3, 20, 20);
         g.drawImage(logoData, 0, HEIGHT - logoHeight, logoWidth, logoHeight, null);
         g.setPaint(Color.BLACK);
-        g.setFont(g.getFont().deriveFont(14f));
-        g.drawString(DistanceIO.formatDistance(workout.distance) + "km  " + DurationIO.formatDuration(workout.duration,
-                "h", "'", "''"), logoWidth + 3, HEIGHT - 10);
+        g.setFont(g.getFont().deriveFont(18f));
+        final String text = DistanceIO.formatDistance(workout.distance) + "km " + DurationIO.formatDuration(
+                workout.duration, "h", "'", "''");
+        g.drawString(text, logoWidth + 3, HEIGHT - 6);
     }
 
     private static void drawCurve(final Graphics2D g, final SortedSet<NikeCurveHelper.Point> points,
