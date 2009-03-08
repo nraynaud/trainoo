@@ -22,6 +22,8 @@ public class NikeCurveHelper {
     private static final XPathExpression INTERVAL = compile("@intervalValue");
     private static final XPathExpression TEXT = compile("text()");
     private static final XPathExpression TOTAL_DISTANCE = compile("//runSummary/distance/text()");
+    private static final XPathExpression TOTAL_DURATION = compile("//runSummary/duration/text()");
+    private static final XPathExpression TOTAL_ENERGY = compile("//runSummary/calories/text()");
     private static final XPathExpression KM_SNAPSHOTS = compile("//snapShotList[@snapShotType='kmSplit']/snapShot");
     private static final XPathExpression CLICK_SNAPSHOTS = compile(
             "//snapShotList[@snapShotType='userClick']/snapShot");
@@ -47,8 +49,8 @@ public class NikeCurveHelper {
     }
 
     public static byte[] getPNGImage(final String userId, final String workoutId, final URL logo) {
-        final SortedSet<Point> points = getNikeCurvePoints(userId, workoutId);
-        return NikeGraphDrawer.getPNGImage(points, logo);
+        final Workout workout = getNikeCurveWorkout(userId, workoutId);
+        return NikeGraphDrawer.getPNGImage(logo, workout);
     }
 
     public static class Point {
@@ -62,6 +64,28 @@ public class NikeCurveHelper {
 
         public String toString() {
             return "[" + distance + ", " + pace + ']';
+        }
+    }
+
+    public static class Workout {
+        public final SortedSet<Point> points;
+        public final SortedSet<Point> snapshots;
+        public final double distance;
+        public final long duration;
+        public final long energy;
+        public final double minPace;
+        public final double maxPace;
+
+        public Workout(final SortedSet<Point> points, final SortedSet<Point> snapshots,
+                       final double distance, final long duration,
+                       final long energy, final double minPace, final double maxPace) {
+            this.points = points;
+            this.snapshots = snapshots;
+            this.distance = distance;
+            this.duration = duration;
+            this.energy = energy;
+            this.minPace = minPace;
+            this.maxPace = maxPace;
         }
     }
 
@@ -120,7 +144,7 @@ public class NikeCurveHelper {
 
     private static void registerExtandedLowPass(final Set<Point> points, final Node extendedDataNode) throws
             XPathExpressionException {
-        final double sampling = parseDouble(INTERVAL.evaluate(extendedDataNode));
+        final double sampling = getDouble(INTERVAL, extendedDataNode);
         final String extendedData = TEXT.evaluate(extendedDataNode);
         double previousDistance = 0.0;
         final double samplingMilisec = sampling * 1000;
@@ -134,16 +158,20 @@ public class NikeCurveHelper {
         }
     }
 
-    public static String getNikePlusCurve(final String userId, final String workoutId) {
-        final SortedSet<Point> points = getNikeCurvePoints(userId, workoutId);
-        return convertToDisplay(points);
+    private static double getDouble(final XPathExpression interval, final Node node) throws XPathExpressionException {
+        return parseDouble(interval.evaluate(node));
     }
 
-    private static SortedSet<Point> getNikeCurvePoints(final String userId, final String workoutId) {
+    public static String getNikePlusCurve(final String userId, final String workoutId) {
+        final Workout workout = getNikeCurveWorkout(userId, workoutId);
+        return convertToDisplay(workout.points);
+    }
+
+    private static Workout getNikeCurveWorkout(final String userId, final String workoutId) {
         final SortedSet<Point> points = new TreeSet<Point>(POINT_COMPARATOR);
         try {
             final Node root = getRoot(userId, workoutId);
-            final double totalDistance = parseDouble(TOTAL_DISTANCE.evaluate(root));
+            final double totalDistance = getDouble(TOTAL_DISTANCE, root);
             final Node extended = (Node) EXTENDED_DATA.evaluate(root, XPathConstants.NODE);
             final Config config = new Config(totalDistance / MAX_FINAL_POINTS);
             registerExtanded(points, extended, config);
@@ -154,10 +182,11 @@ public class NikeCurveHelper {
             points.addAll(snaps);
             points.last().pace = points.first().pace;
             dumpPoints(points, config);
+            return new Workout(points, snaps, totalDistance, (long) getDouble(TOTAL_DURATION, root) / 1000,
+                    (long) getDouble(TOTAL_ENERGY, root), config.minPace, config.maxPace);
         } catch (XPathExpressionException e) {
             throw new RuntimeException(e);
         }
-        return points;
     }
 
     private static Node getRoot(final String userId, final String workoutId) throws XPathExpressionException {
@@ -168,7 +197,7 @@ public class NikeCurveHelper {
 
     private static void registerExtanded(final Set<Point> points, final Node extendedDataNode,
                                          final Config config) throws XPathExpressionException {
-        final double sampling = parseDouble(INTERVAL.evaluate(extendedDataNode));
+        final double sampling = getDouble(INTERVAL, extendedDataNode);
         final String extendedData = TEXT.evaluate(extendedDataNode);
         double previousTime = 0.0;
         double previousDistance = 0.0;
@@ -232,8 +261,8 @@ public class NikeCurveHelper {
         final NodeList snapshots = (NodeList) query.evaluate(root, XPathConstants.NODESET);
         for (int i = 0; i < snapshots.getLength(); i++) {
             final Node snapShotNode = snapshots.item(i);
-            final double pace = parseDouble(PACE.evaluate(snapShotNode));
-            final double distance = parseDouble(DISTANCE.evaluate(snapShotNode));
+            final double pace = getDouble(PACE, snapShotNode);
+            final double distance = getDouble(DISTANCE, snapShotNode);
             final String event = EVENT.evaluate(snapShotNode);
             final Point snap = new Point(distance, pace);
             if (event.equals("")
