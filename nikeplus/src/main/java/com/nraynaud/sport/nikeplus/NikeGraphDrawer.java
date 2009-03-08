@@ -38,6 +38,7 @@ public class NikeGraphDrawer {
             final Graphics2D g = image.createGraphics();
             final AffineTransform shadower = AffineTransform.getTranslateInstance(3, 2);
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             drawLogo(logo, g);
             drawCurve(points, min, variance, distanceCoeff, g, shadower);
             drawSnaps(min, variance, distanceCoeff, g, points);
