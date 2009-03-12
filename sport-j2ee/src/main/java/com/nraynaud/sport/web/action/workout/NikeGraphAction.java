@@ -3,10 +3,12 @@ package com.nraynaud.sport.web.action.workout;
 import com.nraynaud.sport.importer.Importer;
 import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.result.Redirect;
+import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
+import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import org.apache.struts2.dispatcher.StreamResult;
 
 import java.io.ByteArrayInputStream;
@@ -17,7 +19,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Results({
-    @Result(value = "inputStream", type = StreamResult.class, params = {"contentType", "image/png"}),
+    @Result(name = INPUT, type = ServletDispatcherResult.class, value = "/WEB-INF/pages/workout/nikeWidgetForm.jsp"),
+    @Result(name = SUCCESS, value = "inputStream", type = StreamResult.class, params = {"contentType", "image/png"}),
     @Result(name = "url", type = Redirect.class, value = "nikeGraph",
             params = {"namespace", "/workout", "userId", "${userId}", "workoutId", "${workoutId}"})
         })
@@ -43,7 +46,8 @@ public class NikeGraphAction {
             userId = matcher.group(1);
             workoutId = matcher.group(2);
             return "url";
-        }
+        } else if (userId == null && workoutId == null)
+            return INPUT;
         return SUCCESS;
     }
 
