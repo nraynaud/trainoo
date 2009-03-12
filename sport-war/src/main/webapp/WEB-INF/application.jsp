@@ -95,7 +95,8 @@
     </div>
 
     <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
-    <script type="text/javascript" src="<%=stat("/static/scriptaculous.js")%>"></script>
+    <script type="text/javascript" src="<%=stat("/static/effects.js")%>"></script>
+    <script type="text/javascript" src="<%=stat("/static/controls.js")%>"></script>
     <script type="text/javascript" src="<%=stat("/static/sport.js")%>"></script>
     <r:writeJavascript/>
 

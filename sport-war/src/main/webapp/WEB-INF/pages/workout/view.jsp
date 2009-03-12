@@ -116,7 +116,7 @@
         <%}%>
         </span>
 
-        Compte rendu par <%=bibLink(runner, 20)%>
+        Compte rendu
     </h2>
     <%}%>
     <div class="block">

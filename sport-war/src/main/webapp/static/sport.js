@@ -10,7 +10,7 @@ else if (document.getBoxObjectFor != null) Browser.Engine = {name: 'gecko', vers
 Browser.Engine[Browser.Engine.name] = Browser.Engine[Browser.Engine.name + Browser.Engine.version] = true;
 Element.addMethods({
     getComputedStyle: function(elt, property) {
-        if (elt.currentStyle) return elt.currentStyle[property.camelCase()];
+        if (elt.currentStyle) return elt.currentStyle[property.camelize()];
         var win = elt.ownerDocument.defaultView || elt.ownerDocument.parentWindow;
         var computed = win.getComputedStyle(elt, null);
         return (computed) ? computed.getPropertyValue([property.dasherize()]) : null;
