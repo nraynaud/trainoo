@@ -11,8 +11,10 @@
     final String userId = workout.getUser().getNikePlusId();
     final String workoutId = workout.getNikePlusId();
 %>
-
+<!--[if IE]>
 <p:javascript src="<%=Helpers.stat("/static/excanvas.js")%>"/>
+<![endif]-->
+
 <p:javascript src="<%=Helpers.stat("/static/flotr-0.2.0-alpha.js")%>"/>
 <%
     final String min = numberOrNull(pageContext.getRequest().getParameter("min"));
