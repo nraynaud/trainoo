@@ -118,7 +118,7 @@ public class NikeGraphDrawer {
         g.setStroke(new BasicStroke(10, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g.setPaint(SHADOWS_COLOR);
         g.draw(SHADOWER.createTransformedShape(path));
-        g.setPaint(new Color(216, 238, 135));
+        g.setPaint(DARK_GREEN);
         g.draw(path);
     }
 
