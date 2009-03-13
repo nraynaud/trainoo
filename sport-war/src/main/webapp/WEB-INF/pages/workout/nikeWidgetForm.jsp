@@ -15,6 +15,13 @@
         <!--[if lt IE 7]>
             <link href="<%=Helpers.stat("/static/sport_ie6.iecss")%>" rel="stylesheet" type="text/css">
         <![endif]-->
+        <style type="text/css">
+            ul {
+                margin-left: 30px;
+                list-style-position: outside;
+                list-style-type: disc;
+            }
+        </style>
     </head>
     <body>
         <div id="body">
@@ -29,16 +36,27 @@
                         <h1>Affichez votre course Nike+ sous forme d'image !</h1>
 
                         <div class="block aboutBlock">
-                            <div style="margin:40px;overflow:hidden;">
-                                <ul style="float:left; font-size:22px">
+                            <div style="margin:40px;overflow:hidden; font-size:22px; line-height:130%">
+
+                                <ul style="float:left;margin-top:40px;">
                                     <li>Pour votre blog</li>
                                     <li>Pour les forums</li>
-                                    <li>Pas de couleurs rouge !</li>
+                                    <li>Pas de couleur rouge !</li>
                                     <li>Pas de flash lent à chager !</li>
                                 </ul>
-                                <img style="display:block;float:right;" src="/static/nikeGraph/copier_lien.gif" alt="">
+                                <div style="display:block;float:right;">
+                                    Exemple &nbsp;: <br>
+                                    <img src="/static/nikeGraph/nike_example.png"
+                                         alt="exemple de graphe">
+                                </div>
                             </div>
-                            <h2>Collez l'adresse de partage de votre entraînement ci-dessous&nbsp;:</h2>
+                            <h2>1) Copiez l'adresse de partage de la course sur le site de Nike+</h2>
+
+                            <div style="width:100%; text-align:center;"><img style="margin: auto auto;"
+                                                                             src="/static/nikeGraph/copier_lien.gif"
+                                                                             alt="anim lien copie">
+                            </div>
+                            <h2>2) Collez-la ci-dessous&nbsp;:</h2>
 
                             <div style="font-size:25px; margin-top:30px; margin-bottom:30px;">
                                 <form action="" method="GET">
