@@ -42,7 +42,7 @@
                                     <li>Pour votre blog</li>
                                     <li>Pour les forums</li>
                                     <li>Pas de couleur rouge !</li>
-                                    <li>Pas de flash lent à chager !</li>
+                                    <li>Pas de flash lent à charger !</li>
                                 </ul>
                                 <div style="display:block;float:right;">
                                     Exemple &nbsp;: <br>
