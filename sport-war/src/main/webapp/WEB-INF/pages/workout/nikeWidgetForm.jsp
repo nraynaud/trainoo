@@ -26,7 +26,7 @@
                 <div id="contentWrapper">
                     <div id="content">
                         <div id="contentDecor"></div>
-                        <h1>Affichez sortie Nike+ sous forme d'image !</h1>
+                        <h1>Affichez votre course Nike+ sous forme d'image !</h1>
 
                         <div class="block aboutBlock">
                             <div style="margin:40px;overflow:hidden;">
