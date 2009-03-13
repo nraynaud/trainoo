@@ -52,4 +52,16 @@
         <error-code>404</error-code>
         <location>/static/error404.html</location>
     </error-page>
+
+    <locale-encoding-mapping-list>
+        <locale-encoding-mapping>
+            <locale>en</locale>
+            <encoding>UTF-8</encoding>
+        </locale-encoding-mapping>
+        <locale-encoding-mapping>
+            <locale>fr</locale>
+            <encoding>UTF-8</encoding>
+        </locale-encoding-mapping>
+    </locale-encoding-mapping-list>
+
 </web-app>
