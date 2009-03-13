@@ -2,6 +2,7 @@ package com.nraynaud.sport.nikeplus;
 
 import com.nraynaud.sport.formatting.DistanceIO;
 import com.nraynaud.sport.formatting.DurationIO;
+import com.nraynaud.sport.nikeplus.data.Workout;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.SortedSet;
@@ -24,11 +25,18 @@ public class NikeGraphDrawer {
     private static final double TO_MILES = 1.609344;
     private static final int X_PADDING = 15;
     private static final AffineTransform SHADOWER = AffineTransform.getTranslateInstance(3, 2);
+    private static final int Y_PADDING = 25;
+    private static final Color TEXT_COLOR = new Color(64, 54, 21);
+    private static final Font TEXT_FONT = new Font("Dialog", Font.BOLD, 12);
+    private static final Color SNAP_FILL_COLOR = new Color(247, 247, 226);
+    private static final Color SNAP_RING_COLOR = new Color(113, 139, 7);
+    private static final Color LIGHT_GREEN = new Color(231, 243, 185);
+    private static final Color DARK_GREEN = new Color(161, 189, 61);
 
     private NikeGraphDrawer() {
     }
 
-    public static byte[] getPNGImage(final URL logo, final NikeCurveHelper.Workout workout) {
+    public static byte[] getPNGImage(final Workout workout) {
         try {
             final double variance = computeVariance(workout.minPace, workout.maxPace);
             final double distanceCoeff = (WIDTH - X_PADDING * 2) / workout.points.last().distance;
@@ -36,7 +44,8 @@ public class NikeGraphDrawer {
             final Graphics2D g = image.createGraphics();
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            drawInfo(g, workout, logo);
+            g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            drawInfo(g, workout);
             drawCurve(g, workout.points, workout.minPace, variance, distanceCoeff);
             drawSnaps(g, workout.minPace, variance, distanceCoeff, workout.snapshots);
             final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -51,60 +60,79 @@ public class NikeGraphDrawer {
         }
     }
 
-    private static void drawInfo(final Graphics2D g, final NikeCurveHelper.Workout workout, final URL logo) throws
+    private static void drawInfo(final Graphics2D g, final Workout workout) throws
             IOException {
-        final BufferedImage logoData = ImageIO.read(logo);
-        final int logoHeight = 25;
-        final int logoWidth = logoHeight * logoData.getWidth() / logoData.getHeight();
-        g.setStroke(new BasicStroke(3));
-        g.setPaint(new Color(0xF7F7E2));
-        g.fillRoundRect(1, 1, WIDTH - 3, HEIGHT - 3, 20, 20);
-        g.setPaint(new Color(0x869C34));
-        g.drawRoundRect(1, 1, WIDTH - 3, HEIGHT - 3, 20, 20);
-        g.drawImage(logoData, 0, HEIGHT - logoHeight, logoWidth, logoHeight, null);
-        g.setPaint(Color.BLACK);
-        g.setFont(g.getFont().deriveFont(18f));
-        final String text = DistanceIO.formatDistance(workout.distance) + "km " + DurationIO.formatDuration(
+        final BufferedImage logoData = ImageIO.read(
+                NikeGraphDrawer.class.getClassLoader().getResource("/com/nraynaud/sport/nikeplus/logo_widget.png"));
+        final int logoHeight = logoData.getHeight();
+        final int logoWidth = logoData.getWidth();
+        paintRows(g);
+        paintBorder(g);
+        g.drawImage(logoData, WIDTH - logoWidth - 4, HEIGHT - logoHeight - 4, logoWidth, logoHeight, null);
+        g.setPaint(TEXT_COLOR);
+        g.setFont(TEXT_FONT);
+        final String topText = workout.login + " - le " + new SimpleDateFormat("dd/MM/yyyy").format(workout.date);
+        g.drawString(topText, X_PADDING / 2, 19);
+        final String bottomText = DistanceIO.formatDistance(workout.distance) + "km - " + DurationIO.formatDuration(
                 workout.duration, "h", "'", "''");
-        g.drawString(text, logoWidth + 3, HEIGHT - 6);
+        g.drawString(bottomText, X_PADDING / 2, HEIGHT - 7);
     }
 
-    private static void drawCurve(final Graphics2D g, final SortedSet<NikeCurveHelper.Point> points,
+    private static void paintRows(final Graphics2D g) {
+        final int rowHeight = HEIGHT / 6;
+        for (int i = 0; i < 6; i++) {
+            g.setPaint(i % 2 == 0 ? Color.WHITE : LIGHT_GREEN);
+            final int currentHeight = i * rowHeight;
+            g.fillRect(0, currentHeight, WIDTH, rowHeight);
+            g.setPaint(DARK_GREEN);
+            g.drawLine(0, currentHeight, WIDTH, currentHeight);
+        }
+    }
+
+    private static void paintBorder(final Graphics2D g) {
+        g.setPaint(DARK_GREEN);
+        g.drawLine(0, 0, 0, HEIGHT);
+        g.drawLine(WIDTH - 1, 0, WIDTH - 1, HEIGHT);
+        g.setStroke(new BasicStroke(3));
+        g.drawLine(0, 1, WIDTH, 1);
+        g.drawLine(0, HEIGHT - 2, WIDTH, HEIGHT - 2);
+    }
+
+    private static void drawCurve(final Graphics2D g, final SortedSet<Workout.Point> points,
                                   final double min, final double variance,
                                   final double distanceCoeff) {
-        final java.util.List<NikeCurveHelper.Point> list = new ArrayList<NikeCurveHelper.Point>(points);
+        final java.util.List<Workout.Point> list = new ArrayList<Workout.Point>(points);
         final Path2D.Double path = new Path2D.Double();
         path.moveTo(x(distanceCoeff, points.first()), y(min, variance, points.first()));
         for (int i = 1; i < list.size(); i++) {
-            final NikeCurveHelper.Point point = list.get(i);
-            final NikeCurveHelper.Point next = list.get(i + 1 < list.size() ? i + 1 : i);
+            final Workout.Point point = list.get(i);
+            final Workout.Point next = list.get(i + 1 < list.size() ? i + 1 : i);
             final int ctrlX = x(distanceCoeff, point);
             final int ctrlY = y(min, variance, point);
             final int x = (int) (ctrlX + (x(distanceCoeff, next) - ctrlX) / 2.0);
             final int y = (int) (ctrlY + (y(min, variance, next) - ctrlY) / 2.0);
-            System.out.println("x: " + x + "\ty: " + y);
             path.quadTo(ctrlX, ctrlY, x, y);
         }
         g.setStroke(new BasicStroke(10, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g.setPaint(Color.GRAY.brighter());
         g.draw(SHADOWER.createTransformedShape(path));
-        g.setPaint(new Color(0x869C34));
+        g.setPaint(new Color(216, 238, 135));
         g.draw(path);
     }
 
     private static void drawSnaps(final Graphics2D g, final double min, final double variance,
                                   final double distanceCoeff,
-                                  final Collection<NikeCurveHelper.Point> list) {
+                                  final Collection<Workout.Point> list) {
         g.setStroke(new BasicStroke(2));
-        for (final NikeCurveHelper.Point point : list) {
+        for (final Workout.Point point : list) {
             final int left = x(distanceCoeff, point) - 3;
             final int top = y(min, variance, point) - 3;
             final Ellipse2D.Float ellipse = new Ellipse2D.Float(left, top, 7, 7);
             g.setPaint(Color.GRAY);
             g.fill(SHADOWER.createTransformedShape(ellipse));
-            g.setPaint(Color.WHITE);
+            g.setPaint(SNAP_FILL_COLOR);
             g.fill(ellipse);
-            g.setPaint(Color.BLACK);
+            g.setPaint(SNAP_RING_COLOR);
             g.draw(ellipse);
         }
     }
@@ -122,12 +150,12 @@ public class NikeGraphDrawer {
         return pace * TO_MILES;
     }
 
-    private static int y(final double min, final double variance, final NikeCurveHelper.Point point) {
+    private static int y(final double min, final double variance, final Workout.Point point) {
         final double diff = point.pace - min;
-        return (int) (20 + (diff / variance) * HEIGHT);
+        return (int) (Y_PADDING + (diff / variance) * HEIGHT);
     }
 
-    private static int x(final double distanceCoeff, final NikeCurveHelper.Point previous) {
+    private static int x(final double distanceCoeff, final Workout.Point previous) {
         return (int) (previous.distance * distanceCoeff) + X_PADDING;
     }
 }

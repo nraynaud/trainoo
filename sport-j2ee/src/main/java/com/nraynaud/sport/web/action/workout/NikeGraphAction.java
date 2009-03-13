@@ -5,7 +5,6 @@ import com.nraynaud.sport.web.Public;
 import com.nraynaud.sport.web.result.Redirect;
 import static com.opensymphony.xwork2.Action.INPUT;
 import static com.opensymphony.xwork2.Action.SUCCESS;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
@@ -13,8 +12,6 @@ import org.apache.struts2.dispatcher.StreamResult;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +27,7 @@ public class NikeGraphAction {
     public String userId;
     public String workoutId;
     public String url;
+    private ByteArrayInputStream stream;
 
     public NikeGraphAction(final Importer importer) {
         this.importer = importer;
@@ -48,15 +46,11 @@ public class NikeGraphAction {
             return "url";
         } else if (userId == null && workoutId == null)
             return INPUT;
+        stream = new ByteArrayInputStream(importer.getPNGImage(userId, workoutId));
         return SUCCESS;
     }
 
     public InputStream getInputStream() {
-        try {
-            final URL logo = ServletActionContext.getServletContext().getResource("/static/pimp/logo.png");
-            return new ByteArrayInputStream(importer.getPNGImage(userId, workoutId, logo));
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        return stream;
     }
 }

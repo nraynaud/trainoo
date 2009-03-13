@@ -3,6 +3,7 @@ package com.nraynaud.sport.nikeplus;
 import com.nraynaud.sport.importer.FailureException;
 import com.nraynaud.sport.importer.Importer;
 import com.nraynaud.sport.importer.WorkoutCollector;
+import static com.nraynaud.sport.nikeplus.XPathUtil.compile;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -11,38 +12,24 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import javax.xml.namespace.QName;
-import javax.xml.xpath.*;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 public class NikePlusExtractor implements Importer {
-    private static final XPathExpression STATUS_EXPRESSION;
-    private static final XPathExpression RUN_LIST;
-    private static final XPathExpression DISTANCE;
-    private static final XPathExpression DURATION;
-    private static final XPathExpression ENERGY;
-    private static final XPathExpression START_TIME;
-    private static final XPathExpression USER_ID;
+    private static final XPathExpression STATUS_EXPRESSION = compile("/*/status");
+    private static final XPathExpression RUN_LIST = compile("/plusService/runList/*");
+    private static final XPathExpression DISTANCE = compile("distance");
+    private static final XPathExpression DURATION = compile("duration");
+    private static final XPathExpression ENERGY = compile("calories");
+    private static final XPathExpression START_TIME = compile("startTime");
+    private static final XPathExpression USER_ID = compile("/plusService/user/@id");
     private static final Pattern ID__PATTERN = Pattern.compile("[0-9]+");
-
-    static {
-        try {
-            final XPath xPath = XPathFactory.newInstance().newXPath();
-            STATUS_EXPRESSION = xPath.compile("/*/status");
-            RUN_LIST = xPath.compile("/plusService/runList/*");
-            DISTANCE = xPath.compile("distance");
-            DURATION = xPath.compile("duration");
-            ENERGY = xPath.compile("calories");
-            START_TIME = xPath.compile("startTime");
-            USER_ID = xPath.compile("/plusService/user/@id");
-        } catch (XPathExpressionException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static void checkStatus(final byte[] body) throws FailureException {
         try {
@@ -171,7 +158,7 @@ public class NikePlusExtractor implements Importer {
         }
     }
 
-    public byte[] getPNGImage(final String userId, final String workoutId, final URL logo) {
-        return NikeCurveHelper.getPNGImage(checkInjection(userId), checkInjection(workoutId), logo);
+    public byte[] getPNGImage(final String userId, final String workoutId) {
+        return NikeCurveHelper.getPNGImage(checkInjection(userId), checkInjection(workoutId));
     }
 }
