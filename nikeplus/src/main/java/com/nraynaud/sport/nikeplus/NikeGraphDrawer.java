@@ -32,6 +32,7 @@ public class NikeGraphDrawer {
     private static final Color SNAP_RING_COLOR = new Color(113, 139, 7);
     private static final Color LIGHT_GREEN = new Color(231, 243, 185);
     private static final Color DARK_GREEN = new Color(161, 189, 61);
+    private static final Color SHADOWS_COLOR = new Color(163, 163, 130, 150);
 
     private NikeGraphDrawer() {
     }
@@ -114,7 +115,7 @@ public class NikeGraphDrawer {
             path.quadTo(ctrlX, ctrlY, x, y);
         }
         g.setStroke(new BasicStroke(10, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        g.setPaint(Color.GRAY.brighter());
+        g.setPaint(SHADOWS_COLOR);
         g.draw(SHADOWER.createTransformedShape(path));
         g.setPaint(new Color(216, 238, 135));
         g.draw(path);
@@ -128,7 +129,7 @@ public class NikeGraphDrawer {
             final int left = x(distanceCoeff, point) - 3;
             final int top = y(min, variance, point) - 3;
             final Ellipse2D.Float ellipse = new Ellipse2D.Float(left, top, 7, 7);
-            g.setPaint(Color.GRAY);
+            g.setPaint(SHADOWS_COLOR);
             g.fill(SHADOWER.createTransformedShape(ellipse));
             g.setPaint(SNAP_FILL_COLOR);
             g.fill(ellipse);
