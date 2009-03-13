@@ -1,16 +1,14 @@
 package com.nraynaud.sport.nikeplus;
 
 import static com.nraynaud.sport.nikeplus.NikeWorkoutCache.getWorkoutData;
-import static com.nraynaud.sport.nikeplus.XPathUtil.compile;
+import static com.nraynaud.sport.nikeplus.Util.compile;
 import com.nraynaud.sport.nikeplus.data.Workout;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import java.io.ByteArrayInputStream;
 import static java.lang.Double.parseDouble;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -157,9 +155,7 @@ public class NikeCurveHelper {
     }
 
     private static Node getRoot(final String userId, final String workoutId) throws XPathExpressionException {
-        return (Node) ROOT.evaluate(
-                new InputSource(new ByteArrayInputStream(getWorkoutData(userId, workoutId))),
-                XPathConstants.NODE);
+        return (Node) ROOT.evaluate(getWorkoutData(userId, workoutId), XPathConstants.NODE);
     }
 
     private static void registerExtanded(final Set<Workout.Point> points, final Node extendedDataNode,

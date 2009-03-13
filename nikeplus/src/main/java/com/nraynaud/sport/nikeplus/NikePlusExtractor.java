@@ -3,7 +3,7 @@ package com.nraynaud.sport.nikeplus;
 import com.nraynaud.sport.importer.FailureException;
 import com.nraynaud.sport.importer.Importer;
 import com.nraynaud.sport.importer.WorkoutCollector;
-import static com.nraynaud.sport.nikeplus.XPathUtil.compile;
+import static com.nraynaud.sport.nikeplus.Util.compile;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
