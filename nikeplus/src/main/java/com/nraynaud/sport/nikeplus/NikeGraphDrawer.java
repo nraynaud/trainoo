@@ -1,7 +1,7 @@
 package com.nraynaud.sport.nikeplus;
 
-import com.nraynaud.sport.formatting.DistanceIO;
-import com.nraynaud.sport.formatting.DurationIO;
+import static com.nraynaud.sport.formatting.DistanceIO.formatDistance;
+import static com.nraynaud.sport.formatting.DurationIO.formatDuration;
 import com.nraynaud.sport.nikeplus.data.Workout;
 
 import javax.imageio.ImageIO;
@@ -72,9 +72,10 @@ public class NikeGraphDrawer {
         g.drawImage(logoData, WIDTH - logoWidth - 4, HEIGHT - logoHeight - 4, logoWidth, logoHeight, null);
         g.setPaint(TEXT_COLOR);
         g.setFont(TEXT_FONT);
-        final String topText = workout.login + " - le " + new SimpleDateFormat("dd/MM/yyyy").format(workout.date);
-        g.drawString(topText, X_PADDING / 2, 19);
-        final String bottomText = DistanceIO.formatDistance(workout.distance) + "km - " + DurationIO.formatDuration(
+        final String averageSpeed = formatDistance(workout.distance / (workout.duration / 3600.0)) + "km/h";
+        final String topText = workout.login + "   " + new SimpleDateFormat("dd/MM/yyyy").format(workout.date);
+        g.drawString(topText + "  " + averageSpeed, X_PADDING / 2, 19);
+        final String bottomText = formatDistance(workout.distance) + "km - " + formatDuration(
                 workout.duration, "h", "'", "''");
         g.drawString(bottomText, X_PADDING / 2, HEIGHT - 7);
     }
