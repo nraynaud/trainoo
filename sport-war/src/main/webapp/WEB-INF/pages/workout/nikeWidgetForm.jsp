@@ -26,18 +26,27 @@
                 <div id="contentWrapper">
                     <div id="content">
                         <div id="contentDecor"></div>
-                        <h1>Récupérez votre widget Nike+ ici</h1>
+                        <h1>Affichez sortie Nike+ sous forme d'image !</h1>
 
                         <div class="block aboutBlock">
-                            <h2>Collez ici l'adresse de partage de votre entraînement.</h2>
-                            <img src="/static/nikeGraph/copier_lien.png" alt="">
+                            <div style="margin:40px;overflow:hidden;">
+                                <ul style="float:left; font-size:22px">
+                                    <li>Pour votre blog</li>
+                                    <li>Pour les forums</li>
+                                    <li>Pas de couleurs rouge !</li>
+                                    <li>Pas de flash lent à chager !</li>
+                                </ul>
+                                <img style="display:block;float:right;" src="/static/nikeGraph/copier_lien.gif" alt="">
+                            </div>
+                            <h2>Collez l'adresse de partage de votre entraînement ci-dessous&nbsp;:</h2>
 
-                            <div style="font-size:25px">
+                            <div style="font-size:25px; margin-top:30px; margin-bottom:30px;">
                                 <form action="" method="GET">
-                                    <input type="text" name="url" style="width:80%">
-                                    <input type="submit" value="envoyer !">
+                                    <input type="text" id="urlInput" name="url" style="width:80%">
+                                    <input type="submit" value="Envoyer !">
                                 </form>
                             </div>
+
                         </div>
                     </div>
                     <div id="footer">
@@ -48,7 +57,9 @@
                 </div>
             </div>
         </div>
-
+        <script type="text/javascript">
+            document.getElementById("urlInput").focus();
+        </script>
         <script type="text/javascript" src="/static/prototype.js"></script>
         <script type="text/javascript" src="/static/sport.js"></script>
 
