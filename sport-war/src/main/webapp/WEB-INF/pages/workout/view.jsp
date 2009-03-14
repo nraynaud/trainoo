@@ -72,17 +72,13 @@
             <dd><span><%=row.value%></span></dd>
             <%}%>
             <%}%>
-            <% if (isNikePlus) { %>
-            <% if (workout.getUser().getNikePlusId() != null) { %>
-            <dt>Entraînement Nike+&nbsp;:</dt>
-            <dd>
-                <%call(pageContext, "nikePlusDetail.jsp", workout);%>
-            </dd>
-            <%} else {%>
-            <dt class="noDescription">Entrainement Nike+</dt>
-            <%}%>
-            <%}%>
+
         </dl>
+        <% if (isNikePlus && workout.getUser().getNikePlusId() != null) { %>
+        <div>
+            <%call(pageContext, "nikePlusDetail.jsp", workout);%>
+        </div>
+        <%}%>
     </div>
 </div>
 

@@ -38,7 +38,7 @@
             mouse: {lineColor: 'black', radius:1, sensibility: 2}}], $('container'), min, max);
 </p:javascript>
 
-<div id="container" style="width:90%;height:100px;margin:auto;"></div>
+<div id="container" style="max-width:400px;width:90%;height:100px;margin:auto;"></div>
 <%
     } catch (Exception e) {
         out.append("<!-- ");
