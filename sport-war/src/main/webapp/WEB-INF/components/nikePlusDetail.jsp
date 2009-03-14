@@ -35,10 +35,10 @@
     f = drawCurve([
         {data: nikeCurve, points: {show: true}},
         {data: lowPasscurve, lines: {lineWidth: 2}, color:'rgba(0,0,0,0.2)',
-            mouse: {lineColor: 'black', radius:1, sensibility: 2}}], $('container'), min, max);
+            mouse: {lineColor: 'black', radius:1, sensibility: 2}}], $('nikeGraphContainer'), min, max);
 </p:javascript>
 
-<div id="container" style="max-width:400px;width:90%;height:100px;margin:auto;"></div>
+<div id="nikeGraphContainer" class="nikeGraphContainer"></div>
 <%
     } catch (Exception e) {
         out.append("<!-- ");
@@ -46,7 +46,7 @@
         out.append(" -->");
     }
 %>
-<div style="text-align:center">
+<div class="nikePlusLink" style="text-align:center">
     <a href="http://nikeplus.nike.com/nikeplus/?l=runners,runs,<%=userId%>,runID,<%=workoutId%>">Voir la course sur
         nike.com</a>
 </div>

@@ -1,4 +1,4 @@
-function prepare() {
+function prepareParticipantList() {
     var Browser = {
         Engine: {name: 'unknown', version: ''},
         Platform: {name: (navigator.platform.match(/mac|win|linux/i) || ['other'])[0].toLowerCase()},
@@ -254,7 +254,6 @@ function prepare() {
     }
     document.observe("dom:loaded", fixEditViewUnderIE);
 }
-prepare();
 var oldValue = ''
 function feedback(field_name, val)
 {

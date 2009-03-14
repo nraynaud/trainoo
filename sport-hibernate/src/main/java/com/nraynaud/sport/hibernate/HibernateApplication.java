@@ -141,7 +141,7 @@ public class HibernateApplication implements Application {
         }
     }
 
-    public Workout fetchWorkoutForEdition(final Long id, final User user, final boolean willWrite) throws
+    public Workout fetchWorkout(final Long id, final User user, final boolean willWrite) throws
             WorkoutNotFoundException, AccessDeniedException {
         return workoutStore.fetchWorkoutForEdition(id, user, willWrite);
     }
@@ -548,7 +548,7 @@ public class HibernateApplication implements Application {
     }
 
     public void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException, AccessDeniedException {
-        final Workout workout = fetchWorkoutForEdition(id, user, true);
+        final Workout workout = fetchWorkout(id, user, true);
         separatePrivateMessagesFromWorkout(id);
         deletePublicMessageAboutWorkout(id);
         entityManager.remove(workout);
@@ -785,5 +785,9 @@ public class HibernateApplication implements Application {
         final Query workoutQuery = query("select w.id from WorkoutImpl w");
         final Query groupQuery = query("select g.id from GroupImpl g");
         return new SitemapData(userQuery.getResultList(), workoutQuery.getResultList(), groupQuery.getResultList());
+    }
+
+    public Workout fetchWorkout(final Long id) {
+        return workoutStore.fetchWorkout(id);
     }
 }

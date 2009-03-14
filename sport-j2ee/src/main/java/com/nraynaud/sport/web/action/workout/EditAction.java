@@ -36,7 +36,7 @@ public class EditAction extends DefaultAction implements ModelDriven<WorkoutPage
 
     public WorkoutPageDetails getModel() {
         try {
-            final Workout workout = application.fetchWorkoutForEdition(id, getUser(), true);
+            final Workout workout = application.fetchWorkout(id, getUser(), true);
             return new WorkoutPageDetails(
                     WorkoutView.createView(id.toString(),
                             workout.getDiscipline().nonEscaped(),

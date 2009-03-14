@@ -31,6 +31,8 @@
     name : '<%=escapedForJavascript(workout.getUser().getName().nonEscaped())%>'
     }
     };
+
+    prepareParticipantList();
 </p:javascript-raw>
 <h1><%=bibLink(runner, 15)%>&nbsp;: <%=workout.getDiscipline()%>
     <small><%=printDate("EEEE dd MMMM", workout.getDate())%>

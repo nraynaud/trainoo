@@ -1006,7 +1006,7 @@ input.submit:focus {
     padding-left: 6px;
     text-align: left;
     font-size: 1.7857143em;
-    margin-bottom: 14px;
+    margin-bottom: 0.55em;
 }
 
 .editingWorkoutBlock dl dd.editable,
@@ -1276,4 +1276,11 @@ form.workoutEditor {
 
 .flotr-mouse-value {
     font-size: 12px;
+}
+
+.nikeGraphContainer {
+    max-width: 400px;
+    width: 90%;
+    height: 100px;
+    margin: auto;
 }

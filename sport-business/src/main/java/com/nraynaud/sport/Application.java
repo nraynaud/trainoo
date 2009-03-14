@@ -13,7 +13,7 @@ public interface Application extends UserStore {
 
     User authenticate(String login, String password, final boolean rememberMe);
 
-    Workout fetchWorkoutForEdition(final Long id, final User user, final boolean willWrite) throws
+    Workout fetchWorkout(final Long id, final User user, final boolean willWrite) throws
             WorkoutNotFoundException, AccessDeniedException;
 
     void deleteWorkout(final Long id, final User user) throws WorkoutNotFoundException, AccessDeniedException;
@@ -160,4 +160,6 @@ public interface Application extends UserStore {
     StatisticsPageData fetchStatisticsPageData(final Long userId, final String discipline) throws UserNotFoundException;
 
     SitemapData fetchSitemapData();
+
+    Workout fetchWorkout(final Long id);
 }
