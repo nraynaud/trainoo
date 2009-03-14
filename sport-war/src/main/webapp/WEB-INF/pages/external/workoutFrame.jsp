@@ -48,7 +48,7 @@
             }
         </style>
     </head>
-    <body style="background-color:#F7F7E2;font-size:50%;width:250px">
+    <body style="background-color:white;font-size:50%;width:250px">
         <div class="block workoutBlock" id="workoutBlock">
             <div class="content">
                 <dl>
@@ -67,6 +67,10 @@
                 </div>
 
                 <%}%>
+                <div style="text-align:right;"><a
+                        href="<%=createUrl("/workout", "", "id", workout.getId().toString())%>" target="_blank"
+                        title="Aller à la page de l'entraînement"><img
+                        src='<%=stat("/static/external/logo_widget.png")%>' alt=""></a></div>
             </div>
         </div>
         <script type="text/javascript" src="<%=stat("/static/prototype.js")%>"></script>
