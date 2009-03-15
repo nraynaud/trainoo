@@ -72,8 +72,9 @@
         <action name="sitemap.xml" class="com.nraynaud.sport.web.action.SitemapAction">
             <result type="dispatcher">/WEB-INF/pages/sitemap.jsp</result>
         </action>
-        <action name="robots.txt" class="com.nraynaud.sport.web.action.RobotsTxtAction">
-            <result type="dispatcher">/WEB-INF/pages/robots.jsp</result>
+        <action name="robots.txt" class="com.nraynaud.sport.web.actionsupport.DefaultAction">
+            <result type="dispatcher">/WEB-INF/robots.txt</result>
         </action>
+
     </package>
 </struts>
