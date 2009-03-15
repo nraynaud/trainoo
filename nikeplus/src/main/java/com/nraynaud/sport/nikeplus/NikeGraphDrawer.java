@@ -73,10 +73,12 @@ public class NikeGraphDrawer {
         g.setPaint(TEXT_COLOR);
         g.setFont(TEXT_FONT);
         final String averageSpeed = formatDistance(workout.distance / (workout.duration / 3600.0)) + "km/h";
-        final String topText = workout.login + "   " + new SimpleDateFormat("dd/MM/yyyy").format(workout.date);
-        g.drawString(topText + "  " + averageSpeed, X_PADDING / 2, 19);
-        final String bottomText = formatDistance(workout.distance) + "km - " + formatDuration(
-                workout.duration, "h", "'", "''");
+        final String distance = formatDistance(workout.distance) + "km";
+        final String duration = formatDuration(workout.duration, "h", "'", "''");
+        final String date = new SimpleDateFormat("dd/MM/yyyy").format(workout.date);
+        final String topText = workout.login + "   " + date + "  " + distance;
+        g.drawString(topText, X_PADDING / 2, 19);
+        final String bottomText = duration + "  " + averageSpeed;
         g.drawString(bottomText, X_PADDING / 2, HEIGHT - 7);
     }
 
