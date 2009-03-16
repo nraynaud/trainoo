@@ -1,9 +1,9 @@
 package com.nraynaud.sport.web.action.facebook;
 
-import com.facebook.api.Facebook;
-import com.facebook.api.FacebookException;
-import com.facebook.api.IFacebookRestClient;
-import com.facebook.api.ProfileField;
+import com.google.code.facebookapi.FacebookException;
+import com.google.code.facebookapi.FacebookWebappHelper;
+import com.google.code.facebookapi.IFacebookRestClient;
+import com.google.code.facebookapi.ProfileField;
 import com.nraynaud.sport.Application;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserNotFoundException;
@@ -44,8 +44,8 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
     public String name;
     public String auth_token;
     public String trainoo_account;
-    private static final String API_KEY = "4d7b60f54176c2752cc66138c01105a7";
-    private static final String SECRET_KEY = "cb3408a206dc084cec8107298a5a9faf";
+    public static final String API_KEY = System.getenv("FACEBOOK_PUBLIC");
+    private static final String SECRET_KEY = System.getenv("FACEBOOK_PRIVATE");
     private static final int TRAINOO_ACCOUNT_KEY = 1;
 
     public Action(final Application application) {
@@ -56,9 +56,8 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
     @SkipValidation
     public String index() {
         try {
-            final Facebook facebook = new Facebook(request, response, API_KEY, SECRET_KEY);
-            facebook.requireLogin("");
-            final IFacebookRestClient<Document> restClient = facebook.get_api_client();
+            final FacebookWebappHelper<Document> helper = getHelper(request, response);
+            final IFacebookRestClient<Document> restClient = helper.get_api_client();
             final long userID = restClient.users_getLoggedInUser();
             if (trainoo_account != null) {
                 restClient.data_setUserPreference(TRAINOO_ACCOUNT_KEY,
@@ -67,13 +66,13 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
             trainoo_account = restClient.data_getUserPreference(TRAINOO_ACCOUNT_KEY);
             final Collection<Long> users = new ArrayList<Long>();
             users.add(userID);
-            final EnumSet<ProfileField> fields = EnumSet.of(com.facebook.api.ProfileField.NAME);
+            final EnumSet<ProfileField> fields = EnumSet.of(ProfileField.NAME);
             final Document d = restClient.users_getInfo(users, fields);
             name = d.getElementsByTagName("name").item(0).getTextContent();
             final StringWriter stringWriter = new StringWriter();
             LayoutResult.renderWithCharset("/WEB-INF/pages/facebook/profileView.jsp", stringWriter, response, request,
                     "UTF-8");
-            restClient.profile_setProfileFBML(stringWriter.toString());
+            restClient.profile_setFBML(null, stringWriter.toString(), null, null, null);
         } catch (FacebookException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -82,6 +81,11 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
             throw new RuntimeException(e);
         }
         return SUCCESS;
+    }
+
+    public static FacebookWebappHelper<Document> getHelper(final HttpServletRequest request,
+                                                           final HttpServletResponse response) {
+        return FacebookWebappHelper.newInstanceXml(request, response, API_KEY, SECRET_KEY);
     }
 
     @PostOnly

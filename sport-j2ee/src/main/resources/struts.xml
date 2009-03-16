@@ -81,7 +81,7 @@
             <result type="dispatcher">/WEB-INF/facebook/xd_receiver.htm</result>
         </action>
         <action name="test.html" class="com.nraynaud.sport.web.actionsupport.DefaultAction">
-            <result type="dispatcher">/WEB-INF/facebook/test.html</result>
+            <result type="dispatcher">/WEB-INF/facebook/test.jsp</result>
         </action>
     </package>
 </struts>
