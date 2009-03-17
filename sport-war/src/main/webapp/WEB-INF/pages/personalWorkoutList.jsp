@@ -30,7 +30,7 @@
     <div class="block sheetBlock userSheetBlock">
         <%if (data.getStatisticsData().workouts.isEmpty()) {%>
         Je n'ai encore aucun entraînement.<br>
-        <i>Courrage, allez transpirer&nbsp;!</i>
+        <i>Courage, allez transpirer&nbsp;!</i>
         <%} else {%>
         <div class="header">
             <div class="deco"></div>
