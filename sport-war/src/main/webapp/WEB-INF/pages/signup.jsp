@@ -22,7 +22,7 @@
                 </span>
 
                 <p:javascript>$('login').focus();</p:javascript>
-                <p:javascript>makeItCount('login', <%= LOGIN_MAX_LENGTH%>, <%= LOGIN_MIN_LENGTH%>);</p:javascript>
+                <p:javascript-raw>makeItCount('login', <%= LOGIN_MAX_LENGTH%>, <%= LOGIN_MIN_LENGTH%>);</p:javascript-raw>
                 <% call(pageContext, "passwordAndConfirm.jsp", null); %>
 
                 <span class="actions">
