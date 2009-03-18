@@ -790,4 +790,36 @@ public class HibernateApplication implements Application {
     public Workout fetchWorkout(final Long id) {
         return workoutStore.fetchWorkout(id);
     }
+
+    public User createFacebookUser(final String login, final Long facebookId) throws NameClashException {
+        try {
+            final UserImpl user = new UserImpl(login, facebookId);
+            entityManager.persist(user);
+            return user;
+        } catch (EntityExistsException e) {
+            throw new NameClashException();
+        }
+    }
+
+    public void facebookConnect(final User user, final Long facebookId) throws NameClashException {
+        final UserImpl user1 = (UserImpl) user;
+        try {
+            user1.setFacebookId(facebookId);
+            entityManager.merge(user);
+            entityManager.flush();
+        } catch (EntityExistsException e) {
+            user1.setFacebookId(null);
+            throw new NameClashException();
+        }
+    }
+
+    public User facebookLogin(final Long facebookId) {
+        final Query query = query("select u from UserImpl u where u.facebookId=:facebookId");
+        query.setParameter("facebookId", facebookId);
+        try {
+            return (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

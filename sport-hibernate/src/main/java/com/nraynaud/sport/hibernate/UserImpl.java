@@ -19,7 +19,7 @@ public class UserImpl implements User {
     @Column(name = "NAME", unique = true, nullable = false)
     private String name;
 
-    @Column(name = "HASH", nullable = false)
+    @Column(name = "HASH")
     private String passwordHash;
 
     @SuppressWarnings({"UnusedDeclaration"})
@@ -52,6 +52,9 @@ public class UserImpl implements User {
     @Column(name = "SIGNUPDATE")
     private Date sinupDate = new Date();
 
+    @Column(name = "FACEBOOK_ID")
+    private Long facebookId;
+
     @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.LAZY)
     @JoinTable(name = "GROUP_USER", joinColumns = @JoinColumn(name = "USER_ID", nullable = false, updatable = false),
             inverseJoinColumns = @JoinColumn(name = "GROUP_ID", nullable = false, updatable = false))
@@ -67,6 +70,11 @@ public class UserImpl implements User {
     public UserImpl(final String name, final String password) {
         this.name = name;
         setPassword(password);
+    }
+
+    public UserImpl(final String name, final Long facebookId) {
+        this.name = name;
+        this.facebookId = facebookId;
     }
 
     public Long getId() {
@@ -178,5 +186,13 @@ public class UserImpl implements User {
 
     public void setNikePlusId(final String nikePlusId) {
         this.nikePlusId = nikePlusId;
+    }
+
+    public Long getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(final Long facebookId) {
+        this.facebookId = facebookId;
     }
 }

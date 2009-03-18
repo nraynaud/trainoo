@@ -24,4 +24,6 @@ public interface User extends Serializable {
     UserString getNikePlusPassword();
 
     String getNikePlusId();
+
+    Long getFacebookId();
 }

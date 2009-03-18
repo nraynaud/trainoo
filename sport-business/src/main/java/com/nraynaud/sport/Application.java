@@ -162,4 +162,6 @@ public interface Application extends UserStore {
     SitemapData fetchSitemapData();
 
     Workout fetchWorkout(final Long id);
+
+    User createFacebookUser(final String login, final Long facebookId) throws NameClashException;
 }

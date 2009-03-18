@@ -1,5 +1,8 @@
 package com.nraynaud.sport;
 
+/**
+ * thrown when name or facebook ID clash
+ */
 public class NameClashException extends Exception {
     public NameClashException() {
     }
