@@ -20,7 +20,7 @@
     final String min = numberOrNull(pageContext.getRequest().getParameter("min"));
     final String max = numberOrNull(pageContext.getRequest().getParameter("max"));
     final String parameter = pageContext.getRequest().getParameter("radius");
-    final int radius = parameter == null ? 60 : Integer.parseInt(parameter);
+    final int radius = parameter == null ? 10 : Integer.parseInt(parameter);
     try {
         final String lowPassCurve = getLowPassCurve(userId, workoutId, radius);
         final String nikePlusCurve = getNikePlusCurve(userId, workoutId);
