@@ -75,13 +75,8 @@
         <action name="robots.txt" class="com.nraynaud.sport.web.actionsupport.DefaultAction">
             <result type="dispatcher">/WEB-INF/robots.txt</result>
         </action>
-    </package>
-    <package extends="sport-default" name="facebook" namespace="/facebook">
-        <action name="xd_receiver.htm" class="com.nraynaud.sport.web.actionsupport.DefaultAction">
-            <result type="dispatcher">/WEB-INF/facebook/xd_receiver.htm</result>
-        </action>
-        <action name="test.html" class="com.nraynaud.sport.web.actionsupport.DefaultAction">
-            <result type="dispatcher">/WEB-INF/facebook/test.jsp</result>
+        <action name="favicon.ico" class="com.nraynaud.sport.web.actionsupport.DefaultAction">
+            <result type="dispatcher">/static/favicon.ico</result>
         </action>
     </package>
 </struts>
