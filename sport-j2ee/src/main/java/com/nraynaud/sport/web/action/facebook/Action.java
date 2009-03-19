@@ -1,10 +1,10 @@
 package com.nraynaud.sport.web.action.facebook;
 
 import com.google.code.facebookapi.FacebookException;
-import com.google.code.facebookapi.FacebookWebappHelper;
 import com.google.code.facebookapi.IFacebookRestClient;
 import com.google.code.facebookapi.ProfileField;
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.FacebookUtil;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.data.BibPageData;
@@ -44,8 +44,6 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
     public String name;
     public String auth_token;
     public String trainoo_account;
-    public static final String API_KEY = System.getenv("FACEBOOK_PUBLIC");
-    private static final String SECRET_KEY = System.getenv("FACEBOOK_PRIVATE");
     private static final int TRAINOO_ACCOUNT_KEY = 1;
 
     public Action(final Application application) {
@@ -56,8 +54,7 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
     @SkipValidation
     public String index() {
         try {
-            final FacebookWebappHelper<Document> helper = getHelper(request, response);
-            final IFacebookRestClient<Document> restClient = helper.get_api_client();
+            final IFacebookRestClient<Document> restClient = FacebookUtil.getClient(request, response);
             final long userID = restClient.users_getLoggedInUser();
             if (trainoo_account != null) {
                 restClient.data_setUserPreference(TRAINOO_ACCOUNT_KEY,
@@ -81,11 +78,6 @@ public class Action extends DefaultAction implements ServletRequestAware, Servle
             throw new RuntimeException(e);
         }
         return SUCCESS;
-    }
-
-    public static FacebookWebappHelper<Document> getHelper(final HttpServletRequest request,
-                                                           final HttpServletResponse response) {
-        return FacebookWebappHelper.newInstanceXml(request, response, API_KEY, SECRET_KEY);
     }
 
     @PostOnly

@@ -19,8 +19,8 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import javax.servlet.http.HttpServletRequest;
 
 @Results({
-@Result(type = ActionChainResult.class, params = {"namespace", "/", "method", "create"}, value = "login"),
-@Result(name = Action.INPUT, value = "/WEB-INF/pages/signup.jsp")
+    @Result(type = ActionChainResult.class, params = {"namespace", "/", "method", "create"}, value = "login"),
+    @Result(name = Action.INPUT, value = "/WEB-INF/pages/signup.jsp")
         })
 @ParentPackage(Constants.STRUTS_PACKAGE)
 @Public

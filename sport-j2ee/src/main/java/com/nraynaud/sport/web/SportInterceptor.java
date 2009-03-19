@@ -1,5 +1,7 @@
 package com.nraynaud.sport.web;
 
+import com.google.code.facebookapi.FacebookException;
+import com.nraynaud.sport.FacebookUtil;
 import com.nraynaud.sport.User;
 import com.nraynaud.sport.UserNotFoundException;
 import com.nraynaud.sport.UserStore;
@@ -53,15 +55,16 @@ public class SportInterceptor extends AbstractInterceptor {
         return request.isLogged() ? invocation.invoke() : LOGIN_RESULT;
     }
 
-    private void handleRememberMe(final HttpServletRequest servletRequest, final HttpServletResponse response) {
-        final Cookie[] cookies = servletRequest.getCookies();
+    private void handleRememberMe(final HttpServletRequest request, final HttpServletResponse response) {
+        if (handleFacebook(request, response)) return;
+        final Cookie[] cookies = request.getCookies();
         if (cookies == null)
             return;
         for (final Cookie cookie : cookies) {
             if (cookie.getName().equals(Constants.REMEMBER_COOKIE_NAME)) {
                 try {
                     final User user = userStore.fetchRememberedUser(cookie.getValue());
-                    SportSession.openSession(user, servletRequest, true);
+                    SportSession.openSession(user, request, true);
                 } catch (UserNotFoundException e) {
                     //no problem, forget it
                     cookie.setMaxAge(0);
@@ -69,6 +72,25 @@ public class SportInterceptor extends AbstractInterceptor {
                 }
             }
         }
+    }
+
+    private boolean handleFacebook(final HttpServletRequest request, final HttpServletResponse response) {
+        try {
+            final Long facebookId = FacebookUtil.getFacebookUserId(request, response);
+            if (facebookId != null) {
+                final User user = userStore.facebookLogin(facebookId);
+                if (user != null) {
+                    SportSession.openSession(user, request, false);
+                    return true;
+                } else {
+                }
+            }
+        } catch (FacebookException e) {
+            //let's not insist
+            e.printStackTrace();
+            return false;
+        }
+        return false;
     }
 
     private static void setMetadata(final Object action, final ActionProxy actionProxy,
