@@ -16,7 +16,11 @@
             #contentWrapper {
                 background: #F7F7E2;
                 overflow: hidden;
-                margin: 20px 20px 20px 20px;
+                margin: 5px;
+            }
+
+            #content h1 {
+                padding-left: 0;
             }
         </style>
     </head>
