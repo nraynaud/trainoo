@@ -1,30 +1,49 @@
-<%@ page import="com.nraynaud.sport.data.BibPageData" %>
-<%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Trainoo.com arrive bientôt sur Facebook</title>
+        <link rel="icon" href="<%=stat("/static/favicon.ico")%>" type="image/vnd.microsoft.icon">
+        <link href="<%=stat("/static/sport.css")%>" rel="stylesheet" type="text/css">
+        <link href="<%=stat("/static/reset.css")%>" rel="stylesheet" type="text/css">
+        <link href="<%=stat("/static/pimp/sport_pimp.css")%>" rel="stylesheet" type="text/css">
+        <!--[if lt IE 7]>
+        <link href="<%=stat("/static/sport_ie6.iecss")%>" rel="stylesheet" type="text/css">
+    <![endif]-->
+        <style type="text/css">
+            #contentWrapper {
+                background: #F7F7E2 url( /static/pimp/content_top.png ) top;
+                overflow: hidden;
+                margin: 20px 20px 20px 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="body">
+            <div id="center" style="width:inherit;">
+                <img src="<%=stat("/static/pimp/logo.png")%>" alt="logo">
 
-Salut <%=stringProperty("name")%> !
-<br>
-Compte trainoo :
-<form action="" method="POST">
-    <% final String trainoo_account = stringProperty("trainoo_account");
-        if (trainoo_account == null) {%>
-    <input type="text" name="trainoo_account"> <input type="submit" value="Envoyer !">
-    <% } else { %>
-    <%=trainoo_account%> <input type="hidden" name="trainoo_account" value="0"> <input type="submit"
-                                                                                       value="Supprimer !">
-    <%}%>
-</form>
-<fb:add-section-button section="profile"/>
-<br>
-<%
-    if (trainoo_account != null) {
-        final BibPageData data = property("model");
-        if (data == null) {
-%>
-Désolé, ce compte est inconnu sur trainoo.com.
-<%
-        } else {
-            call(pageContext, "facebookTable.jsp", data);
-        }
-    }
-%>
+                <div id="contentWrapper">
+                    <div></div>
+                    <div id="content">
+                        <h1><a href="http://trainoo.com" target="_parent">Trainoo.com</a> arrive bientôt sur facebook
+                        </h1>
+
+                        <h2>Continuez à vous entraîner en attendant !</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            var pageTracker = _gat._getTracker("UA-3412937-1");
+            pageTracker._initData();
+            pageTracker._trackPageview();
+        </script>
+    </body>
+</html>
