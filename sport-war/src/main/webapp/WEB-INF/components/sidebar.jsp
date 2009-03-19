@@ -1,6 +1,7 @@
 <%@ taglib prefix="p" uri="/sport-tags" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.FacebookUtil" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 
 <div id="sidebar">
@@ -48,26 +49,36 @@
                     href="<%=createUrl("/privatedata", "")%>" title="Mon compte">Mon compte</a></li>
             <li><a href="<%=createUrl("/", "logout")%>" title="Déconnexion">Déconnexion</a></li>
         </ul>
-        <% } else { %>
-        <h2>Connexion</h2>
+        <%
+            } else {
+                call(pageContext, "loginForm.jsp");
+            }
+            if (!isLogged() || currentUser().getFacebookId() == null) {
+                final String connectHelp = "Connectez votre compte actuel avec votre compte Facebook";
+                final String signupHelp = "Connectez-vous sur Trainoo.com avec votre compte Facebook";
+                final String help = isLogged() ? connectHelp : signupHelp;
+        %>
+        <ul>
+            <li style="overflow:hidden;">
+                <div style="float:left;">
+                    <fb:login-button id="fBelp"
+                                     onlogin="location.href = '/facebook/connect?fromAction=<%=currentAction()%>';"
+                                     title="Connectez-vous avec Facebook"></fb:login-button>
+                    <p:javascript src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"/>
+                    <p:javascript-raw>
+                        FB.init("<%=FacebookUtil.getClient(request, response)
+                            .getApiKey()%>", "/static/facebook/xd_receiver.htm");
+                    </p:javascript-raw>
+                </div>
+                <p:javascript-raw>
+                    connectTip('fBelp', '<%=help%>');
+                </p:javascript-raw>
+            </li>
+        </ul>
+        <%
+            }
+        %>
 
-        <form action="<%=createUrl("/", "login", "fromAction", fromActionOrCurrent())%>" method="POST">
-            <ul>
-                <li>
-                    <label for="loginSide">Surnom&nbsp;:</label>
-                    <input name="login" id="loginSide" class="text">
-                </li>
-                <li>
-                    <label for="passwordSide">Mot de passe&nbsp;:</label>
-                    <input name="password" id="passwordSide" type="password" class="text">
-                </li>
-                <li>
-                    <input type="submit" class="submit" name="submit" value="Connexion">
-                </li>
-            </ul>
-        </form>
-        <%=link("/", "forgotPassword", "Mot de passe oublié", "")%>
-        <% } %>
     </div>
     <div id="adPlaceHolder">publicité google</div>
 </div>
