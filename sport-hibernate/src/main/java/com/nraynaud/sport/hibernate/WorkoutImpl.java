@@ -58,20 +58,6 @@ public class WorkoutImpl implements Workout {
                        final Date date,
                        final Long duration,
                        final Double distance,
-                       final String discipline,
-                       final String debriefing) {
-        this.date = date;
-        this.user = user;
-        this.duration = duration;
-        this.distance = distance;
-        this.discipline = discipline;
-        this.debriefing = debriefing;
-    }
-
-    public WorkoutImpl(final User user,
-                       final Date date,
-                       final Long duration,
-                       final Double distance,
                        final Long energy,
                        final String discipline,
                        final String debriefing,
