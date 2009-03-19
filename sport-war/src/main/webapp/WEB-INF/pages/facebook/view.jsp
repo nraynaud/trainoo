@@ -14,7 +14,7 @@
     <![endif]-->
         <style type="text/css">
             #contentWrapper {
-                background: #F7F7E2 url( /static/pimp/content_top.png ) top;
+                background: #F7F7E2;
                 overflow: hidden;
                 margin: 20px 20px 20px 20px;
             }
