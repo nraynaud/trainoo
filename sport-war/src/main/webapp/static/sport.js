@@ -315,18 +315,22 @@ function drawCurve(data, element, min, max) {
         }
     });
 }
+function connectTip(id, text) {
+    var element = $(id);
+    element.observe("mouseover", function(event) {
+        element.observe("mouseout", function() {
+            hideToolTip();
+        });
+        showToolTip(event, text);
+    });
+}
 /* MIT licence bablaba */
 function makeItCount(id, maxsize, minsize) {
     function charCounter(id, maxlimit, minLimit) {
         var counterId = 'counter-' + id;
         if (!$(counterId)) {
             $(id).insert({after: '<span class="charcount"><span id="' + counterId + '"></span><a id="a-' + counterId + '" class="tooltipRaiser">?</a></span>'});
-            $('a-' + counterId).observe("mouseover", function(event) {
-                $('a-' + counterId).observe("mouseout", function() {
-                    hideToolTip();
-                });
-                showToolTip(event, "Limites du nombre de caractères&nbsp;:<br><b>minimum / actuel / maximum</b>");
-            });
+            connectTip('a-' + counterId, "Limites du nombre de caractères&nbsp;:<br><b>minimum / actuel / maximum</b>");
         }
         if ($F(id).length >= maxlimit || minLimit != null && minLimit > $F(id).length && $F(id).length > 0) {
             $(id).value = $F(id).substring(0, maxlimit);
