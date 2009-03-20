@@ -24,7 +24,6 @@ import org.w3c.dom.Document;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 
 @Results({
     @Result(type = RedirectBack.class, value = Constants.WORKOUTS_ACTION),
@@ -73,13 +72,7 @@ public class SignupAction extends ChainBackAction implements ServletRequestAware
         final IFacebookRestClient<Document> facebook = getFacebook();
         final Long facebookId = getFacebookId();
         if (facebookId != null) {
-            try {
-                final Document document = facebook.users_getInfo(Collections.singleton(facebookId),
-                        Collections.<CharSequence>singleton("name"));
-                login = document.getFirstChild().getFirstChild().getLastChild().getFirstChild().getTextContent();
-            } catch (FacebookException e) {
-                throw new RuntimeException(e);
-            }
+            login = FacebookUtil.getInfo(facebook, "name");
         }
         return INPUT;
     }
