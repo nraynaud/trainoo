@@ -47,10 +47,8 @@ public class CreateAction extends AbstractWorkoutAction implements ChainBackCapa
         final Workout workout = application.createWorkout(getDate(), user, getDuration(), getDistance(),
                 getEnergy(), getDiscipline(), getDebriefing(), null);
         newId = workout.getId().toString();
-        if (user.getFacebookId() != null) {
-            final HttpSession session = request.getSession(false);
-            session.setAttribute(NEW_WORKOUT, workout);
-        }
+        final HttpSession session = request.getSession(false);
+        session.setAttribute(NEW_WORKOUT, workout);
         return SUCCESS;
     }
 
