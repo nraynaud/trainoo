@@ -43,7 +43,7 @@
     final HttpSession session = request.getSession(false);
     if (session != null) {
         final Workout newWorkout = (Workout) session.getAttribute(CreateAction.NEW_WORKOUT);
-        if (newWorkout != null) {
+        if (newWorkout != null && newWorkout.getUser().getFacebookId() != null) {
             session.removeAttribute(CreateAction.NEW_WORKOUT);
             final IFacebookRestClient<Document> client = getClient(request, response);
             final String formatted = formatWorkout(newWorkout);
