@@ -33,7 +33,7 @@ public class FacebookUtil {
     public static String formatWorkout(final Workout workout) {
         final UserString debriefing = workout.getDebriefing();
         final WorkoutView view = new WorkoutView(workout.getId().toString(),
-                workout.getDiscipline().toString(),
+                Helper.escapedForJavascript(workout.getDiscipline().nonEscaped()),
                 DateIO.DATE_FORMATTER.print(workout.getDate().getTime()),
                 FormatHelper.formatDistance(workout.getDistance(), "km", ""),
                 FormatHelper.formatDuration(workout.getDuration(), ""),
