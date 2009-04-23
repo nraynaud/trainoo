@@ -72,7 +72,11 @@ public class SignupAction extends ChainBackAction implements ServletRequestAware
         final IFacebookRestClient<Document> facebook = getFacebook();
         final Long facebookId = getFacebookId();
         if (facebookId != null) {
-            login = FacebookUtil.getInfo(facebook, "name");
+            try {
+                login = FacebookUtil.getInfo(facebook, "name");
+            } catch (FacebookException e) {
+                throw new RuntimeException(e);
+            }
         }
         return INPUT;
     }

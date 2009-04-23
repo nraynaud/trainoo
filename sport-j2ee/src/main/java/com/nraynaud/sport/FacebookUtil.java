@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
+import static java.util.Collections.singleton;
 
 public class FacebookUtil {
     public static final String API_KEY = System.getenv("FACEBOOK_PUBLIC");
@@ -64,15 +65,12 @@ public class FacebookUtil {
         throw new RuntimeException("unknown discipline");
     }
 
-    public static String getInfo(final IFacebookRestClient<Document> facebook, final String field) {
+    public static String getInfo(final IFacebookRestClient<Document> facebook, final String field) throws
+            FacebookException {
         final Long facebookId;
-        try {
-            facebookId = facebook.users_getLoggedInUser();
-            final Document document = facebook.users_getInfo(Collections.singleton(facebookId),
-                    Collections.<CharSequence>singleton(field));
-            return document.getFirstChild().getFirstChild().getLastChild().getFirstChild().getTextContent();
-        } catch (FacebookException e) {
-            throw new RuntimeException(e);
-        }
+        facebookId = facebook.users_getLoggedInUser();
+        final Document document = facebook.users_getInfo(singleton(facebookId),
+                Collections.<CharSequence>singleton(field));
+        return document.getFirstChild().getFirstChild().getLastChild().getFirstChild().getTextContent();
     }
 }

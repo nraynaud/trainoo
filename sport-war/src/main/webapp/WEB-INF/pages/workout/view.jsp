@@ -1,18 +1,18 @@
-<%@ page import="com.google.code.facebookapi.IFacebookRestClient" %>
+<%@ page import="com.google.code.facebookapi.FacebookException" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
+<%@ page import="com.google.code.facebookapi.IFacebookRestClient" %>
 <%@ page import="com.nraynaud.sport.User" %>
 <%@ page import="com.nraynaud.sport.Workout" %>
-<%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
 <%@ page import="static com.nraynaud.sport.web.view.PaginationView.view" %>
 <%@ page import="static com.nraynaud.sport.Helper.*" %>
-<%@ page import="com.nraynaud.sport.web.action.workout.CreateAction" %>
+<%@ page import="com.nraynaud.sport.data.WorkoutPageData" %>
 <%@ page import="static com.nraynaud.sport.formatting.DateHelper.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.web.action.workout.CreateAction" %>
 <%@ page import="com.nraynaud.sport.web.view.DataHelper" %>
 <%@ page import="org.w3c.dom.Document" %>
-<%@ page import="static com.nraynaud.sport.FacebookUtil.formatWorkout" %>
-<%@ page import="java.util.List" %>
 <%@ page import="static com.nraynaud.sport.FacebookUtil.*" %>
+<%@ page import="java.util.List" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -43,11 +43,12 @@
     final HttpSession session = request.getSession(false);
     if (session != null) {
         final Workout newWorkout = (Workout) session.getAttribute(CreateAction.NEW_WORKOUT);
-        if (newWorkout != null && newWorkout.getUser().getFacebookId() != null) {
-            session.removeAttribute(CreateAction.NEW_WORKOUT);
-            final IFacebookRestClient<Document> client = getClient(request, response);
-            final String formatted = formatWorkout(newWorkout);
-            final String activity = formatActivity(newWorkout, getInfo(client, "sex").equals("female"));
+        try {
+            if (newWorkout != null && newWorkout.getUser().getFacebookId() != null) {
+                session.removeAttribute(CreateAction.NEW_WORKOUT);
+                final IFacebookRestClient<Document> client = getClient(request, response);
+                final String formatted = formatWorkout(newWorkout);
+                final String activity = formatActivity(newWorkout, getInfo(client, "sex").equals("female"));
 %>
 <p:javascript src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"/>
 <p:javascript-raw>
@@ -60,6 +61,9 @@
     });
 </p:javascript>
 <%
+            }
+        } catch (FacebookException e) {
+            //swallow
         }
     }
 %>
