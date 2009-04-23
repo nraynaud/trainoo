@@ -34,7 +34,7 @@
         <%} else {%>
         <div class="header">
             <div class="deco"></div>
-            <%call(pageContext, "distanceTabs.jsp", data.getStatisticsData());%>
+            <%call(pageContext, "disciplineTabs.jsp", data.getStatisticsData());%>
         </div>
         <div class="content">
             <div class="deco"></div>
