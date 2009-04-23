@@ -96,7 +96,7 @@
 <div class="block sheetBlock">
     <div class="header">
         <div class="deco"></div>
-        <% call(pageContext, "distanceByDiscipline.jsp", groupPage.workouts); %>
+        <% call(pageContext, "distanceTabs.jsp", groupPage.workouts); %>
     </div>
     <div class="content">
         <div class="deco"></div>
