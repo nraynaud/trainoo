@@ -192,8 +192,9 @@ public class Helpers {
         final String base = actionUrl(mapping.getNamespace(), mapping.getName());
         final StringBuilder url = new StringBuilder(20);
         url.append(base);
-        url.append('?');
         for (int i = 0; i < params.length; i += 2) {
+            if (i == 0)
+                url.append('?');
             if (i > 0)
                 url.append("&amp;");
             newParams.put(params[i], params[i + 1]);

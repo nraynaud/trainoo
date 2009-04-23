@@ -20,7 +20,7 @@
         <div class="header">
             <div class="deco"></div>
             <% final GlobalWorkoutsPageData data = top();
-                call(pageContext, "distanceByDiscipline.jsp", data.workoutsData);
+                call(pageContext, "disciplineTabs.jsp", data.workoutsData);
             %>
         </div>
         <div class="content">
