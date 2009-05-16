@@ -23,7 +23,7 @@ nraynaud@sd-187:~$ cat bin/pubroot
 #!/bin/sh
 cd /home/nraynaud/&&rm -rf export-sport export-sport.tar.gz && svn export https://nraynaud.fr/svn/sport-app/trunk export-sport&&cd export-sport && mvn package&&cd /usr/share/jetty/webapps/root&&rm -rf *&&jar xfv /home/nraynaud/export-sport/sport-war/target/sport-war.war &&sudo /etc/init.d/jetty restart
 -----------
-
+where /usr/share/jetty/webapps/root is owned by nraynaud (chown)
 
 
 Serving static resources
@@ -39,6 +39,10 @@ linked as http://static.trainoo.com:8080/static/trainoo.css .
 
 Example apache configuration
 
+/var/www_static_trainoo/static is a symbolic link to /usr/share/jetty/webapps/root/static/
+this so we can serve static resources with apache, without exposing the reste of the unpacked war to apache.
+
+---------------
 	DocumentRoot /var/www_static_trainoo/
 	#perf stuff
 	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
