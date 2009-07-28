@@ -47,6 +47,7 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
         this.distance = distance;
     }
 
+    @TypeConversion(converter = "com.nraynaud.sport.web.converter.EnergyConverter")
     public void setEnergy(final Long energy) {
         this.energy = energy;
     }
