@@ -38,17 +38,33 @@
             <attribute name="method" value="5" />
             <attribute name="URI" value="/WEB-INF/lib/jbcrypt-0.1.jar" />
           </containerElement>
-          <containerElement type="library" name="org.hibernate:hibernate:3.2.4.sp1" level="module">
+          <containerElement type="library" name="javax.persistence:persistence-api:1.0" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/hibernate-3.2.4.sp1.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/persistence-api-1.0.jar" />
           </containerElement>
-          <containerElement type="library" name="net.sf.ehcache:ehcache:1.2.3" level="module">
+          <containerElement type="library" name="org.springframework:spring:2.0.5" level="module">
             <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/ehcache-1.2.3.jar" />
+            <attribute name="URI" value="/WEB-INF/lib/spring-2.0.5.jar" />
           </containerElement>
           <containerElement type="library" name="commons-logging:commons-logging:1.0.4" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/commons-logging-1.0.4.jar" />
+          </containerElement>
+          <containerElement type="library" name="org.hibernate:hibernate-entitymanager:3.2.1.ga" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/hibernate-entitymanager-3.2.1.ga.jar" />
+          </containerElement>
+          <containerElement type="library" name="org.hibernate:hibernate-annotations:3.2.1.ga" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/hibernate-annotations-3.2.1.ga.jar" />
+          </containerElement>
+          <containerElement type="library" name="org.hibernate:hibernate:3.2.1.ga" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/hibernate-3.2.1.ga.jar" />
+          </containerElement>
+          <containerElement type="library" name="net.sf.ehcache:ehcache:1.2.3" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/ehcache-1.2.3.jar" />
           </containerElement>
           <containerElement type="library" name="commons-collections:commons-collections:2.1.1" level="module">
             <attribute name="method" value="1" />
@@ -78,18 +94,6 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/asm-1.5.3.jar" />
           </containerElement>
-          <containerElement type="library" name="org.hibernate:hibernate-annotations:3.2.1.ga" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/hibernate-annotations-3.2.1.ga.jar" />
-          </containerElement>
-          <containerElement type="library" name="javax.persistence:persistence-api:1.0" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/persistence-api-1.0.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.hibernate:hibernate-entitymanager:3.2.1.ga" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/hibernate-entitymanager-3.2.1.ga.jar" />
-          </containerElement>
           <containerElement type="library" name="jboss:javassist:3.3.ga" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/javassist-3.3.ga.jar" />
@@ -97,34 +101,6 @@
           <containerElement type="library" name="jboss:jboss-archive-browsing:5.0.0alpha-200607201-119" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/jboss-archive-browsing-5.0.0alpha-200607201-119.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.hibernate:hibernate-tools:3.2.0.beta9a" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/hibernate-tools-3.2.0.beta9a.jar" />
-          </containerElement>
-          <containerElement type="library" name="freemarker:freemarker:2.3.8" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/freemarker-2.3.8.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.hibernate:jtidy:r8-20060801" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/jtidy-r8-20060801.jar" />
-          </containerElement>
-          <containerElement type="library" name="mysql:mysql-connector-java:5.1.5" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
-          </containerElement>
-          <containerElement type="library" name="c3p0:c3p0:0.9.0.2" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/c3p0-0.9.0.2.jar" />
-          </containerElement>
-          <containerElement type="library" name="org.springframework:spring:2.0.5" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/spring-2.0.5.jar" />
-          </containerElement>
-          <containerElement type="library" name="log4j:log4j:1.2.13" level="module">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/log4j-1.2.13.jar" />
           </containerElement>
           <containerElement type="module" name="sport-j2ee">
             <attribute name="method" value="5" />
@@ -150,6 +126,10 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/ognl-2.6.11.jar" />
           </containerElement>
+          <containerElement type="library" name="freemarker:freemarker:2.3.8" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/freemarker-2.3.8.jar" />
+          </containerElement>
           <containerElement type="library" name="jparsec:jparsec:0.2.3" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/jparsec-0.2.3.jar" />
@@ -169,6 +149,14 @@
           <containerElement type="library" name="com.sun.xml.bind:jaxb-impl:2.1.9" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/jaxb-impl-2.1.9.jar" />
+          </containerElement>
+          <containerElement type="library" name="javax.xml.bind:jaxb-api:2.1" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/jaxb-api-2.1.jar" />
+          </containerElement>
+          <containerElement type="library" name="javax.xml.stream:stax-api:1.0-2" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/stax-api-1.0-2.jar" />
           </containerElement>
           <containerElement type="library" name="org.json:json:20070829" level="module">
             <attribute name="method" value="1" />
@@ -209,6 +197,10 @@
           <containerElement type="library" name="commons-lang:commons-lang:2.3" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/commons-lang-2.3.jar" />
+          </containerElement>
+          <containerElement type="library" name="mysql:mysql-connector-java:5.1.5" level="module">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/mysql-connector-java-5.1.5.jar" />
           </containerElement>
           <containerElement type="module" name="sport-war">
             <attribute name="method" value="1" />
@@ -266,28 +258,28 @@
     <orderEntry type="module" module-name="sport-hibernate" exported="" />
     <orderEntry type="module" module-name="jbcrypt" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="org.hibernate:hibernate:3.2.4.sp1">
+      <library name="javax.persistence:persistence-api:1.0">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate/3.2.4.sp1/hibernate-3.2.4.sp1.jar!/" />
+          <root url="jar://$M2_REPO$/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate/3.2.4.sp1/hibernate-3.2.4.sp1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/javax/persistence/persistence-api/1.0/persistence-api-1.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate/3.2.4.sp1/hibernate-3.2.4.sp1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="net.sf.ehcache:ehcache:1.2.3">
+      <library name="org.springframework:spring:2.0.5">
         <CLASSES>
-          <root url="jar://$M2_REPO$/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar!/" />
+          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -301,6 +293,71 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="javax.servlet:servlet-api:2.4">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/javax/servlet/servlet-api/2.4/servlet-api-2.4-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/javax/servlet/servlet-api/2.4/servlet-api-2.4-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.hibernate:hibernate-entitymanager:3.2.1.ga">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.hibernate:hibernate-annotations:3.2.1.ga">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate-annotations/3.2.1.ga/hibernate-annotations-3.2.1.ga.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate-annotations/3.2.1.ga/hibernate-annotations-3.2.1.ga-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate-annotations/3.2.1.ga/hibernate-annotations-3.2.1.ga-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.hibernate:hibernate:3.2.1.ga">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate/3.2.1.ga/hibernate-3.2.1.ga.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate/3.2.1.ga/hibernate-3.2.1.ga-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/hibernate/hibernate/3.2.1.ga/hibernate-3.2.1.ga-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="net.sf.ehcache:ehcache:1.2.3">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -396,45 +453,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.hibernate:hibernate-annotations:3.2.1.ga">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-annotations/3.2.1.ga/hibernate-annotations-3.2.1.ga.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-annotations/3.2.1.ga/hibernate-annotations-3.2.1.ga-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-annotations/3.2.1.ga/hibernate-annotations-3.2.1.ga-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="javax.persistence:persistence-api:1.0">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/javax/persistence/persistence-api/1.0/persistence-api-1.0-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.hibernate:hibernate-entitymanager:3.2.1.ga">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
       <library name="jboss:javassist:3.3.ga">
         <CLASSES>
           <root url="jar://$M2_REPO$/jboss/javassist/3.3.ga/javassist-3.3.ga.jar!/" />
@@ -457,97 +475,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$M2_REPO$/jboss/jboss-archive-browsing/5.0.0alpha-200607201-119/jboss-archive-browsing-5.0.0alpha-200607201-119-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.hibernate:hibernate-tools:3.2.0.beta9a">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-tools/3.2.0.beta9a/hibernate-tools-3.2.0.beta9a.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-tools/3.2.0.beta9a/hibernate-tools-3.2.0.beta9a-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/org/hibernate/hibernate-tools/3.2.0.beta9a/hibernate-tools-3.2.0.beta9a-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="freemarker:freemarker:2.3.8">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/freemarker/freemarker/2.3.8/freemarker-2.3.8.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/freemarker/freemarker/2.3.8/freemarker-2.3.8-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/freemarker/freemarker/2.3.8/freemarker-2.3.8-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.hibernate:jtidy:r8-20060801">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/hibernate/jtidy/r8-20060801/jtidy-r8-20060801.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/org/hibernate/jtidy/r8-20060801/jtidy-r8-20060801-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/org/hibernate/jtidy/r8-20060801/jtidy-r8-20060801-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="mysql:mysql-connector-java:5.1.5">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/mysql/mysql-connector-java/5.1.5/mysql-connector-java-5.1.5.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/mysql/mysql-connector-java/5.1.5/mysql-connector-java-5.1.5-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/mysql/mysql-connector-java/5.1.5/mysql-connector-java-5.1.5-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="c3p0:c3p0:0.9.0.2">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/c3p0/c3p0/0.9.0.2/c3p0-0.9.0.2.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/c3p0/c3p0/0.9.0.2/c3p0-0.9.0.2-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/c3p0/c3p0/0.9.0.2/c3p0-0.9.0.2-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.springframework:spring:2.0.5">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/org/springframework/spring/2.0.5/spring-2.0.5-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="log4j:log4j:1.2.13">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/log4j/log4j/1.2.13/log4j-1.2.13.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/log4j/log4j/1.2.13/log4j-1.2.13-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/log4j/log4j/1.2.13/log4j-1.2.13-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -602,6 +529,19 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$M2_REPO$/opensymphony/ognl/2.6.11/ognl-2.6.11-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="freemarker:freemarker:2.3.8">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/freemarker/freemarker/2.3.8/freemarker-2.3.8.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/freemarker/freemarker/2.3.8/freemarker-2.3.8-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/freemarker/freemarker/2.3.8/freemarker-2.3.8-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -667,6 +607,32 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$M2_REPO$/com/sun/xml/bind/jaxb-impl/2.1.9/jaxb-impl-2.1.9-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="javax.xml.bind:jaxb-api:2.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="javax.xml.stream:stax-api:1.0-2">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -777,6 +743,19 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="mysql:mysql-connector-java:5.1.5">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/mysql/mysql-connector-java/5.1.5/mysql-connector-java-5.1.5.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/mysql/mysql-connector-java/5.1.5/mysql-connector-java-5.1.5-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/mysql/mysql-connector-java/5.1.5/mysql-connector-java-5.1.5-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library name="javax.servlet:jsp-api:2.0">
         <CLASSES>
@@ -787,19 +766,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$M2_REPO$/javax/servlet/jsp-api/2.0/jsp-api-2.0-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="javax.servlet:servlet-api:2.4">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/javax/servlet/servlet-api/2.4/servlet-api-2.4-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/javax/servlet/servlet-api/2.4/servlet-api-2.4-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

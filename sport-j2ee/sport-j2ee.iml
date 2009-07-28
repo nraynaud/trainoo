@@ -305,6 +305,32 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
+      <library name="javax.xml.bind:jaxb-api:2.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="javax.xml.stream:stax-api:1.0-2">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
       <library name="org.json:json:20070829">
         <CLASSES>
           <root url="jar://$M2_REPO$/org/json/json/20070829/json-20070829.jar!/" />
