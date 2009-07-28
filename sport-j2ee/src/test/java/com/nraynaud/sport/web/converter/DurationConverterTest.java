@@ -21,6 +21,7 @@ public class DurationConverterTest {
         checkConvertion(3, 1, 4, "3h1'4''");
         checkConvertion(3, 1, 0, "3h1");
         checkConvertion(3, 1, 0, "3h1'");
+        checkConvertion(3, 0, 1, "3h1''");
         checkConvertion(34, 15, 46, "34h15'46''");
     }
 

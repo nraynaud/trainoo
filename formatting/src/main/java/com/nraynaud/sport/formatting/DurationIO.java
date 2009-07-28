@@ -53,6 +53,7 @@ public class DurationIO {
         HOURS_MINUTES_SECONDS_PATTERN("(\\d+)h(\\d+)'(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
         HOURS_MINUTES_M_SECONDS_PATTERN("(\\d+)h(\\d+)m(\\d+)(?:'')?", HOUR, MINUTE, SECOND),
         HOURS_MINUTES_PATTERN("(\\d+)h(\\d+)'?", HOUR, MINUTE),
+        HOURS_SECONDS_PATTERN("(\\d+)h(\\d+)''", HOUR, SECOND),
         MINUTES_SECONDS_PATTERN("(\\d+)'(\\d+)(?:'')?", MINUTE, SECOND),
         MINUTES_M_SECONDS_PATTERN("(\\d+)m(\\d+)(?:'')?", MINUTE, SECOND),
         HOURS_PATTERN("(\\d+)h", HOUR),
