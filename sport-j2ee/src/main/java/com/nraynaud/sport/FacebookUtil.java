@@ -28,7 +28,10 @@ public class FacebookUtil {
     public static Long getFacebookUserId(final HttpServletRequest request, final HttpServletResponse response) throws
             FacebookException {
         final IFacebookRestClient<Document> facebookClient = getClient(request, response);
-        return facebookClient.users_getLoggedInUser();
+        if (facebookClient.getCacheSessionKey() != null)
+            return facebookClient.users_getLoggedInUser();
+        else
+            return null;
     }
 
     public static String formatWorkout(final Workout workout) {

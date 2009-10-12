@@ -75,14 +75,13 @@ public class SportInterceptor extends AbstractInterceptor {
     }
 
     private boolean handleFacebook(final HttpServletRequest request, final HttpServletResponse response) {
-        try {
+        try {            
             final Long facebookId = FacebookUtil.getFacebookUserId(request, response);
             if (facebookId != null) {
                 final User user = userStore.facebookLogin(facebookId);
                 if (user != null) {
                     SportSession.openSession(user, request, false);
                     return true;
-                } else {
                 }
             }
         } catch (FacebookException e) {
