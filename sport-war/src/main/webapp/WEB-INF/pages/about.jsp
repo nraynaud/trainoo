@@ -6,7 +6,7 @@
 <div class="block aboutBlock">
     <div class="content textContent">
         <p>
-            Ce service est proposé par Nicolas Raynaud que vous pouvez contacter par e-mail à l'adresse <a
+            Ce service est proposé par Nicolas Raynaud, <a href="http://nraynaud.com">consultant en développements complexes</a> que vous pouvez contacter par e-mail à l'adresse <a
                 href="mailto:nicolas@trainoo.com">nicolas@trainoo.com</a>.
         </p>
 
