@@ -19,7 +19,6 @@ var mapOptions = {draggableCursor: 'crosshair', googleBarOptions:{showOnLoad:tru
 onLoaded.push(myStart);
 function myStart() {
     editor = new Editor(map);
-    map.setMapType(IGN_PHOTO_TYPE);
     map.enableGoogleBar();
 }
 function newTrack() {
@@ -27,7 +26,7 @@ function newTrack() {
 }
 function Editor(map) {
     this.map = map;
-    var editor = this
+    var editor = this;
     function isKey(event, keyCode) {
         var key = event.which || event.keyCode;
         return key = keyCode;
@@ -35,7 +34,7 @@ function Editor(map) {
     this.updateModeCallback = function(event) {
         if (isKey(event, SHIFT_KEY))
             editor.toUpdateMode();
-    }
+    };
     this.insertionModeKeyCallback = function(event) {
         if (isKey(event, SHIFT_KEY)) {
             editor.toAppendMode();
@@ -43,10 +42,10 @@ function Editor(map) {
     };
     this.insertionModeBlurCallback = function() {
         editor.toAppendMode();
-    }
+    };
     GEvent.addListener(map, 'mouseout', function() {
         editor.hideTransientPath();
-    })
+    });
     this.markers = [];
     this.line = null;
     this.transientPath = null;
@@ -58,25 +57,25 @@ Editor.prototype.toUpdateMode = function() {
     document.observe('keyup', this.insertionModeKeyCallback);
     document.body.observe('blur', this.insertionModeBlurCallback);
     this.unInstallSubEditor();
-    this.installSubEditor(new UpdateEditor(this))
-    log("update")
-}
+    this.installSubEditor(new UpdateEditor(this));
+    log("update");
+};
 Editor.prototype.toAppendMode = function() {
     document.body.stopObserving('blur', this.insertionModeBlurCallback);
     document.stopObserving('keyup', this.insertionModeKeyCallback);
     document.observe('keydown', this.updateModeCallback);
     this.unInstallSubEditor();
     this.installSubEditor(new AppendEditor(this));
-    log("append")
-}
+    log("append");
+};
 Editor.prototype.installSubEditor = function(subEditor) {
     this.subEditor = subEditor;
     this.subEditor.install();
-}
+};
 Editor.prototype.unInstallSubEditor = function() {
     if (this.subEditor != null)
         this.subEditor.unInstall();
-}
+};
 function renumberMarkers(markers) {
     for (var i = 0; i < markers.length; i++) {
         markers[i].index = i;
@@ -87,7 +86,7 @@ Editor.prototype.addMarker = function(point, index) {
     marker.marker = new GMarker(point, {draggable: true, icon: MARKER_ICON, title: "tirez sur le point pour le déplacer"});
     marker.getPoint = function() {
         return marker.marker.getPoint();
-    }
+    };
     if (index == null) {
         this.markers.push(marker);
         marker.index = this.markers.length - 1;
@@ -96,13 +95,13 @@ Editor.prototype.addMarker = function(point, index) {
         this.markers.splice(index, 0, marker);
         renumberMarkers(this.markers);
     }
-}
+};
 Editor.prototype.deleteMarker = function (marker) {
     this.markers.splice(marker.index, 1);
     this.map.removeOverlay(marker.marker);
     this.draw();
     renumberMarkers(this.markers);
-}
+};
 function setValue(id, value) {
     var element = $(id);
     if (element)
@@ -119,7 +118,7 @@ Editor.prototype.draw = function() {
     }
     var poly = [];
     var encodedTrack = "";
-    var distance = 0
+    var distance = 0;
     for (var i = 0; i < this.markers.length; ++i) {
         var pnt = this.markers[i].getPoint();
         if (poly.length > 0)
@@ -135,31 +134,33 @@ Editor.prototype.draw = function() {
     update('distance', (distance / 1000).toFixed(2) + "km");
     setValue('lengthVar', distance / 1000);
     var tip = $('tip');
+
     function updateTip(value) {
         if (tip.innerHTML != value)
             tip.update(value);
     }
+
     if (this.markers.length > 0) {
         updateTip(SHIFT_KEY_TIP_MESSAGE);
     } else {
         updateTip('Cliquez pour insérer votre point de départ');
     }
     tip.show();
-}
+};
 Editor.prototype.fit = function() {
     var bounds = new GLatLngBounds();
     this.markers.each(function(m) {
-        bounds.extend(m.getPoint())
+        bounds.extend(m.getPoint());
     });
     this.map.setCenter(bounds.getCenter(), this.map.getBoundsZoomLevel(bounds));
-}
+};
 Editor.prototype.clearMap = function() {
     this.markers.each(function(m) {
         map.removeOverlay(m.marker);
     });
     this.markers = [];
-    this.draw()
-}
+    this.draw();
+};
 Editor.prototype.loadTrack = function (track) {
     this.clearMap();
     var editor = this;

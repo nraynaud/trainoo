@@ -1,4 +1,4 @@
-var DELETE_BUTTON = "<div id='deleteButton' title='effacer le point'>X</div>"
+var DELETE_BUTTON = "<div id='deleteButton' title='effacer le point'>X</div>";
 var MARKER_ICON = createMarkerIcon();
 function createHandleIcon() {
     var icon = new GIcon();
@@ -18,7 +18,6 @@ mapOptions = {draggableCursor: 'crosshair', googleBarOptions:{showOnLoad:true}};
 onLoaded.push(myStart);
 function myStart() {
     editor = new Editor(map);
-    map.setMapType(IGN_PHOTO_TYPE);
     editor.canAppendPoint(true);
     map.enableGoogleBar();
 }
@@ -27,7 +26,7 @@ function newTrack() {
 }
 function Editor(map) {
     this.map = map;
-    var editor = this
+    var editor = this;
     this.addPointCallback = function(overlay, latLng) {
         editor.hideTransientPath();
         editor.addMarker(latLng);
@@ -36,7 +35,7 @@ function Editor(map) {
     }.bind(this);
     GEvent.addListener(map, 'mouseout', function() {
         editor.hideTransientPath();
-    })
+    });
     this.insertionEditor = new PointInsertionEditor(map, this);
     this.insertionEditor.canInsertPoint(true);
     this.markers = [];
@@ -49,22 +48,22 @@ Editor.prototype.canAppendPoint = function(can) {
         this.canAppendPointHandler = GEvent.addListener(map, 'click', this.addPointCallback);
     else
         GEvent.removeListener(this.canAppendPointHandler);
-}
+};
 Editor.prototype.canDragMarker = function(can) {
     this.canDragMarker = can;
-}
+};
 Editor.prototype.startInsertion = function() {
     muteMarkers(this.markers);
-}
+};
 Editor.prototype.endInsertion = function() {
     vocalMarkers(this.markers, this);
-}
+};
 Editor.prototype.startMovingMarker = function() {
     muteMouse(this.markers);
-}
+};
 Editor.prototype.endMovingMarker = function() {
     vocalMouse(this.markers, this);
-}
+};
 function muteMarkers(markers) {
     markers.each(function(m) {
         GEvent.removeListener(m.dragHandler);
@@ -134,10 +133,10 @@ function registerEvents(markers, marker, editor) {
         var index = marker.index;
         var poly = [marker.getPoint()];
         if (index > 0) {
-            poly.unshift(markers[index - 1].getPoint())
+            poly.unshift(markers[index - 1].getPoint());
         }
         if (index < markers.length - 1) {
-            poly.push(markers[index + 1].getPoint())
+            poly.push(markers[index + 1].getPoint());
         }
         editor.setTransientPath(poly);
     });
@@ -171,13 +170,13 @@ Editor.prototype.addMarker = function(point, index) {
     marker.enableDragging();
     map.addOverlay(marker);
     registerEvents(this.markers, marker, this);
-}
+};
 Editor.prototype.deleteMarker = function (marker) {
     this.markers.splice(marker.index, 1);
     this.map.removeOverlay(marker);
     this.draw();
     renumberMarkers(this.markers);
-}
+};
 function setValue(id, value) {
     var element = $(id);
     if (element)
@@ -194,7 +193,7 @@ Editor.prototype.draw = function() {
     }
     var poly = [];
     var encodedTrack = "";
-    var distance = 0
+    var distance = 0;
     for (var i = 0; i < this.markers.length; ++i) {
         var pnt = this.markers[i].getPoint();
         if (poly.length > 0)
@@ -210,21 +209,21 @@ Editor.prototype.draw = function() {
     update('distance', (distance / 1000).toFixed(2) + "km");
     setValue('lengthVar', distance / 1000);
     update('pointsCount', this.markers.length);
-}
+};
 Editor.prototype.fit = function() {
     var bounds = new GLatLngBounds();
     this.markers.each(function(m) {
-        bounds.extend(m.getPoint())
+        bounds.extend(m.getPoint());
     });
     this.map.setCenter(bounds.getCenter(), this.map.getBoundsZoomLevel(bounds));
-}
+};
 Editor.prototype.clearMap = function() {
     this.markers.each(function(m) {
         map.removeOverlay(m);
     });
     this.markers = [];
-    this.draw()
-}
+    this.draw();
+};
 Editor.prototype.loadTrack = function (track) {
     this.clearMap();
     var editor = this;
@@ -258,6 +257,7 @@ function PointInsertionEditor(map, editor) {
             function square(x) {
                 return Math.pow(x, 2);
             }
+
             function computeNearestPointOnSegment(p, p1, p2) {
                 var diffLng = p2.lng() - p1.lng();
                 var diffLat = p2.lat() - p1.lat();
@@ -271,6 +271,7 @@ function PointInsertionEditor(map, editor) {
                 var y = p1.lat() + u * diffLat;
                 return (new GLatLng(y, x));
             }
+
             var distMin = Infinity;
             var pointMin = null;
             for (var i = 0; i < editor.markers.length - 1; i++) {
@@ -287,9 +288,11 @@ function PointInsertionEditor(map, editor) {
             if (pointMin != null) {
                 var currentPix = map.fromLatLngToDivPixel(latLng);
                 var handlePix = map.fromLatLngToDivPixel(pointMin);
+
                 function distanceLessThan(p1, p2, threshold) {
                     return square(p1.x - p2.x) + square(p1.y - p2.y) < square(threshold);
                 }
+
                 if (distanceLessThan(currentPix, handlePix, 30)) {
                     var previousPix = map.fromLatLngToDivPixel(editor.markers[markerIndex].getPoint());
                     var nextPix = map.fromLatLngToDivPixel(editor.markers[markerIndex + 1].getPoint());
@@ -308,7 +311,7 @@ function PointInsertionEditor(map, editor) {
             editor.setTransientPath([editor.markers[editor.markers.length - 1].getPoint(), latLng]);
         else
             editor.hideTransientPath();
-    }
+    };
     GEvent.addListener(this.myMarker, 'mouseover', function() {
         insertionEditor.myMarker.setImage($('map_handle_active').src);
         editor.canAppendPoint(false);
@@ -353,4 +356,4 @@ PointInsertionEditor.prototype.canInsertPoint = function(can, keepMarker) {
             this.insertLinePointHandleHandler = null;
         }
     }
-}
+};
