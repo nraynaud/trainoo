@@ -23,9 +23,9 @@ public interface Application extends UserStore {
                        final Date date,
                        final Long duration,
                        final Double distance,
-                       final Long energy, final String discipline, final String comment) throws
+                       final Long energy, final String discipline, final String comment, final String trackId) throws
             WorkoutNotFoundException,
-            AccessDeniedException;
+            AccessDeniedException, TrackNotFoundException;
 
     GlobalWorkoutsPageData fetchFrontPageData(final int firstIndex, final int pageSize,
                                               final Collection<String> disciplines);

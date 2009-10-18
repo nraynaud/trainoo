@@ -430,9 +430,12 @@ public class HibernateApplication implements Application {
                               final Date date,
                               final Long duration,
                               final Double distance,
-                              final Long energy, final String discipline, final String debriefing) throws
-            WorkoutNotFoundException, AccessDeniedException {
-        workoutStore.updateWorkout(id, user, date, duration, distance, energy, discipline, debriefing);
+                              final Long energy, final String discipline, final String debriefing,
+                              final String trackId) throws
+            WorkoutNotFoundException, AccessDeniedException, TrackNotFoundException {
+        final TrackImpl track = trackId != null && !trackId.isEmpty() ? fetchTrackForUpdate(user,
+                Long.parseLong(trackId)) : null;
+        workoutStore.updateWorkout(id, user, date, duration, distance, energy, discipline, debriefing, track);
     }
 
     @SuppressWarnings({"unchecked"})

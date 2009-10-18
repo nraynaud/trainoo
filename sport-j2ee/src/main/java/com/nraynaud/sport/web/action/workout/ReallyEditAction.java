@@ -2,6 +2,7 @@ package com.nraynaud.sport.web.action.workout;
 
 import com.nraynaud.sport.AccessDeniedException;
 import com.nraynaud.sport.Application;
+import com.nraynaud.sport.TrackNotFoundException;
 import com.nraynaud.sport.WorkoutNotFoundException;
 import com.nraynaud.sport.web.ActionDetail;
 import com.nraynaud.sport.web.Constants;
@@ -18,9 +19,9 @@ import org.apache.struts2.config.Results;
 
 @Conversion
 @Results({
-    @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
-    @Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = "")
-        })
+        @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp"),
+        @Result(name = SUCCESS, type = Redirect.class, params = {"namespace", "/workout", "id", "${id}"}, value = "")
+})
 @Validation
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class ReallyEditAction extends AbstractWorkoutAction {
@@ -33,14 +34,16 @@ public class ReallyEditAction extends AbstractWorkoutAction {
     public String create() {
         try {
             application.updateWorkout(Long.valueOf(id), getUser(), getDate(), getDuration(), getDistance(),
-                    getEnergy(),
-                    getDiscipline(), getDebriefing());
+                    getEnergy(), getDiscipline(), getDebriefing(), getTrack());
             return SUCCESS;
         } catch (WorkoutNotFoundException e) {
             addActionError("l'entraînement désigné n'existe pas");
             return INPUT;
         } catch (AccessDeniedException e) {
             addActionError("Vous n'avez pas le droit de modifier cet entraînement");
+            return INPUT;
+        } catch (TrackNotFoundException e) {
+            addActionError("Le parcours n'a pas été trouvé");
             return INPUT;
         }
     }

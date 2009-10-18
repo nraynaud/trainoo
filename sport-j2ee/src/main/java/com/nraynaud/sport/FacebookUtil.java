@@ -42,7 +42,7 @@ public class FacebookUtil {
                 FormatHelper.formatDistance(workout.getDistance(), "km", ""),
                 FormatHelper.formatDuration(workout.getDuration(), ""),
                 FormatHelper.formatEnergy(workout.getEnergy(), "kcal", ""),
-                debriefing == null ? "" : debriefing.toString());
+                debriefing == null ? "" : debriefing.toString(), workout.getTrack().getTitle().toString());
         return view.discipline + " " + view.distance + " " + view.duration + " " + view.energy;
     }
 

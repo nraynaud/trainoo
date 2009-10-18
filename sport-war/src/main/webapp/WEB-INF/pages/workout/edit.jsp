@@ -1,15 +1,17 @@
-<%@ page import="com.nraynaud.sport.Workout" %>
+<%@ page import="com.nraynaud.sport.Track" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.Workout" %>
 <%@ page import="com.nraynaud.sport.web.actionsupport.AbstractWorkoutAction" %>
 <%@ page import="com.nraynaud.sport.web.view.Helpers" %>
-<%@ page import="com.nraynaud.sport.web.view.WorkoutPageDetails" %>
+<%@ page import="com.nraynaud.sport.web.view.WorkoutEditPageDetails" %>
 <%@ page import="com.nraynaud.sport.web.view.WorkoutView" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page session="false" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
 
-<% final WorkoutPageDetails pageDetail = top();%>
+<% final WorkoutEditPageDetails pageDetail = top();%>
 <p:layoutParams title='<%=pageDetail.pageTile%>' showTitleInPage="false"/>
 
 
@@ -21,7 +23,7 @@
 </p:javascript>
 
 <form name="workoutForm" action="<%=Helpers.createUrl(pageDetail.doAction)%>" method="POST"
-      onsubmit="retrieveComment(); return true">
+      onsubmit="retrieveComment(); return true;">
     <input type="hidden" name="debriefing" id="hiddenComment" value="">
 
     <h1><%=pageDetail.pageTile%>
@@ -58,7 +60,7 @@
                            maxlength="15"
                            onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03/10/2006 ou «hier»' , 'date', this.value);"
                            onblur="hideToolTip();"
-                           onkeyup="feedback('date', this.value)"
+                           onkeyup="feedback('date', this.value);"
                            onmouseover=""
                            onmouseout="">
                 </dd>
@@ -69,7 +71,7 @@
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event, 'En kilomètres.', 'distance', this.value);"
                            onblur="hideToolTip();"
-                           onkeyup="feedback('distance', this.value)">
+                           onkeyup="feedback('distance', this.value);">
                 </dd>
                 <dt><label for="duration">Durée :</label></dt>
                 <dd class="editable">
@@ -78,7 +80,7 @@
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event,'ex&nbsp;: 03h41\'17 ou 40\'22' , 'duration', this.value);"
                            onblur="hideToolTip();"
-                           onkeyup="feedback('duration', this.value)">
+                           onkeyup="feedback('duration', this.value);">
                 </dd>
                 <dt><label for="energy">Énergie Dépensée :</label></dt>
                 <dd class="editable">
@@ -87,7 +89,21 @@
                            maxlength="10"
                            onfocus="showWorkoutToolTip(event, 'En kilocalories.', 'energy', this.value);"
                            onblur="hideToolTip();"
-                           onkeyup="feedback('energy', this.value)">
+                           onkeyup="feedback('energy', this.value);">
+                </dd>
+                <dt><label for="energy">Parcours :</label></dt>
+                <%
+                    final ArrayList<String> idList = new ArrayList<String>();
+                    final ArrayList<String> labels = new ArrayList<String>();
+                    idList.add("");
+                    labels.add("<b>Aucun</b>");
+                    for (final Track track : pageDetail.userTracks) {
+                        idList.add(track.getId().toString());
+                        labels.add(track.getTitle().toString());
+                    }
+                %>
+                <dd class="editable"><%=Helpers.selectComponent("track", "track", idList,
+                        labels, workoutView.trackId)%>
                 </dd>
             </dl>
         </div>

@@ -13,8 +13,8 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
 @Results({
-    @Result(name = SUCCESS, value = "/WEB-INF/pages/workout/edit.jsp")
-        })
+        @Result(name = SUCCESS, value = "/WEB-INF/pages/workout/edit.jsp")
+})
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class NewAction extends DefaultAction implements ModelDriven<WorkoutPageDetails> {
     public static final String PAGE_TILE = "Nouvel Entraîment";
@@ -26,7 +26,7 @@ public class NewAction extends DefaultAction implements ModelDriven<WorkoutPageD
 
     public WorkoutPageDetails getModel() {
         return new WorkoutPageDetails(
-                new WorkoutView(null, "", "Aujourd'hui", "", "", "", ""), PAGE_TILE,
+                new WorkoutView(null, "", "Aujourd'hui", "", "", "", "", ""), PAGE_TILE,
                 new ActionDetail("/workout", "create"), CANCEL_ACTION);
     }
 }

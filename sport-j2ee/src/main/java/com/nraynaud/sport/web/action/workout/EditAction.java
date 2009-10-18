@@ -6,6 +6,7 @@ import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.web.ActionDetail;
 import com.nraynaud.sport.web.Constants;
 import com.nraynaud.sport.web.actionsupport.DefaultAction;
+import com.nraynaud.sport.web.view.WorkoutEditPageDetails;
 import com.nraynaud.sport.web.view.WorkoutPageDetails;
 import com.nraynaud.sport.web.view.WorkoutView;
 import static com.opensymphony.xwork2.Action.INPUT;
@@ -15,8 +16,8 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 
 @Results({
-    @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp")
-        })
+        @Result(name = INPUT, value = "/WEB-INF/pages/workout/edit.jsp")
+})
 @ParentPackage(Constants.STRUTS_PACKAGE)
 public class EditAction extends DefaultAction implements ModelDriven<WorkoutPageDetails> {
     public Long id;
@@ -34,19 +35,21 @@ public class EditAction extends DefaultAction implements ModelDriven<WorkoutPage
         return INPUT;
     }
 
-    public WorkoutPageDetails getModel() {
+    public WorkoutEditPageDetails getModel() {
         try {
             final Workout workout = application.fetchWorkout(id, getUser(), true);
-            return new WorkoutPageDetails(
+            final String trackId = workout.getTrack() != null ? workout.getTrack().getId().toString() : "";
+            return new WorkoutEditPageDetails(
                     WorkoutView.createView(id.toString(),
                             workout.getDiscipline().nonEscaped(),
                             workout.getDate(),
                             workout.getDistance(),
                             workout.getDuration(),
                             workout.getEnergy(),
-                            workout.getDebriefing() != null ? workout.getDebriefing().toString() : ""),
+                            workout.getDebriefing() != null ? workout.getDebriefing().toString() : "",
+                            trackId),
                     PAGE_TILE, new ActionDetail("/workout", "reallyEdit", "id", id.toString()),
-                    cancelAction(id.toString()));
+                    cancelAction(id.toString()), application.fetchTracks(getUser()));
         } catch (AccessDeniedException e) {
             throw new RuntimeException(e);
         }

@@ -69,7 +69,8 @@ class WorkoutStore {
                               final Date date,
                               final Long duration,
                               final Double distance,
-                              final Long energy, final String discipline, final String debriefing) throws
+                              final Long energy, final String discipline, final String debriefing,
+                              final TrackImpl track) throws
             WorkoutNotFoundException,
             AccessDeniedException {
         final WorkoutImpl workoutImpl = (WorkoutImpl) fetchWorkoutForEdition(id, user, true);
@@ -79,6 +80,7 @@ class WorkoutStore {
         workoutImpl.setEnergy(energy);
         workoutImpl.setDiscipline(discipline);
         workoutImpl.setDebriefing(debriefing);
+        workoutImpl.setTrack(track);
         entityManager.merge(workoutImpl);
     }
 

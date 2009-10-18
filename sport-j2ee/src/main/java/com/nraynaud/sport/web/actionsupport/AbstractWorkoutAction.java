@@ -21,6 +21,7 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
     private Long energy;
     private String discipline;
     private String debriefing;
+    private String track;
 
     public String id;
 
@@ -91,9 +92,17 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
         return energy;
     }
 
+    public void setTrack(final String track) {
+        this.track = track;
+    }
+
+    public String getTrack() {
+        return track;
+    }
+
     public WorkoutPageDetails getModel() {
         final WorkoutView interpreted = WorkoutView.createView(id, getDiscipline(), getDate(), getDistance(),
-                getDuration(), getEnergy(), getDebriefing() == null ? "" : getDebriefing());
+                getDuration(), getEnergy(), getDebriefing() == null ? "" : getDebriefing(), track);
         return new WorkoutPageDetails(
                 new WorkoutView(id,
                         errorOrValue("discipline", interpreted.discipline),
@@ -101,7 +110,7 @@ public abstract class AbstractWorkoutAction extends DefaultAction implements Mod
                         errorOrValue("distance", interpreted.distance),
                         errorOrValue("duration", interpreted.duration),
                         errorOrValue("energy", interpreted.energy),
-                        errorOrValue("debriefing", interpreted.debriefing)),
+                        errorOrValue("debriefing", interpreted.debriefing), track),
                 pageTitle, actionDescription, cancelAction());
     }
 
