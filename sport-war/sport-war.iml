@@ -137,7 +137,15 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/" />
           </containerElement>
-          <containerElement type="library" name="Maven: com.google.code.facebookapi:facebook-java-api:2.0.5" level="project">
+          <containerElement type="library" name="Maven: com.google.code.facebookapi:facebook-java-api:2.1.0" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/" />
+          </containerElement>
+          <containerElement type="library" name="Maven: com.google.code.facebookapi:facebook-java-api-schema:2.1.0" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib/" />
+          </containerElement>
+          <containerElement type="library" name="Maven: org.jvnet.jaxb2_commons:runtime:0.4.1.3" level="project">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/" />
           </containerElement>
@@ -150,14 +158,6 @@
             <attribute name="URI" value="/WEB-INF/lib/" />
           </containerElement>
           <containerElement type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/" />
-          </containerElement>
-          <containerElement type="library" name="Maven: com.google.code.facebookapi:facebook-java-api-schema:2.0.5" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib/" />
-          </containerElement>
-          <containerElement type="library" name="Maven: org.jvnet.jaxb2_commons:runtime:0.4.1.3" level="project">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/" />
           </containerElement>
@@ -221,32 +221,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library name="com.google.code.facebookapi:facebook-java-api:2.1.0">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.1.0/facebook-java-api-2.1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.1.0/facebook-java-api-2.1.0-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.1.0/facebook-java-api-2.1.0-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="com.google.code.facebookapi:facebook-java-api-schema:2.1.0">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.1.0/facebook-java-api-schema-2.1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.1.0/facebook-java-api-schema-2.1.0-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.1.0/facebook-java-api-schema-2.1.0-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="sport-business" exported="" />
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
@@ -277,12 +251,12 @@
     <orderEntry type="library" exported="" name="Maven: opensymphony:ognl:2.6.11" level="project" />
     <orderEntry type="library" exported="" name="Maven: freemarker:freemarker:2.3.8" level="project" />
     <orderEntry type="library" exported="" name="Maven: jparsec:jparsec:0.2.3" level="project" />
-    <orderEntry type="library" exported="" name="Maven: com.google.code.facebookapi:facebook-java-api:2.0.5" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.google.code.facebookapi:facebook-java-api:2.1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: com.google.code.facebookapi:facebook-java-api-schema:2.1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.jvnet.jaxb2_commons:runtime:0.4.1.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.sun.xml.bind:jaxb-impl:2.1.9" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.xml.bind:jaxb-api:2.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: com.google.code.facebookapi:facebook-java-api-schema:2.0.5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.jvnet.jaxb2_commons:runtime:0.4.1.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: commons-lang:commons-lang:2.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.json:json:20070829" level="project" />
     <orderEntry type="module" module-name="nikeplus" exported="" />

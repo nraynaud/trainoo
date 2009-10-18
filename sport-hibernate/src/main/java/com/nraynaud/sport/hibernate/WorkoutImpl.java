@@ -40,9 +40,11 @@ public class WorkoutImpl implements Workout {
     @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
     private User user;
 
+    @SuppressWarnings({"UnusedDeclaration"})
     @OneToMany(targetEntity = PublicMessageImpl.class, mappedBy = "workout")
     private Collection<PublicMessage> publicMessages;
 
+    @SuppressWarnings({"UnusedDeclaration"})
     @ManyToMany(targetEntity = UserImpl.class, fetch = FetchType.EAGER)
     @JoinTable(name = "WORKOUT_USER",
             joinColumns = @JoinColumn(name = "WORKOUT_ID", nullable = false, updatable = false),
@@ -50,6 +52,10 @@ public class WorkoutImpl implements Workout {
     private Collection<User> participants;
 
     transient Long messageCount;
+
+    @ManyToOne(targetEntity = TrackImpl.class)
+    @JoinColumn(name = "TRACK_ID", nullable = true, updatable = true)
+    private Track track;
 
     public WorkoutImpl() {
     }
@@ -154,6 +160,14 @@ public class WorkoutImpl implements Workout {
 
     public Long getEnergy() {
         return energy;
+    }
+
+    public Track getTrack() {
+        return track;
+    }
+
+    public void setTrack(final Track track) {
+        this.track = track;
     }
 
     public void setEnergy(final Long energy) {

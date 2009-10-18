@@ -965,17 +965,6 @@
         <root url="jar://$M2_REPO$/javax/servlet/servlet-api/2.3/servlet-api-2.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: hsqldb:hsqldb:1.8.0.7">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/hsqldb/hsqldb/1.8.0.7/hsqldb-1.8.0.7.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/hsqldb/hsqldb/1.8.0.7/hsqldb-1.8.0.7-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/hsqldb/hsqldb/1.8.0.7/hsqldb-1.8.0.7-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.hibernate:hibernate-entitymanager:3.2.1.ga">
       <CLASSES>
         <root url="jar://$M2_REPO$/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga.jar!/" />
@@ -1251,17 +1240,6 @@
         <root url="jar://$M2_REPO$/jtidy/jtidy/4aug2000r7-dev/jtidy-4aug2000r7-dev-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.google.code.facebookapi:facebook-java-api:2.0.5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.0.5/facebook-java-api-2.0.5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.0.5/facebook-java-api-2.0.5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.0.5/facebook-java-api-2.0.5-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: com.sun.xml.bind:jaxb-impl:2.1.9">
       <CLASSES>
         <root url="jar://$M2_REPO$/com/sun/xml/bind/jaxb-impl/2.1.9/jaxb-impl-2.1.9.jar!/" />
@@ -1293,17 +1271,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.google.code.facebookapi:facebook-java-api-schema:2.0.5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.0.5/facebook-java-api-schema-2.0.5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.0.5/facebook-java-api-schema-2.0.5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.0.5/facebook-java-api-schema-2.0.5-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.jvnet.jaxb2_commons:runtime:0.4.1.3">
@@ -1381,6 +1348,39 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/javax/servlet/jsp-api/2.0/jsp-api-2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.code.facebookapi:facebook-java-api:2.1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.1.0/facebook-java-api-2.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.1.0/facebook-java-api-2.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api/2.1.0/facebook-java-api-2.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.code.facebookapi:facebook-java-api-schema:2.1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.1.0/facebook-java-api-schema-2.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.1.0/facebook-java-api-schema-2.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/com/google/code/facebookapi/facebook-java-api-schema/2.1.0/facebook-java-api-schema-2.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: hsqldb:hsqldb:1.8.0.10">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/hsqldb/hsqldb/1.8.0.10/hsqldb-1.8.0.10.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/hsqldb/hsqldb/1.8.0.10/hsqldb-1.8.0.10-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/hsqldb/hsqldb/1.8.0.10/hsqldb-1.8.0.10-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

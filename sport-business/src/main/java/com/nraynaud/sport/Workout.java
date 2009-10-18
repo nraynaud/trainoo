@@ -45,4 +45,6 @@ public interface Workout extends Topic {
     UserString getDebriefing();
 
     Long getEnergy();
+
+    Track getTrack();
 }

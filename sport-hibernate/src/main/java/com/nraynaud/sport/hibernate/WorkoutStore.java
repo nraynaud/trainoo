@@ -192,7 +192,7 @@ class WorkoutStore {
         final Query query = query(
                 "select w, count(m) from " + joinPart + " left join w.publicMessages m  where " + wherePart
                         + disciplinePredicate
-                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.energy, w.discipline, w.nikePlusId, w.debriefing"
+                        + " group by w.id, w.user, w.date, w.duration, w.distance, w.energy, w.discipline, w.nikePlusId, w.debriefing, w.track"
                         + " order by w.date desc, w.id desc");
         disciplinePredicate.bindVariables(query);
         return query;
