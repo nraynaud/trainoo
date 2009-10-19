@@ -1,10 +1,10 @@
 _mPreferMetric = true;
 function log(txt) {
-    if ("console" in window && "firebug" in console)
-        console.log(txt);
+    if ("console" in window)
+        window.console.log(txt);
 }
 function updateHeight() {
-    $('content').style.height = $('center').clientHeight - $('content').offsetTop + "px";
+    $('content').style.height = $('contentWrapper').clientHeight + "px";
 }
 function loaded() {
     updateHeight();

@@ -34,6 +34,9 @@
             <li class="<%=isCurrentAction("/workout", "new")?"current":""%>">
                 <a href="<%=createUrl("/workout", "new")%>" title="Enregistrer un entrainement">J'ai sué&nbsp;!</a>
             </li>
+            <li class="<%=isCurrentAction("/track", "")?"current":""%>">
+                <a href="<%=createUrl("/track", "")%>" title="Enregistrer un parcours">Mes Parcours</a>
+            </li>
             <li class="<%=isCurrentAction("/", "workouts")?"current":""%>">
                 <a href="<%=createUrl("/", "workouts")%>" title="Mon vestiaire">Mon vestiaire</a>
             </li>

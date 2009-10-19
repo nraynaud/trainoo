@@ -14,6 +14,11 @@
 <% final Track track = property("track");%>
 <div id="mapGlobalContainer">
     <div id="controlPanel">
+        <a href="/" title="Trainoo.com - Tableau général">
+            <img src="<%=stat("/static/external/logo_widget.png")%>" alt="logo">
+        </a>
+        (parcours beta)
+        <hr>
         <s:form id="createForm" namespace="/track" action="edit">
             <input type="hidden" name="id" value="<%=track == null ? "" : track.getId()%>"/>
             <input type="hidden" id="trackVar" name="points" value="<%=track == null ? "" : track.getPoints()%>"/>
@@ -33,7 +38,7 @@
         <hr>
         <s:form namespace="/track" action="delete">
             <input type="hidden" name="id" value="<%=track.getId()%>"/>
-            <s:submit value="Supprimer le parcours"/>
+            <s:submit id="deleteButton" value="Supprimer le parcours"/>
         </s:form>
         <%}%>
         <hr>

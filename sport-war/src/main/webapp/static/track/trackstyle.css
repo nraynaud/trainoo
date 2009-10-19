@@ -9,11 +9,19 @@ html, body, #body, #center {
 
 #map {
     overflow: hidden;
-    height: 100%;
+    height: 100%
 }
 
-#content, #loginHeader {
-    margin: 0;
+#contentDecor, #menu {
+    visibility: hidden;
+}
+
+#content {
+    padding: 0 0 0 0
+}
+
+#contentWrapper {
+    height: 100%;
 }
 
 #heading {
@@ -31,24 +39,12 @@ html, body, #body, #center {
 #mapGlobalContainer {
     overflow: hidden;
     position: relative;
-    height: 100%;
     width: 100%;
+    height: 100%;
 }
 
 a.copyright {
     color: white;
-}
-
-#deleteButton {
-    position: absolute;
-    color: red;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#deleteButton:hover {
-    background-color: black;
 }
 
 button {

@@ -1,4 +1,4 @@
 package com.nraynaud.sport;
 
-public class AccessDeniedException extends Throwable {
+public class AccessDeniedException extends Exception {
 }

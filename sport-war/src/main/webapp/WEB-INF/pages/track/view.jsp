@@ -1,6 +1,7 @@
 <%@ page import="com.nraynaud.sport.Track" %>
 <%@ page import="static com.nraynaud.sport.web.view.Helpers.*" %>
 <%@ page import="static com.nraynaud.sport.web.view.StackUtil.*" %>
+<%@ page import="com.nraynaud.sport.web.view.Helpers" %>
 <%@ page import="com.nraynaud.sport.web.view.StackUtil" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="p" uri="/sport-tags" %>
@@ -16,6 +17,11 @@
 </p:header>
 <div id="mapGlobalContainer">
     <div id="controlPanel">
+        <a href="/" title="Trainoo.com - Tableau général">
+            <img src="<%=stat("/static/external/logo_widget.png")%>" alt="logo">
+        </a>
+        (parcours beta)
+        <hr>
         <%
             if (track != null) {
                 if (track.getTitle() != null) {
@@ -28,19 +34,22 @@
         <%=link("/track", "edit",
                 "<img class='pen' src=\"" + stat("/static/pen.png") + "\" alt=\"\">",
                 "modifier le parcours", "id", track.getId().toString())%>
-        <%
-            }%>
         <hr>
         <%
+                }
             }
         %>
+        <% if (Helpers.isLogged()) {%>
         <%=link("/track", "edit", "Nouveau Parcours", "")%>
+        <%
+            final List<Track> trackList = StackUtil.<List<Track>>property("tracks");
+            if (!trackList.isEmpty()) {%>
         <hr>
         <h3>Mes parcours&nbsp;:</h3>
         <table id="trackTable">
             <%
                 boolean parity = false;
-                for (final Track loopTrack : StackUtil.<List<Track>>property("tracks")) {
+                for (final Track loopTrack : trackList) {
                     parity = !parity;
             %>
             <tr class="<%=parity ? "odd":"even"%> <%=loopTrack.equals(track) ? "highLight" : ""%>">
@@ -56,6 +65,11 @@
             </tr>
             <% }%>
         </table>
+
+        <%
+                }
+            }
+        %>
         <hr>
         <div style="margin:10px auto; width:125px;">
             <script type="text/javascript"><!--
