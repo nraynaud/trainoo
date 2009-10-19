@@ -38,7 +38,7 @@
         <hr>
         <s:form namespace="/track" action="delete">
             <input type="hidden" name="id" value="<%=track.getId()%>"/>
-            <s:submit id="deleteButton" value="Supprimer le parcours"/>
+            <s:submit value="Supprimer le parcours"/>
         </s:form>
         <%}%>
         <hr>

@@ -47,6 +47,18 @@ a.copyright {
     color: white;
 }
 
+#deleteButton {
+    position: absolute;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#deleteButton:hover {
+    background-color: black;
+}
+
 button {
     margin: 0 2px;
 }
