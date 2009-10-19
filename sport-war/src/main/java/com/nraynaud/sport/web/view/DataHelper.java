@@ -1,8 +1,10 @@
 package com.nraynaud.sport.web.view;
 
+import com.nraynaud.sport.Track;
 import com.nraynaud.sport.Workout;
 import com.nraynaud.sport.formatting.DistanceIO;
 import static com.nraynaud.sport.formatting.FormatHelper.*;
+import static com.nraynaud.sport.web.view.Helpers.link;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -29,13 +31,14 @@ public class DataHelper {
     private static Workout createWorkoutWrapper(final Workout workout) {
         return (Workout) Proxy.newProxyInstance(Workout.class.getClassLoader(),
                 new Class<?>[]{Workout.class}, new InvocationHandler() {
-            public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-                final Object result = method.invoke(workout, args);
-                if (result == null)
-                    throw NO_DATA_EXCEPTION;
-                return result;
-            }
-        });
+                    public Object invoke(final Object proxy, final Method method, final Object[] args) throws
+                            Throwable {
+                        final Object result = method.invoke(workout, args);
+                        if (result == null)
+                            throw NO_DATA_EXCEPTION;
+                        return result;
+                    }
+                });
     }
 
     private static Data computeAverageSpeed(final Workout workout) {
@@ -79,6 +82,14 @@ public class DataHelper {
             public Data compute(final Workout workout) {
                 return new Data("Puissance Moyenne&nbsp;:",
                         workout.getEnergy().longValue() * 4187 / workout.getDuration().longValue() + "<small>W</small>",
+                        false);
+            }},
+        TRACK {
+            public Data compute(final Workout workout) {
+                final Track track = workout.getTrack();
+                return new Data("Circuit&nbsp;:",
+                        link("/track", "", track.getTitle().toString(), "cliquez pour aller au parcours", "id",
+                                track.getId().toString()),
                         false);
             }};
 
