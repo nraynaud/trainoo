@@ -103,21 +103,21 @@ function registerMouseEvents(marker, editor) {
             GEvent.addListener(editor.map, "zoomend", hideDeleteMarkerButton);
             GEvent.addDomListener(del, 'mouseover', function() {
                 editor.insertionEditor.canInsertPoint(false);
+                editor.showMarkeDeletionPreview(del.marker);
             });
             GEvent.addDomListener(del, 'mouseout', function() {
                 editor.insertionEditor.canInsertPoint(true);
             });
+            GEvent.addDomListener(del, 'click', function() {
+                editor.deleteMarker(del.marker);
+                del.hide();
+            });
         }
-        if (editor.deleteHandler != null)
-            GEvent.removeListener(editor.deleteHandler);
-        editor.deleteHandler = GEvent.addDomListener(del, 'click', function() {
-            editor.deleteMarker(marker);
-            del.hide();
-        });
         var pixelPoint = editor.map.fromLatLngToContainerPixel(marker.getPoint());
         var icon = marker.getIcon();
         var xOffset = -icon.iconAnchor.x;
         var yOffset = -icon.iconAnchor.y - del.getDimensions().height;
+        del.marker = marker;
         del.setStyle({left:pixelPoint.x + xOffset + 'px', top: pixelPoint.y + yOffset + 'px'});
         del.show();
         marker.setImage($('map_marker_active').src);
@@ -172,10 +172,14 @@ Editor.prototype.addMarker = function(point, index) {
     registerEvents(this.markers, marker, this);
 };
 Editor.prototype.deleteMarker = function (marker) {
+    this.hideTransientPath();
     this.markers.splice(marker.index, 1);
     this.map.removeOverlay(marker);
     this.draw();
     renumberMarkers(this.markers);
+};
+Editor.prototype.showMarkeDeletionPreview = function (marker) {
+    this.setTransientPath([this.markers[marker.index - 1].getPoint(), this.markers[marker.index + 1].getPoint()]);
 };
 function setValue(id, value) {
     var element = $(id);
@@ -241,7 +245,7 @@ Editor.prototype.hideTransientPath = function () {
 };
 Editor.prototype.setTransientPath = function (path) {
     this.hideTransientPath();
-    this.transientPath = new GPolyline(path, '#D97900', 8, 0.8, {clickable: false});
+    this.transientPath = new GPolyline(path, '#D97900', 6, 0.6, {clickable: false});
     map.addOverlay(this.transientPath);
 };
 function PointInsertionEditor(map, editor) {
