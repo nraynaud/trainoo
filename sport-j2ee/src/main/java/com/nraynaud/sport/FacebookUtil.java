@@ -42,8 +42,15 @@ public class FacebookUtil {
                 FormatHelper.formatDistance(workout.getDistance(), "km", ""),
                 FormatHelper.formatDuration(workout.getDuration(), ""),
                 FormatHelper.formatEnergy(workout.getEnergy(), "kcal", ""),
-                debriefing == null ? "" : debriefing.toString(), workout.getTrack().getTitle().toString());
+                debriefing == null ? "" : debriefing.toString(), formatTrack(workout));
         return view.discipline + " " + view.distance + " " + view.duration + " " + view.energy;
+    }
+
+    private static String formatTrack(final Workout workout) {
+        final Track track = workout.getTrack();
+        if (track == null)
+            return "";
+        return String.valueOf(track.getTitle());
     }
 
     public static String formatActivity(final Workout newWorkout, final boolean feminine) {
