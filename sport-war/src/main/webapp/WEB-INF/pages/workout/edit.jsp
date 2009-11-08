@@ -21,10 +21,7 @@
         document.workoutForm.debriefing.value = document.getElementById("externalComment").value;
     }
 </p:javascript>
-<%
-    System.out.println("edit.jsp ");
-    System.out.flush();
-%>
+
 <form name="workoutForm" action="<%=Helpers.createUrl(pageDetail.doAction)%>" method="POST"
       onsubmit="retrieveComment(); return true;">
     <input type="hidden" name="debriefing" id="hiddenComment" value="">
@@ -42,10 +39,6 @@
                 <s:param value="'energy'"/>
             </s:fielderror>
             <% final WorkoutView workoutView = pageDetail.workoutView; %>
-            <%
-                System.out.println("after fetch " + workoutView);
-                System.out.flush();
-            %>
             <span class="buttonList">
                 <a href="<%=Helpers.createUrl(pageDetail.cancelAction)%>" title="Annuler les modifications"
                    class="button cancelButton verboseButton">
@@ -55,10 +48,6 @@
                    onclick="retrieveComment(); document.workoutForm.submit(); return false;"
                         ><label for="submitWorkout">Valider</label></a>
             </span>
-            <%
-                System.out.println("after buttons " + workoutView);
-                System.out.flush();
-            %>
             <dl>
                 <dt><label for="discipline">Discipline :</label></dt>
                 <dd class="editable"><%=Helpers.selectComponent("discipline", "discipline", Workout.DISCIPLINES,
@@ -75,10 +64,6 @@
                            onmouseover=""
                            onmouseout="">
                 </dd>
-                <%
-                    System.out.println("after date " + workoutView);
-                    System.out.flush();
-                %>
                 <dt><label for="distance">Distance :</label></dt>
                 <dd class="editable">
                     <input id="distance" class="text" name="distance"
@@ -88,10 +73,6 @@
                            onblur="hideToolTip();"
                            onkeyup="feedback('distance', this.value);">
                 </dd>
-                <%
-                    System.out.println("after Distance " + workoutView);
-                    System.out.flush();
-                %>
                 <dt><label for="duration">Durée :</label></dt>
                 <dd class="editable">
                     <input id="duration" class="text" name="duration"
@@ -101,10 +82,6 @@
                            onblur="hideToolTip();"
                            onkeyup="feedback('duration', this.value);">
                 </dd>
-                <%
-                    System.out.println("after durée " + workoutView);
-                    System.out.flush();
-                %>
                 <dt><label for="energy">Énergie Dépensée :</label></dt>
                 <dd class="editable">
                     <input id="energy" class="text" name="energy"
@@ -114,30 +91,16 @@
                            onblur="hideToolTip();"
                            onkeyup="feedback('energy', this.value);">
                 </dd>
-                <%
-                    System.out.println("after energy " + workoutView);
-                    System.out.flush();
-                %>
                 <dt><label for="energy">Parcours :</label></dt>
                 <%
                     final ArrayList<String> idList = new ArrayList<String>();
                     final ArrayList<String> labels = new ArrayList<String>();
                     idList.add("");
                     labels.add("<b>Aucun</b>");
-                    System.out.println("before tracks loop" + pageDetail.userTracks);
-                    System.out.flush();
                     for (final Track track : pageDetail.userTracks) {
-                        System.out.println("in tracks id: " + track.getId());
-                        System.out.flush();
                         idList.add(track.getId().toString());
-                        System.out.println("in tracks title: " + track.getTitle());
-                        System.out.flush();
                         labels.add(String.valueOf(track.getTitle()));
                     }
-                %>
-                <%
-                    System.out.println("after tracks " + workoutView);
-                    System.out.flush();
                 %>
                 <dd class="editable"><%=Helpers.selectComponent("track", "track", idList,
                         labels, workoutView.trackId)%>
@@ -161,10 +124,6 @@
         <div class="content textContent">
             <p>
                 <span class="input">
-                    <%
-                        System.out.println("lol " + workoutView);
-                        System.out.flush();
-                    %>
                     <%=textArea("externalComment", "externalComment", workoutView.debriefing)%>
                 </span>
             </p>
