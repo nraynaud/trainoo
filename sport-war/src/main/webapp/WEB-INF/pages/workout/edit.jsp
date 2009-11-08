@@ -127,7 +127,11 @@
                     System.out.println("before tracks loop" + pageDetail.userTracks);
                     System.out.flush();
                     for (final Track track : pageDetail.userTracks) {
+                        System.out.println("in tracks id: " + track.getId());
+                        System.out.flush();
                         idList.add(track.getId().toString());
+                        System.out.println("in tracks title: " + track.getTitle());
+                        System.out.flush();
                         labels.add(track.getTitle().toString());
                     }
                 %>
