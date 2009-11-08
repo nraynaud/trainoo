@@ -124,6 +124,10 @@
         <div class="content textContent">
             <p>
                 <span class="input">
+                    <%
+                        System.out.println("" + workoutView);
+                        System.out.flush();
+                    %>
                     <%=textArea("externalComment", "externalComment", workoutView.debriefing)%>
                 </span>
             </p>
