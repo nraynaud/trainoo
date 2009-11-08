@@ -124,6 +124,8 @@
                     final ArrayList<String> labels = new ArrayList<String>();
                     idList.add("");
                     labels.add("<b>Aucun</b>");
+                    System.out.println("before tracks loop" + pageDetail.userTracks);
+                    System.out.flush();
                     for (final Track track : pageDetail.userTracks) {
                         idList.add(track.getId().toString());
                         labels.add(track.getTitle().toString());
