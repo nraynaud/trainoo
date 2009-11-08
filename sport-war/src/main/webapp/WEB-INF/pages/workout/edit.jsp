@@ -132,7 +132,7 @@
                         idList.add(track.getId().toString());
                         System.out.println("in tracks title: " + track.getTitle());
                         System.out.flush();
-                        labels.add(track.getTitle().toString());
+                        labels.add(String.valueOf(track.getTitle()));
                     }
                 %>
                 <%
