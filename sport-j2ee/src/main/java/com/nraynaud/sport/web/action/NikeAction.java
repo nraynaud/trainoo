@@ -16,11 +16,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Results({
-    @Result(name = INPUT, type = ServletDispatcherResult.class, value = "/WEB-INF/pages/workout/nikeWidgetForm.jsp"),
-    @Result(name = SUCCESS, value = "inputStream", type = StreamResult.class, params = {"contentType", "image/png"}),
-    @Result(name = "url", type = Redirect.class, value = "nike",
-            params = {"namespace", "/", "userId", "${userId}", "workoutId", "${workoutId}"})
-        })
+        @Result(name = INPUT, type = ServletDispatcherResult.class,
+                value = "/WEB-INF/pages/workout/nikeWidgetForm.jsp"),
+        @Result(name = SUCCESS, value = "inputStream", type = StreamResult.class,
+                params = {"contentType", "image/png"}),
+        @Result(name = "url", type = Redirect.class, value = "nike",
+                params = {"namespace", "/", "userId", "${userId}", "workoutId", "${workoutId}"})
+})
 @Public
 public class NikeAction {
     final Importer importer;
@@ -28,6 +30,8 @@ public class NikeAction {
     public String workoutId;
     public String url;
     private ByteArrayInputStream stream;
+    private static final Pattern PATTERN = Pattern.compile(
+            "http://nikeplus.nike.com/nikeplus/\\?l=runners,runs,([0-9]+),runID,([0-9]+)");
 
     public NikeAction(final Importer importer) {
         this.importer = importer;
@@ -36,9 +40,7 @@ public class NikeAction {
     @SuppressWarnings({"MethodMayBeStatic"})
     public String index() {
         if (url != null) {
-            final Pattern pattern = Pattern.compile(
-                    "http://nikeplus.nike.com/nikeplus/\\?l=runners,runs,([0-9]+),runID,([0-9]+)");
-            final Matcher matcher = pattern.matcher(url);
+            final Matcher matcher = PATTERN.matcher(url);
             if (!matcher.matches())
                 throw new RuntimeException();
             userId = matcher.group(1);
