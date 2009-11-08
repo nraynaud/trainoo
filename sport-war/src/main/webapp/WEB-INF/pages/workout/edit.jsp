@@ -129,6 +129,10 @@
                         labels.add(track.getTitle().toString());
                     }
                 %>
+                <%
+                    System.out.println("after tracks " + workoutView);
+                    System.out.flush();
+                %>
                 <dd class="editable"><%=Helpers.selectComponent("track", "track", idList,
                         labels, workoutView.trackId)%>
                 </dd>
