@@ -21,7 +21,10 @@
         document.workoutForm.debriefing.value = document.getElementById("externalComment").value;
     }
 </p:javascript>
-
+<%
+    System.out.println("edit.jsp ");
+    System.out.flush();
+%>
 <form name="workoutForm" action="<%=Helpers.createUrl(pageDetail.doAction)%>" method="POST"
       onsubmit="retrieveComment(); return true;">
     <input type="hidden" name="debriefing" id="hiddenComment" value="">
@@ -39,6 +42,10 @@
                 <s:param value="'energy'"/>
             </s:fielderror>
             <% final WorkoutView workoutView = pageDetail.workoutView; %>
+            <%
+                System.out.println("after fetch " + workoutView);
+                System.out.flush();
+            %>
             <span class="buttonList">
                 <a href="<%=Helpers.createUrl(pageDetail.cancelAction)%>" title="Annuler les modifications"
                    class="button cancelButton verboseButton">
@@ -125,7 +132,7 @@
             <p>
                 <span class="input">
                     <%
-                        System.out.println("" + workoutView);
+                        System.out.println("lol " + workoutView);
                         System.out.flush();
                     %>
                     <%=textArea("externalComment", "externalComment", workoutView.debriefing)%>
