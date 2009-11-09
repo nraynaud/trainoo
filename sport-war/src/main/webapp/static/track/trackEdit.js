@@ -122,10 +122,22 @@ function registerMouseEvents(marker, editor) {
         del.show();
         marker.setImage($('map_marker_active').src);
         editor.insertionEditor.canInsertPoint(false);
+        editor.canAppendPoint(false);
     });
     marker.mouseOutHandler = GEvent.addListener(marker, "mouseout", function() {
+        editor.canAppendPoint(true);
         editor.insertionEditor.canInsertPoint(true);
         marker.setImage($('map_marker').src);
+    });
+    marker.mouseClickHandler = GEvent.addListener(marker, "click", function() {
+        if (marker.index == 0)
+            editor.insertionEditor.insertAtStart();
+        else if (marker.index == editor.markers.length - 1)
+            editor.insertionEditor.insertAtEnd();
+    });
+    marker.mouseDoubleClickHandler = GEvent.addListener(marker, "dblclick", function() {
+        editor.addMarker(editor.markers[editor.markers.length - 1].getPoint(), 0);
+        editor.draw();
     });
 }
 function registerEvents(markers, marker, editor) {
@@ -159,14 +171,14 @@ function renumberMarkers(markers) {
 }
 Editor.prototype.addMarker = function(point, index) {
     var marker = new GMarker(point, {draggable: true, icon: MARKER_ICON, title: "tirez sur le point pour le déplacer"});
-    if (index == null) {
-        this.markers.push(marker);
-        marker.index = this.markers.length - 1;
-    }
-    else {
+    var insertAt = function(index) {
         this.markers.splice(index, 0, marker);
         renumberMarkers(this.markers);
+    }.bind(this);
+    if (index == null) {
+        index = this.insertionEditor.currentInsertionEnd.index();
     }
+    insertAt(index);
     marker.enableDragging();
     map.addOverlay(marker);
     registerEvents(this.markers, marker, this);
@@ -179,7 +191,8 @@ Editor.prototype.deleteMarker = function (marker) {
     renumberMarkers(this.markers);
 };
 Editor.prototype.showMarkeDeletionPreview = function (marker) {
-    this.setTransientPath([this.markers[marker.index - 1].getPoint(), this.markers[marker.index + 1].getPoint()]);
+    if (marker.index > 0 && marker.index + 1 < this.markers.length)
+        this.setTransientPath([this.markers[marker.index - 1].getPoint(), this.markers[marker.index + 1].getPoint()]);
 };
 function setValue(id, value) {
     var element = $(id);
@@ -250,10 +263,11 @@ Editor.prototype.setTransientPath = function (path) {
 };
 function PointInsertionEditor(map, editor) {
     this.editor = editor;
-    this.myMarker = new GMarker(new GLatLng(47.081850, 2.3995035), {
+    this.transientMarker = new GMarker(new GLatLng(47.081850, 2.3995035), {
         icon: createHandleIcon(), title:"tirez pour insérer un point", draggable: true});
-    map.addOverlay(this.myMarker);
-    this.myMarker.hide();
+    map.addOverlay(this.transientMarker);
+    this.transientMarker.hide();
+    this.insertAtEnd();
     var markerIndex = null;
     var insertionEditor = this;
     this.insertLinePointHandleCallback = function(latLng) {
@@ -300,48 +314,47 @@ function PointInsertionEditor(map, editor) {
                 if (distanceLessThan(currentPix, handlePix, 30)) {
                     var previousPix = map.fromLatLngToDivPixel(editor.markers[markerIndex].getPoint());
                     var nextPix = map.fromLatLngToDivPixel(editor.markers[markerIndex + 1].getPoint());
-                    if (!distanceLessThan(handlePix, previousPix, 15) && !distanceLessThan(handlePix, nextPix, 15))
-                    {
-                        insertionEditor.myMarker.setPoint(pointMin);
-                        insertionEditor.myMarker.show();
+                    if (!distanceLessThan(handlePix, previousPix, 15) && !distanceLessThan(handlePix, nextPix, 15)) {
+                        insertionEditor.transientMarker.setPoint(pointMin);
+                        insertionEditor.transientMarker.show();
                         editor.hideTransientPath();
                         return;
                     }
                 }
             }
-            insertionEditor.myMarker.hide();
+            insertionEditor.transientMarker.hide();
         }
         if (editor.markers.length > 0 && latLng != null)
-            editor.setTransientPath([editor.markers[editor.markers.length - 1].getPoint(), latLng]);
+            editor.setTransientPath([insertionEditor.currentInsertionEnd.marker().getPoint(), latLng]);
         else
             editor.hideTransientPath();
     };
-    GEvent.addListener(this.myMarker, 'mouseover', function() {
-        insertionEditor.myMarker.setImage($('map_handle_active').src);
+    GEvent.addListener(this.transientMarker, 'mouseover', function() {
+        insertionEditor.transientMarker.setImage($('map_handle_active').src);
         editor.canAppendPoint(false);
     });
-    GEvent.addListener(this.myMarker, 'mouseout', function() {
-        insertionEditor.myMarker.setImage($('map_handle').src);
+    GEvent.addListener(this.transientMarker, 'mouseout', function() {
+        insertionEditor.transientMarker.setImage($('map_handle').src);
         editor.canAppendPoint(true);
     });
-    GEvent.bind(this.myMarker, 'dragstart', this, function() {
+    GEvent.bind(this.transientMarker, 'dragstart', this, function() {
         editor.canAppendPoint(false);
         this.canInsertPoint(false, true);
         editor.startInsertion();
-        this.myMarker.show();
-        insertionEditor.myMarker.setImage($('map_handle').src);
+        this.transientMarker.show();
+        insertionEditor.transientMarker.setImage($('map_handle').src);
     });
-    GEvent.bind(this.myMarker, 'dragend', this, function() {
+    GEvent.bind(this.transientMarker, 'dragend', this, function() {
         editor.hideTransientPath();
-        editor.addMarker(insertionEditor.myMarker.getPoint(), markerIndex + 1);
+        editor.addMarker(insertionEditor.transientMarker.getPoint(), markerIndex + 1);
         editor.draw();
         editor.endInsertion();
         this.canInsertPoint(true);
         editor.canAppendPoint(true);
     });
-    GEvent.addListener(this.myMarker, 'drag', function() {
+    GEvent.addListener(this.transientMarker, 'drag', function() {
         var poly = [editor.markers[markerIndex].getPoint(),
-            insertionEditor.myMarker.getPoint(),
+            insertionEditor.transientMarker.getPoint(),
             editor.markers[markerIndex + 1].getPoint()];
         editor.setTransientPath(poly);
     });
@@ -354,10 +367,31 @@ PointInsertionEditor.prototype.canInsertPoint = function(can, keepMarker) {
             this.insertLinePointHandleHandler = GEvent.addListener(map, 'mousemove', this.insertLinePointHandleCallback);
     } else {
         if (!keepMarker)
-            this.myMarker.hide();
+            this.transientMarker.hide();
         if (this.insertLinePointHandleHandler != null) {
             GEvent.removeListener(this.insertLinePointHandleHandler);
             this.insertLinePointHandleHandler = null;
         }
     }
+};
+PointInsertionEditor.prototype.insertAtStart = function() {
+    this.currentInsertionEnd = {
+        index:function() {
+            return 0;
+        }.bind(this),
+        marker: function() {
+            return this.editor.markers[0];
+        }.bind(this)
+    };
+};
+PointInsertionEditor.prototype.insertAtEnd = function() {
+    this.currentInsertionEnd = {
+        index:function() {
+            return this.editor.markers.length;
+        }.bind(this),
+        marker: function() {
+            var markers = this.editor.markers;
+            return markers[markers.length - 1];
+        }.bind(this)
+    };
 };
